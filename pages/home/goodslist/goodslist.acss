@@ -13,7 +13,9 @@ page {
   justify-content: space-between;
   padding: 0 32rpx;
   align-items: center;
-  box-sizing: border-box
+  box-sizing: border-box;
+  z-index: 1000;
+  background: #fff
 }
 .positionLeft {
   display: flex;

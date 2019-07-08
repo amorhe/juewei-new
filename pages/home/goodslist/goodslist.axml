@@ -28,6 +28,13 @@
 
 <image src="{{imageUrl}}advantage.png" class="goodsMessage" />
 
+<!-- 四个分类 -->
+<view class="fourType">
+  <view>
+    <image src="{{imageUrl}}home_membercard.png" />
+  </view>
+</view>
+
 <!-- <view style="position:relative; top:100rpx; box-sizing:border-box;width:100%; background-color:green;">
       <view class="classname" style="position:relative;top:100rpx;left:0;"></view>
       商城商品首页，列表页，分为 外卖，自提，去自提
@@ -39,7 +46,7 @@
       </view>
 </view> -->
 
-<!-- <view id="pagesinfo" style="height:100vh;position:relative;box-sizing:border-box;padding-top:200rpx; padding-bottom:100rpx;">
+<view id="pagesinfo" style="height:100vh;position:relative;box-sizing:border-box;padding-top:200rpx; padding-bottom:100rpx;">
   <view style="position: absolute; top:100rpx; left:0; height:100rpx;background-color:blue;width:100%;">
     附近门店
   </view>
@@ -67,7 +74,7 @@
     <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button>
     <button type="primary" onTap="xiadan">立即下单</button>
   </scroll-view>
-</view> -->
+</view>
 
 <view class="shopcart" style="position: fixed;bottom:0; left:0;background-color:yellow;width:100%; height:100rpx;z-index:9">
   购物车
