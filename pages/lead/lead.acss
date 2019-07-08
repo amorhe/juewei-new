@@ -1,0 +1,5 @@
+.leadBox {
+  width: 100vw;
+  height: 100vh;
+  background: #E60012
+}

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/lead/lead",
     "pages/home/goodslist/goodslist",
     "pages/home/selecttarget/selecttarget",
     "pages/home/switchshop/switchshop",
@@ -15,7 +16,8 @@
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
     "pages/login/auth/auth",
-    "pages/component/shopcart/shopcart"
+    "pages/component/shopcart/shopcart",
+    "pages/lead/lead"
   ],
   "subPackages": [
     {
@@ -82,7 +84,8 @@
   },
   "window": {
     "defaultTitle": "绝味鸭脖",
-    "backgroundColor": "#ffffff"
+    "backgroundColor": "#ffffff",
+    "gestureBack": "YES"
   },
   "tabBar": {
     "textColor": "#7F8389",
