@@ -10,8 +10,16 @@ Page({
         success(res) {
           console.log('my.getLocation=',res)
           my.hideLoading();
-          app.globalData.location.longitude = res.longitude;
-          app.globalData.location.latitude = res.latitude;
+          // app.globalData.location.longitude = res.longitude;
+          // app.globalData.location.latitude = res.latitude;
+          my.setStorageSync({
+          key: 'lat', // 缓存数据的key
+          data: res.latitude, // 要缓存的数据
+        });
+        my.setStorageSync({
+          key: 'lng', // 缓存数据的key
+          data: res.longitude, // 要缓存的数据
+        });
           that.setData({
             logtxt: '定位成功'
           });

@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/lead/lead",
+    
     "pages/home/goodslist/goodslist",
     "pages/home/selecttarget/selecttarget",
     "pages/home/switchshop/switchshop",
@@ -94,26 +94,26 @@
     "items": [
       {
         "pagePath": "pages/home/goodslist/goodslist",
-        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
-        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "icon": "https://test-wap.juewei.com/m/ali-mini/image/menu_home1.png",
+        "activeIcon": "https://test-wap.juewei.com/m/ali-mini/image/menu_home2.png",
         "name": "首页"
       },
       {
         "pagePath": "pages/vip/index/index",
-        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
-        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "icon": "https://test-wap.juewei.com/m/ali-mini/image/menu_vip1.png",
+        "activeIcon": "https://test-wap.juewei.com/m/ali-mini/image/menu_vip2.png",
         "name": "vip专享"
       },
       {
         "pagePath": "pages/order/list/list",
-        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
-        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "icon": "https://test-wap.juewei.com/m/ali-mini/image/menu_order1.png",
+        "activeIcon": "https://test-wap.juewei.com/m/ali-mini/image/menu_order2.png",
         "name": "订单"
       },
       {
         "pagePath": "pages/my/index/index",
-        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
-        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "icon": "https://test-wap.juewei.com/m/ali-mini/image/menu_my1.png",
+        "activeIcon": "https://test-wap.juewei.com/m/ali-mini/image/menu_my2.png",
         "name": "我"
       }
     ]

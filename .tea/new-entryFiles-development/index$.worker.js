@@ -6,7 +6,6 @@ require('../..//app.js?appxworker=1');
 require('../../node_modules/mini-antui/es/grid/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/list/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/list/list-item/index.js?appxworker=1');
-require('../../pages/lead/lead.js?appxworker=1');
 require('../../pages/home/goodslist/goodslist.js?appxworker=1');
 require('../../pages/home/selecttarget/selecttarget.js?appxworker=1');
 require('../../pages/home/switchshop/switchshop.js?appxworker=1');

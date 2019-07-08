@@ -1,15 +1,36 @@
+import {imageUrl} from '../../common/js/baseUrl'
 var app=getApp(); //放在顶部
 Page({
   data: {
-    scroll_y: false
+    scroll_y: false,
+    imageUrl:imageUrl,
+    firstAddress:'紫檀大厦',  
+    type:1,  //默认外卖
+    isClose: false,  //是否营业，true为营业中
+    indicatorDots: false,
+    autoplay: false,
+    vertical: false,
+    interval: 1000,
+    circular: true,
+    imgUrls:['../../common/img/banner.png']
   },
   onLoad(query) {
     // 页面加载
-    console.log('onLoad');
     //判断定位地址是否存在
-    if(app.globalData.location && app.globalData.location.longitude=== null && app.globalData.location.latitude=== null){
-      my.redirectTo({
-         url: '../../position/position'
+    // if(app.globalData.location && app.globalData.location.longitude=== null && app.globalData.location.latitude=== null){
+    //   my.redirectTo({
+    //      url: '../../position/position'
+    //   })
+    // }
+    if(query.address1 || query.address2) {
+      this.setData({
+      firstAddress: query.address1 + query.address2
+    })
+    }
+    if(this.data.imgUrls.length>1){
+      this.setData({
+        indicatorDots:true,
+        autoplay:true
       })
     }
   },
@@ -21,8 +42,20 @@ Page({
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
-    console.log('onready');
+
    
+  },
+    // 切换外卖自提
+  chooseTypes(e){
+    if(e.currentTarget.dataset.type=='ziti'){
+        this.setData({
+          type:2
+        })
+    }else{
+     this.setData({
+        type:1
+     }) 
+    }
   },
   onHide() {
     // 页面隐藏
@@ -70,5 +103,5 @@ Page({
       }
     })
     console.log('监听',e);
-  }
+  },
 });
