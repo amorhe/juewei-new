@@ -1,0 +1,54 @@
+
+
+<view class="position" style="position: fixed;top:0; left:0;background-color:yellow;width:100%; height:100rpx;z-index:9;">
+  <view>紫檀大厦</view><view>外卖 自提</view>
+</view>
+
+<view style="position:relative; top:100rpx; box-sizing:border-box;width:100%; background-color:green;">
+      <view class="classname" style="position:relative;top:100rpx;left:0;"></view>
+      商城商品首页，列表页，分为 外卖，自提，去自提
+      <view class="swiper"></view>
+      <scroll-view class="swiper">会员卡，vip 卡券，附近门店</scroll-view>
+      <view class="banner">
+           <image src="http://checkm.juewei.com/img/addnewaddress.png" width="10"/>
+           <image src="http://checkm.juewei.com/img/addnewaddress.png" width="10"/> 
+      </view>
+</view>
+
+<view id="pagesinfo" style="height:100vh;position:relative;box-sizing:border-box;padding-top:200rpx; padding-bottom:100rpx;">
+  <view style="position: absolute; top:100rpx; left:0; height:100rpx;background-color:blue;width:100%;">
+    附近门店
+  </view>
+  <scroll-view scroll-y="{{scroll_y}}" class="" style="height:100%;box-sizing:border-box;background-color:#888888;width:250rpx;float:left">
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button>
+    <button type="primary" onTap="xiadan">立即下单</button>
+  </scroll-view>
+  <scroll-view scroll-y="{{scroll_y}}" class="" style="height:100%;box-sizing:border-box;background-color:#888888;width:500rpx;float:right">
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
+    <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button>
+    <button type="primary" onTap="xiadan">立即下单</button>
+  </scroll-view>
+</view>
+
+<view class="shopcart" style="position: fixed;bottom:0; left:0;background-color:yellow;width:100%; height:100rpx;z-index:9">
+  购物车
+</view>
+
+<view class="positionwelcome" style="position:fixed;top:0;left:0; background-color:#000; height:100%; width:100%;z-index:10;color:#ffffff;display:none;">
+    定位中
+</view>

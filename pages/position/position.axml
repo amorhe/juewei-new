@@ -1,0 +1,4 @@
+<view>
+  商城引导定位页面
+  <view>{{logtxt}}</view>
+</view>

@@ -1,0 +1,12 @@
+ 
+page {
+  background: #ffffff;
+}
+ 
+
+.classname{
+   background:#ffffff url('http://checkm.juewei.com/img/addnewaddress.png') no-repeat;
+   width:30rpx; 
+   height: 30rpx; 
+   background-size: 100% 100%;
+}

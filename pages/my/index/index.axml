@@ -1,0 +1,5 @@
+<view>
+  <view>我的</view>
+  <grid onGridItemClick="onItemClick" columnNum="{{4}}" list="{{gridelist}}" />
+  <navigator open-type="navigate" url="/package_my/pages/onlineservice/onlineservice" hover-class="navigator-hover">客服</navigator>
+</view>

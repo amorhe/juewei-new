@@ -1,0 +1,118 @@
+{
+  "pages": [
+    "pages/home/goodslist/goodslist",
+    "pages/home/selecttarget/selecttarget",
+    "pages/home/switchshop/switchshop",
+    "pages/home/goodslist/goodsdetail/goodsdetail",
+    "pages/home/orderform/orderform",
+    "pages/home/orderform/agreement/agreement",
+    "pages/home/orderform/selectaddress/selectaddress",
+    "pages/home/orderfinish/orderfinish",
+    "pages/position/position",
+    "pages/my/index/index",
+    "pages/order/list/list",
+    "pages/vip/index/index",
+    "pages/login/protocol/protocol",
+    "pages/login/verifycode/verifycode",
+    "pages/login/auth/auth",
+    "pages/component/shopcart/shopcart"
+  ],
+  "subPackages": [
+    {
+      "root": "package_vip",
+      "pages": [
+        "pages/detail/detail",
+        "pages/exchangelist/exchangelist",
+        "pages/exchangelist/exchangedetail/exchangedetail",
+        "pages/pointlist/pointlist",
+        "pages/pointlist/rules/rules",
+        "pages/waitpay/waitpay",
+        "pages/finish/finish"
+      ]
+    },
+    {
+      "root": "package_order",
+      "pages": [
+        "pages/orderdetail/orderdetail",
+        "pages/comment/comment"
+      ]
+    },
+    {
+      "root": "package_my",
+      "pages": [
+        "pages/coupon/coupon",
+        "pages/membercard/membercard",
+        "pages/coupon/exchange/exchange",
+        "pages/coupon/explain/explain",
+        "pages/coupon/changedetails/changedetails",
+        "pages/mycenter/mycenter",
+        "pages/mycenter/bindphone/bindphone",
+        "pages/myaddress/myaddress",
+        "pages/myaddress/addaddress/addaddress",
+        "pages/onlineservice/onlineservice",
+        "pages/nearshop/nearshop"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/vip/index/index": {
+      "network": "all",
+      "packages": [
+        "package_vip"
+      ]
+    },
+    "pages/order/list/list": {
+      "network": "all",
+      "packages": [
+        "package_order"
+      ]
+    },
+    "pages/home/orderfinish/orderfinish": {
+      "network": "all",
+      "packages": [
+        "package_order"
+      ]
+    },
+    "pages/my/index/index": {
+      "network": "all",
+      "packages": [
+        "package_my"
+      ]
+    }
+  },
+  "window": {
+    "defaultTitle": "绝味鸭脖",
+    "backgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "textColor": "#7F8389",
+    "selectedColor": "#E60012",
+    "backgroundColor": "#ffffff",
+    "items": [
+      {
+        "pagePath": "pages/home/goodslist/goodslist",
+        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "name": "首页"
+      },
+      {
+        "pagePath": "pages/vip/index/index",
+        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "name": "vip专享"
+      },
+      {
+        "pagePath": "pages/order/list/list",
+        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "name": "订单"
+      },
+      {
+        "pagePath": "pages/my/index/index",
+        "icon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "activeIcon": "http://checkm.juewei.com/img/addnewaddress.png",
+        "name": "我"
+      }
+    ]
+  }
+}
