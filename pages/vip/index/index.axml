@@ -1,3 +1,18 @@
-<view>
-  vip专享首页
+<view class="vip">
+  <view class="content">
+    <view class="header flex-space-b">
+      <view class="flex-center">
+        当前积分：
+        <view class="total">4321分</view>
+        <image class="icon" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
+      </view>
+      <view class="flex-center" style="font-size:26rpx;height:32rpx">
+        兑换记录
+        <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
+      </view>
+    </view>
+    <view style="text-align:center">
+      <image class="banner" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
+    </view>
+  </view>
 </view>
