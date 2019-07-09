@@ -54,5 +54,53 @@
     马上支付
   </view>
 
+<!-- 地址 -->
+<view class="post-address">
+  
+  <view class="post-name">
+    <view class="item post-name-left">联系人</view>
+    <input class="post-name-right" placeholder="姓名" />
+  </view>
+
+  <view class="post-sex">
+    <text class="item"></text>
+
+    <view onTap="changeSex" class="{{sex===0?'post-sex-active':''}}">女士</view>
+    <view onTap="changeSex" class="{{sex===1?'post-sex-active':''}}">先生</view>
+  </view>
+
+<view class="list">
+  <view class="item">电话</view>
+  <input placeholder="手机号码" />
+</view>
+
+<view class="select-address list">
+   <view class="item">地址</view>
+    <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
+    <view class="real-address">紫檀大厦</view>
+    <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+
+</view>
+
+
+<view class="list">
+  <view class="item">门牌号</view>
+  <input placeholder="例：6号楼606室" />
+</view>
+
+
+<view class="list">
+  <view class="item">标签</view>
+</view>
+
+
+ <view class="wait-pay-btn">
+    保存地址
+  </view>
+
+</view>
+
+
+</view>
 
 </view>
