@@ -1,6 +1,10 @@
+page{
+  background: white
+}
+
 .icon-wrap{
   text-align: center;
-  padding:32rpx;
+  padding:40rpx;
   height: 220rpx;
 }
 
@@ -10,15 +14,13 @@
 }
 
 .text-success{
-  padding: 10rpx 0 30rpx;
+  padding: 20rpx 0 10rpx;
   font-size:34rpx;
 font-weight:400;
 color:rgba(51,51,51,1);
 }
 
 .bg{
-  min-height: 100vh;
-  background: #fff;
   padding: 0 32rpx;
 }
 
@@ -131,4 +133,11 @@ border-radius:48rpx;
   color: #333;
   border: 1px solid #333;
   margin-top: 40rpx;
+}
+
+
+.fail-reason{
+font-size:22rpx;
+font-weight:400;
+color:rgba(153,153,153,1);
 }

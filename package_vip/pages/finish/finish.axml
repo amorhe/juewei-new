@@ -1,7 +1,7 @@
 <view class="bg">
   <!-- 兑换完成页，页面分虚拟和邮寄实物和门店领取实物，并且页面分为成功和失败两种状态 -->
-  <!-- 虚拟物品 -->
-  <view class="false">
+  <!-- 虚拟物品 成功 false->假的 -->
+  <view class="false" a:if="{{true}}">
     <view class="success">
       <view class="icon-wrap">
         <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}success.png"/>
@@ -42,9 +42,39 @@
       返回VIP专享
     </view>
 
- <view class="li-button gray">
+    <view class="li-button gray">
       查看订单
     </view>
 
   </view>
+
+  <!-- 虚拟物品 失败-->
+  <view class="false" a:if="{{true}}">
+    <view class="success">
+      <view class="icon-wrap">
+        <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}fail.png"/>
+        <view class="text-success">兑换失败</view>
+        <view class="fail-reason">商品库存不足</view>
+      </view>
+    </view>
+
+    <view class="p-detail">
+      <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
+      <view class="p-right">
+        <view class="p-title">
+      幸福西饼6寸蛋糕
+        </view>
+        <view class="p-price">
+      0积分
+        </view>
+      </view>
+    </view>
+
+    <view class="li-button">
+      返回VIP专享
+    </view>
+
+  </view>
+
+  <!-- 邮寄物品 -->
 </view>

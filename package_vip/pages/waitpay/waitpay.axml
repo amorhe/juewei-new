@@ -1,3 +1,58 @@
 <view>
-  带支付页面 实物邮寄，实物门店，虚拟商品直接跳过到兑换成功页
+  <!-- 带支付页面 实物邮寄，实物门店，虚拟商品直接跳过到兑换成功页 -->
+
+<!-- 等待支付 -->
+
+<!-- 实物邮寄 -->
+
+<view class="wait-pay">
+  <text class="wait-pay-title">支付剩余时间：</text>
+  <text class="wait-pay-time">14分59秒</text>
+</view>
+
+
+  <view class="address">
+    <view class="address-title">请填写收货地址</view>
+    <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+    
+  </view>
+
+  <view class="p-good">
+    <view class="p-detail">
+      <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
+      <view class="p-right">
+        <view class="p-title">
+      幸福西饼6寸蛋糕
+        </view>
+        <view class="p-price">
+      2200积分
+        </view>
+      </view>
+    </view>
+
+
+    <view class="order">
+      <view class="ordet-title">订单编号</view> 
+      <view class="order-num">123qwe</view>
+    </view>
+
+
+
+
+    <view class="total">
+        <text class="total-title">合计 </text>
+        <text class="total-vip">2000</text>
+        <text class="total-j">积分</text>
+        <text class="total-vip">+8</text>
+        <text class="total-sm">元运费</text>
+    </view>
+
+  </view>
+
+
+  <view class="wait-pay-btn">
+    马上支付
+  </view>
+
+
 </view>
