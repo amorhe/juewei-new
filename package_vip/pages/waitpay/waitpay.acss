@@ -196,7 +196,7 @@ display: flex;
 padding: 20rpx 0;
 }
 
-.post-sex view{
+.post-sex view,.label{
 width:120rpx;
 height:56rpx;
 border-radius:28rpx;
@@ -210,7 +210,7 @@ text-align: center
 ;margin-right: 30rpx;
 }
 
-.post-sex-active{
+.post-sex-active,.label-active{
   border-color: #E60012 !important;
   color: #E60012 !important;
 }

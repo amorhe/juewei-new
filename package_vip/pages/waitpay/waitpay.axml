@@ -59,7 +59,7 @@
   
   <view class="post-name">
     <view class="item post-name-left">联系人</view>
-    <input class="post-name-right" placeholder="姓名" />
+    <input class="post-name-right" placeholder="姓名" data-key="name" onInput="handelChange"/>
   </view>
 
   <view class="post-sex">
@@ -71,7 +71,7 @@
 
 <view class="list">
   <view class="item">电话</view>
-  <input placeholder="手机号码" />
+  <input placeholder="手机号码" data-key="phone" onInput="handelChange"/>
 </view>
 
 <view class="select-address list">
@@ -91,6 +91,8 @@
 
 <view class="list">
   <view class="item">标签</view>
+
+  <view onTap="changeCur" data-cur='{{index}}' a:for="{{labelList}}" class="label {{index===curLabel?'label-active':''}}" > {{item}} </view>
 </view>
 
 
