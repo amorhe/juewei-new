@@ -1,3 +1,64 @@
 <view>
-  vip商品详情
+  <view class="header">
+    <image class="img" mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
+    <view class="header-wrap">
+      <view class="title">
+        氨基酸洁面乳
+      </view>
+      <view class="coast">
+           20
+        <text>积分</text>
+      </view>
+
+      <view class="bottom"  style="width:{{60}}%;background:#FDE0E1"></view>
+
+      <view class="bottom">
+        已抢60%
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+
+   <view class="footer-title">
+     活动时间
+   </view>
+   <view class="footet-containt">
+     2018-9-30至2019-9-30
+   </view>
+
+
+  <view class="footer-title"> 
+     兑换说明
+   </view>
+   <view class="footet-containt">
+    活动期间每个用户仅限兑换一次；
+   </view> 
+   <view class="footet-containt">
+    活动所有权归本公司所有。
+   </view>
+
+
+  <view class="footer-title">     
+     商品详情
+   </view>
+   <view class="footet-containt">
+    如有快递费请写清楚快递费用      绝味独家设计抱枕全球鬼才设计联合设计绝味独家设计抱枕全球鬼才设计联合设计绝味独家设计抱枕全球鬼才设计联合设计
+   </view> 
+   
+
+  <view class="footer-title">     
+     兑换次数
+   </view>
+   <view class="footet-containt">
+      每人每天1次
+   </view> 
+   
+
+
+  </view>
+
+  <view class="btn">立即兑换</view>
+
+  <view style="height:140rpx"></view>
 </view>
