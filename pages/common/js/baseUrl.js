@@ -6,6 +6,7 @@ export const baseUrl = 'https://test-wap.juewei.com/api';
 
 // 图片测试cdn
 export const imageUrl = 'https://test-wap.juewei.com/m/ali-mini/image/';
+export const imageUrl2 = 'https://test-wap.juewei.com/m/ali-mini/image';
 
 
 // 图片生产cdn
