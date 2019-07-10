@@ -85,7 +85,7 @@
 
 <view class="list">
   <view class="item">门牌号</view>
-  <input placeholder="例：6号楼606室" />
+  <input placeholder="例：6号楼606室" data-key="address" onInput="handelChange"/>
 </view>
 
 
@@ -94,9 +94,7 @@
 
   <view onTap="changeCur" data-cur='{{index}}' a:for="{{labelList}}" class="label {{index===curLabel?'label-active':''}}" > {{item}} </view>
 </view>
-
-
- <view class="wait-pay-btn">
+ <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
     保存地址
   </view>
 

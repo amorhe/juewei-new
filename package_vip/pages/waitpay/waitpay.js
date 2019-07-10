@@ -11,6 +11,8 @@ Page({
 
     phone:'',
 
+    address:'',
+
     labelList:['学校','家','公司'],
 
     curLabel:0
@@ -36,8 +38,6 @@ changeCur(e){
 },
 
 handelChange(e){
-  console.log
-(e)
   let {key} = e.currentTarget.dataset;
   let {value} = e.detail;
   this.setData({[key]:value})
