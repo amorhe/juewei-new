@@ -20,7 +20,7 @@
 }
 
 .total {
-  letter-spacing: .1em;
+  letter-spacing: .05em;
   font-weight: 700
 }
 
@@ -38,7 +38,7 @@
 }
 
 .two image {
-  width: 340rpx;
+  width: 333rpx;
   height: 180rpx;
   border-radius: 8rpx;
 }
@@ -48,6 +48,10 @@
   white-space: nowrap;
   display:flex;
   margin: 20rpx 0;
+}
+
+.x.active{
+  position: fixed;
 }
 
 .x view{
@@ -70,10 +74,17 @@
   font-weight: 600;
 }
 
+.ul{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between
+}
+
 .ul .li{
   width: 333rpx;
   height: 513rpx;
   border-radius: 8rpx;
+  margin-top: 20rpx;
   overflow: hidden
 }
 
@@ -120,4 +131,40 @@ border-radius:32rpx;
   color:rgba(230,0,18,1);
   font-size: 22rpx;
   padding: 6rpx 0;
+}
+
+.toast{
+  z-index: 999;
+  position: absolute;
+  width: 240rpx;
+  left: -120rpx;
+  top: 50rpx;
+  border-radius: 12rpx;
+  background: white;
+  padding: 20rpx;
+  color: #333;
+  font-weight: 500;
+  text-align: center
+}
+
+.toast::before{
+  z-index: -1;
+  position: absolute;
+  content: '';
+  width: 40rpx;
+  height: 40rpx;
+  transform: rotate(45deg);
+  border-radius: 10rpx;
+  background: white;
+  top: -10rpx;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+
+.stickyClass{
+    position: sticky;
+    top: -2rpx;
+    background: rgb(238, 238, 238);
 }
