@@ -1,3 +1,5 @@
-<view>
-  兑换优惠券
+<view class="exchangeBox">
+  <image src="../../../../pages/common/img/gift.png"/>
+  <input type="text" placeholder="请输入优惠券兑换码" auto-focus placeholder-class="colorGray" value="{{code}}" onInput="writeCode" />
+  <button class="{{code.length>0?'hasCode redeemBtn':'noneCode redeemBtn'}}" type="default" hover-class="none">立即兑换</button>
 </view>

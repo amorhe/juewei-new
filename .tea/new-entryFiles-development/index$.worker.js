@@ -9,7 +9,14 @@ require('../../node_modules/mini-antui/es/tabs/tab-content/index.js?appxworker=1
 require('../../node_modules/mini-antui/es/grid/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/list/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/list/list-item/index.js?appxworker=1');
+require('../../package_my/pages/chooseshop/chooseshop.js?appxworker=1');
+require('../../package_my/pages/nearshop/nearshop.js?appxworker=1');
+require('../../package_my/pages/coupon/changedetails/changedetails.js?appxworker=1');
+require('../../package_my/pages/coupon/exchange/exchange.js?appxworker=1');
 require('../../package_my/pages/coupon/coupon.js?appxworker=1');
+require('../../package_my/pages/coupon/explain/explain.js?appxworker=1');
+require('../../package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord.js?appxworker=1');
+require('../../package_my/pages/coupon/couponRecord/couponRecord.js?appxworker=1');
 require('../../package_my/pages/membercard/membercard.js?appxworker=1');
 require('../../pages/home/goodslist/goodslist.js?appxworker=1');
 require('../../pages/home/selecttarget/selecttarget.js?appxworker=1');
@@ -48,5 +55,7 @@ require('../../package_my/pages/myaddress/myaddress.js?appxworker=1');
 require('../../package_my/pages/myaddress/addaddress/addaddress.js?appxworker=1');
 require('../../package_my/pages/onlineservice/onlineservice.js?appxworker=1');
 require('../../package_my/pages/nearshop/nearshop.js?appxworker=1');
+require('../../package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord.js?appxworker=1');
+require('../../package_my/pages/coupon/couponRecord/couponRecord.js?appxworker=1');
 }
 self.bootstrapApp ? self.bootstrapApp({ success }) : success();

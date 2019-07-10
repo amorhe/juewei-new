@@ -1,9 +1,15 @@
 {
   "pages": [
+    "pages/position/position",
+    "package_my/pages/chooseshop/chooseshop",
+    "package_my/pages/nearshop/nearshop",
+    "package_my/pages/coupon/changedetails/changedetails",
+    "package_my/pages/coupon/exchange/exchange",
     "package_my/pages/coupon/coupon",
+    "package_my/pages/coupon/explain/explain",
+    "package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord",
+    "package_my/pages/coupon/couponRecord/couponRecord",
     "package_my/pages/membercard/membercard",
-    
-
     "pages/home/goodslist/goodslist",
     "pages/home/selecttarget/selecttarget",
     "pages/home/switchshop/switchshop",
@@ -12,7 +18,7 @@
     "pages/home/orderform/agreement/agreement",
     "pages/home/orderform/selectaddress/selectaddress",
     "pages/home/orderfinish/orderfinish",
-    "pages/position/position",
+    
     "pages/my/index/index",
     "pages/order/list/list",
     "pages/vip/index/index",
@@ -55,7 +61,9 @@
         "pages/myaddress/myaddress",
         "pages/myaddress/addaddress/addaddress",
         "pages/onlineservice/onlineservice",
-        "pages/nearshop/nearshop"
+        "pages/nearshop/nearshop",
+        "pages/coupon/redeemCodeRecord/redeemCodeRecord",
+        "pages/coupon/couponRecord/couponRecord"
       ]
     }
   ],

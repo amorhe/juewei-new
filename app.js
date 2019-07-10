@@ -17,7 +17,7 @@ App({
   },
   onShow(options) {//多次执行
     // 从后台被 scheme 重新打开
-    console.log(options.query);
+    // console.log(options.query);
     // options.query == {number:1}
   },
   onHide(){

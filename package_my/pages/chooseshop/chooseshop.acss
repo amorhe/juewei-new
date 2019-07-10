@@ -1,0 +1,35 @@
+@import "../nearshop/nearshop.acss";
+.shopLi>cover-view>cover-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
+  line-height: 30rpx!important;
+}
+.shopWrap {
+  background: #fff;
+  margin-bottom: 16rpx;
+  box-shadow:0 2rpx 10rpx 0 rgba(153,153,153,0.2);
+  border-radius:10rpx;
+  padding: 24rpx 24rpx 16rpx;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: flex-start
+}
+.shopMiddle {
+  flex: 1
+}
+.shopMiddle>cover-view {
+  display: flex;
+  flex-direction: column
+}
+.shopMiddle>cover-view>cover-view {
+  display: flex;
+  justify-content: space-between
+}
+.preWrap {
+  white-space: pre-wrap;
+  line-height: 30rpx!important;
+  width: 422rpx;
+}

@@ -21,9 +21,40 @@ page {
   position: fixed; 
   z-index: 0; 
 }
+.jingxuan {
+  width: 48rpx;
+  height: 80rpx;
+  background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
+  border-radius: 2rpx;
+  color: #fff;
+  display: flex;
+  padding: 12rpx 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  font-size: 26rpx;
+  margin-right: 16rpx;
+  white-space: pre-wrap;
+  line-height: 32rpx!important
+}
 .fontTwentyTwo {
   font-size: 22rpx;
 }
 .fontTwentySix {
   font-size: 26rpx;
+}
+.colorWhite {
+  color: #fff
+}
+.fontSmallGray {
+  font-size: 22rpx;
+  color: #999
+}
+.fontBold {
+  font-weight: bold
+}
+.borderBottom {
+  border-bottom: 1rpx #eee dashed
 }

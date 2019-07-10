@@ -1,0 +1,37 @@
+<!-- <view class="listAll">
+  <view class="listItem">
+    <image class="quan" src="../../../../pages/common/img/quan.png" mode="widthFix"/>
+    <view></view>
+  </view>
+</view> -->
+
+<view class="couponUl">
+  <view class="couponLi" a:for="{{6}}">
+    <image class="quan" src="../../../../pages/common/img/quan.png" mode="widthFix"/>
+    <view>
+      <view class="couponNumber">
+        <text>10</text>
+        <text>元</text>
+      </view>
+      <view class="couponMiddle">
+        <view>门店专享券</view>
+        <view class="fontTwentyTwo">2019-05-14至2019-06-14</view>
+        <view class="fontTwentyTwo">满68元可用</view>
+      </view>
+      <image class="guoqi" src="../../../../pages/common/img/guoqi.png"  />
+    </view>
+    <view>
+      <view class="whiteCircleLeft"></view>
+      <view class="dashLine"></view>
+      <view class="whiteCircleRight"></view>
+    </view>
+
+    <view>
+      <view>
+        <text class="fontTwentyTwo">更多使用规则</text>
+        <image class="arrow_down_icon" src="{{imageUrl}}arrow_down1.png" />
+      </view>
+      
+    </view>
+  </view>
+</view>
