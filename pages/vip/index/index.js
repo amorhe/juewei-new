@@ -170,6 +170,12 @@ Page({
     this.setData({ toast: false })
   },
 
+  toDetail(){
+    my.navigateTo({
+      url:'../../../package_vip/pages/detail/detail'
+    });
+  }
+
 
   // initClientRect() {
   //    my

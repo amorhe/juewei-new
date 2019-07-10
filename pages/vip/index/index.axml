@@ -37,7 +37,7 @@
           <view class="flex-space-b" style="padding:8rpx 0 18rpx">
             <view class="li-all">2200
               <text class="li-small">积分</text></view>
-            <view class="li-button">立即兑换</view>
+            <view class="li-button" onTap="toDetail">立即兑换</view>
           </view>
         </view>
 

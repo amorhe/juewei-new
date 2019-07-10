@@ -38,10 +38,14 @@ width: 32rpx;
 height: 32rpx;
 }
 
-.p-good{
-  padding: 24rpx 32rpx;
+.p-good,.store{
+padding: 24rpx 32rpx;
 background: white;
 border-radius: 20rpx;
+}
+
+.store{
+  margin-bottom: 20rpx;
 }
 
 .p-detail{
@@ -134,6 +138,12 @@ color:rgba(255,255,255,1);
 line-height:96rpx;
 text-align: center;
 margin: 100rpx auto
+}
+
+.address-sm{
+font-size:26rpx;
+color:rgba(153,153,153,1);
+font-weight:400;
 }
 
 
