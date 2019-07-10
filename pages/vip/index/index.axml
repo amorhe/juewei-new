@@ -1,10 +1,13 @@
-<view class="vip">
+<view class="vip" onTap="hideToast">
   <view class="content">
     <view class="header flex-space-b">
       <view class="flex-center">
         当前积分：
         <view class="total">4321</view>
-        <image class="icon" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
+        <view style='position:relative;height:32rpx'>
+        <image class="icon" catchTap="showToast" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
+        <view class="toast" a:if="{{toast}}">冻结积分：20</view>
+         </view>
       </view>
       <view class="flex-center" style="font-size:26rpx;height:32rpx">
         兑换记录
@@ -21,12 +24,14 @@
       <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
       <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
     </view>
-    <scroll-view scroll-x="{{true}}" class="x">
+    <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
       <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.title}}</view>
     </scroll-view>
+
     <view class="ul">
       <view class="li" a:for="{{goodsList}}">
-        <image mode="scaleToFill" src="{{imageUrl2+item.goods_pic}}"/>
+             <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
+
         <view class="center">
           <view class="li-title">绿叶水果西瓜</view>
           <view class="flex-space-b" style="padding:8rpx 0 18rpx">
@@ -39,7 +44,6 @@
         <view class="bottom" style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ 60 +'%, white '+ 60+'%)'}}">已抢60%</view>
       </view>
     </view>
-
     
   </view>
 </view>
