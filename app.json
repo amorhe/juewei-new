@@ -1,6 +1,9 @@
 {
   "pages": [
+    "package_my/pages/coupon/coupon",
+    "package_my/pages/membercard/membercard",
     
+
     "pages/home/goodslist/goodslist",
     "pages/home/selecttarget/selecttarget",
     "pages/home/switchshop/switchshop",

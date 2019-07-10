@@ -1,3 +1,4 @@
+<view class="{{showShopcar?'contanier':''}}">
 <!-- 定位 -->
 <view class="goodsPosition">
   <view class="positionLeft">
@@ -10,6 +11,8 @@
     <view class="{{type==2?'activeType':''}}" onTap="chooseTypes" data-type='ziti'>自提</view>
   </view>
 </view>
+
+<view class="null"></view>
 
 <view class="closeIng" a:if="{{!isClose}}">
   <view>您的定位地址配送门店未在营业时间 营业时间：10:00-22:00</view>
@@ -30,56 +33,441 @@
 
 <!-- 四个分类 -->
 <view class="fourType">
-  <view>
+  <navigator url="/package_my/pages/membercard/membercard">
     <image src="{{imageUrl}}home_membercard.png" />
+    <view>会员卡</view>
+  </navigator>
+  <view>
+    <image src="{{imageUrl}}home_vip.png" />
+    <view>VIP专享</view>
+  </view>
+  <navigator url="/package_my/pages/coupon/coupon"></navigator>>
+    <image src="{{imageUrl}}home_coupon.png" />
+    <view>卡券</view>
+  </navigator>
+  <view>
+    <image src="{{imageUrl}}home_nearshop.png" />
+    <view>附近门店</view>
   </view>
 </view>
 
-<!-- <view style="position:relative; top:100rpx; box-sizing:border-box;width:100%; background-color:green;">
-      <view class="classname" style="position:relative;top:100rpx;left:0;"></view>
-      商城商品首页，列表页，分为 外卖，自提，去自提
-      <view class="swiper"></view>
-      <scroll-view class="swiper">会员卡，vip 卡券，附近门店</scroll-view>
-      <view class="banner">
-           <image src="http://checkm.juewei.com/img/addnewaddress.png" width="10"/>
-           <image src="http://checkm.juewei.com/img/addnewaddress.png" width="10"/> 
+<!-- 活动展位 -->
+<view class="activityBox">
+  <image src="../../common/img/img1.png"/>
+  <view>
+    <image src="../../common/img/img2.png"/>
+    <image src="../../common/img/img3.png"/>
+  </view>
+</view>
+
+<view class="activityWrap">
+  <image src="../../common/img/peisong.png" />
+</view>
+
+<!-- 推荐门店 -->
+<view class="shopDefault">
+  <view>
+    <view class="jingxuan">精选</view>
+    <view class="shopMessage">
+      <view>绝味鸭脖（定福庄西街店）</view>
+      <view>在售商品数30</view>
+    </view>
+  </view>
+
+  <view>
+    <view class="shopDefaultRight">
+      <view>
+        <image src="{{imageUrl}}position.png"/>
+        <view>距离1000米</view>
       </view>
-</view> -->
-
-<view id="pagesinfo" style="height:100vh;position:relative;box-sizing:border-box;padding-top:200rpx; padding-bottom:100rpx;">
-  <view style="position: absolute; top:100rpx; left:0; height:100rpx;background-color:blue;width:100%;">
-    附近门店
+      <view>
+        <view class="typeBtn1">外卖</view>
+        <view class="typeBtn2">自提</view>
+      </view>
+    </view>
+    <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
   </view>
-  <scroll-view scroll-y="{{scroll_y}}" class="" style="height:100%;box-sizing:border-box;background-color:#888888;width:250rpx;float:left">
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button>
-    <button type="primary" onTap="xiadan">立即下单</button>
+</view>
+
+<view class="closeIng">
+  <view>
+    <text>您的满</text>
+    <text class="numberColor">30</text>
+    <text>减</text>
+    <text class="numberColor">5</text>
+    <text>的优惠券还有</text>
+    <text class="numberColor">3天</text>
+    <text>过期</text>
+  </view>
+  <!-- <view class="numberColor">您的满30减5的优惠券还有3天过期</view> -->
+  <image src="{{imageUrl}}close2.png" />
+</view>
+
+
+<view id="pagesinfo" style="position:relative;box-sizing:border-box;height:2041rpx;">
+  <!-- 左边选择系列 -->
+  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100%;background: #F8F8F8;">
+    <view class="goodsUl">
+      <view onTap="chooseGoodsType" data-type='1'>
+        <image a:if="{{goodsType!=1}}" src="{{imageUrl}}m_1_1.png"/>
+        <image a:else src="{{imageUrl}}m_1_2.png"/>
+        <view class="{{goodsType==1?'activeView':''}}">折扣</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='2'>
+        <image a:if="{{goodsType!=2}}" src="{{imageUrl}}m_2_1.png"/>
+        <image a:else src="{{imageUrl}}m_2_2.png" />
+        <view class="{{goodsType==2?'activeView':''}}">套餐</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='3'>
+        <image a:if="{{goodsType!=3}}" src="{{imageUrl}}m_3_1.png"/>
+        <image a:else src="{{imageUrl}}m_3_2.png" />
+        <view class="{{goodsType==3?'activeView':''}}">爆款</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='4'>
+        <image a:if="{{goodsType!=4}}" src="{{imageUrl}}m_4_1.png"/>
+        <image a:else src="{{imageUrl}}m_4_2.png" />
+        <view class="{{goodsType==4?'activeView':''}}">超辣</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='5'>
+        <image a:if="{{goodsType!=5}}" src="{{imageUrl}}m_5_1.png"/>
+        <image a:else src="{{imageUrl}}m_5_2.png" />
+        <view class="{{goodsType==5?'activeView':''}}">甜辣</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='6'>
+        <image a:if="{{goodsType!=6}}" src="{{imageUrl}}m_6_1.png"/>
+        <image a:else src="{{imageUrl}}m_6_2.png" />
+        <view class="{{goodsType==6?'activeView':''}}">微辣</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='7'>
+        <image a:if="{{goodsType!=7}}" src="{{imageUrl}}m_7_1.png"/>
+        <image a:else src="{{imageUrl}}m_7_2.png" />
+        <view class="{{goodsType==7?'activeView':''}}">不辣</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='8'>
+        <image a:if="{{goodsType!=8}}" src="{{imageUrl}}m_8_1.png"/>
+        <image a:else src="{{imageUrl}}m_8_2.png" />
+        <view class="{{goodsType==8?'activeView':''}}">招牌系列</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='9'>
+        <image a:if="{{goodsType!=9}}" src="{{imageUrl}}m_9_1.png"/>
+        <image a:else src="{{imageUrl}}m_9_2.png" />
+        <view class="{{goodsType==9?'activeView':''}}">藤椒系列</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='10'>
+        <image a:if="{{goodsType!=10}}" src="{{imageUrl}}m_10_1.png"/>
+        <image a:else src="{{imageUrl}}m_10_2.png" />
+        <view class="{{goodsType==10?'activeView':''}}">素菜系列</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='11'>
+        <image a:if="{{goodsType!=11}}" src="{{imageUrl}}m_11_1.png"/>
+        <image a:else src="{{imageUrl}}m_11_2.png" />
+        <view class="{{goodsType==11?'activeView':''}}">黑鸭系列</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='12'>
+        <image a:if="{{goodsType!=12}}" src="{{imageUrl}}m_12_1.png"/>
+        <image a:else src="{{imageUrl}}m_12_2.png" />
+        <view class="{{goodsType==12?'activeView':''}}">五香系列</view>
+      </view>
+      <view onTap="chooseGoodsType" data-type='13'>
+        <image a:if="{{goodsType!=13}}" src="{{imageUrl}}m_13_1.png"/>
+        <image a:else src="{{imageUrl}}m_13_3.png" />
+        <view class="{{goodsType==13?'activeView':''}}">解辣神器</view>
+      </view>
+    </view>
   </scroll-view>
-  <scroll-view scroll-y="{{scroll_y}}" class="" style="height:100%;box-sizing:border-box;background-color:#888888;width:500rpx;float:right">
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <view><image src="http://checkm.juewei.com/img/addnewaddress.png"></view>
-    <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button>
-    <button type="primary" onTap="xiadan">立即下单</button>
+  <!-- 右边展示系列 -->
+  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{toActive}}">
+    <view class="goodsList">
+      <!-- 折扣 -->
+      <view id="1">
+        <view class="goodsTypeEv">折扣</view>
+        <view class="goodsBox">
+          <view class="discountImg">
+            <image class="discountPng" src="../../common/img/zhe.png" />
+            <image class="goodsImage1" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3397547239,2105577275&fm=27&gp=0.jpg"/>
+          </view>
+          <view class="goodsWrap">
+            <view class="goodsTitle marginB">
+              <view>
+                <view class="goodsName">招牌鸭脖</view>
+                <view class="goodsKind">
+                  <text>（超辣）</text>
+                </view>
+              </view>
+              <view class="goodsSoldNum">
+                <text>已售:</text>
+                <text class="numberColor">4</text>
+                <text>份</text>
+              </view>
+            </view>
+            <view class="goodsRules">
+              <view>
+                <view>
+                  <text>￥</text>
+                  <text>20</text>
+                  <text>/ 份</text>
+                </view>
+                <view class="oldPrice">¥30/份</view>
+              </view>
+              <view class="goodsNumber">
+                <image src="{{imageUrl}}goods_reduce.png" />
+                <text>1</text>
+                <image src="{{imageUrl}}goods_add.png" />
+              </view>
+            </view>
+            <view class="goodsDiscount">
+              <image src="{{imageUrl}}discount.png" />
+              <text>5折  限3份</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 套餐 -->
+      <view id="2">
+        <view class="goodsTypeEv">套餐</view>
+        <view class="goodsBox">
+          <image class="goodsImage1" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4293286665,4193174544&fm=26&gp=0.jpg"/>
+          <view class="goodsWrap">
+            <view class="goodsName">人气组合套餐</view>
+            <view class="goodsKind marginB">
+              <text>招牌鸭脖</text>
+              <text class="fontSmall">(超辣)/大份*2</text>
+              <text>+招牌鸭舌</text>
+              <text class="fontSmall">(超辣)*2</text>
+              <text>+招牌鸭锁骨</text>
+              <text class="fontSmall">(超辣)*2</text>
+            </view>
+            <view class="goodsRules">
+              <view>
+                 <view>
+                  <text>￥</text>
+                  <text>20</text>
+                  <text>/ 份</text>
+                </view>
+                <view class="oldPrice">¥30/份</view>
+              </view>
+              <view class="goodsNumber">
+                <image src="{{imageUrl}}goods_reduce.png" />
+                <text>1</text>
+                <image src="{{imageUrl}}goods_add.png" />
+              </view>
+            </view>
+            <view class="goodsDiscount">
+              <image src="{{imageUrl}}discount.png" />
+              <text>6折  限1份</text>
+            </view>
+          </view>
+        </view>
+      </view>
+       <!-- 爆款 -->
+      <view id="3">
+        <view class="goodsTypeEv">爆款</view>
+        <view class="goodsBox">
+          <image class="goodsImage1" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=576933068,3489050756&fm=27&gp=0.jpg"/>
+          <view class="goodsWrap">
+            <view class="goodsTitle marginB">
+              <view>
+                <view class="goodsName">招牌鸭脖</view>
+                <view class="goodsKind">
+                  <text>（超辣）</text>
+                </view>
+              </view>
+              <view class="goodsSoldNum">
+                <text>已售:</text>
+                <text class="numberColor">178579</text>
+                <text>份</text>
+              </view>
+            </view>
+            <view class="goodsRules">
+              <view>
+                <view>
+                  <text>￥</text>
+                  <text>20</text>
+                  <text>/ 份</text>
+                </view>
+                <view class="oldPrice">¥30/份</view>
+              </view>
+             <view class="goodsSize">
+               <view>选规格</view>
+               <view>2</view>
+             </view>
+            </view>
+            <view class="goodsDiscount">
+              <image src="{{imageUrl}}discount.png" />
+              <text>6折  限1份</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 超辣 -->
+      <view id="4" a:for="{{goodsList}}">
+        <view class="goodsTypeEv">超辣</view>
+        <!-- 直接加减 -->
+        <view class="goodsContent">
+          <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+          <view class="goodsInfos">
+            <view>
+              <text class="goodsName">招牌鸭脖</text>
+              <text class="goodsKind">（超辣）</text>
+            </view>
+            <view class="goodsSoldNum marginUD">
+              <text>已售：</text>
+              <text class="numberColor" style="font-size:22rpx;">888</text>
+              <text>份</text>
+            </view>
+            <view class="goodsRules goodsCount">
+              <view>
+                 <view>
+                  <text>￥</text>
+                  <text>25</text>
+                  <text>/ 份</text>
+                </view>
+              </view>
+              <view class="goodsNumber">
+                <image src="{{imageUrl}}goods_reduce.png" />
+                <text>1</text>
+                <image src="{{imageUrl}}goods_add.png" />
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 选规格 -->
+        <view class="goodsContent">
+          <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+          <view class="goodsInfos">
+            <view>
+              <text class="goodsName">黑鸭鸡膝软骨</text>
+              <text class="goodsKind">（超辣）</text>
+            </view>
+            <view class="goodsSoldNum marginUD">
+              <text>已售：</text>
+              <text class="numberColor" style="font-size:22rpx;">888</text>
+              <text>份</text>
+            </view>
+            <view class="goodsRules goodsCount">
+              <view>
+                 <view>
+                  <text>￥</text>
+                  <text>25</text>
+                  <text>/ 份</text>
+                </view>
+              </view>
+              <view class="goodsSize">
+               <view>选规格</view>
+               <view>2</view>
+             </view>
+            </view>
+          </view>
+        </view>
+        <!-- 折扣组合 -->
+        <view class="goodsContent">
+          <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+          <view class="goodsInfos">
+            <view>
+              <text class="goodsName">人气组合套餐</text>
+              <text class="goodsKind">（超辣）</text>
+            </view>
+            <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+            <view class="goodsSoldNum marginUD">
+              <text>已售：</text>
+              <text class="numberColor" style="font-size:22rpx;">888</text>
+              <text>份</text>
+            </view>
+            <view class="goodsRules goodsCount">
+              <view>
+                 <view>
+                  <text>￥</text>
+                  <text>25</text>
+                  <text>/ 份</text>
+                </view>
+              </view>
+              <view class="goodsNumber">
+                <image src="{{imageUrl}}goods_reduce.png" />
+                <text>1</text>
+                <image src="{{imageUrl}}goods_add.png" />
+              </view>
+            </view>
+            <view class="goodsDiscount">
+              <image src="{{imageUrl}}discount.png" />
+              <text>6折  限1份</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
   </scroll-view>
 </view>
 
-<view class="shopcart" style="position: fixed;bottom:0; left:0;background-color:yellow;width:100%; height:100rpx;z-index:9">
-  购物车
+<view style="width:750rpx;height:146rpx;"></view>
+<view class="goodsBottom">
+  <view class="fullReduce">满48减8；满68减10；满98减20</view>
+  <view class="shopcart">
+    <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
+    <image onTap="openShopcart" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount">2</view>
+    <view class="haveGoods">
+      <view>
+        <text>￥</text>
+        <text>39.6</text>
+      </view>
+      <view>另需配送费6元</view>
+    </view>
+    <!-- <view>另需配送费6元</view> -->
+    <view class="buyBtn">￥30起送</view>
+  </view>
 </view>
 
-<view class="positionwelcome" style="position:fixed;top:0;left:0; background-color:#000; height:100%; width:100%;z-index:10;color:#ffffff;display:none;">
-    定位中
+<!-- 购物车弹框 -->
+<view  a:if="{{showShopcar}}" class="shopcarContent">
+  <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view>
+  <view class="clearShopcar">
+    <image src="../../common/img/deleteIcon.png" />
+    <text>清空购物车</text>
+  </view>
+  <view class="shopcartWrap">
+    <view class="goodsLi" a:for="{{8}}">
+      <view class="goodsNameI">
+        <view>
+          <text>招牌鸭脖</text>
+          <text>（超辣）</text>
+        </view>
+        <view>大份</view>
+      </view>
+      <view class="goodsPriceBox">
+        <text class="goodsOldPrice">￥28</text>
+        <text class="numberColor">￥30</text>
+      </view>
+      <view class="goodsNumber">
+        <image src="{{imageUrl}}goods_reduce.png" />
+        <text>1</text>
+        <image src="{{imageUrl}}goods_add.png" />
+      </view>
+    </view>
+  </view>
+  <view>
+  <view class="nullView"></view>
+  <view class="shopcart">
+    <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
+    <image class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount">2</view>
+    <view class="haveGoods">
+      <view>
+        <text>￥</text>
+        <text>60</text>
+      </view>
+      <view>另需配送费6元</view>
+    </view>
+    <!-- <view>另需配送费6元</view> -->
+    <!-- <view class="buyBtn">￥30起送</view> -->
+    <!-- <view class="buyBtn">未营业</view> -->
+    <view class="buyBtn canBuy">立即购买</view>
+  </view>
+</view>
+
+
+</view>
+<!-- 遮罩层 -->
+<view a:if="{{showShopcar}}" class="mask" onTap="hiddenShopcart"></view>
+
 </view>

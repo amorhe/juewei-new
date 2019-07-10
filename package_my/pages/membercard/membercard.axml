@@ -1,3 +1,10 @@
-<view>
-  会员卡页面
+<view class="memberContainer">
+  <image class="membercard" src="../../../pages/common/img/membercard.png" />
+  <image class="membercode" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4246923684,4201317748&fm=26&gp=0.jpg"/>
+  <view class="membernum">188 8888 8888</view>
+  <view>向店员出示会员码享受会员权益</view>
+  <view class="alipayBox">
+    <image class="alipayIcon" src="../../../pages/common/img/alipay.png"/>
+    <view>立即使用支付宝付款</view>
+  </view>
 </view>

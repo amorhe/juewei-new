@@ -3,9 +3,14 @@ require('./config$.js?appxworker=1');
 require('./importScripts$.js?appxworker=1');
 function success() {
 require('../..//app.js?appxworker=1');
+require('../../node_modules/mini-antui/es/badge/index.js?appxworker=1');
+require('../../node_modules/mini-antui/es/tabs/index.js?appxworker=1');
+require('../../node_modules/mini-antui/es/tabs/tab-content/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/grid/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/list/index.js?appxworker=1');
 require('../../node_modules/mini-antui/es/list/list-item/index.js?appxworker=1');
+require('../../package_my/pages/coupon/coupon.js?appxworker=1');
+require('../../package_my/pages/membercard/membercard.js?appxworker=1');
 require('../../pages/home/goodslist/goodslist.js?appxworker=1');
 require('../../pages/home/selecttarget/selecttarget.js?appxworker=1');
 require('../../pages/home/switchshop/switchshop.js?appxworker=1');
