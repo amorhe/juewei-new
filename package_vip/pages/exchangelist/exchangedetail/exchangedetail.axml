@@ -1,3 +1,66 @@
-<view>
-  兑换详记录情页 分为 官方兑换和 兑换码(非官方)兑换商品
+<view class="bg">
+  <!-- 兑换详记录情页 分为 官方兑换和 兑换码(非官方)兑换商品 -->
+  <!-- 状态 -->
+  <view class="state">
+    <view class="state-title">
+  等待支付
+    </view>
+    <view class="sub-state">
+    剩余时间：14分58秒
+    </view>
+  </view>
+  <view class="buttons">
+    <view class="c-button">取消订单</view>
+    <view class="o-button">立即支付</view>
+  </view>
+  <view class="detail">
+    <view class="body detail-item">
+      <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+      <view class="body-right">
+        <view class="good-title">
+            绝味抱枕
+        </view>
+        <view class="coast-bottom">
+          <view class="cost">
+            免费领
+          </view>
+          <view class="b-button">
+            联系客服
+          </view>
+        </view>
+      </view>
+    </view>
+
+
+<view class="address detail-item">
+  <view class="address-header">
+    小魔女 188 8888 8888
+  </view>
+  <view class="address-footer">
+北京市朝阳区某某某某某某某某某某某某某街
+  </view>
+</view>
+
+<view class="order detail-item">
+  <view class="order-item">
+    <view class="item-name">
+      订单编号
+    </view>
+    <view class="item-value">
+      <text>897575668854676544</text>
+      <view class="copy-button">复制</view>
+    </view>
+  </view>
+
+  <view class="order-item">
+    <view class="item-name">
+      订单时间
+    </view>
+    <view class="item-value">
+      <text>2019-01-09 10:10:10</text>
+    </view>
+  </view>
+</view>
+
+  </view>
 </view>
