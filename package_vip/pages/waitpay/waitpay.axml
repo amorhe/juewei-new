@@ -6,7 +6,7 @@
     <text class="wait-pay-time">14分59秒</text>
   </view>
   <!-- 实物邮寄 -->
-  <view>
+  <view a:if="{{true}}">
     <view class="address">
       <view class="address-title">请填写收货地址</view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
@@ -32,15 +32,15 @@
         <input placeholder="请输入手机号" data-key="phone" onInput="handelChange"/>
       </view>
 
-      <view class="select-address list">
+      <view class="select-address list" onTap="showSelectAddress">
         <view class="item">领取城市</view>
-        <input placeholder="请选择领取城市" data-key="phone" onInput="handelChange"/>
+        <input placeholder="请选择领取城市" disabled="true" data-key="phone" onInput="handelChange"/>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
 
        <view class="select-address list">
         <view class="item">领取门店</view>
-        <input placeholder="请选择领取门店" data-key="phone" onInput="handelChange"/>
+        <input placeholder="请选择领取门店" disabled="true" data-key="phone" onInput="handelChange"/>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
      
@@ -113,6 +113,97 @@
     </view>
   </view>
 
+</view>
+
+<!-- 选择地址 -->
+  <view class="pop-wrap" a:if="{{selectAddress || true}}">
+    <view class="my-pop">
+        <view class="pop-top">
+            <text></text>
+            <text class="title">城市</text>
+            <text class="sure" onTap="hideSelectShow">确定</text>
+        </view>
+
+        <picker-view class="pick" indicator-style="height: 40px;">
+            <picker-view-column>
+                <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+                  <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+                  <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+                  <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+            </picker-view-column>
+        </picker-view>
+    </view>
+</view>
 
 
+<!-- 领取门店 -->
+<view class="shop">
+  <view class="shop-search">
+    <image class="search-icon" mode="scaleToFill" src="{{imageUrl}}search.png"/>
+    <input placeholder="小区/写字楼/学校等" />
+  </view>
+
+  <view class="shop-ul">
+    <view class="shop-item">
+    
+      <image class="shop-position" mode="scaleToFill" src="{{imageUrl}}position.png"/>
+      <view class="shop-detail">
+        <view class="shop-detail-top">
+          <view class="shop-title">
+                绝味鸭脖(定福庄西街店)
+          </view>
+          <view class="shop-distance">
+            <text>距离871米 </text> 
+            <image mode="scaleToFill" class="shop-position"  src="{{imageUrl}}arrow_right3.png"/>
+          </view>
+        </view>
+
+        <view class="shop-address">
+            北京北京市朝阳区定福庄西街南口兴福商厦底商大悦串吧隔壁
+        </view>
+      </view>
+      
+    </view>
+
+ <view class="shop-item">
+    
+      <image class="shop-position" mode="scaleToFill" src="{{imageUrl}}order2.png"/>
+      <view class="shop-detail">
+        <view class="shop-detail-top">
+          <view class="shop-title">
+                绝味鸭脖(定福庄西街店)
+          </view>
+          <view class="shop-distance">
+            <text style="color:#999">距离871米 </text> 
+            <image mode="scaleToFill" class="shop-position"  src="{{imageUrl}}arrow_right1.png"/>
+          </view>
+        </view>
+
+        <view class="shop-address">
+            北京北京市朝阳区定福庄西街南口兴福商厦底商大悦串吧隔壁
+        </view>
+      </view>
+      
+    </view>
+
+
+  </view>
 </view>
