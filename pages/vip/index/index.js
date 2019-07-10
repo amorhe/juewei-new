@@ -174,6 +174,12 @@ Page({
     my.navigateTo({
       url:'../../../package_vip/pages/detail/detail'
     });
+  },
+
+  toExchangeList(){
+    my.navigateTo({
+      url:'../../../package_vip/pages/exchangelist/exchangelist'
+    });
   }
 
 

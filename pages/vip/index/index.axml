@@ -9,7 +9,7 @@
         <view class="toast" a:if="{{toast}}">冻结积分：20</view>
          </view>
       </view>
-      <view class="flex-center" style="font-size:26rpx;height:32rpx">
+      <view class="flex-center" style="font-size:26rpx;height:32rpx" onTap="toExchangeList">
         兑换记录
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
