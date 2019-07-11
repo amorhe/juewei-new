@@ -1,103 +1,36 @@
 <view>
   <!-- 兑换记录列表 -->
   <view class="list">
-    <view class="item">
+    <view class="item" a:for="{{orderList}}" data-id="{{item.id}}" onTap="toOrderDetail">
       <view class="header">
-        <view class="time">2019-01-09 10:10</view>
-        <view class="state">已兑换</view>
+        <view class="time">{{item.order_ctime}}</view>
+        <view class="state">{{item.status_name}}</view>
       </view>
       <view class="body">
-        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+        <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}coupon.png" class="good-img"/>
         <view class="body-right">
           <view class="good-title">
             绝味抱枕
           </view>
-          <view class="cost">
+          <view class="cost" a:if="{{ item.order_point == 0 && item.order_amount == 0 }}">
             免费领
+          </view>
+          <view class="cost" a:if="{{ item.order_point !=0 && item.order_amount != 0 }}">
+           {{ item.order_point}} 积分 + {{ item.order_amount}} 元
+          </view>
+          <view class="cost" a:if="{{ item.order_point !=0 && item.order_amount == 0 }}">
+           {{ item.order_point}} 积分
+          </view>
+          <view class="cost" a:if="{{ item.order_point ==0 && item.order_amount != 0 }}">
+          {{ item.order_amount}} 元
           </view>
         </view>
       </view>
-    </view>
-
-     <view class="item">
-      <view class="header">
-        <view class="time">2019-01-09 10:10</view>
-        <view class="state">未领取</view>
-      </view>
-      <view class="body">
-        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
-        <view class="body-right">
-          <view class="good-title">
-            绝味抱枕
-          </view>
-          <view class="cost">
-            免费领
-          </view>
-        </view>
-      </view>
-    </view>
-
-     <view class="item">
-      <view class="header">
-        <view class="time">2019-01-09 10:10</view>
-        <view class="state">待支付</view>
-      </view>
-      <view class="body">
-        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
-        <view class="body-right">
-          <view class="good-title">
-            绝味抱枕
-          </view>
-          <view class="cost">
-            免费领
-          </view>
-        </view>
-      </view>
-
-<view class="footer-wrap">
-      <view class="footer">
+      <view class="footer-wrap" a:if="{{item.status === 0}}">
+        <view class="footer">
         去支付（还剩14分20秒）
-      </view>
-      </view>
-    </view>
-
-     <view class="item">
-      <view class="header">
-        <view class="time">2019-01-09 10:10</view>
-        <view class="state">未发货</view>
-      </view>
-      <view class="body">
-        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
-        <view class="body-right">
-          <view class="good-title">
-            绝味抱枕
-          </view>
-          <view class="cost">
-            免费领
-          </view>
         </view>
       </view>
     </view>
-
- <view class="item">
-      <view class="header">
-        <view class="time">2019-01-09 10:10</view>
-        <view class="state">已发货</view>
-      </view>
-      <view class="body">
-        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
-        <view class="body-right">
-          <view class="good-title">
-            绝味抱枕
-          </view>
-          <view class="cost">
-            免费领
-          </view>
-        </view>
-      </view>
-    </view>
-
-    
-    
   </view>
 </view>
