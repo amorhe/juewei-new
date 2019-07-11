@@ -9,7 +9,7 @@
     </swiper>
     <view class="header-wrap">
       <view class="title">
-        {{detail.name}}
+        {{detail.goods_name}}
       </view>
       <view class="coast">
            {{detail.point}}
