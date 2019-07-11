@@ -14,9 +14,14 @@
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
     </view>
-    <view style="text-align:center">
-      <image class="banner" mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
-    </view>
+    <swiper >
+      <block a:for="{{bannerList}}">
+        <swiper-item >
+               <image class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
+        </swiper-item>
+      </block>
+    </swiper>
+
     <view class="title">
       为你推荐
     </view>
@@ -25,23 +30,29 @@
       <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
     </view>
     <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
-      <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.title}}</view>
+      <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
     </scroll-view>
 
     <view class="ul">
       <view class="li" a:for="{{goodsList}}">
-             <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
-
+        <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         <view class="center">
-          <view class="li-title">绿叶水果西瓜</view>
+          <view class="li-title">{{item.goods_name}}</view>
           <view class="flex-space-b" style="padding:8rpx 0 18rpx">
-            <view class="li-all">2200
+            <view class="li-all">
+              {{item.point}}
               <text class="li-small">积分</text></view>
-            <view class="li-button" onTap="toDetail">立即兑换</view>
+            <view  a:if="{{0 < item.valid_num}}" class="li-button" onTap="toDetail">立即兑换</view>
+            <view  a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
+
           </view>
         </view>
 
-        <view class="bottom" style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ 60 +'%, white '+ 60+'%)'}}">已抢60%</view>
+        <view 
+        class="bottom"
+        style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
+        已抢{{((item.total_num-item.valid_num)/item.total_num)*100}}%
+        </view>
       </view>
     </view>
     
