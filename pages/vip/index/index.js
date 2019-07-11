@@ -1,9 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
 import { ajax } from '../../common/js/li-ajax'
 
-const log = console.log
-
-
 Page({
   data: {
     imageUrl,
@@ -11,154 +8,153 @@ Page({
 
     toast: false,
 
-    menuTop:0,
-    menuFixed:false,
+    menuTop: 0,
+    menuFixed: false,
 
-    list: [
-      { title: '餐饮美食' },
-      { title: '餐饮美食' },
-      { title: '餐饮美食' },
-      { title: '餐饮美食' },
-      { title: '餐饮美食' },
-    ],
+    shop_id: 181,
+    district_id: 110105,
+    cate_id: 25,
+    page_num: 1,
+    page_size: 100,
+    company_id: 1,
+    city_id: 110100,
+    release_channel: 1,
 
     cur: 0,
+
+    bannerList: [
+      {
+        "pic_src": "/static/check/image/goods_point/pjq1JNVftcaXFkCf.jpg",
+        "sort_no": "1",
+        "link_url": "#"
+      }
+    ],
+
+    positionList: [
+      {
+        "id": "1",
+        "pic_src": [
+          "/static/check/image/goods_point/pi3mYEDeB4IlO73l.jpg"
+        ],
+        "link_url": [
+          "111"
+        ],
+        "sort_no": "1",
+        "type": "1"
+      }
+    ],
+
+
+    list: [{
+      "id": "24",
+      "cate_name": "vip二期优化",
+      "sort_no": "2"
+    }, {
+      "id": "25",
+      "cate_name": "绝味专享",
+      "sort_no": "2"
+    }],
 
     goodsList:
       [
         {
-        "id": "355",
-        "goods_name": "123",
-        "total_num": "1",
-        "valid_num": "1",
-        "cate_id": "25",
-        "goods_type": "2",
-        "goods_detail_type": "4",
-        "exchange_type": "1",
-        "amount": "0",
-        "point": "1",
-        "start_time": "2019-06-22 00:00:00",
-        "end_time": "2019-07-31 23:59:59",
-        "company_id": "0",
-        "city_id": "1",
-        "district_id": "0",
-        "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-        "exchange_day_vaild_num": 1
-      }, {
-        "id": "355",
-        "goods_name": "123",
-        "total_num": "1",
-        "valid_num": "1",
-        "cate_id": "25",
-        "goods_type": "2",
-        "goods_detail_type": "4",
-        "exchange_type": "1",
-        "amount": "0",
-        "point": "1",
-        "start_time": "2019-06-22 00:00:00",
-        "end_time": "2019-07-31 23:59:59",
-        "company_id": "0",
-        "city_id": "1",
-        "district_id": "0",
-        "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-        "exchange_day_vaild_num": 1
-      }, {
-        "id": "355",
-        "goods_name": "123",
-        "total_num": "1",
-        "valid_num": "1",
-        "cate_id": "25",
-        "goods_type": "2",
-        "goods_detail_type": "4",
-        "exchange_type": "1",
-        "amount": "0",
-        "point": "1",
-        "start_time": "2019-06-22 00:00:00",
-        "end_time": "2019-07-31 23:59:59",
-        "company_id": "0",
-        "city_id": "1",
-        "district_id": "0",
-        "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-        "exchange_day_vaild_num": 1
-      }, {
-        "id": "355",
-        "goods_name": "123",
-        "total_num": "1",
-        "valid_num": "1",
-        "cate_id": "25",
-        "goods_type": "2",
-        "goods_detail_type": "4",
-        "exchange_type": "1",
-        "amount": "0",
-        "point": "1",
-        "start_time": "2019-06-22 00:00:00",
-        "end_time": "2019-07-31 23:59:59",
-        "company_id": "0",
-        "city_id": "1",
-        "district_id": "0",
-        "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-        "exchange_day_vaild_num": 1
-      }, 
-      {
-        "id": "355",
-        "goods_name": "123",
-        "total_num": "1",
-        "valid_num": "1",
-        "cate_id": "25",
-        "goods_type": "2",
-        "goods_detail_type": "4",
-        "exchange_type": "1",
-        "amount": "0",
-        "point": "1",
-        "start_time": "2019-06-22 00:00:00",
-        "end_time": "2019-07-31 23:59:59",
-        "company_id": "0",
-        "city_id": "1",
-        "district_id": "0",
-        "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-        "exchange_day_vaild_num": 1
-      }, {
-        "id": "355",
-        "goods_name": "123",
-        "total_num": "1",
-        "valid_num": "1",
-        "cate_id": "25",
-        "goods_type": "2",
-        "goods_detail_type": "4",
-        "exchange_type": "1",
-        "amount": "0",
-        "point": "1",
-        "start_time": "2019-06-22 00:00:00",
-        "end_time": "2019-07-31 23:59:59",
-        "company_id": "0",
-        "city_id": "1",
-        "district_id": "0",
-        "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-        "exchange_day_vaild_num": 1
-      }],
+          "id": "355",
+          "goods_name": "123",
+          "total_num": "1",
+          "valid_num": "1",
+          "cate_id": "25",
+          "goods_type": "2",
+          "goods_detail_type": "4",
+          "exchange_type": "1",
+          "amount": "0",
+          "point": "1",
+          "start_time": "2019-06-22 00:00:00",
+          "end_time": "2019-07-31 23:59:59",
+          "company_id": "0",
+          "city_id": "1",
+          "district_id": "0",
+          "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
+          "exchange_day_vaild_num": 1
+        }
+      ],
 
 
 
   },
-  onLoad() {
+ async onLoad() {
     this.getBanner()
-    this.getGoodsList()
+    this.getPositionList()
+
+   await this.getCategory()
+   await this.getGoodsList()
     // this.initClientRect()
+
+    my.setNavigationBar({
+      title: 'VIP专享',
+      backgroundColor: '#FB5332',
+      success() {
+
+      },
+      fail() {
+
+      },
+    });
   },
 
   listChange(event) {
+    const { list } = this.data;
     const { cur } = event.currentTarget.dataset;
-    log(cur)
-    this.setData({ cur })
+    this.setData({ cur, cate_id: list[cur].id }, () => this.getGoodsList())
+  },
+
+  async getCategory() {
+    const {cur} = this.data;
+    let res = await ajax('/mini/vip/wap/category/category', { type: 1 })
+    if (res.code === 100) {
+      this.setData({ list: res.data,cate_id: res.data[cur].id })
+    }
   },
 
   async getBanner() {
-    let res = await ajax('/mini/vip/wap/banner/banner_list', { city_id: 110100, district_id: 1, release_channel: 1 })
-    log(res)
+    const { city_id, district_id, release_channel } = this.data;
+    const bannerListOption = { city_id, district_id, release_channel }
+    let res = await ajax('/mini/vip/wap/banner/banner_list', bannerListOption)
+    if (res.code === 100) {
+      this.setData({ bannerList: res.data })
+    }
   },
 
   async getGoodsList() {
-    let res = await ajax('/mini/vip/wap/goods/goods_list', { shop: 1, cate_id: 1, company_id: 0, city_id: 110101, page_num: 1, page_size: 100 })
+    let {
+      shop_id,
+      district_id,
+      city_id,
+      cate_id,
+      page_num,
+      page_size,
+    } = this.data;
+
+
+    let goodslistOption = {
+      shop_id,
+      district_id,
+      city_id,
+      cate_id,
+      page_num,
+      page_size
+    }
+    let res = await ajax('/mini/vip/wap/goods/goods_list', goodslistOption)
+    if (res.code === 100) {
+      this.setData({
+        goodsList: res.data.data
+      })
+    }
+  },
+
+  async getPositionList() {
+    let { city_id, district_id, company_id, release_channel } = this.data;
+    let positionListOption = { city_id, district_id, company_id, release_channel }
+    let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
   },
 
 
@@ -169,6 +165,19 @@ Page({
   hideToast() {
     this.setData({ toast: false })
   },
+
+  toDetail(e) {
+    const {id} = e.currentTarget.dataset
+    my.navigateTo({
+      url: '../../../package_vip/pages/detail/detail?id='+id
+    });
+  },
+
+  toExchangeList() {
+    my.navigateTo({
+      url: '../../../package_vip/pages/exchangelist/exchangelist'
+    });
+  }
 
 
   // initClientRect() {

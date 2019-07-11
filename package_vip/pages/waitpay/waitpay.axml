@@ -1,106 +1,209 @@
 <view>
   <!-- 带支付页面 实物邮寄，实物门店，虚拟商品直接跳过到兑换成功页 -->
-
-<!-- 等待支付 -->
-
-<!-- 实物邮寄 -->
-
-<view class="wait-pay">
-  <text class="wait-pay-title">支付剩余时间：</text>
-  <text class="wait-pay-time">14分59秒</text>
-</view>
-
-
-  <view class="address">
-    <view class="address-title">请填写收货地址</view>
-    <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-    
+  <!-- 等待支付 -->
+  <view class="wait-pay">
+    <text class="wait-pay-title">支付剩余时间：</text>
+    <text class="wait-pay-time">14分59秒</text>
   </view>
+  <!-- 实物邮寄 -->
+  <view a:if="{{true}}">
+    <view class="address">
+      <view class="address-title">请填写收货地址</view>
+      <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
 
-  <view class="p-good">
-    <view class="p-detail">
-      <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
-      <view class="p-right">
-        <view class="p-title">
+    <view class="address">
+      <view class="address-title">
+        <view>小魔女 199 9999 9999</view>
+        <view class="address-sm">北京市朝阳区某某某某某某某某某某某某某街</view>
+      </view>
+      <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+
+    <!-- 实物门店 -->
+    <view class="store">
+      <view class="list">
+        <view class="item">领取人</view>
+        <input placeholder="姓名" data-key="phone" onInput="handelChange"/>
+      </view>
+
+       <view class="list">
+        <view class="item">手机号</view>
+        <input placeholder="请输入手机号" data-key="phone" onInput="handelChange"/>
+      </view>
+
+      <view class="select-address list" onTap="showSelectAddress">
+        <view class="item">领取城市</view>
+        <input placeholder="请选择领取城市" disabled="true" data-key="phone" onInput="handelChange"/>
+        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      </view>
+
+       <view class="select-address list">
+        <view class="item">领取门店</view>
+        <input placeholder="请选择领取门店" disabled="true" data-key="phone" onInput="handelChange"/>
+        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      </view>
+     
+    </view>
+
+
+    <view class="p-good">
+      <view class="p-detail">
+        <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
+        <view class="p-right">
+          <view class="p-title">
       幸福西饼6寸蛋糕
-        </view>
-        <view class="p-price">
+          </view>
+          <view class="p-price">
       2200积分
+          </view>
         </view>
       </view>
-    </view>
-
-
-    <view class="order">
-      <view class="ordet-title">订单编号</view> 
-      <view class="order-num">123qwe</view>
-    </view>
-
-
-
-
-    <view class="total">
-        <text class="total-title">合计 </text>
+      <view class="order">
+        <view class="ordet-title">订单编号</view>
+        <view class="order-num">123qwe</view>
+      </view>
+      <view class="total">
+        <text class="total-title">合计</text>
         <text class="total-vip">2000</text>
         <text class="total-j">积分</text>
         <text class="total-vip">+8</text>
         <text class="total-sm">元运费</text>
+      </view>
     </view>
 
-  </view>
 
 
-  <view class="wait-pay-btn">
+    <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
     马上支付
-  </view>
+    </view>
 
-<!-- 地址 -->
-<view class="post-address">
-  
-  <view class="post-name">
-    <view class="item post-name-left">联系人</view>
-    <input class="post-name-right" placeholder="姓名" data-key="name" onInput="handelChange"/>
-  </view>
-
-  <view class="post-sex">
-    <text class="item"></text>
-
-    <view onTap="changeSex" class="{{sex===0?'post-sex-active':''}}">女士</view>
-    <view onTap="changeSex" class="{{sex===1?'post-sex-active':''}}">先生</view>
-  </view>
-
-<view class="list">
-  <view class="item">电话</view>
-  <input placeholder="手机号码" data-key="phone" onInput="handelChange"/>
-</view>
-
-<view class="select-address list">
-   <view class="item">地址</view>
-    <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
-    <view class="real-address">紫檀大厦</view>
-    <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-
-</view>
-
-
-<view class="list">
-  <view class="item">门牌号</view>
-  <input placeholder="例：6号楼606室" data-key="address" onInput="handelChange"/>
-</view>
-
-
-<view class="list">
-  <view class="item">标签</view>
-
-  <view onTap="changeCur" data-cur='{{index}}' a:for="{{labelList}}" class="label {{index===curLabel?'label-active':''}}" > {{item}} </view>
-</view>
- <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
-    保存地址
+    <!-- 地址 -->
+    <view class="post-address">
+      <view class="post-name">
+        <view class="item post-name-left">联系人</view>
+        <input class="post-name-right" placeholder="姓名" data-key="name" onInput="handelChange"/>
+      </view>
+      <view class="post-sex">
+        <text class="item"></text>
+        <view onTap="changeSex" class="{{sex===0?'post-sex-active':''}}">女士</view>
+        <view onTap="changeSex" class="{{sex===1?'post-sex-active':''}}">先生</view>
+      </view>
+      <view class="list">
+        <view class="item">电话</view>
+        <input placeholder="手机号码" data-key="phone" onInput="handelChange"/>
+      </view>
+      <view class="select-address list">
+        <view class="item">地址</view>
+        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
+        <view class="real-address">紫檀大厦</view>
+        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      </view>
+      <view class="list">
+        <view class="item">门牌号</view>
+        <input placeholder="例：6号楼606室" data-key="address" onInput="handelChange"/>
+      </view>
+      <view class="list">
+        <view class="item">标签</view>
+        <view onTap="changeCur" data-cur='{{index}}' a:for="{{labelList}}" class="label {{index===curLabel?'label-active':''}}"> {{item}}</view>
+      </view>
+      <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
+        保存地址
+      </view>
+    </view>
   </view>
 
 </view>
 
+<!-- 选择地址 -->
+  <view class="pop-wrap" a:if="{{selectAddress || true}}">
+    <view class="my-pop">
+        <view class="pop-top">
+            <text></text>
+            <text class="title">城市</text>
+            <text class="sure" onTap="hideSelectShow">确定</text>
+        </view>
 
+        <picker-view class="pick" indicator-style="height: 40px;">
+            <picker-view-column>
+                <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+                  <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+                  <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+                  <view class="selecter">
+                  <view class="value">123</view>
+                </view>
+            </picker-view-column>
+        </picker-view>
+    </view>
 </view>
 
+
+<!-- 领取门店 -->
+<view class="shop">
+  <view class="shop-search">
+    <image class="search-icon" mode="scaleToFill" src="{{imageUrl}}search.png"/>
+    <input placeholder="小区/写字楼/学校等" />
+  </view>
+
+  <view class="shop-ul">
+    <view class="shop-item">
+    
+      <image class="shop-position" mode="scaleToFill" src="{{imageUrl}}position.png"/>
+      <view class="shop-detail">
+        <view class="shop-detail-top">
+          <view class="shop-title">
+                绝味鸭脖(定福庄西街店)
+          </view>
+          <view class="shop-distance">
+            <text>距离871米 </text> 
+            <image mode="scaleToFill" class="shop-position"  src="{{imageUrl}}arrow_right3.png"/>
+          </view>
+        </view>
+
+        <view class="shop-address">
+            北京北京市朝阳区定福庄西街南口兴福商厦底商大悦串吧隔壁
+        </view>
+      </view>
+      
+    </view>
+
+ <view class="shop-item">
+    
+      <image class="shop-position" mode="scaleToFill" src="{{imageUrl}}order2.png"/>
+      <view class="shop-detail">
+        <view class="shop-detail-top">
+          <view class="shop-title">
+                绝味鸭脖(定福庄西街店)
+          </view>
+          <view class="shop-distance">
+            <text style="color:#999">距离871米 </text> 
+            <image mode="scaleToFill" class="shop-position"  src="{{imageUrl}}arrow_right1.png"/>
+          </view>
+        </view>
+
+        <view class="shop-address">
+            北京北京市朝阳区定福庄西街南口兴福商厦底商大悦串吧隔壁
+        </view>
+      </view>
+      
+    </view>
+
+
+  </view>
 </view>

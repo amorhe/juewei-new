@@ -1,19 +1,26 @@
 <view>
   <view class="header">
-    <image class="img" mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
+    <swiper>
+      <block a:for="{{detail.goods_pic}}">
+        <swiper-item >
+          <image class="img" mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>     
+        </swiper-item>
+      </block>
+    </swiper>
     <view class="header-wrap">
       <view class="title">
-        氨基酸洁面乳
+        {{detail.goods_name}}
       </view>
       <view class="coast">
-           20
+           {{detail.point}}
         <text>积分</text>
       </view>
 
-      <view class="bottom"  style="width:{{60}}%;background:#FDE0E1"></view>
+      <view class="bottom"  style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
 
       <view class="bottom">
-        已抢60%
+        已抢{{((detail.total_num-detail.valid_num)/detail.total_num) *100}}%
+
       </view>
     </view>
   </view>
@@ -24,34 +31,29 @@
      活动时间
    </view>
    <view class="footet-containt">
-     2018-9-30至2019-9-30
+     {{detail.start_time}}至{{detail.end_time}}
    </view>
 
 
   <view class="footer-title"> 
      兑换说明
    </view>
-   <view class="footet-containt">
-    活动期间每个用户仅限兑换一次；
-   </view> 
-   <view class="footet-containt">
-    活动所有权归本公司所有。
-   </view>
+   {{detail.exchange_intro}}
 
 
   <view class="footer-title">     
      商品详情
    </view>
-   <view class="footet-containt">
-    如有快递费请写清楚快递费用      绝味独家设计抱枕全球鬼才设计联合设计绝味独家设计抱枕全球鬼才设计联合设计绝味独家设计抱枕全球鬼才设计联合设计
-   </view> 
+   {{detail.intro}}
    
 
   <view class="footer-title">     
      兑换次数
    </view>
    <view class="footet-containt">
-      每人每天1次
+    {{detail.exchange_limit_type==1?"每人每天":"活动期间"}}
+    {{detail.exchange_limit_num}}
+      次
    </view> 
    
 
