@@ -1,9 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
 import { ajax } from '../../common/js/li-ajax'
 
-const log = console.log
-
-
 Page({
   data: {
     imageUrl,
@@ -14,6 +11,17 @@ Page({
     menuTop: 0,
     menuFixed: false,
 
+    shop_id: 181,
+    district_id: 110105,
+    cate_id: 25,
+    page_num: 1,
+    page_size: 100,
+    company_id: 1,
+    city_id: 110100,
+    release_channel: 1,
+
+    cur: 0,
+
     bannerList: [
       {
         "pic_src": "/static/check/image/goods_point/pjq1JNVftcaXFkCf.jpg",
@@ -22,26 +30,20 @@ Page({
       }
     ],
 
-    bannerListOption: {
-      company_id: 1,
-      city_id: 110100,
-      district_id: 110105,
-      release_channel: 2
-    },
-
-    positionList:[
-        {
-            "id": "1",
-            "pic_src": [
-                "/static/check/image/goods_point/pi3mYEDeB4IlO73l.jpg"
-            ],
-            "link_url": [
-                "111"
-            ],
-            "sort_no": "1",
-            "type": "1"
-        }
+    positionList: [
+      {
+        "id": "1",
+        "pic_src": [
+          "/static/check/image/goods_point/pi3mYEDeB4IlO73l.jpg"
+        ],
+        "link_url": [
+          "111"
+        ],
+        "sort_no": "1",
+        "type": "1"
+      }
     ],
+
 
     list: [{
       "id": "24",
@@ -52,19 +54,6 @@ Page({
       "cate_name": "绝味专享",
       "sort_no": "2"
     }],
-
-
-
-    goodslistOption: {
-      shop_id: 181,
-      district_id: 110105,
-      city_id: 0,
-      cate_id: 25,
-      page_num: 1,
-      page_size: 100,
-    },
-
-    cur: 0,
 
     goodsList:
       [
@@ -92,10 +81,12 @@ Page({
 
 
   },
-  onLoad() {
+ async onLoad() {
     this.getBanner()
-    this.getCategory()
-    this.getGoodsList()
+    this.getPositionList()
+
+   await this.getCategory()
+   await this.getGoodsList()
     // this.initClientRect()
 
     my.setNavigationBar({
@@ -111,21 +102,22 @@ Page({
   },
 
   listChange(event) {
-    let { goodslistOption, list } = this.data;
+    const { list } = this.data;
     const { cur } = event.currentTarget.dataset;
-    goodslistOption = { ...goodslistOption, cate_id: list[cur].id }
-    this.setData({ cur, goodslistOption },() => this.getGoodsList())
+    this.setData({ cur, cate_id: list[cur].id }, () => this.getGoodsList())
   },
 
   async getCategory() {
+    const {cur} = this.data;
     let res = await ajax('/mini/vip/wap/category/category', { type: 1 })
     if (res.code === 100) {
-      this.setData({ list: res.data })
+      this.setData({ list: res.data,cate_id: res.data[cur].id })
     }
   },
 
   async getBanner() {
-    const { bannerListOption } = this.data;
+    const { city_id, district_id, release_channel } = this.data;
+    const bannerListOption = { city_id, district_id, release_channel }
     let res = await ajax('/mini/vip/wap/banner/banner_list', bannerListOption)
     if (res.code === 100) {
       this.setData({ bannerList: res.data })
@@ -133,13 +125,36 @@ Page({
   },
 
   async getGoodsList() {
-    const { goodslistOption } = this.data
+    let {
+      shop_id,
+      district_id,
+      city_id,
+      cate_id,
+      page_num,
+      page_size,
+    } = this.data;
+
+
+    let goodslistOption = {
+      shop_id,
+      district_id,
+      city_id,
+      cate_id,
+      page_num,
+      page_size
+    }
     let res = await ajax('/mini/vip/wap/goods/goods_list', goodslistOption)
     if (res.code === 100) {
       this.setData({
         goodsList: res.data.data
       })
     }
+  },
+
+  async getPositionList() {
+    let { city_id, district_id, company_id, release_channel } = this.data;
+    let positionListOption = { city_id, district_id, company_id, release_channel }
+    let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
   },
 
 
@@ -151,9 +166,10 @@ Page({
     this.setData({ toast: false })
   },
 
-  toDetail() {
+  toDetail(e) {
+    const {id} = e.currentTarget.dataset
     my.navigateTo({
-      url: '../../../package_vip/pages/detail/detail'
+      url: '../../../package_vip/pages/detail/detail?id='+id
     });
   },
 

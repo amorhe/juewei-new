@@ -1,4 +1,9 @@
 @import '../../common/style/common.acss';
+
+page{
+  background: white;
+}
+
 .vip {
   background: linear-gradient(180deg, #FB5332 0,#FB5332 200rpx, rgba(255, 255, 255, 0) 300rpx);
   min-height: 100vh;
@@ -84,8 +89,8 @@
   width: 333rpx;
   height: 513rpx;
   border-radius: 8rpx;
-  margin-top: 20rpx;
-  overflow: hidden
+  margin-bottom: 20rpx;
+  overflow: hidden;
 }
 
 .li>image{
@@ -102,6 +107,9 @@
   font-size: 28rpx;
   color: #333;
   font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .li-all{
@@ -166,5 +174,5 @@ border-radius:32rpx;
 .stickyClass{
     position: sticky;
     top: -2rpx;
-    background: rgb(238, 238, 238);
+    background: white
 }

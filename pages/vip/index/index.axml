@@ -14,10 +14,10 @@
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
     </view>
-    <swiper >
+    <swiper class="banner">
       <block a:for="{{bannerList}}">
         <swiper-item >
-               <image class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
+               <image style="margin:0" class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
         </swiper-item>
       </block>
     </swiper>
@@ -26,8 +26,7 @@
       为你推荐
     </view>
     <view class="flex-space-b two">
-      <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
-      <image mode="scaleToFill" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1415104914,3774420749&fm=85&app=57&f=JPEG?w=121&h=75&s=BB0BB04CC224B8E44783148003007098"/>
+      <image mode="scaleToFill" a:for="{{positionList}}" src="{{imageUrl2 + item.pic_src[0]}}"/>
     </view>
     <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
       <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
@@ -42,7 +41,7 @@
             <view class="li-all">
               {{item.point}}
               <text class="li-small">积分</text></view>
-            <view  a:if="{{0 < item.valid_num}}" class="li-button" onTap="toDetail">立即兑换</view>
+            <view  a:if="{{0 < item.valid_num}}" class="li-button" onTap="toDetail" data-id="{{item.id}}">立即兑换</view>
             <view  a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
 
           </view>
@@ -51,7 +50,7 @@
         <view 
         class="bottom"
         style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
-        已抢{{((item.total_num-item.valid_num)/item.total_num)*100}}%
+        已抢{{((((item.total_num-item.valid_num)/item.total_num).toFixed(2)) * 100)}}% 
         </view>
       </view>
     </view>
