@@ -1,6 +1,6 @@
 @import '../../common/style/common.acss';
 .vip {
-  background: linear-gradient(180deg, #DC3D30 0, rgba(255, 255, 255, 0) 300rpx);
+  background: linear-gradient(180deg, #FB5332 0,#FB5332 200rpx, rgba(255, 255, 255, 0) 300rpx);
   min-height: 100vh;
 }
 

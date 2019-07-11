@@ -1,3 +1,103 @@
 <view>
-  兑换记录列表
+  <!-- 兑换记录列表 -->
+  <view class="list">
+    <view class="item">
+      <view class="header">
+        <view class="time">2019-01-09 10:10</view>
+        <view class="state">已兑换</view>
+      </view>
+      <view class="body">
+        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+        <view class="body-right">
+          <view class="good-title">
+            绝味抱枕
+          </view>
+          <view class="cost">
+            免费领
+          </view>
+        </view>
+      </view>
+    </view>
+
+     <view class="item">
+      <view class="header">
+        <view class="time">2019-01-09 10:10</view>
+        <view class="state">未领取</view>
+      </view>
+      <view class="body">
+        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+        <view class="body-right">
+          <view class="good-title">
+            绝味抱枕
+          </view>
+          <view class="cost">
+            免费领
+          </view>
+        </view>
+      </view>
+    </view>
+
+     <view class="item">
+      <view class="header">
+        <view class="time">2019-01-09 10:10</view>
+        <view class="state">待支付</view>
+      </view>
+      <view class="body">
+        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+        <view class="body-right">
+          <view class="good-title">
+            绝味抱枕
+          </view>
+          <view class="cost">
+            免费领
+          </view>
+        </view>
+      </view>
+
+<view class="footer-wrap">
+      <view class="footer">
+        去支付（还剩14分20秒）
+      </view>
+      </view>
+    </view>
+
+     <view class="item">
+      <view class="header">
+        <view class="time">2019-01-09 10:10</view>
+        <view class="state">未发货</view>
+      </view>
+      <view class="body">
+        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+        <view class="body-right">
+          <view class="good-title">
+            绝味抱枕
+          </view>
+          <view class="cost">
+            免费领
+          </view>
+        </view>
+      </view>
+    </view>
+
+ <view class="item">
+      <view class="header">
+        <view class="time">2019-01-09 10:10</view>
+        <view class="state">已发货</view>
+      </view>
+      <view class="body">
+        <image mode="scaleToFill" src="{{imageUrl}}coupon.png" class="good-img"/>
+        <view class="body-right">
+          <view class="good-title">
+            绝味抱枕
+          </view>
+          <view class="cost">
+            免费领
+          </view>
+        </view>
+      </view>
+    </view>
+
+    
+    
+  </view>
 </view>

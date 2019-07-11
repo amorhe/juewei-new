@@ -15,21 +15,33 @@ Page({
 
     labelList:['学校','家','公司'],
 
-    curLabel:0
+    curLabel:0,
+
+    selectAddress:false
   },
   onLoad() {},
 
+stop(e){
+  e.cancelBubble = true
+  console.log(e)
+},
 
+showSelectAddress(){
+ this.setData({selectAddress:true})
+},
 
+hideSelectShow(){
+   this.setData({selectAddress:false})
+},
 
 // 地址
-  changeSex(){
-    const {sex} = this.data;
+changeSex(){
+  const {sex} = this.data;
 
-    this.setData({
-      sex:sex === 0? 1: 0
-    })
-  },
+  this.setData({
+    sex:sex === 0? 1: 0
+  })
+},
 
 changeCur(e){
   let curLabel = e.currentTarget.dataset.cur
