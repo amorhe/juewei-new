@@ -13,50 +13,14 @@ Page({
     interval: 1000,
     circular: true,
     imgUrls:['../../common/img/banner.png'],
-    goodsType:1,   //系列
     goodsList:[
       {
         type:1
       },
       {
         type:2
-      },
-      // {
-      //   type:3
-      // },
-      // {
-      //   type:4
-      // },
-      // {
-      //   type:5
-      // },{
-      //   type:6
-      // },
-      // {
-      //   type:7
-      // },
-      // {
-      //   type:8
-      // },
-      // {
-      //   type:9
-      // },
-      // {
-      //   type:10
-      // },
-      // {
-      //   type:11
-      // },
-      // {
-      //   type:12
-      // },
-      // {
-      //   type:13
-      // }
+      }
     ],
-    toActive:1,
-    scrollY:false,
-    showShopcar:false
   },
   onLoad(query) {
     // 页面加载
@@ -101,27 +65,11 @@ Page({
      }) 
     }
   },
-  // 选择系列
-  chooseGoodsType(e) {
-    this.setData({
-      goodsType: e.currentTarget.dataset.type,
-      toActive: e.currentTarget.dataset.type
-    })
-  },
+  
   preventDefaultFn(e){
     
   },
-  // 打开购物车
-  openShopcart(){
-    this.setData({
-      showShopcar: true
-    })
-  },
-  hiddenShopcart(){
-    this.setData({
-      showShopcar: false
-    })
-  },
+  
   onHide() {
     // 页面隐藏
   },
@@ -157,17 +105,7 @@ Page({
   },
   onPageScroll:function(e){
     my.createSelectorQuery().select('#pagesinfo').boundingClientRect().exec((ret)=>{
-      console.log(ret[0].top)
-      // if(ret[0].top == 127){
-      //   this.setData({
-      //     scrollY: true
-      //   })
-      // }else{
-      //   this.setData({
-      //     scrollY: false
-      //   })
-      // }
-      if(ret[0].top==0){
+      if(ret[0].top<=127){
         this.setData({
           scroll_y:true
         });

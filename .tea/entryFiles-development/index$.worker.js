@@ -1,6 +1,6 @@
 if(!self.__appxInited) {
 self.__appxInited = 1;
-
+require('@alipay/appx-compiler/lib/sjsEnvInit');
 
 require('./config$');
 
@@ -15,15 +15,21 @@ self.abridge = self.my;
 self.Component = AFAppX.WorkerComponent || function(){};
 self.$global = AFAppX.$global;
 
-
+if(AFAppX.compilerConfig){ AFAppX.compilerConfig.component2 = true; }
 function success() {
-require('../..//app');
+require('../../app');
 require('../../node_modules/mini-antui/es/badge/index');
 require('../../node_modules/mini-antui/es/tabs/index');
 require('../../node_modules/mini-antui/es/tabs/tab-content/index');
+require('../../pages/components/shopcartModel/shopcartModel');
+require('../../pages/components/shopcart/shopcart');
 require('../../node_modules/mini-antui/es/grid/index');
 require('../../node_modules/mini-antui/es/list/index');
 require('../../node_modules/mini-antui/es/list/list-item/index');
+require('../../pages/home/orderform/orderform');
+require('../../pages/home/goodslist/goodsdetail/goodsdetail');
+require('../../pages/home/goodslist/goodslist');
+require('../../pages/home/switchshop/switchshop');
 require('../../pages/position/position');
 require('../../package_my/pages/chooseshop/chooseshop');
 require('../../package_my/pages/nearshop/nearshop');
@@ -34,11 +40,7 @@ require('../../package_my/pages/coupon/explain/explain');
 require('../../package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord');
 require('../../package_my/pages/coupon/couponRecord/couponRecord');
 require('../../package_my/pages/membercard/membercard');
-require('../../pages/home/goodslist/goodslist');
 require('../../pages/home/selecttarget/selecttarget');
-require('../../pages/home/switchshop/switchshop');
-require('../../pages/home/goodslist/goodsdetail/goodsdetail');
-require('../../pages/home/orderform/orderform');
 require('../../pages/home/orderform/agreement/agreement');
 require('../../pages/home/orderform/selectaddress/selectaddress');
 require('../../pages/home/orderfinish/orderfinish');

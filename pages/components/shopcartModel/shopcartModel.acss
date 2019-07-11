@@ -1,0 +1,34 @@
+@import '../shopcart/shopcart.acss';
+.modalView {
+  width:560rpx;
+  height:291rpx;
+  background:rgba(255,255,255,1);
+  border-radius:10rpx;
+  position: fixed;
+  top: 403rpx;
+  left: 95rpx;
+  z-index: 101
+}
+.modalContent {
+  height: 190rpx;
+  text-align: center;
+  line-height: 190rpx;
+}
+.modalBtn {
+  border-top: 1px #DDDDDD solid;
+  height: 100rpx;
+  display: flex
+}
+.modalBtn>button {
+  width: 50%;
+  height: 100%;
+  font-size: 32rpx;
+  border:none
+}
+.modalBtn>button:nth-child(1){
+  color: #999;
+  border-right: 1px #DDDDDD solid; 
+}
+.modalBtn>button:nth-child(2){
+  color: #E60012
+}

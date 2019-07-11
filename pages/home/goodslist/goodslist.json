@@ -1,3 +1,6 @@
 {
-  "defaultTitle": "绝味鸭脖"
+  "defaultTitle": "绝味鸭脖",
+  "usingComponents": {
+    "shopcart": "../../components/shopcart/shopcart"
+  }
 }

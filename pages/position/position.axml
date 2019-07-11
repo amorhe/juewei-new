@@ -1,17 +1,1 @@
-<!-- <view>
-  商城引导定位页面
-  <view>{{logtxt}}</view>
-</view> -->
-
-<view class="searchView">
-  <view>
-    <view class="positionAddress">
-      <text>北京市</text>
-      <image src="{{imageUrl}}arrow_down1.png" />
-    </view>
-    <view class="searchBox">
-      <image class="searchIcon" src="{{imageUrl}}search.png" />
-      <input type="text" placeholder="小区/写字楼/学校等" placeholder-class="colorGray"  />
-    </view>
-  </view>
-</view>
+<view></view>

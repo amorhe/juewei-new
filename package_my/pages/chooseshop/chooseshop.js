@@ -21,5 +21,13 @@ Page({
       }
     ]
   },
-  onLoad() {},
+  onLoad() {
+   
+  },
+  // 选择门店
+  chooseshop(){
+    my.navigateTo({
+      url: '/pages/home/switchshop/switchshop'
+    })
+  }
 });

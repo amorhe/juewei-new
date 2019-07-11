@@ -1,0 +1,123 @@
+@import '../../../components/shopcart/shopcart.acss';
+.goodsImage {
+  width: 750rpx;
+  height: 592rpx;
+}
+
+.addShopcart {
+  width:180rpx;
+  height: 52rpx;
+  background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
+  border-radius:32rpx;
+  text-align: center;
+  line-height: 52rpx;
+  color: #fff
+}
+.activeFont {
+  font-weight: 600;
+}
+.goodsintro {
+  padding: 24rpx 32rpx;
+}
+.percentView {
+  width:686rpx;
+  height:32rpx;
+  background:rgba(238,238,238,1);
+  border-radius:32rpx;
+  border:1rpx solid rgba(230,0,18,1);
+  position: relative;
+}
+.percentView>view {
+  width:650rpx;
+  height: 32rpx;
+  background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
+  border-radius:32rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  text-align: center;
+  line-height: 32rpx;
+  color: #FFE100;
+  font-size: 22rpx;
+}
+.tagView {
+  padding: 0 32rpx 31rpx;
+}
+.tagView>text {
+  height:48rpx;
+  border-radius:28rpx;
+  padding: 0 16rpx; 
+  font-size: 22rpx;
+  line-height: 48rpx;
+  display: inline-block;
+  margin-right: 16rpx;
+  margin-bottom: 16rpx
+}
+.tagNoActive {
+  border:1rpx solid rgba(51,51,51,1);
+  color: #333
+}
+.tagActive {
+  border:1rpx solid rgba(230,0,18,1);
+  color: #E60012
+}
+.commontList {
+  display: flex;
+  flex-direction: column;
+  padding-left: 32rpx;
+}
+.commontList>view {
+  padding: 24rpx 0 24rpx 0;
+  border-bottom: 1rpx  #EEEEEE solid;
+  display: flex;
+}
+.commontAvatar {
+  width: 63rpx;
+  height: 63rpx;
+  border-radius: 50%;
+  margin-right: 17rpx;
+}
+.commontList>view>view {
+  display: flex;
+  flex-direction: column;
+}
+.commontUser {
+  width: 606rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.commontImageView {
+  display: flex
+}
+
+.commontText {
+  margin: 16rpx 0 19rpx;
+}
+.commontImages {
+  width: 176rpx;
+  height: 176rpx;
+  margin-right: 16rpx;
+}
+.commontImage {
+  width: 336rpx;
+  height: 336rpx;
+}
+.commontTag {
+  margin-bottom: 8rpx;
+  display: flex;
+  align-items: center
+}
+.commontTag> * {
+  margin-right: 16rpx;
+}
+.commontTag>view {
+  height:32rpx;
+  background:rgba(255,241,240,1);
+  border-radius:4rpx;
+  padding: 0 8rpx;
+  color: #FD9E92;
+  font-size: 22rpx;
+  line-height: 32rpx;
+}

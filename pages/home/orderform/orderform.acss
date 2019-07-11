@@ -1,0 +1,5 @@
+.orderContainer {
+  height: 100vh;
+  background: linear-gradient(180deg, #f23125 0, #fff 229rpx);
+  filter:blur(0px);
+}

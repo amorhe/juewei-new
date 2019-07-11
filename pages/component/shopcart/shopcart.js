@@ -1,4 +1,9 @@
-Page({
+Component({
+  mixins: [],
   data: {},
-  onLoad() {},
+  props: {},
+  didMount() {},
+  didUpdate() {},
+  didUnmount() {},
+  methods: {},
 });

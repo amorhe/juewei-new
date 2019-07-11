@@ -1,3 +1,6 @@
 {
-    "defaultTitle": "绝味鸭脖"
+    "defaultTitle": "门店自提",
+    "usingComponents": {
+      "my-component":"../../components/shopcart/shopcart"
+    }
   }
