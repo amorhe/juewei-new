@@ -11,6 +11,9 @@
     <view class="sub-state" a:if="{{detail.receive_type == 2 || detail.get_start_time}}">
     领取有效期：{{detail.get_start_time}} 至 {{detail.get_end_time}}
     </view>
+    <view class="sub-state" a:if="{{detail.get_time != '0000-00-00 00:00:00'}}">
+    领取时间：{{detail.get_time}}
+    </view>
   </view>
   <view class="buttons" a:if="{{detail.status == 0}}">
     <view class="c-button">取消订单</view>
@@ -83,7 +86,7 @@
       </view>
     </view>
 
-    <view class="get-shop">
+    <view class="get-shop" a:if="{{detail.code_img}}">
       <view class="get-shop-title">
         取商品
       </view>
