@@ -96,16 +96,7 @@ Page({
    await this.getGoodsList()
     // this.initClientRect()
 
-    my.setNavigationBar({
-      title: 'VIP专享',
-      backgroundColor: '#FB5332',
-      success() {
-
-      },
-      fail() {
-
-      },
-    });
+  
   },
 
   listChange(event) {

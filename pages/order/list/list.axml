@@ -1,4 +1,98 @@
 <view>
-  订单列表页<br/>
-  分为外卖和自提列表
+  <!-- 订单列表页<br/>
+  分为外卖和自提列表 -->
+
+  <view class="menus">
+    <view data-cur="{{index}}" onTap="changeMenu" class="menu {{cur === index ? 'active':''}}" a:for="{{menuList}}">
+        {{item.key}}
+    </view>
+  </view>
+
+
+<!-- 官方外卖订单 -->
+<view class="out-list" a:if="{{cur === 0}}">
+  <view class="out-item">
+    <view class="out-header">
+        <view class="out-header-title">
+          <view class="top">
+            绝味鸭脖（定福庄西街店）
+          </view>
+          <view class="bottom">
+            10分钟前
+          </view>
+        </view>
+
+        <view class="out-item-state">
+          等待支付
+        </view>
+    </view>
+    <view class="out-body">
+        <view class="left">
+          招牌鸭脖（超辣）等9件商品
+        </view>
+
+        <view class="right">
+          <text class="y">￥</text> <text class="price">68.00</text>
+        </view>
+    </view>
+    <view class="out-footer">
+        <view class="cancel-order">
+          取消订单
+        </view>
+
+        <view class="topay">
+          去支付（还剩14分20秒）
+        </view>
+
+        <view class="topay con">
+          联系客服
+        </view>
+
+    </view>
+  </view>
+</view>
+
+<!-- 门店自提订单 -->
+<view class="come-list out-list" a:else>
+  <view class="out-item">
+    <view class="out-header">
+        <view class="out-header-title">
+          <view class="top">
+            绝味鸭脖（定福庄西街店）
+          </view>
+          <view class="bottom">
+            2019-06-25 11:23
+          </view>
+        </view>
+
+        <view class="out-item-state">
+          等待支付
+        </view>
+    </view>
+    <view class="out-body">
+        <view class="left">
+          招牌鸭脖（超辣）等9件商品
+        </view>
+
+        <view class="right">
+          <text class="y">￥</text> <text class="price">68.00</text>
+        </view>
+    </view>
+    <view class="out-footer">
+        <view class="cancel-order">
+          再来一单
+        </view>
+
+        <view class="topay">
+          评价订单
+        </view>
+
+        <view class="topay con">
+          联系客服
+        </view>
+
+    </view>
+  </view>
+</view>
+
 </view>
