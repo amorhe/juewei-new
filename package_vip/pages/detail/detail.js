@@ -59,43 +59,59 @@ Page({
     }
   },
 
+  async createOrder(){
+    let {goods_id,exchange_type,point,amount} = this.data.detail;
+    let data = {
+      'goods[goods_id]':goods_id,
+      'goods[exchange_type]':exchange_type,
+      'goods[point]':point,
+      'goods[amount]':amount
+    }
+    let res = await ajax('/mini/vip/wap/trade/create_order',data)
+  },
+
   showConfirm() {
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
-    const { goods_detail_type,receive_type, goods_type,goods_name,point } = this.data.detail
+    const { goods_detail_type, receive_type, goods_type, goods_name, point } = this.data.detail
     if (true) {
 
       return my.confirm({
-        content: '是否兑换“'+goods_name+'”将消耗你的'+point+'积分',
+        content: '是否兑换“' + goods_name + '”将消耗你的' + point + '积分',
         confirmButtonText: '确认',
         cancelButtonText: '取消',
-        success: result => {
+        success: async result => {
           if (result.confirm && result.ok) {
-            // 虚拟订单 + 兑换码 => 无需发货
-            if (goods_type == 1 && goods_detail_type == 2 && receive_type == 0 ) {
-              my.navigateTo({
-                url: './finish?receive_type=0'
-              });
-            }
+            // 虚拟商品，点击兑换按钮，调用创建订单接口，然后调用确认订单接口，然后调起支付
+            if (goods_type == 1) {
+              await this.createOrder()
 
-             // 虚拟订单 + 优惠卷 => 无需发货
-            if (goods_type == 1 && goods_detail_type == 1 && receive_type == 0 ) {
-              my.navigateTo({
-                url: './finish?receive_type=0'
-              });
+              // 虚拟订单 + 兑换码 => 无需发货
+              if (goods_detail_type == 2 && receive_type == 0) {
+                my.navigateTo({
+                  url: './finish?receive_type=0'
+                });
+              }
+
+              // 虚拟订单 + 优惠卷 => 无需发货
+              if (goods_detail_type == 1 && receive_type == 0) {
+                my.navigateTo({
+                  url: './finish?receive_type=0'
+                });
+              }
             }
 
             // 实物订单 + 快递 => 公司邮寄
-            if( goods_type == 2 && receive_type == 2){
-               my.navigateTo({
+            if (goods_type == 2 && receive_type == 2) {
+              my.navigateTo({
                 url: './finish/finish?receive_type=2'
               });
             }
 
             // 实物订单 + 无需发货 => 到店领取
-            if(goods_type == 2 && receive_type == 1){
-               my.navigateTo({
+            if (goods_type == 2 && receive_type == 1) {
+              my.navigateTo({
                 url: '../finish/finish?receive_type=1'
               });
             }
