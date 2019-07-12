@@ -3,10 +3,10 @@
     <view class="header flex-space-b">
       <view class="flex-center">
         当前积分：
-        <view class="total">4321</view>
+        <view class="total">{{userPoint.points}}</view>
         <view style='position:relative;height:32rpx'>
         <image class="icon" catchTap="showToast" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
-        <view class="toast" a:if="{{toast}}">冻结积分：20</view>
+        <view class="toast" a:if="{{toast}}">冻结积分：{{userPoint.freeze_point}}</view>
          </view>
       </view>
       <view class="flex-center" style="font-size:26rpx;height:32rpx" onTap="toExchangeList">
@@ -17,7 +17,7 @@
     <swiper class="banner">
       <block a:for="{{bannerList}}">
         <swiper-item >
-               <image style="margin:0" class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
+          <image style="margin:0" class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
         </swiper-item>
       </block>
     </swiper>
@@ -26,7 +26,11 @@
       为你推荐
     </view>
     <view class="flex-space-b two">
-      <image mode="scaleToFill" a:for="{{positionList}}" src="{{imageUrl2 + item.pic_src[0]}}"/>
+      
+      <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
+        <image mode="scaleToFill" a:for="{{itemName.pic_src}}" src="{{imageUrl2 + item}}"/>
+      </scroll-view>
+     
     </view>
     <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
       <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>

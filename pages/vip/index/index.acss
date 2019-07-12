@@ -46,6 +46,7 @@ page{
   width: 333rpx;
   height: 180rpx;
   border-radius: 8rpx;
+  margin-right: 10rpx;
 }
 
 .x{
