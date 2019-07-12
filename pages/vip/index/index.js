@@ -5,6 +5,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
+    _sid: '4966-inviq2t1sdl3s95idh7a0s1dn',
 
     toast: false,
 
@@ -21,6 +22,11 @@ Page({
     release_channel: 1,
 
     cur: 0,
+
+    userPoint:{
+      "points": 96, // 总积分
+      "freeze_point": 0 // 冻结积分
+    },
 
     bannerList: [
       {
@@ -84,6 +90,7 @@ Page({
  async onLoad() {
     this.getBanner()
     this.getPositionList()
+    this.getUserPoint()
 
    await this.getCategory()
    await this.getGoodsList()
@@ -155,6 +162,21 @@ Page({
     let { city_id, district_id, company_id, release_channel } = this.data;
     let positionListOption = { city_id, district_id, company_id, release_channel }
     let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
+    if(res.code === 100){
+      this.setData({
+        positionList:res.data
+      })
+    }
+  },
+
+  async getUserPoint(){
+    let {_sid} = this.data;
+    let res = await ajax('/mini/user/user_point',{_sid})
+    if(res.code === 100){
+      this.setData({
+        userPoint:res.data
+      })
+    }
   },
 
 
