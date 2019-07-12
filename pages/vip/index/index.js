@@ -172,9 +172,9 @@ Page({
   async getUserPoint(){
     let {_sid} = this.data;
     let res = await ajax('/mini/user/user_point',{_sid})
-    if(res.code === 100){
+    if(res.CODE === 'A100'){
       this.setData({
-        userPoint:res.data
+        userPoint:res.DATA
       })
     }
   },
