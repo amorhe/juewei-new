@@ -18,3 +18,5 @@ export const ajax = (url, data = {}, method = 'POST') => {
     });
   })
 }
+
+export const _sid = '4966-inviq2t1sdl3s95idh7a0s1dn'

@@ -1,9 +1,10 @@
-import { ajax } from '../../../pages/common/js/li-ajax'
+import { ajax, _sid } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
   data: {
     imageUrl2,
+    _sid,
     detail: {
       "id": "355",
       "goods_name": "123",
@@ -60,12 +61,15 @@ Page({
   },
 
   async createOrder(){
-    let {goods_id,exchange_type,point,amount} = this.data.detail;
+    let {id,exchange_type,point,amount} = this.data.detail;
+    let {_sid} = this.data;
+
     let data = {
-      'goods[goods_id]':goods_id,
+      'goods[goods_id]':id,
       'goods[exchange_type]':exchange_type,
       'goods[point]':point,
-      'goods[amount]':amount
+      'goods[amount]':amount,
+      _sid
     }
     let res = await ajax('/mini/vip/wap/trade/create_order',data)
   },
