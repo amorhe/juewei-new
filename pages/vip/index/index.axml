@@ -1,6 +1,6 @@
 <view class="vip" onTap="hideToast">
   <view class="content">
-    <view class="header flex-space-b">
+    <view class="header flex-space-b" a:if="{{_sid}}">
       <view class="flex-center">
         当前积分：
         <view class="total">{{userPoint.points}}</view>
@@ -11,6 +11,13 @@
       </view>
       <view class="flex-center" style="font-size:26rpx;height:32rpx" onTap="toExchangeList">
         兑换记录
+        <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
+      </view>
+    </view>
+    <!-- 未登录 -->
+     <view class="header flex-space-b" style="align-iten:flex-end" a:if="{{!_sid}}">
+      <view class="flex-center">
+        立即登录
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
     </view>
