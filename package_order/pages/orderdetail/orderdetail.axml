@@ -42,6 +42,73 @@
           <text>￥28</text>
         </view>
       </view>
+      <view class="post">
+        <view class="label">
+          配送费
+        </view>
+        <view class="price">
+          <view class="value">
+            <text class="del"> ￥32</text>
+            <text>￥28</text>
+          </view>
+        </view>
+      </view>
+      <view class="reduce">
+        <view class="reduce-item">
+          <view class="left">
+            <image mode="scaleToFill" src="{{imageUrl}}reduce.png"/>
+          活动满减
+          </view>
+          <view class="value">
+            <text>-￥28</text>
+          </view>
+        </view>
+        <view class="reduce-item">
+          <view class="left">
+            <image mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
+          优惠卷
+          </view>
+          <view class="value">
+            <text>-￥28</text>
+          </view>
+        </view>
+      </view>
+      <view class="total">
+        实付￥
+        <text>35</text>
+      </view>
+    </view>
+  </view>
+  <view class="poster">
+    <view class="title">
+      配送信息
+    </view>
+    <view class="list">
+      <view class="item">
+        <view class="label">
+          收货地址
+        </view>
+        <view class="value">
+          <view>紫檀大厦606绝味营销</view>
+          <view>紫檀大厦606绝味营销</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="poster">
+    <view class="title">
+      订单信息
+    </view>
+    <view class="list">
+      <view class="item">
+        <view class="label">
+          订单编号
+        </view>
+        <view class="value">
+          <view>紫檀大厦606绝味营销</view>
+        </view>
+      </view>
     </view>
   </view>
 </view>
