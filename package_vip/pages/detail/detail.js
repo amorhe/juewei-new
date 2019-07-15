@@ -17,7 +17,7 @@ Page({
       "gift_id": "473",
       "exchange_type": "1",
       "point": "1",
-      "amount": "0",
+      "amount": 0,
       "start_time": "2019-06-22 00:00:00",
       "end_time": "2019-07-31 23:59:59",
       "receive_type": "2",
@@ -60,35 +60,42 @@ Page({
     }
   },
 
-  async createOrder(){
-    let {id,exchange_type,point,amount} = this.data.detail;
-    let {_sid} = this.data;
+  async createOrder() {
+    let { id, exchange_type, point, amount } = this.data.detail;
+    let { _sid } = this.data;
 
     let params = {
-      'goods[goods_id]':id,
-      'goods[exchange_type]':exchange_type,
-      'goods[point]':point,
-      'goods[amount]':amount,
+      'goods[goods_id]': id,
+      'goods[exchange_type]': exchange_type,
+      'goods[point]': point,
+      'goods[amount]': amount,
       _sid
     }
-    let {code,data} = await ajax('/mini/vip/wap/trade/create_order',params)
-    if(code === 100){
+    let { code, data } = await ajax('/mini/vip/wap/trade/create_order', params)
+    if (code === 100) {
       return data
     }
   },
 
-  async confirmOrder(order_sn){
-    let {_sid} = this.data;
-    let params = {order_sn,_sid}
-    let {code,data} = await ajax('/mini/vip/wap/trade/confirm_order',params)
+  async confirmOrder(order_sn) {
+    let { _sid } = this.data;
+    let params = { order_sn, _sid }
+    let { code, data } = await ajax('/mini/vip/wap/trade/confirm_order', params)
     return code === 100
+  },
+
+  async pay(order_sn) {
+    let { code, data } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+    if (cdoe === 0) {
+      return { code, data }
+    }
   },
 
   showConfirm() {
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
-    const { goods_detail_type, receive_type, goods_type, goods_name, point } = this.data.detail
+    const { goods_detail_type, receive_type, goods_type, goods_name, point, amount } = this.data.detail
     if (true) {
 
       return my.confirm({
@@ -97,22 +104,34 @@ Page({
         cancelButtonText: '取消',
         success: async result => {
           if (result.confirm && result.ok) {
-            // 虚拟商品，点击兑换按钮，调用创建订单接口，然后调用确认订单接口，然后调起支付
+            // 虚拟商品，点击兑换按钮，调用创建订单接口，
+            // 有钱的订单或者有运费的订单才调起支付
+            // 调用确认订单接口，然后调起支付
+            // id = -1 兑换失败
             if (goods_type == 1) {
-             let {order_id,order_sn} = await this.createOrder()
-             let res = await this.confirmOrder(order_sn)
+              let { order_id, order_sn } = await this.createOrder()
+              let res = await this.confirmOrder(order_sn)
+
+              if (amount !== '0') {
+                let { code, data } = await this.pay(order_sn)
+                if (code !== 0) {
+                  return
+                }
+              }
+
 
               // 虚拟订单 + 兑换码 => 无需发货
               if (goods_detail_type == 2 && receive_type == 0) {
                 my.navigateTo({
-                  url: './finish?receive_type=0'
+                  url: '../finish/finish?receive_type=0'
                 });
               }
 
               // 虚拟订单 + 优惠卷 => 无需发货
+              // 跑通
               if (goods_detail_type == 1 && receive_type == 0) {
                 my.navigateTo({
-                  url: './finish?receive_type=0'
+                  url: '../finish/finish?id=' + order_id
                 });
               }
             }

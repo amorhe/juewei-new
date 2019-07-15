@@ -4,6 +4,7 @@ export const ajax = (url, data = {}, method = 'POST') => {
   my.showLoading({
     content: '加载中...',
   });
+  data._sid = _sid
   return new Promise((resolve, reject) => {
     my.request({
       url: baseUrl + url,
