@@ -1,4 +1,5 @@
 import {imageUrl} from '../../common/js/baseUrl'
+import {bannerList} from '../../common/js/home'
 var app=getApp(); //放在顶部
 Page({
   data: {
@@ -22,10 +23,12 @@ Page({
     //      url: '../../position/position'
     //   })
     // }
+
+    // 定位地址
     if(query.address1 || query.address2) {
       this.setData({
-      firstAddress: query.address1 + query.address2
-    })
+        firstAddress: query.address1 + query.address2
+      })
     }
     if(this.data.imgUrls.length>1){
       this.setData({
@@ -45,6 +48,19 @@ Page({
 
    
   },
+  onGetAuthorize(res) {
+    console.log(1);
+     my.getOpenUserInfo({
+      fail: (res) => {
+      },
+      success: (res) => {
+        let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
+        my.alert({
+         content:userInfo 
+        });
+      }
+    });
+  },
     // 切换外卖自提
   chooseTypes(e){
     if(e.currentTarget.dataset.type=='ziti'){
@@ -57,7 +73,10 @@ Page({
      }) 
     }
   },
-  
+  // 首页banner列表
+  bannerList(){
+    
+  },
   onHide() {
     // 页面隐藏
   },

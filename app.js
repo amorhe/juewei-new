@@ -1,19 +1,29 @@
+import {loginByAliUid} from './pages/common/js/home'
+import {baseUrl} from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
     // 第一次打开
     var that=this;
     // options.query == {number:1}
-    console.info('App onLaunch');
-     //获取静默授权
-    my.getAuthCode({
-      scopes: 'auth_base',
-      success: (res) => {
-        that.globalData.authCode = res.authCode;
-      },
-      fail(){
-        my.alert({ content: '静默授权获取错误'});
-      }
-    });
+     //获取授权
+    // my.getAuthCode({
+    //   scopes: ['auth_user'],
+    //   success: (res) => {
+    //     // loginByAliUid(res.authCode);
+    //     my.request({
+    //       url: baseUrl + '/juewei-api/alimini/loginByAliUid',
+    //       data:{
+    //         auth_code: res.authCode
+    //       },
+    //       methods:"POST",
+    //       success: (data) => {
+    //         my.alert({
+    //           content: data 
+    //         });
+    //       },
+    //     });
+    //   },
+    // });
   },
   onShow(options) {//多次执行
     // 从后台被 scheme 重新打开
