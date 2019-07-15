@@ -1,11 +1,11 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax } from '../../common/js/li-ajax'
+import { ajax , _sid} from '../../common/js/li-ajax'
 
 Page({
   data: {
     imageUrl,
     imageUrl2,
-    _sid: '4966-inviq2t1sdl3s95idh7a0s1dn',
+    _sid,
 
     toast: false,
 

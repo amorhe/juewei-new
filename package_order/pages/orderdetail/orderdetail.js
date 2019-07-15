@@ -1,4 +1,8 @@
+import { imageUrl } from '../../../pages/common/js/baseUrl'
+
 Page({
-  data: {},
+  data: {
+    imageUrl
+  },
   onLoad() {},
 });
