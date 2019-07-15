@@ -1,67 +1,61 @@
 <view class="bg">
   <!-- 兑换完成页，页面分虚拟和邮寄实物和门店领取实物，并且页面分为成功和失败两种状态 -->
   <!-- 虚拟物品 成功 false->假的 -->
-  <view class="false" a:if="{{true}}">
+  <view class="false" a:if="{{!fail}}">
     <view class="success">
       <view class="icon-wrap">
         <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}success.png"/>
         <view class="text-success">兑换成功</view>
       </view>
     </view>
-
     <view class="p-detail">
-      <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
+      <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
       <view class="p-right">
         <view class="p-title">
-      幸福西饼6寸蛋糕
+          {{d.goods_name}}
         </view>
         <view class="p-price">
-      2200积分+18元
+         {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
         </view>
       </view>
     </view>
-
-    <view class="copy">
-      <view class="copy-left">兑换码：1008902930</view>
+    <view class="copy" a:if="{{d.get_code}}">
+      <view class="copy-left">兑换码：{{d.get_code}}</view>
       <view class="copy-right">复制</view>
     </view>
-
     <view class="explain">
-      <view class="explain-title">兑换说明</view>
-      <view class="explain-detail">
-        在 <text>http://www.ebeecake.com</text> 输入兑换码兑换；
-        <view>活动所有权归本公司所有。</view> 
-      </view>
+      <view class="explain-title" a:if="{{d.exchange_intro}}">兑换说明</view>
+      <rich-text nodes="{{d._exchange_intro}}"></rich-text>
+      <!-- <view class="explain-detail">
+        在
+        <text>http://www.ebeecake.com</text> 输入兑换码兑换；
+        <view>活动所有权归本公司所有。</view>
+      </view> -->
     </view>
-
-     <view class="explain">
-      <view class="explain-title">兑换说明</view>
-      <view class="explain-detail">
-       <view>全场通用</view>
-        <view>活动所有权归本公司所有。</view> 
-      </view>
+    <view class="explain">
+      <view class="explain-title" a:if="{{d.intro}}">兑换说明</view>
+      <rich-text nodes="{{d._intro}}"></rich-text>
+      <!-- <view class="explain-detail">
+        <view>全场通用</view>
+        <view>活动所有权归本公司所有。</view>
+      </view> -->
     </view>
-
-    <view class="hint">
+    <view class="hint" a:if="{{d.get_code}}">
       温馨提示：可到VIP专享>兑换记录中查看
     </view>
-
-     <view class="hint">
-      温馨提示：可到 <text style="color:#108EE9">我的>卡劵</text> 中查看
+    <view class="hint" a:if="{{!d.get_code}}">
+      温馨提示：可到
+      <text style="color:#108EE9">我的>卡劵</text> 中查看
     </view>
-
-    <view class="li-button">
+    <view class="li-button" onTap="redirect">
       返回VIP专享
     </view>
-
     <view class="li-button gray">
       查看订单
     </view>
-
   </view>
-
   <!-- 虚拟物品 失败-->
-  <view class="false" a:if="{{true}}">
+  <view class="false" a:if="{{fail}}">
     <view class="success">
       <view class="icon-wrap">
         <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}fail.png"/>
@@ -69,24 +63,20 @@
         <view class="fail-reason">商品库存不足</view>
       </view>
     </view>
-
     <view class="p-detail">
-      <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
+      <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
       <view class="p-right">
         <view class="p-title">
-      幸福西饼6寸蛋糕
+      {{d.goods_name}}
         </view>
         <view class="p-price">
-      0积分
+      {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
         </view>
       </view>
     </view>
-
-    <view class="li-button">
+    <view class="li-button"  onTap="redirect">
       返回VIP专享
     </view>
-
   </view>
-
   <!-- 邮寄物品 -->
 </view>

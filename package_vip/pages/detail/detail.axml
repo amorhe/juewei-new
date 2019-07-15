@@ -38,13 +38,16 @@
   <view class="footer-title"> 
      兑换说明
    </view>
-   {{detail.exchange_intro}}
+   <rich-text nodes="{{detail.exchange_intro}}" />
+   <!-- {{detail.exchange_intro}} -->
 
 
   <view class="footer-title">     
      商品详情
    </view>
-   {{detail.intro}}
+  <rich-text nodes="{{detail.intro}}" />
+
+   <!-- {{detail.intro}} -->
    
 
   <view class="footer-title">     

@@ -1,4 +1,4 @@
-import { ajax, _sid } from '../../../pages/common/js/li-ajax'
+import { ajax, _sid, parseData } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -46,16 +46,27 @@ Page({
       }]
     }
   },
+
+  parseData,
+
   async onLoad(e) {
     const { id } = e
     await this.getDetail(id)
   },
 
   async getDetail(id) {
-    let res = await ajax('/mini/vip/wap/goods/goods_detail', { id })
-    if (res.code === 100) {
+
+    let { code, data: { exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
+    if (code === 100) {
+      let _exchange_intro = await this.parseData(exchange_intro)
+      let _intro = await this.parseData(intro)
+      console.log(intro)
       this.setData({
-        detail: res.data
+        detail: {
+          exchange_intro: _exchange_intro,
+          intro: _intro,
+          ...Data
+        }
       })
     }
   },
@@ -96,6 +107,8 @@ Page({
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
     const { goods_detail_type, receive_type, goods_type, goods_name, point, amount } = this.data.detail
+    let fail = false
+
     if (true) {
 
       return my.confirm({
@@ -115,7 +128,7 @@ Page({
               if (amount !== '0') {
                 let { code, data } = await this.pay(order_sn)
                 if (code !== 0) {
-                  return
+                  fail = true
                 }
               }
 
@@ -131,7 +144,7 @@ Page({
               // 跑通
               if (goods_detail_type == 1 && receive_type == 0) {
                 my.navigateTo({
-                  url: '../finish/finish?id=' + order_id
+                  url: '../finish/finish?id=' + order_id + '&fail=' + fail
                 });
               }
             }

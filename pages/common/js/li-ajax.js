@@ -1,4 +1,5 @@
 import { baseUrl } from './baseUrl'
+import parse from 'mini-html-parser2';
 
 export const ajax = (url, data = {}, method = 'POST') => {
   my.showLoading({
@@ -28,7 +29,7 @@ export const sid = async () => {
         console.log(res)
         ajax('/juewei-api/alimini/loginByAuth', {
           ali_uid: res.authCode,
-          phone:'18640460506'
+          phone: '18640460506'
         })
       },
     });
@@ -36,3 +37,19 @@ export const sid = async () => {
 }
 
 export const _sid = '4966-inviq2t1sdl3s95idh7a0s1dn1'
+
+export const parseData = async (html) => {
+  return new Promise(resolve => {
+    parse(html, (err, nodes) => {
+      if (!err) {
+        resolve(nodes)
+      }
+    })
+  })
+}
+
+export const redirect = (url) =>{
+  my.redirectTo({
+    url, 
+  });
+}
