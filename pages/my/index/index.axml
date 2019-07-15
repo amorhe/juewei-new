@@ -63,4 +63,6 @@
   </view>
 </view>
 
-<image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/>
+<navigator url="/package_my/pages/onlineservice/onlineservice">
+  <image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/>
+</navigator>
