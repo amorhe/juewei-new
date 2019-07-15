@@ -1,4 +1,4 @@
-/node-modules
 /debug.log
 *.log
 .tea
+.idea
