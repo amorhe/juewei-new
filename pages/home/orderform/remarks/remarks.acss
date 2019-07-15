@@ -1,0 +1,34 @@
+.remarks {
+  padding: 24rpx 32rpx;
+  width: 750rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box
+}
+.remarksTextarea {
+  width:686rpx;
+  height:320rpx;
+  border-radius:10rpx;
+  border:1px solid rgba(204,204,204,1);
+  box-sizing: border-box;
+  padding: 24rpx;
+}
+.placeStyle {
+  font-size: 28rpx;
+  color: #ccc;
+  width:638rpx;
+}
+.confirmRemarks {
+  width: 670rpx;
+  height: 94rpx;
+  border-radius: 47rpx;
+  color: #fff;
+  margin-top: 100rpx
+}
+.noWrite {
+  background:linear-gradient(135deg,rgba(251,83,50,.4) 0%,rgba(230,0,18,.4) 100%);
+}
+.hasWrite {
+  background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
+}

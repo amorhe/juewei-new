@@ -1,0 +1,172 @@
+<view class="bg">
+  <!-- 兑换详记录情页 分为 官方兑换和 兑换码(非官方)兑换商品 -->
+  <!-- 状态 -->
+  <view class="state">
+    <view class="state-title">
+      {{detail.status_name}}
+    </view>
+    <view class="sub-state" a:if="{{detail.status == 0}}">
+    剩余时间：14分58秒
+    </view>
+    <view class="sub-state" a:if="{{detail.receive_type == 2 || detail.get_start_time}}">
+    领取有效期：{{detail.get_start_time}} 至 {{detail.get_end_time}}
+    </view>
+    <view class="sub-state" a:if="{{detail.get_time != '0000-00-00 00:00:00'}}">
+    领取时间：{{detail.get_time}}
+    </view>
+  </view>
+  <view class="buttons" a:if="{{detail.status == 0}}">
+    <view class="c-button">取消订单</view>
+    <view class="o-button">立即支付</view>
+  </view>
+  <view class="detail">
+    <view class="body detail-item">
+      <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>
+      <view class="body-right">
+        <view class="good-title">
+            {{detail.goods_name}}
+        </view>
+        <view class="coast-bottom">
+          <view class="cost" a:if="{{ detail.order_point == 0 && detail.order_amount == 0 }}">
+            免费领
+          </view>
+          <view class="cost" a:if="{{ detail.order_point !=0 && detail.order_amount != 0 }}">
+           {{ detail.order_point}} 积分 + {{ detail.order_amount}} 元
+          </view>
+          <view class="cost" a:if="{{ detail.order_point !=0 && detail.order_amount == 0 }}">
+           {{ detail.order_point}} 积分
+          </view>
+          <view class="cost" a:if="{{ detail.order_point ==0 && detail.order_amount != 0 }}">
+          {{ detail.order_amount}} 元
+          </view>
+          <view class="b-button">
+            联系客服
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="user-detail">
+      <view class="user-list" a:if="{{detail.user_address_name}}">
+        <view class="user-left">
+        领取人
+        </view>
+        <view class="user-right">
+        {{detail.user_address_name}}
+        </view>
+      </view>
+
+      <view class="user-list">
+        <view class="user-left" a:if="{{detail.user_address_phone}}">
+        领取手机号码
+        </view>
+        <view class="user-right">
+        {{detail.user_address_phone}}
+        </view>
+      </view>
+
+      <view class="user-list" a:if="{{detail.shop_name}}">
+        <view class="user-left">
+        领取门店
+        </view>
+        <view class="user-right">
+          <view class="shop-name"> {{detail.shop_name}} </view>
+          <view class="code-button">导航</view>
+        </view>
+      </view>
+
+       <view class="user-list" a:if="{{detail.shop_name}}">
+        <view class="user-left">
+        </view>
+        <view class="user-right">
+         <view class="user-address">
+           {{detail.province}} {{detail.city}} {{detail.district}} {{detail.address}}
+         </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="get-shop" a:if="{{detail.code_img}}">
+      <view class="get-shop-title">
+        取商品
+      </view>
+      <view class="get-code">
+        <image mode="scaleToFill" src="{{'data:image/png;base64,'+detail.code_img}}"/>
+      </view>
+
+      <view class="get-shop-tips">
+        请将二维码出示给店员
+      </view>
+
+      <view class="get-code-string">
+        兑换码 {{detail.get_code}}
+      </view>
+    </view>
+
+    <view class="code" a:if="{{code}}">
+      <view class="code-title">兑换码：{{detail.code}}</view>
+      <view class="code-button">复制</view>
+    </view>
+    <view class="ul">
+      <view class="li" a:if="{{detail.start_time}}">
+        <view class="title">
+          活动时间
+        </view>
+        <view class="value">
+          {{detail.start_time}} 至 {{detail.end_time}}
+        </view>
+      </view>
+      <view class="li" a:if="{{detail.exchange_intro}}">
+        <view class="title">
+          兑换说明
+        </view>
+        <view class="value">
+          {{detail.exchange_intro}}
+        </view>
+      </view>
+      <view class="li" a:if="{{detail.intro}}">
+        <view class="title">
+          商品详情
+        </view>
+        <view class="value">
+          {{detail.intro}}
+        </view>
+      </view>
+      <view class="li" a:if="{{detail.exchange_limit_type}}">
+        <view class="title">
+          兑换次数
+        </view>
+        <view class="value">
+          {{detail.exchange_limit_type == 1?"每人每天":"活动期间"}} {{detail.exchange_limit_num}} 次
+        </view>
+      </view>
+    </view>
+    <view class="address detail-item" a:if="{{detail.receive_type == 2}}">
+      <view class="address-header">
+        {{detail.user_address_name}} {{detail.user_address_phone}}
+      </view>
+      <view class="address-footer">
+        {{ detail.user_address_detail_address || detail.user_address_address}}
+      </view>
+    </view>
+    <view class="order detail-item">
+      <view class="order-item">
+        <view class="item-name">
+      订单编号
+        </view>
+        <view class="item-value">
+          <text>{{detail.order_sn}}</text>
+          <view class="copy-button">复制</view>
+        </view>
+      </view>
+      <view class="order-item">
+        <view class="item-name">
+      订单时间
+        </view>
+        <view class="item-value">
+          <text>{{detail.order_ctime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

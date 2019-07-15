@@ -1,0 +1,6 @@
+{
+  "defaultTitle": "我的",
+  "usingComponents":{
+    "grid": "mini-antui/es/grid/index"
+  }
+}

@@ -1,0 +1,104 @@
+<view class="{{showShopcar?'contanier':''}}">
+<!-- 定位 -->
+<view class="goodsPosition">
+  <view class="positionLeft">
+    <image src="{{imageUrl}}position.png"/>
+    <text>{{firstAddress}}</text>
+    <image src="{{imageUrl}}arrow_right1.png"/>
+  </view>
+  <view class="positionRight">
+    <view class="{{type==1?'activeType':''}}" onTap="chooseTypes" data-type='waimai'>外卖</view>
+    <view class="{{type==2?'activeType':''}}" onTap="chooseTypes" data-type='ziti'>自提</view>
+  </view>
+</view>
+
+<view class="null"></view>
+
+<view class="closeIng" a:if="{{!isClose}}">
+  <view>您的定位地址配送门店未在营业时间 营业时间：10:00-22:00</view>
+  <image src="{{imageUrl}}close2.png" />
+</view>
+
+<view class="homeSwiper">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block a:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<image src="{{imageUrl}}advantage.png" class="goodsMessage" />
+
+<!-- 四个分类 -->
+<view class="fourType">
+  <navigator url="/package_my/pages/membercard/membercard">
+    <view>
+      <image src="{{imageUrl}}home_membercard.png" />
+      <view>会员卡</view>
+    </view>
+  </navigator>
+  <navigator url="/pages/vip/index/index" open-type="switchTab">
+    <view>
+      <image src="{{imageUrl}}home_vip.png" />
+      <view>VIP专享</view>
+    </view>
+  </navigator>
+  <navigator url="/package_my/pages/coupon/coupon">
+    <view>
+      <image src="{{imageUrl}}home_coupon.png" />
+      <view>卡券</view>
+    </view>
+  </navigator>
+  <navigator url="/package_my/pages/nearshop/nearshop">
+    <view>
+      <image src="{{imageUrl}}home_nearshop.png" />
+      <view>附近门店</view>
+    </view>
+  </navigator>
+</view>
+
+<!-- 活动展位 -->
+<view class="activityBox">
+  <image src="../../common/img/img1.png"/>
+  <view>
+    <image src="../../common/img/img2.png"/>
+    <image src="../../common/img/img3.png"/>
+  </view>
+</view>
+
+<view class="activityWrap">
+  <image src="../../common/img/peisong.png" />
+</view>
+<view style="height:100rpx;" hidden="{{!scroll_y}}"></view>
+<navigator url="/package_my/pages/chooseshop/chooseshop" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
+  <!-- 推荐门店 -->
+  <view class="shopDefault">
+    <view>
+      <view class="jingxuan">精选</view>
+      <view class="shopMessage">
+        <view>绝味鸭脖（定福庄西街店）</view>
+        <view>在售商品数30</view>
+      </view>
+    </view>
+
+    <view>
+      <view class="shopDefaultRight">
+        <view>
+          <image src="{{imageUrl}}position.png"/>
+          <view>距离1000米</view>
+        </view>
+        <view>
+          <view class="typeBtn1">外卖</view>
+          <view class="typeBtn2">自提</view>
+        </view>
+      </view>
+      <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+    </view>
+  </view>
+</navigator>
+
+<!-- 购物车 -->
+<shopcart scrollY="{{scroll_y}}"  />
+</view>

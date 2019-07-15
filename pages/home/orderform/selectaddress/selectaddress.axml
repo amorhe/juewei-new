@@ -1,0 +1,36 @@
+<view class="addressView">
+   <radio-group class="radio-group" onChange="radioChange" name="lib">
+      <view class="borderBottomSolid" a:for="{{addressList}}">
+        <view class="flexSpecial">
+          <radio value="{{item.id}}" checked="{{item.checked}}" color="#E60012"/>
+          <view class="receiverView">
+            <view>{{item.address}}</view>
+            <view class="fontSmallGray">{{item.name}} {{item.phone}}</view>
+          </view>
+        </view>
+        <image class="ImageFourty" mode="scaleToFill" src="../../../common/img/edit.png"/>
+      </view>
+   </radio-group>
+
+   <view class="noUseView">
+     <view class="viewTitle">以下地址超出配送范围</view>
+     <view class="borderBottomSolid addressUl colorNine" a:for="{{addressList}}" onTap="chooseNewAddress">
+        <view class="flexSpecial">
+          <view class="receives">
+            <view>{{item.address}}</view>
+            <view class="fontSmallGray">{{item.name}} {{item.phone}}</view>
+          </view>
+        </view>
+        <image class="ImageFourty" mode="scaleToFill" src="../../../common/img/edit.png"/>
+      </view>
+   </view>
+<!-- 添加新地址 -->
+   <view style="height:96rpx;"></view>
+   <view class="addView">
+     <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}add.png"/>
+     <view class="fontThirtySix marginLSixteen">新增收获地址</view>
+   </view>
+</view>
+
+<!-- 弹框 -->
+<confirm title="超出配送范围" content="该地址与商家距离较远，是否使用该地址为定位地址" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" />

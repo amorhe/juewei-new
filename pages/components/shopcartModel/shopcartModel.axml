@@ -1,0 +1,73 @@
+<view style="width:750rpx;height:146rpx;"></view>
+<view class="goodsBottom">
+  <view class="fullReduce">满48减8；满68减10；满98减20</view>
+  <view class="shopcart">
+    <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
+    <image onTap="openShopcart" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount">2</view>
+    <view class="haveGoods">
+      <view>
+        <text>￥</text>
+        <text>39.6</text>
+      </view>
+      <view>另需配送费6元</view>
+    </view>
+    <!-- <view>另需配送费6元</view> -->
+    <view class="buyBtn">￥30起送</view>
+  </view>
+</view>
+<!-- 购物车弹框 -->
+<view  a:if="{{showShopcar}}" class="shopcarContent">
+  <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view>
+  <view class="clearShopcar" onTap="clearShopcart">
+    <image src="../../common/img/deleteIcon.png" />
+    <text>清空购物车</text>
+  </view>
+  <view class="shopcartWrap">
+    <view class="goodsLi" a:for="{{8}}">
+      <view class="goodsNameI">
+        <view>
+          <text>招牌鸭脖</text>
+          <text>（超辣）</text>
+        </view>
+        <view>大份</view>
+      </view>
+      <view class="goodsPriceBox">
+        <text class="goodsOldPrice">￥28</text>
+        <text class="numberColor">￥30</text>
+      </view>
+      <view class="goodsNumber">
+        <image src="{{imageUrl}}goods_reduce.png" />
+        <text>1</text>
+        <image src="{{imageUrl}}goods_add.png" />
+      </view>
+    </view>
+  </view>
+  <view>
+  <view class="nullView"></view>
+  <view class="shopcart">
+    <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
+    <image class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount">2</view>
+    <view class="haveGoods">
+      <view>
+        <text>￥</text>
+        <text>60</text>
+      </view>
+      <view>另需配送费6元</view>
+    </view>
+    <!-- <view>另需配送费6元</view> -->
+    <!-- <view class="buyBtn">￥30起送</view> -->
+    <!-- <view class="buyBtn">未营业</view> -->
+    <view class="buyBtn canBuy">立即购买</view>
+  </view>
+</view>
+
+
+</view>
+<!-- 弹框组件 -->
+<confirm content="是否清空购物车" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" />
+<!-- 遮罩层 -->
+<view a:if="{{mask1}}" class="mask" onTap="hiddenShopcart"></view>
+
+

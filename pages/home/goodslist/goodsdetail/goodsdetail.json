@@ -1,0 +1,8 @@
+{
+  "defaultTitle": "绝味鸭脖",
+  "usingComponents": {
+    "tabs": "mini-antui/es/tabs/index",
+    "tab-content": "mini-antui/es/tabs/tab-content/index",
+    "shopcart-model": "../../../components/shopcartModel/shopcartModel"
+  }
+}

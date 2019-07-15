@@ -1,0 +1,34 @@
+.orderfinishView {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.orderfinishView>view:nth-child(1)  {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+}
+.successIcon {
+  width: 136rpx;
+  height: 136rpx;
+  margin-bottom: 17rpx;
+}
+.checkOrder {
+  width:670rpx;
+  height:96rpx;
+  background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
+  border-radius:47rpx;
+  color: #fff;
+  font-size: 36rpx;
+  margin-bottom: 80rpx;
+}
+.adView {
+  width: 686rpx;
+}
+.adView>image {
+  width: 100%;
+  height: 260rpx;
+  margin-bottom: 16rpx;
+  border-radius:10rpx;
+}

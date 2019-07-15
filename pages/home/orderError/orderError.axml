@@ -1,0 +1,7 @@
+<view class="orderfinishView">
+  <view>
+    <image class="successIcon" mode="scaleToFill" src="{{imageUrl}}fail.png"/>
+    <view class="fontThirtyFour">支付失败</view>
+  </view>
+  <button size="default" class="checkOrder" hover-class="none">继续购买</button>
+</view>

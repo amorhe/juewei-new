@@ -1,0 +1,37 @@
+<!-- 遮罩层 -->
+<view class="mask" a:if="{{maskView}}" onTap="closeModal"></view>
+
+<view class="goodsModalBox" a:if="{{goodsModal}}">
+  <view class="goodsTop">
+    <view>
+      <image class="goods_image" mode="scaleToFill" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3869520246,1293354013&fm=26&gp=0.jpg"/>
+      <view>
+        <view class="fontThirtyFour marginBSixteen">招牌鸭脖</view>
+        <view class="fontSmallGray">已售:178579份</view>
+      </view>
+    </view>
+    <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}close1.png" onTap="closeModal"/>
+  </view>
+  <view class="goods_size">
+    <view class="fontTwentySix marginBSixteen">规格</view>
+    <view class="goods_size_item">
+      <view class="{{size==1?'itemActive':''}}" onTap="chooseSize" data-size="1">大份</view>
+      <view class="{{size==2?'itemActive':''}}" onTap="chooseSize" data-size="2">小份</view>
+    </view>
+  </view>
+
+  <view class="goods_bottom_view">
+    <view class="numberColor">
+      <text>￥</text>
+      <text class="goods_prices">20</text>
+      <text>起</text>
+      <text class="colorNine" a:if="{{size!=0}}">（大份）</text>
+    </view>
+    <view class="{{size==0?'add_shopcart noChoose':'add_shopcart hasChoose'}}" disabled="{{size==0}}">
+      <image class="normalImage" mode="scaleToFill" src="../../common/img/shopcart_1.png"/>
+      <view class="marginLEight">加入购物车</view>
+    </view>
+  </view>
+
+</view>
+

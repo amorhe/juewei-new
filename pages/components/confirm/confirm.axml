@@ -1,0 +1,11 @@
+<!-- 遮罩层 -->
+<view a:if="{{mask}}" class="mask" onTap="hiddenShopcart"></view>
+
+<view class="modalView" a:if="{{modalShow}}">
+  <view a:if="{{title}}" class="modalTitle">{{title}}</view>
+  <view class="modalContent">{{content}}</view>
+  <view class="modalBtn">
+   <button onTap="confirmTap" hover-class="none">{{confirmButtonText}}</button>
+   <button onTap="cancelTap" hover-class="none">{{cancelButtonText}}</button>
+  </view>
+</view>

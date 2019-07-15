@@ -1,0 +1,66 @@
+<view>
+  <view class="header">
+    <swiper>
+      <block a:for="{{detail.goods_pic}}">
+        <swiper-item >
+          <image class="img" mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>     
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="header-wrap">
+      <view class="title">
+        {{detail.goods_name}}
+      </view>
+      <view class="coast">
+           {{detail.point}}
+        <text>积分</text>
+      </view>
+
+      <view class="bottom"  style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
+
+      <view class="bottom">
+        已抢{{((detail.total_num-detail.valid_num)/detail.total_num) *100}}%
+
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+
+   <view class="footer-title">
+     活动时间
+   </view>
+   <view class="footet-containt">
+     {{detail.start_time}}至{{detail.end_time}}
+   </view>
+
+
+  <view class="footer-title"> 
+     兑换说明
+   </view>
+   {{detail.exchange_intro}}
+
+
+  <view class="footer-title">     
+     商品详情
+   </view>
+   {{detail.intro}}
+   
+
+  <view class="footer-title">     
+     兑换次数
+   </view>
+   <view class="footet-containt">
+    {{detail.exchange_limit_type==1?"每人每天":"活动期间"}}
+    {{detail.exchange_limit_num}}
+      次
+   </view> 
+   
+
+
+  </view>
+
+  <view class="btn" onTap="showConfirm">立即兑换</view>
+
+  <view style="height:140rpx"></view>
+</view>

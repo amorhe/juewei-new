@@ -1,0 +1,248 @@
+<view class="orderContainer">
+  <!-- 外卖 -->
+  <view class="addressView" a:if="{{orderType==1}}">
+    <view class="noAddress">
+      <!-- 选择地址前 -->
+      <text>选择收货地址</text>
+      <!-- 选择地址后 -->
+      <!-- <view>
+        <view class="fontFourty fontBold marginBEight">紫檀大厦 606</view>
+        <view class="fontGray fontTwentySix">小春（先生） 188 8888 8888</view>
+      </view> -->
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+  </view>
+  <!-- 自提 -->
+  <view class="deliverView" a:if="{{orderType==2}}">
+    <view class="fontThirtySix fontBold">朝阳区青年路甘露园中里2号E-1地铁层商 铺朝阳区青</view>
+    <view class="mapBox">
+      <map style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"></map>
+    </view>
+    <view class="deliverMiddle flexNormal">
+      <view>
+        <text class="colorNine marginBEight">自提时间</text>
+        <text>今日 10:30-22:30</text>
+      </view>
+      <view>
+        <text class="colorNine marginBEight">会员电话</text>
+        <text>188 8888 8888</text>
+      </view>
+    </view>
+    <view class="flexSpecial">
+      <image a:if="{{!isCheck}}" onTap="checkedTrueTap" class="normalImage" mode="scaleToFill" src="../../common/img/checkedFalse.png"/>
+      <image a:if="{{isCheck}}" onTap="checkedTrueTap" class="normalImage" mode="scaleToFill" src="../../common/img/checkedTrue.png"/>
+      <view class="flexNormal marginLEight fontTweentyTwo">
+        <text>同意</text>
+        <navigator url="/pages/home/orderform/agreement/agreement" style="color:#108EE9" hover-class="none">《到店自提服务协议》</navigator>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="orderList_box">
+    <view class="ordershopName borderBottomSolid">绝味鸭脖（定福庄西街店）</view>
+    <view class="order_list">
+      <view a:for="{{2}}">
+        <view class="listLeft">
+          <image class="ordergoodsImage" mode="scaleToFill" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3903606479,4039726850&fm=26&gp=0.jpg"/>
+          <view>
+            <view>
+              <image class="normalImage" mode="scaleToFill" src="../../common/img/rebate.png"/>
+              <text class="marginLEight">招牌鸭脖</text>
+              <text class="fontSmallGray">（超辣）</text>
+            </view>
+            <view class="fontSmallGray">大份</view>
+          </view>
+        </view>
+
+        <view class="listRight">
+          <view class="ordergoodsCount">x1</view>
+          <view class="flexNormal">
+            <view class="ordergoodsOld">
+              <text class="fontTwentyTwo">￥</text>
+              <text>32</text>
+            </view>
+            <view>
+              <text class="fontTwentyTwo">￥</text>
+              <text>28</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="track">
+      <text>配送费</text>
+      <view>
+        <view class="ordergoodsOld">
+          <text class="fontTwentyTwo">￥</text>
+          <text>10</text>
+        </view>
+        <view class="numberColor">
+          <text class="fontTwentyTwo">￥</text>
+          <text>8</text>
+        </view>
+      </view>
+    </view>
+    <view class="track paddingBThirty borderBottomSolid">
+      <view>
+        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}reduce.png"/>
+        <text class="marginLSixteen">满减活动</text>
+      </view>
+      <view>
+        <view class="numberColor">
+          <text class="fontTwentyTwo">-￥</text>
+          <text>8</text>
+        </view>
+      </view>
+    </view>
+    <view class="track paddingBThirty borderBottomSolid">
+      <view>
+        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
+        <text class="marginLSixteen">优惠券</text>
+      </view>
+      <view>
+        <text>无可用红包</text>
+        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      </view>
+    </view>
+    
+    <!-- 优惠券 -->
+    <view class="track paddingBThirty borderBottomSolid">
+      <view>
+        <image class="normalImage" mode="scaleToFill" src="../../common/img/free.png"/>
+        <text class="marginLSixteen">全场通享优惠券 满100减10</text>
+      </view>
+    </view>
+
+    <view class="track">
+      <view>
+        <text class="fontTwentyTwo">优惠说明</text>
+        <image class="normalImage" mode="scaleToFill" src="../../common/img/explain.png"/>
+      </view>
+      <view>
+        <view class="fontTwentySix">
+          <text>已优惠</text>
+          <text class="numberColor">¥35</text>
+        </view>
+        <view class="marginLEight">
+          <text class="fontTwentySix">小计¥</text>
+          <text class="fontFourtyWeight">35</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+  <!-- 换购商品 -->
+  <view class="repurse">
+    <view class="reqpurseBox">
+      <view class="fontBold">超值换购</view>
+      <view class="fontSmallGray marginLEight">只能换购一件商品</view>
+    </view>
+    <!-- 换购商品有多个 -->
+    <scroll-view class="repurseView" scroll-x a:if="{{repurseList.length>1}}">
+     <view style="width:{{581*repurseList.length}}rpx">
+       <view class="repurseGoodsInfo" a:for="{{repurseList}}">
+         <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.img}}"/>
+         <view>
+           <view>
+             <text>{{item.goodsName}}</text>
+             <text class="fontSmallGray">（{{item.goodsType}}）</text>
+           </view>
+
+           <view class="flexNormal">
+             <view class="repurseBottom fontSmallGray">
+                <view>
+                  <text class="repurseNumbers">{{item.goodsNum}}人</text>
+                  <text>参与换购</text>
+                </view>
+                <view>
+                  <text class="numberColor">￥{{item.price}}</text>
+                  <text class="purseGoodsOld">￥{{item.oldPrice}}</text>
+                </view>
+             </view>
+              <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+              </view>
+           </view>
+         </view>
+       </view>
+     </view>
+    </scroll-view>
+
+    <view class="repurseGoodsInfo" a:for="{{repurseList}}" style="width:654rpx">
+      <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.img}}"/>
+      <view>
+        <view>
+          <text>{{item.goodsName}}</text>
+          <text class="fontSmallGray">（{{item.goodsType}}）</text>
+        </view>
+
+        <view class="flexNormal">
+          <view class="repurseBottom fontSmallGray">
+            <view>
+              <text class="repurseNumbers">{{item.goodsNum}}人</text>
+              <text>参与换购</text>
+            </view>
+            <view>
+              <text class="numberColor">￥{{item.price}}</text>
+              <text class="purseGoodsOld">￥{{item.oldPrice}}</text>
+            </view>
+          </view>
+          <view class="goodsNumber" a:if="{{countN!=0}}">
+            <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
+            <text>{{countN}}</text>
+            <image src="{{imageUrl}}goods_add.png" onTap="addBtnTap"/>
+          </view>
+        </view>
+      </view>
+      <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" a:if="{{countN==0}}">换购</button>  
+    </view>
+
+    <view class="repursePrice" a:if="{{repurseList.length>1}}">
+      <text class="fontTwentySix">小计¥</text>
+      <text class="fontFourty fontBold">35</text>
+    </view>
+  </view>
+
+  <view>
+    <navigator url="/pages/home/orderform/remarks/remarks" class="flexNormal remarks paddingRTwenty">
+      <view class="fontBold">备注</view>
+      <view class="colorNine">
+        <text>口味偏好等要求</text>
+        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      </view>
+    </navigator>
+  </view>
+</view>
+
+<view class="null"></view>
+<!-- 底部支付 -->
+<view class="orderConfirm">
+  <view class="colorNine">已优惠¥35</view>
+  <view class="orderPrimary">
+    <view>
+      <text>合计</text>
+      <text class="numberColor">¥</text>
+      <text class="numberColor fontFourty fontBold">35</text>
+    </view>
+    <button size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
+  </view>
+</view>
+
+<!-- 换购提示 -->
+<view class="repurseToast fontTwentyTwo">
+  <view>
+    <text class="fontSmallGray">加</text>
+    <text class="numberColor">￥5</text>
+    <text class="fontSmallGray">超级换购</text>
+    <text>「招牌鸭脖」</text>
+    <text class="fontSmallGray">等商品</text>
+  </view>
+  <image class="normalImage" mode="scaleToFill" src="../../common/img/arrow_low.png"/>
+</view>
+
+<!-- 各种订单商品状态 -->
+<confirm content="{{content}}" confirmButtonText="重新选择" cancelButtonText="继续结算" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne"/>

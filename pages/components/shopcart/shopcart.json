@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "shopcart-model": "../../components/shopcartModel/shopcartModel",
+    "goods-modal": "../goodsModal/goodsModal"
+  }
+}

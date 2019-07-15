@@ -1,0 +1,11 @@
+<view class="redeemCode">
+  <view a:for="{{6}}">
+    <image class="codeSize" src="{{imageUrl}}coupon.png" /> 
+    <view class="redeemContent">
+      <view class="fontBold">樊登小读者21天</view> 
+      <view class="fontSmallGray">活动赠品</view> 
+      <view class="fontTwentyTwo">有效时间 2019-04-13 23:50:59</view>
+    </view> 
+    <image class="guoqi" src="../../../../pages/common/img/guoqi.png" />            
+  </view>
+</view>
