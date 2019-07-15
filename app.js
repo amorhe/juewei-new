@@ -1,29 +1,22 @@
-import {loginByAliUid} from './pages/common/js/home'
+import {loginByAliUid,getuserInfo} from './pages/common/js/login'
 import {baseUrl} from './pages/common/js/baseUrl'
 App({
-  onLaunch(options) {
+   onLaunch(options) {
     // 第一次打开
     var that=this;
     // options.query == {number:1}
      //获取授权
-    // my.getAuthCode({
-    //   scopes: ['auth_user'],
-    //   success: (res) => {
-    //     // loginByAliUid(res.authCode);
-    //     my.request({
-    //       url: baseUrl + '/juewei-api/alimini/loginByAliUid',
-    //       data:{
-    //         auth_code: res.authCode
-    //       },
-    //       methods:"POST",
-    //       success: (data) => {
-    //         my.alert({
-    //           content: data 
-    //         });
-    //       },
-    //     });
-    //   },
-    // });
+    my.getAuthCode({
+      scopes: ['auth_base'],
+      success: (res) => {
+       
+      },
+    });
+    this.getUserInfo("4966-inviq2t1sdl3s95idh7a0s1dn1");
+  },
+  getUserInfo(_sid){
+    const data  = getuserInfo(_sid);
+    console.log(data);
   },
   onShow(options) {//多次执行
     // 从后台被 scheme 重新打开

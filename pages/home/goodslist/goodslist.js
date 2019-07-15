@@ -1,5 +1,6 @@
 import {imageUrl} from '../../common/js/baseUrl'
 import {bannerList} from '../../common/js/home'
+import {loginByAliUid} from '../../common/js/login'
 var app=getApp(); //放在顶部
 Page({
   data: {
@@ -36,6 +37,7 @@ Page({
         autoplay:true
       })
     }
+    this.getBannerList(110100,110105,1,1);
   },
   onShow() {
     // 页面显示 每次显示都执行
@@ -48,17 +50,31 @@ Page({
 
    
   },
-  onGetAuthorize(res) {
-    console.log(1);
-     my.getOpenUserInfo({
-      fail: (res) => {
-      },
-      success: (res) => {
-        let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
-        my.alert({
-         content:userInfo 
+  onGetAuthorize() {
+    my.getAuthCode({
+      success: (ref) => {
+        my.getOpenUserInfo({
+          fail: (res) => {
+          },
+          success: (res) => {
+            let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
+            const data = loginByAliUid(ref.authCode,userInfo.nickName,userInfo.avatar);
+            console.log(data)
+          }
         });
-      }
+      },
+    });
+  },
+  onGetPhone(){
+    my.getPhoneNumber({
+      success: (res) => {
+          let encryptedData = res.response;
+          console.log(encryptedData)
+      },
+      fail: (res) => {
+          console.log(res);
+          console.log('getPhoneNumber_fail');
+      },
     });
   },
     // 切换外卖自提
@@ -74,8 +90,9 @@ Page({
     }
   },
   // 首页banner列表
-  bannerList(){
-    
+  getBannerList(city_id,district_id,company_id,release_channel){
+    const data =  bannerList(city_id,district_id,company_id,release_channel);
+    console.log(data)
   },
   onHide() {
     // 页面隐藏
