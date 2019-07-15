@@ -14,13 +14,34 @@
       <view class="pay">立即支付</view>
     </view>
   </view>
-
-
-
   <view class="good">
     <view class="address">
       <view>绝味鸭脖（定福庄细节点）</view>
       <image mode="scaleToFill" src="{{imageUrl}}telephone.png"/>
+    </view>
+    <view class="good-list">
+      <view class="good-item">
+        <image mode="scaleToFill" src=""/>
+        <view class="body">
+          <view class="name">
+            <view class="top">
+              <view class="image">折</view>
+              <view>
+                 招牌鸭脖
+                <text>（超辣）</text>
+              </view>
+            </view>
+          </view>
+          <view class="size">大份</view>
+        </view>
+        <view class="num">
+          x1
+        </view>
+        <view class="price">
+          <text class="del"> ￥32</text>
+          <text>￥28</text>
+        </view>
+      </view>
     </view>
   </view>
 </view>

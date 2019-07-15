@@ -57,6 +57,105 @@
   margin-right: 24rpx
 }
 
-.good{
+.good {
+  background: white;
+  width: 702rpx;
+  margin: 16rpx auto;
+  padding: 30rpx 24rpx;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+}
 
+.address {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+  padding: 0 0 30rpx 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.address image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.good-list {
+  margin-top: 24rpx;
+}
+
+.good-item image {
+  width: 86rpx;
+  height: 86rpx;
+  border: 1px solid #f2f2f2;
+  margin-right: 28rpx;
+}
+
+.good-item {
+  display: flex;
+  align-items: center;
+}
+
+.body{
+  width: 320rpx;
+  height: 86rpx;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.num{
+  flex: 1;
+font-size:22rpx;
+font-weight:400;
+color:rgba(51,51,51,1);
+}
+
+.price{
+font-size:28rpx;
+font-weight:400;
+color:rgba(51,51,51,1);
+}
+
+.del{
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 16rpx;
+}
+
+.name{
+  display: flex;
+}
+
+.top{
+  display: flex;
+  align-items: center;
+}
+
+.top text{
+font-size:22rpx;
+font-weight:400;
+color: #999;
+}
+
+.size{
+font-size:22rpx;
+font-weight:400;
+color:rgba(153,153,153,1);
+}
+
+.name .image {
+  width: 28rpx;
+  height: 28rpx;
+  background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
+  border-radius: 4rpx;
+  font-size: 22rpx;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  line-height: 28rpx;
+  margin-right: 5rpx;
 }
