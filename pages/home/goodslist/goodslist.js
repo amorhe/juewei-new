@@ -1,4 +1,4 @@
-import {imageUrl} from '../../common/js/baseUrl'
+import {imageUrl,imageUrl2} from '../../common/js/baseUrl'
 import {bannerList} from '../../common/js/home'
 import {loginByAliUid} from '../../common/js/login'
 var app=getApp(); //放在顶部
@@ -6,6 +6,7 @@ Page({
   data: {
     scroll_y: false,
     imageUrl,
+    imageUrl2,
     firstAddress:'紫檀大厦',  
     type:1,  //默认外卖
     isClose: false,  //是否营业，true为营业中
@@ -59,7 +60,6 @@ Page({
           success: (res) => {
             let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
             const data = loginByAliUid(ref.authCode,userInfo.nickName,userInfo.avatar);
-            console.log(data)
           }
         });
       },
@@ -91,8 +91,11 @@ Page({
   },
   // 首页banner列表
   getBannerList(city_id,district_id,company_id,release_channel){
-    const data =  bannerList(city_id,district_id,company_id,release_channel);
-    console.log(data)
+     bannerList(city_id,district_id,company_id,release_channel).then((data) => {
+       this.setData({
+        imgUrls:data.data
+       })
+     });
   },
   onHide() {
     // 页面隐藏

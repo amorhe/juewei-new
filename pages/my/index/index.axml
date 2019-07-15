@@ -1,5 +1,66 @@
-<view>
-  <view>我的</view>
-  <grid onGridItemClick="onItemClick" columnNum="{{4}}" list="{{gridelist}}" />
-  <navigator open-type="navigate" url="/package_my/pages/onlineservice/onlineservice" hover-class="navigator-hover">客服</navigator>
+<view class="myContent">
+  <view class="myTop flexNormal">
+    <view class="flexSpecial">
+      <image class="avatar" mode="scaleToFill" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=311097710,965735535&fm=27&gp=0.jpg"/>
+      <view class="fontFourtyWeight">绝味会员</view>
+    </view>
+    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png"/>
+  </view>
+
+  <view class="vipView">
+    <view class="flexNormal">
+      <view>会员卡</view>
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png"/>
+    </view>
+     <image class="vipcardPng" mode="scaleToFill" src="{{imageUrl}}position_tit.png"/>
+     <image class="qingxie" mode="scaleToFill" src="../../common/img/qingxie.png"/>
+  </view>
+  <!-- 下面的菜单 -->
+  <view class="my_menu">
+    <view class="fontBold">我的服务</view>
+    <view class="menuList">
+      <view>
+        <view>
+         <view>
+            <image mode="scaleToFill" src="{{imageUrl}}my_coupon.png"/>
+            <view>卡券</view>
+         </view>
+        </view>
+      </view>
+      <view>
+        <view>
+          <view>
+            <image mode="scaleToFill" src="{{imageUrl}}my_points.png"/>
+            <view>积分</view>
+          </view>
+        </view>
+      </view>
+      <view>
+        <view>
+          <view>
+            <image mode="scaleToFill" src="{{imageUrl}}my_address.png"/>
+            <view>地址</view>
+          </view>
+        </view>
+      </view>
+      <view>
+        <view>
+          <view>
+            <image mode="scaleToFill" src="{{imageUrl}}my_nearshop.png"/>
+            <view>附近门店</view>
+          </view>
+        </view>
+      </view>
+      <view>
+        <view>
+          <view>
+            <image mode="scaleToFill" src="{{imageUrl}}menu_vip2.png"/>
+            <view>专享权益</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
+
+<image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/>

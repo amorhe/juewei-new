@@ -1,5 +1,7 @@
+import {imageUrl} from '../../common/js/baseUrl'
 Page({
   data: {
+    imageUrl,
     gridelist: [
       {
         icon: 'https://gw.alipayobjects.com/zos/rmsportal/VBqNBOiGYkCjqocXjdUj.png',
@@ -29,10 +31,4 @@ Page({
     ]
   },
   onLoad() {},
-  onItemClick(ev) {
-    var data=this.data.gridelist[ev.detail.index];
-    my.navigateTo({
-       url: data.path
-    })
-  },
 });
