@@ -1,10 +1,9 @@
-import { ajax, _sid, parseData } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
   data: {
     imageUrl2,
-    _sid,
     detail: {
       "id": "355",
       "goods_name": "123",
@@ -60,11 +59,12 @@ Page({
     if (code === 100) {
       let _exchange_intro = await this.parseData(exchange_intro)
       let _intro = await this.parseData(intro)
-      console.log(intro)
       this.setData({
         detail: {
-          exchange_intro: _exchange_intro,
-          intro: _intro,
+          intro,
+          _intro,
+          exchange_intro,
+          _exchange_intro,
           ...Data
         }
       })
@@ -73,14 +73,12 @@ Page({
 
   async createOrder() {
     let { id, exchange_type, point, amount } = this.data.detail;
-    let { _sid } = this.data;
 
     let params = {
       'goods[goods_id]': id,
       'goods[exchange_type]': exchange_type,
       'goods[point]': point,
       'goods[amount]': amount,
-      _sid
     }
     let { code, data } = await ajax('/mini/vip/wap/trade/create_order', params)
     if (code === 100) {
@@ -89,15 +87,14 @@ Page({
   },
 
   async confirmOrder(order_sn) {
-    let { _sid } = this.data;
-    let params = { order_sn, _sid }
+    let params = { order_sn, }
     let { code, data } = await ajax('/mini/vip/wap/trade/confirm_order', params)
     return code === 100
   },
 
   async pay(order_sn) {
     let { code, data } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
-    if (cdoe === 0) {
+    if (code === 0) {
       return { code, data }
     }
   },
@@ -121,17 +118,13 @@ Page({
             // 有钱的订单或者有运费的订单才调起支付
             // 调用确认订单接口，然后调起支付
             // id = -1 兑换失败
+
+            // 虚拟物品
             if (goods_type == 1) {
               let { order_id, order_sn } = await this.createOrder()
               let res = await this.confirmOrder(order_sn)
 
-              if (amount !== '0') {
-                let { code, data } = await this.pay(order_sn)
-                if (code !== 0) {
-                  fail = true
-                }
-              }
-
+              if (!res) { fail = true }
 
               // 虚拟订单 + 兑换码 => 无需发货
               if (goods_detail_type == 2 && receive_type == 0) {
@@ -149,19 +142,33 @@ Page({
               }
             }
 
-            // 实物订单 + 快递 => 公司邮寄
-            if (goods_type == 2 && receive_type == 2) {
-              my.navigateTo({
-                url: './finish/finish?receive_type=2'
-              });
+            // 实物商品，
+            // 点击兑换按钮，
+            // 调用创建订单接口，
+            // 填写页面表单信息，
+            // 然后点击支付按钮，
+            // 调用确认订单接口，
+            // 然后调起支付
+
+            if (goods_type == 2) {
+              let { order_id } = await this.createOrder()
+
+              // 实物订单  公司邮寄
+              if (goods_type == 2 && receive_type == 2) {
+                my.navigateTo({
+                  url: './finish/finish?receive_type=2'
+                });
+              }
+
+              // 实物订单  到店领取
+              if (goods_type == 2 && receive_type == 1) {
+
+                my.navigateTo({
+                  url: '../waitpay/waitpay?id=' + order_id
+                });
+              }
             }
 
-            // 实物订单 + 无需发货 => 到店领取
-            if (goods_type == 2 && receive_type == 1) {
-              my.navigateTo({
-                url: '../finish/finish?receive_type=1'
-              });
-            }
 
           }
         },

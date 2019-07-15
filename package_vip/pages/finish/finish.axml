@@ -23,8 +23,8 @@
       <view class="copy-left">兑换码：{{d.get_code}}</view>
       <view class="copy-right">复制</view>
     </view>
-    <view class="explain">
-      <view class="explain-title" a:if="{{d.exchange_intro}}">兑换说明</view>
+    <view class="explain" a:if="{{d.exchange_intro}}">
+      <view class="explain-title">兑换说明</view>
       <rich-text nodes="{{d._exchange_intro}}"></rich-text>
       <!-- <view class="explain-detail">
         在
@@ -32,8 +32,8 @@
         <view>活动所有权归本公司所有。</view>
       </view> -->
     </view>
-    <view class="explain">
-      <view class="explain-title" a:if="{{d.intro}}">兑换说明</view>
+    <view class="explain" a:if="{{d.intro}}">
+      <view class="explain-title">兑换说明</view>
       <rich-text nodes="{{d._intro}}"></rich-text>
       <!-- <view class="explain-detail">
         <view>全场通用</view>
