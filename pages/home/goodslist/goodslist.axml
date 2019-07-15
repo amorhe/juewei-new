@@ -1,11 +1,11 @@
 <view class="{{showShopcar?'contanier':''}}">
 <!-- 定位 -->
 <view class="goodsPosition">
-  <view class="positionLeft">
+  <navigator url="/pages/home/selecttarget/selecttarget" class="positionLeft" >
     <image src="{{imageUrl}}position.png"/>
     <text>{{firstAddress}}</text>
     <image src="{{imageUrl}}arrow_right1.png"/>
-  </view>
+  </navigator>
   <view class="positionRight">
     <view class="{{type==1?'activeType':''}}" onTap="chooseTypes" data-type='waimai'>外卖</view>
     <view class="{{type==2?'activeType':''}}" onTap="chooseTypes" data-type='ziti'>自提</view>
@@ -13,6 +13,9 @@
 </view>
 
 <view class="null"></view>
+
+<button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" 
+scope='userInfo'>授权登录</button>
 
 <view class="closeIng" a:if="{{!isClose}}">
   <view>您的定位地址配送门店未在营业时间 营业时间：10:00-22:00</view>

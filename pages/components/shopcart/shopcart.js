@@ -51,13 +51,13 @@ Component({
     },
     scrollEvent(e){
       // 套餐
-      my.createSelectorQuery().select('.taocan').boundingClientRect().exec((ret)=>{
-       if(ret[0].top<114) {
-        this.setData({
-          goodsType: 2
-        })
-       }
-      })
+      // my.createSelectorQuery().select('.taocan').boundingClientRect().exec((ret)=>{
+      //  if(ret[0].top<114) {
+      //   this.setData({
+      //     goodsType: 2
+      //   })
+      //  }
+      // })
       // 爆款
       // my.createSelectorQuery().select('.baokuan').boundingClientRect().exec((ret)=>{
       //  if(ret[0].top<114) {
