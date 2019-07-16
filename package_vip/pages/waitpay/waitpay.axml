@@ -1,18 +1,18 @@
 <view>
   <!-- 带支付页面 实物邮寄，实物门店，虚拟商品直接跳过到兑换成功页 -->
   <!-- 等待支付 -->
-  <view class="wait-pay">
+  <view class="wait-pay" a:if="{{d.limit_pay_second}}">
     <text class="wait-pay-title">支付剩余时间：</text>
-    <text class="wait-pay-time">14分59秒</text>
+    <text class="wait-pay-time">{{d.limit_pay_minute}}分{{d.limit_pay_second}}秒</text>
   </view>
   <!-- 实物邮寄 -->
-  <view onTap="showWriteAddress">
-    <view class="address">
+  <view >
+    <view class="address" a:if="{{d.receive_type == 2}}">
       <view class="address-title">请填写收货地址</view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
 
-    <view class="address">
+    <view class="address" a:if="{{d.receive_type == 2}}">
       <view class="address-title">
         <view>小魔女 199 9999 9999</view>
         <view class="address-sm">北京市朝阳区某某某某某某某某某某某某某街</view>
@@ -21,7 +21,7 @@
     </view>
 
     <!-- 实物门店 -->
-    <view class="store">
+    <view class="store" a:if="{{d.receive_type == 1}}">
       <view class="list">
         <view class="item">领取人</view>
         <input placeholder="姓名" data-key="phone" onInput="handelChange"/>
@@ -34,7 +34,7 @@
 
       <view class="select-address list" onTap="showSelectAddress">
         <view class="item">领取城市</view>
-        <input placeholder="请选择领取城市" disabled="true" data-key="phone" onInput="handelChange"/>
+        <input placeholder="请选择领取城市" disabled="true" data-key="phone" value="{{address}}" onInput="handelChange"/>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
 
@@ -49,25 +49,25 @@
 
     <view class="p-good">
       <view class="p-detail">
-        <image class="p-img" mode="scaleToFill" src="{{imageUrl}}success.png"/>
+        <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
         <view class="p-right">
           <view class="p-title">
-      幸福西饼6寸蛋糕
+      {{d.goods_name}}
           </view>
           <view class="p-price">
-      2200积分
+         {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
           </view>
         </view>
       </view>
       <view class="order">
         <view class="ordet-title">订单编号</view>
-        <view class="order-num">123qwe</view>
+        <view class="order-num">{{d._order_sn}}</view>
       </view>
       <view class="total">
         <text class="total-title">合计</text>
-        <text class="total-vip">2000</text>
+        <text class="total-vip">{{d.order_point}}</text>
         <text class="total-j">积分</text>
-        <text class="total-vip">+8</text>
+        <text class="total-vip">+{{d.order_total_amount}}</text>
         <text class="total-sm">元运费</text>
       </view>
     </view>
@@ -85,7 +85,7 @@
 
 
 <!-- 领取门店 -->
-<view class="shop" a:if="{{!writeAddress}}">
+<view class="shop">
   <view class="shop-search">
     <image class="search-icon" mode="scaleToFill" src="{{imageUrl}}search.png"/>
     <input placeholder="小区/写字楼/学校等" />
@@ -136,4 +136,33 @@
 
 
   </view>
+</view>
+
+<!-- 选择地址 -->
+  <view class="pop-wrap" a:if="{{selectAddress}}">
+    <view class="my-pop">
+        <view class="pop-top">
+            <text></text>
+            <text class="title">城市</text>
+            <text class="sure" onTap="hideSelectAddress">确定</text>
+        </view>
+
+        <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
+            <picker-view-column>
+                <view class="selecter" a:for="{{ provinceList }}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter" a:for="{{cityList}}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter" a:for="{{countryList}}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+        </picker-view>
+    </view>
 </view>

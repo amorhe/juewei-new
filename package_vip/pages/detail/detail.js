@@ -1,4 +1,4 @@
-import { ajax, parseData } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData, log } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -80,14 +80,20 @@ Page({
       'goods[point]': point,
       'goods[amount]': amount,
     }
-    let { code, data } = await ajax('/mini/vip/wap/trade/create_order', params)
+    let { code, data, msg } = await ajax('/mini/vip/wap/trade/create_order', params)
     if (code === 100) {
       return data
+    }
+
+    if (code === 320008) {
+      return my.alert({
+        title: msg
+      });
     }
   },
 
   async confirmOrder(order_sn) {
-    let params = { order_sn, }
+    let params = { order_sn }
     let { code, data } = await ajax('/mini/vip/wap/trade/confirm_order', params)
     return code === 100
   },
@@ -122,6 +128,7 @@ Page({
             // 虚拟物品
             if (goods_type == 1) {
               let { order_id, order_sn } = await this.createOrder()
+              if (!order_id) { return }
               let res = await this.confirmOrder(order_sn)
 
               if (!res) { fail = true }
@@ -151,20 +158,21 @@ Page({
             // 然后调起支付
 
             if (goods_type == 2) {
-              let { order_id } = await this.createOrder()
+              let res = await this.createOrder()
+              if ( !res ) { return }
 
               // 实物订单  公司邮寄
-              if (goods_type == 2 && receive_type == 2) {
+              if (receive_type == 2) {
                 my.navigateTo({
                   url: './finish/finish?receive_type=2'
                 });
               }
 
               // 实物订单  到店领取
-              if (goods_type == 2 && receive_type == 1) {
+              if (receive_type == 1) {
 
                 my.navigateTo({
-                  url: '../waitpay/waitpay?id=' + order_id
+                  url: '../waitpay/waitpay?order_sn=' + res.order_sn
                 });
               }
             }

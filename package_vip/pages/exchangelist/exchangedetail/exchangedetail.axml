@@ -21,7 +21,7 @@
   </view>
   <view class="detail">
     <view class="body detail-item">
-      <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>
+      <image mode="scaleToFill" src="{{imageUrl2 + detail.goods_pic}}" class="good-img"/>
       <view class="body-right">
         <view class="good-title">
             {{detail.goods_name}}
