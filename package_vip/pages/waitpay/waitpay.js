@@ -4,6 +4,8 @@ Page({
   data: {
     imageUrl,
 
+    writeAddress:false,
+
 
     // 地址
     name: '',
@@ -25,6 +27,8 @@ Page({
     cityList: [],
     countryList: [],
     defaultAddress: [0, 0, 0]
+
+    
   },
   async onLoad() {
     this.getAddressList()
@@ -39,7 +43,7 @@ Page({
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let provinceList = region.map(({ addrid, name }) => ({ addrid, name }))
     let cityList = region[curProvince].sub
-    let countryList = cityList[curCity].sub || []
+    let countryList = cityList[curCity].sub
 
     this.setData({
       provinceList,
@@ -64,8 +68,10 @@ Page({
     },
       () => this.getAddressList()
     )
+  },
 
-
+  showWriteAddress(){
+    this.setData({ writeAddress: true })
   },
 
   showSelectAddress() {
