@@ -1,5 +1,7 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, region } from '../../../pages/common/js/li-ajax'
+import { log, ajax, getRegion } from '../../../pages/common/js/li-ajax'
+
+let region = []
 Page({
   data: {
     imageUrl,
@@ -33,18 +35,23 @@ Page({
       "code": 'xxx'
     },
 
+    selectShop:false,
+
     selectAddress: false,
 
     addressList: region,
     provinceList: [],
     cityList: [],
     countryList: [],
-    defaultAddress: [0, 0, 0]
+    defaultAddress: [0, 0, 0],
 
+
+    shopList:[]
 
   },
   async onLoad(e) {
     let { order_sn } = e
+    region =  await getRegion()
     this.getAddressList()
     await this.getOrderInfo({ order_sn })
   },
@@ -130,6 +137,20 @@ Page({
     let { key } = e.currentTarget.dataset;
     let { value } = e.detail;
     this.setData({ [key]: value })
+  },
+
+  async doSelectShop(){
+    let [curProvince, curCity, curCountry] = this.data.defaultAddress;
+    let parentid = region[curProvince].addrid + ',' +
+       region[curProvince].sub[curCity].addrid + ',' +
+       ((region[curProvince].sub[curCountry].sub[curCountry] && region[curProvince].sub[curCity].sub[curCountry].addrid ) || 0)
+    let res = await ajax('/mini/game/shop',{parentid})
+    if(res.CODE == 'A100'){
+      this.setData({
+        selectShop:true,
+        shopList:res.DATA
+      })
+    }
   }
 
 });

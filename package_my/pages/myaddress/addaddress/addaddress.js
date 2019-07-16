@@ -1,5 +1,6 @@
 import { imageUrl } from '../../../../pages/common/js/baseUrl'
-import { region } from '../../../../pages/common/js/li-ajax'
+import { getRegion } from '../../../../pages/common/js/li-ajax'
+let region=[]
 Page({
   data: {
     imageUrl,
@@ -28,6 +29,7 @@ Page({
 
   },
   async onLoad() {
+   region =  await getRegion()
     this.getAddressList()
   },
 
