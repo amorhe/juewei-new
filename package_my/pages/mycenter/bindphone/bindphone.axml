@@ -11,5 +11,5 @@
   <view>
     <text class="timeClass">59秒</text>后重新获取验证码
   </view>
-  <view class="bindButton" onTap="outLogin">验证后绑定新手机号</view>
+  <view class="bindButton" onTap="outLogin">{{ type==1?'验证后绑定新手机号':"验证绑定" }}</view>
 </view>
