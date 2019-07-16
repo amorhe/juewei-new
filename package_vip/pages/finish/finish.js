@@ -68,7 +68,10 @@ Page({
       fail: fail == true
     })
     await this.getOdrderDetail(id)
+  
   },
+
+  
 
   redirect(){
     redirect('/pages/vip/index/index')
