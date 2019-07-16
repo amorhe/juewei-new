@@ -1,7 +1,8 @@
 Page({
   data: {
     focus: false,
-    value:''
+    value:'',
+    type:'1',
   },
   onLoad() {},
   bindFocus() {
