@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, getRegion } from '../../../pages/common/js/li-ajax'
+import { log, ajax, getRegion,getDistance } from '../../../pages/common/js/li-ajax'
 
 let region = []
 Page({
@@ -54,6 +54,7 @@ Page({
     region =  await getRegion()
     this.getAddressList()
     await this.getOrderInfo({ order_sn })
+    await getDistance()
   },
 
   /**

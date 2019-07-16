@@ -84,9 +84,30 @@ export const log = console.log
 export const getRegion = async () => {
   return new Promise((resolve, reject) => {
     my.request({
+      dataType:'text',
       url: 'https://imgcdnjwd.juewei.com/prod/vipstatic/region_min.js',
       success: (res) => {
         resolve(JSON.parse(res.data.split('=')[1].slice(0, -1)))
+      },
+      fail:res=>{
+        my.alert({
+          title: res 
+        });
+      }
+    });
+  })
+}
+
+/**
+ * @function 百度jdk
+ */
+
+export const getDistance = async () => {
+  return new Promise((resolve, reject) => {
+    my.request({
+      url: 'https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=116.45633588096595%2C39.9289655041306&ak=pRtqXqnajTytAzWDL3HOnPRK&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=1000&_=1563263791821',
+      success: (res) => {
+        resolve(res)
       },
     });
   })
