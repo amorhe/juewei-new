@@ -2,6 +2,8 @@
   "pages": [
     "pages/lead/lead",
     "pages/home/goodslist/goodslist",
+    
+    
     "pages/my/index/index",
     
     "pages/home/selecttarget/selecttarget",

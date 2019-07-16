@@ -18,7 +18,7 @@ Page({
           key: 'lng', // 缓存数据的key
           data: res.longitude, // 要缓存的数据
         });
-        my.navigateTo({
+        my.redirectTo({
           url: '/pages/home/goodslist/goodslist?address1=' + res.streetNumber.street + '&address2=' + res.streetNumber.number
         })
         /* that对象为Page可以设置数据刷新界面
