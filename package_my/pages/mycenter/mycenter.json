@@ -2,6 +2,8 @@
   "defaultTitle": "基本信息",
   "usingComponents":{
     "list": "mini-antui/es/list/index",
-    "list-item": "mini-antui/es/list/list-item/index"
+    "list-item": "mini-antui/es/list/list-item/index",
+    "popup": "mini-antui/es/popup/index",
+    "modal": "mini-antui/es/modal/index"
   }
 }
