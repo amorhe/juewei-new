@@ -1,0 +1,85 @@
+.usercenter{
+  padding: 0 32rpx;
+  box-sizing: border-box;
+}
+
+.listItem{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 1px solid #eeeeee;
+  padding: 26rpx 0;
+}
+.Itemlabel{
+  flex-shrink:0;
+}
+.ItimInfo{
+  flex: 1;
+  overflow: hidden;
+  text-align: right;
+}
+.arrow_right{
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink:0;
+}
+.SignOutButton{
+  width:670rpx;
+  height:94rpx;
+  background:linear-gradient(135deg,rgba(251,83,50,0.5) 0%,rgba(230,0,18,0.5) 100%);
+  border-radius:47rpx;
+  text-align: center;
+  line-height: 94rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  font-size:36rpx;
+  margin: 175rpx auto 0;
+}
+
+.userImg{
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+}
+
+.onPopupInfo{
+  background:#CDCDD1;
+}
+
+.InfoItem{
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  height: 100rpx;
+  line-height:100rpx;
+}
+
+.ItemBorder{
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.ItemMargin{
+  margin-top: 12rpx;
+}
+
+.modalInfo{
+  padding: 50rpx 0;
+}
+
+.footerButton{
+  display: flex;
+}
+.modalButton{
+  flex: 1;
+  text-align: center;
+}
+.am-modal-footer{
+  background: rgba(0,0,0,0)
+}
+
+.confirm{
+  color: #999;
+}
+.cancel{
+  color: #E60012;
+}
