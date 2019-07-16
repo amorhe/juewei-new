@@ -14,7 +14,7 @@
         <view class="item">电话</view>
         <input placeholder="手机号码" data-key="phone" onInput="handelChange"/>
       </view>
-      <view class="select-address list">
+      <view class="select-address list" onTap="showSelectAddress">
         <view class="item">地址</view>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
         <view class="real-address">紫檀大厦</view>
@@ -31,5 +31,34 @@
       <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
         保存地址
       </view>
+    </view>
+</view>
+
+<!-- 选择地址 -->
+  <view class="pop-wrap" a:if="{{selectAddress}}">
+    <view class="my-pop">
+        <view class="pop-top">
+            <text></text>
+            <text class="title">城市</text>
+            <text class="sure" onTap="hideSelectAddress">确定</text>
+        </view>
+
+        <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
+            <picker-view-column>
+                <view class="selecter" a:for="{{ provinceList }}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter" a:for="{{cityList}}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter" a:for="{{countryList}}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+        </picker-view>
     </view>
 </view>

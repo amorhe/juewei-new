@@ -7,7 +7,7 @@
   </view>
   <!-- 实物邮寄 -->
   <view onTap="showWriteAddress">
-    <view class="address"  a:if="{{!writeAddress}}">
+    <view class="address">
       <view class="address-title">请填写收货地址</view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -81,35 +81,6 @@
     
   </view>
 
-</view>
-
-<!-- 选择地址 -->
-  <view class="pop-wrap" a:if="{{selectAddress}}">
-    <view class="my-pop">
-        <view class="pop-top">
-            <text></text>
-            <text class="title">城市</text>
-            <text class="sure" onTap="hideSelectShow">确定</text>
-        </view>
-
-        <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
-            <picker-view-column>
-                <view class="selecter" a:for="{{ provinceList }}">
-                  <view class="value">{{item.name}}</view>
-                </view>
-            </picker-view-column>
-              <picker-view-column>
-                <view class="selecter" a:for="{{cityList}}">
-                  <view class="value">{{item.name}}</view>
-                </view>
-            </picker-view-column>
-              <picker-view-column>
-                <view class="selecter" a:for="{{countryList}}">
-                  <view class="value">{{item.name}}</view>
-                </view>
-            </picker-view-column>
-        </picker-view>
-    </view>
 </view>
 
 
