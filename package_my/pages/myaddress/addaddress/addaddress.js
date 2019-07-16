@@ -1,5 +1,5 @@
 import { imageUrl } from '../../../../pages/common/js/baseUrl'
-import { log, region } from '../../../../pages/common/js/li-ajax'
+import { region } from '../../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
@@ -56,7 +56,10 @@ Page({
     }
 
     this.setData({
-      defaultAddress: cur
+      defaultAddress: cur,
+      address: region[cur[0]].name + ' ' +
+       region[cur[0]].sub[cur[1]].name + ' ' +
+       ((region[cur[0]].sub[cur[1]].sub[cur[2]] && region[cur[0]].sub[cur[1]].sub[cur[2]].name ) || ' ')
     },
       () => this.getAddressList()
     )

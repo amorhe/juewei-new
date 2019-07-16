@@ -1,6 +1,13 @@
 import { baseUrl } from './baseUrl'
 import parse from 'mini-html-parser2';
 
+/**
+ * @function ajax 请求
+ * @param url 地址 string
+ * @param data 数据
+ * @param method 请求方式
+ * @return Promise<any>
+ */
 export const ajax = (url, data = {}, method = 'POST') => {
   my.showLoading({
     content: '加载中...',
@@ -15,11 +22,15 @@ export const ajax = (url, data = {}, method = 'POST') => {
       success: (res) => {
         my.hideLoading()
         resolve(res.data)
-        console.log(res.data)
+        log(res.data)
       },
     });
   })
 }
+
+/**
+ * @function 获取 sid
+ */
 
 export const sid = async () => {
   return new Promise(resolve => {
@@ -36,8 +47,12 @@ export const sid = async () => {
   })
 }
 
-export const _sid = '4966-inviq2t1sdl3s95idh7a0s1dn1'
+export const _sid = '9789-4ui62bhsvvg4jautqijjk114h6'
 
+
+/**
+ * @function 获取 富文本 数组
+ */
 export const parseData = async (html) => {
   return new Promise(resolve => {
     parse(html, (err, nodes) => {
@@ -48,11 +63,16 @@ export const parseData = async (html) => {
   })
 }
 
+/**
+ * @function 重定向
+ */
+
 export const redirect = (url) =>{
   my.redirectTo({
     url, 
   });
 }
+
 
 export const log = console.log
 
