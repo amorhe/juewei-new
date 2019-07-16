@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/my/index/index",
+    "pages/lead/lead",
     "pages/home/goodslist/goodslist",
+    "pages/my/index/index",
+    
     "pages/home/selecttarget/selecttarget",
     
     "pages/home/orderform/orderform",
@@ -27,8 +29,7 @@
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
     "pages/login/auth/auth",
-    "pages/component/shopcart/shopcart",
-    "pages/lead/lead"
+    "pages/component/shopcart/shopcart"
   ],
   "subPackages": [
     {

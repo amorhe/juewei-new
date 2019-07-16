@@ -6,7 +6,6 @@ export const ajax = (url,data={},method="POST") => {
   }else{
     headers = {'content-type': 'application/json'};
   }
-  data._sid = "4966-inviq2t1sdl3s95idh7a0s1dn1";
   let promise = new Promise(function (resolve, reject) {
     my.request({
       url: baseUrl + url,
@@ -21,6 +20,6 @@ export const ajax = (url,data={},method="POST") => {
       }
     });
   })
-  return promise; 
+  return promise;
 }
 

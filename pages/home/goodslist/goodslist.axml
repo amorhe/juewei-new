@@ -14,8 +14,8 @@
 
 <view class="null"></view>
 
-<button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" 
-scope='userInfo'>授权登录</button>
+<!-- <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" 
+scope='userInfo'>授权登录</button> -->
 <button open-type="getAuthorize" onGetAuthorize="onGetPhone"  
 scope='phoneNumber'>授权手机号</button>
 

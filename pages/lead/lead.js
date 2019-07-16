@@ -6,7 +6,7 @@ Page({
   },
   onLoad() {
     my.getLocation({
-      type:1,
+      type:2,
       success(res) {
         my.hideLoading();
         console.log(res);

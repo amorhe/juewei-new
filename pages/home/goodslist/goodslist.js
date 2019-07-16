@@ -1,6 +1,6 @@
 import {imageUrl,imageUrl2} from '../../common/js/baseUrl'
 import {bannerList} from '../../common/js/home'
-import {loginByAliUid} from '../../common/js/login'
+import {loginByAliUid,loginByAuth} from '../../common/js/login'
 var app=getApp(); //放在顶部
 Page({
   data: {
@@ -39,6 +39,7 @@ Page({
       })
     }
     this.getBannerList(110100,110105,1,1);
+    this.loginByAuth();
   },
   onShow() {
     // 页面显示 每次显示都执行
@@ -76,6 +77,14 @@ Page({
           console.log('getPhoneNumber_fail');
       },
     });
+  },
+  // 手机号授权登录
+  loginByAuth(){
+    const ali_uid = my.getStorageSync({key:'ali_uid'});
+    console.log(ali_uid)
+    loginByAuth(ali_uid.data,'15757902894').then((res) => {
+      console.log(res);
+    })
   },
     // 切换外卖自提
   chooseTypes(e){
