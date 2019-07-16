@@ -1,16 +1,40 @@
-<view class="closeIng">
-  <view>
+<view class="closeIng" a:if="{{isShow}}">
+  <!-- 满减 -->
+  <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days!=0}}">
     <text>您的满</text>
-    <text class="numberColor">30</text>
+    <text class="numberColor">{{couponsExpire.full_money}}</text>
     <text>减</text>
-    <text class="numberColor">5</text>
+    <text class="numberColor">{{couponsExpire.money}}</text>
     <text>的优惠券还有</text>
-    <text class="numberColor">3天</text>
+    <text class="numberColor">{{couponsExpire.days}}天</text>
     <text>过期</text>
   </view>
+  <!-- 满减今日到期的 -->
+  <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days==0}}">
+    <text>您的满</text>
+    <text class="numberColor">{{couponsExpire.full_money}}</text>
+    <text>减</text>
+    <text class="numberColor">{{couponsExpire.money}}</text>
+    <text>的优惠券今日即将过期</text>
+  </view>
+  <!-- 立减券非今日过期 -->
+  <view a:if="{{couponsExpire.full_money==0 && couponsExpire.days!=0}}">
+    <text>您的</text>
+    <text class="numberColor">{{couponsExpire.money}}</text>
+    <text>元立减券还有</text>
+    <text class="numberColor">{{couponsExpire.days}}天</text>
+    <text>过期</text>
+  </view>
+  <!-- 立减券今日过期 -->
+  <view a:if="{{couponsExpire.days==0&&couponsExpire.full_money==0}}">
+    <text>您的</text>
+    <text class="numberColor">{{couponsExpire.money}}</text>
+    <text>元立减券今日即将过期</text>
+  </view>
   <!-- <view class="numberColor">您的满30减5的优惠券还有3天过期</view> -->
-  <image src="{{imageUrl}}close2.png" />
+  <image src="{{imageUrl}}close2.png" onTap="closeCouponView" />
 </view>
+
   <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
     <!-- 左边选择系列 -->
     <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100%;background: #F8F8F8;">

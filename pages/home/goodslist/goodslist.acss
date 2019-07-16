@@ -69,3 +69,17 @@ page {
   display: flex;
   justify-content: space-between
 }
+.activityBox1,.activityBox3{
+  padding: 0 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+.activityBox1>image {
+  width: 100%;
+  height: 336rpx;
+}
+.activityBox3>image {
+  width: 336rpx;
+  height: 336rpx;
+}

@@ -48,22 +48,25 @@
   margin-bottom: 16rpx
 }
 .activityBox {
-  padding: 0 22rpx;
+  padding: 0 32rpx;
   display: flex;
   align-items: center;
   justify-content: space-between
 }
 .activityBox>image {
-  width: 356rpx;
-  height: 356rpx;
+  width: 336rpx;
+  height: 336rpx;
 }
 .activityBox>view {
-  width: 356rpx;
-  height: 356rpx;
+  width: 336rpx;
+  height: 336rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
 }
 .activityBox>view>image {
   width: 100%;
-  height: 178rpx; 
+  height: 160rpx; 
 }
 .activityWrap {
   padding: 0 32rpx;
