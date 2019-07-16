@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax } from '../../../../pages/common/js/li-ajax'
+import { ajax, parseData, log } from '../../../../pages/common/js/li-ajax'
 
 Page({
   data: {
@@ -63,6 +63,9 @@ Page({
 
     },
 
+    _exchange_intro: [],
+    _intro: [],
+
     _sid: '4966-inviq2t1sdl3s95idh7a0s1dn'
   },
   onLoad(e) {
@@ -85,10 +88,28 @@ Page({
   async getOrderDetail(id) {
     const { _sid } = this.data;
     let res = await ajax('/mini/vip/wap/order/order_detail', { _sid, id })
-    if(res.code ===100){
+    let _exchange_intro = await parseData(res.data.exchange_intro)
+    let _intro = await parseData(res.data.intro)
+
+    if (res.code === 100) {
       this.setData({
-        detail:res.data
+        _exchange_intro,
+        _intro,
+        detail: res.data
       })
     }
-  }
+  },
+
+
+  handleCopy() {
+    my.setClipboard({
+      text: this.data.detail.order_sn,
+      success() {
+        my.showToast({
+          type: 'success',
+          content: '操作成功'
+        });
+      }
+    });
+  },
 });
