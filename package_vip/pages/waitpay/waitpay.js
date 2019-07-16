@@ -1,59 +1,28 @@
-import{imageUrl}from '../../../pages/common/js/baseUrl'
+import { imageUrl } from '../../../pages/common/js/baseUrl'
+import { log } from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
 
+    // 地址
+    name: '',
 
-  // 地址
-    name:'',
+    sex: 0,
 
-    sex:0,
+    phone: '',
 
-    phone:'',
+    address: '',
 
-    address:'',
-
-    labelList:['学校','家','公司'],
-
-    curLabel:0,
-
-    selectAddress:false
+    selectAddress: false,
+    
   },
-  onLoad() {},
+  async onLoad(id) {
+  },
 
-stop(e){
-  e.cancelBubble = true
-  console.log(e)
-},
-
-showSelectAddress(){
- this.setData({selectAddress:true})
-},
-
-hideSelectShow(){
-   this.setData({selectAddress:false})
-},
-
-// 地址
-changeSex(){
-  const {sex} = this.data;
-
-  this.setData({
-    sex:sex === 0? 1: 0
-  })
-},
-
-changeCur(e){
-  let curLabel = e.currentTarget.dataset.cur
-  if(curLabel === this.data.curLabel) curLabel = '-1'
-  this.setData({curLabel})
-},
-
-handelChange(e){
-  let {key} = e.currentTarget.dataset;
-  let {value} = e.detail;
-  this.setData({[key]:value})
-}
+  stop(e) {
+    e.cancelBubble = true
+    log(e)
+  },
 
 
 });

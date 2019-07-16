@@ -6,7 +6,7 @@
     <text class="wait-pay-time">14分59秒</text>
   </view>
   <!-- 实物邮寄 -->
-  <view a:if="{{true}}">
+  <view onTap="showWriteAddress">
     <view class="address">
       <view class="address-title">请填写收货地址</view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
@@ -78,84 +78,14 @@
     马上支付
     </view>
 
-    <!-- 地址 -->
-    <view class="post-address">
-      <view class="post-name">
-        <view class="item post-name-left">联系人</view>
-        <input class="post-name-right" placeholder="姓名" data-key="name" onInput="handelChange"/>
-      </view>
-      <view class="post-sex">
-        <text class="item"></text>
-        <view onTap="changeSex" class="{{sex===0?'post-sex-active':''}}">女士</view>
-        <view onTap="changeSex" class="{{sex===1?'post-sex-active':''}}">先生</view>
-      </view>
-      <view class="list">
-        <view class="item">电话</view>
-        <input placeholder="手机号码" data-key="phone" onInput="handelChange"/>
-      </view>
-      <view class="select-address list">
-        <view class="item">地址</view>
-        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
-        <view class="real-address">紫檀大厦</view>
-        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-      </view>
-      <view class="list">
-        <view class="item">门牌号</view>
-        <input placeholder="例：6号楼606室" data-key="address" onInput="handelChange"/>
-      </view>
-      <view class="list">
-        <view class="item">标签</view>
-        <view onTap="changeCur" data-cur='{{index}}' a:for="{{labelList}}" class="label {{index===curLabel?'label-active':''}}"> {{item}}</view>
-      </view>
-      <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
-        保存地址
-      </view>
-    </view>
+    
   </view>
 
 </view>
 
-<!-- 选择地址 -->
-  <view class="pop-wrap" a:if="{{selectAddress || true}}">
-    <view class="my-pop">
-        <view class="pop-top">
-            <text></text>
-            <text class="title">城市</text>
-            <text class="sure" onTap="hideSelectShow">确定</text>
-        </view>
-
-        <picker-view class="pick" indicator-style="height: 40px;">
-            <picker-view-column>
-                <view class="selecter">
-                  <view class="value">123</view>
-                </view>
-                  <view class="selecter">
-                  <view class="value">123</view>
-                </view>
-            </picker-view-column>
-              <picker-view-column>
-                <view class="selecter">
-                  <view class="value">123</view>
-                </view>
-                  <view class="selecter">
-                  <view class="value">123</view>
-                </view>
-            </picker-view-column>
-              <picker-view-column>
-                <view class="selecter">
-                  <view class="value">123</view>
-                </view>
-                  <view class="selecter">
-                  <view class="value">123</view>
-                </view>
-            </picker-view-column>
-        </picker-view>
-    </view>
-</view>
-
 
 <!-- 领取门店 -->
-<view class="shop">
+<view class="shop" a:if="{{!writeAddress}}">
   <view class="shop-search">
     <image class="search-icon" mode="scaleToFill" src="{{imageUrl}}search.png"/>
     <input placeholder="小区/写字楼/学校等" />

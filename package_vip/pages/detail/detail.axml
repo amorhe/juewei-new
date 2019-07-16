@@ -35,16 +35,19 @@
    </view>
 
 
-  <view class="footer-title"> 
+  <view class="footer-title" a:if="{{detail.exchange_intro}}"> 
      兑换说明
    </view>
-   {{detail.exchange_intro}}
+   <rich-text nodes="{{detail._exchange_intro}}" />
+   <!-- {{detail.exchange_intro}} -->
 
 
-  <view class="footer-title">     
+  <view class="footer-title" a:if="{{detail.intro}}">     
      商品详情
    </view>
-   {{detail.intro}}
+  <rich-text nodes="{{detail._intro}}" />
+
+   <!-- {{detail.intro}} -->
    
 
   <view class="footer-title">     

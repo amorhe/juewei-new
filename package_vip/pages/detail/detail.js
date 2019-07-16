@@ -1,10 +1,9 @@
-import { ajax, _sid } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
   data: {
     imageUrl2,
-    _sid,
     detail: {
       "id": "355",
       "goods_name": "123",
@@ -17,7 +16,7 @@ Page({
       "gift_id": "473",
       "exchange_type": "1",
       "point": "1",
-      "amount": "0",
+      "amount": 0,
       "start_time": "2019-06-22 00:00:00",
       "end_time": "2019-07-31 23:59:59",
       "receive_type": "2",
@@ -46,49 +45,67 @@ Page({
       }]
     }
   },
+
+  parseData,
+
   async onLoad(e) {
     const { id } = e
     await this.getDetail(id)
   },
 
   async getDetail(id) {
-    let res = await ajax('/mini/vip/wap/goods/goods_detail', { id })
-    if (res.code === 100) {
+
+    let { code, data: { exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
+    if (code === 100) {
+      let _exchange_intro = await this.parseData(exchange_intro)
+      let _intro = await this.parseData(intro)
       this.setData({
-        detail: res.data
+        detail: {
+          intro,
+          _intro,
+          exchange_intro,
+          _exchange_intro,
+          ...Data
+        }
       })
     }
   },
 
-  async createOrder(){
-    let {id,exchange_type,point,amount} = this.data.detail;
-    let {_sid} = this.data;
+  async createOrder() {
+    let { id, exchange_type, point, amount } = this.data.detail;
 
     let params = {
-      'goods[goods_id]':id,
-      'goods[exchange_type]':exchange_type,
-      'goods[point]':point,
-      'goods[amount]':amount,
-      _sid
+      'goods[goods_id]': id,
+      'goods[exchange_type]': exchange_type,
+      'goods[point]': point,
+      'goods[amount]': amount,
     }
-    let {code,data} = await ajax('/mini/vip/wap/trade/create_order',params)
-    if(code === 100){
+    let { code, data } = await ajax('/mini/vip/wap/trade/create_order', params)
+    if (code === 100) {
       return data
     }
   },
 
-  async confirmOrder(order_sn){
-    let {_sid} = this.data;
-    let params = {order_sn,_sid}
-    let {code,data} = await ajax('/mini/vip/wap/trade/confirm_order',params)
+  async confirmOrder(order_sn) {
+    let params = { order_sn, }
+    let { code, data } = await ajax('/mini/vip/wap/trade/confirm_order', params)
     return code === 100
+  },
+
+  async pay(order_sn) {
+    let { code, data } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+    if (code === 0) {
+      return { code, data }
+    }
   },
 
   showConfirm() {
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
-    const { goods_detail_type, receive_type, goods_type, goods_name, point } = this.data.detail
+    const { goods_detail_type, receive_type, goods_type, goods_name, point, amount } = this.data.detail
+    let fail = false
+
     if (true) {
 
       return my.confirm({
@@ -97,39 +114,61 @@ Page({
         cancelButtonText: '取消',
         success: async result => {
           if (result.confirm && result.ok) {
-            // 虚拟商品，点击兑换按钮，调用创建订单接口，然后调用确认订单接口，然后调起支付
+            // 虚拟商品，点击兑换按钮，调用创建订单接口，
+            // 有钱的订单或者有运费的订单才调起支付
+            // 调用确认订单接口，然后调起支付
+            // id = -1 兑换失败
+
+            // 虚拟物品
             if (goods_type == 1) {
-             let {order_id,order_sn} = await this.createOrder()
-             let res = await this.confirmOrder(order_sn)
+              let { order_id, order_sn } = await this.createOrder()
+              let res = await this.confirmOrder(order_sn)
+
+              if (!res) { fail = true }
 
               // 虚拟订单 + 兑换码 => 无需发货
               if (goods_detail_type == 2 && receive_type == 0) {
                 my.navigateTo({
-                  url: './finish?receive_type=0'
+                  url: '../finish/finish?receive_type=0'
                 });
               }
 
               // 虚拟订单 + 优惠卷 => 无需发货
+              // 跑通
               if (goods_detail_type == 1 && receive_type == 0) {
                 my.navigateTo({
-                  url: './finish?receive_type=0'
+                  url: '../finish/finish?id=' + order_id + '&fail=' + fail
                 });
               }
             }
 
-            // 实物订单 + 快递 => 公司邮寄
-            if (goods_type == 2 && receive_type == 2) {
-              my.navigateTo({
-                url: './finish/finish?receive_type=2'
-              });
+            // 实物商品，
+            // 点击兑换按钮，
+            // 调用创建订单接口，
+            // 填写页面表单信息，
+            // 然后点击支付按钮，
+            // 调用确认订单接口，
+            // 然后调起支付
+
+            if (goods_type == 2) {
+              let { order_id } = await this.createOrder()
+
+              // 实物订单  公司邮寄
+              if (goods_type == 2 && receive_type == 2) {
+                my.navigateTo({
+                  url: './finish/finish?receive_type=2'
+                });
+              }
+
+              // 实物订单  到店领取
+              if (goods_type == 2 && receive_type == 1) {
+
+                my.navigateTo({
+                  url: '../waitpay/waitpay?id=' + order_id
+                });
+              }
             }
 
-            // 实物订单 + 无需发货 => 到店领取
-            if (goods_type == 2 && receive_type == 1) {
-              my.navigateTo({
-                url: '../finish/finish?receive_type=1'
-              });
-            }
 
           }
         },
