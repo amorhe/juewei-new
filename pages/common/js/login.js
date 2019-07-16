@@ -8,4 +8,4 @@ export const loginByAliUid = (auth_code,nick_name,head_img,_sid) => ajax(loginPa
 
 export const getuserInfo = (_sid) => ajax(loginPage.getuserInfo,{_sid});
 
-export const loginByAuth = (_ali_uid,phone,_sid,nick_name,head_img) => ajax(loginPage.loginByAuth,{_ali_uid,phone,_sid,nick_name,head_img});
+export const loginByAuth = (ali_uid,phone,nick_name,head_img,_sid) => ajax(loginPage.loginByAuth,{ali_uid,phone,nick_name,head_img,_sid});

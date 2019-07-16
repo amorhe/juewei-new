@@ -14,10 +14,8 @@
 
 <view class="null"></view>
 
-<!-- <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize" 
-scope='userInfo'>授权登录</button> -->
-<button open-type="getAuthorize" onGetAuthorize="onGetPhone"  
-scope='phoneNumber'>授权手机号</button>
+<button open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
+scope='userInfo'>授权登录</button>
 
 <view class="closeIng" a:if="{{!isClose}}">
   <view>您的定位地址配送门店未在营业时间 营业时间：10:00-22:00</view>
@@ -25,7 +23,7 @@ scope='phoneNumber'>授权手机号</button>
 </view>
 
 <view class="homeSwiper">
-  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
     <block a:for="{{imgUrls}}">
       <swiper-item>
         <image src="{{imageUrl2 + item.pic_src}}" class="slide-image" onTap="linkUrl" data-link="{{item.link_url}}" />
