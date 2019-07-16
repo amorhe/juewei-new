@@ -10,6 +10,7 @@ const ajaxUrl = {
   MyNearbyShop: '/juewei-api/shop/MyNearbyShop',   // 我的/周边门店
   activityList: '/mini/Mini_activity/list',   // 商城页面营销活动
   showPositionList: '/mini/index/wap/show_position/list',   //公众号展位列表
+  GetLbsShop: '/juewei-api/shop/GetLbsShop',    //根据经纬度获取外卖附近门店
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -31,3 +32,5 @@ export const MyNearbyShop = (data) => ajax(ajaxUrl.MyNearbyShop,{data});
 export const activityList = (city_id,district_id,company_id,buy_type,user_id) => ajax(ajaxUrl.activityList,{city_id,district_id,company_id,buy_type,user_id});
 
 export const showPositionList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.showPositionList,{city_id,district_id,company_id,release_channel});
+
+export const GetLbsShop = (location) => ajax(ajaxUrl.GetLbsShop,{location});

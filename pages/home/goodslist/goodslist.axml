@@ -17,9 +17,10 @@
 <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
 scope='userInfo'>授权登录</button>
 
-<view class="closeIng" a:if="{{!isClose}}">
-  <view>您的定位地址配送门店未在营业时间 营业时间：10:00-22:00</view>
-  <image src="{{imageUrl}}close2.png" />
+<view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
+  <view a:if="{{isOpen == 2}}">您的定位地址配送门店未在营业时间 营业时间：{{shopTakeOut[0].start_time}}-{{shopTakeOut[0].end_time}}</view>
+  <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
+  <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
 </view>
 
 <view class="homeSwiper">
@@ -63,17 +64,28 @@ scope='userInfo'>授权登录</button>
 </view>
 
 <!-- 活动展位 -->
-<view class="activityBox">
-  <image src="../../common/img/img1.png"/>
+<!-- 类型1 -->
+<view class="activityBox" a:if="{{showListObj.type==2}}">
+  <image src="{{imageUrl2 + showListObj.pic_src[0]}}"/>
   <view>
-    <image src="../../common/img/img2.png"/>
-    <image src="../../common/img/img3.png"/>
+    <image src="{{imageUrl2 + showListObj.pic_src[1]}}"/>
+    <image src="{{imageUrl2 + showListObj.pic_src[2]}}"/>
   </view>
 </view>
-
-<view class="activityWrap">
-  <image src="../../common/img/peisong.png" />
+<!-- 类型2 -->
+<view class="activityBox1" a:if="{{showListObj.type==1}}">
+  <image mode="scaleToFill" src="{{imageUrl2 + showListObj.pic_src[0]}}"/>
 </view>
+<!-- 类型3 -->
+<view class="activityBox3" a:if="{{showListObj.type==3}}">
+  <image mode="scaleToFill" src="{{imageUrl2 + showListObj.pic_src[0]}}"/>
+  <image mode="scaleToFill" src="{{imageUrl2 + showListObj.pic_src[1]}}"/>
+</view>
+<!-- 类型4 -->
+<view class="activityWrap" a:if="{{showListObj.type==4}}">
+  <image src="{{imageUrl2 + showListObj.pic_src[0]}}" />
+</view>
+
 <view style="height:100rpx;" hidden="{{!scroll_y}}"></view>
 <navigator url="/package_my/pages/chooseshop/chooseshop" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
   <!-- 推荐门店 -->
@@ -81,8 +93,8 @@ scope='userInfo'>授权登录</button>
     <view>
       <view class="jingxuan">精选</view>
       <view class="shopMessage">
-        <view>绝味鸭脖（定福庄西街店）</view>
-        <view>在售商品数30</view>
+        <view>{{shopTakeOut[0].title}}</view>
+        <view>在售商品数{{shopTakeOut[0].goods_num}}</view>
       </view>
     </view>
 
@@ -90,7 +102,7 @@ scope='userInfo'>授权登录</button>
       <view class="shopDefaultRight">
         <view>
           <image src="{{imageUrl}}position.png"/>
-          <view>距离1000米</view>
+          <view>距离{{shopTakeOut[0].distance}}米</view>
         </view>
         <view>
           <view class="typeBtn1">外卖</view>
