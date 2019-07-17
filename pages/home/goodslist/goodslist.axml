@@ -87,7 +87,7 @@ scope='userInfo'>授权登录</button>
 </view>
 
 <view style="height:100rpx;" hidden="{{!scroll_y}}"></view>
-<navigator url="/package_my/pages/chooseshop/chooseshop" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
+<navigator url="/package_my/pages/chooseshop/chooseshop?type={{type}}" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
   <!-- 推荐门店 -->
   <view class="shopDefault">
     <view>
@@ -105,7 +105,8 @@ scope='userInfo'>授权登录</button>
           <view>距离{{shopTakeOut[0].distance}}米</view>
         </view>
         <view>
-          <view class="typeBtn1">外卖</view>
+          <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
+          <view class="typeBtn1" a:if="{{type==1||(shopTakeOut[0].shop_takeout==1 && type==2)}}">外卖</view>
           <view class="typeBtn2">自提</view>
         </view>
       </view>
@@ -115,5 +116,5 @@ scope='userInfo'>授权登录</button>
 </navigator>
 
 <!-- 购物车 -->
-<shopcart scrollY="{{scroll_y}}"  />
+<shopcart scrollY="{{scroll_y}}" shop_id="{{shopTakeOut[0].shop_id}}" />
 </view>

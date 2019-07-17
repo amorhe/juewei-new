@@ -1,5 +1,5 @@
 import {imageUrl,ak} from '../../common/js/baseUrl'
-import {couponsExpire,MyNearbyShop} from '../../common/js/home'
+import {couponsExpire,MyNearbyShop,GetShopGoods} from '../../common/js/home'
 import {datedifference} from '../../common/js/time'
 Component({
   mixins: [],
@@ -16,17 +16,15 @@ Component({
       days:1
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
-    shopList:[],   // 附近门店列表
+    shopGoodsList:[],   // 门店商品列表
   },
   props: {
-    scrollY:""
+    scrollY:"",
+    shop_id:""
   },
   onInit() {
     const _sid = my.getStorageSync({key: '_sid'});
     this.getcouponsExpire(_sid.data);
-    // this.nearShop();
-
-
   },
   didMount() {},
   didUpdate() {
@@ -38,9 +36,18 @@ Component({
         goodsType:0
       })
     }
+    if(this.props.shop_id!=''){
+      this.getGoodsList(this.props.shop_id);
+    }
   },
   didUnmount() {},
   methods: {
+    // 门店商品列表
+    getGoodsList(shop_id){
+      GetShopGoods(shop_id).then((res) => {
+        console.log(res)
+      })
+    },
      // 优惠券过期提醒
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
@@ -51,23 +58,6 @@ Component({
         
       })
     },
-    // 获取附近门店
-    nearShop(){
-      const lng = my.getStorageSync({key:'lng'});
-      const lat = my.getStorageSync({key:'lat'});
-      my.request({
-        url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
-        success: (res) => {
-          const obj = res.data.contents;
-          MyNearbyShop(JSON.stringify(obj)).then((conf) => {
-            console.log(conf)
-            this.setData({
-              shopList:conf
-            })
-          })
-        },
-      });
-    },
     closeCouponView(){
       this.setData({
         isShow: false
@@ -76,7 +66,7 @@ Component({
     // 选择系列
     chooseGoodsType(e) {
       my.pageScrollTo({
-        scrollTop: 610
+        scrollTop: 510
       })
       this.setData({
         goodsType: e.currentTarget.dataset.type

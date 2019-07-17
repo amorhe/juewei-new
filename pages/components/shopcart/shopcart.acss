@@ -86,7 +86,7 @@
 }
 .shopDefault>view {
   display: flex;
-  align-items: center
+  align-items: center;
 }
 .jingxuan {
   width: 48rpx;
@@ -126,7 +126,8 @@
 }
 .shopDefaultRight>view {
   display: flex;
-  align-items: center
+  align-items: center;
+  justify-content: flex-end
 }
 .shopDefaultRight>view>image {
   width: 32rpx;

@@ -15,24 +15,25 @@
   <map id="map" style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="15"></map>
 
   <cover-view class="shopBox">
-     <cover-view class="shopLi">
+     <cover-view class="shopLi" a:for="{{shopList}}">
        
        <cover-view>
         <cover-view class="shopTxt">
-          <cover-image class="shopIcon" src="{{imageUrl}}position_map1.png" />
-          <cover-view>绝味鸭脖(某某某店）</cover-view>
+          <cover-image a:if="{{index==0}}" class="shopIcon" src="{{imageUrl}}position_map1.png" />
+          <cover-image a:if="{{index!=0}}" class="shopIcon" src="{{imageUrl}}order2.png" />
+          <cover-view>{{item.title}}</cover-view>
         </cover-view>
-        <cover-view class="fontTwentyTwo">距离1000米</cover-view>
+        <cover-view class="fontTwentyTwo">距离{{item.distance}}米</cover-view>
        </cover-view>
-       <cover-view class="fontTwentyTwo paddingLeft">营业时间：9:30-23:30</cover-view> 
-       <cover-view class="fontSmallGray paddingLeft">北京北京市朝阳区青年路甘露园中里2号E-1地铁层商铺北京北京市</cover-view>
+       <cover-view class="fontTwentyTwo paddingLeft">营业时间：{{item.start_time}}-{{item.end_time}}</cover-view> 
+       <cover-view class="fontSmallGray paddingLeft">{{item.address}}</cover-view>
        <cover-view class="menuBtn">
          <cover-view>导航</cover-view>
          <cover-view>去自提</cover-view>  
        </cover-view> 
 
      </cover-view>
-     <cover-view class="shopLi">
+     <!-- <cover-view class="shopLi">
 
        <cover-view>
         <cover-view class="shopTxt">
@@ -48,7 +49,7 @@
          <cover-view>去自提</cover-view>  
        </cover-view> 
        
-     </cover-view>
+     </cover-view> -->
   </cover-view>
 
 </view>

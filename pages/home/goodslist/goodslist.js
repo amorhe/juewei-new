@@ -1,5 +1,5 @@
-import {imageUrl,imageUrl2} from '../../common/js/baseUrl'
-import {bannerList,showPositionList,activityList,GetLbsShop} from '../../common/js/home'
+import {imageUrl,imageUrl2,ak} from '../../common/js/baseUrl'
+import {bannerList,showPositionList,activityList,GetLbsShop,NearbyShop} from '../../common/js/home'
 import {getuserInfo,loginByAuth} from '../../common/js/login'
 import {cur_dateTime,compare} from '../../common/js/time'
 var app=getApp(); //放在顶部
@@ -22,7 +22,7 @@ Page({
     region_id:'',  //区
     showListObj:{},   // 展位
     isOpen: '',     //门店是否营业
-    shopTakeOut:[]   // 外卖附近门店列表
+    shopTakeOut:[],   // 外卖附近门店列表
   },
   onLoad(query) {
     // 页面加载
@@ -32,7 +32,6 @@ Page({
     //      url: '../../position/position'
     //   })
     // }
-
     // 定位地址
     if(query.address1 || query.address2) {
       this.setData({
@@ -45,10 +44,20 @@ Page({
         autoplay:true
       })
     }
+    if(query.shop_id){
+      this.setData({
+        switchShop_id:query.shop_id,
+        type: query.type
+      })
+    }
 
     this.getBannerList(110100,110105,1,1);
     this.getShowpositionList(110100,110105,1,1);
-    this.getLbsShop();
+    if(this.data.type == 1) {
+      this.getLbsShop();
+    }else{
+      this.getNearbyShop();
+    }
   },
   onShow() {
     // 页面显示 每次显示都执行
@@ -113,12 +122,16 @@ Page({
   chooseTypes(e){
     if(e.currentTarget.dataset.type=='ziti'){
         this.setData({
-          type:2
+          type:2,
+          shopTakeOut:[]
         })
+        this.getNearbyShop();
     }else{
      this.setData({
-        type:1
-     }) 
+        type:1,
+        shopTakeOut:[]
+     })
+     this.getLbsShop(); 
     }
   },
   // 首页banner列表
@@ -132,7 +145,6 @@ Page({
   // 首页商品展位
   getShowpositionList(city_id,district_id,company_id){
     showPositionList(city_id,district_id,company_id,1).then((res) => {
-      console.log(res)
       this.setData({
         showListObj: res.data[0]
       })
@@ -149,7 +161,7 @@ Page({
       const shopArr2 = [];
       GetLbsShop(location).then((res) => {
         console.log(res)
-        if(res.code == 0){
+        if(res.code == 0 && res.data.length>0){
           for(let i = 0; i < res.data.length; i ++) {
             const status = cur_dateTime(res.data[i].start_time,res.data[i].end_time);
             this.setData({
@@ -166,17 +178,79 @@ Page({
           shopArr1.sort(compare('goods_num'));
           shopArr2.sort(compare('goods_num'));
           const shopArray = shopArr1.concat(shopArr2);
+          my.setStorageSync({key:'takeout',data:shopArray});   // 保存外卖门店到本地
           this.setData({
             shopTakeOut: shopArray
           })
+          // 切换门店
+          if(this.data.switchShop_id){
+              let arr1 = shopArray.filter((item,index)=> {
+                  return item.shop_id == this.data.switchShop_id
+              })
+              let arr2 = shopArray.filter((item,index)=> {
+                  return item.shop_id != this.data.switchShop_id
+              })
+              const arr = arr1.concat(arr2);
+              this.setData({
+                shopTakeOut: arr
+              })
+          }  
+        }else if(res.code == 5 || res.data.length==0){
+          console.log(res.msg)
         }
         
       })
     },
-  // 首页营销活动
-  getActivityList(){
-    
-  },
+    // 自提附近门店
+    getNearbyShop(){
+      // const lng = my.getStorageSync({key:'lng'}).data;
+      // const lat = my.getStorageSync({key:'lat'}).data;
+      const lng = 116.54828;
+      const lat = 39.918639;
+      const location = `${lng},${lat}`
+      const shopArr1 = [];
+      const shopArr2 = [];
+      my.request({
+        url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
+        success: (res) => {
+          const obj = res.data.contents;
+          NearbyShop(JSON.stringify(obj)).then((res) => {
+            for(let i = 0; i < res.length; i ++) {
+              const status = cur_dateTime(res[i].start_time,res[i].end_time);
+              this.setData({
+                isOpen: status
+              })
+              // 判断是否营业
+              if(status == 1 || status == 3) {
+                shopArr1.push(res[i]);
+              }else{
+                shopArr2.push(res[i]);
+              }
+            }
+            const shopArray = shopArr1.concat(shopArr2);
+            my.setStorageSync({key:'self',data:shopArray});  // 保存自提门店到本地
+            console.log(shopArray);
+            this.setData({
+              shopTakeOut: shopArray
+            })
+            // 切换门店
+            if(this.data.switchShop_id){
+              let arr1 = shopArray.filter((item,index)=> {
+                  return item.shop_id == this.data.switchShop_id
+              })
+              let arr2 = shopArray.filter((item,index)=> {
+                  return item.shop_id != this.data.switchShop_id
+              })
+              const arr = arr1.concat(arr2);
+              this.setData({
+                shopTakeOut: arr
+              })
+            }            
+            
+          })
+        },
+      });
+    },
   onHide() {
     // 页面隐藏
   },
