@@ -29,3 +29,7 @@
   font-size: 28rpx;
   color: #E60012;
 }
+.addressInfo{
+  font-size: 22rpx;
+  margin-top: 8rpx;
+}

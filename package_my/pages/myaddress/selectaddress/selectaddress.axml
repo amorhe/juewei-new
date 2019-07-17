@@ -11,7 +11,7 @@
       </view>
       <view class="searchBox">
         <image class="searchIcon" src="{{imageUrl}}search.png" />
-        <input type="text" placeholder="门店名称" placeholder-class="colorGray"  />
+        <input type="text" placeholder="小区/写字楼/学校等" placeholder-class="colorGray"  />
       </view>
     </view>
   </view>
@@ -27,7 +27,7 @@
         </cover-view>
         <cover-view>
           <cover-view class="addressName">紫檀大厦A座</cover-view>
-          <cover-view>北京市朝阳区建国路27号</cover-view>
+          <cover-view class="addressInfo">北京市朝阳区建国路27号</cover-view>
         </cover-view>
       </cover-view>
       <cover-view class="addressItem">
@@ -36,7 +36,7 @@
         </cover-view>
         <cover-view>
           <cover-view>紫檀大厦A座</cover-view>
-          <cover-view>北京市朝阳区建国路27号</cover-view>
+          <cover-view class="addressInfo">北京市朝阳区建国路27号</cover-view>
         </cover-view>
       </cover-view>
     </cover-view>
