@@ -73,18 +73,20 @@ Page({
    */
   async getOrderInfo(order_sn) {
     let { showSelectAddress } = this.data;
-    let { code, data: { order_sn: _order_sn, limit_pay_second, ...rest } } = await ajax('/mini/vip/wap/order/order_info', order_sn)
+    let { code, data: { order_sn: _order_sn, limit_pay_minute, limit_pay_second, ...rest } } = await ajax('/mini/vip/wap/order/order_info', order_sn)
     if (code === 100) {
       let a = setInterval(() => {
         --limit_pay_second
+        if (limit_pay_minute === -1) {
+          return clearInterval(a)
+        }
         if (limit_pay_second === 0) {
+          --limit_pay_minute
           limit_pay_second = 59
-          clearInterval(a)
-          this.getOrderInfo({ order_sn: _order_sn })
         }
 
         this.setData({
-          d: { _order_sn, limit_pay_second, ...rest }
+          d: { _order_sn, limit_pay_minute, limit_pay_second, ...rest }
         })
       }, 1000)
     }
@@ -226,7 +228,12 @@ Page({
         shop_id,
         shop_name,
       }
-      let { code } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      let { code, msg } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      if (code !== 100) {
+        my.showToast({
+          content: msg
+        });
+      }
       return code === 100
     }
 
@@ -237,10 +244,7 @@ Page({
    */
   async pay() {
     let { order_sn } = this.data;
-    let { code, data, msg } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
-    if (code === 0) {
-      return { code, data }
-    }
+    return await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
   },
 
   /**
@@ -261,9 +265,7 @@ Page({
 
     let confirm = await this.confirmOrder()
     if (!confirm) {
-      return my.showToast({
-        content: '未获取到订单信息'
-      });
+      return
     }
     let { code, data, msg } = await this.pay()
     if (code !== 100) {
