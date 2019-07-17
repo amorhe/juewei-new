@@ -2,13 +2,8 @@
   "pages": [
     "pages/home/goodslist/goodslist",
     "pages/lead/lead",
-    
-    
-    
     "pages/my/index/index",
-    
     "pages/home/selecttarget/selecttarget",
-    
     "pages/home/orderform/orderform",
     "pages/home/orderError/orderError",
     "pages/home/orderfinish/orderfinish",
@@ -64,6 +59,7 @@
         "pages/coupon/changedetails/changedetails",
         "pages/mycenter/mycenter",
         "pages/mycenter/bindphone/bindphone",
+        "pages/mycenter/newphone/newphone",
         "pages/myaddress/myaddress",
         "pages/myaddress/addaddress/addaddress",
         "pages/onlineservice/onlineservice",
