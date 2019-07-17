@@ -1,3 +1,13 @@
-<view>
+<!-- <view>
   积分规则说明
+</view> -->
+<view class="rules">
+  <view a:for="{{3}}">
+    <view class="itemTitle">
+      Q:如何获得积分？
+    </view>
+    <view class="itemInfo">
+      这是大段文字这是大段文字这是大段文字这是大段文字这是大段文字这是大段文字这是大段文字
+    </view>
+  </view>
 </view>

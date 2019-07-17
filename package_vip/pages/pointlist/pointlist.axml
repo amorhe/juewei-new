@@ -1,3 +1,34 @@
-<view>
+<!-- <view>
   积分明细列表
+</view> -->
+<view class="pointlistTop">
+  <view class="pittopItema">
+    <view>当前积分：4000</view>
+     <view class="pitrule">积分规则</view> 
+  </view>
+  <view class="pittopItemb">
+    <view class="pittopItembinfo">冻结积分：50</view>
+    <image class="imgicon" src="{{ imageUrl }}explain.png"/>
+  </view>
+</view>
+<view class="pitInfo">
+  <view class="listItem freeze">
+    <view>
+      <view>门店支付</view>
+      <view class="itemTime">2018-12-02 10:33</view>
+    </view>
+    <view class="itemcount">+99</view>
+  </view>
+   <view class="listItem">
+    <view>
+      <view>门店支付</view>
+      <view class="itemTime">2018-12-02 10:33</view>
+    </view>
+    <view class="itemcount">+99</view>
+  </view>
+  <view class="bottomview">
+    <view class="bottomprompt">仅显示最近一个月的积分明细</view>
+    <view class="bottomBorder"></view>
+  </view>
+
 </view>
