@@ -9,10 +9,10 @@ const ajaxUrl = {
   checkDis: '/juewei-api/shop/CheckDis',     // 判断收获地址是不是在当前门店配送范围内
   MyNearbyShop: '/juewei-api/shop/MyNearbyShop',   // 我的/周边门店
   activityList: '/mini/Mini_activity/list',   // 商城页面营销活动
-  showPositionList: '/mini/index/wap/show_position/list',   //公众号展位列表
-  GetLbsShop: '/juewei-api/shop/GetLbsShop',    //根据经纬度获取外卖附近门店
+  showPositionList: '/mini/index/wap/show_position/list',   // 公众号展位列表
+  GetLbsShop: '/juewei-api/shop/GetLbsShop',    // 根据经纬度获取外卖附近门店
   NearbyShop: '/juewei-api/shop/NearbyShop',      // 根据经纬度获取自提附近门店
-  GetShopGoods: '/juewei-api/shop/GetShopGoods',      //门店商品列表
+  GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});

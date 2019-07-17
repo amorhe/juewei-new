@@ -324,6 +324,861 @@
             </view>
           </view>
         </view>
+        <!-- 甜辣 -->
+        <view id="5">
+          <view class="goodsTypeEv">甜辣</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 微辣 -->
+        <view id="6">
+          <view class="goodsTypeEv">微辣</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 不辣 -->
+        <view id="7">
+          <view class="goodsTypeEv">不辣</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 招牌系列 -->
+        <view id="8">
+          <view class="goodsTypeEv">招牌系列</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 藤椒系列 -->
+        <view id="9">
+          <view class="goodsTypeEv">藤椒系列</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+         <!-- 素菜系列 -->
+        <view id="10">
+          <view class="goodsTypeEv">素菜系列</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+         <!-- 黑鸭系列 -->
+        <view id="11">
+          <view class="goodsTypeEv">黑鸭系列</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+         <!-- 五香系列 -->
+        <view id="12">
+          <view class="goodsTypeEv">五香系列</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
+         <!-- 解辣神器 -->
+        <view id="13">
+          <view class="goodsTypeEv">解辣神器</view>
+          <!-- 直接加减 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">招牌鸭脖</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 选规格 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">黑鸭鸡膝软骨</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsSize" onTap="chooseSizeTap">
+                <view>选规格</view>
+                <view>2</view>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 折扣组合 -->
+          <view class="goodsContent">
+            <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
+            <view class="goodsInfos">
+              <view>
+                <text class="goodsName">人气组合套餐</text>
+                <text class="goodsKind">（超辣）</text>
+              </view>
+              <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">888</text>
+                <text>份</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text>25</text>
+                    <text>/ 份</text>
+                  </view>
+                </view>
+                <view class="goodsNumber">
+                  <image src="{{imageUrl}}goods_reduce.png" />
+                  <text>1</text>
+                  <image src="{{imageUrl}}goods_add.png" />
+                </view>
+              </view>
+              <view class="goodsDiscount">
+                <image src="{{imageUrl}}discount.png" />
+                <text>6折  限1份</text>
+              </view>
+            </view>
+          </view>
+        </view>
     </scroll-view>
   </view>
 

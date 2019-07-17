@@ -17,16 +17,21 @@ Component({
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
     shopGoodsList:[],   // 门店商品列表
-  },
-  props: {
-    scrollY:"",
-    shop_id:""
+    zhaopai:[],
+    tengjiao:[],
+    sucai:[],
+    heiya:[],
+    wuxiang:[],
+    jiela:[]
   },
   onInit() {
     const _sid = my.getStorageSync({key: '_sid'});
     this.getcouponsExpire(_sid.data);
   },
-  didMount() {},
+  didMount() {
+    console.log(1)
+    // this.getShopGoodsList(this.props.shop_id);
+  },
   didUpdate() {
     this.setData({
       scroll_y:this.props.scrollY
@@ -35,17 +40,24 @@ Component({
       this.setData({
         goodsType:0
       })
-    }
-    if(this.props.shop_id!=''){
-      this.getGoodsList(this.props.shop_id);
-    }
+    } 
   },
   didUnmount() {},
   methods: {
     // 门店商品列表
-    getGoodsList(shop_id){
+    getShopGoodsList(shop_id) {
       GetShopGoods(shop_id).then((res) => {
-        console.log(res)
+        console.log(res.data[`${shop_id}`])
+        const shopGoodsList = res.data[`${shop_id}`];
+        const companyGoodsList = my.getStorageSync({key: 'company'}).data;
+      //  获取某公司下的某一个门店的商品
+        let arr = companyGoodsList.filter((item,index) => {
+          return shopGoodsList.includes(item.sap_code)
+        })
+        console.log(arr)
+        this.setData({
+          shopGoodsList: arr
+        })
       })
     },
      // 优惠券过期提醒

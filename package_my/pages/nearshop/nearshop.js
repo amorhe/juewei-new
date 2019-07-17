@@ -4,10 +4,10 @@ Page({
   data: {
     imageUrl,
     // 地图中心点
-    longitude: 116.54828,
-    latitude: 39.918639,
-    // longitude: my.getStorageSync({key:'lng'}).data,
-    // latitude: my.getStorageSync({key:'lat'}).data,
+    // longitude: 116.54828,
+    // latitude: 39.918639,
+    longitude: my.getStorageSync({key:'lng'}).data,
+    latitude: my.getStorageSync({key:'lat'}).data,
     markersArray:[
       {
         longitude: 116.30051,

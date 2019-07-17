@@ -1,13 +1,16 @@
 import {membercard} from '../../../pages/common/js/my'
+import {baseUrl} from '../../../pages/common/js/baseUrl'
 Page({
-  data: {},
+  data: {
+    imgSrc:''
+  },
   onLoad() {
     this.getQRcode();
   },
   getQRcode(){
     const _sid = my.getStorageSync({key: '_sid'}).data;
-    membercard(_sid).then((res) => {
-      console.log(res)
+    this.setData({
+      imgSrc:baseUrl + '/juewei-api/alimini/getQRcode?_sid=' + _sid
     })
   }
 });
