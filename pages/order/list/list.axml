@@ -11,28 +11,28 @@
 
 <!-- 官方外卖订单 -->
 <view class="out-list" a:if="{{cur === 0}}">
-  <view class="out-item">
+  <view class="out-item" a:for="{{takeOutList}}">
     <view class="out-header">
         <view class="out-header-title">
           <view class="top">
-            绝味鸭脖（定福庄西街店）
+            {{item.shop_name}}
           </view>
           <view class="bottom">
-            10分钟前
+           {{item.order_ctime}}
           </view>
         </view>
 
         <view class="out-item-state">
-          等待支付
+          {{orderState[item.order_status]}}
         </view>
     </view>
     <view class="out-body">
         <view class="left">
-          招牌鸭脖（超辣）等9件商品
+          {{item.goods[0].goods_name + '('+ item.goods[0].goods_taste +')'}} 等{{item.goods.length}}件商品
         </view>
 
         <view class="right">
-          <text class="y">￥</text> <text class="price">68.00</text>
+          <text class="y">￥</text> <text class="price">{{item.real_price}}</text>
         </view>
     </view>
     <view class="out-footer">
@@ -54,28 +54,28 @@
 
 <!-- 门店自提订单 -->
 <view class="come-list out-list" a:else>
-  <view class="out-item">
+  <view class="out-item" a:for="{{pickUpList}}">
     <view class="out-header">
         <view class="out-header-title">
           <view class="top">
-            绝味鸭脖（定福庄西街店）
+             {{item.shop_name}}
           </view>
           <view class="bottom">
-            2019-06-25 11:23
+           {{item.order_ctime}}
           </view>
         </view>
 
         <view class="out-item-state">
-          等待支付
+          {{orderState[item.order_status]}}
         </view>
     </view>
     <view class="out-body">
         <view class="left">
-          招牌鸭脖（超辣）等9件商品
+         {{item.goods[0].goods_name + '('+ item.goods[0].goods_taste +')'}} 等{{item.goods.length}}件商品
         </view>
 
         <view class="right">
-          <text class="y">￥</text> <text class="price">68.00</text>
+          <text class="y">￥</text> <text class="price">{{item.real_price}}</text>
         </view>
     </view>
     <view class="out-footer">
