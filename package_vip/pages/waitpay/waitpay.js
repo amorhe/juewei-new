@@ -21,6 +21,10 @@ Page({
 
     shop_name: '',
 
+    province: '',
+    city: '',
+    district: '',
+
 
     d: {
       "id": "17",
@@ -56,6 +60,9 @@ Page({
   },
   async onLoad(e) {
     let { order_sn } = e
+    this.setData({
+      order_sn
+    })
     region = await getRegion()
     this.getAddressList()
     await this.getOrderInfo({ order_sn })
@@ -108,11 +115,16 @@ Page({
       cur = [cur[0], cur[1], 0]
     }
 
+    let province = region[cur[0]].name;
+    let city = region[cur[0]].sub[cur[1]].name;
+    let district = (region[cur[0]].sub[cur[1]].sub[cur[2]] && region[cur[0]].sub[cur[1]].sub[cur[2]].name) || ''
+
     this.setData({
       defaultAddress: cur,
-      address: region[cur[0]].name + ' ' +
-        region[cur[0]].sub[cur[1]].name + ' ' +
-        ((region[cur[0]].sub[cur[1]].sub[cur[2]] && region[cur[0]].sub[cur[1]].sub[cur[2]].name) || ' ')
+      address: province + ' ' + city + ' ' + district,
+      province,
+      city,
+      district
     },
       () => this.getAddressList()
     )
@@ -151,8 +163,8 @@ Page({
   async doSelectShop() {
     let { address } = this.data;
     if (!address) {
-      return my.alert({
-        title: '请先选择领取城市'
+      return my.showToast({
+        content: '请先选择领取城市'
       });
     }
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
@@ -188,5 +200,38 @@ Page({
       shop_name,
       selectShop: false
     })
+  },
+
+  async confirmOrder() {
+    let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
+
+    // 如果商品是实物并且发货方式到店领取
+
+    if (d.receive_type == 1) {
+
+      if (!order_sn ||
+        !user_address_name ||
+        !user_address_phone ||
+        !province ||
+        !city ||
+        !district ||
+        !shop_id ||
+        !shop_name) {
+        return
+      }
+
+      let params = {
+        order_sn,
+        user_address_name,
+        user_address_phone,
+        province, city, district,
+        shop_id,
+        shop_name,
+      }
+      let { code } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      return code === 100
+    }
+
+
   }
 });

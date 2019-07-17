@@ -22,11 +22,11 @@
     <view class="store" a:if="{{d.receive_type == 1}}">
       <view class="list">
         <view class="item">领取人</view>
-        <input placeholder="姓名" data-key="user_address_name" onInput="handelChange"/>
+        <input placeholder="姓名" value="{{user_address_name}}" data-key="user_address_name" onInput="handelChange"/>
       </view>
       <view class="list">
         <view class="item">手机号</view>
-        <input placeholder="请输入手机号" data-key="user_address_phone" onInput="handelChange"/>
+        <input placeholder="请输入手机号" value="{{user_address_phone}}" maxlength="11" type="number" data-key="user_address_phone" onInput="handelChange"/>
       </view>
       <view class="select-address list" onTap="showSelectAddress">
         <view class="item">领取城市</view>
@@ -63,7 +63,10 @@
         <text class="total-sm">元运费</text>
       </view>
     </view>
-    <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
+    <view 
+    class="wait-pay-btn" 
+    onTap="confirmOrder"
+    style="background:{{(user_address_name==='' || user_address_phone==='' || address==='' || shop_name === '') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
     马上支付
     </view>
   </view>
@@ -87,7 +90,6 @@
             <text style="color:{{index === 0?'':'#999'}}">距离{{item.distance}}米</text>
             <image mode="scaleToFill" class="shop-position" src="{{imageUrl}}arrow_right3.png" a:if="{{index === 0}}"/>
             <image mode="scaleToFill" class="shop-position" src="{{imageUrl}}arrow_right1.png" a:if="{{index !== 0}}"/>
-
           </view>
         </view>
         <view class="shop-address">
