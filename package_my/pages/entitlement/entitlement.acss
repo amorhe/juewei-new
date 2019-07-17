@@ -5,6 +5,10 @@
   padding: 0 32rpx;
 }
 
+.cardView{
+  position: relative;
+}
+
 .membercard {
   display: block;
   margin: 32rpx 0;
