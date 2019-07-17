@@ -1,4 +1,4 @@
-import {loginByAliUid,getuserInfo} from './pages/common/js/login'
+import {loginByAliUid} from './pages/common/js/login'
 import {baseUrl} from './pages/common/js/baseUrl'
 App({
    onLaunch(options) {
@@ -10,7 +10,6 @@ App({
       scopes: ['auth_base'],
       success: (res) => {
        loginByAliUid(res.authCode).then((data) => {
-        console.log(data);
         my.setStorageSync({
           key: 'ali_uid', // 缓存数据的key
           data: data.data.ali_uid, // 要缓存的数据
@@ -18,12 +17,6 @@ App({
        })
       },
     });
-    // this.getUserInfo("4966-inviq2t1sdl3s95idh7a0s1dn1");
-  },
-  getUserInfo(_sid){
-    getuserInfo(_sid).then((data) => {
-      console.log(data);
-    })
   },
   onShow(options) {//多次执行
     // 从后台被 scheme 重新打开

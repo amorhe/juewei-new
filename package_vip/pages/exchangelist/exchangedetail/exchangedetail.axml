@@ -21,7 +21,7 @@
   </view>
   <view class="detail">
     <view class="body detail-item">
-      <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>
+      <image mode="scaleToFill" src="{{imageUrl2 + detail.goods_pic}}" class="good-img"/>
       <view class="body-right">
         <view class="good-title">
             {{detail.goods_name}}
@@ -108,7 +108,7 @@
       <view class="code-button">复制</view>
     </view>
     <view class="ul">
-      <view class="li" a:if="{{detail.start_time}}">
+      <view class="li" a:if="{{detail.start_time !== '0000-00-00 00:00:00'}}">
         <view class="title">
           活动时间
         </view>
@@ -121,7 +121,7 @@
           兑换说明
         </view>
         <view class="value">
-          {{detail.exchange_intro}}
+          <rich-text nodes="{{_exchange_intro}}"></rich-text>
         </view>
       </view>
       <view class="li" a:if="{{detail.intro}}">
@@ -129,7 +129,7 @@
           商品详情
         </view>
         <view class="value">
-          {{detail.intro}}
+         <rich-text nodes="{{_intro}}"></rich-text>
         </view>
       </view>
       <view class="li" a:if="{{detail.exchange_limit_type}}">
@@ -156,7 +156,7 @@
         </view>
         <view class="item-value">
           <text>{{detail.order_sn}}</text>
-          <view class="copy-button">复制</view>
+          <view class="copy-button" onTap="handleCopy">复制</view>
         </view>
       </view>
       <view class="order-item">

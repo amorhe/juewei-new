@@ -7,10 +7,10 @@
         <view class="state">{{item.status_name}}</view>
       </view>
       <view class="body">
-        <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}coupon.png" class="good-img"/>
+        <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>
         <view class="body-right">
           <view class="good-title">
-            绝味抱枕
+            {{item.goods_name}}
           </view>
           <view class="cost" a:if="{{ item.order_point == 0 && item.order_amount == 0 }}">
             免费领

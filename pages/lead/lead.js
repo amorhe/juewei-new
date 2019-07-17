@@ -1,4 +1,5 @@
 import {imageUrl} from '../common/js/baseUrl'
+import {bd_encrypt} from '../common/js/map'
 
 Page({
   data: {
@@ -9,14 +10,14 @@ Page({
       type:2,
       success(res) {
         my.hideLoading();
-        console.log(res);
+        const mapPosition = bd_encrypt(res.longitude,res.latitude)
         my.setStorageSync({
           key: 'lat', // 缓存数据的key
-          data: res.latitude, // 要缓存的数据
+          data: mapPosition.bd_lat, // 要缓存的数据
         });
         my.setStorageSync({
           key: 'lng', // 缓存数据的key
-          data: res.longitude, // 要缓存的数据
+          data: mapPosition.bd_lng, // 要缓存的数据
         });
         my.redirectTo({
           url: '/pages/home/goodslist/goodslist?address1=' + res.streetNumber.street + '&address2=' + res.streetNumber.number
