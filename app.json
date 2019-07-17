@@ -62,6 +62,7 @@
         "pages/mycenter/newphone/newphone",
         "pages/myaddress/myaddress",
         "pages/myaddress/addaddress/addaddress",
+        "pages/entitlement/entitlement",
         "pages/onlineservice/onlineservice",
         "pages/nearshop/nearshop",
         "pages/coupon/redeemCodeRecord/redeemCodeRecord",
