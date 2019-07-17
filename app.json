@@ -1,13 +1,9 @@
 {
   "pages": [
-    "pages/lead/lead",
     "pages/home/goodslist/goodslist",
-    
-    
+    "pages/lead/lead",
     "pages/my/index/index",
-    
     "pages/home/selecttarget/selecttarget",
-    
     "pages/home/orderform/orderform",
     "pages/home/orderError/orderError",
     "pages/home/orderfinish/orderfinish",
@@ -63,8 +59,11 @@
         "pages/coupon/changedetails/changedetails",
         "pages/mycenter/mycenter",
         "pages/mycenter/bindphone/bindphone",
+        "pages/mycenter/newphone/newphone",
         "pages/myaddress/myaddress",
         "pages/myaddress/addaddress/addaddress",
+        "pages/myaddress/selectaddress/selectaddress",
+        "pages/entitlement/entitlement",
         "pages/onlineservice/onlineservice",
         "pages/nearshop/nearshop",
         "pages/coupon/redeemCodeRecord/redeemCodeRecord",

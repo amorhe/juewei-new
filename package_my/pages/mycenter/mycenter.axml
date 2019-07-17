@@ -1,23 +1,84 @@
-<view>
-  个人中心，用户基本信息修改
-  <scroll-view style="height: 100vh;" scroll-y onScrollToLower="onScrollToLower">
-    <list>
-    <block a:for="{{items}}">
-				<list-item
-					thumb="{{item.thumb}}"
-					arrow="{{item.arrow}}"
-					onClick="onItemClick"
-					index="items2-{{index}}"
-					key="items2-{{index}}"
-					last="{{index === (items2.length - 1)}}"
-				>
-					{{item.title}}
-					<view class="am-list-brief">{{item.brief}}</view>
-					<view a:if="{{item.extra}}" slot="extra">
-						{{item.extra}}
-					</view>
-				</list-item>
-			</block>
-    </list>
-  </scroll-view>
+<view class="usercenter">
+  <view>
+    <view class="listItem">
+      <view class="Itemlabel">头像</view>
+      <view class="ItimInfo"></view>
+      <image mode="scaleToFill" class='userImg' src="https://test-wap.juewei.com/m/ali-mini/image/home_vip.png"/>
+    </view>
+    <view class="listItem">
+      <view class="Itemlabel">昵称</view>
+      <view class="ItimInfo">绝味会员</view>
+    </view>
+    <view class="listItem" onTap="onTopBtnTap">
+      <view class="Itemlabel">性别</view>
+      <view class="ItimInfo">男</view>
+      <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+    <view class="listItem" onTap="Taptime">
+      <view class="Itemlabel">生日</view>
+      <view class="ItimInfo">请输入生日信息，保存后不可修改</view>
+      <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+     <view class="listItem" onTap="showSelectAddress">
+      <view class="Itemlabel">城市</view>
+      <view class="ItimInfo">请选择城市</view>
+      <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+     <view class="listItem">
+      <view class="Itemlabel">手机号</view>
+      <view class="ItimInfo">188****8888</view>
+      <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+  </view>
+  <view class="SignOutButton" onTap="outLogin">退出登录</view>
+</view>
+<popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
+    <view class="onPopupInfo">
+      <view class="InfoItem ItemBorder">男</view>
+      <view class="InfoItem">女</view>
+      <view class="InfoItem ItemMargin">取消</view>
+    </view>
+</popup>
+
+<!-- 退出提示 -->
+<modal
+    show="{{modalOpened}}"
+    showClose="{{ false }}"
+  >
+    <view class="modalInfo">
+      是否确定退出登录
+    </view>
+    <view slot="footer" class="footerButton">
+      <view class="modalButton confirm" onTap="onModalClick">确定</view>
+      <view class="modalButton cancel" onTap="onModalClose">取消</view>
+    </view>
+</modal>
+
+<!-- 选择地址 -->
+  <view class="pop-wrap" a:if="{{selectAddress}}">
+    <view class="my-pop">
+        <view class="pop-top">
+            <text></text>
+            <text class="title">城市</text>
+            <text class="sure" onTap="hideSelectAddress">确定</text>
+        </view>
+
+        <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
+            <picker-view-column>
+                <view class="selecter" a:for="{{ provinceList }}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter" a:for="{{cityList}}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+              <picker-view-column>
+                <view class="selecter" a:for="{{countryList}}">
+                  <view class="value">{{item.name}}</view>
+                </view>
+            </picker-view-column>
+        </picker-view>
+    </view>
 </view>

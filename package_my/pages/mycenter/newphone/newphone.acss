@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom:1px solid #eee; 
 }
 
 .inputInfo{
@@ -24,8 +25,8 @@
 }
 
 .inputClass{
-  width: 0;
-  height: 0;
+  width: 670rpx;
+  height: 50rpx;
 }
 
 .bindButton{
@@ -39,17 +40,4 @@
   color:rgba(255,255,255,1);
   font-size:36rpx;
   margin: 175rpx auto 0;
-}
-
-.timeClass{
-  color: #E60012;
-}
-
-.inputFocus{
-  border-color:#333; 
-}
-
-.inputFocus::after{
-  content: '|';
-  color:#E60012;
 }

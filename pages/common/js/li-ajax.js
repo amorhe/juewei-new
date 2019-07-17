@@ -54,6 +54,7 @@ export const _sid = '9789-4ui62bhsvvg4jautqijjk114h6'
 
 /**
  * @function 获取 富文本 数组
+ * @param string html字符串
  */
 export const parseData = async (html) => {
   return new Promise(resolve => {
@@ -84,14 +85,14 @@ export const log = console.log
 export const getRegion = async () => {
   return new Promise((resolve, reject) => {
     my.request({
-      dataType:'text',
+      dataType: 'text',
       url: 'https://imgcdnjwd.juewei.com/prod/vipstatic/region_min.js',
       success: (res) => {
         resolve(JSON.parse(res.data.split('=')[1].slice(0, -1)))
       },
-      fail:res=>{
+      fail: res => {
         my.alert({
-          title: res 
+          title: res
         });
       }
     });
@@ -100,18 +101,20 @@ export const getRegion = async () => {
 
 /**
  * @function 百度jdk
+ * @param _lat 经纬度中超过能100的那个 => 经度
+ * @param _lng 经纬度中 没有 超过 100的那个 => 纬度
  */
 
-export const getDistance = async () => {
+export const getDistance = async (_lng,_lat) => {
+  let lat = my.getStorageSync({ key: 'lat' }).data;
+  let lng = my.getStorageSync({ key: 'lng' }).data;
   return new Promise((resolve, reject) => {
     my.request({
-      url: 'https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=116.45633588096595%2C39.9289655041306&ak=pRtqXqnajTytAzWDL3HOnPRK&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=1000&_=1563263791821',
+      url:`https://api.map.baidu.com/directionlite/v1/driving?origin=${lng},${lat}&destination=${_lng},${_lat}&ak=pRtqXqnajTytAzWDL3HOnPRK`,
       success: (res) => {
         resolve(res)
       },
     });
   })
 }
-
-
 
