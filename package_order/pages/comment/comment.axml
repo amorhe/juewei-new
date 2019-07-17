@@ -1,3 +1,35 @@
 <view>
-  外卖和自提评价
+  <!-- 外卖和自提评价 -->
+  <view class="shop">
+    <view class="title">
+      门店评价服务
+    </view>
+    <view class="stars">
+      <image mode="scaleToFill" class="star" src="{{imageUrl}}stars_big{{item?2:1}}.png" data-index="{{index}}" onTap="changeShopStar" a:for="{{shopStars}}"/>
+    </view>
+    <view class="tabs">
+      <view class="tab {{ currentShopSelect.includes(item.key) ? 'active' : '' }}" data-item="{{item.key}}" onTap="selectShopTag" a:for="{{shopTabs}}">{{item.key}}</view>
+    </view>
+    <view class="commen">
+      <textarea maxlength=1000 placeholder="说说对门店的印象" show-count="{{false}}" placeholder-class="textarea"></textarea>
+    </view>
+  </view>
+  <view class="goods">
+    <view class="title">
+      产品评价
+    </view>
+    <view class="stars">
+      <image mode="scaleToFill" class="star" src=""/>
+      <image mode="scaleToFill" class="star" src=""/>
+      <image mode="scaleToFill" class="star" src=""/>
+      <image mode="scaleToFill" class="star" src=""/>
+      <image mode="scaleToFill" class="star" src=""/>
+    </view>
+    <view class="tabs">
+      <view class="tab" a:for="{{tabs}}">{{item.key}}</view>
+    </view>
+    <view class="commen">
+      <textarea maxlength=1000 placeholder="说说哪里满意，帮助大家选择" show-count="{{false}}" placeholder-class="textarea"></textarea>
+    </view>
+  </view>
 </view>

@@ -90,7 +90,7 @@ Page({
       return data
     }
 
-    if (code === 320008) {
+    if (code !== 100) {
       return my.alert({
         title: msg
       });
@@ -143,7 +143,7 @@ Page({
 
             // 虚拟物品
             if (goods_type == 1) {
-              let { order_id, order_sn } = await this.createOrder()
+              let { order_id = '', order_sn } = await this.createOrder()
               if (!order_id) { return }
               let res = await this.confirmOrder(order_sn)
 
