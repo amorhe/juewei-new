@@ -1,6 +1,7 @@
 import {imageUrl,imageUrl2} from '../../common/js/baseUrl'
-import {bannerList,showPositionList,activityList} from '../../common/js/home'
+import {bannerList,showPositionList,activityList,GetLbsShop} from '../../common/js/home'
 import {getuserInfo,loginByAuth} from '../../common/js/login'
+import {cur_dateTime,compare} from '../../common/js/time'
 var app=getApp(); //放在顶部
 Page({
   data: {
@@ -9,7 +10,7 @@ Page({
     imageUrl2,
     firstAddress:'紫檀大厦',  
     type:1,  //默认外卖
-    isClose: false,  //是否营业，true为营业中
+    isClose: false,  
     indicatorDots: true,
     autoplay: false,
     vertical: false,
@@ -19,6 +20,9 @@ Page({
     province_id:'',  //省
     city_id:'',  // 市
     region_id:'',  //区
+    showListObj:{},   // 展位
+    isOpen: '',     //门店是否营业
+    shopTakeOut:[]   // 外卖附近门店列表
   },
   onLoad(query) {
     // 页面加载
@@ -44,6 +48,7 @@ Page({
 
     this.getBannerList(110100,110105,1,1);
     this.getShowpositionList(110100,110105,1,1);
+    this.getLbsShop();
   },
   onShow() {
     // 页面显示 每次显示都执行
@@ -56,13 +61,17 @@ Page({
 
    
   },
+  closeOpen(){
+    this.setData({
+      isClose: true
+    })
+  },
   // 授权获取用户信息
    onGetAuthorize(res) {
       my.getOpenUserInfo({
         success: (res) => {
          let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
-         app.globalData.userInfo = userInfo;
-         this.loginByAuth(userInfo._sid,userInfo.nickName,userInfo.avatar);
+         this.loginByAuth(userInfo.nickName,userInfo.avatar);
         },
         fail(){
            my.alert({ title:'获取用户信息失败' });
@@ -82,20 +91,21 @@ Page({
     });
   },
   // 授权登录
-  loginByAuth(ali_uid,nick_name,head_img){
-    loginByAuth(ali_uid,'15757902894',nick_name,head_img).then((res) => {
-      console.log(res);
+  loginByAuth(nick_name,head_img){
+    const ali_uid = my.getStorageSync({key: 'ali_uid'});
+    loginByAuth(ali_uid.data,'15757902894',nick_name,head_img).then((res) => {
       my.setStorageSync({
         key: '_sid', // session_id
         data: res.data._sid,
       });
-      this.getUserInfo(res.data._sid) 
+      this.getUserInfo(res.data._sid) ;
     })
   },
   // 用户信息
   getUserInfo(_sid){
     getuserInfo(_sid).then((res) => {
       console.log(res);
+      app.globalData.userInfo = res.data;
       this.getBannerList(res.data.city_id,res.data.region_id,1,1);
     })
   },
@@ -123,8 +133,46 @@ Page({
   getShowpositionList(city_id,district_id,company_id){
     showPositionList(city_id,district_id,company_id,1).then((res) => {
       console.log(res)
+      this.setData({
+        showListObj: res.data[0]
+      })
     })
   },
+   // 外卖附近门店
+    getLbsShop(){
+      // const lng = my.getStorageSync({key:'lng'}).data;
+      // const lat = my.getStorageSync({key:'lat'}).data;
+      const lng = 116.54828;
+      const lat = 39.918639;
+      const location = `${lng},${lat}`
+      const shopArr1 = [];
+      const shopArr2 = [];
+      GetLbsShop(location).then((res) => {
+        console.log(res)
+        if(res.code == 0){
+          for(let i = 0; i < res.data.length; i ++) {
+            const status = cur_dateTime(res.data[i].start_time,res.data[i].end_time);
+            this.setData({
+              isOpen: status
+            })
+            // 判断是否营业
+            if(status == 1 || status == 3) {
+              shopArr1.push(res.data[i]);
+            }else{
+              shopArr2.push(res.data[i]);
+            }
+          }
+          // 按照goods_num做降序排列
+          shopArr1.sort(compare('goods_num'));
+          shopArr2.sort(compare('goods_num'));
+          const shopArray = shopArr1.concat(shopArr2);
+          this.setData({
+            shopTakeOut: shopArray
+          })
+        }
+        
+      })
+    },
   // 首页营销活动
   getActivityList(){
     
