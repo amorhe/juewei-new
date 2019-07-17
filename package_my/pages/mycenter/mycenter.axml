@@ -3,7 +3,7 @@
     <view class="listItem">
       <view class="Itemlabel">头像</view>
       <view class="ItimInfo"></view>
-      <image mode="scaleToFill" class='userImg' src="https://test-wap.juewei.com/m/ali-mini/image/home_vip.png"/>
+      <image mode="scaleToFill" class='userImg' src="{{imageUrl}}home_vip.png"/>
     </view>
     <view class="listItem">
       <view class="Itemlabel">昵称</view>
@@ -24,7 +24,7 @@
       <view class="ItimInfo">请选择城市</view>
       <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
     </view>
-     <view class="listItem">
+     <view class="listItem" onTap="toUrl" data-url='/package_my/pages/mycenter/bindphone/bindphone'>
       <view class="Itemlabel">手机号</view>
       <view class="ItimInfo">188****8888</view>
       <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
