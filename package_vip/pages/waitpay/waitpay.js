@@ -1,5 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, getRegion, getDistance } from '../../../pages/common/js/li-ajax'
+import { log, ajax, getRegion } from '../../../pages/common/js/li-ajax'
+import getDistance from '../../../pages/common/js/getdistance'
 
 let region = []
 Page({
@@ -149,13 +150,19 @@ Page({
     let res = await ajax('/mini/game/shop', { parentid })
     let lat = my.getStorageSync({ key: 'lat' }).data;
     let lng = my.getStorageSync({ key: 'lng' }).data;
-    let baidu = await getDistance(lat, lng)
     if (res.CODE == 'A100') {
+      let shopList = res.DATA
+        .map(({ shop_gd_latitude, shop_gd_longitude, ...rest }) => {
+          let distance = getDistance(lng, lat, shop_gd_longitude, shop_gd_latitude).toFixed(0)
+          return {
+            distance: distance > 1000 ? (distance / 1000).toFixed(1) + '千' : distance,
+            ...rest
+          }
+        })
       this.setData({
         selectShop: true,
-        shopList: res.DATA
+        shopList
       })
     }
   }
-
 });

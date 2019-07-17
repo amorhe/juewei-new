@@ -84,7 +84,7 @@
                 {{item.shop_name}}
           </view>
           <view class="shop-distance">
-            <text style="color:{{index === 0?'':'#999'}}">距离871米</text>
+            <text style="color:{{index === 0?'':'#999'}}">距离{{item.distance}}米</text>
             <image mode="scaleToFill" class="shop-position" src="{{imageUrl}}arrow_right3.png" a:if="{{index === 0}}"/>
             <image mode="scaleToFill" class="shop-position" src="{{imageUrl}}arrow_right1.png" a:if="{{index !== 0}}"/>
 
