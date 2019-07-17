@@ -54,6 +54,7 @@ export const _sid = '9789-4ui62bhsvvg4jautqijjk114h6'
 
 /**
  * @function 获取 富文本 数组
+ * @param string html字符串
  */
 export const parseData = async (html) => {
   return new Promise(resolve => {

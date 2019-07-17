@@ -90,6 +90,9 @@ Page({
     }
   },
 
+  /**
+   * @function 获取当前省市区列表 
+   */
   getAddressList() {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let provinceList = region.map(({ addrid, name }) => ({ addrid, name }))
@@ -103,6 +106,9 @@ Page({
     })
   },
 
+  /**
+   * @function 修改地址
+   */
   changeAddress(e) {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let cur;
@@ -130,36 +136,33 @@ Page({
     )
   },
 
+  /**
+   * @function 展示地址选择列表
+   */
   showSelectAddress() {
     this.setData({ selectAddress: true })
   },
 
+  /**
+   * @function 隐藏地址选择列表，并确认改变
+   */
   hideSelectAddress() {
     this.changeAddress()
     this.setData({ selectAddress: false })
   },
 
-  // 地址
-  changeSex() {
-    const { sex } = this.data;
-
-    this.setData({
-      sex: sex === 0 ? 1 : 0
-    })
-  },
-
-  changeCur(e) {
-    let curLabel = e.currentTarget.dataset.cur
-    if (curLabel === this.data.curLabel) curLabel = '-1'
-    this.setData({ curLabel })
-  },
-
+  /**
+   * @function input表单收集数据
+   */
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
     let { value } = e.detail;
     this.setData({ [key]: value })
   },
 
+  /**
+   * @function 获取当前的商店列表，排序并展示
+   */
   async doSelectShop() {
     let { address } = this.data;
     if (!address) {
@@ -192,6 +195,9 @@ Page({
     }
   },
 
+  /**
+   * @function 选择商店并返回
+   */
   sureSelectShop(e) {
     let { shop_id, shop_name } = e.currentTarget.dataset;
 
@@ -202,24 +208,16 @@ Page({
     })
   },
 
+
+  /**
+   * @function 确认订单
+   */
   async confirmOrder() {
     let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
 
     // 如果商品是实物并且发货方式到店领取
 
     if (d.receive_type == 1) {
-
-      if (!order_sn ||
-        !user_address_name ||
-        !user_address_phone ||
-        !province ||
-        !city ||
-        !district ||
-        !shop_id ||
-        !shop_name) {
-        return
-      }
-
       let params = {
         order_sn,
         user_address_name,
@@ -232,6 +230,47 @@ Page({
       return code === 100
     }
 
+  },
 
+  /**
+   * @function 支付订单
+   */
+  async pay() {
+    let { order_sn } = this.data;
+    let { code, data, msg } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+    if (code === 0) {
+      return { code, data }
+    }
+  },
+
+  /**
+   * @function 上支付 
+   */
+  async payNow() {
+    let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
+    if (!order_sn ||
+      !user_address_name ||
+      !user_address_phone ||
+      !province ||
+      !city ||
+      !district ||
+      !shop_id ||
+      !shop_name) {
+      return
+    }
+
+    let confirm = await this.confirmOrder()
+    if (!confirm) {
+      return my.showToast({
+        content: '未获取到订单信息'
+      });
+    }
+    let { code, data, msg } = await this.pay()
+    if (code !== 100) {
+      return my.showToast({
+        content: msg
+      });
+    }
   }
+
 });

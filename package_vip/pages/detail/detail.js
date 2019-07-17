@@ -53,8 +53,10 @@ Page({
     await this.getDetail(id)
   },
 
+/**
+ * @function 获取当商品面详情
+ */
   async getDetail(id) {
-
     let { code, data: { exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
     if (code === 100) {
       let _exchange_intro = await this.parseData(exchange_intro)
@@ -71,6 +73,9 @@ Page({
     }
   },
 
+/**
+ * @function 创建订单
+ */
   async createOrder() {
     let { id, exchange_type, point, amount } = this.data.detail;
 
@@ -91,6 +96,10 @@ Page({
       });
     }
   },
+  
+  /**
+   * @function 确认订单
+   */
 
   async confirmOrder(order_sn) {
     let params = { order_sn }
@@ -98,12 +107,19 @@ Page({
     return code === 100
   },
 
+  /**
+   * @function 支付订单
+   */
   async pay(order_sn) {
     let { code, data } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
     if (code === 0) {
       return { code, data }
     }
   },
+
+  /**
+   *@function 确认兑换
+   */
 
   showConfirm() {
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
