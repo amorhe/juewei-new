@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, getRegion,getDistance } from '../../../pages/common/js/li-ajax'
+import { log, ajax, getRegion, getDistance } from '../../../pages/common/js/li-ajax'
 
 let region = []
 Page({
@@ -35,7 +35,7 @@ Page({
       "code": 'xxx'
     },
 
-    selectShop:false,
+    selectShop: false,
 
     selectAddress: false,
 
@@ -46,30 +46,31 @@ Page({
     defaultAddress: [0, 0, 0],
 
 
-    shopList:[]
+    shopList: []
 
   },
   async onLoad(e) {
     let { order_sn } = e
-    region =  await getRegion()
+    region = await getRegion()
     this.getAddressList()
     await this.getOrderInfo({ order_sn })
-    await getDistance()
   },
 
   /**
    * @function 获取公众号支付前订单详情
    */
   async getOrderInfo(order_sn) {
-    let {showSelectAddress} = this.data;
+    let { showSelectAddress } = this.data;
     let { code, data: { order_sn: _order_sn, limit_pay_second, ...rest } } = await ajax('/mini/vip/wap/order/order_info', order_sn)
     if (code === 100) {
-      setInterval(() => {
+      let a = setInterval(() => {
         --limit_pay_second
         if (limit_pay_second === 0) {
+          limit_pay_second = 59
+          clearInterval(a)
           this.getOrderInfo({ order_sn: _order_sn })
         }
-       
+
         this.setData({
           d: { _order_sn, limit_pay_second, ...rest }
         })
@@ -77,7 +78,7 @@ Page({
     }
   },
 
-   getAddressList() {
+  getAddressList() {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let provinceList = region.map(({ addrid, name }) => ({ addrid, name }))
     let cityList = region[curProvince].sub
@@ -104,8 +105,8 @@ Page({
     this.setData({
       defaultAddress: cur,
       address: region[cur[0]].name + ' ' +
-       region[cur[0]].sub[cur[1]].name + ' ' +
-       ((region[cur[0]].sub[cur[1]].sub[cur[2]] && region[cur[0]].sub[cur[1]].sub[cur[2]].name ) || ' ')
+        region[cur[0]].sub[cur[1]].name + ' ' +
+        ((region[cur[0]].sub[cur[1]].sub[cur[2]] && region[cur[0]].sub[cur[1]].sub[cur[2]].name) || ' ')
     },
       () => this.getAddressList()
     )
@@ -140,16 +141,19 @@ Page({
     this.setData({ [key]: value })
   },
 
-  async doSelectShop(){
+  async doSelectShop() {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let parentid = region[curProvince].addrid + ',' +
-       region[curProvince].sub[curCity].addrid + ',' +
-       ((region[curProvince].sub[curCountry].sub[curCountry] && region[curProvince].sub[curCity].sub[curCountry].addrid ) || 0)
-    let res = await ajax('/mini/game/shop',{parentid})
-    if(res.CODE == 'A100'){
+      region[curProvince].sub[curCity].addrid + ',' +
+      ((region[curProvince].sub[curCountry].sub[curCountry] && region[curProvince].sub[curCity].sub[curCountry].addrid) || 0)
+    let res = await ajax('/mini/game/shop', { parentid })
+    let lat = my.getStorageSync({ key: 'lat' }).data;
+    let lng = my.getStorageSync({ key: 'lng' }).data;
+    let baidu = await getDistance(lat, lng)
+    if (res.CODE == 'A100') {
       this.setData({
-        selectShop:true,
-        shopList:res.DATA
+        selectShop: true,
+        shopList: res.DATA
       })
     }
   }
