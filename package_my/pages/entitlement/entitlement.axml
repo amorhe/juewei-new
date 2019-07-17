@@ -1,0 +1,27 @@
+<view class="entitlement">
+  <view class="cardView">
+    <image class="membercard" src="../../../pages/common/img/membercard.png" />
+  </view>
+  <view class="entInfo">
+    <view class="vipTitle">VIP专享权益</view>
+    <block a:for="{{list}}">
+      <view class="entListItem">
+        <view class="iconView">
+          <image class="iconClass" src="{{ item.icon }}"/>
+        </view>
+        <view class="ItemInfo">
+          <view class="ItemTitle">{{ item.title }}</view>
+          <view class="ItemText">{{ item.info }}</view>
+        </view>  
+      </view> 
+    </block>
+    <view class="entListItem">
+      <view class="iconView">
+      </view>
+      <view class="ItemInfo">
+        <view class="ItemTitle">更多权益敬请期待～</view>
+        <view class="ItemText"></view>
+      </view>  
+    </view> 
+  </view>
+</view>
