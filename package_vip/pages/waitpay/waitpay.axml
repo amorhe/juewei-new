@@ -22,11 +22,11 @@
     <view class="store" a:if="{{d.receive_type == 1}}">
       <view class="list">
         <view class="item">领取人</view>
-        <input placeholder="姓名" data-key="phone" onInput="handelChange"/>
+        <input placeholder="姓名" data-key="user_address_name" onInput="handelChange"/>
       </view>
       <view class="list">
         <view class="item">手机号</view>
-        <input placeholder="请输入手机号" data-key="phone" onInput="handelChange"/>
+        <input placeholder="请输入手机号" data-key="user_address_phone" onInput="handelChange"/>
       </view>
       <view class="select-address list" onTap="showSelectAddress">
         <view class="item">领取城市</view>
@@ -35,7 +35,7 @@
       </view>
       <view class="select-address list" onTap="doSelectShop">
         <view class="item">领取门店</view>
-        <input placeholder="请选择领取门店" disabled="true" data-key="phone" onInput="handelChange"/>
+        <input placeholder="请选择领取门店" disabled="true" data-key="shop_name" value="{{shop_name}}" onInput="handelChange"/>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
     </view>
@@ -75,7 +75,7 @@
     <input placeholder="小区/写字楼/学校等" />
   </view>
   <view class="shop-ul">
-    <view class="shop-item" a:for="{{shopList}}">
+    <view class="shop-item" a:for="{{shopList}}" data-shop_name="{{item.shop_name}}" data-shop_id="{{item.shop_id}}" onTap="sureSelectShop">
       <image class="shop-position" mode="scaleToFill" src="{{imageUrl}}position.png" a:if="{{index === 0}}"/>
       <image class="shop-position" mode="scaleToFill" src="{{imageUrl}}order2.png" a:if="{{index !==0 }}"/>
       <view class="shop-detail">
@@ -105,7 +105,7 @@
       <text class="title">城市</text>
       <text class="sure" onTap="hideSelectAddress">确定</text>
     </view>
-    <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
+    <picker-view class="pick" value="{{defaultAddress}}" indicator-style="height: 40px;" onChange="changeAddress">
       <picker-view-column>
         <view class="selecter" a:for="{{ provinceList }}">
           <view class="value">{{item.name}}</view>

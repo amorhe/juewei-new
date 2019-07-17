@@ -9,13 +9,17 @@ Page({
     imageUrl2,
 
     // 地址
-    name: '',
+    user_address_name: '',
 
     sex: 0,
 
-    phone: '',
+    user_address_phone: '',
 
     address: '',
+
+    shop_id: '',
+
+    shop_name: '',
 
 
     d: {
@@ -94,7 +98,8 @@ Page({
 
   changeAddress(e) {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
-    let cur = e.detail.value
+    let cur;
+    if (e) { cur = e.detail.value } else { cur = this.data.defaultAddress }
     if (cur[0] != curProvince) {
       cur = [cur[0], 0, 0]
     }
@@ -118,6 +123,7 @@ Page({
   },
 
   hideSelectAddress() {
+    this.changeAddress()
     this.setData({ selectAddress: false })
   },
 
@@ -143,6 +149,12 @@ Page({
   },
 
   async doSelectShop() {
+    let { address } = this.data;
+    if (!address) {
+      return my.alert({
+        title: '请先选择领取城市'
+      });
+    }
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let parentid = region[curProvince].addrid + ',' +
       region[curProvince].sub[curCity].addrid + ',' +
@@ -155,14 +167,26 @@ Page({
         .map(({ shop_gd_latitude, shop_gd_longitude, ...rest }) => {
           let distance = getDistance(lng, lat, shop_gd_longitude, shop_gd_latitude).toFixed(0)
           return {
+            _distance: distance,
             distance: distance > 1000 ? (distance / 1000).toFixed(1) + '千' : distance,
             ...rest
           }
         })
+        .sort((a, b) => a._distance - b._distance)
       this.setData({
         selectShop: true,
         shopList
       })
     }
+  },
+
+  sureSelectShop(e) {
+    let { shop_id, shop_name } = e.currentTarget.dataset;
+
+    this.setData({
+      shop_id,
+      shop_name,
+      selectShop: false
+    })
   }
 });
