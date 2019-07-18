@@ -1,0 +1,35 @@
+@import '../../nearshop/nearshop.acss';
+.addressView{
+  max-height: 100vh;
+  overflow: hidden;
+}
+.addressshopBox{
+  position: fixed;
+  left:0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 0 32rpx;
+}
+.addressItem{
+  display: flex;
+  background: #fff;
+  padding: 16rpx 0;
+  border-bottom:1px solid #eee; 
+}
+.iconImgView{
+  margin-right: 10rpx;
+}
+.iconImg{
+  display: block;
+  width: 32rpx;
+  height: 32rpx;
+}
+.addressName{
+  font-size: 28rpx;
+  color: #E60012;
+}
+.addressInfo{
+  font-size: 22rpx;
+  margin-top: 8rpx;
+}

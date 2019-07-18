@@ -4,7 +4,7 @@
       <image class="avatar" mode="scaleToFill" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=311097710,965735535&fm=27&gp=0.jpg"/>
       <view class="fontFourtyWeight">绝味会员</view>
     </view>
-    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png"/>
+    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="toUrl" data-url='/package_my/pages/mycenter/mycenter'/>
   </view>
 
   <view class="vipView">
@@ -19,7 +19,7 @@
   <view class="my_menu">
     <view class="fontBold">我的服务</view>
     <view class="menuList">
-      <view>
+      <view onTap="toUrl" data-url='aa'>
         <view>
          <view>
             <image mode="scaleToFill" src="{{imageUrl}}my_coupon.png"/>
@@ -27,7 +27,7 @@
          </view>
         </view>
       </view>
-      <view>
+      <view onTap="toUrl" data-url='/package_vip/pages/pointlist/pointlist'>
         <view>
           <view>
             <image mode="scaleToFill" src="{{imageUrl}}my_points.png"/>
@@ -51,7 +51,7 @@
           </view>
         </view>
       </view>
-      <view>
+      <view onTap="toUrl" data-url='/package_my/pages/entitlement/entitlement'>
         <view>
           <view>
             <image mode="scaleToFill" src="{{imageUrl}}menu_vip2.png"/>

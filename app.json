@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/home/goodslist/goodslist",
     "pages/lead/lead",
+    "pages/home/goodslist/goodslist",
     "pages/my/index/index",
     "pages/home/selecttarget/selecttarget",
     "pages/home/orderform/orderform",
@@ -26,8 +26,7 @@
     "pages/order/list/list",
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
-    "pages/login/auth/auth",
-    "pages/component/shopcart/shopcart"
+    "pages/login/auth/auth"
   ],
   "subPackages": [
     {
@@ -62,6 +61,7 @@
         "pages/mycenter/newphone/newphone",
         "pages/myaddress/myaddress",
         "pages/myaddress/addaddress/addaddress",
+        "pages/myaddress/selectaddress/selectaddress",
         "pages/entitlement/entitlement",
         "pages/onlineservice/onlineservice",
         "pages/nearshop/nearshop",

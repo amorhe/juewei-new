@@ -1,5 +1,5 @@
 import {imageUrl,ak} from '../../common/js/baseUrl'
-import {couponsExpire,MyNearbyShop} from '../../common/js/home'
+import {couponsExpire,MyNearbyShop,GetShopGoods} from '../../common/js/home'
 import {datedifference} from '../../common/js/time'
 Component({
   mixins: [],
@@ -16,19 +16,22 @@ Component({
       days:1
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
-    shopList:[],   // 附近门店列表
-  },
-  props: {
-    scrollY:""
+    shopGoodsList:[],   // 门店商品列表
+    zhaopai:[],
+    tengjiao:[],
+    sucai:[],
+    heiya:[],
+    wuxiang:[],
+    jiela:[]
   },
   onInit() {
     const _sid = my.getStorageSync({key: '_sid'});
     this.getcouponsExpire(_sid.data);
-    // this.nearShop();
-
-
   },
-  didMount() {},
+  didMount() {
+    console.log(1)
+    // this.getShopGoodsList(this.props.shop_id);
+  },
   didUpdate() {
     this.setData({
       scroll_y:this.props.scrollY
@@ -37,10 +40,26 @@ Component({
       this.setData({
         goodsType:0
       })
-    }
+    } 
   },
   didUnmount() {},
   methods: {
+    // 门店商品列表
+    getShopGoodsList(shop_id) {
+      GetShopGoods(shop_id).then((res) => {
+        console.log(res.data[`${shop_id}`])
+        const shopGoodsList = res.data[`${shop_id}`];
+        const companyGoodsList = my.getStorageSync({key: 'company'}).data;
+      //  获取某公司下的某一个门店的商品
+        let arr = companyGoodsList.filter((item,index) => {
+          return shopGoodsList.includes(item.sap_code)
+        })
+        console.log(arr)
+        this.setData({
+          shopGoodsList: arr
+        })
+      })
+    },
      // 优惠券过期提醒
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
@@ -51,23 +70,6 @@ Component({
         
       })
     },
-    // 获取附近门店
-    nearShop(){
-      const lng = my.getStorageSync({key:'lng'});
-      const lat = my.getStorageSync({key:'lat'});
-      my.request({
-        url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
-        success: (res) => {
-          const obj = res.data.contents;
-          MyNearbyShop(JSON.stringify(obj)).then((conf) => {
-            console.log(conf)
-            this.setData({
-              shopList:conf
-            })
-          })
-        },
-      });
-    },
     closeCouponView(){
       this.setData({
         isShow: false
@@ -76,7 +78,7 @@ Component({
     // 选择系列
     chooseGoodsType(e) {
       my.pageScrollTo({
-        scrollTop: 610
+        scrollTop: 510
       })
       this.setData({
         goodsType: e.currentTarget.dataset.type

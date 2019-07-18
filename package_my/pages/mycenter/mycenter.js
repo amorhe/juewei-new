@@ -1,5 +1,6 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
-import { log, region } from '../../../pages/common/js/li-ajax'
+import { getRegion } from '../../../pages/common/js/li-ajax'
+let region=[]
 Page({
   data: {
     imageUrl,
@@ -29,6 +30,7 @@ Page({
     defaultAddress: [0, 0, 0]
   },
    async onLoad() {
+    region =  await getRegion()
     this.getAddressList()
   },
 
@@ -134,6 +136,13 @@ Page({
   onModalClose() { // 取消
     this.setData({
       modalOpened: false,
+    });
+  },
+  //页面跳转
+  toUrl(e){
+    var url = e.currentTarget.dataset.url
+    my.navigateTo({
+      url:url
     });
   },
   onReady() {

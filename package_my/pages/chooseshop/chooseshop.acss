@@ -42,4 +42,24 @@
   line-height: 30rpx!important;
   width: 422rpx;
 }
-
+.jing {
+  width: 48rpx;
+  height: 80rpx;
+  /* 这里使用线性渐变手机上不显示 */
+  background:#E60012;  
+  border-radius: 2rpx;
+  color: #fff;
+  display: flex;
+  padding: 12rpx 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  font-size: 26rpx;
+  margin-right: 16rpx;
+  line-height: 32rpx!important
+}
+.jing>cover-view {
+  background: transparent
+}

@@ -29,4 +29,11 @@ Page({
     })
     console.log(value)
   },
+  //页面跳转
+  toUrl(e){
+    var url = e.currentTarget.dataset.url
+    my.navigateTo({
+      url:url
+    });
+  },
 });
