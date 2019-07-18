@@ -61,7 +61,7 @@
         <view 
         class="bottom"
         style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
-        已抢{{((((item.total_num-item.valid_num)/item.total_num).toFixed(2)) * 100)}}% 
+        已抢{{((((item.total_num-item.valid_num)* 100/item.total_num).toFixed(0)))}}% 
         </view>
       </view>
     </view>

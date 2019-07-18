@@ -56,7 +56,6 @@ Page({
   /**
    * @function 上传图片
    */
-
   upLoad() {
     my.chooseImage({
       sourceType: ['camera', 'album'],

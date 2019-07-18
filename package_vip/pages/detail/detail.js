@@ -53,9 +53,9 @@ Page({
     await this.getDetail(id)
   },
 
-/**
- * @function 获取当商品面详情
- */
+  /**
+   * @function 获取当商品面详情
+   */
   async getDetail(id) {
     let { code, data: { exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
     if (code === 100) {
@@ -73,9 +73,9 @@ Page({
     }
   },
 
-/**
- * @function 创建订单
- */
+  /**
+   * @function 创建订单
+   */
   async createOrder() {
     let { id, exchange_type, point, amount } = this.data.detail;
 
@@ -96,7 +96,7 @@ Page({
       });
     }
   },
-  
+
   /**
    * @function 确认订单
    */
@@ -112,9 +112,7 @@ Page({
    */
   async pay(order_sn) {
     let { code, data } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
-    if (code === 0) {
-      return { code, data }
-    }
+    return { code, data }
   },
 
   /**
@@ -147,12 +145,20 @@ Page({
               if (!order_id) { return }
               let res = await this.confirmOrder(order_sn)
 
+              if (amount != 0) {
+                let res = await this.pay(order_sn)
+                if (res.code !== 0) return my.showToast({
+                  content: res.msg
+                });
+              }
+
               if (!res) { fail = true }
 
               // 虚拟订单 + 兑换码 => 无需发货
+              //
               if (goods_detail_type == 2 && receive_type == 0) {
                 my.navigateTo({
-                  url: '../finish/finish?receive_type=0'
+                  url: '../finish/finish?id=' + order_id + '&fail=' + fail
                 });
               }
 
@@ -175,7 +181,7 @@ Page({
 
             if (goods_type == 2) {
               let res = await this.createOrder()
-              if ( !res ) { return }
+              if (!res) { return }
 
               // 实物订单  公司邮寄
               if (receive_type == 2) {

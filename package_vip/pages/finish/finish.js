@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { ajax, parseData,redirect } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData,redirect,log } from '../../../pages/common/js/li-ajax'
 
 Page({
   data: {
@@ -65,7 +65,7 @@ Page({
   async onLoad(query) {
     let { id ,fail} = query
     this.setData({
-      fail: fail == true
+      fail: fail == 'true'
     })
     await this.getOdrderDetail(id)
   
@@ -74,7 +74,13 @@ Page({
   
 
   redirect(){
-    redirect('/pages/vip/index/index')
+    my.switchTab({
+      url: '/pages/vip/index/index', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
+      success: (res) => {
+        
+      },
+    });
+    // redirect('/pages/vip/index/index')
   },
 
   toOrder(){
