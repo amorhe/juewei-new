@@ -17,20 +17,15 @@ Component({
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
     shopGoodsList:[],   // 门店商品列表
-    zhaopai:[],
-    tengjiao:[],
-    sucai:[],
-    heiya:[],
-    wuxiang:[],
-    jiela:[]
+    activityList:[],
+    goods_num:0
   },
   onInit() {
-    const _sid = my.getStorageSync({key: '_sid'});
-    this.getcouponsExpire(_sid.data);
+    
   },
   didMount() {
-    console.log(1)
-    // this.getShopGoodsList(this.props.shop_id);
+    const _sid = my.getStorageSync({key: '_sid'});
+    this.getcouponsExpire(_sid.data);
   },
   didUpdate() {
     this.setData({
@@ -40,26 +35,20 @@ Component({
       this.setData({
         goodsType:0
       })
-    } 
+    }
+    if(this.props.shopGoodsList){
+      this.setData({
+        shopGoodsList:this.props.shopGoodsList
+      })
+    }
+    if(this.props.activityList){
+      this.setData({
+        activityList:this.props.activityList
+      })
+    }
   },
   didUnmount() {},
   methods: {
-    // 门店商品列表
-    getShopGoodsList(shop_id) {
-      GetShopGoods(shop_id).then((res) => {
-        console.log(res.data[`${shop_id}`])
-        const shopGoodsList = res.data[`${shop_id}`];
-        const companyGoodsList = my.getStorageSync({key: 'company'}).data;
-      //  获取某公司下的某一个门店的商品
-        let arr = companyGoodsList.filter((item,index) => {
-          return shopGoodsList.includes(item.sap_code)
-        })
-        console.log(arr)
-        this.setData({
-          shopGoodsList: arr
-        })
-      })
-    },
      // 优惠券过期提醒
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
@@ -98,22 +87,25 @@ Component({
       })
     },
     scrollEvent(e){
-      // 套餐
-      // my.createSelectorQuery().select('.taocan').boundingClientRect().exec((ret)=>{
-      //  if(ret[0].top<114) {
-      //   this.setData({
-      //     goodsType: 2
+      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
+      //   let arr = ret[0].filter((item,index) => {
+      //     return item.top<=104.5
       //   })
-      //  }
-      // })
-      // 爆款
-      // my.createSelectorQuery().select('.baokuan').boundingClientRect().exec((ret)=>{
-      //  if(ret[0].top<114) {
       //   this.setData({
-      //     goodsType: 3
+      //     goodsType:arr.length
       //   })
-      //  }
       // })
+    },
+    addshopcart(e){
+      this.setData({
+        goods_num:this.data.goods_num += 1
+      })
+      ;
+    },
+    reduceshopcart(){
+      this.setData({
+        goods_num:this.data.goods_num -= 1
+      })
     }
   }
 });

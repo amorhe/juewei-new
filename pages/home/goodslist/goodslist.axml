@@ -86,7 +86,7 @@ scope='userInfo'>授权登录</button>
   <image src="{{imageUrl2 + showListObj.pic_src[0]}}" />
 </view>
 
-<view style="height:100rpx;" hidden="{{!scroll_y}}"></view>
+<view style="height:150rpx;" hidden="{{!scroll_y}}"></view>
 <navigator url="/package_my/pages/chooseshop/chooseshop?type={{type}}" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
   <!-- 推荐门店 -->
   <view class="shopDefault">
@@ -116,5 +116,5 @@ scope='userInfo'>授权登录</button>
 </navigator>
 
 <!-- 购物车 -->
-<shopcart scrollY="{{scroll_y}}" shop_id="{{shopTakeOut[0].shop_id}}" />
+<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsList}}" activityList="{{activityList}}"/>
 </view>
