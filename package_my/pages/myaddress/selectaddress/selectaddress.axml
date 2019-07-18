@@ -30,7 +30,7 @@
           <cover-view class="addressInfo">北京市朝阳区建国路27号</cover-view>
         </cover-view>
       </cover-view>
-      <cover-view class="addressItem">
+      <cover-view class="addressItem" a:for="{{3}}">
         <cover-view class="iconImgView">
           <cover-image src="{{ imageUrl }}order2.png" class="iconImg"/>
         </cover-view>

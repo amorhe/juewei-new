@@ -1,3 +1,21 @@
-<view>
+<!-- <view>
   手机号登录页面
+</view> -->
+
+<view class="bindPhone">
+  <view class="TitleName">输入验证码</view>
+  <view>验证码已发送至 {{phone}}</view>
+  <view class="inputView" onTap="bindFocus">
+    <view class="inputInfo {{ value[0]?'':'inputFocus' }}">{{ value[0] }}</view> 
+    <view class="inputInfo {{ value[0]?value[1]?'':'inputFocus':'' }}">{{ value[1] }}</view>
+    <view class="inputInfo {{ value[1]?value[2]?'':'inputFocus':''  }}">{{ value[2] }}</view>
+    <view class="inputInfo {{ value[2]?value[3]?'':'inputFocus':''  }}">{{ value[3] }}</view>
+  </view> 
+  <input class="inputClass" focus="{{focus}}" onFocus="onFocus" onBlur="onBlur" maxlength="4" type="number" onInput="inputValue"/>
+  <view class="errorTitel">
+    验证码输入错误，请重新输入
+  </view>
+  <view>
+    <text class="timeClass">59秒</text>后重新获取验证码
+  </view>
 </view>
