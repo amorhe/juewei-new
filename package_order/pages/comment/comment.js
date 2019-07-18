@@ -1,10 +1,11 @@
-import { imageUrl } from '../../../pages/common/js/baseUrl'
+import { imageUrl, baseUrl } from '../../../pages/common/js/baseUrl'
 import { ajax, log } from '../../../pages/common/js/li-ajax'
 
 Page({
   data: {
     imageUrl,
     shopStars: [true, true, true, true, false],
+    pics: [],
     shopTabs: [
       { key: '送餐快' },
       { key: '餐品保存完好' },
@@ -50,5 +51,46 @@ Page({
     this.setData({
       currentShopSelect
     })
+  },
+
+  /**
+   * @function 上传图片
+   */
+
+  upLoad() {
+    my.chooseImage({
+      sourceType: ['camera', 'album'],
+      count: 1,
+      success: (res) => {
+        log(res.apFilePaths[0])
+
+        my.uploadFile({
+          url: baseUrl + '/juewei-api/comment/UploadCommentImg',
+
+          fileType: 'image',
+          fileName: 'imgFile',
+          filePath: res.apFilePaths[0],
+          success: (result) => {
+            log(result)
+            my.alert({
+              content: '上传成功'
+            });
+          },
+          fail: (error) => {
+            log(error)
+            my.showToast({
+              content: 'fail',
+            });
+          }
+        });
+      },
+      fail: (err) => {
+        log(err)
+        my.showToast({
+          content: 'fail',
+        });
+      }
+    })
+
   }
 });

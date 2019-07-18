@@ -33,6 +33,10 @@
         <view class="commen">
           <textarea maxlength=1000 placeholder="说说对门店的印象" show-count="{{false}}" placeholder-class="textarea"></textarea>
         </view>
+        <view class="pics">
+          <image mode="scaleToFill" src="" a:for="{{pics}}"/>
+          <image mode="scaleToFill" src="{{imageUrl}}camera.png" onTap="upLoad"/>
+        </view>
       </view>
     </view>
   </view>
