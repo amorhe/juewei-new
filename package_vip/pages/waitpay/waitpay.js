@@ -5,6 +5,7 @@ import getDistance from '../../../pages/common/js/getdistance'
 let region = []
 Page({
   data: {
+    a: 0,
     imageUrl,
     imageUrl2,
 
@@ -68,6 +69,11 @@ Page({
     await this.getOrderInfo({ order_sn })
   },
 
+  onUnload() {
+    clearInterval(this.data.a)
+    this.setData({ a: 0 })
+  },
+
   /**
    * @function 获取公众号支付前订单详情
    */
@@ -86,6 +92,7 @@ Page({
         }
 
         this.setData({
+          a,
           d: { _order_sn, limit_pay_minute, limit_pay_second, ...rest }
         })
       }, 1000)
@@ -265,14 +272,23 @@ Page({
 
     let confirm = await this.confirmOrder()
     if (!confirm) {
-      return
-    }
-    let { code, data, msg } = await this.pay()
-    if (code !== 100) {
       return my.showToast({
-        content: msg
+        content: confirm.msg
       });
     }
+
+    if (d.order_total_amount != 0) {
+      let { code, data, msg } = await this.pay()
+      if (code !== 100) {
+        return my.redirectTo({
+          url: '../finish/finish?id=' + d.id + '&fail=' + false
+        });
+      }
+    }
+
+
+
+
   }
 
 });

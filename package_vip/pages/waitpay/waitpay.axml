@@ -59,8 +59,8 @@
         <text class="total-title">合计</text>
         <text class="total-vip">{{d.order_point}}</text>
         <text class="total-j">积分</text>
-        <text class="total-vip">+{{d.order_total_amount}}</text>
-        <text class="total-sm">元运费</text>
+        <text class="total-vip" a:if="{{d.order_total_amount != 0}}">+{{d.order_total_amount}}</text>
+        <text class="total-sm" a:if="{{d.order_total_amount != 0}}">元运费</text>
       </view>
     </view>
     <view 

@@ -1,0 +1,95 @@
+.shop, .goods {
+  width: 702rpx;
+  margin: 16rpx auto;
+  padding: 32rpx 24rpx;
+  background: white;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+  padding-bottom: 40rpx;
+}
+
+.stars {
+  width: 380rpx;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stars image {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.tabs {
+  width: 580rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tab {
+  box-sizing: border-box;
+  border-radius: 28rpx;
+  padding: 9rpx 16rpx;
+  border: 1px solid #333;
+  margin: 24rpx 16rpx 0 0;
+  font-size: 22rpx;
+  font-weight: 400;
+  color: #333;
+}
+
+.active {
+  color: #E60012;
+  border-color: #E60012
+}
+
+textarea {
+  width: 620rpx;
+  height: 160rpx;
+  background: rgba(238, 238, 238, 1);
+  border-radius: 4rpx;
+  margin: 24rpx auto 0;
+  padding: 16rpx;
+  font-size: 28rpx;
+}
+
+.textarea {
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(204, 204, 204, 1);
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.header .stars{
+  width: 170rpx;
+  margin: 0
+}
+
+.header .star{
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.pics{
+  display: flex;
+  margin: 10rpx 0 0 0;
+}
+
+.pics image{
+  width: 100rpx;
+  height: 100rpx;
+}

@@ -10,12 +10,49 @@
     </view>
     <view class="p-detail">
       <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
-      <view class="p-right">
+      <view class="p-right" style="flex:1">
         <view class="p-title">
           {{d.goods_name}}
         </view>
         <view class="p-price">
          {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+        </view>
+      </view>
+      <view class="btn">联系客服</view>
+    </view>
+    <view class="user-detail">
+      <view class="user-list" a:if="{{d.user_address_name}}">
+        <view class="user-left">
+        领取人
+        </view>
+        <view class="user-right">
+        {{d.user_address_name}}
+        </view>
+      </view>
+      <view class="user-list">
+        <view class="user-left" a:if="{{d.user_address_phone}}">
+        领取手机号码
+        </view>
+        <view class="user-right">
+        {{detail.user_address_phone}}
+        </view>
+      </view>
+      <view class="user-list" a:if="{{d.shop_name}}">
+        <view class="user-left">
+        领取门店
+        </view>
+        <view class="user-right">
+          <view class="shop-name"> {{d.shop_name}}</view>
+          <view class="code-button">导航</view>
+        </view>
+      </view>
+      <view class="user-list" a:if="{{d.shop_name}}">
+        <view class="user-left">
+        </view>
+        <view class="user-right">
+          <view class="user-address">
+           {{d.province}} {{d.city}} {{d.district}} {{d.address}}
+          </view>
         </view>
       </view>
     </view>
@@ -26,20 +63,10 @@
     <view class="explain" a:if="{{d.exchange_intro}}">
       <view class="explain-title">兑换说明</view>
       <rich-text nodes="{{d._exchange_intro}}"></rich-text>
-      <!-- <view class="explain-detail">
-        在
-        <text>http://www.ebeecake.com</text> 输入兑换码兑换；
-        <view>活动所有权归本公司所有。</view>
-      </view> -->
+      <!--<view class="explain-detail">
+        在<text>http://www.ebeecake.com</text> 输入兑换码兑换；<view>活动所有权归本公司所有。</view></view> -->
     </view>
-    <view class="explain" a:if="{{d.intro}}">
-      <view class="explain-title">兑换说明</view>
-      <rich-text nodes="{{d._intro}}"></rich-text>
-      <!-- <view class="explain-detail">
-        <view>全场通用</view>
-        <view>活动所有权归本公司所有。</view>
-      </view> -->
-    </view>
+    <!--<view class="explain" a:if="{{d.intro}}"><view class="explain-title">商品</view><rich-text nodes="{{d._intro}}"></rich-text><view class="explain-detail"><view>全场通用</view><view>活动所有权归本公司所有。</view></view></view> -->
     <view class="hint" a:if="{{d.get_code}}">
       温馨提示：可到VIP专享>兑换记录中查看
     </view>
@@ -65,16 +92,53 @@
     </view>
     <view class="p-detail">
       <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
-      <view class="p-right">
+      <view class="p-right" style="flex:1">
         <view class="p-title">
-      {{d.goods_name}}
+          {{d.goods_name}}
         </view>
         <view class="p-price">
-      {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+          {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+        </view>
+      </view>
+      <view class="btn">联系客服</view>
+    </view>
+    <view class="user-detail">
+      <view class="user-list" a:if="{{d.user_address_name}}">
+        <view class="user-left">
+        领取人
+        </view>
+        <view class="user-right">
+        {{d.user_address_name}}
+        </view>
+      </view>
+      <view class="user-list">
+        <view class="user-left" a:if="{{d.user_address_phone}}">
+        领取手机号码
+        </view>
+        <view class="user-right">
+        {{detail.user_address_phone}}
+        </view>
+      </view>
+      <view class="user-list" a:if="{{d.shop_name}}">
+        <view class="user-left">
+        领取门店
+        </view>
+        <view class="user-right">
+          <view class="shop-name"> {{d.shop_name}}</view>
+          <view class="code-button">导航</view>
+        </view>
+      </view>
+      <view class="user-list" a:if="{{d.shop_name}}">
+        <view class="user-left">
+        </view>
+        <view class="user-right">
+          <view class="user-address">
+           {{d.province}} {{d.city}} {{d.district}} {{d.address}}
+          </view>
         </view>
       </view>
     </view>
-    <view class="li-button"  onTap="redirect">
+    <view class="li-button" onTap="redirect">
       返回VIP专享
     </view>
   </view>
