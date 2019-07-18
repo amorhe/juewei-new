@@ -41,13 +41,11 @@ Page({
     let { currentShopSelect } = this.data;
     const { item } = e.currentTarget.dataset;
 
-    if(currentShopSelect.includes(item)){
-       currentShopSelect.splice(currentShopSelect.findIndex(key => key===item),1)
-    }else{
-     currentShopSelect.push(item)
+    if (currentShopSelect.includes(item)) {
+      currentShopSelect.splice(currentShopSelect.findIndex(key => key === item), 1)
+    } else {
+      currentShopSelect.push(item)
     }
-
-    
 
     this.setData({
       currentShopSelect

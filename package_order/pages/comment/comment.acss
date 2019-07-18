@@ -67,3 +67,19 @@ textarea {
   font-weight: 400;
   color: rgba(204, 204, 204, 1);
 }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.header .stars{
+  width: 170rpx;
+  margin: 0
+}
+
+.header .star{
+  width: 32rpx;
+  height: 32rpx;
+}
