@@ -257,7 +257,7 @@
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
                 <image a:if="{{goods_num>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart"/>
                 <text a:if="{{goods_num>0}}">{{goods_num}}</text>
-                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart"/>
+                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}"/>
               </view>
               <view class="goodsSize" onTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
