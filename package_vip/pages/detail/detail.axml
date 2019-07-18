@@ -19,7 +19,7 @@
       <view class="bottom"  style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
 
       <view class="bottom">
-        已抢{{((detail.total_num-detail.valid_num)/detail.total_num) *100}}%
+        已抢{{(((detail.total_num-detail.valid_num)*100/detail.total_num)).toFixed(0)}}%
 
       </view>
     </view>
