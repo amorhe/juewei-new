@@ -12,10 +12,31 @@
     <view class="inputInfo {{ value[2]?value[3]?'':'inputFocus':''  }}">{{ value[3] }}</view>
   </view> 
   <input class="inputClass" focus="{{focus}}" onFocus="onFocus" onBlur="onBlur" maxlength="4" type="number" onInput="inputValue"/>
-  <view class="errorTitel">
+  <view class="errorTitel" a:if="{{false}}">
     验证码输入错误，请重新输入
   </view>
-  <view>
-    <text class="timeClass">59秒</text>后重新获取验证码
+  <view a:if="{{isnew}}">
+    <text class="timeClass">{{countTime}}秒</text>后重新获取验证码
+  </view>
+   <view a:else onTap="timeDate" data-is='1'>
+    重新获取验证码
   </view>
 </view>
+
+<modal
+    show="{{modalOpened}}"
+    showClose="{{ false }}"
+  >
+    <view slot="header">请输入图形验证码</view>
+    <view class="modelBody">
+      <view class="modelInput">
+        <input placeholder="请按右图输入" value="{{img_code}}"  onInput="getcodeImg"/>
+      </view>
+      <view class="imgCode">
+        <image class="imgCodeIcon" src="{{ imgUrl }}"/>
+      </view>
+    </view>
+    <view>
+      <view class="addButton addButtonTrue" onTap="getcodeFn">提交</view>
+    </view>
+</modal>

@@ -39,6 +39,10 @@ page {
   margin: auto;
 }
 
+.out-list {
+  margin: 20rpx auto;
+}
+
 .out-item {
   width: 702rpx;
   margin: 20rpx auto;
@@ -122,7 +126,7 @@ page {
 }
 
 .cancel-order {
-  padding: 0 18rpx;
+  width: 140rpx;
   height: 64rpx;
   border-radius: 32rpx;
   border: 1px solid rgba(153, 153, 153, 1);
@@ -131,5 +135,28 @@ page {
   color: rgba(51, 51, 51, 1);
   line-height: 64rpx;
   text-align: center;
-  margin-right: 20rpx
+  margin-left: 20rpx
+}
+
+.none {
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+
+.none image {
+  margin: 207rpx auto 20rpx;
+  width: 320rpx;
+  height: 320rpx;
+}
+
+.txt {
+  font-size: 28rpx;
+  color: rgba(51, 51, 51, 1);
+}
+
+.red {
+  border: 1px solid rgba(230, 0, 18, 1);
+  color: rgba(230, 0, 18, 1);
 }
