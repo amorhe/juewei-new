@@ -108,7 +108,7 @@
       <view class="code-button">复制</view>
     </view>
     <view class="ul">
-      <view class="li" a:if="{{detail.start_time !== '0000-00-00 00:00:00'}}">
+      <view class="li" a:if="{{detail.start_time !== '0000-00-00 00:00:00' && detail.start_time }}">
         <view class="title">
           活动时间
         </view>
