@@ -10,6 +10,8 @@
   bottom: 0;
   background: #fff;
   padding: 0 32rpx;
+  max-height: 600rpx;
+  overflow: scroll;
 }
 .addressItem{
   display: flex;

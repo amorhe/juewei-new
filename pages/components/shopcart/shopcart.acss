@@ -184,7 +184,7 @@
   height: 60rpx;
   line-height: 60rpx;
   font-size: 24rpx;
-  font-weight: 500
+  font-weight: 600;
 }
 .goodsImage1 {
   width: 100%;
@@ -192,7 +192,8 @@
 }
 .goodsBox {
   border-radius: 10px;
-  box-shadow: 0 2rpx 10rpx 2rpx rgba(153, 153, 153, .2)
+  box-shadow: 0 2rpx 10rpx 2rpx rgba(153, 153, 153, .2);
+  margin-bottom: 30rpx;
 }
 .discountImg {
   position: relative
