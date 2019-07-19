@@ -34,3 +34,9 @@
     </view>
   </view>
 </view>
+
+<!-- 空状态 -->
+<view class="none" a:if="{{ orderList.length === 0 }}">
+  <image mode="scaleToFill" src="{{imageUrl}}bg_order.png"/>
+  <view class="txt">暂无订单</view>
+</view>

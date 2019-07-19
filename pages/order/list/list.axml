@@ -11,7 +11,7 @@
 
 <!-- 官方外卖订单 -->
 <view class="out-list" a:if="{{cur === 0}}">
-  <view class="out-item" a:for="{{takeOutList}}">
+  <view class="out-item" a:for="{{takeOutList}}"  onTap="toDetail">
     <view class="out-header">
         <view class="out-header-title">
           <view class="top">
@@ -53,7 +53,7 @@
 </view>
 
 <!-- 门店自提订单 -->
-<view class="come-list out-list" a:else>
+<view class="come-list out-list" a:if="{{cur === 1}}">
   <view class="out-item" a:for="{{pickUpList}}">
     <view class="out-header">
         <view class="out-header-title">
@@ -93,6 +93,12 @@
 
     </view>
   </view>
+</view>
+
+<!-- 空状态 -->
+<view class="none" a:if="{{(cur === 0 && takeOutList.length === 0) || (cur === 1 && pickUpList.length === 0) }}">
+  <image mode="scaleToFill" src="{{imageUrl}}bg_order.png"/>
+  <view class="txt">暂无订单</view>
 </view>
 
 </view>

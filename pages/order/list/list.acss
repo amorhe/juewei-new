@@ -39,6 +39,10 @@ page {
   margin: auto;
 }
 
+.out-list{
+  margin: 20rpx auto;
+}
+
 .out-item {
   width: 702rpx;
   margin: 20rpx auto;
@@ -132,4 +136,22 @@ page {
   line-height: 64rpx;
   text-align: center;
   margin-right: 20rpx
+}
+
+.none{
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+
+.none image{
+  margin: 207rpx auto 20rpx;
+  width: 320rpx;
+  height: 320rpx;
+}
+
+.txt{
+font-size:28rpx;
+color:rgba(51,51,51,1);
 }
