@@ -1,3 +1,53 @@
-<view>
+<!-- <view>
   我的收货地址管理
+</view> -->
+
+<view class="addressList">
+  <view class="listItme">
+    <view class="tiemleft">
+      <view class="lefttop">
+        <view class="spanClass spanColor">学校</view> 
+        <text>紫檀大厦 606</text>
+      </view>
+      <view class="itemInfo">
+        小春<text>（先生）</text>188 8888 8888
+      </view>
+    </view>
+    <view class="tiemright" onTap="toUrl" data-url='/package_my/pages/myaddress/addaddress/addaddress'>
+      <image class='editicon' src="../../../pages/common/img/edit.png"/>
+    </view>
+  </view> 
+  <view class="listItme">
+    <view class="tiemleft">
+      <view class="lefttop">
+        <view class="spanClass spangsColor">公司</view> 
+        <text>紫檀大厦 606</text>
+      </view>
+      <view class="itemInfo">
+        小春<text>（先生）</text>188 8888 8888
+      </view>
+    </view>
+    <view class="tiemright">
+      <image class='editicon' src="../../../pages/common/img/edit.png"/>
+    </view>
+  </view>  
+  <view class="listItme">
+    <view class="tiemleft">
+      <view class="lefttop">
+        <view class="spanClass spajiaColor">家</view> 
+        <text>紫檀大厦 606</text>
+      </view>
+      <view class="itemInfo">
+        小春<text>（先生）</text>188 8888 8888
+      </view>
+    </view>
+    <view class="tiemright">
+      <image class='editicon' src="../../../pages/common/img/edit.png"/>
+    </view>
+  </view>   
+</view>
+
+<view class="bottomView" onTap="toUrl" data-url='/package_my/pages/myaddress/selectaddress/selectaddress'>
+  <image class='addIcon' src="{{imageUrl}}add.png"/>
+  <text>新增收获地址</text>
 </view>
