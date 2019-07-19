@@ -8,7 +8,6 @@ Page({
     getCode:false,
     phone:'',
     img_code:'',
-    imgShow:true,
     imgUrl:''
   },
   openModal() {
@@ -72,11 +71,12 @@ Page({
           data: new Date().toLocaleDateString(), // 要缓存的数据
         });
       }
-      if(count>5&&!this.data.modalOpened){
+      if(count>5&&!this.data.modalOpened&&count<=10){
         this.setData({
           modalOpened:true,
           imgUrl:this.data.baseUrl+'/juewei-api/user/captcha?_sid=9789-4ui62bhsvvg4jautqijjk114h6&s='+(new Date()).getTime()
         })
+        return
       }
       var data = {
         phone:this.data.phone,
@@ -97,7 +97,11 @@ Page({
           url:'/pages/login/verifycode/verifycode?phone='+data.phone
         });
       }else{
-        
+        my.showToast({
+          type:'none',
+          duration:2000,
+          content:code.msg
+        });
       }
     }
   },

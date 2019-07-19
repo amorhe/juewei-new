@@ -19,7 +19,7 @@
   <view class="my_menu">
     <view class="fontBold">我的服务</view>
     <view class="menuList">
-      <view onTap="toUrl" data-url='aa'>
+      <view onTap="toUrl" data-url='/package_my/pages/coupon/coupon'>
         <view>
          <view>
             <image mode="scaleToFill" src="{{imageUrl}}my_coupon.png"/>
@@ -35,7 +35,7 @@
           </view>
         </view>
       </view>
-      <view>
+      <view onTap="toUrl" data-url='/package_my/pages/myaddress/myaddress'>
         <view>
           <view>
             <image mode="scaleToFill" src="{{imageUrl}}my_address.png"/>
@@ -43,7 +43,7 @@
           </view>
         </view>
       </view>
-      <view>
+      <view onTap="toUrl" data-url='/package_my/pages/nearshop/nearshop'>
         <view>
           <view>
             <image mode="scaleToFill" src="{{imageUrl}}my_nearshop.png"/>
