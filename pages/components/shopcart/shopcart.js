@@ -1,4 +1,4 @@
-import {imageUrl,ak} from '../../common/js/baseUrl'
+import {imageUrl,imageUrl2,ak} from '../../common/js/baseUrl'
 import {couponsExpire,MyNearbyShop,GetShopGoods} from '../../common/js/home'
 import {datedifference} from '../../common/js/time'
 Component({
@@ -6,6 +6,7 @@ Component({
   data: {
     scroll_y:false, 
     imageUrl,
+    imageUrl2,
     goodsType:0, //系列
     maskView:false,
     goodsModal:false,
@@ -17,8 +18,10 @@ Component({
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
     shopGoodsList:[],   // 门店商品列表
-    activityList:[],
-    goods_num:0
+    activityAllObj:[],
+    shopcartArr:[],     //购物车
+    showAnmimation:true,
+    windowHeight:''
   },
   onInit() {
     
@@ -26,10 +29,18 @@ Component({
   didMount() {
     const _sid = my.getStorageSync({key: '_sid'});
     this.getcouponsExpire(_sid.data);
+    my.getSystemInfo({
+      success: (res) => {
+        this.setData({
+          windowHeight: res.windowHeight
+        })
+      }
+    })
   },
   didUpdate() {
     this.setData({
-      scroll_y:this.props.scrollY
+      scroll_y:this.props.scrollY,
+      type:this.props.type
     })
     if(!this.props.scrollY) {
       this.setData({
@@ -37,13 +48,18 @@ Component({
       })
     }
     if(this.props.shopGoodsList){
+      this.props.shopGoodsList.forEach(val => {
+        val.last.forEach(v=> {
+          v.count = 0;
+        })
+      })
       this.setData({
         shopGoodsList:this.props.shopGoodsList
       })
     }
-    if(this.props.activityList){
+    if(this.props.activityAllObj){
       this.setData({
-        activityList:this.props.activityList
+        activityAllObj:this.props.activityAllObj
       })
     }
   },
@@ -97,15 +113,29 @@ Component({
       // })
     },
     addshopcart(e){
-      this.setData({
-        goods_num:this.data.goods_num += 1
+      this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
+      const animation = my.createAnimation({
+        duration: 400,
+        timingFunction: 'ease-in-out', 
+        transformOrigin: '50% 50% 0',
+        success: function(res) { 
+        }
       })
-      ;
+      my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
+        animation.translate(-ret[0].left+57 ,this.data.windowHeight - ret[0].top - 114).step();
+        this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = animation.export();
+        this.setData({
+          shopGoodsList: this.data.shopGoodsList
+        });
+      })
+     
+      
     },
-    reduceshopcart(){
+    reduceshopcart(e){
+      this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count --;
       this.setData({
-        goods_num:this.data.goods_num -= 1
+        shopGoodsList: this.data.shopGoodsList
       })
-    }
+    },
   }
 });

@@ -56,7 +56,10 @@ Page({
       }
     ]
   },
-  onLoad() {
+  onLoad(e) {
+    this.setData({
+      orderType:e.orderType
+    })
     switch(this.data.type) {
       case 0:
         this.setData({

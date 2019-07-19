@@ -1,3 +1,4 @@
+@import '../../components/shopcart/shopcart.acss';
 page {
   background: #ffffff;
 }

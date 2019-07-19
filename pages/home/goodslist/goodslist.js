@@ -28,9 +28,9 @@ Page({
     typeList1:{
       "折扣": "zk",
       "套餐": "zhsm",
-      "爆款": "hot",
     },
     typeList: {
+      "爆款": "hot",
       "超辣": "kl",
       "甜辣": "tl",
       "微辣": "wl",
@@ -42,7 +42,7 @@ Page({
       "五香系列": "wu_series",
       "解辣神器": "qqt_series"
     },
-    activityList:[],   // 营销活动列表
+    activityAllObj:{},   // 营销活动
   },
   onLoad(query) {
     // 页面加载
@@ -136,7 +136,7 @@ Page({
       app.globalData.userInfo = res.data;
       // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
       this.getBannerList(110100, 110105, 1, 1);    //banner列表
-      this.getActivityList(110100,110105,1,this.data.type,res.data.user_id)     //营销活动
+      this.getActivityList(110100,110105,25,this.data.type,294785)     //营销活动
     })
   },
   // 切换外卖自提
@@ -377,7 +377,7 @@ Page({
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
       console.log(res)
       this.setData({
-        activityList:res.data
+        activityAllObj:res.data
       })
     })
   },

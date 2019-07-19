@@ -485,3 +485,18 @@
 .canBuy {
   background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)!important;
 }
+
+.balls {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+.ball {
+  width: 20rpx;
+  height: 20rpx;
+  background: #E60012;
+  border-radius: 50%;
+  position: relative;
+  z-index: 9999
+}
