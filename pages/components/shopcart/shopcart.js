@@ -103,14 +103,15 @@ Component({
       })
     },
     scrollEvent(e){
-      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
-      //   let arr = ret[0].filter((item,index) => {
-      //     return item.top<=104.5
-      //   })
-      //   this.setData({
-      //     goodsType:arr.length
-      //   })
-      // })
+      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
+        console.log(ret)
+        let arr = ret[0].filter((item,index) => {
+          return item.top<=104.5
+        })
+        this.setData({
+          goodsType:arr.length
+        })
+      })
     },
     addshopcart(e){
       this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;

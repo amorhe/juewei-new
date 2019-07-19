@@ -24,7 +24,7 @@ Page({
         that.setData({
           city:res.city
         },()=> {
-           my.redirectTo({
+           my.switchTab({
             url: '/pages/home/goodslist/goodslist?address1=' + res.streetNumber.street + '&address2=' + res.streetNumber.number
           })
         })
