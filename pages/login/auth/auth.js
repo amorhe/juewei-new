@@ -1,5 +1,5 @@
 import {imageUrl,baseUrl} from '../../common/js/baseUrl'
-import {sendCode,captcha} from '../../common/js/login'
+import {sendCode,captcha,loginByAliUid} from '../../common/js/login'
 Page({
   data: {
     imageUrl,
@@ -105,5 +105,38 @@ Page({
       }
     }
   },
+  // 授权获取用户信息
+  onGetAuthorize(res) {
+    // 获取授权
+    my.getAuthCode({
+      scopes: ['auth_base'],
+      success: (res) => {
+      console.log(res,'code')
+       loginByAliUid(res.authCode).then((data) => {
+         console.log(data)
+        // my.setStorageSync({
+        //   key: 'ali_uid', // 缓存数据的key
+        //   data: data.data.ali_uid, // 要缓存的数据
+        // });
+       })
+      },
+    });
+    console.log(res)
+    my.getOpenUserInfo({
+      success: (res) => {
+        let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
+
+      },
+      fail() {
+        my.alert({ title: '获取用户信息失败' });
+      }
+    });
+  },
   onLoad() {},
+  toUrl(e){
+    var url = e.currentTarget.dataset.url
+    my.navigateTo({
+      url:url
+    });
+  },
 });

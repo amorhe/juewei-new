@@ -5,7 +5,7 @@ App({
     // 第一次打开
     var that=this;
     // options.query == {number:1}
-     //获取授权
+    // 获取授权
     my.getAuthCode({
       scopes: ['auth_base'],
       success: (res) => {

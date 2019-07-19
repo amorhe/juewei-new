@@ -2,6 +2,7 @@ import {imageUrl} from '../../common/js/baseUrl'
 Page({
   data: {
     imageUrl,
+    avatarImg:'',
     gridelist: [
       {
         icon: 'https://gw.alipayobjects.com/zos/rmsportal/VBqNBOiGYkCjqocXjdUj.png',

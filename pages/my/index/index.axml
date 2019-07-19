@@ -1,8 +1,8 @@
 <view class="myContent">
   <view class="myTop flexNormal">
     <view class="flexSpecial">
-      <image class="avatar" mode="scaleToFill" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=311097710,965735535&fm=27&gp=0.jpg"/>
-      <view class="fontFourtyWeight">绝味会员</view>
+      <image class="avatar" mode="scaleToFill" src="{{ avatarImg }}"/>
+      <view class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view>
     </view>
     <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="toUrl" data-url='/package_my/pages/mycenter/mycenter'/>
   </view>

@@ -11,13 +11,14 @@
   <view>
   </view>
   <view class="bindButton {{ getCode?'':'bgColor' }}" onTap="getcodeFn">获取短信验证码</view>
-  <view class="bindButton">
+  <button class="bindButton" open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
+scope='userInfo'>
     <image class="alipayIcon" src="{{imageUrl}}alipay.png"/>
     <text>支付宝快捷登录</text>
-  </view>
+  </button>
 </view>
 
-<view class="bottomTitle">登录代表你已同意 <text class="xyClass">《绝味注册协议及用户服务条款》</text></view>
+<view class="bottomTitle">登录代表你已同意 <text class="xyClass" onTap="toUrl" data-url='/pages/login/protocol/protocol'>《绝味注册协议及用户服务条款》</text></view>
 
 
 <modal

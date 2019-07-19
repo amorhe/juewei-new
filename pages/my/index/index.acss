@@ -10,6 +10,7 @@
   height: 104rpx;
   border-radius: 50%;
   margin-right: 16rpx;
+  background: #eee;
 }
 .vipView {
   width: 100vw;
