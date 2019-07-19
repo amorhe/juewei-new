@@ -1,8 +1,4 @@
 {
-  "window":{
-    "title": "支付宝接口功能演示",
-    "titleBarColor":"#F02721"
-  },
-   "title": "支付宝接口功能演示",
-    "titleBarColor":"#F02721"
+  "defaultTitle": "兑换记录",
+  "backgroundColor": "#F5402B"
 }

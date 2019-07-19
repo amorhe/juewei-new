@@ -36,7 +36,8 @@
 </view>
 
 <!-- 空状态 -->
-<view class="none" a:if="{{ orderList.length === 0 }}">
+<view class="none" a:if="{{ orderList.length === 0 }}" onTap="switchTo">
   <image mode="scaleToFill" src="{{imageUrl}}bg_order.png"/>
-  <view class="txt">暂无订单</view>
+  <view class="txt">暂无兑换记录</view>
+  <view class="exchange-btn">去兑换</view>
 </view>

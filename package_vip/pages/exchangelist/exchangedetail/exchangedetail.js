@@ -71,17 +71,6 @@ Page({
     const { id } = e;
 
     this.getOrderDetail(id)
-
-    my.setNavigationBar({
-      title: '兑换记录',
-      backgroundColor: '#F5402B',
-      success() {
-
-      },
-      fail() {
-
-      },
-    });
   },
 
   async getOrderDetail(id) {
