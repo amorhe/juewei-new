@@ -1,5 +1,6 @@
 import {imageUrl,baseUrl} from '../../common/js/baseUrl'
-import {sendCode,captcha,loginByAliUid} from '../../common/js/login'
+import {sendCode,captcha,loginByAliUid,loginByAuth,getuserInfo} from '../../common/js/login'
+var app = getApp(); //放在顶部
 Page({
   data: {
     imageUrl,
@@ -111,26 +112,51 @@ Page({
     my.getAuthCode({
       scopes: ['auth_base'],
       success: (res) => {
-      console.log(res,'code')
        loginByAliUid(res.authCode).then((data) => {
-         console.log(data)
-        // my.setStorageSync({
-        //   key: 'ali_uid', // 缓存数据的key
-        //   data: data.data.ali_uid, // 要缓存的数据
-        // });
+        my.setStorageSync({
+          key: 'ali_uid', // 缓存数据的key
+          data: data.data.ali_uid, // 要缓存的数据
+        });
        })
       },
     });
-    console.log(res)
     my.getOpenUserInfo({
       success: (res) => {
+        let ali_uid = my.getStorageSync({
+          key: 'ali_uid', // 缓存数据的key
+        }).data;
         let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
-
+        this.loginByAuth(userInfo.nickName, userInfo.avatar);
       },
       fail() {
         my.alert({ title: '获取用户信息失败' });
       }
     });
+  },
+  // 授权登录
+  loginByAuth(nick_name, head_img) {
+    const ali_uid = my.getStorageSync({ key: 'ali_uid' });
+    loginByAuth(ali_uid.data, '18140588481', nick_name, head_img).then((res) => {
+      console.log(res.data._sid,'_sid')
+      my.setStorageSync({
+        key: '_sid', // session_id
+        data: res.data._sid,
+      });
+      this.getUserInfo(res.data._sid);
+    })
+  },
+  // 用户信息
+  getUserInfo(_sid) {
+    getuserInfo(_sid).then((res) => {
+      app.globalData.userInfo = res.data;
+      console.log(res.data)
+      my.switchTab({
+        url:'/pages/home/goodslist/goodslist'
+      })
+      // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
+      //this.getBannerList(110100, 110105, 1, 1);    //banner列表
+      //this.getActivityList(110100,110105,1,this.data.type,res.data.user_id)     //营销活动
+    })
   },
   onLoad() {},
   toUrl(e){
