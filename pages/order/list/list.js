@@ -18,7 +18,7 @@ Page({
       '订单已提交',
       '商家已接单',
       '正在配送',
-      '已送到',
+      '已送达',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -76,9 +76,9 @@ Page({
    * @function 跳转订单详情页面
    */
   toDetail(e) {
-
+    const {order_no} = e.currentTarget.dataset;
     my.navigateTo({
-      url: '/package_order/pages/orderdetail/orderdetail'
+      url: '/package_order/pages/orderdetail/orderdetail?order_no=' + order_no
     });
   }
 
