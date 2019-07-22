@@ -3,16 +3,26 @@
   <view style="height:1rpx"></view>
   <view class="board">
     <view class="board-state">
-        等待支付
+        {{d.dis_type==1?takeOutState[d.order_status_info.order_status]:pickUpState[d.order_status_info.order_status]}}
+        <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
-    <view class="board-time">
+    <view class="board-time" a:if="{{d.order_status_info.order_status == 0}}">
       <text class="board-last">剩余时间：</text>
       <text class="board-last-time">14分58秒</text>
     </view>
-    <view class="buttons">
+    <view class="buttons" a:if="{{d.order_status_info.order_status == 0}}">
       <view class="cancel">取消订单</view>
       <view class="pay">立即支付</view>
+    </view>
+
+    <view class="cancelr" a:if="{{d.order_cancel_reason}}">
+      {{d.order_cancel_reason}}
+    </view>
+
+     <view class="buttons"  a:if="{{d.order_cancel_reason}}">
+      <view class="cancel">联系客服</view>
+      <view class="pay">再来一单</view>
     </view>
   </view>
   <view class="good">
@@ -85,7 +95,7 @@
       配送信息
     </view>
     <view class="list">
-      <view class="item">
+      <view class="item" a:if="{{d.dis_tag}}">
         <view class="label">
           配送方式
         </view>
@@ -93,7 +103,7 @@
           <view>{{postWay[d.dis_tag]}}</view>
         </view>
       </view>
-      <view class="item">
+      <view class="item" a:if="{{d.dis_tel}}">
         <view class="label">
           配送骑手
         </view>
@@ -126,7 +136,7 @@
           订单编号
         </view>
         <view class="value">
-          <view>紫檀大厦606绝味营销</view>
+          <view>{{d.order_no}}</view>
         </view>
       </view>
     </view>

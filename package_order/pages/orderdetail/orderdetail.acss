@@ -61,6 +61,11 @@ page {
   margin-right: 24rpx
 }
 
+view.pay{
+  color: #E60012;
+  border-color: #E60012;
+}
+
 .good, .poster {
   background: white;
   width: 702rpx;
@@ -246,4 +251,13 @@ page {
 
 .dis text{
   margin-left: 15rpx;
+}
+
+.cancelr{
+font-size:22rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(51,51,51,1);
+text-align: center;
+padding: 8rpx 0 40rpx;
 }
