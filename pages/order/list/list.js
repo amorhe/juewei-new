@@ -76,9 +76,9 @@ Page({
    * @function 跳转订单详情页面
    */
   toDetail(e) {
-
+    const {order_no} = e.currentTarget.dataset;
     my.navigateTo({
-      url: '/package_order/pages/orderdetail/orderdetail'
+      url: '/package_order/pages/orderdetail/orderdetail?order_no=' + order_no
     });
   }
 

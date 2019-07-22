@@ -4,14 +4,17 @@ page {
 
 .menus {
   position: sticky;
+  box-sizing: border-box;
+  width: 750rpx;
   top: 0;
   display: flex;
+  justify-content: space-between;
   background: white;
   padding: 26rpx;
 }
 
 .menu {
-  width: 50%;
+  /* width: 50%; */
   text-align: center;
   width: 168px;
   font-size: 28rpx;
