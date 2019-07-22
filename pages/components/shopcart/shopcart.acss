@@ -48,22 +48,25 @@
   margin-bottom: 16rpx
 }
 .activityBox {
-  padding: 0 22rpx;
+  padding: 0 32rpx;
   display: flex;
   align-items: center;
   justify-content: space-between
 }
 .activityBox>image {
-  width: 356rpx;
-  height: 356rpx;
+  width: 336rpx;
+  height: 336rpx;
 }
 .activityBox>view {
-  width: 356rpx;
-  height: 356rpx;
+  width: 336rpx;
+  height: 336rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
 }
 .activityBox>view>image {
   width: 100%;
-  height: 178rpx; 
+  height: 160rpx; 
 }
 .activityWrap {
   padding: 0 32rpx;
@@ -83,7 +86,7 @@
 }
 .shopDefault>view {
   display: flex;
-  align-items: center
+  align-items: center;
 }
 .jingxuan {
   width: 48rpx;
@@ -123,7 +126,8 @@
 }
 .shopDefaultRight>view {
   display: flex;
-  align-items: center
+  align-items: center;
+  justify-content: flex-end
 }
 .shopDefaultRight>view>image {
   width: 32rpx;
@@ -180,7 +184,7 @@
   height: 60rpx;
   line-height: 60rpx;
   font-size: 24rpx;
-  font-weight: 500
+  font-weight: 600;
 }
 .goodsImage1 {
   width: 100%;
@@ -188,7 +192,8 @@
 }
 .goodsBox {
   border-radius: 10px;
-  box-shadow: 0 2rpx 10rpx 2rpx rgba(153, 153, 153, .2)
+  box-shadow: 0 2rpx 10rpx 2rpx rgba(153, 153, 153, .2);
+  margin-bottom: 30rpx;
 }
 .discountImg {
   position: relative
@@ -479,4 +484,19 @@
 }
 .canBuy {
   background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)!important;
+}
+
+.balls {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+.ball {
+  width: 20rpx;
+  height: 20rpx;
+  background: #E60012;
+  border-radius: 50%;
+  position: relative;
+  z-index: 9999
 }

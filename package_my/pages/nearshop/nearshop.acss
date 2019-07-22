@@ -50,10 +50,11 @@
   width: 686rpx;
   left: 32rpx;
   bottom: 0;
-  background: transparent
+  background: transparent;
+  max-height: 408rpx;
+  overflow-y: scroll;
 }
 .shopLi {
-  /* height: 262rpx; */
   background: #fff;
   margin-bottom: 16rpx;
   box-shadow:0 2rpx 10rpx 0 rgba(153,153,153,0.2);

@@ -1,3 +1,64 @@
-<view>
+<!-- <view>
   积分规则说明
+</view> -->
+<view class="rules">
+  <view>
+    <view class="itemTitle">
+      Q：如何获得积分？
+    </view>
+    <view class="itemInfo">
+      1、在绝味线下店购物获取积分方式：在绝味线下门店消费时，店员通过店POS会员管理，输入会员手机号使用微信或者支付宝付款后，系统会按照规则根据您的购买金额发放积分。现金交易、不获得积分。
+    </view>
+    <view class="itemInfo">
+      2、在绝味商城购物获取积分方式：登陆绝味官方服务号，购物成功后，系统会按照规则根据您的购买金额发放积分。    
+    </view>
+  </view>
+  <view>
+    <view class="itemTitle">
+      Q：积分获取规则？
+    </view>
+    <view class="itemInfo">
+      订单支付完成后积分实时发放至您的账户中，积分冻结时间为24小时，冻结期间积分不能使用。若订单无退单、退款等行为发生则在24小时后解冻，否则积分将自动扣除。
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      Q：冻结积分规则？
+    </view>
+    <view class="itemInfo">
+      线上实付金额每1元得1积分，消费金额不包含运费（取实际消费金额整数部分）现金支付的订单不发放积分。
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      Q：如何使用积分？
+    </view>
+    <view class="itemInfo">
+      目前积分只能在VIP专享中兑换福利，未来还有更多用法，敬请期待！
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      Q：用积分兑换的商品支持退换么？
+    </view>
+    <view class="itemInfo">
+      暂不支持，兑换前请谨慎下单，不过下手速度太慢可能就没有了哦!
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      Q：积分会过期么？
+    </view>
+    <view class="itemInfo">
+      会的，用户获得但未使用的积分，将在下一个自然年底过期。例：2017年度客户获得但未使用的积分将会在2019年1月1日起失效，还请及时使用。
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      Q：积分是否可以从A账户转移到B账户？
+    </view>
+    <view class="itemInfo">
+      如无特殊活动，积分不支持账户之间的相互转换。
+    </view>
+  </view>
 </view>

@@ -9,7 +9,11 @@ const ajaxUrl = {
   checkDis: '/juewei-api/shop/CheckDis',     // 判断收获地址是不是在当前门店配送范围内
   MyNearbyShop: '/juewei-api/shop/MyNearbyShop',   // 我的/周边门店
   activityList: '/mini/Mini_activity/list',   // 商城页面营销活动
-  showPositionList: '/mini/index/wap/show_position/list',   //公众号展位列表
+  showPositionList: '/mini/index/wap/show_position/list',   // 公众号展位列表
+  GetLbsShop: '/juewei-api/shop/GetLbsShop',    // 根据经纬度获取外卖附近门店
+  NearbyShop: '/juewei-api/shop/NearbyShop',      // 根据经纬度获取自提附近门店
+  GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
+  createOrder: '/juewei-api/order/create',       // 购物车提交订单
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -28,6 +32,14 @@ export const checkDis = (shop_id,location) => ajax(ajaxUrl.checkDis,{shop_id,loc
 
 export const MyNearbyShop = (data) => ajax(ajaxUrl.MyNearbyShop,{data});
 
-export const activityList = (city_id,district_id,company_id,buy_type,user_id) => ajax(ajaxUrl.activityList,{city_id,district_id,company_id,buy_type,user_id});
+export const activityList = (city_id,district_id,company_id,join_way,user_id) => ajax(ajaxUrl.activityList,{city_id,district_id,company_id,join_way,user_id});
 
 export const showPositionList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.showPositionList,{city_id,district_id,company_id,release_channel});
+
+export const GetLbsShop = (location) => ajax(ajaxUrl.GetLbsShop,{location});
+
+export const NearbyShop = (data) => ajax(ajaxUrl.NearbyShop,{data});
+
+export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
+
+export const createOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})

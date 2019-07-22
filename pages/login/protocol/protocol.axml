@@ -1,3 +1,95 @@
-<view>
+<!-- <view>
   用户服务条款
+</view> -->
+<view class="topTitle">绝味鸭脖注册及用户服务条款</view>
+<view class="rules">
+  <view>绝味鸭脖是由长沙绝味食品有限公司运营的品牌（以下统称：绝味鸭脖）。绝味鸭脖致力于向用户提供优质的商品及相关服务，并严格遵守本协议及相关承诺。</view>
+  <view>
+    <view class="itemTitle">
+      一、协议的确认和接纳
+    </view>
+    <view class="itemInfo">
+      用户成为绝味鸭脖的注册用户并登录后，本服务协议即在用户和绝味鸭脖之间产生法律效力。请用户务必在注册/登录之前认真阅读全部服务协议内容，如有任何疑问，可向绝味鸭脖咨询。无论用户事实上是否在注册/登录之前认真阅读了本服务协议，只要用户成功注册并登录，即表示同意并签署了本服务协议。
+    </view>
+    <view class="itemInfo">
+      用户确认：本协议条款是处理双方权利义务的当然约定依据，除非违反国家强制性法律，否则始终有效。    
+    </view>
+  </view>
+  <view>
+    <view class="itemTitle">
+      二、用户应当
+    </view>
+    <view class="itemInfo">
+      1、自行配备上网的所需设备，包括手机、电脑、调制解调器或其他必备上网装置等。 
+    </view>
+    <view class="itemInfo">
+      2、自行负担个人上网所支付的电话费用、网络费用等。
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      三、用户不得发布下列违法信息
+    </view>
+    <view class="itemInfo">
+      1、反对宪法所确定的基本原则的；
+    </view>
+    <view class="itemInfo">
+      2、危害国家安全，泄露国家秘密，颠覆国家政权，破坏 国家统一的；
+    </view>
+    <view class="itemInfo">
+      3、损害国家荣誉和利益的；
+    </view>
+    <view class="itemInfo">
+      4、煽动民族仇恨、民族歧视，破坏民族团结的； 
+    </view>
+    <view class="itemInfo">
+      5、破坏国家宗教政策，宣扬邪教和封建迷信的；
+    </view>
+    <view class="itemInfo">
+      6、散布谣言，扰乱社会秩序，破坏社会稳定的；
+    </view>
+     <view class="itemInfo">
+      7、散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆 犯罪的； 
+    </view>
+     <view class="itemInfo">
+      8、侮辱或者诽谤他人，侵害他人合法权益的；
+    </view>
+     <view class="itemInfo">
+      9、含有法律、行政法规禁止的其他内容的。
+    </view>
+     <view class="itemInfo">
+      未经绝味鸭脖同意，用户不得在网站发布任何形式的广告，一经发现，绝味鸭脖有权采取暂停或关闭用户账号等措施。
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      四、用户个人资料
+    </view>
+     <view class="itemInfo">
+      用户同意：
+    </view>
+     <view class="itemInfo">
+      提供及时、详尽及准确的个人资料；
+    </view>
+     <view class="itemInfo">
+      同意接收来自绝味鸭脖的信息，包括电子邮件、短信、微信等；
+    </view>
+     <view class="itemInfo">
+      不断更新注册资料，符合及时、详尽准确的要求； 
+    </view>
+    <view class="itemInfo">
+      绝味鸭脖不公开用户的姓名、地址、电子邮箱和笔名，但符合本协议第七条第4款的情况除外。
+    </view>
+    <view class="itemInfo">
+      如果用户提供的资料包含有不正确的信息，绝味鸭脖保留结束用户使用百果园信息服务资格的权利。
+    </view>
+  </view>
+    <view>
+    <view class="itemTitle">
+      五、信息接收
+    </view>
+    <view class="itemInfo">
+      用户在注册/登录时应当填写正确、有效的手机号码等信息，且注册/登录完成后同意接收绝味鸭脖发往用户的各类信息(包括短信、微信等)。如用户未及时从自己的手机接受短信或因用户手机或程序问题使信息无法正常接收或阅读的，在此情况下，应当视为绝味鸭脖成功发送且用户已经接收到相关的信息。
+    </view>
+  </view>
 </view>

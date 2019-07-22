@@ -1,0 +1,87 @@
+.pointlistTop{
+  padding: 32rpx;
+  background: #FB5332;
+  color: #fff;
+}
+
+.pittopItema{
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+.pitrule{
+  font-size: 22rpx;
+}
+.pittopItemb{
+  display: flex;
+  align-items: center;
+}
+.pittopItembinfo{
+  height: 32rpx;
+  line-height: 32rpx;
+}
+.imgicon{
+  display: block;
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 10rpx;
+}
+
+.pitInfo{
+  padding: 0 32rpx;
+  box-sizing: border-box;
+}
+
+.listItem{
+  width: 100%;
+  height: 120rpx;
+  border-radius:10rpx;
+  border: 1px solid #eee;
+  box-shadow: 0rpx 0rpx 10rpx 1rpx #eee; 
+  margin-top: 20rpx;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.itemTime{
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.itemcount{
+  font-size: 36rpx;
+  color: #333;
+}
+
+.freeze{
+  background-image: url("https://test-wap.juewei.com/m/ali-mini/image/snow.png");
+  background-color: rgba(238,249,255,1);
+  box-shadow:0px 2px 10px 0px rgba(196,234,255,1);
+  background-repeat: no-repeat;
+  background-size: 130rpx;
+}
+
+.bottomview{
+  position: relative;
+  margin-top: 48rpx;
+}
+.bottomprompt{
+  position: absolute;
+  left: 50%; 
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  background: #fff;
+}
+
+.bottomBorder{
+  width: 100%;
+  border-top: 1px solid #eee; 
+}
