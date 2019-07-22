@@ -281,7 +281,7 @@ Page({
       let { code, data, msg } = await this.pay()
       if (code !== 100) {
         return my.redirectTo({
-          url: '../finish/finish?id=' + d.id + '&fail=' + false
+          url: '../finish/finish?id=' + d.id + '&fail=' + true
         });
       }
     }
