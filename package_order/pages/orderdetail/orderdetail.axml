@@ -139,6 +139,24 @@
           <view>{{d.order_no}}</view>
         </view>
       </view>
+
+      <view class="item">
+        <view class="label">
+          支付方式
+        </view>
+        <view class="value">
+          <view>{{d.order_no}}</view>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="label">
+          下单时间
+        </view>
+        <view class="value">
+          <view>{{d.order_no}}</view>
+        </view>
+      </view>
     </view>
   </view>
 </view>
