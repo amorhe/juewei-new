@@ -153,7 +153,7 @@ Page({
       my.switchTab({
         url:'/pages/home/goodslist/goodslist'
       })
-      // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
+      //this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
       //this.getBannerList(110100, 110105, 1, 1);    //banner列表
       //this.getActivityList(110100,110105,1,this.data.type,res.data.user_id)     //营销活动
     })

@@ -38,17 +38,24 @@ Page({
     this.getUserInfo()
   },
   getUserInfo(){
-    var _sid = my.getStorageSync({
-      key: '_sid', // 缓存数据的key
-    }).data;
-    console.log(_sid,app.globalData.userInfo,'sss')
-    if(_sid&&app.globalData.userInfo){
-      console.log(app.globalData.userInfo)
-      this.setData({
-        _sid:_sid,
-        userInfo:app.globalData.userInfo
-      })
-    }
+    var that = this
+    my.getAuthCode({
+      scopes: ['auth_user'],
+      success: (res) => {
+        my.getAuthUserInfo({
+          success: (userInfo) => {
+            var _sid = my.getStorageSync({
+              key: '_sid', // 缓存数据的key
+            }).data;
+            that.setData({
+              _sid:_sid,
+              userInfo:userInfo
+            })
+            console.log(that.data,'data')
+          }
+        });
+      },
+    });
   },
   toUrl(e){
     var url = e.currentTarget.dataset.url
