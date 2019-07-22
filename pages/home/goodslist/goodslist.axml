@@ -14,8 +14,8 @@
 
 <view class="null"></view>
 
-<button open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
-scope='userInfo'>授权登录</button>
+<!-- <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
+scope='userInfo'>授权登录</button> -->
 
 <view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
   <view a:if="{{isOpen == 2}}">您的定位地址配送门店未在营业时间 营业时间：{{shopTakeOut[0].start_time}}-{{shopTakeOut[0].end_time}}</view>
@@ -86,7 +86,7 @@ scope='userInfo'>授权登录</button>
   <image src="{{imageUrl2 + showListObj.pic_src[0]}}" />
 </view>
 
-<view style="height:150rpx;" hidden="{{!scroll_y}}"></view>
+<!-- <view style="height:150rpx;" hidden="{{!scroll_y}}"></view> -->
 <navigator url="/package_my/pages/chooseshop/chooseshop?type={{type}}" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
   <!-- 推荐门店 -->
   <view class="shopDefault">
@@ -116,5 +116,6 @@ scope='userInfo'>授权登录</button>
 </navigator>
 
 <!-- 购物车 -->
-<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsList}}" activityList="{{activityList}}"/>
+<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" type="{{type}}"/>
+
 </view>

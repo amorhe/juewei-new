@@ -35,20 +35,20 @@
   <image src="{{imageUrl}}close2.png" onTap="closeCouponView" />
 </view>
 
-  <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
+<view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
   <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;">
     <view class="goodsUl">
-      <view onTap="chooseGoodsType" data-type='1' a:if="{{activityList.length>0}}">
+      <view onTap="chooseGoodsType" data-type='1' a:if="{{activityAllObj.DIS.length>0}}">
         <image a:if="{{goodsType!=1}}" src="{{imageUrl}}m_1_1.png"/>
         <image a:else src="{{imageUrl}}m_1_2.png"/>
         <view class="{{goodsType==1?'activeView':''}}">折扣</view>
       </view>
-      <view onTap="chooseGoodsType" data-type='2' a:if="{{activityList.length>0}}">
+      <view onTap="chooseGoodsType" data-type='2' a:if="{{activityAllObj.PKG.length>0}}">
         <image a:if="{{goodsType!=2}}" src="{{imageUrl}}m_2_1.png"/>
         <image a:else src="{{imageUrl}}m_2_2.png" />
         <view class="{{goodsType==2?'activeView':''}}">套餐</view>
       </view>
-      <view onTap="chooseGoodsType" data-type='3' a:if="{{activityList.length>0}}">
+      <view onTap="chooseGoodsType" data-type='3' a:if="{{shopGoodsList[0].last.length>0}}">
         <image a:if="{{goodsType!=3}}" src="{{imageUrl}}m_3_1.png"/>
         <image a:else src="{{imageUrl}}m_3_2.png" />
         <view class="{{goodsType==3?'activeView':''}}">爆款</view>
@@ -109,72 +109,70 @@
   <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent"> 
     <view>
             <!-- 折扣 -->
-      <view id="1" class="zhekou" a:if="{{activityList.length>0}}">
+      <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}">
         <view class="goodsTypeEv">折扣</view>
         <view class="goodsBox">
           <view class="discountImg">
             <image class="discountPng" src="../../common/img/zhe.png" />
-            <image class="goodsImage1" src="http://imgcdnjwd.juewei.com/static/product/image/g…_point/file/2017-12-22/src/eb98614416db858a8d.jpg"/>
+            <image class="goodsImage1" src="{{item.goods_img[0]}}"/>
           </view>
           <view class="goodsWrap">
             <view class="goodsTitle marginB">
               <view>
-                <view class="goodsName">绝味1+1</view>
+                <view class="goodsName">{{item.goods_name}}</view>
                 <view class="goodsKind">
-                  <text>（超辣）</text>
+                  <!-- <text>（超辣）</text> -->
                 </view>
               </view>
               <view class="goodsSoldNum">
                 <text>已售:</text>
-                <text class="numberColor">4</text>
-                <text>份</text>
+                <text class="numberColor">{{item.goods_buy_sum}}</text>
+                <text>{{item.goods_unit}}</text>
               </view>
             </view>
             <view class="goodsRules">
               <view>
                 <view>
                   <text>￥</text>
-                  <text>21</text>
-                  <text>/ 份</text>
+                  <text>{{item.goods_format[0].goods_price}}</text>
+                  <text>/ {{item.goods_unit}}</text>
                 </view>
-                <view class="oldPrice">¥30/份</view>
+                <view class="oldPrice">¥{{item.goods_format[0].goods_original_price}}/{{item.goods_unit}}</view>
               </view>
               <view class="goodsNumber">
-                <image src="{{imageUrl}}goods_reduce.png" />
+                <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart"/>
                 <text>1</text>
-                <image src="{{imageUrl}}goods_add.png" />
+                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" />
               </view>
             </view>
             <view class="goodsDiscount">
               <image src="{{imageUrl}}discount.png" />
-              <text>5折  限3份</text>
+              <text>{{item.goods_format[0].goods_order_limit}}折  限{{item.goods_discount_user_limit}}份</text>
             </view>
           </view>
         </view>
       </view>
       <!-- 套餐 -->
-      <view id="2" class="taocan" a:if="{{activityList.length>0}}">
+      <view id="2" class="taocan" a:if="{{activityAllObj.PKG.length>0}}" a:for="{{activityAllObj.PKG}}">
         <view class="goodsTypeEv">套餐</view>
         <view class="goodsBox">
-          <image class="goodsImage1" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4293286665,4193174544&fm=26&gp=0.jpg"/>
+          <image class="goodsImage1" src="{{imageUrl2 + item.goods_img}}"/>
           <view class="goodsWrap">
-            <view class="goodsName">人气组合套餐</view>
+            <view class="goodsName">{{item.goods_name}}</view>
             <view class="goodsKind marginB">
-              <text>招牌鸭脖</text>
-              <text class="fontSmall">(超辣)/大份*2</text>
-              <text>+招牌鸭舌</text>
-              <text class="fontSmall">(超辣)*2</text>
-              <text>+招牌鸭锁骨</text>
-              <text class="fontSmall">(超辣)*2</text>
+              <text a:for="{{item.pkg_goods}}" a:for-index="i" a:for-item="v">
+                <text><text a:if="{{i!=0}}">+</text>{{v.pkg_goods_name}}</text>
+                <text class="fontSmall">({{v.pkg_goods_taste}})/{{v.pkg_goods_format}}*{{v.goods_num}}</text>
+              </text>
             </view>
             <view class="goodsRules">
               <view>
                 <view>
                   <text>￥</text>
-                  <text>20</text>
-                  <text>/ 份</text>
+                  <text>{{item.goods_format[0].goods_price}}</text>
+                  <text>/ {{item.goods_unit}}</text>
                 </view>
-                <view class="oldPrice">¥30/份</view>
+                <view class="oldPrice">¥{{item.goods_original_price}}/{{item.goods_unit}}</view>
               </view>
               <view class="goodsNumber">
                 <image src="{{imageUrl}}goods_reduce.png" />
@@ -184,36 +182,37 @@
             </view>
             <view class="goodsDiscount">
               <image src="{{imageUrl}}discount.png" />
-              <text>6折  限1份</text>
+              <text>{{item.goods_format[0].goods_order_limit}}折  限{{item.goods_format[0].goods_discount_user_limit}}份</text>
             </view>
           </view>
         </view>
       </view>
       <!-- 爆款 -->
-      <view id="3" a:if="{{activityList.length>0}}">
+      <view id="3" a:if="{{shopGoodsList[0].last.length>0}}" a:for="{{shopGoodsList[0].last}}">
         <view class="goodsTypeEv">爆款</view>
         <view class="goodsBox">
-          <image class="goodsImage1" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=576933068,3489050756&fm=27&gp=0.jpg"/>
+          <image class="goodsImage1" src="{{item.goods_img[0]}}"/>
           <view class="goodsWrap">
             <view class="goodsTitle marginB">
               <view>
-                <view class="goodsName">招牌鸭脖</view>
+                <view class="goodsName">{{item.goods_name}}</view>
                 <view class="goodsKind">
-                  <text>（超辣）</text>
+                  <text>（{{item.taste_name}}）</text>
                 </view>
               </view>
               <view class="goodsSoldNum">
                 <text>已售:</text>
-                <text class="numberColor">178579</text>
-                <text>份</text>
+                <text class="numberColor">{{item.goods_buy_sum}}</text>
+                <text>{{item.goods_unit}}</text>
               </view>
             </view>
             <view class="goodsRules">
               <view>
                 <view>
                   <text>￥</text>
-                  <text>20</text>
-                  <text>/ 份</text>
+                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price< v.goods_format[1].goods_price?v.goods_format[0].goods_price:v.goods_format[1].goods_price}}</text>
+                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price}}</text>
+                  <text>/ {{v.goods_unit}}</text>
                 </view>
                 <view class="oldPrice">¥30/份</view>
               </view>
@@ -255,9 +254,10 @@
                 </view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
-                <image a:if="{{goods_num>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart"/>
-                <text a:if="{{goods_num>0}}">{{goods_num}}</text>
-                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}"/>
+                <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
+                <text a:if="{{v.count>0}}">{{v.count}}</text>
+                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" />
+                <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view>
               </view>
               <view class="goodsSize" onTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
@@ -303,10 +303,11 @@
       </view>
     </view>
   </scroll-view>
-  </view>
+</view>
 
 <!-- 购物车 -->
-<shopcart-model />
+<shopcart-model orderType="{{type}}"/>
 
 <!-- 选择商品规格 -->
 <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" />
+

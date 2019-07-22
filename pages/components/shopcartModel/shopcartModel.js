@@ -1,4 +1,5 @@
 import {imageUrl} from '../../common/js/baseUrl'
+import {createOrder} from '../../common/js/home'
 Component({
   mixins: [],
   data: {
@@ -6,11 +7,17 @@ Component({
     mask:false, //遮罩
     imageUrl,
     modalShow: false, //弹框
-    mask1: false
+    mask1: false,
   },
   props: {},
-  didMount() {},
-  didUpdate() {},
+  didMount() {
+   
+  },
+  didUpdate() {
+    this.setData({
+     orderType:this.props.orderType
+   })
+  },
   didUnmount() {},
   methods: {
     // 打开购物车
@@ -41,5 +48,11 @@ Component({
         modalShow: data.modalShow
       })
     },
+    // 立即购买
+    goOrderSubmit(){
+      my.navigateTo({
+        url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType
+      });
+    }
   },
 });
