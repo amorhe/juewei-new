@@ -4,7 +4,7 @@
   <view class="shopcart">
     <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
     <image onTap="openShopcart" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount">2</view>
+    <view class="addcount">{{goodscartList.length}}</view>
     <view class="haveGoods">
       <view>
         <text>￥</text>
@@ -24,17 +24,17 @@
     <text>清空购物车</text>
   </view>
   <view class="shopcartWrap">
-    <view class="goodsLi" a:for="{{2}}">
+    <view class="goodsLi" a:for="{{goodscartList}}">
       <view class="goodsNameI">
         <view>
-          <text>招牌鸭脖</text>
-          <text>（超辣）</text>
+          <text>{{item.goods_name}}</text>
+          <text>（{{item.taste_name}}）</text>
         </view>
-        <view>大份</view>
+        <view>{{item.goods_format}}</view>
       </view>
       <view class="goodsPriceBox">
         <text class="goodsOldPrice">￥28</text>
-        <text class="numberColor">￥30</text>
+        <text class="numberColor">￥{{item.goods_price}}</text>
       </view>
       <view class="goodsNumber">
         <image src="{{imageUrl}}goods_reduce.png" />

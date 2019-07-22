@@ -13,7 +13,9 @@ const ajaxUrl = {
   GetLbsShop: '/juewei-api/shop/GetLbsShop',    // 根据经纬度获取外卖附近门店
   NearbyShop: '/juewei-api/shop/NearbyShop',      // 根据经纬度获取自提附近门店
   GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
-  createOrder: '/juewei-api/order/create',       // 购物车提交订单
+  createOrder: '/juewei-api/order/create',       // 创建订单
+  confirmOrder: '/juewei-api/order/confirm',        // 确认订单（商品加入购物车点击立即购买）
+  useraddress: '/juewei-api/useraddress/list',     // 我的地址，收货地址列表
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -43,3 +45,7 @@ export const NearbyShop = (data) => ajax(ajaxUrl.NearbyShop,{data});
 export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
 
 export const createOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
+
+export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
+
+export const useraddress = (_sid,type,location) => ajax(ajaxUrl.useraddress,{_sid,type,location});

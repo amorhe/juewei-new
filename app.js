@@ -35,6 +35,8 @@ App({
       longitude: null,
       latitude: null
     },
+    address1:null,
+    address2:null,
     userInfo: null, //拉去支付宝用户信息
     authCode:null, //静默授权
     phone:null //获取手机号权限

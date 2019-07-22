@@ -53,9 +53,9 @@ Page({
     //   })
     // }
     // 定位地址
-    if (query.address1 || query.address2) {
+    if (app.globalData.address1 || app.globalData.address2) {
       this.setData({
-        firstAddress: query.address1 + query.address2
+        firstAddress: app.globalData.address1 + app.globalData.address2
       })
     }
     if (this.data.imgUrls.length > 1) {
@@ -136,7 +136,7 @@ Page({
       app.globalData.userInfo = res.data;
       // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
       this.getBannerList(110100, 110105, 1, 1);    //banner列表
-      this.getActivityList(110100,110105,25,this.data.type,294785)     //营销活动
+      
     })
   },
   // 切换外卖自提
@@ -204,7 +204,7 @@ Page({
         this.setData({
           shopTakeOut: shopArray
         })
-        // 切换门店
+        // 切换门店筛选
         if (this.data.switchShop_id) {
           let arr1 = shopArray.filter((item, index) => {
             return item.shop_id == this.data.switchShop_id
@@ -216,6 +216,7 @@ Page({
           this.setData({
             shopTakeOut: arr
           })
+          my.setStorageSync({ key: 'takeout', data: arr });
           this.getCompanyGoodsList(arr[0].company_sale_id);
         }
       } else if (res.code == 5 || res.data.length == 0) {
@@ -299,6 +300,7 @@ Page({
         this.setData({
           shopTakeOut: arr
         })
+        my.setStorageSync({ key: 'self', data: arr });
         this.getCompanyGoodsList(arr[0].company_sale_id);
       }
 
@@ -364,20 +366,41 @@ Page({
         
           console.log(sortList)
           this.setData({
-            shopGoodsList: sortList
-          })
-
+            shopGoodsList: sortList,
+           companyGoodsList
+          },() => 
+             this.getActivityList(110100,110105,25,this.data.type,294785)     //营销活动
+          )
         },
       });
       
     })
   },
-  // 门店营销活动
+  // 门店营销活动(折扣和套餐)
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
-      console.log(res)
+      console.log(res);
+      const companyGoodsList = this.data.companyGoodsList;
+      // 筛选在当前门店里面的折扣商品
+      let DIS= [],PKG = []
+      if(res.data.DIS) {
+        DIS =  res.data.DIS.filter(item => {
+          return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
+        }) 
+      }
+      
+      // 筛选在当前门店里面的套餐商品  
+      if(res.data.PKG) {
+        PKG=  res.data.PKG.filter(item => {
+          return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
+        })
+      }
+      let activityAllObj ={}
+      activityAllObj.DIS = DIS;
+      activityAllObj.PKG = PKG;
+      console.log(activityAllObj)
       this.setData({
-        activityAllObj:res.data
+        activityAllObj
       })
     })
   },

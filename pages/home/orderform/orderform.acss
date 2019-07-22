@@ -16,8 +16,8 @@
   margin-bottom: 16rpx;
 }
 .addressView {
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
   padding: 26rpx 24rpx;
 }
 .noAddress {

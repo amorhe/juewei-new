@@ -36,7 +36,7 @@
 </view>
 
 <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
-  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;">
+  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;" scroll-with-animation="true">
     <view class="goodsUl">
       <view onTap="chooseGoodsType" data-type='1' a:if="{{activityAllObj.DIS.length>0}}">
         <image a:if="{{goodsType!=1}}" src="{{imageUrl}}m_1_1.png"/>
@@ -106,7 +106,7 @@
     </view>
   </scroll-view>
 
-  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent"> 
+  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent" scroll-with-animation="true"> 
     <view>
             <!-- 折扣 -->
       <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}">
@@ -134,10 +134,10 @@
               <view>
                 <view>
                   <text>￥</text>
-                  <text>{{item.goods_format[0].goods_price}}</text>
+                  <text>{{item.goods_format[0].goods_price / 100}}</text>
                   <text>/ {{item.goods_unit}}</text>
                 </view>
-                <view class="oldPrice">¥{{item.goods_format[0].goods_original_price}}/{{item.goods_unit}}</view>
+                <view class="oldPrice">¥{{item.goods_format[0].goods_original_price / 100}}/{{item.goods_unit}}</view>
               </view>
               <view class="goodsNumber">
                 <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart"/>
@@ -169,10 +169,10 @@
               <view>
                 <view>
                   <text>￥</text>
-                  <text>{{item.goods_format[0].goods_price}}</text>
+                  <text>{{item.goods_format[0].goods_price / 100}}</text>
                   <text>/ {{item.goods_unit}}</text>
                 </view>
-                <view class="oldPrice">¥{{item.goods_original_price}}/{{item.goods_unit}}</view>
+                <view class="oldPrice">¥{{item.goods_format[0].goods_original_price / 100}}/{{item.goods_unit}}</view>
               </view>
               <view class="goodsNumber">
                 <image src="{{imageUrl}}goods_reduce.png" />
@@ -188,7 +188,7 @@
         </view>
       </view>
       <!-- 爆款 -->
-      <view id="3" a:if="{{shopGoodsList[0].last.length>0}}" a:for="{{shopGoodsList[0].last}}">
+      <view id="3" a:for="{{shopGoodsList[0].last}}">
         <view class="goodsTypeEv">爆款</view>
         <view class="goodsBox">
           <image class="goodsImage1" src="{{item.goods_img[0]}}"/>
@@ -210,8 +210,8 @@
               <view>
                 <view>
                   <text>￥</text>
-                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price< v.goods_format[1].goods_price?v.goods_format[0].goods_price:v.goods_format[1].goods_price}}</text>
-                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price}}</text>
+                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100< v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
+                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
                   <text>/ {{v.goods_unit}}</text>
                 </view>
                 <view class="oldPrice">¥30/份</view>
@@ -248,15 +248,16 @@
               <view>
                 <view>
                   <text>￥</text>
-                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price< v.goods_format[1].goods_price?v.goods_format[0].goods_price:v.goods_format[1].goods_price}}</text>
-                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price}}</text>
+                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
+                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
                   <text>/ {{v.goods_unit}}</text>
                 </view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" />
+                <!-- <image  a:if="{{v.goods_format.length>1}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format="{{v.goods_format.type}}" data-price="{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}" /> -->
+                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format="{{v.goods_format[0].type}}" data-price="{{v.goods_format[0].goods_price / 100}}" data-goods_quantity="{{v.count + 1}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}" />
                 <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view>
               </view>
               <view class="goodsSize" onTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
@@ -306,8 +307,8 @@
 </view>
 
 <!-- 购物车 -->
-<shopcart-model orderType="{{type}}"/>
+<shopcart-model orderType="{{type}}" goodsResult="{{goodsResult}}"/>
 
 <!-- 选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsBuy="{{goodsBuy}}" />
 

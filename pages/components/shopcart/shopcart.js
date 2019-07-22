@@ -21,7 +21,10 @@ Component({
     activityAllObj:[],
     shopcartArr:[],     //购物车
     showAnmimation:true,
-    windowHeight:''
+    windowHeight:'',
+    animation:null,
+    goodsBuy:[],
+    goodsResult:[]
   },
   onInit() {
     
@@ -34,6 +37,20 @@ Component({
         this.setData({
           windowHeight: res.windowHeight
         })
+      }
+    })
+    this.animation1 = my.createAnimation({
+      duration: 400,
+      timingFunction: 'linear', 
+      transformOrigin: '50% 50% 0',
+      success: function(res) { 
+      }
+    })
+    this.animation2 = my.createAnimation({
+      duration: 0,
+      timingFunction: 'linear', 
+      transformOrigin: '50% 50% 0',
+      success: function(res) { 
       }
     })
   },
@@ -103,34 +120,67 @@ Component({
       })
     },
     scrollEvent(e){
-      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
-        console.log(ret)
-        let arr = ret[0].filter((item,index) => {
-          return item.top<=104.5
-        })
-        this.setData({
-          goodsType:arr.length
-        })
-      })
+      // console.log(e)
+      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
+      //   // console.log(ret)
+      //   let arr = ret[0].filter((item,index) => {
+      //     return item.top<=104.5
+      //   })
+      //   this.setData({
+      //     goodsType:arr.length
+      //   })
+      // })
     },
     addshopcart(e){
       this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
-      const animation = my.createAnimation({
-        duration: 400,
-        timingFunction: 'ease-in-out', 
-        transformOrigin: '50% 50% 0',
-        success: function(res) { 
-        }
-      })
+      // 加入购物车小红点动画效果
       my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
-        animation.translate(-ret[0].left+57 ,this.data.windowHeight - ret[0].top - 114).step();
-        this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = animation.export();
+        this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
+        this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation1.export();
+        // this.animation2.translate(0,0).opacity(1).step();
+        // this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation2.export();
+        // this.setData({
+        //   shopGoodsList: this.data.shopGoodsList
+        // });
+      })
+      let obj = {
+          "goods_code":e.currentTarget.dataset.goods_code,
+          "goods_format":e.currentTarget.dataset.goods_format,
+          "goods_quantity": e.currentTarget.dataset.goods_quantity,
+          "goods_price": e.currentTarget.dataset.price,
+          "goods_name": e.currentTarget.dataset.goods_name,
+          "taste_name": e.currentTarget.dataset.taste_name
+        }
+        this.data.goodsResult.push(obj);
+        // let shopcartArr = [];
+        // if(my.getStorageSync({key: 'goodsList'}).data){
+        //   shopcartArr = my.getStorageSync({key: 'goodsList'}).data
+        // }else{
+        //   shopcartArr = []
+        // }
+        // let a =  this.data.goodsBuy.map(item => {
+        //   if(shopcartArr.length == 0) {
+        //     shopcartArr.push(item);
+        //   }else{
+        //     // shopcartArr.filter(_item => {
+        //     //   if(item.goods_code != _item.goods_code) {
+        //     //     shopcartArr.push(item);
+        //     //   }else{
+        //     //     //  shopcartArr.filter(items => items.goods_code == _item.goods_code);
+        //     //     //  return shopcartArr
+        //     //   }
+        //     // }) 
+        //   }
+        // })
+        console.log(this.data.goodsResult)
         this.setData({
+          goodsResult:this.data.goodsResult,
           shopGoodsList: this.data.shopGoodsList
         });
-      })
-     
-      
+        // my.setStorageSync({
+        //   key: 'goodsList', // 缓存数据的key
+        //   data: this.data.goodsResult, // 要缓存的数据
+        // });
     },
     reduceshopcart(e){
       this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count --;

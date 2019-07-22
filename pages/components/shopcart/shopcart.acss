@@ -234,7 +234,7 @@
 }
 .goodsRules>view {
   display: flex;
-  align-items: flex-end
+  align-items: flex-end;
 }
 .goodsNumber>text {
   align-self: center;
@@ -497,6 +497,5 @@
   height: 20rpx;
   background: #E60012;
   border-radius: 50%;
-  position: relative;
-  z-index: 9999
+  display: none
 }

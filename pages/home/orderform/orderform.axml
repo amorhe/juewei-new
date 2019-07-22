@@ -1,31 +1,31 @@
 <view class="orderContainer">
   <!-- 外卖 -->
   <view class="addressView" a:if="{{orderType==1}}">
-    <view class="noAddress">
+    <navigator url="/pages/home/orderform/selectaddress/selectaddress" class="noAddress">
       <!-- 选择地址前 -->
-      <text>选择收货地址</text>
+      <!-- <text>选择收货地址</text> -->
       <!-- 选择地址后 -->
-      <!-- <view>
+      <view>
         <view class="fontFourty fontBold marginBEight">紫檀大厦 606</view>
         <view class="fontGray fontTwentySix">小春（先生） 188 8888 8888</view>
-      </view> -->
+      </view>
       <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-    </view>
+    </navigator>
   </view>
   <!-- 自提 -->
   <view class="deliverView" a:if="{{orderType==2}}">
-    <view class="fontThirtySix fontBold">朝阳区青年路甘露园中里2号E-1地铁层商 铺朝阳区青</view>
+    <view class="fontThirtySix fontBold">{{shopObj.address}}</view>
     <view class="mapBox">
       <map style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"></map>
     </view>
     <view class="deliverMiddle flexNormal">
       <view>
         <text class="colorNine marginBEight">自提时间</text>
-        <text>今日 10:30-22:30</text>
+        <text>今日 {{shopObj.start_time}}-{{shopObj.end_time}}</text>
       </view>
       <view>
         <text class="colorNine marginBEight">会员电话</text>
-        <text>188 8888 8888</text>
+        <text>{{shopObj.shop_phone}}</text>
       </view>
     </view>
     <view class="flexSpecial">
@@ -42,29 +42,29 @@
   <view class="orderList_box">
     <view class="ordershopName borderBottomSolid">绝味鸭脖（定福庄西街店）</view>
     <view class="order_list">
-      <view a:for="{{2}}">
+      <view a:for="{{repurseList}}">
         <view class="listLeft">
           <image class="ordergoodsImage" mode="scaleToFill" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3903606479,4039726850&fm=26&gp=0.jpg"/>
           <view>
             <view>
               <image class="normalImage" mode="scaleToFill" src="../../common/img/rebate.png"/>
-              <text class="marginLEight">招牌鸭脖</text>
-              <text class="fontSmallGray">（超辣）</text>
+              <text class="marginLEight">{{item.goods_name}}</text>
+              <text class="fontSmallGray">（{{item.taste_name}}）</text>
             </view>
-            <view class="fontSmallGray">大份</view>
+            <view class="fontSmallGray">{{item.goods_format}}</view>
           </view>
         </view>
 
         <view class="listRight">
-          <view class="ordergoodsCount">x1</view>
+          <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
           <view class="flexNormal">
-            <view class="ordergoodsOld">
+            <view class="ordergoodsOld" a:if="{{item.goods_old_price}}">
               <text class="fontTwentyTwo">￥</text>
-              <text>32</text>
+              <text>{{item.goods_old_price}}</text>
             </view>
             <view>
               <text class="fontTwentyTwo">￥</text>
-              <text>28</text>
+              <text>{{item.goods_price}}</text>
             </view>
           </view>
         </view>

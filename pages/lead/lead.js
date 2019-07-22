@@ -1,5 +1,6 @@
 import {imageUrl} from '../common/js/baseUrl'
 import {bd_encrypt} from '../common/js/map'
+var app = getApp();
 
 Page({
   data: {
@@ -21,11 +22,13 @@ Page({
           key: 'lng', // 缓存数据的key
           data: mapPosition.bd_lng, // 要缓存的数据
         });
+        app.globalData.address1 = res.streetNumber.street;
+        app.globalData.address2 = res.streetNumber.number;
         that.setData({
           city:res.city
         },()=> {
            my.switchTab({
-            url: '/pages/home/goodslist/goodslist?address1=' + res.streetNumber.street + '&address2=' + res.streetNumber.number
+            url: '/pages/home/goodslist/goodslist'
           })
         })
         /* that对象为Page可以设置数据刷新界面

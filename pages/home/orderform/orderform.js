@@ -5,14 +5,14 @@ Page({
     isCheck: false,  //协议
     // 换购商品列表
     repurseList:[
-      {
-        img: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3858629,3224043760&fm=26&gp=0.jpg',
-        goodsName: '黑鸭鸡膝软骨',
-        goodsType: '超辣',
-        goodsNum: 2000,
-        price: 4,
-        oldPrice: 10
-      },
+      // {
+      //   img: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3858629,3224043760&fm=26&gp=0.jpg',
+      //   goodsName: '黑鸭鸡膝软骨',
+      //   goodsType: '超辣',
+      //   goodsNum: 2000,
+      //   price: 4,
+      //   oldPrice: 10
+      // },
       // {
       //   img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3898176482,3211240837&fm=26&gp=0.jpg',
       //   goodsName: '如来鸭掌',
@@ -31,35 +31,74 @@ Page({
     longitude: 116.30051,
     latitude: 40.0511,
     markersArray:[
-      {
-        longitude: 116.30051,
-        latitude: 40.0511,
-        iconPath:`${imageUrl}position_map1.png`,
-        width: 45,
-        height: 45,
-        rotate:270
-      },
-      {
-        longitude:116.3005,
-        latitude: 40.1,
-        iconPath:`${imageUrl}position_map2.png`,
-        width: 72,
-        height: 72,
-        label:{
-          content:"距你2.5公里",
-          color:"#333",
-          fontSize:11,
-          borderRadius:30,
-          bgColor:"#ffffff",
-          padding:8,
-        }
-      }
-    ]
+      // {
+      //   longitude: 116.30051,
+      //   latitude: 40.0511,
+      //   iconPath:`${imageUrl}position_map1.png`,
+      //   width: 45,
+      //   height: 45,
+      //   rotate:270
+      // },
+      // {
+      //   longitude:116.3005,
+      //   latitude: 40.1,
+      //   iconPath:`${imageUrl}position_map2.png`,
+      //   width: 72,
+      //   height: 72,
+      //   label:{
+      //     content:"距你2.5公里",
+      //     color:"#333",
+      //     fontSize:11,
+      //     borderRadius:30,
+      //     bgColor:"#ffffff",
+      //     padding:8,
+      //   }
+      // }
+    ],
+    shopObj:{}   // 自提商店的详细信息
   },
   onLoad(e) {
+    console.log(e)
     this.setData({
-      orderType:e.orderType
+      orderType:e.orderType,
+      repurseList:JSON.parse(e.goodsList)
     })
+    if(e.orderType == 2) {
+      const self = my.getStorageSync({key: 'self'}).data;
+      let arr = [
+        {
+          longitude: this.data.longitude,
+          latitude: this.data.latitude,
+          iconPath:`${imageUrl}position_map1.png`,
+          width: 45,
+          height: 45,
+          rotate:270
+        },
+        {
+          longitude:self[0].location[0],
+          latitude: self[0].location[1],
+          iconPath:`${imageUrl}position_map2.png`,
+          width: 72,
+          height: 72,
+          label:{
+            content:`距你${self[0].distance}米`,
+            color:"#333",
+            fontSize:11,
+            borderRadius:30,
+            bgColor:"#ffffff",
+            padding:8,
+          }
+        }
+      ]
+      console.log(arr)
+      this.setData({
+        shopObj:self[0],
+        longitude:my.getStorageSync({key: 'lng'}).data,
+        latitude: my.getStorageSync({key: 'lat', }).data,
+        markersArray: arr
+      })
+    }
+
     switch(this.data.type) {
       case 0:
         this.setData({
