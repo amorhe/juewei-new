@@ -1,17 +1,20 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
 import { getRegion } from '../../../pages/common/js/li-ajax'
+import { UpdateAliUserInfo,UpdateUserInfo } from '../../../pages/common/js/my'
+import { getuserInfo } from '../../../pages/common/js/login'
+var app = getApp()
 let region=[]
 Page({
   data: {
     imageUrl,
     showTop: false,
     modalOpened: false,
+    head_img:'', // 头像
+    nick_name:'', // 名字
+    userinfo:'', // 用户信息
 
-    
     // 地址
     name: '',
-
-    sex: 0,
 
     phone: '',
 
@@ -29,25 +32,95 @@ Page({
     countryList: [],
     defaultAddress: [0, 0, 0]
   },
-   async onLoad() {
-    region =  await getRegion()
-    this.getAddressList()
+  onLoad(e) {
+    this.setData({
+      head_img:e.head_img,
+      nick_name:e.nick_name
+    })
+    this.UpdateInfo()
+
   },
 
-  onShow() {
+   async onShow() {
     // 页面显示 每次显示都执行
-     my.alert({ title: 'onShow=='+app.globalData.authCode });
-
+    // my.alert({ title: 'onShow=='+app.globalData.authCode });
+    region =  await getRegion()
+    this.getAddressList()
+    this.getUserInfo()
+  },
+  UpdateInfo(){
+    var that = this
+    var _sid = my.getStorageSync({
+      key: '_sid', // 缓存数据的key
+    }).data;
+    UpdateAliUserInfo(_sid,that.data.head_img,that.data.nick_name).then((res)=>{
+      console.log(res)
+    })
+  },
+  // 用户信息
+  getUserInfo() {
+    var that = this
+    var _sid = my.getStorageSync({
+      key: '_sid', // 缓存数据的key
+    }).data;
+    getuserInfo(_sid).then((res) => {
+      var province = region.filter(item=>{
+        return item.addrid==res.data.province_id
+      })
+      var city = province[0].sub.filter(item=>{
+        return item.addrid==res.data.city_id
+      })
+      var regions = city[0].sub.filter(item=>{
+        return item.addrid==res.data.region_id
+      })
+      res.data.provinceName=province[0].name||''
+      res.data.cityName=city[0].name||''
+      res.data.regionName=regions[0].name||''
+      this.setData({
+        userinfo:res.data
+      })
+      console.log(that.data.userinfo)
+    })
+  },
+  // 选择性别
+  genderFN(e){
+    var that = this
+    var data = e.currentTarget.dataset
+    var sex = data.sex==1?0:1
+    UpdateUserInfo({sex:data.sex}).then(res=>{
+      that.setData({
+        'userinfo.sex':sex,
+        showTop: false,
+      })
+    })
+  },
+  // 保存用户信息
+  saveUserInfo(data){
+    var data= {
+      sex:data.sex||'',
+      birthday:data.birthday||'',
+      province_id:data.province_id||'',
+      city_id:data.city_id||'',
+      region_id:data.region_id||''
+    }
+    UpdateUserInfo(data).then((res)=>{
+      console.log(res,'用户保存')
+    })
   },
   // 生日选择器
   Taptime(){
-    console.log('ss')
+    var that = this
     my.datePicker({
       currentDate: '',
       startDate: '1950-1-1',
       endDate: '',
       success: (res) => {
-        console.log(res)
+        var birthday = res.date
+        UpdateUserInfo({birthday:birthday}).then(res=>{
+          that.setData({
+            'userinfo.birthday':birthday
+          })
+        })
       },
     });
   },
@@ -88,18 +161,29 @@ Page({
   },
 
   hideSelectAddress() {
-    this.setData({ selectAddress: false })
-  },
-
-  // 地址
-  changeSex() {
-    const { sex } = this.data;
-
-    this.setData({
-      sex: sex === 0 ? 1 : 0
+    var that = this
+    var province = that.data.provinceList[that.data.defaultAddress[0]]
+    var curCity= that.data.cityList[that.data.defaultAddress[1]]
+    var region= that.data.countryList[that.data.defaultAddress[2]]
+    var data = {
+      province_id:province.addrid,
+      city_id:curCity.addrid,
+      region_id:region.addrid
+    }
+    UpdateUserInfo(data).then(res=>{
+      that.setData({
+        'userinfo.province_id':province.addrid,
+        'userinfo.city_id':curCity.addrid,
+        'userinfo.region_id':region.addrid,
+        'userinfo.provinceName':province.name,
+        'userinfo.cityName':curCity.name,
+        'userinfo.regionName':region.name,
+        selectAddress: false
+      })
     })
   },
 
+  // 地址
   changeCur(e) {
     let curLabel = e.currentTarget.dataset.cur
     if (curLabel === this.data.curLabel) curLabel = '-1'

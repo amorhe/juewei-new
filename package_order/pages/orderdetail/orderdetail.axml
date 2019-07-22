@@ -17,30 +17,30 @@
   </view>
   <view class="good">
     <view class="address">
-      <view>绝味鸭脖（定福庄细节点）</view>
-      <image mode="scaleToFill" src="{{imageUrl}}telephone.png"/>
+      <view>{{d.shop_name}}</view>
+      <image mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.shop_tel}}" onTap="makePhoneCall"/>
     </view>
     <view class="good-list">
-      <view class="good-item">
-        <image mode="scaleToFill" src=""/>
+      <view class="good-item" a:for="{{d.goods_list}}">
+        <image mode="scaleToFill" src="{{item.goods_img}}"/>
         <view class="body">
           <view class="name">
             <view class="top">
               <view class="image">折</view>
               <view>
-                 招牌鸭脖
-                <text>（超辣）</text>
+                 {{item.goods_name}}
+                <text>（{{item.remark}}）</text>
               </view>
             </view>
           </view>
-          <view class="size">大份</view>
+          <view class="size">{{item.goods_format}}</view>
         </view>
         <view class="num">
-          x1
+          x{{item.goods_quantity}}
         </view>
         <view class="price">
-          <text class="del"> ￥32</text>
-          <text>￥28</text>
+          <text class="del"> ￥{{item.goods_original_price}}</text>
+          <text>￥{{item.goods_price}}</text>
         </view>
       </view>
       <view class="post">
@@ -49,8 +49,8 @@
         </view>
         <view class="price">
           <view class="value">
-            <text class="del"> ￥32</text>
-            <text>￥28</text>
+            <text class="del"> ￥{{d.dis_original_price}}</text>
+            <text>￥{{d.dis_price}}</text>
           </view>
         </view>
       </view>
@@ -61,7 +61,7 @@
           活动满减
           </view>
           <view class="value">
-            <text>-￥28</text>
+            <text>-￥{{d.minus_money}}</text>
           </view>
         </view>
         <view class="reduce-item">
@@ -70,13 +70,13 @@
           优惠卷
           </view>
           <view class="value">
-            <text>-￥28</text>
+            <text>-￥{{d.coupon_money}}</text>
           </view>
         </view>
       </view>
       <view class="total">
         实付￥
-        <text>35</text>
+        <text>{{d.real_price}}</text>
       </view>
     </view>
   </view>
@@ -87,16 +87,35 @@
     <view class="list">
       <view class="item">
         <view class="label">
+          配送方式
+        </view>
+        <view class="value">
+          <view>{{postWay[d.dis_tag]}}</view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="label">
+          配送骑手
+        </view>
+        <view class="value">
+          <view class="dis">
+            <image style="width:32rpx;height:32rpx" mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.dis_tel}}" onTap="makePhoneCall"/>
+            <text>联系骑手</text>
+            <text>{{d.dis_name}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="label">
           收货地址
         </view>
         <view class="value">
-          <view>紫檀大厦606绝味营销</view>
-          <view>紫檀大厦606绝味营销</view>
+          <view>{{d.user_address}}</view>
+          <view>{{d.user_name}} {{d.user_phone}}</view>
         </view>
       </view>
     </view>
   </view>
-
   <view class="poster">
     <view class="title">
       订单信息

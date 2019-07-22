@@ -122,10 +122,10 @@ Page({
   loginByAuth(nick_name, head_img) {
     const ali_uid = my.getStorageSync({ key: 'ali_uid' });
     loginByAuth(ali_uid.data, '15757902894', nick_name, head_img).then((res) => {
-      my.setStorageSync({
-        key: '_sid', // session_id
-        data: res.data._sid,
-      });
+      // my.setStorageSync({
+      //   key: '_sid', // session_id
+      //   data: res.data._sid,
+      // });
       this.getUserInfo(res.data._sid);
     })
   },

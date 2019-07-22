@@ -1,16 +1,20 @@
 <view class="myContent">
   <view class="myTop flexNormal">
     <view class="flexSpecial">
-      <image class="avatar" mode="scaleToFill" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=311097710,965735535&fm=27&gp=0.jpg"/>
-      <view class="fontFourtyWeight">绝味会员</view>
+      <image class="avatar" mode="scaleToFill" src="{{ userInfo.avatar||avatarImg }}"/>
+      <view a:if="{{ userInfo&&_sid }}" class="fontFourtyWeight">
+        <text a:if="{{ userInfo.nickName }}">{{ userInfo.nickName }}</text>
+        <text a:else>绝味会员</text>
+      </view>
+      <view a:else class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view>
     </view>
-    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="toUrl" data-url='/package_my/pages/mycenter/mycenter'/>
+    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="toUrl" data-url="/package_my/pages/mycenter/mycenter?head_img={{userInfo.avatar||avatarImg}}&nick_name={{ userInfo.nickName }}"/>
   </view>
 
   <view class="vipView">
     <view class="flexNormal">
       <view>会员卡</view>
-      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png"/>
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png" onTap="toUrl" data-url="/package_my/pages/membercard/membercard"/>
     </view>
      <image class="vipcardPng" mode="scaleToFill" src="{{imageUrl}}position_tit.png"/>
      <image class="qingxie" mode="scaleToFill" src="../../common/img/qingxie.png"/>

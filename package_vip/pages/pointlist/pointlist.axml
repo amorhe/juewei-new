@@ -3,29 +3,23 @@
 </view> -->
 <view class="pointlistTop">
   <view class="pittopItema">
-    <view>当前积分：4000</view>
+    <view>当前积分：  <text class="n">{{userPoint.points}}</text> </view>
      <view class="pitrule" onTap="toUrl" data-url='/package_vip/pages/pointlist/rules/rules'>积分规则</view> 
   </view>
   <view class="pittopItemb">
-    <view class="pittopItembinfo">冻结积分：50</view>
+    <view class="pittopItembinfo">冻结积分：{{userPoint.freeze_point}}</view>
     <image class="imgicon" src="{{ imageUrl }}explain.png"/>
   </view>
 </view>
 <view class="pitInfo">
-  <view class="listItem freeze">
+  <view class="listItem {{item.point_is_del==1?'freeze':''}}" data-point_id="{{item.point_id}}" a:for="{{list}}">
     <view>
-      <view>门店支付</view>
-      <view class="itemTime">2018-12-02 10:33</view>
+      <view>{{item.point_content}}</view>
+      <view class="itemTime">{{item.point_ctime}}</view>
     </view>
-    <view class="itemcount">+99</view>
+    <view class="itemcount">{{item.point_type == 1 ? '+' : '-'}}{{item.point_num}}</view>
   </view>
-   <view class="listItem">
-    <view>
-      <view>门店支付</view>
-      <view class="itemTime">2018-12-02 10:33</view>
-    </view>
-    <view class="itemcount">+99</view>
-  </view>
+  
   <view class="bottomview">
     <view class="bottomprompt">仅显示最近一个月的积分明细</view>
     <view class="bottomBorder"></view>
