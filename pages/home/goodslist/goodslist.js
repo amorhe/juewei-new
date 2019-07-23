@@ -58,31 +58,31 @@ Page({
         firstAddress: app.globalData.address1 + app.globalData.address2
       })
     }
+  },
+  onShow() {
+    // 页面显示 每次显示都执行
+    // my.alert({ title: 'onShow=='+app.globalData.authCode });
+    // 初始化默认外卖
+    if (this.data.type == 1) {
+      this.getLbsShop();
+    } else {
+      this.getNearbyShop();
+    }
     if (this.data.imgUrls.length > 1) {
       this.setData({
         indicatorDots: true,
         autoplay: true
       })
     }
-    if (query.shop_id) {
-      this.setData({
-        switchShop_id: query.shop_id,
-        type: query.type
-      })
-    }
     this.getShowpositionList(110100, 110105, 1, 1);
     this.loginByAuth();
-    if (this.data.type == 1) {
-      this.getLbsShop();
-    } else {
-      this.getNearbyShop();
+    // 切换门店
+    if (app.globalData.shop_id) {
+      this.setData({
+        switchShop_id: app.globalData.shop_id,
+        type: app.globalData.type
+      })
     }
-  },
-  onShow() {
-    // 页面显示 每次显示都执行
-    // my.alert({ title: 'onShow=='+app.globalData.authCode });
-
-
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
@@ -204,8 +204,9 @@ Page({
         this.setData({
           shopTakeOut: shopArray
         })
-        // 切换门店筛选
+        // 切换门店
         if (this.data.switchShop_id) {
+           
           let arr1 = shopArray.filter((item, index) => {
             return item.shop_id == this.data.switchShop_id
           })
@@ -366,8 +367,8 @@ Page({
         
           console.log(sortList)
           this.setData({
-            shopGoodsList: sortList,
-           companyGoodsList
+            shopGoodsList: JSON.parse(JSON.stringify(sortList)),
+            companyGoodsList
           },() => 
              this.getActivityList(110100,110105,25,this.data.type,294785)     //营销活动
           )

@@ -64,10 +64,13 @@ Component({
         goodsType:0
       })
     }
+    // 初始化加入购物车的商品数量
     if(this.props.shopGoodsList){
       this.props.shopGoodsList.forEach(val => {
         val.last.forEach(v=> {
           v.count = 0;
+          v.largeCount = 0;
+          v.smallCount = 0;
         })
       })
       this.setData({
@@ -132,61 +135,45 @@ Component({
       // })
     },
     addshopcart(e){
-      this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
-      // 加入购物车小红点动画效果
-      my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
-        this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
-        this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation1.export();
-        // this.animation2.translate(0,0).opacity(1).step();
-        // this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation2.export();
-        // this.setData({
-        //   shopGoodsList: this.data.shopGoodsList
-        // });
+      let{ shopGoodsList,goodsResult } = this.data
+      shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
+      let buyArr = shopGoodsList.map(item => {
+        return item.last.filter(_item=> _item.count > 0)
       })
-      let obj = {
-          "goods_code":e.currentTarget.dataset.goods_code,
-          "goods_format":e.currentTarget.dataset.goods_format,
-          "goods_quantity": e.currentTarget.dataset.goods_quantity,
-          "goods_price": e.currentTarget.dataset.price,
-          "goods_name": e.currentTarget.dataset.goods_name,
-          "taste_name": e.currentTarget.dataset.taste_name
-        }
-        this.data.goodsResult.push(obj);
-        // let shopcartArr = [];
-        // if(my.getStorageSync({key: 'goodsList'}).data){
-        //   shopcartArr = my.getStorageSync({key: 'goodsList'}).data
-        // }else{
-        //   shopcartArr = []
-        // }
-        // let a =  this.data.goodsBuy.map(item => {
-        //   if(shopcartArr.length == 0) {
-        //     shopcartArr.push(item);
-        //   }else{
-        //     // shopcartArr.filter(_item => {
-        //     //   if(item.goods_code != _item.goods_code) {
-        //     //     shopcartArr.push(item);
-        //     //   }else{
-        //     //     //  shopcartArr.filter(items => items.goods_code == _item.goods_code);
-        //     //     //  return shopcartArr
-        //     //   }
-        //     // }) 
-        //   }
-        // })
-        console.log(this.data.goodsResult)
-        this.setData({
-          goodsResult:this.data.goodsResult,
-          shopGoodsList: this.data.shopGoodsList
-        });
-        // my.setStorageSync({
-        //   key: 'goodsList', // 缓存数据的key
-        //   data: this.data.goodsResult, // 要缓存的数据
-        // });
+      this.setData({
+        shopGoodsList,
+      },()=> {
+        goodsResult = buyArr.filter(item => item.length>0);
+      })
+      // this.setData({
+      //   goodsResult:callBack
+      // })
+      // 加入购物车小红点动画效果
+      // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
+      //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
+      //   this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation1.export();
+      //   // this.animation2.translate(0,0).opacity(1).step();
+      //   // this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation2.export();
+      //   // this.setData({
+      //   //   shopGoodsList: this.data.shopGoodsList
+      //   // });
+      // })
+      // let obj = {
+      //     "goods_code":e.currentTarget.dataset.goods_code,
+      //     "goods_format":e.currentTarget.dataset.goods_format,
+      //     "goods_quantity": e.currentTarget.dataset.goods_quantity,
+      //     "goods_price": e.currentTarget.dataset.price,
+      //     "goods_name": e.currentTarget.dataset.goods_name,
+      //     "taste_name": e.currentTarget.dataset.taste_name
+      //   }
+      
     },
     reduceshopcart(e){
       this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count --;
-      this.setData({
+       this.setData({
         shopGoodsList: this.data.shopGoodsList
       })
+     
     },
   }
 });

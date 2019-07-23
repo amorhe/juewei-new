@@ -29,7 +29,7 @@
        <cover-view class="fontSmallGray paddingLeft">{{item.address}}</cover-view>
        <cover-view class="menuBtn">
          <cover-view>导航</cover-view>
-         <cover-view>去自提</cover-view>  
+         <cover-view onTap="goSelf">去自提</cover-view>  
        </cover-view> 
 
      </cover-view>

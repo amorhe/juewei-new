@@ -8,7 +8,7 @@ Component({
     imageUrl,
     modalShow: false, //弹框
     mask1: false,
-    goodscartList:[],
+    goodsResult:[],
     orderType:""
   },
   props: {},
@@ -19,9 +19,15 @@ Component({
     this.setData({
      orderType:this.props.orderType
    })
-   this.setData({
-     goodscartList: this.props.goodsResult
-   })
+   if(my.getStorageSync({key:'goodsList'}).data){
+     this.setData({
+      goodsResult: this.props.goodsResult
+    })
+   }else{
+     this.setData({
+      goodsResult: this.props.goodsResult
+    })
+   }
   },
   didUnmount() {},
   methods: {

@@ -256,8 +256,7 @@
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <!-- <image  a:if="{{v.goods_format.length>1}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format="{{v.goods_format.type}}" data-price="{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}" /> -->
-                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format="{{v.goods_format[0].type}}" data-price="{{v.goods_format[0].goods_price / 100}}" data-goods_quantity="{{v.count + 1}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}" />
+                <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
                 <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view>
               </view>
               <view class="goodsSize" onTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">

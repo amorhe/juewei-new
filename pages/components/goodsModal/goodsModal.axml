@@ -29,6 +29,7 @@
     </view>
     <view class="{{size==0?'add_shopcart noChoose':'add_shopcart hasChoose'}}" disabled="{{size==0}}">
       <image class="normalImage" mode="scaleToFill" src="../../common/img/shopcart_1.png"/>
+      <!-- <image  a:if="{{v.goods_format.length>1}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format="{{v.goods_format.type}}" data-price="{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}" /> -->
       <view class="marginLEight">加入购物车</view>
     </view>
   </view>

@@ -1,4 +1,5 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
+var app = getApp();
 Page({
   data: {
     imageUrl,
@@ -68,8 +69,10 @@ Page({
   },
   // 选择门店
   chooseshop(e) {
-    my.redirectTo({
-      url: '/pages/home/goodslist/goodslist?shop_id=' + e.currentTarget.dataset.id + '&type=' + this.data.type
+    app.globalData.shop_id = e.currentTarget.dataset.id;   //商店id
+    app.globalData.type = this.data.type    //外卖自提
+    my.switchTab({ 
+      url: '/pages/home/goodslist/goodslist'
     })
   }
 });

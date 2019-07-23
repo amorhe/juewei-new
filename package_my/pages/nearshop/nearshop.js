@@ -71,5 +71,11 @@ Page({
         })
       },
     });
+  },
+  // 去自提
+  goSelf(){
+    my.navigateTo({
+      url: '/pages/home/switchshop/switchshop'
+    });
   }
 });
