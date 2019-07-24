@@ -73,9 +73,9 @@ Page({
     //   key: '_sid', // 缓存数据的key
     // }).data;
 
-    let _sid = await this.getSid()
-  
-   let res = await getuserInfo(_sid.data||'')
+  let _sid = await this.getSid()
+  console.log(_sid,'_sid')
+  let res = await getuserInfo(_sid.data||'')
       console.log(res,'我的页面')
       if(res.code==30106){
         this.setData({

@@ -1,5 +1,5 @@
 import {imageUrl} from '../../../pages/common/js/baseUrl'
-
+import {addressList} from '../../../pages/common/js/my'
 Page({
   data: {
     imageUrl,

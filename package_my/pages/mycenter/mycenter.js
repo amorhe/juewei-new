@@ -42,26 +42,6 @@ Page({
     this.getAddressList()
     this.getUserInfo()
   },
-  // UpdateInfo(){
-  //   var that = this
-  //   var _sid = my.getStorageSync({
-  //     key: '_sid', // 缓存数据的key
-  //   }).data;
-  //   my.getAuthCode({
-  //     scopes: ['auth_user'],
-  //     success: (res) => {
-  //       my.getAuthUserInfo({
-  //         success: (userInfo) => {
-  //           console.log(userInfo,'执行一')
-  //         }
-  //       });
-  //     },
-  //   });
-  //   console.log('执行二')
-  //   UpdateAliUserInfo(_sid,that.data.head_img,that.data.nick_name).then((res)=>{
-  //     console.log(res)
-  //   })
-  // },
   // 用户信息
   getUserInfo() {
     var that = this
@@ -85,7 +65,7 @@ Page({
       this.setData({
         userinfo:res.data
       })
-      console.log(that.data.userinfo,'基本信息页')
+      //console.log(that.data.userinfo,'基本信息页')
     })
   },
   // 选择性别
