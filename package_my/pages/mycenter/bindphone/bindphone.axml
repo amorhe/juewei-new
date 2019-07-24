@@ -11,7 +11,7 @@
   <view a:if="{{isnew}}">
     <text class="timeClass">{{countTime}}秒</text>后重新获取验证码
   </view>
-  <view a:else>
+  <view a:else onTap="timeDate">
     重新获取验证码
   </view>
   <view class="bindButton" onTap="bindphone">{{ type=='1'?'验证后绑定新手机号':"验证绑定" }}</view>

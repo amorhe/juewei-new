@@ -84,6 +84,7 @@ Page({
       'goods[exchange_type]': exchange_type,
       'goods[point]': point,
       'goods[amount]': amount,
+      'pay_type':11
     }
     let { code, data, msg } = await ajax('/mini/vip/wap/trade/create_order', params)
     if (code === 100) {

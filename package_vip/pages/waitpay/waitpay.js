@@ -279,11 +279,16 @@ Page({
 
     if (d.order_total_amount != 0) {
       let { code, data, msg } = await this.pay()
-      if (code !== 100) {
+      if (code !== 0) {
         return my.redirectTo({
-          url: '../finish/finish?id=' + d.id + '&fail=' + false
+          url: '../finish/finish?id=' + d.id + '&fail=' + true
         });
       }
+
+      return my.redirectTo({
+          url: '../finish/finish?id=' + d.id + '&fail=' + false
+        });
+      
     }
 
 

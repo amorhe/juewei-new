@@ -12,4 +12,11 @@ Page({
       url:url
     });
   },
+  addressFn(){
+     my.chooseLocation({
+      success:(res)=>{
+        console.log(res)
+      }
+    });
+  },
 });

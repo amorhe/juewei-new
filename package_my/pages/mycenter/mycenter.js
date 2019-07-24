@@ -1,7 +1,7 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
 import { getRegion } from '../../../pages/common/js/li-ajax'
 import { UpdateAliUserInfo,UpdateUserInfo } from '../../../pages/common/js/my'
-import { getuserInfo } from '../../../pages/common/js/login'
+import { getuserInfo,LoginOut } from '../../../pages/common/js/login'
 var app = getApp()
 let region=[]
 Page({
@@ -12,7 +12,7 @@ Page({
     head_img:'', // 头像
     nick_name:'', // 名字
     userinfo:'', // 用户信息
-
+    sex:0,
     // 地址
     name: '',
 
@@ -33,30 +33,35 @@ Page({
     defaultAddress: [0, 0, 0]
   },
   onLoad(e) {
-    this.setData({
-      head_img:e.head_img,
-      nick_name:e.nick_name
-    })
-    this.UpdateInfo()
-
+    //this.UpdateInfo()
   },
-
-   async onShow() {
+  async onShow() {
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
     region =  await getRegion()
     this.getAddressList()
     this.getUserInfo()
   },
-  UpdateInfo(){
-    var that = this
-    var _sid = my.getStorageSync({
-      key: '_sid', // 缓存数据的key
-    }).data;
-    UpdateAliUserInfo(_sid,that.data.head_img,that.data.nick_name).then((res)=>{
-      console.log(res)
-    })
-  },
+  // UpdateInfo(){
+  //   var that = this
+  //   var _sid = my.getStorageSync({
+  //     key: '_sid', // 缓存数据的key
+  //   }).data;
+  //   my.getAuthCode({
+  //     scopes: ['auth_user'],
+  //     success: (res) => {
+  //       my.getAuthUserInfo({
+  //         success: (userInfo) => {
+  //           console.log(userInfo,'执行一')
+  //         }
+  //       });
+  //     },
+  //   });
+  //   console.log('执行二')
+  //   UpdateAliUserInfo(_sid,that.data.head_img,that.data.nick_name).then((res)=>{
+  //     console.log(res)
+  //   })
+  // },
   // 用户信息
   getUserInfo() {
     var that = this
@@ -66,20 +71,21 @@ Page({
     getuserInfo(_sid).then((res) => {
       var province = region.filter(item=>{
         return item.addrid==res.data.province_id
-      })
-      var city = province[0].sub.filter(item=>{
+      })[0]
+  
+      var city = province.sub.filter(item=>{
         return item.addrid==res.data.city_id
-      })
-      var regions = city[0].sub.filter(item=>{
+      })[0]
+      var regions = city.sub.filter(item=>{
         return item.addrid==res.data.region_id
       })
-      res.data.provinceName=province[0].name||''
-      res.data.cityName=city[0].name||''
-      res.data.regionName=regions[0].name||''
+      res.data.provinceName=province.name||''
+      res.data.cityName=city.name||''
+      res.data.regionName=regions.name||''
       this.setData({
         userinfo:res.data
       })
-      console.log(that.data.userinfo)
+      console.log(that.data.userinfo,'基本信息页')
     })
   },
   // 选择性别
@@ -213,6 +219,26 @@ Page({
     });
   },
   onModalClick() { // 确认
+    var _sid = my.getStorageSync({
+      key: '_sid', // 缓存数据的key
+    }).data;
+    LoginOut(_sid).then(res=>{
+      console.log(res)
+      if(res.code==0){
+        my.removeStorageSync({
+          key: '_sid',
+        });
+        my.switchTab({
+          url:'/pages/home/goodslist/goodslist'
+        })
+      }else{
+        my.showToast({
+          type: 'none',
+          content: res.msg,
+          duration: 2000
+        });
+      }
+    })
     this.setData({
       modalOpened: false,
     });

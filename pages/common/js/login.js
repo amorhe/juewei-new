@@ -6,6 +6,7 @@ const loginPage = {
   sendCode:'/juewei-api/alimini/sendCode', // 获取短信验证码
   captcha:'/juewei-api/user/captcha', // 获取图片验证码
   loginByPhone:'/juewei-api/alimini/loginByPhone', // 手机号登录
+  LoginOut:'/juewei-api/alimini/LoginOut', // 退出登录
 }
 export const loginByAliUid = (auth_code,nick_name,head_img,_sid) => ajax(loginPage.loginByAliUid,{auth_code,nick_name,head_img,_sid});
 
@@ -16,3 +17,5 @@ export const loginByAuth = (ali_uid,phone,nick_name,head_img,_sid) => ajax(login
 export const sendCode = (data) => ajax(loginPage.sendCode,data);
 
 export const loginByPhone = (data) => ajax(loginPage.loginByPhone,data);
+
+export const LoginOut = (_sid) => ajax(loginPage.LoginOut,{_sid});

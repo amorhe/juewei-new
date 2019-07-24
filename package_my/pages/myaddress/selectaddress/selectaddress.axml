@@ -17,7 +17,7 @@
   </view>
 
   <view class="mapView">
-    <map id="map" style="width:100%;height:100%"></map>
+    <map id="map" style="width:100%;height:100%" onTap="tapMap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{ mapInfo }}"></map>
 
     <cover-view class="addressshopBox">
       <cover-view class="addressItem">
@@ -30,13 +30,13 @@
           <cover-view class="addressInfo">北京市朝阳区建国路27号</cover-view>
         </cover-view>
       </cover-view>
-      <cover-view class="addressItem" a:for="{{3}}">
+      <cover-view class="addressItem" a:for="{{list}}">
         <cover-view class="iconImgView">
           <cover-image src="{{ imageUrl }}order2.png" class="iconImg"/>
         </cover-view>
         <cover-view>
-          <cover-view>紫檀大厦A座</cover-view>
-          <cover-view class="addressInfo">北京市朝阳区建国路27号</cover-view>
+          <cover-view>{{item.name}}</cover-view>
+          <cover-view class="addressInfo">{{item.address}}</cover-view>
         </cover-view>
       </cover-view>
     </cover-view>

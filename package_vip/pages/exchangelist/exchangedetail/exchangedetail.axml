@@ -8,7 +8,7 @@
     <view class="sub-state" a:if="{{detail.status == 0}}">
     剩余时间：14分58秒
     </view>
-    <view class="sub-state" a:if="{{detail.receive_type == 2 || detail.get_start_time}}">
+    <view class="sub-state" a:if="{{!['已关闭'].includes(detail.status_name) }}">
     领取有效期：{{detail.get_start_time}} 至 {{detail.get_end_time}}
     </view>
     <view class="sub-state" a:if="{{detail.get_time != '0000-00-00 00:00:00'}}">
@@ -16,7 +16,7 @@
     </view>
   </view>
   <view class="buttons" a:if="{{detail.status == 0}}">
-    <view class="c-button">取消订单</view>
+    <view class="c-button" onTap="doCancelOrder">取消订单</view>
     <view class="o-button">立即支付</view>
   </view>
   <view class="detail">
@@ -45,8 +45,13 @@
         </view>
       </view>
     </view>
-
-    <view class="user-detail">
+    <view class="ul" a:if="{{detail.receive_type == 2}}">
+      <view class="li">
+        <view class="title">{{detail.user_address_name}} {{detail.user_address_phone}}</view>
+        <view class="address-sm">北京市朝阳区某某某某某某某某某某某某某街</view>
+      </view>
+    </view>
+    <view class="user-detail" a:if="{{detail.receive_type == 1}}">
       <view class="user-list" a:if="{{detail.user_address_name}}">
         <view class="user-left">
         领取人
@@ -55,7 +60,6 @@
         {{detail.user_address_name}}
         </view>
       </view>
-
       <view class="user-list">
         <view class="user-left" a:if="{{detail.user_address_phone}}">
         领取手机号码
@@ -64,45 +68,39 @@
         {{detail.user_address_phone}}
         </view>
       </view>
-
       <view class="user-list" a:if="{{detail.shop_name}}">
         <view class="user-left">
         领取门店
         </view>
         <view class="user-right">
-          <view class="shop-name"> {{detail.shop_name}} </view>
+          <view class="shop-name"> {{detail.shop_name}}</view>
           <view class="code-button">导航</view>
         </view>
       </view>
-
-       <view class="user-list" a:if="{{detail.shop_name}}">
+      <view class="user-list" a:if="{{detail.shop_name}}">
         <view class="user-left">
         </view>
         <view class="user-right">
-         <view class="user-address">
+          <view class="user-address">
            {{detail.province}} {{detail.city}} {{detail.district}} {{detail.address}}
-         </view>
+          </view>
         </view>
       </view>
     </view>
-
-    <view class="get-shop" a:if="{{detail.code_img}}">
+    <view class="get-shop" a:if="{{detail.code_img && detail.status != 0}}">
       <view class="get-shop-title">
         取商品
       </view>
       <view class="get-code">
         <image mode="scaleToFill" src="{{'data:image/png;base64,'+detail.code_img}}"/>
       </view>
-
       <view class="get-shop-tips">
         请将二维码出示给店员
       </view>
-
       <view class="get-code-string">
         兑换码 {{detail.get_code}}
       </view>
     </view>
-
     <view class="code" a:if="{{code}}">
       <view class="code-title">兑换码：{{detail.code}}</view>
       <view class="code-button">复制</view>
@@ -129,7 +127,7 @@
           商品详情
         </view>
         <view class="value">
-         <rich-text nodes="{{_intro}}"></rich-text>
+          <rich-text nodes="{{_intro}}"></rich-text>
         </view>
       </view>
       <view class="li" a:if="{{detail.exchange_limit_type}}">

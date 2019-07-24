@@ -221,64 +221,71 @@ page {
   line-height: 2em;
 }
 
-.user-left{
-font-size:28rpx;
-font-weight:400;
-color:rgba(153,153,153,1);
+.user-left {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
 }
 
-.user-right{
+.user-right {
   display: flex;
   justify-content: flex-end;
-font-size:28rpx;
-font-weight:400;
-color:rgba(51,51,51,1);
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
 }
 
-.shop-name{
+.shop-name {
   margin-right: 10rpx;
 }
 
-.user-address{
-  max-width:459rpx;
-font-size:24rpx;
-font-weight:400;
-color:rgba(153,153,153,1);
+.user-address {
+  max-width: 459rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
 }
 
-.get-shop{
+.get-shop {
   padding: 20rpx 0;
   border-bottom: 1rpx dashed #eee
 }
 
-.get-shop-title{
-font-size:34rpx;
-font-weight:600;
-color:rgba(51,51,51,1);
+.get-shop-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
 }
 
-.get-code{
+.get-code {
   padding: 24rpx;
   text-align: center
 }
 
-.get-code image{
+.get-code image {
   width: 300rpx;
   height: 300rpx;
 }
 
-.get-shop-tips{
+.get-shop-tips {
   text-align: center;
-font-size:28rpx;
-font-weight:400;
-color:rgba(51,51,51,1);
-line-height: 2em;
-
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2em;
 }
 
-.get-code-string{
+.get-code-string {
   text-align: center;
-font-size:36rpx;
-font-weight:600;
-color:rgba(230,0,18,1);
+  font-size: 36rpx;
+  font-weight: 600;
+  color: rgba(230, 0, 18, 1);
+}
+
+.address-sm {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  margin-top: 10rpx;
 }

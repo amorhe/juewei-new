@@ -67,12 +67,15 @@ Page({
     _intro: [],
 
   },
-  onLoad(e) {
+  async onLoad(e) {
     const { id } = e;
 
-    this.getOrderDetail(id)
+    await this.getOrderDetail(id)
   },
 
+  /**
+   * @function 或其订单详情
+   */
   async getOrderDetail(id) {
     const { _sid } = this.data;
     let res = await ajax('/mini/vip/wap/order/order_detail', { _sid, id })
@@ -88,7 +91,23 @@ Page({
     }
   },
 
+  /**
+   * @function 取消订单
+   */
 
+ async doCancelOrder(){
+   const {order_sn} = this.data.detail
+   let res = await ajax('/mini/vip/wap/trade/cancel_order',{order_sn},'POST')
+   if(res.code ===100){
+     my.navigateBack({
+       delta:1
+     });
+   }
+  },
+
+  /**
+   * @function 剪切板
+   */
   handleCopy() {
     my.setClipboard({
       text: this.data.detail.order_sn,
