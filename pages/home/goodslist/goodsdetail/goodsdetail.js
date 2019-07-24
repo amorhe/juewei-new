@@ -1,4 +1,5 @@
-import {imageUrl} from '../../../common/js/baseUrl'
+import {imageUrl,imageUrl2} from '../../../common/js/baseUrl'
+import {commentList,DispatchCommentList} from '../../../common/js/home'
 Page({
   data: {
     activeTab:0,
@@ -20,6 +21,7 @@ Page({
       }
     ],
     imageUrl,
+    imageUrl2,
     // 评论
     commentArr:[
       {
@@ -47,9 +49,20 @@ Page({
         comment_text:'第一次订这个，味道超级好',
         imgUrls:[]
       }
-    ]
+    ],
+    goodsInfo:{},
+    dispatchArr:[]
   },
-  onLoad() {},
+  onLoad(e) {
+    const goodsAll = JSON.parse(e.goodsAll);
+    let arr = goodsAll.filter(item => 
+      item.goods_id == e.goods_id)
+    this.setData({
+      goodsInfo:arr[0]
+    })
+    this.getCommentList(arr[0].goods_code,1,10);
+    this.getDispatchCommentList(arr[0].goods_code,1,10)
+  },
   handleTabClick({ index }) {
     this.setData({
       activeTab: index,
@@ -59,5 +72,23 @@ Page({
     this.setData({
       tabActive: index,
     });
+  },
+  // 商品评价
+  getCommentList(goods_code,pagenum,pagesize){
+    commentList(goods_code,pagenum,pagesize,1).then((res) => {
+      console.log(res)
+      this.setData({
+        commentArr:res.data
+      })
+    })
+  },
+  // 配送评价
+  getDispatchCommentList(goods_code,pagenum,pagesize){
+    DispatchCommentList(goods_code,pagenum,pagesize,1).then((res) => {
+      console.log(res);
+      this.setData({
+        dispatchArr:res.data
+      })
+    })
   }
 });

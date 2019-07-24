@@ -106,10 +106,10 @@
     </view>
   </scroll-view>
 
-  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent" scroll-with-animation="true"> 
+  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent"> 
     <view>
             <!-- 折扣 -->
-      <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}">
+      <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}" onTap="goodsdetailContent" data-goodsAll="{{activityAllObj.DIS}}" data-goods_id="{{item.goods_id}}">
         <view class="goodsTypeEv">折扣</view>
         <view class="goodsBox">
           <view class="discountImg">
@@ -153,7 +153,7 @@
         </view>
       </view>
       <!-- 套餐 -->
-      <view id="2" class="taocan" a:if="{{activityAllObj.PKG.length>0}}" a:for="{{activityAllObj.PKG}}">
+      <view id="2" class="taocan" a:if="{{activityAllObj.PKG.length>0}}" a:for="{{activityAllObj.PKG}}" onTap="goodsdetailContent" data-goodsAll="{{activityAllObj.PKG}}" data-goods_id="{{item.goods_id}}">
         <view class="goodsTypeEv">套餐</view>
         <view class="goodsBox">
           <image class="goodsImage1" src="{{imageUrl2 + item.goods_img}}"/>
@@ -232,7 +232,7 @@
       <view id="{{index+4}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
         <view class="goodsTypeEv">{{item.key}}</view>
         <!-- 直接加减 -->
-        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v">
+        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{companyGoodsList}}" data-goods_id="{{v.goods_id}}">
           <image src="{{v.goods_small_img[0]}}"/>
           <view class="goodsInfos">
             <view>

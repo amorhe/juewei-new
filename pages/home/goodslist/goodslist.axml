@@ -116,6 +116,6 @@ scope='userInfo'>授权登录</button> -->
 </navigator>
 
 <!-- 购物车 -->
-<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" type="{{type}}"/>
+<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" type="{{type}}" companyGoodsList="{{companyGoodsList}}"/>
 
 </view>

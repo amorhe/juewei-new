@@ -40,7 +40,7 @@
   </view>
 
   <view class="orderList_box">
-    <view class="ordershopName borderBottomSolid">绝味鸭脖（定福庄西街店）</view>
+    <view class="ordershopName borderBottomSolid">{{shopObj.title}}</view>
     <view class="order_list">
       <view a:for="{{repurseList}}">
         <view class="listLeft">

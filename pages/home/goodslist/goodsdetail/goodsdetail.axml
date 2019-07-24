@@ -1,24 +1,25 @@
-<image class="goodsImage" mode="scaleToFill" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=309559398,1858255297&fm=26&gp=0.jpg"/>
+<image class="goodsImage" mode="scaleToFill" src="{{goodsInfo.goods_img_detail}}"/>
 <view class="goodsWrap borderBottom">
   <view class="goodsTitle marginB">
     <view>
-      <view class="goodsName">招牌鸭脖</view>
+      <view class="goodsName">{{goodsInfo.goods_name}}</view>
       <view class="goodsKind">
-        <text>（超辣）</text>
+        <text>（{{goodsInfo.taste_name}}）</text>
       </view>
     </view>
     <view class="goodsSoldNum">
       <text>已售:</text>
-      <text class="numberColor">178579</text>
-      <text>份</text>
+      <text class="numberColor">{{goodsInfo.goods_buy_sum}}</text>
+      <text>{{goodsInfo.goods_unit}}</text>
     </view>
   </view>
   <view class="goodsRules">
     <view>
       <view>
         <text>￥</text>
-        <text>20</text>
-        <text>/ 份</text>
+        <text a:if="{{goodsInfo.goods_format.length>1}}">{{goodsInfo.goods_format[0].goods_price / 100 < goodsInfo.goods_format[1].goods_price / 100 ? goodsInfo.goods_format[0].goods_price / 100 :goodsInfo.goods_format[1].goods_price / 100}}</text>
+        <text a:if="{{goodsInfo.goods_format.length==1}}">{{goodsInfo.goods_format[0].goods_price / 100}}</text>
+        <text>/ {{goodsInfo.goods_unit}}</text>
       </view>
     </view>
   <view>
@@ -39,11 +40,13 @@
     <block>
       <tab-content key="0">
         <view class="tab-content">
-          <view class="goodsintro">够辣够过瘾，才是鸭脖最性感的姿势。别问为什么那么多人啃，不够味何以做行业老大。</view>
+          <view class="goodsintro">{{goodsInfo.goods_introduce}}</view>
         </view>
       </tab-content>
       <tab-content key="1">
-        <view class="tab-content">154125</view>
+        <view class="tab-content">
+          <image mode="scaleToFill" style="width:100%" src="{{goodsInfo.goods_img_intr}}"/>
+        </view>
       </tab-content>
     </block>
   </tabs>
@@ -75,33 +78,33 @@
           <!-- 评论列表 -->
           <view class="commontList">
             <view a:for="{{commentArr}}">
-              <image class="commontAvatar" mode="scaleToFill" src="{{item.imgAvatar}}"/>
+              <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
               <view>
                 <view class="commontUser">
                   <view>
                     <view>
-                      <view>{{item.name}}</view>
+                      <view>{{item.nick_name}}</view>
                       <view class="commontImageView">
-                        <image class="normalImage" a:for="{{item.star}}" src="{{imageUrl}}stars_2.png"/>
-                        <image class="normalImage" a:for="{{5-item.star}}" src="{{imageUrl}}stars_1.png"/>
+                        <image class="normalImage" a:for="{{item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_2.png"/>
+                        <image class="normalImage" a:for="{{5-item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_1.png"/>
                       </view>
                     </view>
                   </view>
-                  <view class="fontSmallGray">{{item.comment_time}}</view>
+                  <view class="fontSmallGray">{{item.takeout_goods_comment_ctime}}</view>
                 </view>
 
-                <view class="commontText fontTwentySix">{{item.comment_text}}</view>
+                <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content}}</view>
 
                 <view a:if="{{item.imgUrls.length>0}}">
-                  <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"/>
+                  <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"/>
                 </view>
                 <view class="commontTag">
                   <image class="normalImage" mode="scaleToFill" src="../../../common/img/hands.png"/>
-                  <view>味道正宗</view>
-                  <view>食材新鲜</view>
-                  <view>包装精美</view>
+                  <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
+                  <!-- <view>食材新鲜</view>
+                  <view>包装精美</view> -->
                 </view>
-                <view class="fontSmallGray">购买时间：2019.06.19 11:28</view>
+                <view class="fontSmallGray">购买时间：{{item.order_ctime}}</view>
               </view>
 
 
@@ -111,7 +114,43 @@
         </view>
       </tab-content>
       <tab-content key="1">
-        <view class="tab-content">配送</view>
+        <view class="tab-content">
+           <!-- 评论列表 -->
+          <view class="commontList">
+            <view a:for="{{dispatchArr}}">
+              <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+              <view>
+                <view class="commontUser">
+                  <view>
+                    <view>
+                      <view>{{item.nick_name}}</view>
+                      <view class="commontImageView">
+                        <image class="normalImage" a:for="{{item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_2.png"/>
+                        <image class="normalImage" a:for="{{5-item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_1.png"/>
+                      </view>
+                    </view>
+                  </view>
+                  <view class="fontSmallGray">{{item.takeout_order_comment_ctime}}</view>
+                </view>
+
+                <view class="commontText fontTwentySix">{{item.takeout_order_comment_content}}</view>
+
+                <view a:if="{{item.imgUrls.length>0}}">
+                  <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"/>
+                </view>
+                <view class="commontTag">
+                  <image class="normalImage" mode="scaleToFill" src="../../../common/img/hands.png"/>
+                  <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
+                  <!-- <view>食材新鲜</view>
+                  <view>包装精美</view> -->
+                </view>
+                <view class="fontSmallGray">购买时间：{{item.takeout_order_comment_utime}}</view>
+              </view>
+
+
+            </view>
+          </view>
+        </view>
       </tab-content>
     </block>
   </tabs>

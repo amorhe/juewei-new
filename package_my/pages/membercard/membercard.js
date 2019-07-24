@@ -12,5 +12,16 @@ Page({
     this.setData({
       imgSrc:baseUrl + '/juewei-api/alimini/getQRcode?_sid=' + _sid
     })
+  },
+  goPay(){
+    my.ap.navigateToAlipayPage({
+      appCode:'payCode',
+      success:(res) => {
+          // my.alert(JSON.stringify(res));
+      },
+      fail:(res) => {
+          // my.alert(JSON.stringify(res));        
+      }
+    })
   }
 });

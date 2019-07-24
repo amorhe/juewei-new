@@ -16,6 +16,11 @@ const ajaxUrl = {
   createOrder: '/juewei-api/order/create',       // 创建订单
   confirmOrder: '/juewei-api/order/confirm',        // 确认订单（商品加入购物车点击立即购买）
   useraddress: '/juewei-api/useraddress/list',     // 我的地址，收货地址列表
+  exchangeCode: '/mini/user/exchange_code_list',     // 兑换码列表
+  exchangeCoupon: '/mini/coupons/exchange_coupons',   // 兑换优惠券
+  exchangedetail: '/mini/user/exchange_code_view',    // 兑换详情
+  commentList: '/juewei-api/comment/GoodsCommentList',     //  商品详情中的商品评价列表
+  DispatchCommentList: '/juewei-api/comment/DispatchCommentList',      // 商品详情中的配送评价列表
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -24,7 +29,7 @@ export const upAliMiniFormId = (aliUid,formId) => ajax(ajaxUrl.upAliMiniFormId,{
 
 export const upAliMiniTradeNo = (aliUid,tradeNo) => ajax(ajaxUrl.upAliMiniTradeNo,{aliUid,tradeNo},"GET");
 
-export const couponsList = (get_use,money,phone,shop_id) => ajax(ajaxUrl.couponsList,{get_use,money,phone,shop_id});
+export const couponsList = (_sid,get_use,money,phone,shop_id) => ajax(ajaxUrl.couponsList,{_sid,get_use,money,phone,shop_id});
 
 export const getQRcode = (_sid) => ajax(ajaxUrl.getQRcode,{_sid},"GET");
 
@@ -49,3 +54,13 @@ export const createOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,n
 export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
 
 export const useraddress = (_sid,type,location) => ajax(ajaxUrl.useraddress,{_sid,type,location});
+
+export const exchangeCode = (_sid,get_type) => ajax(ajaxUrl.exchangeCode,{_sid,get_type});
+
+export const exchangeCoupon = (_sid,couponscode) => ajax(ajaxUrl.exchangeCoupon,{_sid,couponscode});
+
+export const exchangedetail = (_sid,gift_code_id,gift_id,order_id) => ajax(ajaxUrl.exchangedetail,{_sid,gift_code_id,gift_id,order_id});
+
+export const commentList = (goods_code,pagenum,pagesize,plate) => ajax(ajaxUrl.commentList,{goods_code,pagenum,pagesize,plate});
+
+export const DispatchCommentList = (shop_id,pagenum,pagesize,plate) => ajax(ajaxUrl.DispatchCommentList,{shop_id,pagenum,pagesize,plate});

@@ -1,10 +1,10 @@
 <view class="redeemCode">
-  <view a:for="{{6}}">
-    <image class="codeSize" src="{{imageUrl}}coupon.png" /> 
+  <view a:for="{{exchageArr}}">
+    <image class="codeSize" src="{{imageUrl2 + item.gift_img_url}}" /> 
     <view class="redeemContent">
-      <view class="fontBold">樊登小读者21天</view> 
-      <view class="fontSmallGray">活动赠品</view> 
-      <view class="fontTwentyTwo">有效时间 2019-04-13 23:50:59</view>
+      <view class="fontBold">{{item.gift_name}}</view> 
+      <view class="fontSmallGray">{{item.source==1?'活动赠品':'积分兑换'}}</view> 
+      <view class="fontTwentyTwo">有效时间 {{item.gift_use_time}}</view>
     </view> 
     <image class="guoqi" src="../../../../pages/common/img/guoqi.png" />            
   </view>

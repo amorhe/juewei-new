@@ -6,17 +6,17 @@
 </view> -->
 
 <view class="couponUl">
-  <view class="couponLi" a:for="{{6}}">
+  <view class="couponLi" a:for="{{couponList}}">
     <image class="quan" src="../../../../pages/common/img/quan.png" mode="widthFix"/>
     <view>
       <view class="couponNumber">
-        <text>10</text>
+        <text>{{item.money /100}}</text>
         <text>元</text>
       </view>
       <view class="couponMiddle">
-        <view>门店专享券</view>
-        <view class="fontTwentyTwo">2019-05-14至2019-06-14</view>
-        <view class="fontTwentyTwo">满68元可用</view>
+        <view>{{item.full_money>0?'满减券':'立减券'}}</view>
+        <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
+        <view class="fontTwentyTwo">满{{item.full_money / 100}}元可用</view>
       </view>
       <image class="guoqi" src="../../../../pages/common/img/guoqi.png"  />
     </view>

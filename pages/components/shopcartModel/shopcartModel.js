@@ -3,31 +3,55 @@ import {confirmOrder} from '../../common/js/home'
 Component({
   mixins: [],
   data: {
-    showShopcar:false ,  //购物车
+    showShopcar:true ,  //购物车
     mask:false, //遮罩
     imageUrl,
     modalShow: false, //弹框
     mask1: false,
-    goodsResult:[],
-    orderType:""
+    goodsArr:[],
+    orderType:"",
+    priceAll:''
   },
   props: {},
   didMount() {
-   
+  //  let data = JSON.parse(my.getStorageSync({key:'goodsList'}).data);
+  //  console.log(data)
+  //  if(data){
+  //    this.setData({
+  //     goodsResult: data
+  //    })
+  //  }
   },
   didUpdate() {
     this.setData({
      orderType:this.props.orderType
    })
-   if(my.getStorageSync({key:'goodsList'}).data){
-     this.setData({
-      goodsResult: this.props.goodsResult
+   
+    let data = my.getStorageSync({key:'goodsList'}).data;
+    let arr1 = data.filter(item => {
+        return item.count > 0
+    }) 
+    let arr2 = data.filter(item => {
+        return item.largeCount > 0
     })
-   }else{
-     this.setData({
-      goodsResult: this.props.goodsResult
-    })
-   }
+   let arr3 = data.filter(item => {
+      return item.smallCount > 0
+   })
+   let price1 = 0,price2 = 0,price3 = 0;
+   arr1.forEach(item => {
+     price1 += item.goods_format[0].goods_price / 100 * item.count
+   })
+   arr2.forEach(item => {
+     price2 += item.goods_format[1].goods_price * item.largeCount
+   })
+   arr3.forEach(item => {
+     price3 += item.goods_format[0].goods_price * item.smallCount
+   })
+   console.log(data)
+   this.setData({
+     priceAll:price1 + price2 + price3,
+    //  goodsArr:data
+   })
   },
   didUnmount() {},
   methods: {
@@ -62,13 +86,13 @@ Component({
     },
     // 立即购买
     goOrderSubmit(){
-      if(this.data.goodscartList.length == 0) {
+      if(this.data.goodsArr.length == 0) {
         my.showToast({
           content:"请至少选择一件商品"
         });
         return 
       }
-      let goods = JSON.stringify(this.data.goodscartList);
+      let goods = JSON.stringify(this.data.goodsArr);
       let shop_id;
       if(this.data.orderType == 1){
         shop_id = my.getStorageSync({
@@ -79,12 +103,11 @@ Component({
           key: 'self', // 缓存数据的key
         }).data[0].shop_id;
       }
-      confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
-        console.log(res)
-      })
       my.navigateTo({
-        url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType + '&goodsList=' + JSON.stringify(this.data.goodscartList)
+        url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType 
       });
+      
+      
     }
   },
 });

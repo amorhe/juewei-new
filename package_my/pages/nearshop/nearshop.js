@@ -1,5 +1,5 @@
 import {imageUrl,ak} from '../../../pages/common/js/baseUrl'
-import {MyNearbyShop} from '../../../pages/common/js/home'
+import {NearbyShop} from '../../../pages/common/js/home'
 Page({
   data: {
     imageUrl,
@@ -37,7 +37,7 @@ Page({
       url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
       success: (res) => {
         const obj = res.data.contents;
-        MyNearbyShop(JSON.stringify(obj)).then((conf) => {
+        NearbyShop(JSON.stringify(obj)).then((conf) => {
           console.log(conf)
           let arr = conf
           .map(({location}) => ({
@@ -73,9 +73,18 @@ Page({
     });
   },
   // 去自提
-  goSelf(){
+  goSelf(e){
     my.navigateTo({
-      url: '/pages/home/switchshop/switchshop'
+      url: '/pages/home/switchshop/switchshop?shop_id=' + e.currentTarget.dataset.shop_id + '&company_id=' + e.currentTarget.dataset.company_id + '&title=' + e.currentTarget.dataset.title + '&address=' + e.currentTarget.dataset.address + '&goods_num=' + e.currentTarget.dataset.goods_num + '&distance=' + e.currentTarget.dataset.distance 
+    });
+  },
+  // 去导航
+  goNavigation(e){
+    my.openLocation({
+      longitude: e.currentTarget.dataset.lng,
+      latitude: e.currentTarget.dataset.lat,
+      name: e.currentTarget.dataset.title,
+      address: e.currentTarget.dataset.address,
     });
   }
 });

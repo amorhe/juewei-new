@@ -5,22 +5,22 @@ Page({
     isCheck: false,  //协议
     // 换购商品列表
     repurseList:[
-      // {
-      //   img: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3858629,3224043760&fm=26&gp=0.jpg',
-      //   goodsName: '黑鸭鸡膝软骨',
-      //   goodsType: '超辣',
-      //   goodsNum: 2000,
-      //   price: 4,
-      //   oldPrice: 10
-      // },
-      // {
-      //   img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3898176482,3211240837&fm=26&gp=0.jpg',
-      //   goodsName: '如来鸭掌',
-      //   goodsType: '甜辣',
-      //   goodsNum: 20000,
-      //   price: 10,
-      //   oldPrice: 20
-      // }
+      {
+        img: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3858629,3224043760&fm=26&gp=0.jpg',
+        goodsName: '黑鸭鸡膝软骨',
+        goodsType: '超辣',
+        goodsNum: 2000,
+        price: 4,
+        oldPrice: 10
+      },
+      {
+        img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3898176482,3211240837&fm=26&gp=0.jpg',
+        goodsName: '如来鸭掌',
+        goodsType: '甜辣',
+        goodsNum: 20000,
+        price: 10,
+        oldPrice: 20
+      }
     ],
     countN:0,
     mask:false,
@@ -59,9 +59,12 @@ Page({
   },
   onLoad(e) {
     console.log(e)
+    // const res = JSON.parse(my.getStorageSync({key: 'goodsList'}).data);
+    // confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
+    //   console.log(res)
+    // })
     this.setData({
-      orderType:e.orderType,
-      repurseList:JSON.parse(e.goodsList)
+      orderType:e.orderType
     })
     if(e.orderType == 2) {
       const self = my.getStorageSync({key: 'self'}).data;
@@ -96,6 +99,11 @@ Page({
         longitude:my.getStorageSync({key: 'lng'}).data,
         latitude: my.getStorageSync({key: 'lat', }).data,
         markersArray: arr
+      })
+    }else{
+      const self = my.getStorageSync({key: 'takeout'}).data;
+      this.setData({
+        shopObj:self[0]
       })
     }
 
@@ -154,5 +162,6 @@ Page({
     this.setData({
       isCheck: !this.data.isCheck
     })
-  }
+  },
+  
 });

@@ -12,19 +12,19 @@
       <tab-content key="0">
         <view class="tab-content tabBox">
           <view class="couponUl">
-            <view class="couponLi" a:for="{{6}}">
+            <view class="couponLi" a:for="{{couponList}}">
               <image class="quan" src="../../../../pages/common/img/quan.png" mode="widthFix"/>
               <view>
                 <view class="couponNumber">
-                  <text>10</text>
+                  <text>{{item.money/100}}</text>
                   <text>元</text>
                 </view>
                 <view class="couponMiddle">
-                  <view>门店专享券</view>
-                  <view class="fontTwentyTwo">2019-05-14至2019-06-14</view>
-                  <view class="fontTwentyTwo">满68元可用</view>
+                  <view>{{item.full_money>0?'满减券':'立减券'}}</view>
+                  <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
+                  <view class="fontTwentyTwo" a:if="{{item.full_money>0}}">满{{item.full_money/100}}元可用</view>
                 </view>
-                <view class="useBtn fontTwentySix">立即使用</view>
+                <navigator url="/pages/home/goodslist/goodslist" class="useBtn fontTwentySix" open-type="switchTab">立即使用</navigator>
               </view>
               <view>
                 <view class="whiteCircleLeft"></view>
@@ -52,12 +52,12 @@
        <tab-content key="1">
         <view class="tab-content tabBox">
           <view class="redeemCode">
-            <view a:for="{{6}}">
-              <image class="codeSize" src="{{imageUrl}}coupon.png" /> 
+            <view a:for="{{exchangeList}}" onTap="changedetail">
+              <image class="codeSize" src="{{imageUrl2 + item.gift_img_url}}" /> 
               <view class="redeemContent">
-                <view class="fontBold">樊登小读者21天</view> 
-                <view class="fontSmallGray">活动赠品</view> 
-                <view class="fontTwentyTwo">有效时间 2019-04-13 23:50:59</view>
+                <view class="fontBold">{{item.gift_name}}</view> 
+                <view class="fontSmallGray">{{item.source==1?'活动赠品':'积分兑换'}}</view> 
+                <view class="fontTwentyTwo">有效时间 {{item.gift_use_time}}</view>
               </view>             
             </view>
           </view>

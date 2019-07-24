@@ -2,21 +2,20 @@
   <view class="activity_wrap">
     <view class="goodsView borderBottom">
       <view>
-        <image class="goodsImage" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3213540736,4145711375&fm=26&gp=0.jpg" />
+        <image class="goodsImage" src="{{imageUrl2 + exchangeObj.gift_img_url}}" />
         <view class="goodsInfo">
-          <text class="fontBold">幸福西饼6寸蛋糕</text>
+          <text class="fontBold">{{exchangeObj.gift_name}}</text>
           <text>活动赠品</text>
-          <!-- <text>积分兑换</text> -->
         </view>
       </view>
-      <view class="contactBtn">联系客服</view>
+      <navigator url="/package_my/pages/onlineservice/onlineservice" class="contactBtn">联系客服</navigator>
     </view>
     <view class="redeemCodeDetail borderBottom">
       <view>
         <text>兑换码:</text>
-        <text>1008902930</text>
+        <text>{{exchangeObj.gift_code}}</text>
       </view>
-      <!-- <view class="copyScore">复制</view> -->
+      <view class="copyScore" onTap="handleCopy" data-code="{{exchangeObj.gift_code}}">复制</view>
     </view>
     <view class="middleShow borderBottom">
       <view>
@@ -34,19 +33,19 @@
       </view> -->
       <view>
         <view class="typeFont">使用范围</view>
-        <view>全国门店可用</view>
+        <view>{{exchangeObj.gift_application_store}}</view>
       </view>
       <view>
         <view class="typeFont">兑换说明</view>
-        <view>在http://www.ebeecake.com输入兑换码兑换；活动所有权归本公司所有。</view>
+        <view>{{exchangeObj.gift_exchange_process}}</view>
       </view>
       <view>
         <view class="typeFont">商品详情</view>
-        <view>牛油果的清香弥漫在口腔，和着乳清奶酪咀嚼，仿佛热带的阳光，洒满心房，也惊叹牛油果的神奇，包容所有的味道，升华所有的味觉，伟大的感动，总在不言中。</view>
+        <view>{{exchangeObj.gift_desciption}}</view>
       </view>
       <view>
         <view class="typeFont">客服电话</view>
-        <view>400-9995917</view>
+        <view>{{exchangeObj.gift_service_telephone}}</view>
       </view>
     </view>
 
@@ -54,13 +53,13 @@
       <view>
         <view>订单编号</view>
         <view>
-          <text>897575668854676544</text>
-          <view class="copy">复制</view>
+          <text>{{exchangeObj.order_id}}</text>
+          <view class="copy" onTap="handleCopy" data-code="{{exchangeObj.order_id}}">复制</view>
         </view>
       </view>
       <view>
         <view>订单时间</view>
-        <view>2019-01-09 10:10:10</view>
+        <view>{{exchangeObj.order_ctime}}</view>
       </view>
     </view>
   </view>

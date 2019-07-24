@@ -18,6 +18,7 @@ Component({
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
     shopGoodsList:[],   // 门店商品列表
+    companyGoodsList:[],   //公司所有商品
     activityAllObj:[],
     shopcartArr:[],     //购物车
     showAnmimation:true,
@@ -74,7 +75,8 @@ Component({
         })
       })
       this.setData({
-        shopGoodsList:this.props.shopGoodsList
+        shopGoodsList:this.props.shopGoodsList,
+        companyGoodsList:this.props.companyGoodsList
       })
     }
     if(this.props.activityAllObj){
@@ -135,19 +137,21 @@ Component({
       // })
     },
     addshopcart(e){
-      let{ shopGoodsList,goodsResult } = this.data
+      let{ shopGoodsList } = this.data
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
       let buyArr = shopGoodsList.map(item => {
         return item.last.filter(_item=> _item.count > 0)
       })
-      this.setData({
-        shopGoodsList,
-      },()=> {
-        goodsResult = buyArr.filter(item => item.length>0);
-      })
+      let goodsResult = buyArr.filter(item => item.length>0);
+       console.log(goodsResult[0])
       // this.setData({
-      //   goodsResult:callBack
+      //   shopGoodsList,
+      //   goodsResult:goodsResult[0]
       // })
+        // my.setStorageSync({
+        //   key: 'goodsList', // 缓存数据的key
+        //   data:goodsResult[0], // 要缓存的数据
+        // });
       // 加入购物车小红点动画效果
       // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
       //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
@@ -175,5 +179,11 @@ Component({
       })
      
     },
+    // 商品详情
+    goodsdetailContent(e){
+      my.navigateTo({
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id
+      });
+    }
   }
 });

@@ -4,16 +4,16 @@
     <view>
       <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
       <view class="shop_info">
-        <view class="fontThirtySix">绝味鸭脖（定福庄西街店）</view>
-        <view>在售商品：50</view>
-        <view>北京市朝阳区青年路甘露园中里2号E-19</view>
+        <view class="fontThirtySix">{{title}}</view>
+        <view>在售商品：{{goods_num}}</view>
+        <view>{{address}}</view>
       </view>
     </view>
     <view class="distanceView">
       <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-      <view>距离1000米</view>
+      <view>距离{{distance}}米</view>
     </view>
   </navigator>
 </view>
 
-<my-component />
+<my-component shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" scrollY="true" />

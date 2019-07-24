@@ -312,7 +312,7 @@ Page({
     my.request({
       url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=156335816013`,
       success: (res) => {
-        // 该门店所有的商品
+        // 该公司所有的商品
         this.setData({
           companyGoodsList:res.data.data[`${company_id}`]
         })
