@@ -48,6 +48,12 @@ Page({
 
   parseData,
 
+  events: {
+    onBack() {
+      console.log('onBack');
+    },
+  },
+
   async onLoad(e) {
     const { id } = e
     await this.getDetail(id)
