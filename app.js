@@ -1,4 +1,4 @@
-import {loginByAliUid} from './pages/common/js/login'
+import {loginByAliUid,getuserInfo} from './pages/common/js/login'
 import {baseUrl} from './pages/common/js/baseUrl'
 App({
    onLaunch(options) {
@@ -17,11 +17,33 @@ App({
        })
       },
     });
+    this.getUserInfo()
   },
   onShow(options) {//多次执行
     // 从后台被 scheme 重新打开
     // console.log(options.query);
     // options.query == {number:1}
+  },
+  getUserInfo(){
+    var that = this
+    var _sid = my.getStorageSync({
+      key: '_sid', // 缓存数据的key
+    }).data;
+    getuserInfo(_sid||'').then(res=> {
+      console.log(res,'我的页面')
+      if(res.code==30106){
+        my.setStorageSync({
+          key: 'loginId', // 缓存数据的key
+          data: res.code, // 要缓存的数据
+        });
+      }
+      if(res.code==0){
+        my.setStorageSync({
+          key: 'loginId', // 缓存数据的key
+          data: res.code, // 要缓存的数据
+        });
+      }
+    })
   },
   onHide(){
     // 当小程序从前台进入后台时触发

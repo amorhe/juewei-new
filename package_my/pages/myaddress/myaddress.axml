@@ -47,7 +47,7 @@
   </view>   
 </view>
 
-<view class="bottomView" onTap="toUrl" data-url='/package_my/pages/myaddress/selectaddress/selectaddress'>
+<view class="bottomView" onTap="addressFn">
   <image class='addIcon' src="{{imageUrl}}add.png"/>
   <text>新增收获地址</text>
 </view>

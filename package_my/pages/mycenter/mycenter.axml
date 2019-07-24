@@ -3,11 +3,11 @@
     <view class="listItem">
       <view class="Itemlabel">头像</view>
       <view class="ItimInfo"></view>
-      <image mode="scaleToFill" class='userImg' src="{{ head_img }}"/>
+      <image mode="scaleToFill" class='userImg' src="{{ userinfo.head_img }}"/>
     </view>
     <view class="listItem">
       <view class="Itemlabel">昵称</view>
-      <view class="ItimInfo">{{nick_name||'绝味会员'}}</view>
+      <view class="ItimInfo">{{userinfo.nick_name||'绝味会员'}}</view>
     </view>
     <view class="listItem" onTap="onTopBtnTap">
       <view class="Itemlabel">性别</view>
