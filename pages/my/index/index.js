@@ -1,4 +1,8 @@
 import {imageUrl} from '../../common/js/baseUrl'
+import{getuserInfo} from '../../common/js/login'
+
+let log = console.log
+
 var app = getApp() 
 Page({
   data: {
@@ -6,6 +10,7 @@ Page({
     avatarImg:'',
     _sid:'',
     userInfo:'',
+    isLogin:false,
     gridelist: [
       {
         icon: 'https://gw.alipayobjects.com/zos/rmsportal/VBqNBOiGYkCjqocXjdUj.png',
@@ -35,27 +40,63 @@ Page({
     ]
   },
   onLoad() {
+    // var loginId = my.getStorageSync({
+    //   key: 'loginId', // 缓存数据的key
+    // }).data;
+    // this.setData({
+    //   loginId:loginId
+    // })
+    // console.log(loginId)
+  },
+  onShow(){
     this.getUserInfo()
   },
-  getUserInfo(){
-    var that = this
-    my.getAuthCode({
-      scopes: ['auth_user'],
-      success: (res) => {
-        my.getAuthUserInfo({
-          success: (userInfo) => {
-            var _sid = my.getStorageSync({
-              key: '_sid', // 缓存数据的key
-            }).data;
-            that.setData({
-              _sid:_sid,
-              userInfo:userInfo
-            })
-            console.log(that.data,'data')
+  getSid(){
+      return new Promise((resolve,reject)=>{
+        my.getStorage({
+          key: '_sid', // 缓存数据的key
+          success: (res) => {
+            resolve(res)
+            log(res)
+          },
+          fail: err=>{
+            log(err)
+            reject(err)
           }
         });
-      },
-    });
+      })
+  },
+
+ async getUserInfo(){
+
+    // let _sid = my.getStorageSync({
+    //   key: '_sid', // 缓存数据的key
+    // }).data;
+
+    let _sid = await this.getSid()
+  
+   let res = await getuserInfo(_sid.data||'')
+      console.log(res,'我的页面')
+      if(res.code==30106){
+        this.setData({
+          loginId:res.code,
+          userInfo:'',
+        })
+      }
+      if(res.code==0){
+        this.setData({
+          loginId:res.code,
+          userInfo:res.data
+        })
+      }
+    
+  },
+  isloginFn(){
+    if(this.data.loginId==30106){
+      my.navigateTo({
+        url:'/pages/login/auth/auth'
+      });
+    }
   },
   toUrl(e){
     var url = e.currentTarget.dataset.url

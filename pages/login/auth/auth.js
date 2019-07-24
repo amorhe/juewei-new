@@ -126,6 +126,10 @@ Page({
           key: 'ali_uid', // 缓存数据的key
         }).data;
         let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
+        my.setStorageSync({
+          key: 'aliUserifo', // 缓存数据的key
+          data: userInfo, // 要缓存的数据
+        });
         this.loginByAuth(userInfo.nickName, userInfo.avatar);
       },
       fail() {

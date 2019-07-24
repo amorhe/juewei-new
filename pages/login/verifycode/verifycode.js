@@ -38,6 +38,7 @@ Page({
     });
   },
   onBlur() {
+    console.log('失去焦点')
     this.setData({
       focus: false,
     });
@@ -50,8 +51,20 @@ Page({
       console.log(res)
       if(res.code==0){
         // 成功
+        my.setStorageSync({
+          key: '_sid', // 缓存数据的key
+          data: res._sid, // 要缓存的数据
+        });
+        my.switchTab({
+          url:'/pages/home/goodslist/goodslist'
+        });
       }else{
         // 其他
+        my.showToast({
+          type:'none',
+          duration:2000,
+          content:code.msg
+        });
       }
 
     })
@@ -158,5 +171,8 @@ Page({
         });
       }
     }
+  },
+  onHide(){
+    clearInterval(timeCount)
   },
 });

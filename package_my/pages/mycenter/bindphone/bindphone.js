@@ -30,7 +30,7 @@ Page({
         isnew:true,
         countTime:60,
     })
-    //this.sendCodeFN()
+    this.sendCodeFN()
     var time = 60
     timeCount = setInterval(function(){
       time--
@@ -101,8 +101,17 @@ Page({
           my.navigateBack({
             delta: 4
           })
+        }else{
+          my.showToast({
+            type: 'none',
+            content: res.msg,
+            duration: 2000
+          });
         }
       })
     }
+  },
+  onHide(){
+    clearInterval(timeCount)
   },
 });

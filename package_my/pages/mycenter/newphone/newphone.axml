@@ -5,5 +5,5 @@
   </view> 
   <view>
   </view>
-  <view class="bindButton">获取短信验证码</view>
+  <view class="bindButton" onTap="getCode">获取短信验证码</view>
 </view>
