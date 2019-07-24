@@ -5,7 +5,8 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
-    _sid: '4966-inviq2t1sdl3s95idh7a0s1dn',
+
+    _sid:'1',
 
     toast: false,
 
