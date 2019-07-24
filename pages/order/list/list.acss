@@ -116,6 +116,11 @@ page {
   padding: 32rpx 24rpx;
 }
 
+.out-footer view:last-child{
+  border-color: #E60012;
+  color: #E60012
+}
+
 .topay {
   padding: 0 18rpx;
   height: 64rpx;

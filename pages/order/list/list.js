@@ -27,7 +27,7 @@ Page({
       '订单已取消'
     ],
 
-    pickUpState:[
+    pickUpState: [
       '待支付',
       '订单已提交',
       '商家已接单',
@@ -76,11 +76,20 @@ Page({
    * @function 跳转订单详情页面
    */
   toDetail(e) {
-    const {order_no} = e.currentTarget.dataset;
+    const { order_no } = e.currentTarget.dataset;
     my.navigateTo({
       url: '/package_order/pages/orderdetail/orderdetail?order_no=' + order_no
     });
-  }
+  },
+  /**
+   * @function 去评价页面
+   */
+  toComment(e) {
+    const { order_no } = e.currentTarget.dataset;
+    my.navigateTo({
+      url: '/package_order/pages/comment/comment?order_no=' + order_no
+    });
+  },
 
 });
 
