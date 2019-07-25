@@ -1,4 +1,4 @@
-import {loginByAliUid,getuserInfo} from './pages/common/js/login'
+import {loginByAliUid} from './pages/common/js/login'
 import {baseUrl} from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
@@ -7,7 +7,7 @@ App({
     // options.query == {number:1}
     // 获取授权
     my.getAuthCode({
-      scopes: ['auth_user'],
+      scopes: ['auth_base'],
       success: (res) => {
        loginByAliUid(res.authCode).then((data) => {
         my.setStorageSync({
