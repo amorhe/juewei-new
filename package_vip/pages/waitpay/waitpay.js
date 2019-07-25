@@ -86,7 +86,7 @@ Page({
         if (limit_pay_minute === -1) {
           return clearInterval(a)
         }
-        if (limit_pay_second === 0) {
+        if (limit_pay_second <= 0) {
           --limit_pay_minute
           limit_pay_second = 59
         }

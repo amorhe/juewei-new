@@ -48,12 +48,6 @@ Page({
 
   parseData,
 
-  events: {
-    onBack() {
-      console.log('onBack');
-    },
-  },
-
   async onLoad(e) {
     const { id } = e
     await this.getDetail(id)
@@ -140,7 +134,8 @@ Page({
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         success: async result => {
-          if (result.confirm && result.ok) {
+          log(result)
+          if (result.confirm) {
             // 虚拟商品，点击兑换按钮，调用创建订单接口，
             // 有钱的订单或者有运费的订单才调起支付
             // 调用确认订单接口，然后调起支付
@@ -209,6 +204,9 @@ Page({
 
           }
         },
+        fail:err=>{
+          log('err',err)
+        }
       });
     }
 
