@@ -3,7 +3,7 @@ import parse from 'mini-html-parser2';
 
 // let baseUrl = 'https://test-wap.juewei.com/api'
 
-export const _sid = 'upje8h4gmk8u5e3pvebkujab54'
+export const _sid = 'u9avtura35u8pvlc7d6ts5fqk9'
 
 
 /**
@@ -117,4 +117,5 @@ export const getDistance = async (_lng,_lat) => {
     });
   })
 }
+
 

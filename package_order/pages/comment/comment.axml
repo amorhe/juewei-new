@@ -1,5 +1,6 @@
-<view>
+<view class="after">
   <!-- 外卖和自提评价 -->
+  <view style="height:1rpx"></view>
   <view class="shop">
     <view class="title">
       门店评价服务
@@ -11,7 +12,7 @@
       <view class="tab {{ currentShopSelect.includes(item.takeout_goods_comment_tag_id) ? 'active' : '' }}" data-item="{{item.takeout_goods_comment_tag_id}}" onTap="selectShopTag" a:for="{{shopTabs}}">{{item.takeout_goods_comment_tag_name}}</view>
     </view>
     <view class="commen">
-      <textarea maxlength=1000 placeholder="说说对门店的印象" show-count="{{false}}" placeholder-class="textarea"></textarea>
+      <textarea maxlength=1000 placeholder="说说对门店的印象" onInput="getDisContent" data-name="dis_content" show-count="{{false}}" placeholder-class="textarea"></textarea>
     </view>
   </view>
   <view class="goods">
@@ -31,7 +32,7 @@
           <view class="tab {{ item.goods_comment.tags.includes(tag.takeout_goods_comment_tag_id) ? 'active' : '' }}" data-item="{{tag.takeout_goods_comment_tag_id}}" data-i="{{i}}" onTap="selectGoodTag" a:for-item="tag" a:for="{{item.goods_comment._tags}}">{{tag.takeout_goods_comment_tag_name}}</view>
         </view>
         <view class="commen">
-          <textarea maxlength=1000 placeholder="说说哪里满意，帮助大家选择" show-count="{{false}}" placeholder-class="textarea"></textarea>
+          <textarea data-i="{{i}}"  maxlength=1000 placeholder="说说哪里满意，帮助大家选择" onInput="getGoodContent" show-count="{{false}}" placeholder-class="textarea"></textarea>
         </view>
         <view class="pics">
           <image mode="scaleToFill" src="{{ imageUrl2 + item }}" a:for="{{item.goods_comment.pics}}"/>
@@ -42,3 +43,9 @@
     </view>
   </view>
 </view>
+
+<view class="bot">
+  <view class="but" catchTap="doCommemt">提交评论</view>
+</view>
+
+<view style="height:150rpx"></view>

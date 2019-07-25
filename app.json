@@ -26,7 +26,8 @@
     "pages/order/list/list",
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
-    "pages/login/auth/auth"
+    "pages/login/auth/auth",
+    "package_order/pages/comment/comment-success/comment-success"
   ],
   "subPackages": [
     {
