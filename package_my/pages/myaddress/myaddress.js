@@ -19,4 +19,9 @@ Page({
       }
     });
   },
+  getaddressList(){
+    addressList(_sid).then(res=>{
+      console.log(res)
+    })
+  },
 });

@@ -40,13 +40,7 @@ Page({
     ]
   },
   onLoad() {
-    // var loginId = my.getStorageSync({
-    //   key: 'loginId', // 缓存数据的key
-    // }).data;
-    // this.setData({
-    //   loginId:loginId
-    // })
-    // console.log(loginId)
+
   },
   onShow(){
     this.getUserInfo()

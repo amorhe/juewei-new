@@ -86,8 +86,6 @@ Page({
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
-
-
   },
   closeOpen() {
     this.setData({
