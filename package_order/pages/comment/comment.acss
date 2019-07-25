@@ -68,28 +68,41 @@ textarea {
   color: rgba(204, 204, 204, 1);
 }
 
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center
 }
 
-.header .stars{
+.header .stars {
   width: 170rpx;
   margin: 0
 }
 
-.header .star{
+.header .star {
   width: 32rpx;
   height: 32rpx;
 }
 
-.pics{
+.pics {
   display: flex;
   margin: 10rpx 0 0 0;
 }
 
-.pics image{
+.pics image {
   width: 100rpx;
   height: 100rpx;
+  margin-right: 16rpx;
+}
+
+.remark {
+  color: #999;
+  font-size: 22rpx;
+}
+
+.null {
+  width: 98rpx;
+  height: 98rpx;
+  border: 1rpx solid #eee;
+  
 }

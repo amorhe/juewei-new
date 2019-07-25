@@ -3,7 +3,7 @@ import parse from 'mini-html-parser2';
 
 // let baseUrl = 'https://test-wap.juewei.com/api'
 
-export const _sid = 'qub1cv6tjettm0iqoiah3kr7ag'
+export const _sid = 'upje8h4gmk8u5e3pvebkujab54'
 
 
 /**
