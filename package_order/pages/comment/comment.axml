@@ -21,20 +21,22 @@
     <view class="">
       <view class="good" a:for="{{d.goods_list}}" a:for-index="i">
         <view class="header">
-          <view class="good-name"> {{item.goods_name}} </view>
+          <view class="good-name"> {{item.goods_name}}
+            <text class="remark">（{{item.remark}}）</text></view>
           <view class="stars">
             <image mode="scaleToFill" class="star" src="{{imageUrl}}stars_big{{item?2:1}}.png" data-index="{{index}}" data-i="{{i}}" onTap="changeGoodsComment" a:for="{{item.goods_comment.goodStar}}"/>
           </view>
         </view>
         <view class="tabs">
-          <view class="tab {{ item.goods_comment.tags.includes(tag.takeout_goods_comment_tag_id) ? 'active' : '' }}" data-item="{{tag.takeout_goods_comment_tag_id}}"  data-i="{{i}}" onTap="selectGoodTag" a:for-item="tag" a:for="{{item.goods_comment._tags}}">{{tag.takeout_goods_comment_tag_name}}</view>
+          <view class="tab {{ item.goods_comment.tags.includes(tag.takeout_goods_comment_tag_id) ? 'active' : '' }}" data-item="{{tag.takeout_goods_comment_tag_id}}" data-i="{{i}}" onTap="selectGoodTag" a:for-item="tag" a:for="{{item.goods_comment._tags}}">{{tag.takeout_goods_comment_tag_name}}</view>
         </view>
         <view class="commen">
-          <textarea maxlength=1000 placeholder="说说对门店的印象" show-count="{{false}}" placeholder-class="textarea"></textarea>
+          <textarea maxlength=1000 placeholder="说说哪里满意，帮助大家选择" show-count="{{false}}" placeholder-class="textarea"></textarea>
         </view>
         <view class="pics">
-          <image mode="scaleToFill" src="" a:for="{{pics}}"/>
-          <image mode="scaleToFill" src="{{imageUrl}}camera.png" onTap="upLoad"/>
+          <image mode="scaleToFill" src="{{ imageUrl2 + item }}" a:for="{{item.goods_comment.pics}}"/>
+          <image mode="scaleToFill" data-i="{{i}}" src="{{imageUrl}}camera.png" onTap="upLoad" a:if="{{item.goods_comment.pics.length<3}}"/>
+          <image mode="scaleToFill" class="null" src="" a:for="{{2 - item.goods_comment.pics.length}}"/>
         </view>
       </view>
     </view>

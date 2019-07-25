@@ -1,11 +1,11 @@
-import { imageUrl, baseUrl } from '../../../pages/common/js/baseUrl'
+import { imageUrl, baseUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
 import { ajax, log } from '../../../pages/common/js/li-ajax'
 
 Page({
   data: {
     imageUrl,
+    imageUrl2,
     shopStars: [true, false, false, false, false],
-    pics: [],
 
     com: {},
 
@@ -68,7 +68,8 @@ Page({
         tags: [],
         _tags: com.goods.low,
         content: "鸭舌很好吃xxx1111",
-        img: ""
+        img: "",
+        pics: []
       },
     }))
     res.data.goods_list = goods_list
@@ -173,14 +174,12 @@ Page({
     * @function 修改商品标签
     */
   selectGoodTag(e) {
-    log(e)
 
     let { d } = this.data
     let { goods_list } = d
     const { item, i } = e.currentTarget.dataset
     let { tags } = goods_list[i].goods_comment
 
-    log(tags)
 
     if (tags.includes(item)) {
       tags.splice(tags.findIndex(key => key === item), 1)
@@ -201,31 +200,42 @@ Page({
   /**
    * @function 上传图片
    */
-  upLoad() {
+  upLoad(e) {
+    const { i } = e.currentTarget.dataset
     my.chooseImage({
       sourceType: ['camera', 'album'],
       count: 1,
       success: (res) => {
-        log(res.apFilePaths[0])
-
         my.uploadFile({
           url: baseUrl + '/juewei-api/comment/UploadCommentImg',
 
           fileType: 'image',
           fileName: 'imgFile',
           filePath: res.apFilePaths[0],
+          dataType: 'json',
+
           success: (result) => {
-            log(result)
-            my.alert({
-              content: '上传成功'
-            });
+            let { d } = this.data
+            let { goods_list } = d
+            let { pics } = goods_list[i].goods_comment
+            log(result.data)
+            let p = /\"path\"\:\"(\S*)\"\}\,/
+            log(result.data.match(p))
+            pics = [...pics, result.data.match(p)[1]]
+
+            log(pics, d)
+            d.goods_list[i].goods_comment.pics = pics
+
+            this.setData({
+              d
+            })
           },
-          fail: (error) => {
-            log(error)
-            my.showToast({
-              content: 'fail',
-            });
-          }
+          // fail: (error) => {
+          //   log(error)
+          //   my.showToast({
+          //     content: 'fail',
+          //   });
+          // }
         });
       },
       fail: (err) => {
@@ -235,6 +245,5 @@ Page({
         });
       }
     })
-
   }
 });
