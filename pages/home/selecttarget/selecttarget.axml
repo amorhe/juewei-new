@@ -6,7 +6,7 @@
 <view class="searchView">
   <view>
     <view class="positionAddress" onTap="choosecityTap">
-      <text>北京市</text>
+      <text>{{city}}</text>
       <image src="{{imageUrl}}arrow_down1.png" />
     </view>
     <view class="searchBox">
@@ -21,9 +21,9 @@
   <view class="positionTxt">
     <view>
       <image src="{{imageUrl}}position.png"/>
-      <text>紫檀大厦</text>
+      <text>{{addressIng}}</text>
     </view>
-    <view class="numberColor fontTwentySix">重新定位</view>
+    <view class="numberColor fontTwentySix" onTap="rePosition">重新定位</view>
   </view>
 </view>
 
@@ -31,15 +31,15 @@
 <view class="delivery">
   <view class="fontGray">收货地址</view>
   <view class="addressList">
-    <view>
+    <view a:for="{{canUseAddress}}">
       <view class="addressTxt">
-        <view class="fontBold">紫檀大厦 606</view>
-        <view class="addressTabbar bar1">学校</view>
+        <view class="fontBold">{{item.user_address_address}}</view>
+        <view a:if="{{item.tag!=0}}" class="{{item.tag==1?'addressTabbar bar1':item.tag==2?'addressTabbar bar2':'addressTabbar bar3'}}">{{item.tag==1?'家':item.tag==2?'公司':'学校'}}</view>
       </view>
-      <view class="fontGray">小春（先生） 188 8888 8888</view>
+      <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>
     </view>
 
-    <view>
+    <!-- <view>
       <view class="addressTxt">
         <view class="fontBold">紫檀大厦 606</view>
         <view class="addressTabbar bar2">公司</view>
@@ -53,12 +53,12 @@
         <view class="addressTabbar bar3">家</view>
       </view>
       <view class="fontGray">小春（先生） 188 8888 8888</view>
-    </view>
+    </view> -->
   </view>
-  <view class="addAddressTxt">
+  <navigator url="/package_my/pages/myaddress/addaddress/addaddress" class="addAddressTxt">
     <text>新增地址</text>
     <image class="normalImage" src="{{imageUrl}}arrow_right1.png"/>
-  </view>
+  </navigator>
 </view>
 
 <!-- 附近地址 -->

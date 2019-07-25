@@ -3,7 +3,7 @@ import {confirmOrder} from '../../common/js/home'
 Component({
   mixins: [],
   data: {
-    showShopcar:true ,  //购物车
+    showShopcar:false ,  //购物车
     mask:false, //遮罩
     imageUrl,
     modalShow: false, //弹框

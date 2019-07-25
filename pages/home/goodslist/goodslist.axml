@@ -1,7 +1,7 @@
 <view class="{{showShopcar?'contanier':''}}">
 <!-- 定位 -->
 <view class="goodsPosition">
-  <navigator url="/pages/home/selecttarget/selecttarget" class="positionLeft" >
+  <navigator url="/pages/home/selecttarget/selecttarget?" class="positionLeft" >
     <image src="{{imageUrl}}position.png"/>
     <text>{{firstAddress}}</text>
     <image src="{{imageUrl}}arrow_right1.png"/>
@@ -13,8 +13,8 @@
 </view>
 
 <view class="null"></view>
-
-<!-- <button open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
+<!-- 
+<button open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
 scope='userInfo'>授权登录</button> -->
 
 <view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
@@ -116,6 +116,6 @@ scope='userInfo'>授权登录</button> -->
 </navigator>
 
 <!-- 购物车 -->
-<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" type="{{type}}" companyGoodsList="{{companyGoodsList}}"/>
+<shopcart scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsAll}}" type="{{type}}" companyGoodsList="{{companyGoodsList}}"/>
 
 </view>

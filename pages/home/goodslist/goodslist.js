@@ -42,7 +42,7 @@ Page({
       "五香系列": "wu_series",
       "解辣神器": "qqt_series"
     },
-    activityAllObj:{},   // 营销活动
+    shopGoodsAll:[],  
   },
   onLoad(query) {
     // 页面加载
@@ -60,8 +60,6 @@ Page({
     }
   },
   onShow() {
-    // 页面显示 每次显示都执行
-    // my.alert({ title: 'onShow=='+app.globalData.authCode });
     // 初始化默认外卖
     if (this.data.type == 1) {
       this.getLbsShop();
@@ -122,10 +120,10 @@ Page({
   loginByAuth(nick_name, head_img) {
     const ali_uid = my.getStorageSync({ key: 'ali_uid' });
     loginByAuth(ali_uid.data, '15757902894', nick_name, head_img).then((res) => {
-      // my.setStorageSync({
-      //   key: '_sid', // session_id
-      //   data: res.data._sid,
-      // });
+      my.setStorageSync({
+        key: '_sid', // session_id
+        data: res.data._sid,
+      });
       this.getUserInfo(res.data._sid);
     })
   },
@@ -364,8 +362,6 @@ Page({
               last:[...last]
             }
           })
-        
-          console.log(sortList)
           this.setData({
             shopGoodsList: JSON.parse(JSON.stringify(sortList)),
             companyGoodsList
@@ -396,12 +392,24 @@ Page({
           return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
         })
       }
-      let activityAllObj ={}
-      activityAllObj.DIS = DIS;
-      activityAllObj.PKG = PKG;
-      console.log(activityAllObj)
+    
+      // let activityAllObj ={}
+      // activityAllObj.DIS = DIS;
+      // activityAllObj.PKG = PKG;
+      // console.log(activityAllObj)
+      let obj1 = {}, obj2 = {};
+      obj1 = {
+        "key": "折扣",
+        "last": DIS
+      }
+      obj2 = {
+        "key": "套餐",
+        "last": PKG
+      }
+      this.data.shopGoodsList.unshift(obj1,obj2);
+      console.log(this.data.shopGoodsList)
       this.setData({
-        activityAllObj
+        shopGoodsAll:this.data.shopGoodsList
       })
     })
   },

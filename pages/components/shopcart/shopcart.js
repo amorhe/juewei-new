@@ -21,7 +21,7 @@ Component({
     companyGoodsList:[],   //公司所有商品
     activityAllObj:[],
     shopcartArr:[],     //购物车
-    showAnmimation:true,
+    showAnmimation:false,
     windowHeight:'',
     animation:null,
     goodsBuy:[],
@@ -77,11 +77,6 @@ Component({
       this.setData({
         shopGoodsList:this.props.shopGoodsList,
         companyGoodsList:this.props.companyGoodsList
-      })
-    }
-    if(this.props.activityAllObj){
-      this.setData({
-        activityAllObj:this.props.activityAllObj
       })
     }
   },
@@ -143,7 +138,7 @@ Component({
         return item.last.filter(_item=> _item.count > 0)
       })
       let goodsResult = buyArr.filter(item => item.length>0);
-       console.log(goodsResult[0])
+      console.log(goodsResult[0])
       // this.setData({
       //   shopGoodsList,
       //   goodsResult:goodsResult[0]
@@ -162,14 +157,6 @@ Component({
       //   //   shopGoodsList: this.data.shopGoodsList
       //   // });
       // })
-      // let obj = {
-      //     "goods_code":e.currentTarget.dataset.goods_code,
-      //     "goods_format":e.currentTarget.dataset.goods_format,
-      //     "goods_quantity": e.currentTarget.dataset.goods_quantity,
-      //     "goods_price": e.currentTarget.dataset.price,
-      //     "goods_name": e.currentTarget.dataset.goods_name,
-      //     "taste_name": e.currentTarget.dataset.taste_name
-      //   }
       
     },
     reduceshopcart(e){

@@ -60,6 +60,7 @@ Page({
     this.setData({
       goodsInfo:arr[0]
     })
+    console.log(arr[0])
     this.getCommentList(arr[0].goods_code,1,10);
     this.getDispatchCommentList(arr[0].goods_code,1,10)
   },

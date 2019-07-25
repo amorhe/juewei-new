@@ -22,6 +22,9 @@ Page({
           key: 'lng', // 缓存数据的key
           data: mapPosition.bd_lng, // 要缓存的数据
         });
+        console.log(res)
+        app.globalData.province = res.province;
+        app.globalData.city = res.city;
         app.globalData.address1 = res.streetNumber.street;
         app.globalData.address2 = res.streetNumber.number;
         that.setData({
@@ -31,12 +34,6 @@ Page({
             url: '/pages/home/goodslist/goodslist'
           })
         })
-        /* that对象为Page可以设置数据刷新界面
-        that.setData({
-          hasLocation: true,
-          location: formatLocation(res.longitude, res.latitude)
-        })
-        */
       },
       fail() {
         my.hideLoading();

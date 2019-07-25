@@ -63,9 +63,11 @@
   color: #E60012
 }
 .commontList {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   padding-left: 32rpx;
+  overflow-y: scroll;
+  height: 40vh
 }
 .commontList>view {
   padding: 24rpx 0 24rpx 0;
@@ -93,7 +95,7 @@
 }
 
 .commontText {
-  margin: 16rpx 0 19rpx;
+  padding: 16rpx 0 19rpx;
 }
 .commontImages {
   width: 176rpx;
@@ -107,10 +109,12 @@
 .commontTag {
   margin-bottom: 8rpx;
   display: flex;
-  align-items: center
+  align-items: center;
+  flex-wrap: wrap
 }
 .commontTag> * {
   margin-right: 16rpx;
+  margin-bottom: 8rpx
 }
 .commontTag>view {
   height:32rpx;
@@ -120,4 +124,7 @@
   color: #FD9E92;
   font-size: 22rpx;
   line-height: 32rpx;
+}
+.am-tabs,.am-tabs-tab-bar-wrap,.am-tabs-content-wrap{
+  height: 60vh!important
 }
