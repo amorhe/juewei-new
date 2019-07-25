@@ -147,6 +147,26 @@
       </view>
       <view class="item">
         <view class="label">
+          配送方式
+        </view>
+        <view class="value">
+          <view>{{postWay[d.dis_tag]}}</view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="label">
+          配送骑手
+        </view>
+        <view class="value">
+          <view class="dis">
+            <image style="width:32rpx;height:32rpx" mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.dis_tel}}" onTap="makePhoneCall"/>
+            <text>联系骑手</text>
+            <text>{{d.dis_name}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="label">
           收货地址
         </view>
         <view class="value">
