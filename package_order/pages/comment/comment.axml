@@ -27,7 +27,7 @@
           </view>
         </view>
         <view class="tabs">
-          <view class="tab {{ item.goods_comment.tags.includes(tag.key) ? 'active' : '' }}" data-item="{{tag.key}}"  data-i="{{i}}" onTap="selectGoodTag" a:for-item="tag" a:for="{{shopTabs}}">{{tag.key}}</view>
+          <view class="tab {{ item.goods_comment.tags.includes(tag.takeout_goods_comment_tag_id) ? 'active' : '' }}" data-item="{{tag.takeout_goods_comment_tag_id}}"  data-i="{{i}}" onTap="selectGoodTag" a:for-item="tag" a:for="{{item.goods_comment._tags}}">{{tag.takeout_goods_comment_tag_name}}</view>
         </view>
         <view class="commen">
           <textarea maxlength=1000 placeholder="说说对门店的印象" show-count="{{false}}" placeholder-class="textarea"></textarea>

@@ -46,7 +46,7 @@ Page({
     if (res.code === 0) {
       this.setData({
         com: res.data,
-        shopTabs:res.data.dis.low
+        shopTabs: res.data.dis.low
       })
     }
   },
@@ -62,10 +62,11 @@ Page({
       ...item,
       goods_comment: {
         goods_code: "A1QLT26",
-        level: 5,
-        goodStar: [true, true, true, true, false],
+        level: 1,
+        goodStar: [true, false, false, false, false],
         tag: "2",
         tags: [],
+        _tags: com.goods.low,
         content: "鸭舌很好吃xxx1111",
         img: ""
       },
@@ -92,7 +93,6 @@ Page({
     let shopTabs
     switch (stars) {
       case 1:
-        shopTabs = com.dis.low;
       case 2:
         shopTabs = com.dis.low;
         break;
@@ -100,7 +100,6 @@ Page({
         shopTabs = com.dis.mid;
         break;
       case 4:
-        shopTabs = com.dis.good;
       case 5:
         shopTabs = com.dis.good;
         break
@@ -109,7 +108,7 @@ Page({
     this.setData({
       shopStars,
       shopTabs,
-      currentShopSelect:[]
+      currentShopSelect: []
     })
   },
 
@@ -117,15 +116,35 @@ Page({
   * @function 修改菜品评分
   */
   changeGoodsComment(e) {
-    let { d } = this.data
+    let { d, com } = this.data
     let { goods_list } = d
     const { index, i } = e.currentTarget.dataset
     let { goodStar } = goods_list[i].goods_comment
-    goodStar.fill(true, 0, index + 1)
-    goodStar.fill(false, index + 1, 4 + 1)
+    let stars = index + 1
+    /* 修改星星 */
+    goodStar.fill(true, 0, stars)
+    goodStar.fill(false, stars, 5)
+
+    // 修改标签
+    switch (stars) {
+      case 1:
+      case 2:
+        goods_list[i].goods_comment._tags = com.goods.low;
+        break;
+      case 3:
+        goods_list[i].goods_comment._tags = com.goods.mid;
+        break;
+      case 4:
+      case 5:
+        goods_list[i].goods_comment._tags = com.goods.good;
+        break
+    }
+
+    goods_list[i].goods_comment.tags = []
+
     d.goods_list = goods_list
     this.setData({
-      d
+      d,
     })
   },
 
