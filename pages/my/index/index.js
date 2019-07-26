@@ -40,13 +40,7 @@ Page({
     ]
   },
   onLoad() {
-    // var loginId = my.getStorageSync({
-    //   key: 'loginId', // 缓存数据的key
-    // }).data;
-    // this.setData({
-    //   loginId:loginId
-    // })
-    // console.log(loginId)
+
   },
   onShow(){
     this.getUserInfo()
@@ -57,10 +51,8 @@ Page({
           key: '_sid', // 缓存数据的key
           success: (res) => {
             resolve(res)
-            log(res)
           },
           fail: err=>{
-            log(err)
             reject(err)
           }
         });
@@ -73,9 +65,9 @@ Page({
     //   key: '_sid', // 缓存数据的key
     // }).data;
 
-    let _sid = await this.getSid()
-  
-   let res = await getuserInfo(_sid.data||'')
+  let _sid = await this.getSid()
+  console.log(_sid,'_sid')
+  let res = await getuserInfo(_sid.data||'')
       console.log(res,'我的页面')
       if(res.code==30106){
         this.setData({
@@ -103,5 +95,10 @@ Page({
     my.navigateTo({
       url:url
     });
+  },
+  onHide(){
+  },
+  makePhoneCall() {
+    my.makePhoneCall({ number: '4009995917' });
   },
 });

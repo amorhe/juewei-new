@@ -94,6 +94,11 @@ Page({
           modalOpened:false,
           img_code:''
         })
+        my.showToast({
+          type:'none',
+          duration:2000,
+          content:'短信发送成功'
+        });
         my.navigateTo({
           url:'/pages/login/verifycode/verifycode?phone='+data.phone
         });
@@ -117,6 +122,11 @@ Page({
           key: 'ali_uid', // 缓存数据的key
           data: data.data.ali_uid, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: '_sid', // 缓存数据的key
+          data: data.data._sid, // 要缓存的数据
+        });
+        app.globalData._sid=data.data._sid
        })
       },
     });

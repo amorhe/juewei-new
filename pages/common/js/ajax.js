@@ -7,6 +7,7 @@ export const ajax = (url,data={},method="POST") => {
     headers = {'content-type': 'application/json'};
   }
   let promise = new Promise(function (resolve, reject) {
+    console.log(data,'data')
     my.request({
       url: baseUrl + url,
       headers,
