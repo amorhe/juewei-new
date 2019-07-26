@@ -6,9 +6,9 @@ Page({
     imageUrl,
     imageUrl2,
 
-    _sid:'1',
-
     toast: false,
+
+    _sid:'1',
 
     menuTop: 0,
     menuFixed: false,
@@ -24,10 +24,7 @@ Page({
 
     cur: 0,
 
-    userPoint:{
-      "points": 96, // 总积分
-      "freeze_point": 0 // 冻结积分
-    },
+    userPoint:'',
 
     bannerList: [
       {
@@ -100,12 +97,18 @@ Page({
   
   },
 
+  /**
+   * @function 修改分类
+   */
   listChange(event) {
     const { list } = this.data;
     const { cur } = event.currentTarget.dataset;
     this.setData({ cur, cate_id: list[cur].id }, () => this.getGoodsList())
   },
 
+  /**
+   * @function 获取分类
+   */
   async getCategory() {
     const {cur} = this.data;
     let res = await ajax('/mini/vip/wap/category/category', { type: 1 })
@@ -114,6 +117,9 @@ Page({
     }
   },
 
+  /**
+   * @function 获取轮播
+   */
   async getBanner() {
     const { city_id, district_id, release_channel } = this.data;
     const bannerListOption = { city_id, district_id, release_channel }
@@ -123,6 +129,9 @@ Page({
     }
   },
 
+  /**
+   * @function 获取商品列表
+   */
   async getGoodsList() {
     let {
       shop_id,
@@ -150,6 +159,9 @@ Page({
     }
   },
 
+  /**
+   * @function 获取位置列表
+   */
   async getPositionList() {
     let { city_id, district_id, company_id, release_channel } = this.data;
     let positionListOption = { city_id, district_id, company_id, release_channel }
@@ -161,6 +173,9 @@ Page({
     }
   },
 
+  /**
+   * @function 获取用户积分
+   */
   async getUserPoint(){
     let {_sid} = this.data;
     let res = await ajax('/mini/user/user_point',{_sid})
@@ -171,15 +186,23 @@ Page({
     }
   },
 
-
+  /**
+   * @function 显示冻结积分
+   */
   showToast() {
     this.setData({ toast: true })
   },
 
+  /**
+   * @function 隐藏冻结积分
+   */
   hideToast() {
     this.setData({ toast: false })
   },
 
+  /**
+   * @function 跳转详情页面
+   */
   toDetail(e) {
     const {id} = e.currentTarget.dataset
     my.navigateTo({
@@ -187,6 +210,9 @@ Page({
     });
   },
 
+  /**
+   * @function 跳转兑换列表页面
+   */
   toExchangeList() {
     my.navigateTo({
       url: '../../../package_vip/pages/exchangelist/exchangelist'

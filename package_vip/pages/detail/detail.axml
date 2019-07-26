@@ -3,7 +3,7 @@
     <swiper>
       <block a:for="{{detail.goods_pic}}">
         <swiper-item >
-          <image class="img" mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>     
+          <image class="img" mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         </swiper-item>
       </block>
     </swiper>
@@ -15,55 +15,57 @@
            {{detail.point}}
         <text>积分</text>
       </view>
-
-      <view class="bottom"  style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
-
+      <view class="bottom" style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
       <view class="bottom">
         已抢{{(((detail.total_num-detail.valid_num)*100/detail.total_num)).toFixed(0)}}%
-
       </view>
     </view>
   </view>
-
   <view class="footer">
-
-   <view class="footer-title">
+    <view class="footer-title">
      活动时间
-   </view>
-   <view class="footet-containt">
+    </view>
+    <view class="footet-containt">
      {{detail.start_time}}至{{detail.end_time}}
-   </view>
-
-
-  <view class="footer-title" a:if="{{detail.exchange_intro}}"> 
+    </view>
+    <view class="footer-title" a:if="{{detail.exchange_intro}}"> 
      兑换说明
-   </view>
-   <rich-text nodes="{{detail._exchange_intro}}" />
-   <!-- {{detail.exchange_intro}} -->
-
-
-  <view class="footer-title" a:if="{{detail.intro}}">     
+    </view>
+    <rich-text nodes="{{detail._exchange_intro}}" />
+    <!-- {{detail.exchange_intro}} -->
+    <view class="footer-title" a:if="{{detail.intro}}">     
      商品详情
-   </view>
-  <rich-text nodes="{{detail._intro}}" />
-
-   <!-- {{detail.intro}} -->
-   
-
-  <view class="footer-title">     
+    </view>
+    <rich-text nodes="{{detail._intro}}" />
+    <!-- {{detail.intro}} -->
+    <view class="footer-title">     
      兑换次数
-   </view>
-   <view class="footet-containt">
-    {{detail.exchange_limit_type==1?"每人每天":"活动期间"}}
+    </view>
+    <view class="footet-containt"> {{detail.exchange_limit_type==1?"每人每天":"活动期间"}}
     {{detail.exchange_limit_num}}
       次
-   </view> 
-   
-
-
+    </view>
   </view>
-
   <view class="btn" onTap="showConfirm">立即兑换</view>
-
   <view style="height:140rpx"></view>
 </view>
+<!-- 退出提示 -->
+<modal show="{{modalOpened}}" showClose="{{ false }}">
+  <view class="modalInfo">
+      {{content}}
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm " onTap="onModalClose">取消</view>
+    <view class="modalButton cancel " onTap="onModalClick">确定</view>
+  </view>
+</modal>
+<!-- 当前积分不足 -->
+<modal show="{{openPoint}}" showClose="{{ false }}">
+  <view class="modalInfo">
+     你的当前积分
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm " onTap="onModalClose">取消</view>
+    <view class="modalButton cancel " onTap="onModalClick">赚积分</view>
+  </view>
+</modal>
