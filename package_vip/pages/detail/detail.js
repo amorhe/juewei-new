@@ -5,7 +5,7 @@ Page({
   data: {
     modalOpened: false,
     imageUrl2,
-    openPoint:false,
+    openPoint: false,
     content: '',
     detail: {
       "id": "355",
@@ -130,8 +130,6 @@ Page({
     const { goods_detail_type, receive_type, goods_type, amount } = this.data.detail
     let fail = false
 
-    log(goods_type)
-
     // 虚拟商品，点击兑换按钮，调用创建订单接口，
     // 有钱的订单或者有运费的订单才调起支付
     // 调用确认订单接口，然后调起支付
@@ -184,13 +182,12 @@ Page({
       // 实物订单  公司邮寄
       if (receive_type == 2) {
         my.navigateTo({
-          url: './finish/finish?receive_type=2'
+          url: '../waitpay/waitpay?order_sn=' + res.order_sn
         });
       }
 
       // 实物订单  到店领取
       if (receive_type == 1) {
-
         my.navigateTo({
           url: '../waitpay/waitpay?order_sn=' + res.order_sn
         });
@@ -214,8 +211,10 @@ Page({
         content: `是否兑换“${goods_name}”将消耗你的${point}积分`,
         modalOpened: true
       })
-    }else{
-
+    } else {
+      this.setData({
+        openPoint: true
+      })
     }
 
 
@@ -226,6 +225,7 @@ Page({
    */
   onModalClose() {
     this.setData({
+      openPoint: false,
       modalOpened: false
     })
   },
@@ -233,9 +233,9 @@ Page({
   /**
    * @function 赚积分
   */
-  async getMorePoint(){
+  async getMorePoint() {
     my.navigateBack({
-      delta:1
+      delta: 1
     });
   },
 

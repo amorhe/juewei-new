@@ -60,12 +60,12 @@
   </view>
 </modal>
 <!-- 当前积分不足 -->
-<modal show="{{openPoint}}}" showClose="{{ false }}">
+<modal show="{{openPoint}}" showClose="{{ false }}">
   <view class="modalInfo">
-     你的当前积分不足
+     你的当前积分
   </view>
   <view slot="footer" class="footerButton">
     <view class="modalButton confirm " onTap="onModalClose">取消</view>
-    <view class="modalButton cancel " onTap="onModalClick">确定</view>
+    <view class="modalButton cancel " onTap="onModalClick">赚积分</view>
   </view>
 </modal>

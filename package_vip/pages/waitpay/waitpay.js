@@ -255,7 +255,7 @@ Page({
   },
 
   /**
-   * @function 上支付 
+   * @function 马上支付 
    */
   async payNow() {
     let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
@@ -272,25 +272,36 @@ Page({
 
     let confirm = await this.confirmOrder()
     if (!confirm) {
-      return my.showToast({
-        content: confirm.msg
-      });
+      return
     }
 
     if (d.order_total_amount != 0) {
-      let { code, data, msg } = await this.pay()
-      if (code !== 0) {
+      let { code, data: { tradeNO }, msg } = await this.pay()
+
+      if (code === 0) {
+        my.tradePay({
+          tradeNO, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+          success: res => {
+            return my.redirectTo({
+              url: '../finish/finish?id=' + d.id + '&fail=' + false
+            });
+          },
+          fail: res => {
+            return my.redirectTo({
+              url: '../finish/finish?id=' + d.id + '&fail=' + true
+            });
+          }
+        });
+
+      } else {
         return my.redirectTo({
           url: '../finish/finish?id=' + d.id + '&fail=' + true
         });
       }
-
-      return my.redirectTo({
-          url: '../finish/finish?id=' + d.id + '&fail=' + false
-        });
-      
     }
-
+    return my.redirectTo({
+      url: '../finish/finish?id=' + d.id + '&fail=' + false
+    });
 
 
 
