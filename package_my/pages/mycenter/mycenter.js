@@ -207,6 +207,7 @@ Page({
         my.removeStorageSync({
           key: '_sid',
         });
+        app.globalData._sid = ""
         my.switchTab({
           url:'/pages/home/goodslist/goodslist'
         })

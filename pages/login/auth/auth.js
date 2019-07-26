@@ -122,6 +122,11 @@ Page({
           key: 'ali_uid', // 缓存数据的key
           data: data.data.ali_uid, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: '_sid', // 缓存数据的key
+          data: data.data._sid, // 要缓存的数据
+        });
+        app.globalData._sid=data.data._sid
        })
       },
     });
