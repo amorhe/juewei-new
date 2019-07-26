@@ -19,4 +19,4 @@ export const checkPhoneCode = (_sid,phone,code) => ajax(myObject.checkPhoneCode,
 
 export const resetPhone = (_sid,new_phone,new_code) => ajax(myObject.resetPhone ,{_sid,new_phone,new_code});
 
-export const addressList = (_sid) => ajax(myObject.addressList ,{_sid});
+export const addressList = (data) => ajax(myObject.addressList ,data);

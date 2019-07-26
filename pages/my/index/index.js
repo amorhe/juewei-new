@@ -51,10 +51,8 @@ Page({
           key: '_sid', // 缓存数据的key
           success: (res) => {
             resolve(res)
-            log(res)
           },
           fail: err=>{
-            log(err)
             reject(err)
           }
         });
@@ -97,5 +95,7 @@ Page({
     my.navigateTo({
       url:url
     });
+  },
+  onHide(){
   },
 });

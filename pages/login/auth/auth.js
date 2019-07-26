@@ -94,6 +94,11 @@ Page({
           modalOpened:false,
           img_code:''
         })
+        my.showToast({
+          type:'none',
+          duration:2000,
+          content:'短信发送成功'
+        });
         my.navigateTo({
           url:'/pages/login/verifycode/verifycode?phone='+data.phone
         });

@@ -14,6 +14,7 @@ App({
           key: 'ali_uid', // 缓存数据的key
           data: data.data.ali_uid, // 要缓存的数据
         });
+       this.globalData._sid=data.data._sid
        })
       },
     });
@@ -37,6 +38,7 @@ App({
     },
     address1:null,
     address2:null,
+    _sid:null,
     userInfo: null, //拉去支付宝用户信息
     authCode:null, //静默授权
     phone:null //获取手机号权限
