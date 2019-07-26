@@ -261,3 +261,58 @@ color:rgba(51,51,51,1);
 text-align: center;
 padding: 8rpx 0 40rpx;
 }
+
+.out-footer {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  background: white;
+}
+
+.out-footer view:last-child{
+  border-color: #E60012;
+  color: #E60012
+}
+
+.topay {
+  padding: 0 18rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+  border: 1px solid rgba(230, 0, 18, 1);
+  font-size: 26rpx;
+  font-weight: 400;
+  color: rgba(230, 0, 18, 1);
+  line-height: 64rpx;
+  text-align: center
+}
+
+.cancel-order {
+  width: 140rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+  border: 1px solid rgba(153, 153, 153, 1);
+  font-size: 26rpx;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 64rpx;
+  text-align: center;
+  margin-left: 20rpx
+}
+
+.item .label {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+
+.dis {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(230, 0, 18, 1);
+}
+
+.dis text{
+  margin-left: 15rpx;
+}

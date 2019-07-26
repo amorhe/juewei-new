@@ -85,3 +85,26 @@ font-size: 36rpx;
 text-align: center;
 line-height: 96rpx;
 }
+
+.modalInfo{
+  padding: 50rpx 0;
+}
+
+.footerButton{
+  display: flex;
+}
+.modalButton{
+  flex: 1;
+  text-align: center;
+}
+.am-modal-footer{
+  background: rgba(0,0,0,0)
+}
+
+
+.confirm{
+  color: #999;
+}
+.cancel{
+  color: #E60012;
+}

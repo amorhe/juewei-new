@@ -3,7 +3,10 @@ import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
   data: {
+    modalOpened: false,
     imageUrl2,
+    openPoint: false,
+    content: '',
     detail: {
       "id": "355",
       "goods_name": "123",
@@ -84,7 +87,7 @@ Page({
       'goods[exchange_type]': exchange_type,
       'goods[point]': point,
       'goods[amount]': amount,
-      'pay_type':11
+      'pay_type': 11
     }
     let { code, data, msg } = await ajax('/mini/vip/wap/trade/create_order', params)
     if (code === 100) {
@@ -120,99 +123,130 @@ Page({
    *@function 确认兑换
    */
 
-  showConfirm() {
+  async onModalClick() {
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
-    const { goods_detail_type, receive_type, goods_type, goods_name, point, amount } = this.data.detail
+    const { goods_detail_type, receive_type, goods_type, amount } = this.data.detail
     let fail = false
 
-    if (true) {
+    // 虚拟商品，点击兑换按钮，调用创建订单接口，
+    // 有钱的订单或者有运费的订单才调起支付
+    // 调用确认订单接口，然后调起支付
+    // id = -1 兑换失败
 
-      return my.confirm({
-        content: '是否兑换“' + goods_name + '”将消耗你的' + point + '积分',
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        success: async result => {
-          if (result.confirm && result.ok) {
-            // 虚拟商品，点击兑换按钮，调用创建订单接口，
-            // 有钱的订单或者有运费的订单才调起支付
-            // 调用确认订单接口，然后调起支付
-            // id = -1 兑换失败
+    // 虚拟物品
+    if (goods_type == 1) {
+      let { order_id = '', order_sn } = await this.createOrder()
+      if (!order_id) { return }
+      let res = await this.confirmOrder(order_sn)
 
-            // 虚拟物品
-            if (goods_type == 1) {
-              let { order_id = '', order_sn } = await this.createOrder()
-              if (!order_id) { return }
-              let res = await this.confirmOrder(order_sn)
+      if (amount != 0) {
+        let res = await this.pay(order_sn)
+        if (res.code !== 0) return my.showToast({
+          content: res.msg
+        });
+      }
 
-              if (amount != 0) {
-                let res = await this.pay(order_sn)
-                if (res.code !== 0) return my.showToast({
-                  content: res.msg
-                });
-              }
+      if (!res) { fail = true }
 
-              if (!res) { fail = true }
+      // 虚拟订单 + 兑换码 => 无需发货
+      //
+      if (goods_detail_type == 2 && receive_type == 0) {
+        my.navigateTo({
+          url: '../finish/finish?id=' + order_id + '&fail=' + fail
+        });
+      }
 
-              // 虚拟订单 + 兑换码 => 无需发货
-              //
-              if (goods_detail_type == 2 && receive_type == 0) {
-                my.navigateTo({
-                  url: '../finish/finish?id=' + order_id + '&fail=' + fail
-                });
-              }
-
-              // 虚拟订单 + 优惠卷 => 无需发货
-              // 跑通
-              if (goods_detail_type == 1 && receive_type == 0) {
-                my.navigateTo({
-                  url: '../finish/finish?id=' + order_id + '&fail=' + fail
-                });
-              }
-            }
-
-            // 实物商品，
-            // 点击兑换按钮，
-            // 调用创建订单接口，
-            // 填写页面表单信息，
-            // 然后点击支付按钮，
-            // 调用确认订单接口，
-            // 然后调起支付
-
-            if (goods_type == 2) {
-              let res = await this.createOrder()
-              if (!res) { return }
-
-              // 实物订单  公司邮寄
-              if (receive_type == 2) {
-                my.navigateTo({
-                  url: './finish/finish?receive_type=2'
-                });
-              }
-
-              // 实物订单  到店领取
-              if (receive_type == 1) {
-
-                my.navigateTo({
-                  url: '../waitpay/waitpay?order_sn=' + res.order_sn
-                });
-              }
-            }
-
-
-          }
-        },
-      });
+      // 虚拟订单 + 优惠卷 => 无需发货
+      // 跑通
+      if (goods_detail_type == 1 && receive_type == 0) {
+        my.navigateTo({
+          url: '../finish/finish?id=' + order_id + '&fail=' + fail
+        });
+      }
     }
 
-    my.confirm({
-      content: '你的当前积分不足',
-      confirmButtonText: '赚积分',
-      cancelButtonText: '取消',
-      success: result => {
-        console.log(result)
-      },
+    // 实物商品，
+    // 点击兑换按钮，
+    // 调用创建订单接口，
+    // 填写页面表单信息，
+    // 然后点击支付按钮，
+    // 调用确认订单接口，
+    // 然后调起支付
+
+    if (goods_type == 2) {
+      let res = await this.createOrder()
+      if (!res) { return }
+
+      // 实物订单  公司邮寄
+      if (receive_type == 2) {
+        my.navigateTo({
+          url: '../waitpay/waitpay?order_sn=' + res.order_sn
+        });
+      }
+
+      // 实物订单  到店领取
+      if (receive_type == 1) {
+        my.navigateTo({
+          url: '../waitpay/waitpay?order_sn=' + res.order_sn
+        });
+      }
+    }
+
+  },
+
+  /**
+   * @function 显示modal
+   */
+
+  async showConfirm() {
+    let { goods_name, point } = this.data.detail
+
+    // 获取 用户 积分
+    let points = await this.getUserPoint()
+
+    if (points > point) {
+      this.setData({
+        content: `是否兑换“${goods_name}”将消耗你的${point}积分`,
+        modalOpened: true
+      })
+    } else {
+      this.setData({
+        openPoint: true
+      })
+    }
+
+
+  },
+
+  /**
+   * @function 关闭modal
+   */
+  onModalClose() {
+    this.setData({
+      openPoint: false,
+      modalOpened: false
+    })
+  },
+
+  /**
+   * @function 赚积分
+  */
+  async getMorePoint() {
+    my.navigateBack({
+      delta: 1
     });
-  }
+  },
+
+
+  /**
+  * @function 获取用户积分
+  */
+  async getUserPoint() {
+    let res = await ajax('/mini/user/user_point', {})
+    if (res.CODE === 'A100') {
+      return res.DATA.points
+    }
+  },
 });

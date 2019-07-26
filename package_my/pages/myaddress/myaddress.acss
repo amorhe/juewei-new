@@ -1,5 +1,6 @@
 .addressList{
   padding: 32rpx;
+  padding-bottom: 50rpx;
 }
 
 .listItme{
@@ -64,5 +65,12 @@
   display: block;
   width: 40rpx;
   height: 40rpx;
-  margin-right: 10rpx;
+}
+
+
+.nullImg{
+  display: block;
+  margin: 295rpx auto;
+  width: 320rpx;
+  height: 320rpx;
 }

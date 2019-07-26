@@ -1,3 +1,7 @@
 {
-  "backgroundColor": "#F5F5F5"
+  "backgroundColor": "#F5F5F5",
+   "usingComponents":{
+    "popup": "mini-antui/es/popup/index",
+    "modal": "mini-antui/es/modal/index"
+  }
 }

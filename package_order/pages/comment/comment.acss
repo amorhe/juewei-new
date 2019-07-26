@@ -1,9 +1,14 @@
+page{
+  background: #f5f5f5
+}
+
 .shop, .goods {
   width: 702rpx;
   margin: 16rpx auto;
   padding: 32rpx 24rpx;
   background: white;
   box-sizing: border-box;
+  border-top: 1rpx solid #fff;
 }
 
 .title {
@@ -68,28 +73,70 @@ textarea {
   color: rgba(204, 204, 204, 1);
 }
 
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center
 }
 
-.header .stars{
+.header .stars {
   width: 170rpx;
   margin: 0
 }
 
-.header .star{
+.header .star {
   width: 32rpx;
   height: 32rpx;
 }
 
-.pics{
+.pics {
   display: flex;
   margin: 10rpx 0 0 0;
 }
 
-.pics image{
+.pics image {
   width: 100rpx;
   height: 100rpx;
+  margin-right: 16rpx;
+}
+
+.remark {
+  color: #999;
+  font-size: 22rpx;
+}
+
+.null {
+  width: 98rpx;
+  height: 98rpx;
+  border: 1rpx solid #eee;
+  
+}
+
+.bot{
+  background: #fff;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  height: 142rpx;
+  text-align: center;
+  border-top: 1rpx solid #fff;
+}
+
+.after::after{
+  content: '';
+  height: 1421rpx;
+  width: 100vw;
+}
+
+.bot .but{
+  width:670rpx;
+height:94rpx;
+line-height: 94rpx;
+background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
+border-radius:47rpx;
+font-size:36rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(255,255,255,1);
+margin: 24rpx auto;
 }

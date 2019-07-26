@@ -3,51 +3,27 @@
 </view> -->
 
 <view class="addressList">
-  <view class="listItme">
+  <image class='nullImg' a:if="{{ list.length==0 }}" src="{{ imageUrl }}bg_address.png"/>
+  <view class="listItme" a:for="{{ list }}">
     <view class="tiemleft">
       <view class="lefttop">
-        <view class="spanClass spanColor">学校</view> 
-        <text>紫檀大厦 606</text>
+        <view a:if="{{ item.tag==1 }}" class="spanClass spajiaColor">家</view> 
+        <view a:if="{{ item.tag==2 }}" class="spanClass spangsColor">公司</view> 
+        <view a:if="{{ item.tag==3 }}" class="spanClass spanColor">学校</view> 
+        <text>{{item.user_address_address}} {{item.user_address_detail_address}}</text>
       </view>
       <view class="itemInfo">
-        小春<text>（先生）</text>188 8888 8888
+        {{ item.user_address_name }}<text>{{ item.user_address_sex==1?'（先生）':'（女生）' }}</text>{{item.user_address_phone}}
       </view>
     </view>
-    <view class="tiemright" onTap="toUrl" data-url='/package_my/pages/myaddress/addaddress/addaddress'>
+    <view class="tiemright" onTap="toUrl" data-item="{{ item }}">
       <image class='editicon' src="../../../pages/common/img/edit.png"/>
     </view>
   </view> 
-  <view class="listItme">
-    <view class="tiemleft">
-      <view class="lefttop">
-        <view class="spanClass spangsColor">公司</view> 
-        <text>紫檀大厦 606</text>
-      </view>
-      <view class="itemInfo">
-        小春<text>（先生）</text>188 8888 8888
-      </view>
-    </view>
-    <view class="tiemright">
-      <image class='editicon' src="../../../pages/common/img/edit.png"/>
-    </view>
-  </view>  
-  <view class="listItme">
-    <view class="tiemleft">
-      <view class="lefttop">
-        <view class="spanClass spajiaColor">家</view> 
-        <text>紫檀大厦 606</text>
-      </view>
-      <view class="itemInfo">
-        小春<text>（先生）</text>188 8888 8888
-      </view>
-    </view>
-    <view class="tiemright">
-      <image class='editicon' src="../../../pages/common/img/edit.png"/>
-    </view>
-  </view>   
 </view>
 
+
 <view class="bottomView" onTap="addressFn">
-  <image class='addIcon' src="{{imageUrl}}add.png"/>
-  <text>新增收获地址</text>
+    <image class='addIcon' src="{{imageUrl}}add.png"/>
+    <text>新增收获地址</text>
 </view>
