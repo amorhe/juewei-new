@@ -1,5 +1,6 @@
 .addressList{
   padding: 32rpx;
+  padding-bottom: 50rpx;
 }
 
 .listItme{

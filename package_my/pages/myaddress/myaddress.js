@@ -19,10 +19,8 @@ Page({
     });
   },
   addressFn(){
-     my.chooseLocation({
-      success:(res)=>{
-        console.log(res)
-      }
+    my.navigateTo({
+      url:"/package_my/pages/myaddress/addaddress/addaddress"
     });
   },
   getaddressList(){

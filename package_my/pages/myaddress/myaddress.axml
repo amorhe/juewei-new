@@ -22,9 +22,8 @@
   </view> 
 </view>
 
-<navigator url="/package_my/pages/myaddress/addaddress/addaddress">
-  <view class="bottomView" onTap="addressFn">
+
+<view class="bottomView" onTap="addressFn">
     <image class='addIcon' src="{{imageUrl}}add.png"/>
     <text>新增收获地址</text>
-  </view>
-</navigator>
+</view>

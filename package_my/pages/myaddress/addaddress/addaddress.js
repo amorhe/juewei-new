@@ -86,11 +86,12 @@ Page({
     var that = this
     my.chooseLocation({
       success:(res)=>{
-        console.log(res)
+        var address = res.name?res.name:res.address
+        console.log(res,'地址数据')   
+        console.log(this.data.address,'地址数据')
         my.request({
           url: 'https://api.map.baidu.com/geocoder/v2/?ak='+ak+'&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
           success: (res) => {
-            console.log(res,'地址')
             that.setData({
               province:res.data.result.addressComponent.province,
               city:res.data.result.addressComponent.city,
@@ -111,8 +112,11 @@ Page({
         that.setData({
           longitude:res.longitude,
           latitude: res.latitude,
-          address:res.name
+          address:address
         })
+      },
+      fail(err){
+        console.log(err,'错误')
       }
     });
   },
