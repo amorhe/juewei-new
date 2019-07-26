@@ -84,8 +84,6 @@ Page({
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
-
-
   },
   closeOpen() {
     this.setData({
@@ -119,7 +117,7 @@ Page({
   // 授权登录
   loginByAuth(nick_name, head_img) {
     const ali_uid = my.getStorageSync({ key: 'ali_uid' });
-    loginByAuth(ali_uid.data, '15757902894', nick_name, head_img).then((res) => {
+    loginByAuth(ali_uid.data, '18140588481', nick_name, head_img).then((res) => {
       my.setStorageSync({
         key: '_sid', // session_id
         data: res.data._sid,

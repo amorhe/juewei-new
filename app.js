@@ -1,7 +1,7 @@
-import {loginByAliUid,getuserInfo} from './pages/common/js/login'
+import {loginByAliUid} from './pages/common/js/login'
 import {baseUrl} from './pages/common/js/baseUrl'
 App({
-   onLaunch(options) {
+  onLaunch(options) {
     // 第一次打开
     var that=this;
     // options.query == {number:1}
@@ -14,36 +14,15 @@ App({
           key: 'ali_uid', // 缓存数据的key
           data: data.data.ali_uid, // 要缓存的数据
         });
+       this.globalData._sid=data.data._sid
        })
       },
     });
-    this.getUserInfo()
   },
   onShow(options) {//多次执行
     // 从后台被 scheme 重新打开
     // console.log(options.query);
     // options.query == {number:1}
-  },
-  getUserInfo(){
-    var that = this
-    var _sid = my.getStorageSync({
-      key: '_sid', // 缓存数据的key
-    }).data;
-    getuserInfo(_sid||'').then(res=> {
-      console.log(res,'我的页面')
-      if(res.code==30106){
-        my.setStorageSync({
-          key: 'loginId', // 缓存数据的key
-          data: res.code, // 要缓存的数据
-        });
-      }
-      if(res.code==0){
-        my.setStorageSync({
-          key: 'loginId', // 缓存数据的key
-          data: res.code, // 要缓存的数据
-        });
-      }
-    })
   },
   onHide(){
     // 当小程序从前台进入后台时触发
@@ -59,6 +38,7 @@ App({
     },
     address1:null,
     address2:null,
+    _sid:null,
     userInfo: null, //拉去支付宝用户信息
     authCode:null, //静默授权
     phone:null //获取手机号权限

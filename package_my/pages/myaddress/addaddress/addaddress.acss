@@ -132,7 +132,15 @@
   color: rgba(255, 255, 255, 1);
   line-height: 96rpx;
   text-align: center;
-  margin: 100rpx auto
+  margin: 100rpx auto 0;
+}
+
+.rmButton{
+  box-sizing: border-box;
+  background: #fff;
+  color: #000;
+  border:1px solid #000;
+  margin-top:40rpx;
 }
 
 .address-sm {
@@ -369,4 +377,30 @@ color:rgba(153,153,153,1);
   width: 32rpx;
   height: 32rpx;
   margin-right: 10rpx;
+}
+
+
+
+/* 弹框 */
+
+.modalInfo{
+  padding: 50rpx 0;
+}
+
+.footerButton{
+  display: flex;
+}
+.modalButton{
+  flex: 1;
+  text-align: center;
+}
+.am-modal-footer{
+  background: rgba(0,0,0,0)
+}
+
+.confirm{
+  color: #999;
+}
+.cancel{
+  color: #E60012;
 }

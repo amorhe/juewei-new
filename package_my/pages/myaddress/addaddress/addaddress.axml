@@ -3,18 +3,18 @@
     <view class="post-address">
       <view class="post-name">
         <view class="item post-name-left">联系人</view>
-        <input class="post-name-right" placeholder="姓名" data-key="name" onInput="handelChange"/>
+        <input class="post-name-right" placeholder="姓名" value="{{name}}" data-key="name" onInput="handelChange"/>
       </view>
       <view class="post-sex">
         <text class="item"></text>
-        <view onTap="changeSex" class="{{sex===0?'post-sex-active':''}}">女士</view>
-        <view onTap="changeSex" class="{{sex===1?'post-sex-active':''}}">先生</view>
+        <view onTap="changeSex" class="{{sex==0?'post-sex-active':''}}">女士</view>
+        <view onTap="changeSex" class="{{sex==1?'post-sex-active':''}}">先生</view>
       </view>
       <view class="list">
         <view class="item">电话</view>
-        <input placeholder="手机号码" data-key="phone" onInput="handelChange"/>
+        <input placeholder="手机号码" value="{{phone}}" data-key="phone" onInput="handelChange"/>
       </view>
-      <view class="select-address list" onTap="showSelectAddress">
+      <view class="select-address list" onTap="chooseLocation">
         <view class="item">地址</view>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
         <view class="real-address">{{address}}</view>
@@ -22,17 +22,39 @@
       </view>
       <view class="list">
         <view class="item">门牌号</view>
-        <input placeholder="例：6号楼606室" data-key="address" onInput="handelChange"/>
+        <input placeholder="例：6号楼606室" value="{{addressdetail}}" data-key="addressdetail" onInput="handelChange"/>
       </view>
       <view class="list">
         <view class="item">标签</view>
-        <view onTap="changeCur" data-cur='{{index}}' a:for="{{labelList}}" class="label {{index===curLabel?'label-active':''}}"> {{item}}</view>
+        <view onTap="changeCur" a:for="{{labelList}}" data-type="{{ item.type }}" class="label {{item.type==curLabel?'label-active':''}}"> {{item.name}}</view>
       </view>
-      <view class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
+      <view onTap="Addaddress" class="wait-pay-btn" style="background:{{(name==='' || phone==='' || address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
         保存地址
+      </view>
+
+      <view class="wait-pay-btn rmButton" onTap="modalShowFN" a:if="{{ addressId!='' }}">
+        删除地址
       </view>
     </view>
 </view>
+
+
+<!-- 退出提示 -->
+<modal
+    show="{{modalShow}}"
+    showClose="{{ false }}"
+  >
+    <view class="modalInfo">
+      是否删除该配送地址
+    </view>
+    <view slot="footer" class="footerButton">
+      <view class="modalButton confirm" onTap="modalhideFN">取消</view>
+      <view class="modalButton cancel" onTap="rmaddress">确定</view>
+    </view>
+</modal>
+
+
+
 
 <!-- 选择地址 -->
   <view class="pop-wrap" a:if="{{selectAddress}}">

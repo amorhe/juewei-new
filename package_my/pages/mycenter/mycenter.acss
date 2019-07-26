@@ -63,6 +63,9 @@
   margin-top: 12rpx;
 }
 
+
+/* 弹框 */
+
 .modalInfo{
   padding: 50rpx 0;
 }

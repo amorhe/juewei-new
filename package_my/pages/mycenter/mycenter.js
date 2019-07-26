@@ -36,38 +36,17 @@ Page({
     //this.UpdateInfo()
   },
   async onShow() {
+    console.log('执行')
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
     region =  await getRegion()
     this.getAddressList()
-    this.getUserInfo()
+    var _sid = app.globalData._sid
+    this.getUserInfo(_sid)
   },
-  // UpdateInfo(){
-  //   var that = this
-  //   var _sid = my.getStorageSync({
-  //     key: '_sid', // 缓存数据的key
-  //   }).data;
-  //   my.getAuthCode({
-  //     scopes: ['auth_user'],
-  //     success: (res) => {
-  //       my.getAuthUserInfo({
-  //         success: (userInfo) => {
-  //           console.log(userInfo,'执行一')
-  //         }
-  //       });
-  //     },
-  //   });
-  //   console.log('执行二')
-  //   UpdateAliUserInfo(_sid,that.data.head_img,that.data.nick_name).then((res)=>{
-  //     console.log(res)
-  //   })
-  // },
   // 用户信息
-  getUserInfo() {
+  getUserInfo(_sid) {
     var that = this
-    var _sid = my.getStorageSync({
-      key: '_sid', // 缓存数据的key
-    }).data;
     getuserInfo(_sid).then((res) => {
       var province = region.filter(item=>{
         return item.addrid==res.data.province_id
@@ -78,14 +57,14 @@ Page({
       })[0]
       var regions = city.sub.filter(item=>{
         return item.addrid==res.data.region_id
-      })
+      })[0]
       res.data.provinceName=province.name||''
       res.data.cityName=city.name||''
       res.data.regionName=regions.name||''
-      this.setData({
+      console.log(res.data,'数据啊')
+      that.setData({
         userinfo:res.data
       })
-      console.log(that.data.userinfo,'基本信息页')
     })
   },
   // 选择性别
@@ -261,8 +240,5 @@ Page({
   },
   onHide() {
     // 页面隐藏
-  },
-  onUnload() {
-    // 页面被关闭
   }
 });

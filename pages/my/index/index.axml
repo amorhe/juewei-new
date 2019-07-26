@@ -6,7 +6,7 @@
         <!-- <text a:if="{{ userInfo.nick_name }}">{{ userInfo.nick_name }}</text>
         <text a:else>绝味会员</text> -->
 
-        <text>{{ loginId==30106?'登录':userInfo?userInfo.nick_name:'绝味会员' }}</text>
+        <text>{{ loginId==30106?'登录':userInfo.nick_name?userInfo.nick_name:'绝味会员' }}</text>
       </view>
       <!-- <view a:else class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view> -->
     </view>
@@ -69,6 +69,7 @@
   </view>
 </view>
 
-<navigator url="/package_my/pages/onlineservice/onlineservice">
+<!-- <navigator url="/package_my/pages/onlineservice/onlineservice">
   <image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/>
-</navigator>
+</navigator> -->
+<image class="customerService" mode="scaleToFill" onTap="makePhoneCall" src="{{imageUrl}}service.png"/>
