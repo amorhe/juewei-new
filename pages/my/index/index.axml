@@ -69,6 +69,7 @@
   </view>
 </view>
 
-<navigator url="/package_my/pages/onlineservice/onlineservice">
+<!-- <navigator url="/package_my/pages/onlineservice/onlineservice">
   <image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/>
-</navigator>
+</navigator> -->
+<image class="customerService" mode="scaleToFill" onTap="makePhoneCall" src="{{imageUrl}}service.png"/>

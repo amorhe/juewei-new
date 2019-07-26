@@ -98,4 +98,7 @@ Page({
   },
   onHide(){
   },
+  makePhoneCall() {
+    my.makePhoneCall({ number: '4009995917' });
+  },
 });
