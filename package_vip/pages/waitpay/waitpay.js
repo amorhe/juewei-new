@@ -75,6 +75,15 @@ Page({
   },
 
   /**
+   * @function 添加地址
+   */
+  toAddAddress(){
+    my.navigateTo({
+      url:'/package_my/pages/myaddress/addaddress/addaddress'
+    });
+  },
+
+  /**
    * @function 获取公众号支付前订单详情
    */
   async getOrderInfo(order_sn) {

@@ -7,7 +7,7 @@
   </view>
   <!-- 实物邮寄 -->
   <view >
-    <view class="address" a:if="{{d.receive_type == 2}}">
+    <view class="address" a:if="{{d.receive_type == 2}}" onTap="toAddAddress"">
       <view class="address-title">请填写收货地址</view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
