@@ -5,6 +5,7 @@ Page({
   data: {
     modalOpened: false,
     imageUrl2,
+    openPoint:false,
     content: '',
     detail: {
       "id": "355",
@@ -126,7 +127,7 @@ Page({
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
-    const { goods_detail_type, receive_type, goods_type, goods_name, point, amount } = this.data.detail
+    const { goods_detail_type, receive_type, goods_type, amount } = this.data.detail
     let fail = false
 
     log(goods_type)
@@ -196,38 +197,56 @@ Page({
       }
     }
 
-
-
-
-    // my.confirm({
-    //   content: '你的当前积分不足',
-    //   confirmButtonText: '赚积分',
-    //   cancelButtonText: '取消',
-    //   success: result => {
-    //     console.log(result)
-    //   },
-    // });
   },
 
   /**
    * @function 显示modal
    */
 
-  showConfirm() {
-    let { goods_name, point, } = this.data.detail
-    this.setData({
-      content: `是否兑换“${goods_name}”将消耗你的${point}积分`,
-      modalOpened: true
-    })
+  async showConfirm() {
+    let { goods_name, point } = this.data.detail
+
+    // 获取 用户 积分
+    let points = await this.getUserPoint()
+
+    if (points > point) {
+      this.setData({
+        content: `是否兑换“${goods_name}”将消耗你的${point}积分`,
+        modalOpened: true
+      })
+    }else{
+
+    }
+
+
   },
 
   /**
    * @function 关闭modal
    */
-
   onModalClose() {
     this.setData({
       modalOpened: false
     })
-  }
+  },
+
+  /**
+   * @function 赚积分
+  */
+  async getMorePoint(){
+    my.navigateBack({
+      delta:1
+    });
+  },
+
+
+  /**
+  * @function 获取用户积分
+  */
+  async getUserPoint() {
+    let res = await ajax('/mini/user/user_point', {})
+    if (res.CODE === 'A100') {
+      return res.DATA.points
+    }
+  },
 });
