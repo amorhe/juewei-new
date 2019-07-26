@@ -2,6 +2,7 @@ import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
 import { bannerList, showPositionList, activityList, GetLbsShop, NearbyShop, GetShopGoods } from '../../common/js/home'
 import { getuserInfo, loginByAuth } from '../../common/js/login'
 import { cur_dateTime, compare } from '../../common/js/time'
+import {bd_encrypt} from '../../common/js/map'
 var app = getApp(); //放在顶部
 Page({
   data: {
@@ -45,21 +46,10 @@ Page({
     shopGoodsAll:[],  
   },
   onLoad(query) {
-    // 页面加载
-    //判断定位地址是否存在
-    // if(app.globalData.location && app.globalData.location.longitude=== null && app.globalData.location.latitude=== null){
-    //   my.redirectTo({
-    //      url: '../../position/position'
-    //   })
-    // }
     // 定位地址
-    if (app.globalData.address1 || app.globalData.address2) {
-      this.setData({
-        firstAddress: app.globalData.address1 + app.globalData.address2
-      })
-    }
-  },
-  onShow() {
+    this.setData({
+      firstAddress: app.globalData.address
+    })
     // 初始化默认外卖
     if (this.data.type == 1) {
       this.getLbsShop();
@@ -81,6 +71,9 @@ Page({
         type: app.globalData.type
       })
     }
+  },
+  onShow() {
+    
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
@@ -229,10 +222,10 @@ Page({
   },
   // 自提附近门店
   getNearbyShop() {
-    // const lng = my.getStorageSync({key:'lng'}).data;
-    // const lat = my.getStorageSync({key:'lat'}).data;
-    const lng = 116.54828;
-    const lat = 39.918639;
+    const lng = my.getStorageSync({key:'lng'}).data;
+    const lat = my.getStorageSync({key:'lat'}).data;
+    // const lng = 116.54828;
+    // const lat = 39.918639;
     const location = `${lng},${lat}`
     my.request({
       url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
@@ -378,8 +371,13 @@ Page({
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
       console.log(res);
       const companyGoodsList = this.data.companyGoodsList;
+      // 获取加价购商品
+      app.globalData.gifts = res.data.MARKUP.gifts;
+      // 获取参与加价购商品的列表
+      app.globalData.otherGoods = res.data.MARKUP.goods;
+
       // 筛选在当前门店里面的折扣商品
-      let DIS= [],PKG = []
+      let DIS = [],PKG = []
       if(res.data.DIS) {
         DIS =  res.data.DIS.filter(item => {
           return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
@@ -392,12 +390,12 @@ Page({
           return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
         })
       }
-    
-      // let activityAllObj ={}
-      // activityAllObj.DIS = DIS;
-      // activityAllObj.PKG = PKG;
-      // console.log(activityAllObj)
       let obj1 = {}, obj2 = {};
+      for(let item of PKG) {
+        item.goods_img = [item.goods_img];
+        item.goods_img_detail_origin = [item.goods_img_detail_origin]
+        item.goods_img_intr_origin = [item.goods_img_intr_origin]
+      }
       obj1 = {
         "key": "折扣",
         "last": DIS

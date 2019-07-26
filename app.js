@@ -57,12 +57,12 @@ App({
       longitude: null,
       latitude: null
     },
-    address1:null,
-    address2:null,
+    address:null,
     userInfo: null, //拉去支付宝用户信息
     authCode:null, //静默授权
-    phone:null //获取手机号权限
-    // 消息模板权限
+    phone:null, //获取手机号权限
+    addressInfo:null,   //切换定位地址
+    gifts:null,    //加购商品
   }
 
 

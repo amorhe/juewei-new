@@ -24,7 +24,7 @@
                   <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
                   <view class="fontTwentyTwo" a:if="{{item.full_money>0}}">满{{item.full_money/100}}元可用</view>
                 </view>
-                <navigator url="/pages/home/goodslist/goodslist" class="useBtn fontTwentySix" open-type="switchTab">立即使用</navigator>
+                <view class="useBtn fontTwentySix">立即使用</view>
               </view>
               <view>
                 <view class="whiteCircleLeft"></view>

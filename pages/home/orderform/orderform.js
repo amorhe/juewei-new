@@ -1,4 +1,6 @@
 import {imageUrl} from '../../common/js/baseUrl'
+import {couponsList} from '../../common/js/home'
+var app = getApp();
 Page({
   data: {
     imageUrl,
@@ -7,20 +9,21 @@ Page({
     repurseList:[
       {
         img: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3858629,3224043760&fm=26&gp=0.jpg',
-        goodsName: '黑鸭鸡膝软骨',
-        goodsType: '超辣',
-        goodsNum: 2000,
-        price: 4,
-        oldPrice: 10
+        goods_name: '黑鸭鸡膝软骨',
+        taste_name: '超辣',
+        goods_quantity: 2,
+        goods_price: 4,
+        goods_old_price: 10,
+        goods_count:0
       },
-      {
-        img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3898176482,3211240837&fm=26&gp=0.jpg',
-        goodsName: '如来鸭掌',
-        goodsType: '甜辣',
-        goodsNum: 20000,
-        price: 10,
-        oldPrice: 20
-      }
+      // {
+      //   img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3898176482,3211240837&fm=26&gp=0.jpg',
+      //   goods_name: '如来鸭掌',
+      //   taste_name: '甜辣',
+      //   goods_quantity: 20,
+      //   goods_price: 10,
+      //   goods_old_price: 20
+      // }
     ],
     countN:0,
     mask:false,
@@ -55,7 +58,10 @@ Page({
       //   }
       // }
     ],
-    shopObj:{}   // 自提商店的详细信息
+    shopObj:{},   // 自提商店的详细信息
+    couponsList:[],   //优惠券
+    couponsDefault:null,
+    full_money:0
   },
   onLoad(e) {
     console.log(e)
@@ -106,6 +112,20 @@ Page({
         shopObj:self[0]
       })
     }
+    this.getCouponsList();   //优惠券
+  // 加购商品
+    console.log(app.globalData.gifts);
+    const gifts = app.globalData.gifts;
+    for(let key in gifts){
+      gifts[key].forEach(val => {
+        val.goods_count = 0;
+        val.goods_choose = true
+      })
+      this.setData({
+        full_money:key,
+        repurseList:gifts[key]
+      })
+    }
 
     switch(this.data.type) {
       case 0:
@@ -125,22 +145,40 @@ Page({
          break;
     }
   },
-  // 换购
+  // 换购显示
   addRepurseTap(){
     this.setData({
       countN:1
     })
   },
   // 减
-  reduceBtnTap(){
+  reduceBtnTap(e){
+    // this.setData({
+    //   countN: this.data.countN - 1
+    // })
+    this.data.repurseList[e.currentTarget.dataset.index].goods_count --;
+    this.data.repurseList.forEach((item,index) => {
+      if(index != e.currentTarget.dataset.index && item.goods_count == 0){
+        item.goods_choose = true
+      }
+    })
     this.setData({
-      countN: this.data.countN - 1
+      repurseList:this.data.repurseList
     })
   },
   // 加
-  addBtnTap(){
+  addBtnTap(e){
+    // this.setData({
+    //   countN: this.data.countN + 1
+    // })
+    this.data.repurseList[e.currentTarget.dataset.index].goods_count ++;
+    this.data.repurseList.forEach((item,index) => {
+      if(index != e.currentTarget.dataset.index){
+        item.goods_choose = false
+      }
+    })
     this.setData({
-      countN: this.data.countN + 1
+      repurseList:this.data.repurseList
     })
   },
   // 弹框事件回调
@@ -163,5 +201,19 @@ Page({
       isCheck: !this.data.isCheck
     })
   },
+  // 查找用户可用优惠券
+  getCouponsList(){
+    const _sid = my.getStorageSync({key:'_sid'}).data;
+    couponsList(_sid,'use').then((res) => {
+      console.log(res)
+      if(res.DATA.use){
+        this.setData({
+          couponsList:res.DATA.use,
+          couponsDefault:res.DATA.max
+        })
+      }
+      
+    })
+  }
   
 });

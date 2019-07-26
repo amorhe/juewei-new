@@ -1,6 +1,6 @@
 @import '../../components/shopcart/shopcart.acss';
 .orderContainer {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(180deg, #f23124 0, #f5f5f5 229rpx);
   filter:blur(0px);
   display: flex;
@@ -165,8 +165,12 @@
   padding-left: 24rpx;
 }
 .null {
+  width: 750rpx;
   height: 164rpx;
-  background: #f5f5f5
+  background: #f5f5f5;
+  position: relative;
+  left: 0;
+  bottom: 0
 }
 .orderPrimary {
   display: flex;

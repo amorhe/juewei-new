@@ -38,17 +38,18 @@
 <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
   <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;" scroll-with-animation="true">
     <view class="goodsUl">
-      <view onTap="chooseGoodsType" data-type='1' a:if="{{activityAllObj.DIS.length>0}}">
-        <image a:if="{{goodsType!=1}}" src="{{imageUrl}}m_1_1.png"/>
-        <image a:else src="{{imageUrl}}m_1_2.png"/>
-        <view class="{{goodsType==1?'activeView':''}}">折扣</view>
+      <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
+        <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{index+1}}_1.png"/>
+        <image a:if="{{goodsType == index + 1 && goodsType!=13}}" src="{{imageUrl}}m_{{index + 1}}_2.png"/>
+         <image a:if="{{goodsType == 13}}" src="{{imageUrl}}m_13_2.png"/>
+        <view class="{{goodsType== index + 1?'activeView':''}}">{{item.key}}</view>
       </view>
-      <view onTap="chooseGoodsType" data-type='2' a:if="{{activityAllObj.PKG.length>0}}">
+      <!-- <view onTap="chooseGoodsType" data-type='2'>
         <image a:if="{{goodsType!=2}}" src="{{imageUrl}}m_2_1.png"/>
         <image a:else src="{{imageUrl}}m_2_2.png" />
         <view class="{{goodsType==2?'activeView':''}}">套餐</view>
       </view>
-      <view onTap="chooseGoodsType" data-type='3' a:if="{{shopGoodsList[0].last.length>0}}">
+      <view onTap="chooseGoodsType" data-type='3'>
         <image a:if="{{goodsType!=3}}" src="{{imageUrl}}m_3_1.png"/>
         <image a:else src="{{imageUrl}}m_3_2.png" />
         <view class="{{goodsType==3?'activeView':''}}">爆款</view>
@@ -102,7 +103,7 @@
         <image a:if="{{goodsType!=13}}" src="{{imageUrl}}m_13_1.png"/>
         <image a:else src="{{imageUrl}}m_13_3.png" />
         <view class="{{goodsType==13?'activeView':''}}">解辣神器</view>
-      </view>
+      </view> -->
     </view>
   </scroll-view>
 
@@ -229,7 +230,7 @@
         </view>
       </view> -->
       <!-- 超辣 -->
-      <view id="{{index}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
+      <view id="{{index + 1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
         <view class="goodsTypeEv">{{item.key}}</view>
 
         <!-- 折扣套餐爆款 -->
@@ -342,7 +343,7 @@
 </view>
 
 <!-- 购物车 -->
-<shopcart-model orderType="{{type}}" goodsResult="{{goodsResult}}"/>
+<shopcart-model orderType="{{type}}"/>
 
 <!-- 选择商品规格 -->
 <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsBuy="{{goodsBuy}}" />
