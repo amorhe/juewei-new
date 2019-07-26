@@ -114,4 +114,8 @@ Page({
   onHide(){
     clearInterval(timeCount)
   },
+  onUnload() {
+    // 页面被关闭
+    clearInterval(timeCount)
+  },
 });

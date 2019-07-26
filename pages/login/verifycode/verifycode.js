@@ -1,6 +1,7 @@
 import {imageUrl,baseUrl} from '../../common/js/baseUrl'
 import {sendCode,captcha,loginByPhone} from '../../common/js/login'
 let timeCount
+var app = getApp()
 Page({
   data: {
     imageUrl,
@@ -38,7 +39,6 @@ Page({
     });
   },
   onBlur() {
-    console.log('失去焦点')
     this.setData({
       focus: false,
     });
@@ -51,9 +51,10 @@ Page({
       console.log(res)
       if(res.code==0){
         // 成功
+        app.globalData._sid=res.data._sid
         my.setStorageSync({
           key: '_sid', // 缓存数据的key
-          data: res._sid, // 要缓存的数据
+          data: res.data._sid, // 要缓存的数据
         });
         my.switchTab({
           url:'/pages/home/goodslist/goodslist'
@@ -173,6 +174,10 @@ Page({
     }
   },
   onHide(){
+    clearInterval(timeCount)
+  },
+  onUnload() {
+    // 页面被关闭
     clearInterval(timeCount)
   },
 });
