@@ -93,7 +93,7 @@ Page({
     if (res.code === 100) {
       if (res.data.receive_type == 2 || res.data.receive_type == 1) {
         if (!res.data.user_address_phone) {
-         return my.redirectTo({
+          return my.redirectTo({
             url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
           });
         }
@@ -131,6 +131,43 @@ Page({
     if (res.code === 100) {
       my.navigateBack({
         delta: 1
+      });
+    }
+  },
+
+  /**
+   * @function 立即支付
+   */
+
+  async payNow() {
+    let { order_sn, id } = this.data.detail;
+    let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+    if (r.code === 0) {
+      let { tradeNo } = r.data
+      if(!tradeNo){
+        return my.showToast({
+          content: res.data.erroMSg
+        })
+      }
+      my.tradePay({
+        tradeNO:tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+        success: res => {
+          log(res)
+          return my.redirectTo({
+            url: '../..//finish/finish?id=' + id + '&fail=' + false
+          });
+        },
+        fail: res => {
+          log(res)
+          return my.redirectTo({
+            url: '../../finish/finish?id=' + id + '&fail=' + true
+          });
+        }
+      });
+
+    } else {
+      return my.redirectTo({
+        url: '../../finish/finish?id=' + id + '&fail=' + true
       });
     }
   },

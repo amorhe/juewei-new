@@ -332,10 +332,11 @@ Page({
     log(3)
 
     if (d.order_total_amount != 0) {
-      let { code, data: { tradeNo }, msg } = await this.pay()
-      if (code === 0) {
+      let r = await this.pay()
+      log(r.data.tradeNo)
+      if (r.code === 0) {
         my.tradePay({
-          tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+          tradeNO:r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
           success: res => {
             log(res)
             return my.redirectTo({

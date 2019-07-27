@@ -17,7 +17,7 @@
   </view>
   <view class="buttons" a:if="{{detail.status == 0}}">
     <view class="c-button" onTap="doCancelOrder">取消订单</view>
-    <view class="o-button">立即支付</view>
+    <view class="o-button" onTap="payNow">立即支付</view>
   </view>
   <view class="detail">
     <view class="body detail-item">
