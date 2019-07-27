@@ -1,6 +1,6 @@
 <view class="bg">
   <!-- 兑换完成页，页面分虚拟和邮寄实物和门店领取实物，并且页面分为成功和失败两种状态 -->
-  <!-- 虚拟物品 成功 false->假的 -->
+  <!-- 虚拟物品 成功 false => 假的 -->
   <view class="false" a:if="{{!fail}}">
     <view class="success">
       <view class="icon-wrap">
@@ -20,7 +20,7 @@
       </view>
       <view class="btn">联系客服</view>
     </view>
-    <view class="user-detail">
+    <view class="user-detail" a:if="{{d.receive_type == 1}}">
       <view class="user-list" a:if="{{d.user_address_name}}">
         <view class="user-left">
         领取人
@@ -56,29 +56,37 @@
         </view>
       </view>
     </view>
-    <view class="copy" a:if="{{d.get_code}}">
-      <view class="copy-left">兑换码：{{d.get_code}}</view>
-      <view class="copy-right">复制</view>
-    </view>
-    <view class="explain" a:if="{{d.exchange_intro}}">
-      <view class="explain-title">兑换说明</view>
-      <rich-text nodes="{{d._exchange_intro}}"></rich-text>
-      <!--<view class="explain-detail">
+    <view a:if="{{d.receive_type == 2}}">
+      <view class="address" a:if="{{ d.user_address_name}}" onTap="toAddAddress">
+        <view class="address-title">
+          <view>{{d.user_address_name}} {{d.user_address_phone}}</view>
+          <view class="address-sm">{{d.province}}{{d.city}}{{d.district}}{{d.user_address_detail_address}}</view>
+        </view>
+      </view>
+      <view class="copy" a:if="{{d.get_code}}">
+        <view class="copy-left">兑换码：{{d.get_code}}</view>
+        <view class="copy-right">复制</view>
+      </view>
+      <view class="explain" a:if="{{d.exchange_intro}}">
+        <view class="explain-title">兑换说明</view>
+        <rich-text nodes="{{d._exchange_intro}}"></rich-text>
+        <!--<view class="explain-detail">
         在<text>http://www.ebeecake.com</text> 输入兑换码兑换；<view>活动所有权归本公司所有。</view></view> -->
-    </view>
-    <!--<view class="explain" a:if="{{d.intro}}"><view class="explain-title">商品</view><rich-text nodes="{{d._intro}}"></rich-text><view class="explain-detail"><view>全场通用</view><view>活动所有权归本公司所有。</view></view></view> -->
-    <view class="hint" a:if="{{d.get_code}}">
+      </view>
+      <!--<view class="explain" a:if="{{d.intro}}"><view class="explain-title">商品</view><rich-text nodes="{{d._intro}}"></rich-text><view class="explain-detail"><view>全场通用</view><view>活动所有权归本公司所有。</view></view></view> -->
+      <view class="hint" a:if="{{d.get_code}}">
       温馨提示：可到VIP专享>兑换记录中查看
-    </view>
-    <view class="hint" a:if="{{!d.get_code}}">
+      </view>
+      <view class="hint" a:if="{{!d.get_code}}">
       温馨提示：可到
-      <text style="color:#108EE9">我的>卡劵</text> 中查看
-    </view>
-    <view class="li-button" onTap="redirect">
+        <text style="color:#108EE9">我的>卡劵</text> 中查看
+      </view>
+      <view class="li-button" onTap="redirect">
       返回VIP专享
-    </view>
-    <view class="li-button gray">
+      </view>
+      <view class="li-button gray">
       查看订单
+      </view>
     </view>
   </view>
   <!-- 虚拟物品 失败-->
@@ -102,7 +110,7 @@
       </view>
       <view class="btn">联系客服</view>
     </view>
-    <view class="user-detail">
+    <view class="user-detail" a:if="{{ d.receive_type == 1}}">
       <view class="user-list" a:if="{{d.user_address_name}}">
         <view class="user-left">
         领取人
@@ -135,6 +143,14 @@
           <view class="user-address">
            {{d.province}} {{d.city}} {{d.district}} {{d.address}}
           </view>
+        </view>
+      </view>
+    </view>
+    <view a:if="{{d.receive_type == 2}}">
+      <view class="address" a:if="{{ d.user_address_name}}" onTap="toAddAddress">
+        <view class="address-title">
+          <view>{{d.user_address_name}} {{d.user_address_phone}}</view>
+          <view class="address-sm">{{d.province}}{{d.city}}{{d.district}}{{d.user_address_detail_address}}</view>
         </view>
       </view>
     </view>

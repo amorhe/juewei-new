@@ -374,3 +374,58 @@ page {
   font-weight: 600;
   color: rgba(230, 0, 18, 1);
 }
+
+.address {
+  background: white;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom:1rpx solid #eee 
+}
+
+.address-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+}
+
+.address-sm {
+  font-size: 26rpx;
+  color: rgba(153, 153, 153, 1);
+  font-weight: 400;
+}
+
+.arrow {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.p-good, .store {
+  padding: 24rpx 32rpx;
+  background: white;
+  border-radius: 20rpx;
+}
+
+.store {
+  margin-bottom: 20rpx;
+}
+
+.p-detail {
+  display: flex;
+  padding: 0 0 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.p-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around
+}
+
+.p-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+}
