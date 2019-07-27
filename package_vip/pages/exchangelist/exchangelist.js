@@ -33,7 +33,7 @@ Page({
         orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return clearInterval(a)
+            return clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute

@@ -88,74 +88,75 @@
       查看订单
       </view>
     </view>
-    <!-- 虚拟物品 失败-->
-    <view class="false" a:if="{{fail}}">
-      <view class="success">
-        <view class="icon-wrap">
-          <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}fail.png"/>
-          <view class="text-success">兑换失败</view>
-          <view class="fail-reason">商品库存不足</view>
-        </view>
-      </view>
-      <view class="p-detail">
-        <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
-        <view class="p-right" style="flex:1">
-          <view class="p-title">
-          {{d.goods_name}}
-          </view>
-          <view class="p-price">
-          {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
-          </view>
-        </view>
-        <view class="btn">联系客服</view>
-      </view>
-      <view class="user-detail" a:if="{{ d.receive_type == 1}}">
-        <view class="user-list" a:if="{{d.user_address_name}}">
-          <view class="user-left">
-        领取人
-          </view>
-          <view class="user-right">
-        {{d.user_address_name}}
-          </view>
-        </view>
-        <view class="user-list">
-          <view class="user-left" a:if="{{d.user_address_phone}}">
-        领取手机号码
-          </view>
-          <view class="user-right">
-        {{detail.user_address_phone}}
-          </view>
-        </view>
-        <view class="user-list" a:if="{{d.shop_name}}">
-          <view class="user-left">
-        领取门店
-          </view>
-          <view class="user-right">
-            <view class="shop-name"> {{d.shop_name}}</view>
-            <view class="code-button">导航</view>
-          </view>
-        </view>
-        <view class="user-list" a:if="{{d.shop_name}}">
-          <view class="user-left">
-          </view>
-          <view class="user-right">
-            <view class="user-address">
-           {{d.province}} {{d.city}} {{d.district}} {{d.address}}
-            </view>
-          </view>
-        </view>
-      </view>
-      <view a:if="{{d.receive_type == 2}}">
-        <view class="address" a:if="{{ d.user_address_name}}" onTap="toAddAddress">
-          <view class="address-title">
-            <view>{{d.user_address_name}} {{d.user_address_phone}}</view>
-            <view class="address-sm">{{d.province}}{{d.city}}{{d.district}}{{d.user_address_detail_address}}</view>
-          </view>
-        </view>
-      </view>
-      <view class="li-button" onTap="redirect">
-      返回VIP专享
+  </view>
+  <!-- 虚拟物品 失败-->
+  <view class="false" a:if="{{fail}}">
+    <view class="success">
+      <view class="icon-wrap">
+        <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}fail.png"/>
+        <view class="text-success">兑换失败</view>
+        <view class="fail-reason">商品库存不足</view>
       </view>
     </view>
-    <!-- 邮寄物品 -->
+    <view class="p-detail">
+      <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
+      <view class="p-right" style="flex:1">
+        <view class="p-title">
+          {{d.goods_name}}
+        </view>
+        <view class="p-price">
+          {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+        </view>
+      </view>
+      <view class="btn">联系客服</view>
+    </view>
+    <view class="user-detail" a:if="{{ d.receive_type == 1}}">
+      <view class="user-list" a:if="{{d.user_address_name}}">
+        <view class="user-left">
+        领取人
+        </view>
+        <view class="user-right">
+        {{d.user_address_name}}
+        </view>
+      </view>
+      <view class="user-list">
+        <view class="user-left" a:if="{{d.user_address_phone}}">
+        领取手机号码
+        </view>
+        <view class="user-right">
+        {{detail.user_address_phone}}
+        </view>
+      </view>
+      <view class="user-list" a:if="{{d.shop_name}}">
+        <view class="user-left">
+        领取门店
+        </view>
+        <view class="user-right">
+          <view class="shop-name"> {{d.shop_name}}</view>
+          <view class="code-button">导航</view>
+        </view>
+      </view>
+      <view class="user-list" a:if="{{d.shop_name}}">
+        <view class="user-left">
+        </view>
+        <view class="user-right">
+          <view class="user-address">
+           {{d.province}} {{d.city}} {{d.district}} {{d.address}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view a:if="{{d.receive_type == 2}}">
+      <view class="address" a:if="{{ d.user_address_name}}" onTap="toAddAddress">
+        <view class="address-title">
+          <view>{{d.user_address_name}} {{d.user_address_phone}}</view>
+          <view class="address-sm">{{d.province}}{{d.city}}{{d.district}}{{d.user_address_detail_address}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="li-button" onTap="redirect">
+      返回VIP专享
+    </view>
   </view>
+  <!-- 邮寄物品 -->
+</view>

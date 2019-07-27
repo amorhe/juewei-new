@@ -86,12 +86,12 @@ Page({
    * @function 获取公众号支付前订单详情
    */
   async getOrderInfo(order_sn) {
-    let { showSelectAddress } = this.data;
+    let { showSelectAddress, a } = this.data;
     let { code, data: { order_sn: _order_sn, limit_pay_minute, limit_pay_second, ...rest } } = await ajax('/mini/vip/wap/order/order_info', order_sn)
     if (code === 100) {
-      let a = setInterval(() => {
+      a = setInterval(() => {
         --limit_pay_second
-        if (limit_pay_minute === 0 && limit_pay_second==0) {
+        if (limit_pay_minute === 0 && limit_pay_second == 0) {
           return clearInterval(a)
         }
         if (limit_pay_second <= 0) {

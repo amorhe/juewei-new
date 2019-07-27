@@ -91,6 +91,14 @@ Page({
     let _intro = await parseData(res.data.intro)
 
     if (res.code === 100) {
+      if (res.data.receive_type == 2 || res.data.receive_type == 1) {
+        if (!res.data.user_address_phone) {
+         return my.redirectTo({
+            url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
+          });
+        }
+      }
+
       let { remaining_pay_minute, remaining_pay_second, ...item } = res.data
       let { a } = this.data
       a = setInterval(() => {
