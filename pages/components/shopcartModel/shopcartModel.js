@@ -27,6 +27,7 @@ Component({
       orderType:this.props.orderType
     })
     let data = my.getStorageSync({key:'goodsList'}).data;
+    console.log(data)
     // 无规格商品
     let arr1 = data.filter(item => {
         return item.count > 0
@@ -49,9 +50,7 @@ Component({
    arr3.forEach(item => {
      price3 += item.goods_format[0].goods_price * item.smallCount
    })
-   let shopcartGoods = [];
-   shopcartGoods.push(data);
-   console.log(shopcartGoods,data)
+
   //  this.setData({
   //    priceAll:price1 + price2 + price3,
   //    shopcartGoods:data

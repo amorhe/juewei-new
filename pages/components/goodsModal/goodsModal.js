@@ -87,6 +87,7 @@ Component({
        arr = oldArr.concat(smallArr[0],largeArr[0]);
       } 
       let goodsCart = arr.filter(item=> item!=undefined);
+      console.log(goodsCart)
       my.setStorageSync({
         key: 'goodsList', 
         data: goodsCart, 

@@ -65,25 +65,26 @@ scope='userInfo'>授权登录</button> -->
 
 <!-- 活动展位 -->
 <!-- 类型1 -->
-<view class="activityBox" a:if="{{showListObj.type==2}}">
-  <image src="{{imageUrl2 + showListObj.pic_src[0]}}"/>
-  <view>
-    <image src="{{imageUrl2 + showListObj.pic_src[1]}}"/>
-    <image src="{{imageUrl2 + showListObj.pic_src[2]}}"/>
-  </view>
+<view class="activityBox1 marginBEight" a:if="{{showListObj[0].type==1}}">
+  <image mode="scaleToFill" src="{{imageUrl2 + showListObj[0].pic_src[0]}}"/>
 </view>
 <!-- 类型2 -->
-<view class="activityBox1" a:if="{{showListObj.type==1}}">
-  <image mode="scaleToFill" src="{{imageUrl2 + showListObj.pic_src[0]}}"/>
+<view class="activityBox marginBEight" a:if="{{showListObj[1].type==2}}">
+  <image src="{{imageUrl2 + showListObj[1].pic_src[0]}}"/>
+  <view>
+    <image src="{{imageUrl2 + showListObj[1].pic_src[1]}}"/>
+    <image src="{{imageUrl2 + showListObj[1].pic_src[2]}}"/>
+  </view>
 </view>
+
 <!-- 类型3 -->
-<view class="activityBox3" a:if="{{showListObj.type==3}}">
-  <image mode="scaleToFill" src="{{imageUrl2 + showListObj.pic_src[0]}}"/>
-  <image mode="scaleToFill" src="{{imageUrl2 + showListObj.pic_src[1]}}"/>
+<view class="activityBox3 marginBEight" a:if="{{showListObj[2].type==3}}">
+  <image mode="scaleToFill" src="{{imageUrl2 + showListObj[2].pic_src[0]}}"/>
+  <image mode="scaleToFill" src="{{imageUrl2 + showListObj[2].pic_src[1]}}"/>
 </view>
 <!-- 类型4 -->
-<view class="activityWrap" a:if="{{showListObj.type==4}}">
-  <image src="{{imageUrl2 + showListObj.pic_src[0]}}" />
+<view class="activityWrap" a:if="{{showListObj[3].type==4}}">
+  <image src="{{imageUrl2 + showListObj[3].pic_src[0]}}" />
 </view>
 
 <view style="height:200rpx;" hidden="{{!scroll_y}}"></view>

@@ -101,9 +101,6 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
-      my.pageScrollTo({
-        scrollTop: 510
-      })
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })

@@ -162,7 +162,7 @@ Page({
   getShowpositionList(city_id, district_id, company_id) {
     showPositionList(city_id, district_id, company_id, 1).then((res) => {
       this.setData({
-        showListObj: res.data[0]
+        showListObj: res.data
       })
     })
   },
@@ -237,8 +237,9 @@ Page({
     // const lng = 116.54828;
     // const lat = 39.918639;
     const location = `${lng},${lat}`
+    const str = new Date().getTime();
     my.request({
-      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
+      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=${str}`,
       success: (res) => {
         // 3公里有门店
         if (res.data.contents.length > 0) {
@@ -314,8 +315,9 @@ Page({
   },
   // 公司商品列表
   getCompanyGoodsList(company_id) {
+    const str = new Date().getTime();
     my.request({
-      url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=156335816013`,
+      url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=${str}`,
       success: (res) => {
         // 该公司所有的商品
         this.setData({
@@ -334,15 +336,15 @@ Page({
       let arr = companyGoodsList.filter(item => {
         return shopGoodsList.includes(item.sap_code)
       })
-      console.log(companyGoodsList)
+       const str = new Date().getTime();
       my.request({
-        url: 'https://images.juewei.com/prod/shop/goods_sort.json?v=1563417069075',
+        url: `https://images.juewei.com/prod/shop/goods_sort.json?v=${str}`,
         success: (res) => {
           console.log(res.data.data.country);
           let _T = res.data.data.country
           const { typeList } = this.data
 
-          let keys = Object.keys(typeList)
+          let keys = Object.keys(typeList);
 
           let list = keys.map(
             item => ({
@@ -350,7 +352,6 @@ Page({
               values: arr.filter(_item => item === _item.cate_name || item === _item.taste_name)
             })
           )
-
 
           let sortList = list.map(({ key, values }) => {
             let _sort = typeList[key]
@@ -360,6 +361,9 @@ Page({
 
             let last = []
             _t.map(_item => {
+              if(values.length ==0){
+                values = arr;
+              }
               let cur = values.filter(({ goods_code }) => goods_code === _item)
               last = new Set([...last, ...cur])
             })
