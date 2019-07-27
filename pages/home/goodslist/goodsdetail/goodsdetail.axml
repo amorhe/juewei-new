@@ -23,7 +23,7 @@
       </view>
     </view>
   <view>
-    <view class="fontTwentySix addShopcart">加入购物车</view>
+    <view class="fontTwentySix addShopcart" onTap="chooseSizeTap">加入购物车</view>
   </view>
   </view>
 </view>
@@ -175,3 +175,6 @@
 <view style="height:100rpx;background:transparent"></view>
 <!-- 购物车 -->
 <shopcart-model />
+
+<!-- 加入购物车选择商品规格 -->
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{goodsKey}}" goodsLast="{{goodsLast}}" shopGoodsList="{{shopGoodsList}}" />

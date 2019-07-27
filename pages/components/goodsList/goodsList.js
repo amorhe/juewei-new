@@ -146,7 +146,10 @@ Component({
       if(my.getStorageSync({key:'goodsList'}).data){
         const oldArr = my.getStorageSync({key:'goodsList'}).data;
         goodsResult.concat(oldArr);
-      } 
+      }else{
+        const oldArr = [];
+        goodsResult.concat(oldArr);
+      }
       this.data.goodsResult = goodsResult;
       this.setData({
         shopGoodsList,
@@ -178,7 +181,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&type=' + e.currentTarget.dataset.type + '&index=' + e.currentTarget.dataset.index
       });
     }
   }

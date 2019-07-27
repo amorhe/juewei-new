@@ -1,7 +1,7 @@
 {
   "defaultTitle": "绝味鸭脖",
   "usingComponents": {
-    "shopcart": "../../components/shopcart/shopcart",
+    "goods-list": "../../components/goodsList/goodsList",
     "confirm": "../../components/confirm/confirm"
   }
 }
