@@ -126,36 +126,41 @@ Component({
       })
     },
     scrollEvent(e){
-      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
-      //   // console.log(ret)
-      //   let arr = ret[0].filter((item,index) => {
-      //     return item.top<=104.5
-      //   })
-      //   this.setData({
-      //     goodsType:arr.length + 1
-      //   })
-      // })
+      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
+        // console.log(ret)
+        // let arr = ret[0].filter((item,index) => {
+        //   return item.top<=104.5
+        // })
+        // console.log(arr.length)
+        // this.setData({
+        //   goodsType:arr.length + 1
+        // })
+      })
     },
     addshopcart(e){
       let{ shopGoodsList } = this.data
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
-      let goodsResult=[];
       this.data.shopGoodsList = shopGoodsList;
       let buyArr = shopGoodsList.map(item =>  item.last.filter(_item=> _item.count > 0))
-      goodsResult = buyArr.filter(item => item.length>0);
-      if(my.getStorageSync({key:'goodsList'}).data){
+      let goodsResult = buyArr.filter(item => item.length>0);
+      let buyNew = [];
+      if(my.getStorageSync({key:'goodsList'}).data!=null){
         const oldArr = my.getStorageSync({key:'goodsList'}).data;
-        goodsResult.concat(oldArr);
-      } 
-      this.data.goodsResult = goodsResult;
+        buyNew = oldArr.concat(goodsResult[0]);
+      }else{
+        const oldArr = [];
+        buyNew = oldArr.concat(goodsResult[0]);
+      }
+      this.data.goodsResult = buyNew;
       this.setData({
         shopGoodsList,
         goodsResult: this.data.goodsResult
       })
         my.setStorageSync({
           key: 'goodsList', // 缓存数据的key
-          data: goodsResult, // 要缓存的数据
+          data: buyNew, // 要缓存的数据
         });
+        
       // 加入购物车小红点动画效果
       // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
       //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
@@ -178,7 +183,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&type=' + e.currentTarget.dataset.type + '&index=' + e.currentTarget.dataset.index
       });
     }
   }

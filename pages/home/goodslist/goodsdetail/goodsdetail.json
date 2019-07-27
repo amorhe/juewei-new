@@ -3,6 +3,7 @@
   "usingComponents": {
     "tabs": "mini-antui/es/tabs/index",
     "tab-content": "mini-antui/es/tabs/tab-content/index",
-    "shopcart-model": "../../../components/shopcartModel/shopcartModel"
+    "shopcart-model": "../../../components/shopcartModel/shopcartModel",
+    "goods-modal": "../../../components/goodsModal/goodsModal"
   }
 }

@@ -51,18 +51,21 @@ Page({
       }
     ],
     goodsInfo:{},
+    type:'',
+    index:'',
     dispatchArr:[],
+    maskView:false
   },
   onLoad(e) {
-    const goodsAll = JSON.parse(e.goodsAll);
-    let arr = goodsAll.filter(item => 
-      item.goods_id == e.goods_id)
+    console.log(e)
+    const goodsInfo = JSON.parse(e.goodsAll).last[e.index];
     this.setData({
-      goodsInfo:arr[0]
+      goodsInfo,
+      type:e.type,
+      index:e.index
     })
-    console.log(arr[0])
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
-    this.getCommentList(arr[0].goods_code,1,10);
+    this.getCommentList(goodsInfo.goods_code,1,10);
     this.getDispatchCommentList(shop_id,1,10)
   },
   handleTabClick({ index }) {
@@ -92,5 +95,22 @@ Page({
         dispatchArr:res
       })
     })
-  }
+  },
+  closeModal(data){
+    this.setData({
+      maskView:data.maskView,
+      goodsModal:data.goodsModal
+    })
+  },
+  // 选规格
+  chooseSizeTap(e){
+    // console.log(e)
+    this.setData({
+      maskView:true,
+      goodsModal:true,
+      goodsItem: e.currentTarget.dataset.item,
+      goodsKey: e.currentTarget.dataset.type,
+      goodsLast: e.currentTarget.dataset.index
+    })
+  },
 });

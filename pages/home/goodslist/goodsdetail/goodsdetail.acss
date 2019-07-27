@@ -1,4 +1,4 @@
-@import '../../../components/shopcart/shopcart.acss';
+@import '../../../components/goods/goods.acss';
 .goodsImage {
   width: 750rpx;
   height: 592rpx;
