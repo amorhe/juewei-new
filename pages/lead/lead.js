@@ -25,8 +25,7 @@ Page({
         console.log(res)
         app.globalData.province = res.province;
         app.globalData.city = res.city;
-        app.globalData.address1 = res.streetNumber.street;
-        app.globalData.address2 = res.streetNumber.number;
+        app.globalData.address = res.streetNumber.street + res.streetNumber.number;
         that.setData({
           city:res.city
         },()=> {

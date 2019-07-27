@@ -4,15 +4,15 @@
   <view class="shopcart">
     <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
     <image onTap="openShopcart" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount" a:if="{{goodsArr.length>0}}">{{goodsArr.length}}</view>
+    <view class="addcount" a:if="{{shopcartGoods.length>0}}">{{shopcartGoods.length}}</view>
     <view class="haveGoods">
-      <view a:if="{{goodsArr.length>0}}">
+      <view a:if="{{shopcartGoods.length>0}}">
         <text>￥</text>
         <text>{{priceAll}}</text>
       </view>
-      <view a:if="{{goodsArr.length==0}}">另需配送费6元</view>
+      <view a:if="{{shopcartGoods.length==0}}">另需配送费6元</view>
     </view>
-    <view a:if="{{goodsArr.length>0}}">另需配送费6元</view>
+    <view a:if="{{shopcartGoods.length>0}}">另需配送费6元</view>
     <view class="buyBtn" a:if="{{priceAll<30}}">￥30起送</view>
     <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>30}}">立即购买</view>
   </view>
@@ -25,17 +25,17 @@
     <text>清空购物车</text>
   </view>
   <view class="shopcartWrap">
-    <view class="goodsLi" a:for="{{goodsArr}}">
+    <view class="goodsLi" a:for="{{shopcartGoods}}">
       <view class="goodsNameI">
         <view>
           <text>{{item.goods_name}}</text>
-          <text>（{{item.taste_name}}）</text>
+          <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
         </view>
         <view>{{item.goods_format}}</view>
       </view>
       <view class="goodsPriceBox">
         <text class="goodsOldPrice">￥28</text>
-        <text class="numberColor">￥{{item.goods_price}}</text>
+        <text class="numberColor">￥{{item.goods_format[0].goods_price / 100}}</text>
       </view>
       <view class="goodsNumber">
         <image src="{{imageUrl}}goods_reduce.png" />

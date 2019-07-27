@@ -1,5 +1,6 @@
 .addressList{
   padding: 32rpx;
+  padding-bottom: 50rpx;
 }
 
 .listItme{
@@ -9,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
 }
-
+  
 .spanClass{
   min-width: 64rpx;
   height: 32rpx;

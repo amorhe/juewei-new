@@ -102,7 +102,7 @@
         <text class="marginLSixteen">优惠券</text>
       </view>
       <view>
-        <text>无可用红包</text>
+        <text class="colorNine" a:if="{{couponsDefault==null}}">无可用红包</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
     </view>
@@ -143,28 +143,29 @@
     <scroll-view class="repurseView" scroll-x a:if="{{repurseList.length>1}}">
      <view style="width:{{581*repurseList.length}}rpx">
        <view class="repurseGoodsInfo" a:for="{{repurseList}}">
-         <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.img}}"/>
+         <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.gift_img_url}}"/>
          <view>
            <view>
-             <text>{{item.goodsName}}</text>
-             <text class="fontSmallGray">（{{item.goodsType}}）</text>
+             <text>{{item.gift_name}}</text>
+             <!-- <text class="fontSmallGray">（{{item.taste_name}}）</text> -->
            </view>
 
            <view class="flexNormal">
              <view class="repurseBottom fontSmallGray">
                 <view>
-                  <text class="repurseNumbers">{{item.goodsNum}}人</text>
+                  <text class="repurseNumbers">10人</text>
                   <text>参与换购</text>
                 </view>
                 <view>
-                  <text class="numberColor">￥{{item.price}}</text>
-                  <text class="purseGoodsOld">￥{{item.oldPrice}}</text>
+                  <text class="numberColor">￥{{item.cash}}</text>
+                  <text class="purseGoodsOld">￥{{item.gift_price}}</text>
                 </view>
              </view>
               <view class="goodsNumber">
-                  <image src="{{imageUrl}}goods_reduce.png" />
-                  <text>1</text>
-                  <image src="{{imageUrl}}goods_add.png" />
+                  <image a:if="{{item.goods_count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" data-index="{{index}}"/>
+                  <text a:if="{{item.goods_count>0}}">{{item.goods_count}}</text>
+                  <image a:if="{{!item.goods_choose}}" mode="scaleToFill" src="../../common/img/addNO.png"/>
+                  <image a:if="{{item.goods_choose}}" src="{{imageUrl}}goods_add.png" onTap="addBtnTap" data-index="{{index}}"/>
               </view>
            </view>
          </view>
@@ -172,29 +173,33 @@
      </view>
     </scroll-view>
 
-    <view class="repurseGoodsInfo" a:for="{{repurseList}}" style="width:654rpx">
-      <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.img}}"/>
+    <!-- 换购商品只有1个 -->
+    <view class="repurseGoodsInfo" a:for="{{repurseList}}" style="width:654rpx" a:if="{{repurseList.length==1}}">
+      <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.gift_img_url}}"/>
       <view>
         <view>
-          <text>{{item.goodsName}}</text>
-          <text class="fontSmallGray">（{{item.goodsType}}）</text>
+          <text>{{item.gift_name}}</text>
+          <!-- <text class="fontSmallGray">（{{item.taste_name}}）</text> -->
         </view>
 
         <view class="flexNormal">
           <view class="repurseBottom fontSmallGray">
             <view>
-              <text class="repurseNumbers">{{item.goodsNum}}人</text>
+              <text class="repurseNumbers">10人</text>
               <text>参与换购</text>
             </view>
             <view>
-              <text class="numberColor">￥{{item.price}}</text>
-              <text class="purseGoodsOld">￥{{item.oldPrice}}</text>
+              <text class="numberColor">￥{{item.cash}}</text>
+              <text class="purseGoodsOld">￥{{item.gift_price}}</text>
             </view>
           </view>
-          <view class="goodsNumber" a:if="{{countN!=0}}">
-            <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
+          <view class="goodsNumber">
+            <!-- <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
             <text>{{countN}}</text>
-            <image src="{{imageUrl}}goods_add.png" onTap="addBtnTap"/>
+            <image src="{{imageUrl}}goods_add.png" onTap="addBtnTap"/> -->
+            <image a:if="{{item.goods_count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" data-index="{{index}}"/>
+            <text a:if="{{item.goods_count>0}}">{{item.goods_count}}</text>
+            <image src="{{imageUrl}}goods_add.png" onTap="addBtnTap" data-index="{{index}}"/>
           </view>
         </view>
       </view>
@@ -236,9 +241,9 @@
 <view class="repurseToast fontTwentyTwo">
   <view>
     <text class="fontSmallGray">加</text>
-    <text class="numberColor">￥5</text>
+    <text class="numberColor">￥{{repurseList[0].goods_price}}</text>
     <text class="fontSmallGray">超级换购</text>
-    <text>「招牌鸭脖」</text>
+    <text>「{{reqpurseList[0].goods_name}}」</text>
     <text class="fontSmallGray">等商品</text>
   </view>
   <image class="normalImage" mode="scaleToFill" src="../../common/img/arrow_low.png"/>

@@ -64,6 +64,6 @@
 <!-- 附近地址 -->
 <view class="nearAddressBox">
   <view class="fontGray">附近地址</view>
-  <view class="nearList">紫檀大厦</view>
-  <view class="nearList">北京传媒大学西校区</view>
+  <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}">{{item.name}}</view>
+  <!-- <view class="nearList">北京传媒大学西校区</view> -->
 </view>

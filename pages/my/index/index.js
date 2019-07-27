@@ -43,6 +43,9 @@ Page({
 
   },
   onShow(){
+    this.setData({
+      _sid:app.globalData._sid
+    })
     this.getUserInfo()
   },
   getSid(){
@@ -66,7 +69,6 @@ Page({
     // }).data;
 
   let _sid = await this.getSid()
-  console.log(_sid,'_sid')
   let res = await getuserInfo(_sid.data||'')
       console.log(res,'我的页面')
       if(res.code==30106){
@@ -84,7 +86,7 @@ Page({
     
   },
   isloginFn(){
-    if(this.data.loginId==30106){
+    if(!this.data._sid){
       my.navigateTo({
         url:'/pages/login/auth/auth'
       });

@@ -21,6 +21,8 @@ const ajaxUrl = {
   exchangedetail: '/mini/user/exchange_code_view',    // 兑换详情
   commentList: '/juewei-api/comment/GoodsCommentList',     //  商品详情中的商品评价列表
   DispatchCommentList: '/juewei-api/comment/DispatchCommentList',      // 商品详情中的配送评价列表
+  add_lng_lat: '/mini/order_online/add_lng_lat',            // 风控数据经纬度
+  getMarkActivity: '/mini/activity/markup/mark/getMarkActivity',             // 加价购列表
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -51,7 +53,7 @@ export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
 
 export const createOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
 
-export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
+export const confirmOrder = (dispatch_type,shop_id,goods,shops,notUse,coupon_code,gift) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,notUse,coupon_code,gift})
 
 export const useraddress = (_sid,type,location) => ajax(ajaxUrl.useraddress,{_sid,type,location});
 
@@ -64,3 +66,7 @@ export const exchangedetail = (_sid,gift_code_id,gift_id,order_id) => ajax(ajaxU
 export const commentList = (goods_code,pagenum,pagesize,plate) => ajax(ajaxUrl.commentList,{goods_code,pagenum,pagesize,plate});
 
 export const DispatchCommentList = (shop_id,pagenum,pagesize,plate) => ajax(ajaxUrl.DispatchCommentList,{shop_id,pagenum,pagesize,plate});
+
+export const add_lng_lat = (order_no,type,longitude,latitude) =>ajax(ajaxUrl.add_lng_lat,{order_no,type,longitude,latitude});
+
+export const getMarkActivity = (company_id,user_id) => ajax(ajaxUrl.getMarkActivity,{company_id,user_id})

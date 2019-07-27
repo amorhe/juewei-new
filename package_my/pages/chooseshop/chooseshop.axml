@@ -14,7 +14,7 @@
                 <cover-view class="shopTxt">
                   <cover-view>{{item.title}}</cover-view>
                 </cover-view>
-                <cover-view class="fontTwentyTwo">在售商品：{{itme.goods_num}}</cover-view>
+                <cover-view class="fontTwentyTwo">在售商品：{{item.goods_num}}</cover-view>
              </cover-view>
              <cover-view>
                <cover-view class="fontSmallGray preWrap">{{item.address}}</cover-view>
