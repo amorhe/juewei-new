@@ -22,11 +22,6 @@ Page({
 
     shop_name: '',
 
-    province: '',
-    city: '',
-    district: '',
-
-
     d: {
       "id": "17",
       "order_point": "1",
@@ -55,14 +50,18 @@ Page({
     countryList: [],
     defaultAddress: [0, 0, 0],
 
-
-    shopList: []
+    shopList: [],
+    user_address_id: '',
+    user_address_detail_address: '',
+    province: '',
+    city: '',
+    district: ''
 
   },
   async onLoad(e) {
-    let { order_sn } = e
+    let { order_sn, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
     this.setData({
-      order_sn
+      order_sn, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
     })
     region = await getRegion()
     this.getAddressList()
@@ -71,19 +70,28 @@ Page({
 
   onUnload() {
     clearInterval(this.data.a)
-    this.setData({ a: 0 })
+  },
+
+  /**
+   * @function 添加地址
+   */
+  toAddAddress() {
+    const { order_sn } = this.data
+    my.navigateTo({
+      url: '/package_my/pages/myaddress/myaddress?order_sn=' + order_sn
+    });
   },
 
   /**
    * @function 获取公众号支付前订单详情
    */
   async getOrderInfo(order_sn) {
-    let { showSelectAddress } = this.data;
+    let { showSelectAddress, a } = this.data;
     let { code, data: { order_sn: _order_sn, limit_pay_minute, limit_pay_second, ...rest } } = await ajax('/mini/vip/wap/order/order_info', order_sn)
     if (code === 100) {
-      let a = setInterval(() => {
+      a = setInterval(() => {
         --limit_pay_second
-        if (limit_pay_minute === -1) {
+        if (limit_pay_minute === 0 && limit_pay_second == 0) {
           return clearInterval(a)
         }
         if (limit_pay_second <= 0) {
@@ -244,6 +252,26 @@ Page({
       return code === 100
     }
 
+    // 邮递
+
+    if (d.receive_type == 2) {
+      let params = {
+        order_sn,
+        user_address_name,
+        user_address_phone,
+        user_address_id,
+        province, city, district,
+      }
+      let { code, msg } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      if (code !== 100) {
+        my.showToast({
+          content: msg
+        });
+      }
+      return code === 100
+    }
+
+
   },
 
   /**
@@ -259,34 +287,64 @@ Page({
    */
   async payNow() {
     let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
-    if (!order_sn ||
-      !user_address_name ||
-      !user_address_phone ||
-      !province ||
-      !city ||
-      !district ||
-      !shop_id ||
-      !shop_name) {
-      return
+    if (d.receive_type == 1) {
+      if (!order_sn ||
+        !user_address_name ||
+        !user_address_phone ||
+        !province ||
+        !city ||
+        !district ||
+        !shop_id ||
+        !shop_name
+      ) {
+        return
+      }
     }
+
+    log(1)
+
+    if (d.receive_type == 2) {
+      log(order_sn,
+        user_address_name
+        , user_address_phone
+        , province
+        , city
+        , district)
+      if (!order_sn ||
+        !user_address_name ||
+        !user_address_phone ||
+        !province ||
+        !city ||
+        !district
+      ) {
+        return
+      }
+    }
+
+    log(2)
+
 
     let confirm = await this.confirmOrder()
     if (!confirm) {
       return
     }
 
-    if (d.order_total_amount != 0) {
-      let { code, data: { tradeNO }, msg } = await this.pay()
+    log(3)
 
-      if (code === 0) {
+    if (d.order_total_amount != 0) {
+      let r = await this.pay()
+      log(r.data.tradeNo)
+      if (r.code === 0) {
         my.tradePay({
-          tradeNO, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+          tradeNO:r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
           success: res => {
+            log(res)
             return my.redirectTo({
               url: '../finish/finish?id=' + d.id + '&fail=' + false
             });
           },
           fail: res => {
+            log(res)
             return my.redirectTo({
               url: '../finish/finish?id=' + d.id + '&fail=' + true
             });

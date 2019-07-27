@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { ajax } from '../../../pages/common/js/li-ajax'
+import { ajax, log } from '../../../pages/common/js/li-ajax'
 
 
 
@@ -13,16 +13,43 @@ Page({
 
     page_num: 1,
     page_size: 100,
+
+    time: ''
   },
   async onShow() {
+    clearInterval(this.data.time)
     await this.getOrderList()
+  },
+  onUnload() {
+    clearInterval(this.data.time)
   },
 
   async getOrderList() {
-    const { _sid, page_num, page_size } = this.data;
+    let { _sid, page_num, page_size, time } = this.data;
     let res = await ajax('/mini/vip/wap/order/order_list', { _sid, page_num, page_size })
     if (res.code === 100) {
-      this.setData({ orderList: res.data.data })
+      let orderList = res.data.data
+      time = setInterval(() => {
+        orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
+          remaining_pay_second--
+          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+            return clearInterval(time)
+          }
+          if (remaining_pay_second <= 0) {
+            --remaining_pay_minute
+            remaining_pay_second = 59
+          }
+          return {
+            remaining_pay_minute,
+            remaining_pay_second,
+            ...item,
+          }
+        })
+        log(time)
+        this.setData({ orderList, time })
+
+      }, 1000)
+
     }
   },
 
@@ -34,7 +61,7 @@ Page({
     });
   },
 
-  switchTo(){
+  switchTo() {
     my.switchTab({
       url: '/pages/vip/index/index', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
     });

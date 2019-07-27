@@ -28,7 +28,7 @@
       </view>
       <view class="footer-wrap" a:if="{{item.status == 0}}">
         <view class="footer">
-        去支付（还剩14分20秒）
+        去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
       </view>
     </view>

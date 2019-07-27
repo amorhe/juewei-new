@@ -4,6 +4,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
+    showTop: false,
     orderState: [],
     takeOutState: [
       '待支付',
@@ -19,7 +20,7 @@ Page({
       '订单已取消'
     ],
 
-    pickUpState:[
+    pickUpState: [
       '待支付',
       '订单已提交',
       '商家已接单',
@@ -33,6 +34,9 @@ Page({
       '订单已取消'
     ],
 
+    payTypes: {
+      1: '微信', 2: '支付宝', 3: '银联', 4: '微信扫码', 5: '支付宝扫码', 6: '现金'
+    },
 
     postWay: {
       FNPS: '蜂鸟配送', MTPS: '美团配送', ZPS: '自配送'
@@ -61,6 +65,12 @@ Page({
     const { number } = e.currentTarget.dataset
     my.makePhoneCall({ number });
   },
+
+  show() {
+    this.setData({
+      showTop: true
+    })
+  }
 });
 
 let data = {
