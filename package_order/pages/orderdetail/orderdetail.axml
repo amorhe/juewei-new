@@ -195,7 +195,7 @@
           支付方式
         </view>
         <view class="value">
-          <view>{{d.order_no}}</view>
+          <view>{{payTypes[d.pay_type]}}</view>
         </view>
       </view>
 
@@ -204,7 +204,7 @@
           下单时间
         </view>
         <view class="value">
-          <view>{{d.order_no}}</view>
+          <view>{{d.order_ctime}}</view>
         </view>
       </view>
     </view>
