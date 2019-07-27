@@ -19,8 +19,8 @@ Page({
   back(){
     const {order_sn} = this.data;
     if(order_sn){
-      my.navigateBack({
-        delta:1
+      my.redirectTo({
+        url:'/pages'
       });
     }
   },
