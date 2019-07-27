@@ -10,9 +10,9 @@
         <text>￥</text>
         <text>{{priceAll}}</text>
       </view>
-      <view a:if="{{shopcartGoods.length==0}}">另需配送费6元</view>
+      <view a:if="{{shopcartGoods.length>0}}">另需配送费6元</view>
     </view>
-    <view a:if="{{shopcartGoods.length>0}}">另需配送费6元</view>
+    <view a:if="{{shopcartGoods.length==0}}">另需配送费6元</view>
     <view class="buyBtn" a:if="{{priceAll<30}}">￥30起送</view>
     <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>30}}">立即购买</view>
   </view>

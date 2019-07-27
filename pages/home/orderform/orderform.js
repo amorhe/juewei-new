@@ -195,11 +195,17 @@ Page({
       modalShow: true
     })
   },
-  // 选择
+  // 同意协议
   checkedTrueTap(){
     this.setData({
       isCheck: !this.data.isCheck
     })
+  },
+  // 选择优惠券
+  chooseCoupon(){
+    my.navigateTo({
+      url: '/pages/home/orderform/chooseCoupon/chooseCoupon'
+    });
   },
   // 查找用户可用优惠券
   getCouponsList(){

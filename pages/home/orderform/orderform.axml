@@ -101,7 +101,7 @@
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
         <text class="marginLSixteen">优惠券</text>
       </view>
-      <view>
+      <view onTap="chooseCoupon">
         <text class="colorNine" a:if="{{couponsDefault==null}}">无可用红包</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>

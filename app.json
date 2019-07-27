@@ -18,7 +18,8 @@
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
     "pages/login/auth/auth",
-    "package_order/pages/comment/comment-success/comment-success"
+    "package_order/pages/comment/comment-success/comment-success",
+    "pages/home/orderform/chooseCoupon/chooseCoupon"
   ],
   "subPackages": [
     {
