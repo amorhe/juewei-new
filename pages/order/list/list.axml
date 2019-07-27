@@ -33,7 +33,7 @@
       </view>
       <view class="out-footer">
         <view class="topay" a:if="{{item.order_status == 0}}">
-          去支付（还剩{{item._remaining_pay_minute}}分{{item._remaining_pay_second}}秒）
+          去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}">
           取消订单

@@ -17,18 +17,18 @@ Page({
     time: ''
   },
   async onShow() {
+    clearInterval(this.data.time)
     await this.getOrderList()
   },
   onUnload() {
     clearInterval(this.data.time)
-    this.setData({ time: 0 })
   },
 
   async getOrderList() {
     const { _sid, page_num, page_size } = this.data;
     let res = await ajax('/mini/vip/wap/order/order_list', { _sid, page_num, page_size })
     if (res.code === 100) {
-     let orderList = res.data.data
+      let orderList = res.data.data
       let time = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
@@ -45,7 +45,7 @@ Page({
             ...item,
           }
         })
-
+        log(time)
         this.setData({ orderList, time })
 
       }, 1000)

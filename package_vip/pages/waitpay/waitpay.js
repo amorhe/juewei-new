@@ -70,7 +70,6 @@ Page({
 
   onUnload() {
     clearInterval(this.data.a)
-    this.setData({ a: 0 })
   },
 
   /**

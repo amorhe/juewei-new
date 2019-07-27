@@ -60,6 +60,9 @@ Page({
       "dis_sn": "",
       "dispatch_name": "",
       "code": ""
+      ,
+
+      a:''
 
     },
 
@@ -73,6 +76,11 @@ Page({
     await this.getOrderDetail(id)
   },
 
+   onUnload() {
+    clearInterval(this.data.a)
+  },
+
+
   /**
    * @function 或其订单详情
    */
@@ -83,11 +91,25 @@ Page({
     let _intro = await parseData(res.data.intro)
 
     if (res.code === 100) {
-      this.setData({
-        _exchange_intro,
-        _intro,
-        detail: res.data
-      })
+      let { remaining_pay_minute, remaining_pay_second,...item }  = res.data
+      let { a } = this.data
+      a = setInterval(() => {
+        --remaining_pay_second
+        if (remaining_pay_minute === 0 && remaining_pay_second == 0) {
+          return clearInterval(a)
+        }
+        if (remaining_pay_second <= 0) {
+          --remaining_pay_minute
+          remaining_pay_second = 59
+        }
+        log(remaining_pay_second)
+        this.setData({
+          _exchange_intro,
+          _intro,
+          detail:{...item,remaining_pay_second,remaining_pay_minute},
+          a
+        })
+      }, 1000)
     }
   },
 
@@ -95,14 +117,14 @@ Page({
    * @function 取消订单
    */
 
- async doCancelOrder(){
-   const {order_sn} = this.data.detail
-   let res = await ajax('/mini/vip/wap/trade/cancel_order',{order_sn},'POST')
-   if(res.code ===100){
-     my.navigateBack({
-       delta:1
-     });
-   }
+  async doCancelOrder() {
+    const { order_sn } = this.data.detail
+    let res = await ajax('/mini/vip/wap/trade/cancel_order', { order_sn }, 'POST')
+    if (res.code === 100) {
+      my.navigateBack({
+        delta: 1
+      });
+    }
   },
 
   /**
