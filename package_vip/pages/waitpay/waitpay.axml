@@ -7,11 +7,11 @@
   </view>
   <!-- 实物邮寄 -->
   <view >
-    <view class="address" a:if="{{d.receive_type == 2}}" onTap="toAddAddress"">
+    <view class="address" a:if="{{d.receive_type == 2 && !name}}" onTap="toAddAddress">
       <view class="address-title">请填写收货地址</view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
-    <view class="address" a:if="{{d.receive_type == 2}}">
+    <view class="address" a:if="{{d.receive_type == 2 && name}}">
       <view class="address-title">
         <view>小魔女 199 9999 9999</view>
         <view class="address-sm">北京市朝阳区某某某某某某某某某某某某某街</view>
@@ -44,10 +44,10 @@
         <image class="p-img" mode="scaleToFill" src="{{imageUrl2 + d.goods_pic}}"/>
         <view class="p-right">
           <view class="p-title">
-      {{d.goods_name}}
+            {{d.goods_name}}
           </view>
           <view class="p-price">
-         {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+            {{d.order_point}} 积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
           </view>
         </view>
       </view>
@@ -93,7 +93,7 @@
           </view>
         </view>
         <view class="shop-address">
-            {{item.shop_address}}
+          {{item.shop_address}}
         </view>
       </view>
     </view>

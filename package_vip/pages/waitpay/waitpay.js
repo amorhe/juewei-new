@@ -55,14 +55,16 @@ Page({
     countryList: [],
     defaultAddress: [0, 0, 0],
 
-
     shopList: []
 
   },
   async onLoad(e) {
-    let { order_sn } = e
+    let { order_sn, name, phone, address } = e
     this.setData({
-      order_sn
+      order_sn,
+      name,
+      phone,
+      address
     })
     region = await getRegion()
     this.getAddressList()
@@ -77,9 +79,10 @@ Page({
   /**
    * @function 添加地址
    */
-  toAddAddress(){
+  toAddAddress() {
+    const { order_sn } = this.data
     my.navigateTo({
-      url:'/package_my/pages/myaddress/addaddress/addaddress'
+      url: '/package_my/pages/myaddress/myaddress?order_sn=' + order_sn
     });
   },
 

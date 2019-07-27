@@ -50,6 +50,7 @@
 }
 
 .bottomView{
+  background: #fff;
   width: 100%;
   padding: 20rpx 0;
   position: fixed;
