@@ -29,7 +29,7 @@
    <view a:if="{{addressList.length== 0}}" style="display:flex;justify-content:center;padding-top:100rpx;">暂无收货地址！</view>
 <!-- 添加新地址 -->
    <view style="height:96rpx;"></view>
-   <navigator url="/package_my/pages/myaddress/addaddress/addaddress" class="addView">
+   <navigator url="/package_my/pages/myaddress/addaddress/addaddress?order=1" class="addView">
      <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}add.png"/>
      <view class="fontThirtySix marginLSixteen">新增收获地址</view>
    </navigator>

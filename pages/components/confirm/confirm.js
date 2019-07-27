@@ -4,8 +4,8 @@ Component({
     
   },
   props: {
-    mask:'',
-    modalShow:'',
+    mask:'',   // 遮罩
+    modalShow:'',   // 提示框
     content:'',
     title:'',
     onCounterPlusOne: (data) => console.log(data),
@@ -19,14 +19,16 @@ Component({
     confirmTap(){
       const modalObj = {
         modalShow:false,
-        mask:false
+        mask:false,
+        type:1
       }
       this.props.onCounterPlusOne(modalObj)
     },
     cancelTap() {
       const modalObj = {
         modalShow:false,
-        mask:false
+        mask:false,
+        type:0
       }
       this.props.onCounterPlusOne(modalObj)
     },

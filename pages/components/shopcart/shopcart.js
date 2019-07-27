@@ -24,8 +24,10 @@ Component({
     showAnmimation:false,
     windowHeight:'',
     animation:null,
-    goodsBuy:[],
-    goodsResult:[]
+    goodsItem:{},   //选择规格一条商品
+    goodsResult:[],
+    goodsKey:"",
+    goodsLast:''
   },
   onInit() {
     
@@ -106,11 +108,15 @@ Component({
         goodsType: e.currentTarget.dataset.type
       })
     },
-    // 选择规格
-    chooseSizeTap(){
+    // 选规格
+    chooseSizeTap(e){
+      // console.log(e)
       this.setData({
         maskView:true,
-        goodsModal:true
+        goodsModal:true,
+        goodsItem: e.currentTarget.dataset.item,
+        goodsKey: e.currentTarget.dataset.type,
+        goodsLast: e.currentTarget.dataset.index
       })
     },
     closeModal(data){

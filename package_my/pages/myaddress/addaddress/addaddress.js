@@ -41,6 +41,7 @@ Page({
     defaultAddress: [0, 0, 0],
     shop_id:'',
     addressId:'',
+    order:0
   },
   async onLoad(e) {
    if(e.Id){
@@ -48,6 +49,9 @@ Page({
      this.getInfo(e.Id)
    }else{
      this.data.addressId = ''
+   }
+   if(e.order){
+     this.data.order=1
    }
    region =  await getRegion()
     this.getAddressList()
@@ -232,9 +236,15 @@ Page({
       }
       addressCreate(data).then(res=>{
         if(res.code==0){
-          my.navigateBack({
-            url:'/package_my/pages/myaddress/myaddress'
-          });
+          if(this.data.order==1){
+            my.navigateBack({
+              url:'/pages/home/orderform/selectaddress/selectaddress'
+            })
+          }else{
+            my.navigateBack({
+              url:'/package_my/pages/myaddress/myaddress'
+            });
+          }
         }else{
           my.showToast({
             type:'none',

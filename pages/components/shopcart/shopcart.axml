@@ -229,12 +229,11 @@
           </view>
         </view>
       </view> -->
-      <!-- 超辣 -->
       <view id="{{index + 1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
         <view class="goodsTypeEv">{{item.key}}</view>
 
         <!-- 折扣套餐爆款 -->
-        <view class="goodsBox" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{companyGoodsList}}" data-goods_id="{{v.goods_id}}" a:if="{{index<3}}">
+        <view class="goodsBox" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{companyGoodsList}}" data-goods_id="{{v.goods_id}}" data-shop_id="{{v}}" a:if="{{index<3}}">
           <image a:if="{{index==1}}" class="goodsImage1" src="{{imageUrl2 + v.goods_img}}"/>
           <image a:if="{{index==0}}" class="goodsImage1" src="{{v.goods_img[0]}}"/>
           <view class="goodsWrap">
@@ -267,7 +266,7 @@
           </view>
         </view>
 
-        <!-- 直接加减 -->
+        <!-- 超辣 -->
         <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{companyGoodsList}}" data-goods_id="{{v.goods_id}}" a:if="{{index>=3}}">
           <image src="{{v.goods_small_img[0]}}"/>
           <view class="goodsInfos">
@@ -295,7 +294,7 @@
                 <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
                 <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view>
               </view>
-              <view class="goodsSize" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
+              <view class="goodsSize" data-item="{{item}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
                 <view>{{v.goods_format.length}}</view>
               </view>
@@ -346,5 +345,5 @@
 <shopcart-model orderType="{{type}}"/>
 
 <!-- 选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsBuy="{{goodsBuy}}" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{goodsKey}}" goodsLast="{{goodsLast}}" shopGoodsList="{{shopGoodsList}}" />
 

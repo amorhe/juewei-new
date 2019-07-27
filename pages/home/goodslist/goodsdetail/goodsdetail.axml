@@ -37,8 +37,9 @@
     tabBarActiveTextColor="#E60012"
     tabBarUnderlineColor="#E60012"
     activeCls="activeFont"
+    swipeable="false"
   >
-    <block style="height:50vh">
+    <block>
       <tab-content key="0">
         <view class="tab-content">
           <view class="goodsintro">{{goodsInfo.goods_introduce}}</view>
@@ -46,7 +47,7 @@
       </tab-content>
       <tab-content key="1">
         <view class="tab-content">
-         <view style="height:50vh;overflow-y:scroll">
+         <view style="overflow-y:scroll">
             <image a:for="{{goodsInfo.goods_img_intr}}" mode="widthFix" style="width:100%" src="{{item}}"/>
          </view>
         </view>
@@ -65,6 +66,7 @@
     tabBarUnderlineColor="#E60012"
     activeCls="activeFont"
     onChange="tabChange"
+    swipeable="false"
   >
     <block>
       <tab-content key="0">
@@ -72,16 +74,16 @@
           <view class="goodsintro">
             <!-- 好评率 -->
             <view class="percentView">
-              <view>好评率99%</view>
+              <view style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{(commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100}}%</view>
             </view>
           </view>
           <view class="tagView">
             <!-- 选中class为 tagActive -->
-            <text class="tagNoActive" a:for="{{5}}">全部（9999+）</text>
+            <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
           </view>
           <!-- 评论列表 -->
           <view class="commontList">
-            <view a:for="{{commentArr}}">
+            <view a:for="{{commentArr.data}}">
               <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
               <view>
                 <view class="commontUser">
@@ -122,16 +124,16 @@
           <view class="goodsintro">
             <!-- 好评率 -->
             <view class="percentView">
-              <view>好评率99%</view>
+              <view style="width:{{686 * (dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0)}}rpx">好评率{{(dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0) * 100}}%</view>
             </view>
           </view>
           <view class="tagView">
             <!-- 选中class为 tagActive -->
-            <text class="tagNoActive" a:for="{{5}}">全部（9999+）</text>
+            <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
           </view>
            <!-- 评论列表 -->
           <view class="commontList">
-            <view a:for="{{dispatchArr}}">
+            <view a:for="{{dispatchArr.data}}">
               <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
               <view>
                 <view class="commontUser">

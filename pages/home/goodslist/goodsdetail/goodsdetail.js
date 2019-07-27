@@ -51,7 +51,7 @@ Page({
       }
     ],
     goodsInfo:{},
-    dispatchArr:[]
+    dispatchArr:[],
   },
   onLoad(e) {
     const goodsAll = JSON.parse(e.goodsAll);
@@ -61,8 +61,9 @@ Page({
       goodsInfo:arr[0]
     })
     console.log(arr[0])
+    const shop_id = my.getStorageSync({key:'shop_id'}).data;
     this.getCommentList(arr[0].goods_code,1,10);
-    this.getDispatchCommentList(arr[0].goods_code,1,10)
+    this.getDispatchCommentList(shop_id,1,10)
   },
   handleTabClick({ index }) {
     this.setData({
@@ -79,16 +80,16 @@ Page({
     commentList(goods_code,pagenum,pagesize,1).then((res) => {
       console.log(res)
       this.setData({
-        commentArr:res.data
+        commentArr:res
       })
     })
   },
   // 配送评价
-  getDispatchCommentList(goods_code,pagenum,pagesize){
-    DispatchCommentList(goods_code,pagenum,pagesize,1).then((res) => {
+  getDispatchCommentList(shop_id,pagenum,pagesize){
+    DispatchCommentList(shop_id,pagenum,pagesize,1).then((res) => {
       console.log(res);
       this.setData({
-        dispatchArr:res.data
+        dispatchArr:res
       })
     })
   }

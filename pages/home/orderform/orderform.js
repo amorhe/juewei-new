@@ -158,7 +158,7 @@ Page({
     // })
     this.data.repurseList[e.currentTarget.dataset.index].goods_count --;
     this.data.repurseList.forEach((item,index) => {
-      if(index != e.currentTarget.dataset.index && item.goods_count == 0){
+      if(index != e.currentTarget.dataset.index && this.data.repurseList[e.currentTarget.dataset.index].goods_count == 0){
         item.goods_choose = true
       }
     })

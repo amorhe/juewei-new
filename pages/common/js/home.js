@@ -63,9 +63,9 @@ export const exchangeCoupon = (_sid,couponscode) => ajax(ajaxUrl.exchangeCoupon,
 
 export const exchangedetail = (_sid,gift_code_id,gift_id,order_id) => ajax(ajaxUrl.exchangedetail,{_sid,gift_code_id,gift_id,order_id});
 
-export const commentList = (goods_code,pagenum,pagesize,plate) => ajax(ajaxUrl.commentList,{goods_code,pagenum,pagesize,plate});
+export const commentList = (goods_code,pagenum,pagesize,plate,level,tag_id) => ajax(ajaxUrl.commentList,{goods_code,pagenum,pagesize,plate,level,tag_id});
 
-export const DispatchCommentList = (shop_id,pagenum,pagesize,plate) => ajax(ajaxUrl.DispatchCommentList,{shop_id,pagenum,pagesize,plate});
+export const DispatchCommentList = (shop_id,pagenum,pagesize,plate,level,tag_id) => ajax(ajaxUrl.DispatchCommentList,{shop_id,pagenum,pagesize,plate,level,tag_id});
 
 export const add_lng_lat = (order_no,type,longitude,latitude) =>ajax(ajaxUrl.add_lng_lat,{order_no,type,longitude,latitude});
 

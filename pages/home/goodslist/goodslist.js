@@ -23,7 +23,7 @@ Page({
     region_id: '',  //区
     showListObj: {},   // 展位
     isOpen: '',     //门店是否营业
-    shopTakeOut: [],   // 外卖附近门店列表
+    shopTakeOut: [],   // 附近门店列表
     shopGoodsList: [],         // 门店商品列表
     companyGoodsList:[],
     typeList1:{
@@ -44,6 +44,11 @@ Page({
       "解辣神器": "qqt_series"
     },
     shopGoodsAll:[],  
+    content:'',
+    confirmButtonText:'',
+    cancelButtonText:'',
+    modalShow:false,
+    mask:false
   },
   onLoad(query) {
     // 定位地址
@@ -79,9 +84,9 @@ Page({
     // 页面加载完成 只加载一次 页面初始化用
   },
   closeOpen() {
-    this.setData({
-      isClose: true
-    })
+    // this.setData({
+    //   isClose: true
+    // })
   },
   // 授权获取用户信息
   onGetAuthorize(res) {
@@ -163,10 +168,10 @@ Page({
   },
   // 外卖附近门店
   getLbsShop() {
-    // const lng = my.getStorageSync({key:'lng'}).data;
-    // const lat = my.getStorageSync({key:'lat'}).data;
-    const lng = 116.54828;
-    const lat = 39.918639;
+    const lng = my.getStorageSync({key:'lng'}).data;
+    const lat = my.getStorageSync({key:'lat'}).data;
+    // const lng = 116.54828;
+    // const lat = 39.918639;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -190,7 +195,8 @@ Page({
         shopArr2.sort(compare('goods_num'));
         const shopArray = shopArr1.concat(shopArr2);
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
+         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id})
+        this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
         this.setData({
           shopTakeOut: shopArray
         })
@@ -208,13 +214,18 @@ Page({
             shopTakeOut: arr
           })
           my.setStorageSync({ key: 'takeout', data: arr });
+          my.setStorageSync({key:'shop_id',data:arr[0].shop_id})
           this.getCompanyGoodsList(arr[0].company_sale_id);
         }
       } else if (res.code == 5 || res.data.length == 0) {
-        console.log("附近暂无门店");
         this.setData({
-          type: 2
+          content:'您的定位地址无可配送门店',
+          confirmButtonText:'去自提',
+          cancelButtonText:'修改地址',
+          modalShow:true,
+          mask:true
         })
+
       }
 
     })
@@ -244,8 +255,10 @@ Page({
                 my.showToast({
                   content: "当前定位地址无可浏览的门店，请切换地址！",
                   success: (res) => {
-
-                  },
+                    my.navigateTo({
+                      url: '/pages/home/selecttarget/selecttarget'
+                    });
+                  },  
                 });
               }
             },
@@ -274,6 +287,7 @@ Page({
       }
       const shopArray = shopArr1.concat(shopArr2);
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
+      my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id})
       this.getCompanyGoodsList(shopArray[0].company_sale_id);  //获取公司所有商品
       console.log(shopArray);
       this.setData({
@@ -292,6 +306,7 @@ Page({
           shopTakeOut: arr
         })
         my.setStorageSync({ key: 'self', data: arr });
+         my.setStorageSync({key:'shop_id',data:arr[0].shop_id})
         this.getCompanyGoodsList(arr[0].company_sale_id);
       }
 
@@ -409,6 +424,21 @@ Page({
         shopGoodsAll:this.data.shopGoodsList
       })
     })
+  },
+  onCounterPlusOne(e){
+    console.log(e)
+    // 点击左边去自提
+    if(e.type==1) {
+      this.setData({
+        modalShow:e.modalShow,
+        mask:e.mask,
+        type:2
+      })
+    }else{
+      my.navigateTo({
+        url: '/pages/home/selecttarget/selecttarget'
+      });
+    }
   },
   onHide() {
     // 页面隐藏

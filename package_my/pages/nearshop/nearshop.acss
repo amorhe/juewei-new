@@ -7,26 +7,30 @@
   background: #EEE;
   border-radius: 32rpx;
   display: flex;
-  align-items: center
+  align-items: center;
+  overflow: hidden
 }
 .positionAddress {
   display: flex;
   align-items: center;
   height: 40rpx;
   border-right: 1rpx #ccc solid;
-  width: 132rpx;
   padding-left: 32rpx;
+  padding-right: 16rpx;
 }
 .positionAddress>image {
   width: 24rpx;
   height: 24rpx;
   margin-left: 8rpx;
 }
+.positionAddress>text {
+  white-space: nowrap
+}
 .searchBox {
   height: 40rpx;
-  width: 520rpx;
   display: flex;
-  align-items: center
+  align-items: center;
+  flex: 1
 }
 .searchIcon {
   width: 24rpx;
