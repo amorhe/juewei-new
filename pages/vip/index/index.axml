@@ -21,7 +21,7 @@
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
     </view>
-    <swiper class="banner">
+    <swiper class="banner" a:if="{{bannerList.lenght}}">
       <block a:for="{{bannerList}}">
         <swiper-item >
           <image style="margin:0" class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>

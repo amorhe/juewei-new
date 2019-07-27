@@ -4,6 +4,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
+    showTop: false,
     orderState: [],
     takeOutState: [
       '待支付',
@@ -64,6 +65,12 @@ Page({
     const { number } = e.currentTarget.dataset
     my.makePhoneCall({ number });
   },
+
+  show() {
+    this.setData({
+      showTop: true
+    })
+  }
 });
 
 let data = {
