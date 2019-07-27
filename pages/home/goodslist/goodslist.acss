@@ -1,4 +1,4 @@
-@import '../../components/goodsList/goodsList.acss';
+@import '../../components/goods/goods.acss';
 page {
   background: #ffffff;
 }

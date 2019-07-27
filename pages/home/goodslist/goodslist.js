@@ -68,7 +68,7 @@ Page({
       })
     }
     this.getShowpositionList(110100, 110105, 1, 1);
-    this.loginByAuth();
+    // this.loginByAuth();
     // 切换门店
     if (app.globalData.shop_id) {
       this.setData({
@@ -89,51 +89,51 @@ Page({
     // })
   },
   // 授权获取用户信息
-  onGetAuthorize(res) {
-    my.getOpenUserInfo({
-      success: (res) => {
-        let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
-        this.loginByAuth(userInfo.nickName, userInfo.avatar);
-      },
-      fail() {
-        my.alert({ title: '获取用户信息失败' });
-      }
-    });
-  },
-  // 获取手机号
-  onGetPhone() {
-    my.getPhoneNumber({
-      success: (res) => {
-        let encryptedData = res.response;
-        console.log(encryptedData)
-      },
-      fail: (res) => {
-        console.log(res);
-      },
-    });
-  },
-  // 授权登录
-  loginByAuth(nick_name, head_img) {
-    const ali_uid = my.getStorageSync({ key: 'ali_uid' });
-    loginByAuth(ali_uid.data, '15757902894', nick_name, head_img).then((res) => {
-      console.log(res)
-      my.setStorageSync({
-        key: '_sid', // session_id
-        data: res.data._sid,
-      });
-      this.getUserInfo(res.data._sid);
-    })
-  },
-  // 用户信息
-  getUserInfo(_sid) {
-    getuserInfo(_sid).then((res) => {
-      console.log(res);
-      app.globalData.userInfo = res.data;
-      // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
-      this.getBannerList(110100, 110105, 1, 1);    //banner列表
+  // onGetAuthorize(res) {
+  //   my.getOpenUserInfo({
+  //     success: (res) => {
+  //       let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
+  //       this.loginByAuth(userInfo.nickName, userInfo.avatar);
+  //     },
+  //     fail() {
+  //       my.alert({ title: '获取用户信息失败' });
+  //     }
+  //   });
+  // },
+  // // 获取手机号
+  // onGetPhone() {
+  //   my.getPhoneNumber({
+  //     success: (res) => {
+  //       let encryptedData = res.response;
+  //       console.log(encryptedData)
+  //     },
+  //     fail: (res) => {
+  //       console.log(res);
+  //     },
+  //   });
+  // },
+  // // 授权登录
+  // loginByAuth(nick_name, head_img) {
+  //   const ali_uid = my.getStorageSync({ key: 'ali_uid' });
+  //   loginByAuth(ali_uid.data, '15757902894', nick_name, head_img).then((res) => {
+  //     console.log(res)
+  //     my.setStorageSync({
+  //       key: '_sid', // session_id
+  //       data: res.data._sid,
+  //     });
+  //     this.getUserInfo(res.data._sid);
+  //   })
+  // },
+  // // 用户信息
+  // getUserInfo(_sid) {
+  //   getuserInfo(_sid).then((res) => {
+  //     console.log(res);
+  //     app.globalData.userInfo = res.data;
+  //     // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
+  //     this.getBannerList(110100, 110105, 1, 1);    //banner列表
       
-    })
-  },
+  //   })
+  // },
   // 切换外卖自提
   chooseTypes(e) {
     if (e.currentTarget.dataset.type == 'ziti') {
@@ -369,6 +369,7 @@ Page({
               last:[...last]
             }
           })
+          console.log(sortList)
           this.setData({
             shopGoodsList: JSON.parse(JSON.stringify(sortList)),
             companyGoodsList
@@ -419,9 +420,10 @@ Page({
         "last": PKG
       }
       this.data.shopGoodsList.unshift(obj1,obj2);
-      console.log(this.data.shopGoodsList)
+      let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
+      console.log(goodsNew)
       this.setData({
-        shopGoodsAll:this.data.shopGoodsList
+        shopGoodsAll:goodsNew
       })
     })
   },

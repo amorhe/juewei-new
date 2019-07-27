@@ -27,52 +27,34 @@ Component({
       orderType:this.props.orderType
     })
     let data = my.getStorageSync({key:'goodsList'}).data;
-    console.log(data)
-    // this.setData({
-    //   shopcartGoods:data
-    // })
-    // let arr3 = [],goodsArr=[],arr1=[],arr2=[],arr_2=[];
-    // arr1 = data.filter(item=> item.length==1);   // 长度为1的购物车商品数据
-    // arr2 = data.filter(item=> item.length>1);
-    // if(arr2.length>0) {
-    //   arr_2 = arr2[0].map(item => {return item})
-    // }
-    // arr1.forEach(item => {
-    //   arr3 = [...arr3,...item]
-    // })
-    // goodsArr = [...arr_2,...arr3];
-    // console.log(prevProps, this.props, prevData, this.data);
-    // this.setData({
-    //   goodsArr
-    // })
-    // prevData.goodsArr = goodsArr;
-    // prevData.orderType = this.props.orderType;
-    // this.setData({
-    //   orderType:this.props.orderType,
-    //   goodsArr
-    // })
-  //   let arr1 = data.filter(item => {
-  //       return item.count > 0
-  //   }) 
-  //   let arr2 = data.filter(item => {
-  //       return item.largeCount > 0
-  //   })
-  //  let arr3 = data.filter(item => {
-  //     return item.smallCount > 0
-  //  })
-  //  let price1 = 0,price2 = 0,price3 = 0;
-  //  arr1.forEach(item => {
-  //    price1 += item.goods_format[0].goods_price / 100 * item.count
-  //  })
-  //  arr2.forEach(item => {
-  //    price2 += item.goods_format[1].goods_price * item.largeCount
-  //  })
-  //  arr3.forEach(item => {
-  //    price3 += item.goods_format[0].goods_price * item.smallCount
-  //  })
+    // 无规格商品
+    let arr1 = data.filter(item => {
+        return item.count > 0
+    }) 
+    // 大份
+    let arr2 = data.filter(item => {
+        return item.largeCount > 0
+    })
+    // 小份
+   let arr3 = data.filter(item => {
+      return item.smallCount > 0
+   })
+   let price1 = 0,price2 = 0,price3 = 0;
+   arr1.forEach(item => {
+     price1 += item.goods_format[0].goods_price / 100 * item.count
+   })
+   arr2.forEach(item => {
+     price2 += item.goods_format[1].goods_price * item.largeCount
+   })
+   arr3.forEach(item => {
+     price3 += item.goods_format[0].goods_price * item.smallCount
+   })
+   let shopcartGoods = [];
+   shopcartGoods.push(data);
+   console.log(shopcartGoods,data)
   //  this.setData({
   //    priceAll:price1 + price2 + price3,
-  //    goodsArr:data
+  //    shopcartGoods:data
   //  })
   },
   didUnmount() {},

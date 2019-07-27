@@ -78,21 +78,19 @@ Component({
       // 统计小份
       let small = shopGoodsList.map(item =>  item.last.filter(_item=> _item.smallCount > 0))
       smallArr = small.filter(item => item.length>0);
+      let arr = [];
       if(my.getStorageSync({key:'goodsList'}).data){
         const oldArr = my.getStorageSync({key:'goodsList'}).data;
-        let arr = largeArr.concat(smallArr,oldArr);
-        my.setStorageSync({
-          key: 'goodsList', 
-          data: arr, 
-        });
+        arr = oldArr.concat(smallArr[0],largeArr[0]);
       }else{
        const oldArr =[];
-        let arr = largeArr.concat(smallArr,oldArr);
-        my.setStorageSync({
-          key: 'goodsList', 
-          data: arr, 
-        }); 
+       arr = oldArr.concat(smallArr[0],largeArr[0]);
       } 
+      let goodsCart = arr.filter(item=> item!=undefined);
+      my.setStorageSync({
+        key: 'goodsList', 
+        data: goodsCart, 
+      }); 
     }
   },
 });

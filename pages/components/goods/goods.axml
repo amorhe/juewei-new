@@ -38,72 +38,12 @@
 <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
   <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;" scroll-with-animation="true">
     <view class="goodsUl">
-      <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
+      <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}">
         <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{index+1}}_1.png"/>
         <image a:if="{{goodsType == index + 1 && goodsType!=13}}" src="{{imageUrl}}m_{{index + 1}}_2.png"/>
          <image a:if="{{goodsType == 13}}" src="{{imageUrl}}m_13_2.png"/>
         <view class="{{goodsType== index + 1?'activeView':''}}">{{item.key}}</view>
       </view>
-      <!-- <view onTap="chooseGoodsType" data-type='2'>
-        <image a:if="{{goodsType!=2}}" src="{{imageUrl}}m_2_1.png"/>
-        <image a:else src="{{imageUrl}}m_2_2.png" />
-        <view class="{{goodsType==2?'activeView':''}}">套餐</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='3'>
-        <image a:if="{{goodsType!=3}}" src="{{imageUrl}}m_3_1.png"/>
-        <image a:else src="{{imageUrl}}m_3_2.png" />
-        <view class="{{goodsType==3?'activeView':''}}">爆款</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='4'>
-        <image a:if="{{goodsType!=4}}" src="{{imageUrl}}m_4_1.png"/>
-        <image a:else src="{{imageUrl}}m_4_2.png" />
-        <view class="{{goodsType==4?'activeView':''}}">超辣</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='5'>
-        <image a:if="{{goodsType!=5}}" src="{{imageUrl}}m_5_1.png"/>
-        <image a:else src="{{imageUrl}}m_5_2.png" />
-        <view class="{{goodsType==5?'activeView':''}}">甜辣</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='6'>
-        <image a:if="{{goodsType!=6}}" src="{{imageUrl}}m_6_1.png"/>
-        <image a:else src="{{imageUrl}}m_6_2.png" />
-        <view class="{{goodsType==6?'activeView':''}}">微辣</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='7'>
-        <image a:if="{{goodsType!=7}}" src="{{imageUrl}}m_7_1.png"/>
-        <image a:else src="{{imageUrl}}m_7_2.png" />
-        <view class="{{goodsType==7?'activeView':''}}">不辣</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='8'>
-        <image a:if="{{goodsType!=8}}" src="{{imageUrl}}m_8_1.png"/>
-        <image a:else src="{{imageUrl}}m_8_2.png" />
-        <view class="{{goodsType==8?'activeView':''}}">招牌系列</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='9'>
-        <image a:if="{{goodsType!=9}}" src="{{imageUrl}}m_9_1.png"/>
-        <image a:else src="{{imageUrl}}m_9_2.png" />
-        <view class="{{goodsType==9?'activeView':''}}">藤椒系列</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='10'>
-        <image a:if="{{goodsType!=10}}" src="{{imageUrl}}m_10_1.png"/>
-        <image a:else src="{{imageUrl}}m_10_2.png" />
-        <view class="{{goodsType==10?'activeView':''}}">素菜系列</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='11'>
-        <image a:if="{{goodsType!=11}}" src="{{imageUrl}}m_11_1.png"/>
-        <image a:else src="{{imageUrl}}m_11_2.png" />
-        <view class="{{goodsType==11?'activeView':''}}">黑鸭系列</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='12'>
-        <image a:if="{{goodsType!=12}}" src="{{imageUrl}}m_12_1.png"/>
-        <image a:else src="{{imageUrl}}m_12_2.png" />
-        <view class="{{goodsType==12?'activeView':''}}">五香系列</view>
-      </view>
-      <view onTap="chooseGoodsType" data-type='13'>
-        <image a:if="{{goodsType!=13}}" src="{{imageUrl}}m_13_1.png"/>
-        <image a:else src="{{imageUrl}}m_13_3.png" />
-        <view class="{{goodsType==13?'activeView':''}}">解辣神器</view>
-      </view> -->
     </view>
   </scroll-view>
 
@@ -234,8 +174,8 @@
 
         <!-- 折扣套餐爆款 -->
         <view class="goodsBox" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{companyGoodsList}}" data-goods_id="{{v.goods_id}}" data-shop_id="{{v}}" a:if="{{index<3}}">
-          <image a:if="{{index==1}}" class="goodsImage1" src="{{imageUrl2 + v.goods_img}}"/>
-          <image a:if="{{index==0}}" class="goodsImage1" src="{{v.goods_img[0]}}"/>
+           <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{imageUrl2 + v.goods_img[0]}}"/>
+          <image a:if="{{item.key!='套餐'}}" class="goodsImage1" src="{{v.goods_img[0]}}"/>
           <view class="goodsWrap">
             <view class="goodsName">{{v.goods_name}}</view>
             <view class="goodsKind marginB">
