@@ -62,7 +62,7 @@ Page({
       "code": ""
       ,
 
-      a:''
+      a: ''
 
     },
 
@@ -76,7 +76,7 @@ Page({
     await this.getOrderDetail(id)
   },
 
-   onUnload() {
+  onUnload() {
     clearInterval(this.data.a)
   },
 
@@ -91,7 +91,7 @@ Page({
     let _intro = await parseData(res.data.intro)
 
     if (res.code === 100) {
-      let { remaining_pay_minute, remaining_pay_second,...item }  = res.data
+      let { remaining_pay_minute, remaining_pay_second, ...item } = res.data
       let { a } = this.data
       a = setInterval(() => {
         --remaining_pay_second
@@ -106,7 +106,7 @@ Page({
         this.setData({
           _exchange_intro,
           _intro,
-          detail:{...item,remaining_pay_second,remaining_pay_minute},
+          detail: { ...item, remaining_pay_second, remaining_pay_minute },
           a
         })
       }, 1000)
