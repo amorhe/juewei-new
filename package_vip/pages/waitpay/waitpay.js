@@ -22,11 +22,6 @@ Page({
 
     shop_name: '',
 
-    province: '',
-    city: '',
-    district: '',
-
-
     d: {
       "id": "17",
       "order_point": "1",
@@ -55,16 +50,18 @@ Page({
     countryList: [],
     defaultAddress: [0, 0, 0],
 
-    shopList: []
+    shopList: [],
+    user_address_id: '',
+    user_address_detail_address: '',
+    province: '',
+    city: '',
+    district: ''
 
   },
   async onLoad(e) {
-    let { order_sn, name, phone, address } = e
+    let { order_sn, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
     this.setData({
-      order_sn,
-      name,
-      phone,
-      address
+      order_sn, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
     })
     region = await getRegion()
     this.getAddressList()
@@ -95,7 +92,7 @@ Page({
     if (code === 100) {
       let a = setInterval(() => {
         --limit_pay_second
-        if (limit_pay_minute === -1) {
+        if (limit_pay_minute === 0 && limit_pay_second==0) {
           return clearInterval(a)
         }
         if (limit_pay_second <= 0) {
@@ -256,6 +253,26 @@ Page({
       return code === 100
     }
 
+    // 邮递
+
+    if (d.receive_type == 2) {
+      let params = {
+        order_sn,
+        user_address_name,
+        user_address_phone,
+        user_address_id,
+        province, city, district,
+      }
+      let { code, msg } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      if (code !== 100) {
+        my.showToast({
+          content: msg
+        });
+      }
+      return code === 100
+    }
+
+
   },
 
   /**
@@ -271,34 +288,63 @@ Page({
    */
   async payNow() {
     let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
-    if (!order_sn ||
-      !user_address_name ||
-      !user_address_phone ||
-      !province ||
-      !city ||
-      !district ||
-      !shop_id ||
-      !shop_name) {
-      return
+    if (d.receive_type == 1) {
+      if (!order_sn ||
+        !user_address_name ||
+        !user_address_phone ||
+        !province ||
+        !city ||
+        !district ||
+        !shop_id ||
+        !shop_name
+      ) {
+        return
+      }
     }
+
+    log(1)
+
+    if (d.receive_type == 2) {
+      log(order_sn,
+        user_address_name
+        , user_address_phone
+        , province
+        , city
+        , district)
+      if (!order_sn ||
+        !user_address_name ||
+        !user_address_phone ||
+        !province ||
+        !city ||
+        !district
+      ) {
+        return
+      }
+    }
+
+    log(2)
+
 
     let confirm = await this.confirmOrder()
     if (!confirm) {
       return
     }
 
-    if (d.order_total_amount != 0) {
-      let { code, data: { tradeNO }, msg } = await this.pay()
+    log(3)
 
+    if (d.order_total_amount != 0) {
+      let { code, data: { tradeNo }, msg } = await this.pay()
       if (code === 0) {
         my.tradePay({
-          tradeNO, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+          tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
           success: res => {
+            log(res)
             return my.redirectTo({
               url: '../finish/finish?id=' + d.id + '&fail=' + false
             });
           },
           fail: res => {
+            log(res)
             return my.redirectTo({
               url: '../finish/finish?id=' + d.id + '&fail=' + true
             });
