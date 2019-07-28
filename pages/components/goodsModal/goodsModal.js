@@ -26,6 +26,7 @@ Component({
           v.count = 0;
           v.largeCount = 0;
           v.smallCount = 0;
+          // v.goods_format[0].goods_quantity=0;
         })
       })
       this.setData({
@@ -53,15 +54,13 @@ Component({
         this.setData({
           size: e.currentTarget.dataset.size,
           price:this.data.goodsItem.goods_format[0].goods_price / 100,
-          sizeText:this.data.goodsItem.goods_format[0].type,
-          count:this.data.goodsItem.goods_format[0].goods_quantity
+          sizeText:this.data.goodsItem.goods_format[0].type
         })
       }else if(e.currentTarget.dataset.size ==2){
         this.setData({
           size: e.currentTarget.dataset.size,
           price:this.data.goodsItem.goods_format[1].goods_price / 100,
-          sizeText:this.data.goodsItem.goods_format[1].type,
-          count:this.data.goodsItem.goods_format[1].goods_quantity
+          sizeText:this.data.goodsItem.goods_format[1].type
         })
       } 
     },
@@ -77,7 +76,7 @@ Component({
       })
     },
     addshopcart(e){
-      let {shopGoodsList,goodsKey,goodsLast,size} = this.data;
+      let {shopGoodsList,goodsKey,goodsLast,size,goodsItem} = this.data;
       // // 统计大份
       // let large = shopGoodsList.map(item => item.last.filter(_item=> _item.largeCount > 0));
       // large.forEach((item, index)=>{
@@ -92,18 +91,22 @@ Component({
       //     smallArr=[...smallArr, ...item];
       //   }
       // });
-      let goodsCart = [];
       // arr = largeArr.concat(smallArr);
+      let goodsCart = [];
       let arraylist = [];
       // 大份
       if(size==1){
-        shopGoodsList[goodsKey].last[goodsLast].goods_format[0].goods_quantity ++;
+        // shopGoodsList[goodsKey].last[goodsLast].goods_format[0].goods_quantity ++;
+        goodsItem.largeCount ++ 
       }
       // 小份
       if(size==2){
-        shopGoodsList[goodsKey].last[goodsLast].goods_format[1].goods_quantity ++;
+        // shopGoodsList[goodsKey].last[goodsLast].goods_format[1].goods_quantity ++;
+        // shopGoodsList[goodsKey].last[goodsLast].count ++;
+        goodsItem.smallCount ++
       }
       // 非折扣
+      console.log(e.currentTarget.dataset.goods_quantity + 1)
       if(e.currentTarget.dataset.key != '折扣'){
         arraylist.push({
           'goods_code':e.currentTarget.dataset.goods_code,
@@ -129,9 +132,9 @@ Component({
        goodsCart = oldArr.concat(arraylist);
       } 
       console.log(goodsCart)
-      // this.data.shopGoodsList = shopGoodsList;
+      console.log(goodsItem)
       this.setData({
-        shopGoodsList
+        goodsItem
       })
       my.setStorageSync({
         key: 'goodsList', 
