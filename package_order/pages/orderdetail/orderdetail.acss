@@ -61,7 +61,7 @@ page {
   margin-right: 24rpx
 }
 
-view.pay{
+view.pay {
   color: #E60012;
   border-color: #E60012;
 }
@@ -249,27 +249,27 @@ view.pay{
   color: rgba(230, 0, 18, 1);
 }
 
-.dis text{
+.dis text {
   margin-left: 15rpx;
 }
 
-.cancelr{
-font-size:22rpx;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(51,51,51,1);
-text-align: center;
-padding: 8rpx 0 40rpx;
+.cancelr {
+  font-size: 22rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  text-align: center;
+  padding: 8rpx 0 40rpx;
 }
 
 .out-footer {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   background: white;
 }
 
-.out-footer view:last-child{
+.out-footer view:last-child {
   border-color: #E60012;
   color: #E60012
 }
@@ -313,6 +313,34 @@ padding: 8rpx 0 40rpx;
   color: rgba(230, 0, 18, 1);
 }
 
-.dis text{
+.dis text {
   margin-left: 15rpx;
+}
+
+.order-trace {
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  text-align: center;
+  padding-top: 32rpx
+}
+
+.order-trace-ul{
+  padding: 42rpx 32rpx;
+}
+
+.order-trace-li{
+  display: flex;
+  align-items: center
+}
+
+.order-trace-left{
+  display: flex;
+  flex: 1
+}
+
+.order-trace-left image{
+ width: 32rpx;
+ height: 32rpx;
 }
