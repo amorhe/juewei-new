@@ -196,7 +196,7 @@
               <view class="goodsNumber">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count}}" data-goods_price="{{v.goods_format[0].goods_price}}"/>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count}}" data-goods_price="{{v.goods_format[0].goods_price}}"/>
               </view>
             </view>
             <view class="goodsDiscount">

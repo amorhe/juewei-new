@@ -138,36 +138,43 @@ Component({
       let{ shopGoodsList } = this.data
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
       this.data.shopGoodsList = shopGoodsList;
-      console.log(e);
-      let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0))
-      let goodsResult = [];//多个商品数组[{},{},{}]
-      //数据转换
-      buyArr.forEach((item, index)=>{
-        if(item.length>0){
-          goodsResult=[...goodsResult, ...item];
-        }
-      });
+      let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
+      let arraylist = [];
+      // 非折扣
+      if(e.currentTarget.dataset.key != '折扣'){
+        arraylist.push({
+          'goods_code':e.currentTarget.dataset.goods_code,
+          'goods_format':e.currentTarget.dataset.goods_format,
+          'goods_quantity':e.currentTarget.dataset.goods_quantity + 1,
+          'goods_price':e.currentTarget.dataset.goods_price,
+        })
+      }else{
+        //折扣
+        arraylist.push({
+          'goods_code':e.currentTarget.dataset.goods_code,
+          'goods_format':e.currentTarget.dataset.goods_format,
+          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_forma[0].goods_discount_user_limit),
+          'goods_price':e.currentTarget.dataset.goods_price,
+        })
+      }
+      // let goodsResult = [];//多个商品数组[{},{},{}]
+      // //数据转换
+      // buyArr.forEach((item, index)=>{
+      //   if(item.length>0){
+      //     goodsResult=[...goodsResult, ...item];
+      //   }
+      // });
       let buyNew = [];
       if(my.getStorageSync({key:'goodsList'}).data!=null){
-      let oldArr = my.getStorageSync({key:'goodsList'}).data;
+        let oldArr = my.getStorageSync({key:'goodsList'}).data;
         //这个的作用是用于，当前购物商品，和历史购物车数据对比将历史购物车的商品去掉重复的。
-        oldArr = oldArr.filter(_item => goodsResult.findIndex(value => value.goods_code == _item.goods_code) == -1);
-        buyNew = oldArr.concat(goodsResult);
+        oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
+        buyNew = oldArr.concat(arraylist);
       }else{
         const oldArr = [];
-        buyNew = oldArr.concat(goodsResult);
+        buyNew = oldArr.concat(arraylist);
       }
       this.data.goodsResult = buyNew;
-      let arraylist = [];
-      buyNew.map(item => {
-        arraylist.push({
-          'goods_code':item.goods_activity_code,
-          'goods_format':item.goods_format,
-          'goods_quantity':parseInt(item.goods_order_limit),
-          'goods_price':item.goods_price
-        })
-      })
-
       this.setData({
         shopGoodsList,
         goodsResult: this.data.goodsResult
