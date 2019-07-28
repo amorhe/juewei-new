@@ -207,7 +207,7 @@
         </view>
 
         <!-- 超辣 -->
-        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{item}}" data-goods_id="{{v.goods_id}}" data-type="{{index}}" data-index="{{i}}" a:if="{{index>=3}}">
+        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{item}}" data-goods_id="{{v.goods_id}}" data-type="{{index}}" data-index="{{i}}" a:if="{{index>=3}}" >
           <image src="{{v.goods_small_img[0]}}"/>
           <view class="goodsInfos">
             <view>

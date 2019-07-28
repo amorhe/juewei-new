@@ -2,17 +2,16 @@
 <view class="goodsBottom">
   <!-- <view class="fullReduce">满48减8；满68减10；满98减20</view> -->
   <view class="shopcart">
-    <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
-    <image onTap="openShopcart" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <image class="shopcarImage" a:if="{{shopcartGoods.length==0}}" src="{{imageUrl}}shopcart_empty.png" />
+    <image onTap="openShopcart" a:if="{{shopcartGoods.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
     <view class="addcount" a:if="{{shopcartGoods.length>0}}">{{shopcartGoods.length}}</view>
     <view class="haveGoods">
       <view a:if="{{shopcartGoods.length>0}}">
         <text>￥</text>
         <text>{{priceAll}}</text>
       </view>
-      <view a:if="{{shopcartGoods.length>0}}">另需配送费6元</view>
+      <view>另需配送费6元</view>
     </view>
-    <view a:if="{{shopcartGoods.length==0}}">另需配送费6元</view>
     <view class="buyBtn" a:if="{{priceAll<30}}">￥30起送</view>
     <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>30}}">立即购买</view>
   </view>
@@ -31,7 +30,7 @@
           <text>{{item.goods_name}}</text>
           <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
         </view>
-        <view>{{item.goods_format}}</view>
+        <view>1221</view>
       </view>
       <view class="goodsPriceBox">
         <text class="goodsOldPrice">￥28</text>
@@ -46,10 +45,9 @@
   </view>
   <view>
   <view class="nullView"></view>
-  <view class="shopcart">
-    <!-- <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" /> -->
+  <view class="shopcart" a:if="{{shopcartGoods.length>0}}">
     <image class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount">2</view>
+    <view class="addcount">{{shopcartGoods.length}}</view>
     <view class="haveGoods">
       <view>
         <text>￥</text>
@@ -57,17 +55,20 @@
       </view>
       <view>另需配送费6元</view>
     </view>
-    <!-- <view>另需配送费6元</view> -->
-    <!-- <view class="buyBtn">￥30起送</view> -->
-    <!-- <view class="buyBtn">未营业</view> -->
     <view class="buyBtn canBuy" onTap="goOrderSubmit">立即购买</view>
   </view>
+  <!-- <view class="shopcart" a:if="{{shopcartGoods.length==0}}">
+    <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" />
+    <view>另需配送费6元</view>
+    <view class="buyBtn">￥30起送</view>
+    <view class="buyBtn">未营业</view>
+  </view> -->
 </view>
 
 
 </view>
 <!-- 弹框组件 -->
-<confirm content="是否清空购物车" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" />
+<confirm content="是否清空购物车" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="clearShopcart" />
 <!-- 遮罩层 -->
 <view a:if="{{mask1}}" class="mask" onTap="hiddenShopcart"></view>
 

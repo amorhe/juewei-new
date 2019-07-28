@@ -17,6 +17,7 @@ Component({
   didUnmount() {},
   methods: {
     confirmTap(){
+      console.log(1)
       const modalObj = {
         modalShow:false,
         mask:false,

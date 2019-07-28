@@ -1,4 +1,5 @@
-<image class="goodsImage" mode="scaleToFill" src="{{goodsInfo.goods_img_detail[0]}}"/>
+<image class="goodsImage" mode="scaleToFill" a:if="{{type!=0}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
+<image class="goodsImage" mode="scaleToFill" a:if="{{type==0}}" src="{{imageUrl2 + goodsInfo.goods_img[0]}}"/>
 <view class="goodsWrap borderBottom">
   <view class="goodsTitle marginB">
     <view>
@@ -177,4 +178,4 @@
 <shopcart-model />
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{goodsKey}}" goodsLast="{{goodsLast}}" shopGoodsList="{{shopGoodsList}}" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{type}}" goodsLast="{{index}}" shopGoodsList="{{shopGoodsList}}" />

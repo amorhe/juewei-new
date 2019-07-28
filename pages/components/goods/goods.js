@@ -68,7 +68,7 @@ Component({
       })
     }
     // 初始化加入购物车的商品数量
-    if(this.props.shopGoodsList){
+    if(Object.keys(this.props.shopGoodsList).length>0){
       this.props.shopGoodsList.forEach(val => {
         val.last.forEach(v=> {
           v.count = 0;
@@ -138,25 +138,33 @@ Component({
       let{ shopGoodsList } = this.data
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
       this.data.shopGoodsList = shopGoodsList;
-      let buyArr = shopGoodsList.map(item =>  item.last.filter(_item=> _item.count > 0))
-      let goodsResult = buyArr.filter(item => item.length>0);
+      let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0))
+      let goodsResult = [];//多个商品数组[{},{},{}]
+      //数据转换
+      buyArr.forEach((item, index)=>{
+        if(item.length>0){
+          goodsResult=[...goodsResult, ...item];
+        }
+      });
       let buyNew = [];
       if(my.getStorageSync({key:'goodsList'}).data!=null){
-        const oldArr = my.getStorageSync({key:'goodsList'}).data;
-        buyNew = oldArr.concat(goodsResult[0]);
+      let oldArr = my.getStorageSync({key:'goodsList'}).data;
+        //这个的作用是用于，当前购物商品，和历史购物车数据对比将历史购物车的商品去掉重复的。
+        oldArr = oldArr.filter(_item => goodsResult.findIndex(value => value.goods_code == _item.goods_code) == -1);
+        buyNew = oldArr.concat(goodsResult);
       }else{
         const oldArr = [];
-        buyNew = oldArr.concat(goodsResult[0]);
+        buyNew = oldArr.concat(goodsResult);
       }
       this.data.goodsResult = buyNew;
       this.setData({
         shopGoodsList,
         goodsResult: this.data.goodsResult
       })
-        my.setStorageSync({
-          key: 'goodsList', // 缓存数据的key
-          data: buyNew, // 要缓存的数据
-        });
+      my.setStorageSync({
+        key: 'goodsList', // 缓存数据的key
+        data: buyNew, // 要缓存的数据
+      });
         
       // 加入购物车小红点动画效果
       // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
@@ -180,7 +188,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&type=' + e.currentTarget.dataset.type + '&index=' + e.currentTarget.dataset.index
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&type=' + e.currentTarget.dataset.type + '&index=' + e.currentTarget.dataset.index + '&shopGoodsList=' + JSON.stringify(this.data.shopGoodsList)
       });
     }
   }

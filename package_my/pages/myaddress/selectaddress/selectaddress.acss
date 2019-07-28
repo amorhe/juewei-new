@@ -35,3 +35,9 @@
   font-size: 22rpx;
   margin-top: 8rpx;
 }
+.nullImg{
+  display: block;
+  margin: 295rpx auto;
+  width: 320rpx;
+  height: 320rpx;
+}

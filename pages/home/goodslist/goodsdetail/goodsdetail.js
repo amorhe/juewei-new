@@ -54,7 +54,9 @@ Page({
     type:'',
     index:'',
     dispatchArr:[],
-    maskView:false
+    maskView:false,
+    goodsItem:{},
+    shopGoodsList:[]
   },
   onLoad(e) {
     console.log(e)
@@ -62,7 +64,9 @@ Page({
     this.setData({
       goodsInfo,
       type:e.type,
-      index:e.index
+      index:e.index,
+      goodsItem:JSON.parse(e.goodsAll),
+      shopGoodsList:JSON.parse(e.shopGoodsList)
     })
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
     this.getCommentList(goodsInfo.goods_code,1,10);
@@ -104,13 +108,10 @@ Page({
   },
   // 选规格
   chooseSizeTap(e){
-    // console.log(e)
+    console.log(e)
     this.setData({
       maskView:true,
-      goodsModal:true,
-      goodsItem: e.currentTarget.dataset.item,
-      goodsKey: e.currentTarget.dataset.type,
-      goodsLast: e.currentTarget.dataset.index
+      goodsModal:true
     })
   },
 });
