@@ -17,17 +17,26 @@ Component({
  
   },
   didUpdate(prevProps, prevData) {
-     
+    if(Object.keys(this.props.shopGoodsList).length>0){
+      this.props.shopGoodsList.forEach(val => {
+        val.last.forEach(v=> {
+          v.count = 0;
+          v.largeCount = 0;
+          v.smallCount = 0;
+        })
+      })
+      this.setData({
+        shopGoodsList:this.props.shopGoodsList,
+      })
+    }
     if(Object.keys(this.props.goodsItem).length>0){
-     
       const goodsKey = this.props.goodsKey;   
       const goodsLast = this.props.goodsLast;
       let goodsItem = this.props.goodsItem.last[goodsLast];
       this.setData({
         goodsItem,
         goodsKey,
-        goodsLast,
-        shopGoodsList:this.props.shopGoodsList
+        goodsLast
       })
     }
   },
@@ -82,7 +91,7 @@ Component({
         }
       });
       // 统计小份
-      let small = shopGoodsList.map(item =>  item.last.filter(_item=> _item.smallCount > 0 && _item.size == 2))
+      let small = shopGoodsList.map(item =>  item.last.filter(_item=> _item.smallCount > 0))
       small.forEach((item, index)=>{
         if(item.length>0){
           smallArr=[...smallArr, ...item];
@@ -92,7 +101,7 @@ Component({
       arr = largeArr.concat(smallArr);
       if(my.getStorageSync({key:'goodsList'}).data!=null){
         let oldArr = my.getStorageSync({key:'goodsList'}).data;
-        oldArr = oldArr.filter(_item => arr.findIndex(value => value.goods_code == _item.goods_code) == -1 && value.size == _item.size);
+        oldArr = oldArr.filter(_item => arr.findIndex(value => value.goods_code == _item.goods_code) == -1);
         goodsCart = oldArr.concat(arr);
       }else{
        const oldArr =[];

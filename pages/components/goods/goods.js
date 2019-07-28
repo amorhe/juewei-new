@@ -138,6 +138,7 @@ Component({
       let{ shopGoodsList } = this.data
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
       this.data.shopGoodsList = shopGoodsList;
+      console.log(e);
       let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0))
       let goodsResult = [];//多个商品数组[{},{},{}]
       //数据转换
@@ -157,10 +158,21 @@ Component({
         buyNew = oldArr.concat(goodsResult);
       }
       this.data.goodsResult = buyNew;
+      let arraylist = [];
+      buyNew.map(item => {
+        arraylist.push({
+          'goods_code':item.goods_activity_code,
+          'goods_format':item.goods_format,
+          'goods_quantity':parseInt(item.goods_order_limit),
+          'goods_price':item.goods_price
+        })
+      })
+
       this.setData({
         shopGoodsList,
         goodsResult: this.data.goodsResult
       })
+      
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: buyNew, // 要缓存的数据
