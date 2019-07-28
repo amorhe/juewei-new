@@ -17,12 +17,21 @@ Component({
   didUnmount() {},
   methods: {
     confirmTap(){
-      console.log(1)
-      const modalObj = {
+       let modalObj = {};
+      if(this.props.isType=="clearShopcart"){
+        modalObj = {
+          modalShow:false,
+          mask:false,
+          type:1,
+          isType:'clear'
+        }
+      } 
+     modalObj = {
         modalShow:false,
         mask:false,
         type:1
       }
+      
       this.props.onCounterPlusOne(modalObj)
     },
     cancelTap() {

@@ -81,6 +81,7 @@ Component({
         companyGoodsList:this.props.companyGoodsList
       })
     }
+    console.log(1)
   },
   didUnmount() {},
   methods: {
@@ -146,7 +147,7 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':e.currentTarget.dataset.goods_quantity + 1,
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price / 100,
         })
       }else{
         //折扣
@@ -154,7 +155,7 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_format[0].goods_discount_user_limit),
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price / 100,
         })
       }
       // let goodsResult = [];//多个商品数组[{},{},{}]

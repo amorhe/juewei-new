@@ -10,9 +10,9 @@
         <text>￥</text>
         <text>{{priceAll}}</text>
       </view>
-      <view>另需配送费6元</view>
+      <view>另需配送费{{dispatch_price}}元</view>
     </view>
-    <view class="buyBtn" a:if="{{priceAll<30}}">￥30起送</view>
+    <view class="buyBtn" a:if="{{priceAll<30}}">￥{{send_price}}起送</view>
     <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>30}}">立即购买</view>
   </view>
 </view>
@@ -30,15 +30,15 @@
           <text>{{item.goods_name}}</text>
           <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
         </view>
-        <view>1221</view>
+        <view>{{goodsInfo[index].goods_format}}</view>
       </view>
       <view class="goodsPriceBox">
         <text class="goodsOldPrice">￥28</text>
-        <text class="numberColor">￥{{item.goods_format[0].goods_price / 100}}</text>
+        <text class="numberColor">￥{{goodsInfo[index].goods_price}}</text>
       </view>
       <view class="goodsNumber">
         <image src="{{imageUrl}}goods_reduce.png" />
-        <text>1</text>
+        <text>{{goodsInfo[index].goods_quantity}}</text>
         <image src="{{imageUrl}}goods_add.png" />
       </view>
     </view>

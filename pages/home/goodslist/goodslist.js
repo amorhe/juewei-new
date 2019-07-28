@@ -429,6 +429,11 @@ Page({
       this.setData({
         shopGoodsAll:goodsNew
       })
+      // 缓存门店商品
+      my.setStorageSync({
+        key: 'shopGoods', // 缓存数据的key
+        data: JSON.stringify(goodsNew)
+      });
     })
   },
   onCounterPlusOne(e){

@@ -96,17 +96,13 @@ Component({
       let arraylist = [];
       // 大份
       if(size==1){
-        // shopGoodsList[goodsKey].last[goodsLast].goods_format[0].goods_quantity ++;
         goodsItem.largeCount ++ 
       }
       // 小份
       if(size==2){
-        // shopGoodsList[goodsKey].last[goodsLast].goods_format[1].goods_quantity ++;
-        // shopGoodsList[goodsKey].last[goodsLast].count ++;
         goodsItem.smallCount ++
       }
       // 非折扣
-      console.log(e.currentTarget.dataset.goods_quantity + 1)
       if(e.currentTarget.dataset.key != '折扣'){
         arraylist.push({
           'goods_code':e.currentTarget.dataset.goods_code,
@@ -132,7 +128,6 @@ Component({
        goodsCart = oldArr.concat(arraylist);
       } 
       console.log(goodsCart)
-      console.log(goodsItem)
       this.setData({
         goodsItem
       })
@@ -140,7 +135,7 @@ Component({
         key: 'goodsList', 
         data: goodsCart, 
       }); 
-
+      
     }
   },
 });
