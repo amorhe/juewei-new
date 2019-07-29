@@ -67,10 +67,10 @@ Page({
     goodsInfo:''
   },
   onLoad(e) {
-    // // 获取商品
-    const data = my.getStorageSync({key: 'goodsList'}).data;
-    const shopGoods = JSON.parse(my.getStorageSync({key:'shopGoods'}).data);
-    let arr = []
+    // 获取商品
+    let data = my.getStorageSync({key: 'goodsList'}).data;
+    let shopGoods = JSON.parse(my.getStorageSync({key:'shopGoods'}).data);
+    let arr = [];
     arr = shopGoods
     .map(_item => _item.last.filter(item =>
       data.some(value => value.goods_code == item.goods_code)
@@ -79,7 +79,7 @@ Page({
     let shopcartGoods = [];
     arr.forEach(item => {
       if(item.length>0){
-          shopcartGoods=[...shopcartGoods, ...item];
+        shopcartGoods=[...shopcartGoods, ...item];
       }
     })
     //  计算价格
@@ -122,7 +122,6 @@ Page({
           }
         }
       ]
-      console.log(arr)
       this.setData({
         shopObj:self[0],
         longitude:my.getStorageSync({key: 'lng'}).data,
