@@ -1,16 +1,16 @@
-import {imageUrl} from '../../common/js/baseUrl'
-import{getuserInfo} from '../../common/js/login'
+import { imageUrl } from '../../common/js/baseUrl'
+import { getuserInfo } from '../../common/js/login'
 
 let log = console.log
 
-var app = getApp() 
+var app = getApp()
 Page({
   data: {
     imageUrl,
-    avatarImg:'',
-    _sid:'',
-    userInfo:'',
-    isLogin:false,
+    avatarImg: '',
+    _sid: '',
+    userInfo: '',
+    isLogin: false,
     gridelist: [
       {
         icon: 'https://gw.alipayobjects.com/zos/rmsportal/VBqNBOiGYkCjqocXjdUj.png',
@@ -42,63 +42,63 @@ Page({
   onLoad() {
 
   },
-  onShow(){
+  onShow() {
     this.setData({
-      _sid:app.globalData._sid
+      _sid: app.globalData._sid
     })
     this.getUserInfo()
   },
-  getSid(){
-      return new Promise((resolve,reject)=>{
-        my.getStorage({
-          key: '_sid', // 缓存数据的key
-          success: (res) => {
-            resolve(res)
-          },
-          fail: err=>{
-            reject(err)
-          }
-        });
+  getSid() {
+    return new Promise((resolve, reject) => {
+      my.getStorage({
+        key: '_sid', // 缓存数据的key
+        success: (res) => {
+          resolve(res)
+        },
+        fail: err => {
+          reject(err)
+        }
+      });
+    })
+  },
+
+
+  async getUserInfo() {
+
+    let _sid = await this.getSid()
+    let res = await getuserInfo(_sid.data || '')
+    console.log(res, '我的页面')
+    if (res.code == 30106) {
+      this.setData({
+        loginId: res.code,
+        userInfo: '',
       })
+    }
+    if (res.code == 0) {
+      this.setData({
+        loginId: res.code,
+        userInfo: res.data
+      })
+    }
   },
-
- async getUserInfo(){
-
-    // let _sid = my.getStorageSync({
-    //   key: '_sid', // 缓存数据的key
-    // }).data;
-
-  let _sid = await this.getSid()
-  let res = await getuserInfo(_sid.data||'')
-      console.log(res,'我的页面')
-      if(res.code==30106){
-        this.setData({
-          loginId:res.code,
-          userInfo:'',
-        })
-      }
-      if(res.code==0){
-        this.setData({
-          loginId:res.code,
-          userInfo:res.data
-        })
-      }
-    
-  },
-  isloginFn(){
-    if(!this.data._sid){
+  isloginFn() {
+    if (!this.data.loginId == 0) {
       my.navigateTo({
-        url:'/pages/login/auth/auth'
+        url: '/pages/login/auth/auth'
+      });
+    }else{
+      my.navigateTo({
+        url:'/package_my/pages/mycenter/mycenter'
       });
     }
   },
-  toUrl(e){
+  toUrl(e) {
     var url = e.currentTarget.dataset.url
     my.navigateTo({
-      url:url
+      url: url
     });
   },
-  onHide(){
+  onHide() {
   },
   makePhoneCall() {
     my.makePhoneCall({ number: '4009995917' });

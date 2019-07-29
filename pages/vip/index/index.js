@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax } from '../../common/js/li-ajax'
+import { ajax, getSid, log } from '../../common/js/li-ajax'
 
 Page({
   data: {
@@ -8,7 +8,7 @@ Page({
 
     toast: false,
 
-    _sid:'1',
+    _sid: '',
 
     menuTop: 0,
     menuFixed: false,
@@ -24,7 +24,7 @@ Page({
 
     cur: 0,
 
-    userPoint:'',
+    userPoint: '',
 
     bannerList: [
       {
@@ -85,16 +85,22 @@ Page({
 
 
   },
- async onShow() {
+  async onShow() {
     this.getBanner()
     this.getPositionList()
     this.getUserPoint()
 
-   await this.getCategory()
-   await this.getGoodsList()
+    let _sid = await getSid()
+
+    this.setData({
+      _sid
+    })
+
+    await this.getCategory()
+    await this.getGoodsList()
     // this.initClientRect()
 
-  
+
   },
 
   /**
@@ -110,10 +116,10 @@ Page({
    * @function 获取分类
    */
   async getCategory() {
-    const {cur} = this.data;
+    const { cur } = this.data;
     let res = await ajax('/mini/vip/wap/category/category', { type: 1 })
     if (res.code === 100) {
-      this.setData({ list: res.data,cate_id: res.data[cur].id })
+      this.setData({ list: res.data, cate_id: res.data[cur].id })
     }
   },
 
@@ -166,9 +172,9 @@ Page({
     let { city_id, district_id, company_id, release_channel } = this.data;
     let positionListOption = { city_id, district_id, company_id, release_channel }
     let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
-    if(res.code === 100){
+    if (res.code === 100) {
       this.setData({
-        positionList:res.data
+        positionList: res.data
       })
     }
   },
@@ -176,12 +182,12 @@ Page({
   /**
    * @function 获取用户积分
    */
-  async getUserPoint(){
-    let {_sid} = this.data;
-    let res = await ajax('/mini/user/user_point',{_sid})
-    if(res.CODE === 'A100'){
+  async getUserPoint() {
+    let { _sid } = this.data;
+    let res = await ajax('/mini/user/user_point', { _sid })
+    if (res.CODE === 'A100') {
       this.setData({
-        userPoint:res.DATA
+        userPoint: res.DATA
       })
     }
   },
@@ -204,9 +210,9 @@ Page({
    * @function 跳转详情页面
    */
   toDetail(e) {
-    const {id} = e.currentTarget.dataset
+    const { id } = e.currentTarget.dataset
     my.navigateTo({
-      url: '../../../package_vip/pages/detail/detail?id='+id
+      url: '../../../package_vip/pages/detail/detail?id=' + id
     });
   },
 
@@ -217,7 +223,7 @@ Page({
     my.navigateTo({
       url: '../../../package_vip/pages/exchangelist/exchangelist'
     });
-  }
+  },
 
 
   // initClientRect() {
@@ -238,5 +244,13 @@ Page({
   //     menuFixed: (scroll.scrollTop > this.data.menuTop)
   //   })
   // }
+
+  isloginFn() {
+
+    my.navigateTo({
+      url: '/pages/login/auth/auth'
+    });
+
+  },
 
 });

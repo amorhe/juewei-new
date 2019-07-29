@@ -101,3 +101,32 @@
   width: 100%;
   border-top: 1px solid #eee;
 }
+
+.toast{
+  z-index: 999;
+  position: absolute;
+  width: 240rpx;
+  left: -120rpx;
+  top: 50rpx;
+  border-radius: 12rpx;
+  background: white;
+  padding: 20rpx;
+  color: #333;
+  font-weight: 500;
+  text-align: center
+}
+
+.toast::before{
+  z-index: -1;
+  position: absolute;
+  content: '';
+  width: 40rpx;
+  height: 40rpx;
+  transform: rotate(45deg);
+  border-radius: 10rpx;
+  background: white;
+  top: -10rpx;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
