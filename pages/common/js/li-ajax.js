@@ -28,7 +28,6 @@ export const ajax = async(url, data = {}, method = 'POST') => {
     content: '加载中...',
   });
   let _sid = await getSid()
-  _sid = '2a322pq8j38gjgfv0s6jbv6pra'
   data._sid = _sid
   return new Promise((resolve, reject) => {
     my.request({
