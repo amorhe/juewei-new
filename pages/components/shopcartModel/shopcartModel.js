@@ -30,12 +30,11 @@ Component({
     })
     this.getSendPrice();
      // 获取购物车数据
-    let data = [];
     // data = this.props.shopcartList
-    data = my.getStorageSync({key:'shopcartList'}).data;
+    let data = my.getStorageSync({key:'shopcartList'}).data;
     console.log(data)
     //  计算价格
-    if(data.length>0){
+    if(data!=null){
       let priceAll = 0;
       data.forEach(item => {
         priceAll += item.goods_price * item.goods_quantity

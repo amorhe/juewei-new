@@ -121,10 +121,10 @@ Page({
   },
   // 外卖附近门店
   getLbsShop() {
-    // const lng = my.getStorageSync({key:'lng'}).data;
-    // const lat = my.getStorageSync({key:'lat'}).data;
-    const lng = 116.54828;
-    const lat = 39.918639;
+    const lng = my.getStorageSync({key:'lng'}).data;
+    const lat = my.getStorageSync({key:'lat'}).data;
+    // const lng = 116.54828;
+    // const lat = 39.918639;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -149,9 +149,9 @@ Page({
         const shopArray = shopArr1.concat(shopArr2);
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
-        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1);//banner
-        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1); 
         this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
+        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
+        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1); 
         this.setData({
           shopTakeOut: shopArray
         })
@@ -170,9 +170,9 @@ Page({
           })
           my.setStorageSync({ key: 'takeout', data: arr });
           my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
-          this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1);//banner
-          this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1); 
           this.getCompanyGoodsList(arr[0].company_sale_id);
+          this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);//banner
+          this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1); 
         }
       } else if (res.code == 5 || res.data.length == 0) {
         this.setData({
@@ -189,10 +189,10 @@ Page({
   },
   // 自提附近门店
   getNearbyShop() {
-    // const lng = my.getStorageSync({key:'lng'}).data;
-    // const lat = my.getStorageSync({key:'lat'}).data;
-    const lng = 116.54828;
-    const lat = 39.918639;
+    const lng = my.getStorageSync({key:'lng'}).data;
+    const lat = my.getStorageSync({key:'lat'}).data;
+    // const lng = 116.54828;
+    // const lat = 39.918639;
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
@@ -246,9 +246,10 @@ Page({
       const shopArray = shopArr1.concat(shopArr2);
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
-      this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1); //banner
-      this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1);
       this.getCompanyGoodsList(shopArray[0].company_sale_id);  //获取公司所有商品
+      this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1); //banner
+      this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);
+      
       console.log(shopArray);
       this.setData({
         shopTakeOut: shopArray
@@ -267,9 +268,9 @@ Page({
         })
         my.setStorageSync({ key: 'self', data: arr });
         my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
-        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1);//banner
-        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1);
         this.getCompanyGoodsList(arr[0].company_sale_id);
+        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);//banner
+        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);
       }
 
     })
