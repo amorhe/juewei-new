@@ -1,5 +1,5 @@
 import {imageUrl,baseUrl} from '../../common/js/baseUrl'
-import {sendCode,captcha,loginByAliUid,loginByAuth,getuserInfo} from '../../common/js/login'
+import {sendCode,captcha,loginByAliUid,loginByAuth,getuserInfo,decryptPhone} from '../../common/js/login'
 var app = getApp(); //放在顶部
 Page({
   data: {
@@ -113,6 +113,7 @@ Page({
   },
   // 授权获取用户信息
   onGetAuthorize(res) {
+    var that = this
     // 获取授权
     my.getAuthCode({
       scopes: ['auth_base'],
@@ -130,17 +131,21 @@ Page({
        })
       },
     });
-    my.getOpenUserInfo({
+    
+    my.getPhoneNumber({
       success: (res) => {
         let ali_uid = my.getStorageSync({
           key: 'ali_uid', // 缓存数据的key
         }).data;
-        let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
-        my.setStorageSync({
-          key: 'aliUserifo', // 缓存数据的key
-          data: userInfo, // 要缓存的数据
-        });
-        this.loginByAuth(userInfo.nickName, userInfo.avatar);
+        let userInfo = JSON.parse(res.response); // 以下方的报文格式解析两层 response
+        var data = {
+          response:userInfo.response
+        }
+        decryptPhone(data).then(res=>{
+          if(res.code==0){
+            that.loginByAuthFn(ali_uid,res.data.phone);
+          }
+        })
       },
       fail() {
         my.alert({ title: '获取用户信息失败' });
@@ -148,10 +153,9 @@ Page({
     });
   },
   // 授权登录
-  loginByAuth(nick_name, head_img) {
-    const ali_uid = my.getStorageSync({ key: 'ali_uid' });
-    loginByAuth(ali_uid.data, '18140588481', nick_name, head_img).then((res) => {
-      console.log(res.data._sid,'_sid')
+  loginByAuthFn(ali_uid,phone) {
+    console.log('授权函数')
+    loginByAuth(ali_uid, phone,'','').then((res) => {
       my.setStorageSync({
         key: '_sid', // session_id
         data: res.data._sid,
