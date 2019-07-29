@@ -52,21 +52,21 @@ Component({
   },
   didUpdate() {
     // 获取购物车数据
-    let data = [];
-    // data = this.props.shopcartList
-    data = my.getStorageSync({key:'shopcartList'}).data;
-    console.log(data)
-    //  计算价格
-    if(data.length>0){
-      let priceAll = 0;
-      data.forEach(item => {
-        priceAll += item.goods_price * item.goods_quantity
-      })
-      this.setData({
-        priceAll,
-        shopcartGoods:data
-      })
-    }
+    // let data = [];
+    // // data = this.props.shopcartList
+    // data = my.getStorageSync({key:'shopcartList'}).data;
+    // console.log(data)
+    // //  计算价格
+    // if(data.length>0){
+    //   let priceAll = 0;
+    //   data.forEach(item => {
+    //     priceAll += item.goods_price * item.goods_quantity
+    //   })
+    //   this.setData({
+    //     priceAll,
+    //     shopcartGoods:data
+    //   })
+    // }
   },
   didUnmount() {},
   methods: {
