@@ -48,19 +48,6 @@ Page({
     })
     this.getUserInfo()
   },
-  getSid(){
-      return new Promise((resolve,reject)=>{
-        my.getStorage({
-          key: '_sid', // 缓存数据的key
-          success: (res) => {
-            resolve(res)
-          },
-          fail: err=>{
-            reject(err)
-          }
-        });
-      })
-  },
 
  async getUserInfo(){
 
