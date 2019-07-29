@@ -45,7 +45,7 @@ Page({
 
     cur: 0,
 
-    page: 0
+    page: 1
   },
 
   async onShow() {

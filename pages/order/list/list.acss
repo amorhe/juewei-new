@@ -123,6 +123,7 @@ page {
 
 .topay {
   padding: 0 18rpx;
+  min-width: 196rpx;
   height: 64rpx;
   border-radius: 32rpx;
   border: 1px solid rgba(230, 0, 18, 1);
