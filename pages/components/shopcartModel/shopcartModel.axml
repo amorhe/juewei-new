@@ -30,15 +30,15 @@
           <text>{{item.goods_name}}</text>
           <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
         </view>
-        <view>{{goodsInfo[index].goods_format}}</view>
+        <view>{{item.goods_format}}</view>
       </view>
       <view class="goodsPriceBox">
         <text class="goodsOldPrice">￥28</text>
-        <text class="numberColor">￥{{goodsInfo[index].goods_price}}</text>
+        <text class="numberColor">￥{{item.goods_price}}</text>
       </view>
       <view class="goodsNumber">
         <image src="{{imageUrl}}goods_reduce.png" />
-        <text>{{goodsInfo[index].goods_quantity}}</text>
+        <text>{{item.goods_quantity}}</text>
         <image src="{{imageUrl}}goods_add.png" />
       </view>
     </view>

@@ -1,6 +1,7 @@
 import {imageUrl,imageUrl2,ak} from '../../common/js/baseUrl'
 import {couponsExpire,MyNearbyShop,GetShopGoods} from '../../common/js/home'
 import {datedifference} from '../../common/js/time'
+var app = getApp();
 Component({
   mixins: [],
   data: {
@@ -81,7 +82,6 @@ Component({
         companyGoodsList:this.props.companyGoodsList
       })
     }
-    console.log(1)
   },
   didUnmount() {},
   methods: {
@@ -136,56 +136,74 @@ Component({
       })
     },
     addshopcart(e){
+      console.log(e)
       let{ shopGoodsList } = this.data
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
       this.data.shopGoodsList = shopGoodsList;
       let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
-      let arraylist = [];
+      let arraylist = [],shopcartList=[];
       // 非折扣
       if(e.currentTarget.dataset.key != '折扣'){
         arraylist.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity + 1,
-          'goods_price':e.currentTarget.dataset.goods_price / 100,
+          'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          'goods_price':e.currentTarget.dataset.goods_price,
+        })
+        shopcartList.push({
+          'goods_code':e.currentTarget.dataset.goods_code,
+          'goods_format':e.currentTarget.dataset.goods_format,
+          'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_img': e.currentTarget.dataset.goods_img,
+          'goods_name': e.currentTarget.dataset.goods_name,
+          'taste_name': e.currentTarget.dataset.taste_name
         })
       }else{
         //折扣
         arraylist.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_format[0].goods_discount_user_limit),
-          'goods_price':e.currentTarget.dataset.goods_price / 100,
+          'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_type': 1
+        })
+        shopcartList.push({
+          'goods_code':e.currentTarget.dataset.goods_code,
+          'goods_format':e.currentTarget.dataset.goods_format,
+          'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_type': 1,
+          'goods_img': e.currentTarget.dataset.goods_img,
+          'goods_name': e.currentTarget.dataset.goods_name,
+          'taste_name': e.currentTarget.dataset.taste_name
         })
       }
-      // let goodsResult = [];//多个商品数组[{},{},{}]
-      // //数据转换
-      // buyArr.forEach((item, index)=>{
-      //   if(item.length>0){
-      //     goodsResult=[...goodsResult, ...item];
-      //   }
-      // });
-      let buyNew = [];
+      let buyNew = [],carArray=[];
       if(my.getStorageSync({key:'goodsList'}).data!=null){
         let oldArr = my.getStorageSync({key:'goodsList'}).data;
-        //这个的作用是用于，当前购物商品，和历史购物车数据对比将历史购物车的商品去掉重复的。
+        let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
         oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
+        oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
         buyNew = oldArr.concat(arraylist);
+        carArray = oldAllArr.concat(shopcartList);
       }else{
-        const oldArr = [];
+        const oldArr = [],oldAllArr=[];
         buyNew = oldArr.concat(arraylist);
+        carArray = oldAllArr.concat(shopcartList);
       }
-      this.data.goodsResult = buyNew;
       this.setData({
-        shopGoodsList,
-        goodsResult: this.data.goodsResult
+        shopGoodsList
       })
-      
+      app.globalData.shopcartList = carArray;
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: buyNew, // 要缓存的数据
       });
-        
+       my.setStorageSync({
+        key: 'shopcartList', // 缓存数据的key
+        data: carArray, // 要缓存的数据
+      });
       // 加入购物车小红点动画效果
       // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
       //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();

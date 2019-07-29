@@ -234,6 +234,7 @@ Page({
         detail_address:this.data.addressdetail, // 地址详情
         tag:this.data.curLabel, // 地址标签
       }
+      console.log(data,'ssssssss')
       addressCreate(data).then(res=>{
         if(res.code==0){
           if(this.data.order==1){

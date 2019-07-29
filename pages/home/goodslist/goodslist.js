@@ -67,8 +67,6 @@ Page({
         autoplay: true
       })
     }
-    this.getShowpositionList(110100, 110105, 1, 1);
-    // this.loginByAuth();
     // 切换门店
     if (app.globalData.shop_id) {
       this.setData({
@@ -88,52 +86,6 @@ Page({
     //   isClose: true
     // })
   },
-  // 授权获取用户信息
-  // onGetAuthorize(res) {
-  //   my.getOpenUserInfo({
-  //     success: (res) => {
-  //       let userInfo = JSON.parse(res.response).response; // 以下方的报文格式解析两层 response
-  //       this.loginByAuth(userInfo.nickName, userInfo.avatar);
-  //     },
-  //     fail() {
-  //       my.alert({ title: '获取用户信息失败' });
-  //     }
-  //   });
-  // },
-  // // 获取手机号
-  // onGetPhone() {
-  //   my.getPhoneNumber({
-  //     success: (res) => {
-  //       let encryptedData = res.response;
-  //       console.log(encryptedData)
-  //     },
-  //     fail: (res) => {
-  //       console.log(res);
-  //     },
-  //   });
-  // },
-  // // 授权登录
-  // loginByAuth(nick_name, head_img) {
-  //   const ali_uid = my.getStorageSync({ key: 'ali_uid' });
-  //   loginByAuth(ali_uid.data, '15757902894', nick_name, head_img).then((res) => {
-  //     console.log(res)
-  //     my.setStorageSync({
-  //       key: '_sid', // session_id
-  //       data: res.data._sid,
-  //     });
-  //     this.getUserInfo(res.data._sid);
-  //   })
-  // },
-  // // 用户信息
-  // getUserInfo(_sid) {
-  //   getuserInfo(_sid).then((res) => {
-  //     console.log(res);
-  //     app.globalData.userInfo = res.data;
-  //     // this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
-  //     this.getBannerList(110100, 110105, 1, 1);    //banner列表
-      
-  //   })
-  // },
   // 切换外卖自提
   chooseTypes(e) {
     if (e.currentTarget.dataset.type == 'ziti') {
@@ -153,6 +105,7 @@ Page({
   // 首页banner列表
   getBannerList(city_id, district_id, company_id, release_channel) {
     bannerList(city_id, district_id, company_id, release_channel).then((data) => {
+      console.log(data)
       this.setData({
         imgUrls: data.data
       })
@@ -168,10 +121,10 @@ Page({
   },
   // 外卖附近门店
   getLbsShop() {
-    const lng = my.getStorageSync({key:'lng'}).data;
-    const lat = my.getStorageSync({key:'lat'}).data;
-    // const lng = 116.54828;
-    // const lat = 39.918639;
+    // const lng = my.getStorageSync({key:'lng'}).data;
+    // const lat = my.getStorageSync({key:'lat'}).data;
+    const lng = 116.54828;
+    const lat = 39.918639;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -195,7 +148,9 @@ Page({
         shopArr2.sort(compare('goods_num'));
         const shopArray = shopArr1.concat(shopArr2);
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id})
+        my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1);//banner
+        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1); 
         this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
         this.setData({
           shopTakeOut: shopArray
@@ -214,7 +169,9 @@ Page({
             shopTakeOut: arr
           })
           my.setStorageSync({ key: 'takeout', data: arr });
-          my.setStorageSync({key:'shop_id',data:arr[0].shop_id})
+          my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
+          this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1);//banner
+          this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1); 
           this.getCompanyGoodsList(arr[0].company_sale_id);
         }
       } else if (res.code == 5 || res.data.length == 0) {
@@ -232,10 +189,10 @@ Page({
   },
   // 自提附近门店
   getNearbyShop() {
-    const lng = my.getStorageSync({key:'lng'}).data;
-    const lat = my.getStorageSync({key:'lat'}).data;
-    // const lng = 116.54828;
-    // const lat = 39.918639;
+    // const lng = my.getStorageSync({key:'lng'}).data;
+    // const lat = my.getStorageSync({key:'lat'}).data;
+    const lng = 116.54828;
+    const lat = 39.918639;
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
@@ -288,7 +245,9 @@ Page({
       }
       const shopArray = shopArr1.concat(shopArr2);
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
-      my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id})
+      my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+      this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1); //banner
+      this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].shop_id, 1);
       this.getCompanyGoodsList(shopArray[0].company_sale_id);  //获取公司所有商品
       console.log(shopArray);
       this.setData({
@@ -307,7 +266,9 @@ Page({
           shopTakeOut: arr
         })
         my.setStorageSync({ key: 'self', data: arr });
-         my.setStorageSync({key:'shop_id',data:arr[0].shop_id})
+        my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
+        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1);//banner
+        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].shop_id, 1);
         this.getCompanyGoodsList(arr[0].company_sale_id);
       }
 
@@ -378,7 +339,7 @@ Page({
             shopGoodsList: JSON.parse(JSON.stringify(sortList)),
             companyGoodsList
           },() => 
-             this.getActivityList(110100,110105,25,this.data.type,294785)     //营销活动
+             this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,25,this.data.type,294785)     //营销活动
           )
         },
       });
@@ -443,7 +404,7 @@ Page({
   onCounterPlusOne(e){
     console.log(e)
     // 点击左边去自提
-    if(e.type==1) {
+    if(e.type==1 && e.isType=="noShop") {
       this.setData({
         modalShow:e.modalShow,
         mask:e.mask,

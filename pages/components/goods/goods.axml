@@ -177,7 +177,10 @@
            <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{imageUrl2 + v.goods_img[0]}}"/>
           <image a:if="{{item.key!='套餐'}}" class="goodsImage1" src="{{v.goods_img[0]}}"/>
           <view class="goodsWrap">
-            <view class="goodsName">{{v.goods_name}}</view>
+           <view>
+              <text class="goodsName">{{v.goods_name}}</text>
+              <text a:if="{{v.taste_name}}">({{v.taste_name}})</text>
+           </view>
             <view class="goodsKind marginB">
               <text a:for="{{v.pkg_goods}}" a:for-index="_index" a:for-item="_item">
                 <text><text a:if="{{_index!=0}}">+</text>{{_item.pkg_goods_name}}</text>
@@ -196,7 +199,7 @@
               <view class="goodsNumber">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count}}" data-goods_price="{{v.goods_format[0].goods_price}}"/>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}"/>
               </view>
             </view>
             <view class="goodsDiscount">
@@ -231,7 +234,8 @@
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" />
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count}}" data-goods_price="{{v.goods_format[0].goods_price}}"/>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}"/>
+                <!-- 小红点 -->
                 <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view>
               </view>
               <view class="goodsSize" data-item="{{item}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
@@ -285,5 +289,5 @@
 <shopcart-model orderType="{{type}}"/>
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{goodsKey}}" goodsLast="{{goodsLast}}" shopGoodsList="{{shopGoodsList}}" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{goodsKey}}" goodsLast="{{goodsLast}}" shopcartList="{{shopcartList}}" />
 

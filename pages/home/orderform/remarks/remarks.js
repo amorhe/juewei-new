@@ -9,8 +9,12 @@ Page({
     })
   },
   remarksBtn(){
+    my.setStorageSync({
+      key: 'remark', // 缓存数据的key
+      data: this.data.remarks // 要缓存的数据
+    });
     my.navigateBack({
-      url: '/pages/home/orderform/orderform?remarks=' + this.data.remarks 
+      url: '/pages/home/orderform/orderform'
     });
   }
 });
