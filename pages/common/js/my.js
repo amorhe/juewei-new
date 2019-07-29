@@ -11,7 +11,7 @@ const myObject = {
 
 export const membercard = (_sid) => ajax(myObject.membercard,{_sid},"GET");
 
-export const UpdateAliUserInfo = (_sid,head_img,nick_name) => ajax(myObject.UpdateAliUserInfo,{_sid,head_img,nick_name});
+export const UpdateAliUserInfo = (data) => ajax(myObject.UpdateAliUserInfo,data);
 
 export const UpdateUserInfo = (data) => ajax(myObject.UpdateUserInfo,data);
 

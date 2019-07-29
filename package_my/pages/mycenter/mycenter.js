@@ -36,17 +36,21 @@ Page({
     //this.UpdateInfo()
   },
   async onShow() {
+    this.getInfo()
     console.log('执行')
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
     region =  await getRegion()
     this.getAddressList()
-    var _sid = app.globalData._sid
-    this.getUserInfo(_sid)
+    this.getUserInfo()
   },
   // 用户信息
-  getUserInfo(_sid) {
+  getUserInfo() {
     var that = this
+    var _sid = my.getStorageSync({
+      key:'_sid'
+    }).data
+    console.log(_sid,'_ssssss')
     getuserInfo(_sid).then((res) => {
       var province = region.filter(item=>{
         return item.addrid==res.data.province_id
@@ -233,6 +237,29 @@ Page({
     var url = e.currentTarget.dataset.url
     my.navigateTo({
       url:url
+    });
+  },
+  getInfo(){
+    my.getAuthCode({
+      scopes: ['auth_user','auth_life_msg'],
+      success: (res) => { 
+        my.getAuthUserInfo({
+          success: (userInfo) => {
+            var _sid = my.getStorageSync({
+                  key: '_sid', // 缓存数据的key
+            }).data;
+            var data = {
+              _sid:_sid,
+              head_img: userInfo.avatar,
+              nick_name:userInfo.nickName
+            }
+            console.log(data,'更新')
+            UpdateAliUserInfo(data).then(res=>{
+
+            })
+          }
+        });
+      },
     });
   },
   onReady() {
