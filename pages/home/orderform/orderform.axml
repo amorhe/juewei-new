@@ -42,7 +42,7 @@
   <view class="orderList_box">
     <view class="ordershopName borderBottomSolid">{{shopObj.title}}</view>
     <view class="order_list">
-      <view a:for="{{repurseList}}">
+      <view a:for="{{shopcartGoods}}">
         <view class="listLeft">
           <image class="ordergoodsImage" mode="scaleToFill" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3903606479,4039726850&fm=26&gp=0.jpg"/>
           <view>
@@ -208,7 +208,7 @@
 
     <view class="repursePrice" a:if="{{repurseList.length>1}}">
       <text class="fontTwentySix">小计¥</text>
-      <text class="fontFourty fontBold">35</text>
+      <text class="fontFourty fontBold">{{priceAll}}</text>
     </view>
   </view>
 

@@ -3,7 +3,7 @@
     <view class="listItem">
       <view class="Itemlabel">头像</view>
       <view class="ItimInfo"></view>
-      <image mode="scaleToFill" class='userImg' src="{{ userinfo.head_img }}"/>
+      <image mode="scaleToFill" class='userImg' src="{{ userinfo.head_img?userinfo.head_img:imageUrl+'default_head1.png' }}"/>
     </view>
     <view class="listItem">
       <view class="Itemlabel">昵称</view>

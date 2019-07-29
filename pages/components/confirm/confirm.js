@@ -23,13 +23,15 @@ Component({
           modalShow:false,
           mask:false,
           type:1,
-          isType:'clear'
+          isType:'clearShopcart'
         }
-      } 
+      }
+      if(this.props.isType=="orderConfirm") 
      modalObj = {
         modalShow:false,
         mask:false,
-        type:1
+        type:1,
+        isType:'orderConfirm'
       }
       
       this.props.onCounterPlusOne(modalObj)
