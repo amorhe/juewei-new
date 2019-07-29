@@ -114,26 +114,13 @@ Page({
   // 授权获取用户信息
   onGetAuthorize(res) {
     var that = this
-    // 获取授权
-    my.getAuthCode({
-      scopes: ['auth_base'],
-      success: (res) => {
-       loginByAliUid(res.authCode).then((data) => {
-        my.setStorageSync({
-          key: 'ali_uid', // 缓存数据的key
-          data: data.data.ali_uid, // 要缓存的数据
-        });
-        my.setStorageSync({
-          key: '_sid', // 缓存数据的key
-          data: data.data._sid, // 要缓存的数据
-        });
-        app.globalData._sid=data.data._sid
-       })
-      },
-    });
-    
+   
     my.getPhoneNumber({
       success: (res) => {
+        my.showLoading({
+          content: '加载中...',
+          delay: 1000,
+        });
         let ali_uid = my.getStorageSync({
           key: 'ali_uid', // 缓存数据的key
         }).data;
@@ -160,6 +147,7 @@ Page({
         key: '_sid', // session_id
         data: res.data._sid,
       });
+      app.globalData._sid=res.data._sid
       this.getUserInfo(res.data._sid);
     })
   },
@@ -167,7 +155,7 @@ Page({
   getUserInfo(_sid) {
     getuserInfo(_sid).then((res) => {
       app.globalData.userInfo = res.data;
-      console.log(res.data)
+      my.hideLoading();
       my.switchTab({
         url:'/pages/home/goodslist/goodslist'
       })
