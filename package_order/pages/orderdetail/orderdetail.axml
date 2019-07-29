@@ -17,7 +17,7 @@
       <view class="topay" a:if="{{item.order_status == 0}}">
           去支付（还剩14分20秒）
       </view>
-      <view class="cancel-order" a:if="{{![1,2].includes(d.order_status_info.order_status)}}" catchTap="showCancel">
+      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status)}}" catchTap="showCancel">
           取消订单
       </view>
       <view class="topay con" a:if="{{[1,2,3].includes(d.order_status_info.order_status)}}">
