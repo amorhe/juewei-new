@@ -15,16 +15,18 @@ Component({
     goodsInfo:'',
     send_price:"",   //起送费
     dispatch_price: '', // 邮费
+    isType:'',
+    content:''
   },
   props: {},
   onInit(){
     
   },
   didMount() {
-    const shopGoods = JSON.parse(my.getStorageSync({key:'shopGoods'}).data);
     this.setData({
-      shopGoods 
-    }) 
+      orderType:this.props.orderType
+    })
+    const shopGoods = JSON.parse(my.getStorageSync({key:'shopGoods'}).data);
     this.getSendPrice();
     // 获取购物车数据
     let data = my.getStorageSync({key:'goodsList'}).data;
@@ -46,7 +48,9 @@ Component({
       data.forEach(item => {
         priceAll += item.goods_price * item.goods_quantity
       })
+      console.log(shopcartGoods)
       this.setData({
+        shopGoods,
         shopcartGoods,
         goodsInfo:data,
         priceAll
@@ -110,8 +114,11 @@ Component({
         showShopcar: false,
         mask1:false,
         mask:true,
-        modalShow: true
+        modalShow: true,
+        isType:'clearShopcart',
+        content:'是否清空购物车'
       })
+      
     },
     onCounterPlusOne(data) {
       console.log(data)
@@ -119,6 +126,15 @@ Component({
         mask: data.mask,
         modalShow: data.modalShow
       })
+      if(data.isType =='clearShopcart' && data.type == 1){
+        // 清空购物车
+        my.removeStorageSync({key:'goodsList'});
+      }
+      if(data.isType =='orderConfirm'){
+        this.setData({
+          mask1:false
+        })
+      }
     },
     // 立即购买
     goOrderSubmit(){
@@ -128,7 +144,7 @@ Component({
         });
         return 
       }
-      let goods = JSON.stringify(this.data.shopcartGoods);
+      let goods = JSON.stringify(my.getStorageSync({key: 'goodsList'}).data);
       let shop_id;
       if(this.data.orderType == 1){
         shop_id = my.getStorageSync({
@@ -141,9 +157,23 @@ Component({
       }
       confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
         console.log(res)
+        // 测试
         my.navigateTo({
-          url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType 
-        }); 
+          url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType
+        });
+        // if(res.code == 0){
+        //   my.navigateTo({
+        //     url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType 
+        //   }); 
+        // }else{
+        //   this.setData({
+        //     mask:true,
+        //     modalShow:true,
+        //     showShopcar:false,
+        //     isType:'orderConfirm',
+        //     content: res.msg
+        //   })
+        // }
       })
         
     },

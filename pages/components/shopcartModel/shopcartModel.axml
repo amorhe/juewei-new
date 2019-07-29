@@ -12,8 +12,8 @@
       </view>
       <view>另需配送费{{dispatch_price}}元</view>
     </view>
-    <view class="buyBtn" a:if="{{priceAll<30}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>30}}">立即购买</view>
+    <view class="buyBtn" a:if="{{priceAll<send_price}}">￥{{send_price}}起送</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">立即购买</view>
   </view>
 </view>
 <!-- 购物车弹框 -->
@@ -55,7 +55,8 @@
       </view>
       <view>另需配送费6元</view>
     </view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit">立即购买</view>
+    <view class="buyBtn" a:if="{{priceAll<send_price}}">￥{{send_price}}起送</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">立即购买</view>
   </view>
   <!-- <view class="shopcart" a:if="{{shopcartGoods.length==0}}">
     <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" />
@@ -68,7 +69,7 @@
 
 </view>
 <!-- 弹框组件 -->
-<confirm content="是否清空购物车" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="clearShopcart" />
+<confirm content="{{content}}" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
 <!-- 遮罩层 -->
 <view a:if="{{mask1}}" class="mask" onTap="hiddenShopcart"></view>
 

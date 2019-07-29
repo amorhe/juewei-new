@@ -1,5 +1,5 @@
 import {imageUrl} from '../../common/js/baseUrl'
-import {couponsList} from '../../common/js/home'
+import {couponsList,confirmOrder} from '../../common/js/home'
 var app = getApp();
 Page({
   data: {
@@ -61,17 +61,40 @@ Page({
     shopObj:{},   // 自提商店的详细信息
     couponsList:[],   //优惠券
     couponsDefault:null,
-    full_money:0
+    full_money:0,
+    shopcartGoods:[],   //商品列表
+    priceAll:'',
+    goodsInfo:''
   },
   onLoad(e) {
-    console.log(e)
-    // const res = JSON.parse(my.getStorageSync({key: 'goodsList'}).data);
-    // confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
-    //   console.log(res)
-    // })
+    // // 获取商品
+    const data = my.getStorageSync({key: 'goodsList'}).data;
+    const shopGoods = JSON.parse(my.getStorageSync({key:'shopGoods'}).data);
+    let arr = []
+    arr = shopGoods
+    .map(_item => _item.last.filter(item =>
+      data.some(value => value.goods_code == item.goods_code)
+    ))
+    // 获取购物车商品
+    let shopcartGoods = [];
+    arr.forEach(item => {
+      if(item.length>0){
+          shopcartGoods=[...shopcartGoods, ...item];
+      }
+    })
+    //  计算价格
+    let priceAll = 0;
+    data.forEach(item => {
+      priceAll += item.goods_price * item.goods_quantity
+    })
     this.setData({
+      shopcartGoods,
+      goodsInfo:data,
+      priceAll,
       orderType:e.orderType
     })
+
+    const shop_id = my.getStorageSync({key: 'shop_id'}).data;
     if(e.orderType == 2) {
       const self = my.getStorageSync({key: 'self'}).data;
       let arr = [
@@ -116,34 +139,36 @@ Page({
   // 加购商品
     console.log(app.globalData.gifts);
     const gifts = app.globalData.gifts;
-    for(let key in gifts){
-      gifts[key].forEach(val => {
-        val.goods_count = 0;
-        val.goods_choose = true
-      })
-      this.setData({
-        full_money:key,
-        repurseList:gifts[key]
-      })
+    if(gifts.length>0){
+      for(let key in gifts){
+        gifts[key].forEach(val => {
+          val.goods_count = 0;
+          val.goods_choose = true
+        })
+        this.setData({
+          full_money:key,
+          repurseList:gifts[key]
+        })
+     }
     }
 
-    switch(this.data.type) {
-      case 0:
-        this.setData({
-          content: "有5个商品已失效，系统已清除，是否确认结算"
-        })
-         break;
-      case 1:
-        this.setData({
-          content: "有5个商品价格更新，系统已清更新，是否确认结算"
-        })
-         break;
-      case 2:
-        this.setData({
-          content: "有1个商品已失效，有5个商品价格更新，系统已清更新，是否确认结算"
-        })
-         break;
-    }
+    // switch(this.data.type) {
+    //   case 0:
+    //     this.setData({
+    //       content: "有5个商品已失效，系统已清除，是否确认结算"
+    //     })
+    //      break;
+    //   case 1:
+    //     this.setData({
+    //       content: "有5个商品价格更新，系统已清更新，是否确认结算"
+    //     })
+    //      break;
+    //   case 2:
+    //     this.setData({
+    //       content: "有1个商品已失效，有5个商品价格更新，系统已清更新，是否确认结算"
+    //     })
+    //      break;
+    // }
   },
   // 换购显示
   addRepurseTap(){

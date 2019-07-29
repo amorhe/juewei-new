@@ -391,7 +391,11 @@ Page({
       console.log(res);
       const companyGoodsList = this.data.companyGoodsList;
       // 获取加价购商品
-      app.globalData.gifts = res.data.MARKUP.gifts;
+      if(res.data.MARKUP!=null) {
+        app.globalData.gifts = res.data.MARKUP.gifts;
+      }else{
+         app.globalData.gifts = [];
+      }
       // 获取参与加价购商品的列表
       app.globalData.otherGoods = res.data.MARKUP.goods;
 
