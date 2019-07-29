@@ -6,7 +6,7 @@ export const getSid = () => {
     my.getStorage({
       key: '_sid', // 缓存数据的key
       success: (res) => {
-        resolve(res)
+        resolve(res.data)
       },
       fail: err => {
         reject(err)

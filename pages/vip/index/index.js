@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, getSid } from '../../common/js/li-ajax'
+import { ajax, getSid, log } from '../../common/js/li-ajax'
 
 Page({
   data: {
@@ -223,7 +223,7 @@ Page({
     my.navigateTo({
       url: '../../../package_vip/pages/exchangelist/exchangelist'
     });
-  }
+  },
 
 
   // initClientRect() {
@@ -244,5 +244,13 @@ Page({
   //     menuFixed: (scroll.scrollTop > this.data.menuTop)
   //   })
   // }
+
+  isloginFn() {
+
+    my.navigateTo({
+      url: '/pages/login/auth/auth'
+    });
+
+  },
 
 });
