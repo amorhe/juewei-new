@@ -236,7 +236,7 @@ Page({
         my.tradePay({
           tradeNO: res.data.order_no, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
           success: (res) => {
-           add_lng_lat(order_no,typeClass,lng,lat).then((conf) => {
+           add_lng_lat(res.data.order_no,typeClass,lng,lat).then((conf) => {
              console.log('成功',conf);
              my.navigateTo({
                url: '/pages/home/orderfinish/orderfinish', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
