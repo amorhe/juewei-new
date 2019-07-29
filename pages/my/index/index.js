@@ -85,6 +85,10 @@ Page({
       my.navigateTo({
         url:'/pages/login/auth/auth'
       });
+    }else{
+      my.navigateTo({
+        url:'/package_my/pages/mycenter/mycenter'
+      });
     }
   },
   toUrl(e){
