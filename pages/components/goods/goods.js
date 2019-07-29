@@ -183,8 +183,12 @@ Component({
       if(my.getStorageSync({key:'goodsList'}).data!=null){
         let oldArr = my.getStorageSync({key:'goodsList'}).data;
         let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
-        oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
-        oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
+        if(oldArr){
+           oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
+        }
+        if(oldAllArr){
+          oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
+        }
         buyNew = oldArr.concat(arraylist);
         carArray = oldAllArr.concat(shopcartList);
       }else{
