@@ -65,7 +65,7 @@ Page({
       res.data.provinceName=province.name||''
       res.data.cityName=city.name||''
       res.data.regionName=regions.name||''
-      console.log(res.data,'数据啊')
+      // console.log(res.data,'数据啊')
       that.setData({
         userinfo:res.data
       })

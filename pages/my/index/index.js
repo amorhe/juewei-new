@@ -48,6 +48,7 @@ Page({
     })
     this.getUserInfo()
   },
+  // 取本地缓存_sid
   getSid(){
       return new Promise((resolve,reject)=>{
         my.getStorage({
@@ -61,7 +62,7 @@ Page({
         });
       })
   },
-
+  // 获取用户信息
  async getUserInfo(){
 
   let _sid = await this.getSid()
@@ -80,6 +81,7 @@ Page({
         })
       }
   },
+  // 判断是否去登录
   isloginFn(){
     if(!this.data.loginId==0){
       my.navigateTo({
@@ -99,6 +101,7 @@ Page({
   },
   onHide(){
   },
+  // 打客服电话
   makePhoneCall() {
     my.makePhoneCall({ number: '4009995917' });
   },

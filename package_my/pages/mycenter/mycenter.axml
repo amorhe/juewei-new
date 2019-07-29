@@ -34,6 +34,8 @@
   </view>
   <view class="SignOutButton" onTap="outLogin">退出登录</view>
 </view>
+
+<!-- 选择性别弹框 -->
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
     <view class="onPopupInfo">
       <view class="InfoItem ItemBorder" onTap="genderFN" data-sex='1'>男</view>

@@ -23,6 +23,7 @@
   </view>
 </view>
 
+<!-- 图片验证码弹框 -->
 <modal
     show="{{modalOpened}}"
     showClose="{{ false }}"
