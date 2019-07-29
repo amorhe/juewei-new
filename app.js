@@ -47,7 +47,4 @@ App({
     addressInfo:null,   //切换定位地址
     gifts:null,    //加购商品
   }
-
-
-
 });
