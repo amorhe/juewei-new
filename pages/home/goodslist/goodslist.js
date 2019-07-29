@@ -103,8 +103,8 @@ Page({
     }
   },
   // 首页banner列表
-  getBannerList(city_id, district_id, company_id, release_channel) {
-    bannerList(city_id, district_id, company_id, release_channel).then((data) => {
+   getBannerList(city_id, district_id, company_id, release_channel) {
+     bannerList(city_id, district_id, company_id, release_channel).then( (data) => {
       console.log(data)
       this.setData({
         imgUrls: data.data
@@ -113,7 +113,7 @@ Page({
   },
   // 首页商品展位
   getShowpositionList(city_id, district_id, company_id) {
-    showPositionList(city_id, district_id, company_id, 1).then((res) => {
+    showPositionList(city_id, district_id, company_id, 1).then( (res) => {
       this.setData({
         showListObj: res.data
       })
@@ -150,8 +150,8 @@ Page({
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
         this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
-        // this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
-        // this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1); 
+        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
+        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
         this.setData({
           shopTakeOut: shopArray
         })
@@ -172,7 +172,7 @@ Page({
           my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
           this.getCompanyGoodsList(arr[0].company_sale_id);
           this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);//banner
-          this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1); 
+          this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id); 
         }
       } else if (res.code == 5 || res.data.length == 0) {
         this.setData({
@@ -248,7 +248,7 @@ Page({
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
       this.getCompanyGoodsList(shopArray[0].company_sale_id);  //获取公司所有商品
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1); //banner
-      this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);
+      this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id);
       
       console.log(shopArray);
       this.setData({
@@ -270,7 +270,7 @@ Page({
         my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
         this.getCompanyGoodsList(arr[0].company_sale_id);
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);//banner
-        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);
+        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id);
       }
 
     })
