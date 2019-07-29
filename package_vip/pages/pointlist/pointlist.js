@@ -4,7 +4,8 @@ Page({
   data: {
     imageUrl,
     userPoint:0,
-    list: []
+    list: [],
+    toast:false
   },
   async onLoad() {
     await this.getDetail()
@@ -37,5 +38,19 @@ Page({
         userPoint:res.DATA
       })
     }
+  },
+
+  /**
+   * @function 显示冻结积分
+   */
+  showToast() {
+    this.setData({ toast: true })
+  },
+
+  /**
+   * @function 隐藏冻结积分
+   */
+  hideToast() {
+    this.setData({ toast: false })
   },
 });
