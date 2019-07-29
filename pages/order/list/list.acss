@@ -168,3 +168,7 @@ page {
   border: 1px solid rgba(230, 0, 18, 1);
   color: rgba(230, 0, 18, 1);
 }
+
+.con{
+  margin-left: 20rpx;
+}
