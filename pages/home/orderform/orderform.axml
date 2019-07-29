@@ -3,11 +3,11 @@
   <view class="addressView" a:if="{{orderType==1}}">
     <navigator url="/pages/home/orderform/selectaddress/selectaddress" class="noAddress">
       <!-- 选择地址前 -->
-      <!-- <text>选择收货地址</text> -->
+      <text a:if="{{!address}}">选择收货地址</text>
       <!-- 选择地址后 -->
-      <view>
-        <view class="fontFourty fontBold marginBEight">紫檀大厦 606</view>
-        <view class="fontGray fontTwentySix">小春（先生） 188 8888 8888</view>
+      <view a:if="{{address}}">
+        <view class="fontFourty fontBold marginBEight">{{addressInfo.user_address_address + addressInfo.user_address_detail_address}}</view>
+        <view class="fontGray fontTwentySix">{{addressInfo.user_address_name}}（{{addressInfo.user_address_sex == 1?'先生':'女士'}}） {{addressInfo.user_address_phone}}</view>
       </view>
       <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </navigator>
@@ -44,12 +44,12 @@
     <view class="order_list">
       <view a:for="{{shopcartGoods}}">
         <view class="listLeft">
-          <image class="ordergoodsImage" mode="scaleToFill" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3903606479,4039726850&fm=26&gp=0.jpg"/>
+          <image class="ordergoodsImage" mode="scaleToFill" src="{{item.goods_img}}"/>
           <view>
             <view>
-              <image class="normalImage" mode="scaleToFill" src="../../common/img/rebate.png"/>
+              <image class="normalImage" mode="scaleToFill" src="../../common/img/rebate.png" a:if="{{item.goods_type}}"/>
               <text class="marginLEight">{{item.goods_name}}</text>
-              <text class="fontSmallGray">（{{item.taste_name}}）</text>
+              <text class="fontSmallGray" a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
             </view>
             <view class="fontSmallGray">{{item.goods_format}}</view>
           </view>
@@ -127,14 +127,14 @@
         </view>
         <view class="marginLEight">
           <text class="fontTwentySix">小计¥</text>
-          <text class="fontFourtyWeight">35</text>
+          <text class="fontFourtyWeight">{{priceAll}}</text>
         </view>
       </view>
     </view>
 
   </view>
   <!-- 换购商品 -->
-  <view class="repurse">
+  <view class="repurse" a:if="{{repurseList.length!=0}}">
     <view class="reqpurseBox">
       <view class="fontBold">超值换购</view>
       <view class="fontSmallGray marginLEight">只能换购一件商品</view>
@@ -226,19 +226,19 @@
 <view class="null"></view>
 <!-- 底部支付 -->
 <view class="orderConfirm">
-  <view class="colorNine">已优惠¥35</view>
+  <view class="colorNine">已优惠¥3</view>
   <view class="orderPrimary">
     <view>
       <text>合计</text>
       <text class="numberColor">¥</text>
-      <text class="numberColor fontFourty fontBold">35</text>
+      <text class="numberColor fontFourty fontBold">{{priceAll}}</text>
     </view>
     <button size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
   </view>
 </view>
 
 <!-- 换购提示 -->
-<view class="repurseToast fontTwentyTwo">
+<view class="repurseToast fontTwentyTwo" a:if="{{repurseList.length!=0}}">
   <view>
     <text class="fontSmallGray">加</text>
     <text class="numberColor">￥{{repurseList[0].goods_price}}</text>

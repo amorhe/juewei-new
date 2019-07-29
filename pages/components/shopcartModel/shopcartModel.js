@@ -1,5 +1,5 @@
 import {imageUrl} from '../../common/js/baseUrl'
-import {confirmOrder} from '../../common/js/home'
+var app = getApp();
 Component({
   mixins: [],
   data: {
@@ -18,7 +18,9 @@ Component({
     isType:'',
     content:''
   },
-  props: {},
+  props: {
+    shopcartList:[]
+  },
   onInit(){
     
   },
@@ -26,72 +28,45 @@ Component({
     this.setData({
       orderType:this.props.orderType
     })
-    const shopGoods = JSON.parse(my.getStorageSync({key:'shopGoods'}).data);
     this.getSendPrice();
-    // 获取购物车数据
-    let data = my.getStorageSync({key:'goodsList'}).data;
-    let arr = []
-    if(data!=null){
-       arr = shopGoods
-      .map(_item => _item.last.filter(item =>
-        data.some(value => value.goods_code == item.goods_code)
-      ))
-      // 获取购物车商品
-      let shopcartGoods = [];
-      arr.forEach(item => {
-        if(item.length>0){
-            shopcartGoods=[...shopcartGoods, ...item];
-        }
-      })
+     // 获取购物车数据
+    let data = [];
+    // data = this.props.shopcartList
+    data = my.getStorageSync({key:'shopcartList'}).data;
+    console.log(data)
     //  计算价格
+    if(data.length>0){
       let priceAll = 0;
       data.forEach(item => {
         priceAll += item.goods_price * item.goods_quantity
       })
-      console.log(shopcartGoods)
       this.setData({
-        shopGoods,
-        shopcartGoods,
-        goodsInfo:data,
-        priceAll
+        priceAll,
+        shopcartGoods:data
       })
     }
+     
   },
   deriveDataFromProps(){
   
   },
   didUpdate() {
-    // this.setData({
-    //   orderType:this.props.orderType
-    // })
-    // // 获取购物车数据
-    // let data = my.getStorageSync({key:'goodsList'}).data;
-    // const {shopGoods} = this.data;
-    // let arr = []
-    // if(data!=null){
-    //   arr = shopGoods
-    //   .map(_item => _item.last.filter(item =>
-    //     data.some(value => value.goods_code == item.goods_code)
-    //   ))
-    //   //获取购物车商品
-    //   let shopcartGoods = [];
-    //   arr.forEach(item => {
-    //     if(item.length>0){
-    //         shopcartGoods=[...shopcartGoods, ...item];
-    //     }
-    //   })
-    // //  计算价格
-    //   let priceAll = 0;
-    //   data.forEach(item => {
-    //     priceAll += item.goods_price * item.goods_quantity
-    //   })
-    //   // console.log(shopcartGoods)
-    //   this.setData({
-    //     shopcartGoods,
-    //     goodsInfo:data,
-    //     priceAll
-    //   })
-    // }
+    // 获取购物车数据
+    let data = [];
+    // data = this.props.shopcartList
+    data = my.getStorageSync({key:'shopcartList'}).data;
+    console.log(data)
+    //  计算价格
+    if(data.length>0){
+      let priceAll = 0;
+      data.forEach(item => {
+        priceAll += item.goods_price * item.goods_quantity
+      })
+      this.setData({
+        priceAll,
+        shopcartGoods:data
+      })
+    }
   },
   didUnmount() {},
   methods: {
@@ -129,11 +104,7 @@ Component({
       if(data.isType =='clearShopcart' && data.type == 1){
         // 清空购物车
         my.removeStorageSync({key:'goodsList'});
-      }
-      if(data.isType =='orderConfirm'){
-        this.setData({
-          mask1:false
-        })
+        my.removeStorageSync({key:'shopcartList'});
       }
     },
     // 立即购买
@@ -155,27 +126,9 @@ Component({
           key: 'self', // 缓存数据的key
         }).data[0].shop_id;
       }
-      confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
-        console.log(res)
-        // 测试
-        my.navigateTo({
-          url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType
-        });
-        // if(res.code == 0){
-        //   my.navigateTo({
-        //     url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType 
-        //   }); 
-        // }else{
-        //   this.setData({
-        //     mask:true,
-        //     modalShow:true,
-        //     showShopcar:false,
-        //     isType:'orderConfirm',
-        //     content: res.msg
-        //   })
-        // }
-      })
-        
+      my.navigateTo({
+        url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType
+      });       
     },
     // 获取起送价格
     getSendPrice(){

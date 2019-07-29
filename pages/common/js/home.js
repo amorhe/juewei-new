@@ -23,6 +23,8 @@ const ajaxUrl = {
   DispatchCommentList: '/juewei-api/comment/DispatchCommentList',      // 商品详情中的配送评价列表
   add_lng_lat: '/mini/order_online/add_lng_lat',            // 风控数据经纬度
   getMarkActivity: '/mini/activity/markup/mark/getMarkActivity',             // 加价购列表
+  AliMiniPay: '/juewei-service/payment/AliMiniPay',               // 支付生成交易号
+  useraddressInfo: '/juewei-api/useraddress/info',               // 地址详情
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -51,9 +53,23 @@ export const NearbyShop = (data) => ajax(ajaxUrl.NearbyShop,{data});
 
 export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
 
-export const createOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
+export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,coupon_code,gift,notUse})
+// dispatch_type	是	int	1（外卖）2（自提）
+// shop_id	是	int	门店id
+// goods	是	json	购物车商品
+// shops	是	int	附近门店id，当dispath_type=1必传，附近门店id，英文逗号分隔
+// coupon_code	否	string	用户选择的优惠券
+// gift	否	json	加价购商品 数据 [{"activity_id":"29","gift_id":"79","id":"74"}] (三个id 都在订单页换购商品接口下的gifts中对应)
+// notUse	是	int	优惠券不使用标识，适用在用户主动取消优惠券时的操作,使传入的优惠券码不生效
+// plate	是	int	订单平台。支付宝，传值：11
+// remark	是	str	订单备注
+// source	是	str	订单来源。传值：阿里小程序
+// user_address_id	是	int	收货地址id
+// longitude	是	str	风控参数：下单经度
+// latitude	是	str	风控参数：下单纬度
+// type	是	int	风控参数：下单类型，1:外卖去下单；2:外卖确定支付；3:自提去下单；4:自提确认支付
 
-export const confirmOrder = (dispatch_type,shop_id,goods,shops,notUse,coupon_code,gift) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,notUse,coupon_code,gift})
+export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.confirmOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
 
 export const useraddress = (_sid,type,location) => ajax(ajaxUrl.useraddress,{_sid,type,location});
 
@@ -69,4 +85,6 @@ export const DispatchCommentList = (shop_id,pagenum,pagesize,plate,level,tag_id)
 
 export const add_lng_lat = (order_no,type,longitude,latitude) =>ajax(ajaxUrl.add_lng_lat,{order_no,type,longitude,latitude});
 
-export const getMarkActivity = (company_id,user_id) => ajax(ajaxUrl.getMarkActivity,{company_id,user_id})
+export const getMarkActivity = (company_id,user_id) => ajax(ajaxUrl.getMarkActivity,{company_id,user_id});
+
+export const useraddressInfo = (address_id) => ajax(ajaxUrl.useraddressInfo,{address_id});

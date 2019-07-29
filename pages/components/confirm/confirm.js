@@ -18,22 +18,23 @@ Component({
   methods: {
     confirmTap(){
        let modalObj = {};
+       let isType = ''
       if(this.props.isType=="clearShopcart"){
-        modalObj = {
-          modalShow:false,
-          mask:false,
-          type:1,
-          isType:'clearShopcart'
-        }
+        isType = 'clearShopcart'
       }
-      if(this.props.isType=="orderConfirm") 
-     modalObj = {
+      if(this.props.isType=="orderConfirm"){
+        isType = 'orderConfirm'
+      } 
+      if(this.props.isType == "noShop"){
+        isType = 'noShop'
+      }
+      
+      modalObj = {
         modalShow:false,
         mask:false,
         type:1,
-        isType:'orderConfirm'
+        isType:isType
       }
-      
       this.props.onCounterPlusOne(modalObj)
     },
     cancelTap() {

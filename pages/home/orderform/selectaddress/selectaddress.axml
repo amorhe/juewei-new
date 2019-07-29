@@ -1,11 +1,11 @@
 <view class="addressView">
    <view a:if="{{addressList.length>0}}">
       <radio-group class="radio-group" onChange="radioChange" name="lib">
-        <view class="borderBottomSolid" a:for="{{addressList}}">
+        <view class="borderBottomSolid" a:for="{{addressList}}" onTap="chooseAddress">
           <view class="flexSpecial">
             <radio value="{{item.user_address_id}}" checked="{{item.is_default==1}}" color="#E60012"/>
             <view class="receiverView">
-              <view>{{item.province + item.city + item.district + item.user_address_detail_address}}</view>
+              <view>{{item.user_address_address + item.user_address_detail_address}}</view>
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
