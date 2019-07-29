@@ -201,5 +201,20 @@
   </view>
 </view>
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
-  <view style="height: 200px; background: #fff; display: flex; justify-content: center; align-items: center;">hello world</view>
+  <view style="height: 518rpx; background: #fff">
+    <view class="order-trace">订单跟踪</view>
+    <view class="order-trace-ul">
+      <view class="order-trace-li">
+        <view class="order-trace-left">
+          <image mode="scaleToFill" src="{{imageUrl}}order1.png"/>
+          <image mode="scaleToFill" src="{{imageUrl}}order3.png"/>
+          <view class="order-trace-state">已提交</view>
+         
+        </view>
+        <view class="order-trace-right">
+           <view class="order-trace-time">12:00</view>
+        </view>
+      </view>
+    </view>
+  </view>
 </popup>

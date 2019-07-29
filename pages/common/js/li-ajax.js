@@ -1,9 +1,19 @@
 import { baseUrl } from './baseUrl'
 import parse from 'mini-html-parser2';
 
-// let baseUrl = 'https://test-wap.juewei.com/api'
-
-export const _sid = '208mamgu25fktp7f7dc1dpqpe6'
+export const getSid = () => {
+  return new Promise((resolve, reject) => {
+    my.getStorage({
+      key: '_sid', // 缓存数据的key
+      success: (res) => {
+        resolve(res)
+      },
+      fail: err => {
+        reject(err)
+      }
+    });
+  })
+}
 
 
 /**
@@ -13,10 +23,11 @@ export const _sid = '208mamgu25fktp7f7dc1dpqpe6'
  * @param method 请求方式
  * @return Promise<any>
  */
-export const ajax = (url, data = {}, method = 'POST') => {
+export const ajax = async(url, data = {}, method = 'POST') => {
   my.showLoading({
     content: '加载中...',
   });
+  let _sid = await getSid()
   data._sid = _sid
   return new Promise((resolve, reject) => {
     my.request({
@@ -105,12 +116,12 @@ export const getRegion = async () => {
  * @param _lng 经纬度中 没有 超过 100的那个 => 纬度
  */
 
-export const getDistance = async (_lng,_lat) => {
+export const getDistance = async (_lng, _lat) => {
   let lat = my.getStorageSync({ key: 'lat' }).data;
   let lng = my.getStorageSync({ key: 'lng' }).data;
   return new Promise((resolve, reject) => {
     my.request({
-      url:`https://api.map.baidu.com/directionlite/v1/driving?origin=${lng},${lat}&destination=${_lng},${_lat}&ak=pRtqXqnajTytAzWDL3HOnPRK`,
+      url: `https://api.map.baidu.com/directionlite/v1/driving?origin=${lng},${lat}&destination=${_lng},${_lat}&ak=pRtqXqnajTytAzWDL3HOnPRK`,
       success: (res) => {
         resolve(res)
       },
