@@ -64,10 +64,6 @@ Page({
 
  async getUserInfo(){
 
-    // let _sid = my.getStorageSync({
-    //   key: '_sid', // 缓存数据的key
-    // }).data;
-
   let _sid = await this.getSid()
   let res = await getuserInfo(_sid.data||'')
       console.log(res,'我的页面')
@@ -83,10 +79,9 @@ Page({
           userInfo:res.data
         })
       }
-    
   },
   isloginFn(){
-    if(!this.data._sid){
+    if(!this.data.loginId==0){
       my.navigateTo({
         url:'/pages/login/auth/auth'
       });
