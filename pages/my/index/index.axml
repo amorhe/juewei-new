@@ -1,8 +1,8 @@
 <view class="myContent">
   <view class="myTop flexNormal">
-    <view class="flexSpecial">
+    <view class="flexSpecial" onTap="isloginFn">
       <image class="avatar" mode="scaleToFill" src="{{ loginId==0?userInfo.head_img?userInfo.head_img:imageUrl+'default_head1.png':imageUrl+'default_head2.png' }}"/>
-      <view class="fontFourtyWeight" onTap="isloginFn">
+      <view class="fontFourtyWeight">
         <!-- <text a:if="{{ userInfo.nick_name }}">{{ userInfo.nick_name }}</text>
         <text a:else>绝味会员</text> -->
 
