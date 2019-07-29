@@ -1,15 +1,15 @@
 <!-- <view>
   积分明细列表
 </view> -->
-<view class="pointlistTop">
+<view class="pointlistTop" onTap="hideToast">
   <view class="pittopItema">
     <view>当前积分：  <text class="n">{{userPoint.points}}</text> </view>
      <view class="pitrule" onTap="toUrl" data-url='/package_vip/pages/pointlist/rules/rules'>积分规则</view> 
   </view>
   <view class="pittopItemb">
     <view class="pittopItembinfo">冻结积分：{{userPoint.freeze_point}}</view>
-    <image class="imgicon" src="{{ imageUrl }}explain.png"/>
-    <view class="toast" a:if="{{toast}}">冻结积分：{{userPoint.freeze_point}}</view>
+    <image class="imgicon" src="{{ imageUrl }}explain.png" catchTap="showToast"/>
+    <view class="toast" a:if="{{toast}}">订单积分24小时后解冻，冻结期间不能使用。</view>
   </view>
 </view>
 <view class="pitInfo">

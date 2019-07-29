@@ -10,6 +10,8 @@ Page({
       { key: '门店自提订单', value: '' }
     ],
 
+    listAll:[],
+
     takeOutList: [],
     pickUpList: [],
 
@@ -41,11 +43,14 @@ Page({
       '订单已取消'
     ],
 
-    cur: 0
+    cur: 0,
+
+    page: 0
   },
 
   async onShow() {
-    await this.getOrderList()
+    const { page } = this.data
+    await this.getOrderList(page)
   },
 
   /**
@@ -60,16 +65,33 @@ Page({
   /**
    * @function 获取订单列表
    */
-  async getOrderList() {
-    let { data, code } = await ajax('/juewei-api/order/list', {}, 'GET')
+  async getOrderList(page) {
+    let {listAll} = this.data
+    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page }, 'GET')
     if (code === 0) {
-      let takeOutList = data.filter(({ dis_type }) => dis_type === 1)
-      let pickUpList = data.filter(({ dis_type }) => dis_type === 2)
+      listAll = [...data,...listAll]
+      let takeOutList = listAll.filter(({ dis_type }) => dis_type === 1)
+      let pickUpList = listAll.filter(({ dis_type }) => dis_type === 2)
       this.setData({
         takeOutList,
-        pickUpList
+        pickUpList,
+        listAll
       })
     }
+  },
+
+  /**
+   * @function 获取更对订单信息
+   */
+
+  async onReachBottom() {
+    // 页面被拉到底部
+    let {page} = this.data
+    ++page
+    await this.getOrderList(page)
+    this.setData({
+      page
+    })
   },
 
   /**

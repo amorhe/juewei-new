@@ -29,6 +29,7 @@
 .pittopItemb {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .pittopItembinfo {
@@ -82,6 +83,7 @@
 }
 
 .bottomview {
+  z-index: -1;
   position: relative;
   margin: 48rpx auto;
 }
@@ -103,10 +105,10 @@
 }
 
 .toast{
-  z-index: 999;
+  z-index: 99999;
   position: absolute;
   width: 240rpx;
-  left: -120rpx;
+  left: -0rpx;
   top: 50rpx;
   border-radius: 12rpx;
   background: white;
