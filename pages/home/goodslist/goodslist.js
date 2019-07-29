@@ -150,8 +150,8 @@ Page({
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
         this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
-        this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
-        this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1); 
+        // this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
+        // this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1); 
         this.setData({
           shopTakeOut: shopArray
         })
@@ -411,6 +411,7 @@ Page({
         mask:e.mask,
         type:2
       })
+       this.getLbsShop();
     }else{
       my.navigateTo({
         url: '/pages/home/selecttarget/selecttarget'
