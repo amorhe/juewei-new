@@ -48,23 +48,22 @@ Page({
     })
     this.getUserInfo()
   },
-  getSid() {
-    return new Promise((resolve, reject) => {
-      my.getStorage({
-        key: '_sid', // 缓存数据的key
-        success: (res) => {
-          resolve(res)
-        },
-        fail: err => {
-          reject(err)
-        }
-      });
-    })
+  // 取本地缓存_sid
+  getSid(){
+      return new Promise((resolve,reject)=>{
+        my.getStorage({
+          key: '_sid', // 缓存数据的key
+          success: (res) => {
+            resolve(res)
+          },
+          fail: err=>{
+            reject(err)
+          }
+        });
+      })
   },
-
-
-  async getUserInfo() {
-
+  // 获取用户信息
+ async getUserInfo(){
     let _sid = await this.getSid()
     let res = await getuserInfo(_sid.data || '')
     console.log(res, '我的页面')
@@ -81,8 +80,9 @@ Page({
       })
     }
   },
-  isloginFn() {
-    if (!this.data.loginId == 0) {
+  // 判断是否去登录
+  isloginFn(){
+    if(!this.data.loginId==0){
       my.navigateTo({
         url: '/pages/login/auth/auth'
       });
@@ -100,6 +100,7 @@ Page({
   },
   onHide() {
   },
+  // 打客服电话
   makePhoneCall() {
     my.makePhoneCall({ number: '4009995917' });
   },
