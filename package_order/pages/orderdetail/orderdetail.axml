@@ -17,7 +17,7 @@
       <view class="topay" a:if="{{item.order_status == 0}}">
           去支付（还剩14分20秒）
       </view>
-      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status)}}">
+      <view class="cancel-order" a:if="{{![1,2].includes(d.order_status_info.order_status)}}" catchTap="showCancel">
           取消订单
       </view>
       <view class="topay con" a:if="{{[1,2,3].includes(d.order_status_info.order_status)}}">
@@ -202,7 +202,7 @@
 </view>
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
   <view style="height: 518rpx; background: #fff">
-    <view class="order-trace">订单跟踪</view>
+    <view class="order-trace">订单跟踪 <image onTap="hide" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
     <view class="order-trace-ul">
       <view class="order-trace-li">
         <view class="order-trace-left">
@@ -215,6 +215,22 @@
            <view class="order-trace-time">12:00</view>
         </view>
       </view>
+    </view>
+  </view>
+</popup>
+
+<popup show="{{cancleShow}}" position="bottom" onClose="onPopupClose">
+  <view style="height: 711rpx; width:750rpx; background: #fff;border-radius: 20rpx 20rpx 0 0">
+    <view class="cancle-title">请选择取消原因</view>
+    <view class="cancel-list" a:for="{{cancelReasonList}}" onTap="selectReason" data-index="{{index}}">
+      <view class="cancle-left">
+        {{item.reason}}
+      </view>
+      <image  class="select" mode="scaleToFill" src="{{imageUrl}}select{{item.value?2:1}}.png"/>
+    </view>
+    <view class="cancel-buttons">
+      <view catchTap='hideCancle'>暂不取消</view>
+      <view>确认取消</view>
     </view>
   </view>
 </popup>

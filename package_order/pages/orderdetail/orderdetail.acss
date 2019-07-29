@@ -318,6 +318,10 @@ view.pay {
 }
 
 .order-trace {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   font-size: 34rpx;
   font-family: PingFangSC-Medium;
   font-weight: 500;
@@ -326,21 +330,79 @@ view.pay {
   padding-top: 32rpx
 }
 
-.order-trace-ul{
+.order-trace image {
+  position: absolute;
+  right: 40rpx;
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.order-trace-ul {
   padding: 42rpx 32rpx;
 }
 
-.order-trace-li{
+.order-trace-li {
   display: flex;
   align-items: center
 }
 
-.order-trace-left{
+.order-trace-left {
   display: flex;
   flex: 1
 }
 
-.order-trace-left image{
- width: 32rpx;
- height: 32rpx;
+.order-trace-left image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.select {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.cancle-title {
+  padding: 40rpx 32rpx 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+
+.cancel-list {
+  margin: 0 32rpx;
+  padding: 30rpx 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #eee
+}
+
+.cancel-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 670rpx;
+  margin: 30rpx auto 0;
+}
+
+.cancel-buttons view {
+  width: 50%;
+  height: 96rpx;
+  line-height: 96rpx;
+  color: #fff;
+  text-align: center;
+  font-size: r34px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+
+.cancel-buttons view:first-child {
+  background: #CCCCCC;
+  border-radius: 48rpx 0 0 48rpx;
+}
+
+.cancel-buttons view:last-child {
+  background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
+  border-radius: 0 48rpx 48rpx 0;
 }

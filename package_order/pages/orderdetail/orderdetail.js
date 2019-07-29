@@ -5,6 +5,7 @@ Page({
     imageUrl,
     imageUrl2,
     showTop: false,
+    cancleShow: false,
     orderState: [],
     takeOutState: [
       '待支付',
@@ -32,6 +33,14 @@ Page({
       '订单已取消',
       '订单已取消',
       '订单已取消'
+    ],
+
+    cancelReasonList: [
+      { reason: '下错单/临时不想要了', value: true },
+      { reason: '订单长时间未分配骑手', value: false },
+      { reason: '门店商品缺货/无法出货/已售完', value: false },
+      { reason: '联系不上门店/门店关门了', value: false },
+      { reason: '其他', value: false },
     ],
 
     payTypes: {
@@ -69,6 +78,43 @@ Page({
   show() {
     this.setData({
       showTop: true
+    })
+  },
+
+  hide() {
+    this.setData({
+      showTop: false
+    })
+  },
+
+  /**
+   * @ 显示选择原因
+   */
+
+  showCancel() {
+    this.setData({
+      cancleShow : true
+    })
+  },
+
+  hideCancle() {
+    this.setData({
+      cancleShow : false
+    })
+  },
+
+  /**
+   * @function 选择原因
+   */
+
+  selectReason(e) {
+    const { cancelReasonList } = this.data;
+    const { index } = e.currentTarget.dataset;
+    cancelReasonList.forEach(item => item.value = false)
+    cancelReasonList[index].value = true
+
+    this.setData({
+      cancelReasonList
     })
   }
 });
