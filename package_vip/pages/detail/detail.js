@@ -206,7 +206,7 @@ Page({
     // 获取 用户 积分
     let points = await this.getUserPoint()
 
-    if (points > point) {
+    if (points >= point) {
       this.setData({
         content: `是否兑换“${goods_name}”将消耗你的${point}积分`,
         modalOpened: true
