@@ -5,7 +5,6 @@ var app = getApp();
 Component({
   mixins: [],
   data: {
-    a:[],
     scroll_y:false, 
     imageUrl,
     imageUrl2,
