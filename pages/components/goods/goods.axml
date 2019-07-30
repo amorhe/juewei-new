@@ -288,5 +288,5 @@
 <shopcart-model orderType="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear"/>
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem.last[goodsLast]}}"  onGetShopList="onGetShopList"  />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem.last[goodsLast]}}"/>
 
