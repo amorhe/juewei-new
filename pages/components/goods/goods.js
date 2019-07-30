@@ -91,7 +91,6 @@ Component({
       })
       this.setData({
         shopGoodsList:this.props.shopGoodsList,
-        companyGoodsList:this.props.companyGoodsList
       })
     }
   },
