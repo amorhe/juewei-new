@@ -101,7 +101,7 @@
         兑换码 {{detail.get_code}}
       </view>
     </view>
-    <view class="code" a:if="{{code}}">
+    <view class="code" a:if="{{detail.code}}">
       <view class="code-title">兑换码：{{detail.code}}</view>
       <view class="code-button">复制</view>
     </view>
