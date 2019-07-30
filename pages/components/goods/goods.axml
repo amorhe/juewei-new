@@ -47,7 +47,7 @@
     </view>
   </scroll-view>
 
-  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent"> 
+  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent" scroll-with-animation="true" scroll-animation-duration="100"> 
     <view>
             <!-- 折扣 -->
       <!-- <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}" onTap="goodsdetailContent" data-goodsAll="{{activityAllObj.DIS}}" data-goods_id="{{item.goods_id}}">
@@ -194,15 +194,15 @@
                   <text>{{v.goods_format[0].goods_price / 100}}</text>
                   <text>/ {{v.goods_unit}}</text>
                 </view>
-                <view class="oldPrice">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
+                <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
               </view>
               <view class="goodsNumber">
-                <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
+                <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}"  data-goods_quantity="{{v.count + 1}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
                 <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}"/>
               </view>
             </view>
-            <view class="goodsDiscount">
+            <view class="goodsDiscount" a:if="{{item.key!='爆款'}}">
               <image src="{{imageUrl}}discount.png" />
               <text>{{v.goods_format[0].goods_order_limit}}折  限{{v.goods_format[0].goods_discount_user_limit}}份</text>
             </view>
@@ -214,7 +214,7 @@
           <image src="{{v.goods_small_img[0]}}"/>
           <view class="goodsInfos">
             <view>
-              <text class="goodsName">{{v.goods_name}}</text>
+              <text class="goodsName">{{v.goods_name}}{{v.count}}</text>
               <text class="goodsKind">（{{v.taste_name}}）</text>
             </view>
             <view class="goodsSoldNum marginUD">
@@ -284,10 +284,9 @@
     </view>
   </scroll-view>
 </view>
-
 <!-- 购物车 -->
-<shopcart-model orderType="{{type}}"/>
+<shopcart-model orderType="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear"/>
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{goodsKey}}" goodsLast="{{goodsLast}}" shopcartList="{{shopcartList}}" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem.last[goodsLast]}}"  onGetShopList="onGetShopList"  />
 

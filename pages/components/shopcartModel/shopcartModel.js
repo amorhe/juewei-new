@@ -1,7 +1,6 @@
 import {imageUrl} from '../../common/js/baseUrl'
 var app = getApp();
 Component({
-  mixins: [],
   data: {
     showShopcar:false ,  //购物车
     mask:false, //遮罩
@@ -9,9 +8,6 @@ Component({
     modalShow: false, //弹框
     mask1: false,
     shopGoods:[],
-    shopcartGoods:[],
-    orderType:"",
-    priceAll:'',
     goodsInfo:'',
     send_price:"",   //起送费
     dispatch_price: '', // 邮费
@@ -19,53 +15,20 @@ Component({
     content:''
   },
   props: {
-    shopcartList:[]
+   onClear: (data) => console.log(data),
   },
   onInit(){
     
   },
   didMount() {
-    this.setData({
-      orderType:this.props.orderType
-    })
+    // 获取起送费
     this.getSendPrice();
-     // 获取购物车数据
-    // data = this.props.shopcartList
-    let data = my.getStorageSync({key:'shopcartList'}).data;
-    console.log(data)
-    //  计算价格
-    if(data!=null){
-      let priceAll = 0;
-      data.forEach(item => {
-        priceAll += item.goods_price * item.goods_quantity
-      })
-      this.setData({
-        priceAll,
-        shopcartGoods:data
-      })
-    }
-     
   },
-  deriveDataFromProps(){
-  
+  deriveDataFromProps(nextProps){
+    // console.log(nextProps) 
   },
   didUpdate() {
-    // 获取购物车数据
-    // let data = [];
-    // // data = this.props.shopcartList
-    // data = my.getStorageSync({key:'shopcartList'}).data;
-    // console.log(data)
-    // //  计算价格
-    // if(data.length>0){
-    //   let priceAll = 0;
-    //   data.forEach(item => {
-    //     priceAll += item.goods_price * item.goods_quantity
-    //   })
-    //   this.setData({
-    //     priceAll,
-    //     shopcartGoods:data
-    //   })
-    // }
+   
   },
   didUnmount() {},
   methods: {
@@ -95,7 +58,6 @@ Component({
       
     },
     onCounterPlusOne(data) {
-      console.log(data)
       this.setData({
         mask: data.mask,
         modalShow: data.modalShow
@@ -104,11 +66,12 @@ Component({
         // 清空购物车
         my.removeStorageSync({key:'goodsList'});
         my.removeStorageSync({key:'shopcartList'});
+        this.props.onClear();
       }
     },
     // 立即购买
     goOrderSubmit(){
-      if(this.data.shopcartGoods.length == 0) {
+      if(this.props.shopcartGoods) {
         my.showToast({
           content:"请至少选择一件商品"
         });
@@ -126,7 +89,7 @@ Component({
         }).data[0].shop_id;
       }
       my.navigateTo({
-        url:'/pages/home/orderform/orderform?orderType=' + this.data.orderType
+        url:'/pages/home/orderform/orderform?orderType=' + this.props.orderType
       });       
     },
     // 获取起送价格

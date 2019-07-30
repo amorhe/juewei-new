@@ -5,6 +5,7 @@ var app = getApp();
 Component({
   mixins: [],
   data: {
+    a:[],
     scroll_y:false, 
     imageUrl,
     imageUrl2,
@@ -26,12 +27,23 @@ Component({
     windowHeight:'',
     animation:null,
     goodsItem:{},   //选择规格一条商品
-    goodsResult:[],
+    shopcartList:[],
     goodsKey:"",
-    goodsLast:''
+    goodsLast:'',
+    priceAll:''
   },
   onInit() {
-    
+    let shopcartList = my.getStorageSync({
+      key: 'shopcartList', // 缓存数据的key
+    }).data; 
+    let priceAll = 0;
+    if(shopcartList){
+      shopcartList.forEach(item => {
+        priceAll += item.goods_price * item.goods_quantity
+      })
+    }
+    this.data.shopcartList = shopcartList;
+    this.data.priceAll = priceAll
   },
   didMount() {
     const _sid = my.getStorageSync({key: '_sid'});
@@ -136,8 +148,7 @@ Component({
       })
     },
     addshopcart(e){
-      console.log(e)
-      let{ shopGoodsList } = this.data
+      let { shopGoodsList } = this.data;
       shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
       this.data.shopGoodsList = shopGoodsList;
       let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
@@ -180,6 +191,55 @@ Component({
         })
       }
       let buyNew = [],carArray=[];
+      if(my.getStorageSync({key:'goodsList'}).data!=null && my.getStorageSync({key:'shopcartList'}).data!=null){
+        let oldArr = my.getStorageSync({key:'goodsList'}).data;
+        let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
+        oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
+        oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
+        buyNew = oldArr.concat(arraylist);
+        carArray = oldAllArr.concat(shopcartList);
+      }else{
+        const oldArr = [],oldAllArr=[];
+        buyNew = oldArr.concat(arraylist);
+        carArray = oldAllArr.concat(shopcartList);
+      } 
+      app.globalData.shopcartList = carArray;
+      let priceAll = 0;
+      carArray.forEach(item => {
+        priceAll += item.goods_price * item.goods_quantity
+      })
+      this.setData({
+        shopcartList:carArray,
+        priceAll
+      })
+      my.setStorageSync({
+        key: 'goodsList', // 缓存数据的key
+        data: buyNew, // 要缓存的数据
+      });
+       my.setStorageSync({
+        key: 'shopcartList', // 缓存数据的key
+        data: carArray, // 要缓存的数据
+      });
+      
+      // 加入购物车小红点动画效果
+      // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
+      //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
+      //   this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation1.export();
+      //   // this.animation2.translate(0,0).opacity(1).step();
+      //   // this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation2.export();
+      //   // this.setData({
+      //   //   shopGoodsList: this.data.shopGoodsList
+      //   // });
+      // })
+       
+    },
+    reduceshopcart(e){
+      let{ shopGoodsList } = this.data
+      shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count --;
+      this.data.shopGoodsList = shopGoodsList;
+      let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
+      let arraylist = [],shopcartList=[];
+      let buyNew = [],carArray=[];
       if(my.getStorageSync({key:'goodsList'}).data!=null){
         let oldArr = my.getStorageSync({key:'goodsList'}).data;
         let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
@@ -200,6 +260,7 @@ Component({
         shopGoodsList
       })
       app.globalData.shopcartList = carArray;
+      console.log(buyNew)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: buyNew, // 要缓存的数据
@@ -208,30 +269,21 @@ Component({
         key: 'shopcartList', // 缓存数据的key
         data: carArray, // 要缓存的数据
       });
-      // 加入购物车小红点动画效果
-      // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
-      //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
-      //   this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation1.export();
-      //   // this.animation2.translate(0,0).opacity(1).step();
-      //   // this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation2.export();
-      //   // this.setData({
-      //   //   shopGoodsList: this.data.shopGoodsList
-      //   // });
-      // })
-      
-    },
-    reduceshopcart(e){
-      this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count --;
-       this.setData({
-        shopGoodsList: this.data.shopGoodsList
-      })
-     
     },
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
         url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&type=' + e.currentTarget.dataset.type + '&index=' + e.currentTarget.dataset.index + '&shopGoodsList=' + JSON.stringify(this.data.shopGoodsList)
       });
+    },
+    // 清空购物车
+    onClear(){
+      this.setData({
+        shopcartList:[]
+      })
+    },
+    onGetShopList(data){
+
     }
-  }
+  },
 });

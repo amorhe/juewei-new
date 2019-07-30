@@ -2,11 +2,11 @@
 <view class="goodsBottom">
   <!-- <view class="fullReduce">满48减8；满68减10；满98减20</view> -->
   <view class="shopcart">
-    <image class="shopcarImage" a:if="{{shopcartGoods.length==0}}" src="{{imageUrl}}shopcart_empty.png" />
-    <image onTap="openShopcart" a:if="{{shopcartGoods.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount" a:if="{{shopcartGoods.length>0}}">{{shopcartGoods.length}}</view>
+    <image class="shopcarImage" a:if="{{shopcartList.length==0}}" src="{{imageUrl}}shopcart_empty.png" />
+    <image onTap="openShopcart" a:if="{{shopcartList.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount" a:if="{{shopcartList.length>0}}">{{shopcartList.length}}</view>
     <view class="haveGoods">
-      <view a:if="{{shopcartGoods.length>0}}">
+      <view a:if="{{shopcartList.length>0}}">
         <text>￥</text>
         <text>{{priceAll}}</text>
       </view>
@@ -24,7 +24,7 @@
     <text>清空购物车</text>
   </view>
   <view class="shopcartWrap">
-    <view class="goodsLi" a:for="{{shopcartGoods}}">
+    <view class="goodsLi" a:for="{{shopcartList}}">
       <view class="goodsNameI">
         <view>
           <text>{{item.goods_name}}</text>
