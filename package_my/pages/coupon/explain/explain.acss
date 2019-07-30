@@ -1,0 +1,58 @@
+/* 
+
+page{
+  background: #F5F5F5;
+}
+.explain{
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+.itemOne{
+  display: flex;
+  margin: 20rpx 0;
+}
+
+.imgIcon{
+  width: 70rpx;
+  height: 70rpx;
+  display: block;
+}
+
+.itemOneRight{
+  max-width: 70%;
+  background: red;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+  background: #fff;
+  border-radius: 10rpx; 
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+
+
+.itemTwo{
+  display: flex;
+  justify-content: flex-end;
+  margin: 20rpx 0;
+}
+
+.itemTwoRight{
+  max-width: 70%;
+  background: red;
+  font-size: 24rpx;
+  margin-right: 20rpx;
+  background:  #a0e759;
+  border-radius: 10rpx; 
+  padding: 10rpx;
+  box-sizing: border-box;
+} */
+
+
+.rules{
+  padding: 40rpx 32rpx;
+}
+.itemTitle{
+  font-size: 32rpx;
+  font-weight: 600;
+  margin: 20rpx 0 10rpx;
+}
