@@ -143,12 +143,21 @@ Page({
   loginByAuthFn(ali_uid,phone) {
     console.log('授权函数')
     loginByAuth(ali_uid, phone,'','').then((res) => {
-      my.setStorageSync({
-        key: '_sid', // session_id
-        data: res.data._sid,
-      });
-      app.globalData._sid=res.data._sid
-      this.getUserInfo(res.data._sid);
+      if(res.code==0){
+        my.setStorageSync({
+          key: '_sid', // session_id
+          data: res.data._sid,
+        });
+        app.globalData._sid=res.data._sid
+        this.getUserInfo(res.data._sid);
+      }else{
+        my.showToast({
+          type: 'none',
+          content: res.msg,
+          duration: 2000
+        });
+      }
+     
     })
   },
   // 用户信息
@@ -156,8 +165,8 @@ Page({
     getuserInfo(_sid).then((res) => {
       app.globalData.userInfo = res.data;
       my.hideLoading();
-      my.switchTab({
-        url:'/pages/home/goodslist/goodslist'
+      my.navigateBack({
+          delta: 1
       })
       //this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
       //this.getBannerList(110100, 110105, 1, 1);    //banner列表

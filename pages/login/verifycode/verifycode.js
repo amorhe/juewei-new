@@ -56,15 +56,15 @@ Page({
           key: '_sid', // 缓存数据的key
           data: res.data._sid, // 要缓存的数据
         });
-        my.switchTab({
-          url:'/pages/home/goodslist/goodslist'
-        });
+        my.navigateBack({
+          delta: 2
+        })
       }else{
         // 其他
         my.showToast({
           type:'none',
           duration:2000,
-          content:code.msg
+          content:res.msg
         });
       }
 
@@ -102,6 +102,9 @@ Page({
     this.setData({
       value:value
     })
+    if(value.length==4){
+      this.onBlur()
+    }
   },
   //页面跳转
   toUrl(e){
