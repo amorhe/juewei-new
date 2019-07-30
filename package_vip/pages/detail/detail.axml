@@ -66,6 +66,6 @@
   </view>
   <view slot="footer" class="footerButton">
     <view class="modalButton confirm " onTap="onModalClose">取消</view>
-    <view class="modalButton cancel " onTap="onModalClick">赚积分</view>
+    <view class="modalButton cancel " onTap="getMorePoint">赚积分</view>
   </view>
 </modal>

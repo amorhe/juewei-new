@@ -144,18 +144,19 @@ Page({
     let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
     if (r.code === 0) {
       let { tradeNo } = r.data
-      if(!tradeNo){
+      if (!tradeNo) {
         return my.showToast({
-          content: res.data.erroMSg
+          content: r.data.erroMSg
         })
       }
       my.tradePay({
-        tradeNO:tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+        tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
         success: res => {
-          log(res)
-          return my.redirectTo({
-            url: '../..//finish/finish?id=' + id + '&fail=' + false
-          });
+          if (res.resultCode == 900) {
+            return my.redirectTo({
+              url: '../..//finish/finish?id=' + id + '&fail=' + false
+            });
+          }
         },
         fail: res => {
           log(res)
