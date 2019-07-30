@@ -26,61 +26,14 @@ Page({
 
     userPoint: '',
 
-    bannerList: [
-      {
-        "pic_src": "/static/check/image/goods_point/pjq1JNVftcaXFkCf.jpg",
-        "sort_no": "1",
-        "link_url": "#"
-      }
-    ],
+    bannerList: [],
 
-    positionList: [
-      {
-        "id": "1",
-        "pic_src": [
-          "/static/check/image/goods_point/pi3mYEDeB4IlO73l.jpg"
-        ],
-        "link_url": [
-          "111"
-        ],
-        "sort_no": "1",
-        "type": "1"
-      }
-    ],
+    positionList: [],
 
 
-    list: [{
-      "id": "24",
-      "cate_name": "vip二期优化",
-      "sort_no": "2"
-    }, {
-      "id": "25",
-      "cate_name": "绝味专享",
-      "sort_no": "2"
-    }],
+    list: [],
 
-    goodsList:
-      [
-        {
-          "id": "355",
-          "goods_name": "123",
-          "total_num": "1",
-          "valid_num": "1",
-          "cate_id": "25",
-          "goods_type": "2",
-          "goods_detail_type": "4",
-          "exchange_type": "1",
-          "amount": "0",
-          "point": "1",
-          "start_time": "2019-06-22 00:00:00",
-          "end_time": "2019-07-31 23:59:59",
-          "company_id": "0",
-          "city_id": "1",
-          "district_id": "0",
-          "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg",
-          "exchange_day_vaild_num": 1
-        }
-      ],
+    goodsList:[],
 
 
 
