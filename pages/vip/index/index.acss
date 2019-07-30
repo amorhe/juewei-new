@@ -15,7 +15,8 @@ page {
 
 .header-title-s text{
   position: absolute;
-  bottom: 0;
+  height: 44rpx;
+  bottom: 0rpx;
   left: 30rpx;
 }
 
