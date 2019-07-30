@@ -17,32 +17,10 @@ Component({
  
   },
    deriveDataFromProps(nextProps){
-    console.log(nextProps) 
+    // console.log(nextProps) 
   },
   didUpdate(prevProps, prevData) {
-    // if(Object.keys(this.props.shopGoodsList).length>0){
-    //   this.props.shopGoodsList.forEach(val => {
-    //     val.last.forEach(v=> {
-    //       v.count = 0;
-    //       v.largeCount = 0;
-    //       v.smallCount = 0;
-    //       // v.goods_format[0].goods_quantity=0;
-    //     })
-    //   })
-    //   this.setData({
-    //     shopGoodsList:this.props.shopGoodsList,
-    //   })
-    // }
-    // if(Object.keys(this.props.goodsItem).length>0){
-    //   const goodsKey = this.props.goodsKey;   
-    //   const goodsLast = this.props.goodsLast;
-    //   let goodsItem = this.props.goodsItem.last[goodsLast];
-    //   this.setData({
-    //     goodsItem,
-    //     goodsKey,
-    //     goodsLast
-    //   })
-    // }
+    
   },
   didUnmount() {
    

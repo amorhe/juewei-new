@@ -207,7 +207,9 @@ Component({
       carArray.forEach(item => {
         priceAll += item.goods_price * item.goods_quantity
       })
+      // console.log(shopGoodsList)
       this.setData({
+        shopGoodsList,
         shopcartList:carArray,
         priceAll
       })
