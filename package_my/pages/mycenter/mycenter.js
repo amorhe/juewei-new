@@ -240,6 +240,7 @@ Page({
     });
   },
   getInfo(){
+    var that = this
     my.getAuthCode({
       scopes: ['auth_user','auth_life_msg'],
       success: (res) => { 
@@ -248,6 +249,10 @@ Page({
             var _sid = my.getStorageSync({
                   key: '_sid', // 缓存数据的key
             }).data;
+            that.setData({
+              'userinfo.head_img':userInfo.avatar,
+              'userinfo.nick_name':userInfo.nickName
+            })
             var data = {
               _sid:_sid,
               head_img: userInfo.avatar,

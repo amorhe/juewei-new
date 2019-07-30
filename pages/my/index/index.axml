@@ -10,7 +10,7 @@
       </view>
       <!-- <view a:else class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view> -->
     </view>
-    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="toUrl" data-url="/package_my/pages/mycenter/mycenter"/>
+    <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="isloginFn"/>
   </view>
 
   <view class="vipView">
