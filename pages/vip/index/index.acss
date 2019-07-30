@@ -1,15 +1,47 @@
 @import '../../common/style/common.acss';
-
-page{
+page {
   background: white;
 }
 
+.header-title-s {
+  z-index: 1;
+  position: relative;
+  height: 150rpx;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+}
+
+.header-title-s text{
+  position: absolute;
+  height: 44rpx;
+  bottom: 0rpx;
+  left: 30rpx;
+}
+
+.body_bg{
+  position: absolute;
+  top: 128rpx;
+  width: 100vw;
+  height: 328rpx;
+}
+
+.title_bg{
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 128rpx;
+}
+
 .vip {
-  background: linear-gradient(180deg, #FB5332 0,#FB5332 200rpx, rgba(255, 255, 255, 0) 300rpx);
+  /* background: linear-gradient(180deg, #FB5332 0,#FB5332 200rpx, rgba(255, 255, 255, 0) 300rpx); */
   min-height: 100vh;
 }
 
 .content {
+  z-index: 999;
+  position: relative;
   padding: 23rpx 32rpx;
 }
 
@@ -49,20 +81,20 @@ page{
   margin-right: 10rpx;
 }
 
-.x{
+.x {
   width: 100%;
   white-space: nowrap;
-  display:flex;
+  display: flex;
   margin: 20rpx 0;
 }
 
-.x.active{
+.x.active {
   position: fixed;
 }
 
-.x view{
-  flex-shrink:0;
-  flex-grow:0;
+.x view {
+  flex-shrink: 0;
+  flex-grow: 0;
   height: 80rpx;
   line-height: 80rpx;
   margin-right: 48rpx;
@@ -70,23 +102,23 @@ page{
   font-weight: 400;
 }
 
-.x view.active{
-  flex-shrink:0;
-  flex-grow:0;
+.x view.active {
+  flex-shrink: 0;
+  flex-grow: 0;
   height: 80rpx;
   line-height: 80rpx;
   margin-right: 48rpx;
-  color:#E60012;
+  color: #E60012;
   font-weight: 600;
 }
 
-.ul{
+.ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between
 }
 
-.ul .li{
+.ul .li {
   width: 333rpx;
   height: 513rpx;
   border-radius: 8rpx;
@@ -94,17 +126,17 @@ page{
   overflow: hidden;
 }
 
-.li>image{
+.li>image {
   width: 333rpx;
-  height:333rpx;
+  height: 333rpx;
 }
 
-.li>.center{
+.li>.center {
   padding: 16rpx 20rpx 0;
   background: white
 }
 
-.li>.center>.li-title{
+.li>.center>.li-title {
   font-size: 28rpx;
   color: #333;
   font-weight: 600;
@@ -113,36 +145,36 @@ page{
   width: 100%;
 }
 
-.li-all{
+.li-all {
   font-size: 28rpx;
   color: #e60012;
   font-weight: 600;
-  height:64rpx;
+  height: 64rpx;
   line-height: 64rpx;
 }
 
-.li-all>.li-small{
+.li-all>.li-small {
   font-size: 22rpx;
 }
 
-.li-button{
-width:140rpx;
-height:64rpx;
-line-height: 64rpx;
-text-align: center;
-color: white;
-background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
-border-radius:32rpx;
+.li-button {
+  width: 140rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
+  border-radius: 32rpx;
 }
 
-.bottom{
+.bottom {
   text-align: center;
-  color:rgba(230,0,18,1);
+  color: rgba(230, 0, 18, 1);
   font-size: 22rpx;
   padding: 6rpx 0;
 }
 
-.toast{
+.toast {
   z-index: 999;
   position: absolute;
   width: 240rpx;
@@ -156,7 +188,7 @@ border-radius:32rpx;
   text-align: center
 }
 
-.toast::before{
+.toast::before {
   z-index: -1;
   position: absolute;
   content: '';
@@ -171,9 +203,8 @@ border-radius:32rpx;
   margin: auto;
 }
 
-
-.stickyClass{
-    position: sticky;
-    top: -2rpx;
-    background: white
+.stickyClass {
+  position: sticky;
+  top: -2rpx;
+  background: white
 }

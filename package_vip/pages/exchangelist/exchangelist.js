@@ -7,7 +7,6 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
-    _sid: '4966-inviq2t1sdl3s95idh7a0s1dn',
 
     orderList: [],
 
@@ -25,8 +24,8 @@ Page({
   },
 
   async getOrderList() {
-    let { _sid, page_num, page_size, time } = this.data;
-    let res = await ajax('/mini/vip/wap/order/order_list', { _sid, page_num, page_size })
+    let { page_num, page_size, time } = this.data;
+    let res = await ajax('/mini/vip/wap/order/order_list', { page_num, page_size })
     if (res.code === 100) {
       let orderList = res.data.data
       time = setInterval(() => {

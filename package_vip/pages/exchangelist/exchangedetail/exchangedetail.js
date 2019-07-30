@@ -6,65 +6,65 @@ Page({
     imageUrl,
     imageUrl2,
 
-    detail: {
-      "id": "",
-      "order_point": "",
-      "order_amount": "",
-      "exchange_type": "",
-      "order_ctime": "",
-      "uid": "",
-      "order_type": "",
-      "receive_type": "",
-      "dis_status": "",
-      "get_time": "",
-      "get_code": "",
-      "user_phone": "",
-      "goods_id": "",
-      "shop_id": "",
-      "status": "",
-      "order_sn": "",
-      "goods_name": "",
-      "goods_pic": "",
-      "goods_detail_type": "",
-      //到店领取
-      "user_address_name": "",
-      "user_address_phone": "",
-      "code_img": "",
-      "shop_name": null,
-      "province": null,
-      "city": null,
-      "district": null,
-      "address": null,
-      "shop_latitude": null,
-      "shop_longitude": null,
-      "get_start_time": "",
-      "get_end_time": "",
-      "status_name": "",
-      //虚拟商品
-      "gift_name": "",
-      "conpon_valid_type": "",
-      "conpon_valid_day": "",
-      "start_time": "",
-      "end_time": "",
-      "gift_use_time": "",
-      "intro": "",
-      "exchange_intro": "",
-      "exchange_limit_type": "",
-      "exchange_limit_num": "",
-      // 公司邮寄
-      "user_address_name": "",
-      "user_address_phone": "",
-      "user_address_address": "",
-      "user_address_detail_address": "",
-      "dis_time": "",
-      "dis_sn": "",
-      "dispatch_name": "",
-      "code": ""
-      ,
+    // detail: {
+    //   "id": "",
+    //   "order_point": "",
+    //   "order_amount": "",
+    //   "exchange_type": "",
+    //   "order_ctime": "",
+    //   "uid": "",
+    //   "order_type": "",
+    //   "receive_type": "",
+    //   "dis_status": "",
+    //   "get_time": "",
+    //   "get_code": "",
+    //   "user_phone": "",
+    //   "goods_id": "",
+    //   "shop_id": "",
+    //   "status": "",
+    //   "order_sn": "",
+    //   "goods_name": "",
+    //   "goods_pic": "",
+    //   "goods_detail_type": "",
+    //   //到店领取
+    //   "user_address_name": "",
+    //   "user_address_phone": "",
+    //   "code_img": "",
+    //   "shop_name": null,
+    //   "province": null,
+    //   "city": null,
+    //   "district": null,
+    //   "address": null,
+    //   "shop_latitude": null,
+    //   "shop_longitude": null,
+    //   "get_start_time": "",
+    //   "get_end_time": "",
+    //   "status_name": "",
+    //   //虚拟商品
+    //   "gift_name": "",
+    //   "conpon_valid_type": "",
+    //   "conpon_valid_day": "",
+    //   "start_time": "",
+    //   "end_time": "",
+    //   "gift_use_time": "",
+    //   "intro": "",
+    //   "exchange_intro": "",
+    //   "exchange_limit_type": "",
+    //   "exchange_limit_num": "",
+    //   // 公司邮寄
+    //   "user_address_name": "",
+    //   "user_address_phone": "",
+    //   "user_address_address": "",
+    //   "user_address_detail_address": "",
+    //   "dis_time": "",
+    //   "dis_sn": "",
+    //   "dispatch_name": "",
+    //   "code": ""
+    //   ,
 
-      a: ''
+    //   a: ''
 
-    },
+    // },
 
     _exchange_intro: [],
     _intro: [],
@@ -144,18 +144,19 @@ Page({
     let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
     if (r.code === 0) {
       let { tradeNo } = r.data
-      if(!tradeNo){
+      if (!tradeNo) {
         return my.showToast({
-          content: res.data.erroMSg
+          content: r.data.erroMSg
         })
       }
       my.tradePay({
-        tradeNO:tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+        tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
         success: res => {
-          log(res)
-          return my.redirectTo({
-            url: '../..//finish/finish?id=' + id + '&fail=' + false
-          });
+          if (res.resultCode == 900) {
+            return my.redirectTo({
+              url: '../..//finish/finish?id=' + id + '&fail=' + false
+            });
+          }
         },
         fail: res => {
           log(res)

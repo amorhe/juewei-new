@@ -1,4 +1,5 @@
 {
-  "defaultTitle": "VIP专享",
-  "titleBarColor": "#FB5332"
+  "defaultTitle": "",
+  "titleBarColor": "#ff0000",
+  "transparentTitle": "always"
 }

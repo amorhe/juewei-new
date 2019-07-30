@@ -336,15 +336,19 @@ Page({
       log(r.data.tradeNo)
       if (r.code === 0) {
         my.tradePay({
-          tradeNO:r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+          tradeNO: r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
           success: res => {
-            log(res)
-            return my.redirectTo({
-              url: '../finish/finish?id=' + d.id + '&fail=' + false
-            });
+            log('s',res)
+            
+            if (res.resultCode == 900) {
+              return my.redirectTo({
+                url: '../finish/finish?id=' + d.id + '&fail=' + false
+              });
+            }
+
           },
           fail: res => {
-            log(res)
+            log('fail')
             return my.redirectTo({
               url: '../finish/finish?id=' + d.id + '&fail=' + true
             });
@@ -357,9 +361,6 @@ Page({
         });
       }
     }
-    return my.redirectTo({
-      url: '../finish/finish?id=' + d.id + '&fail=' + false
-    });
 
 
 

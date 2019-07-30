@@ -1,4 +1,10 @@
 <view class="vip" onTap="hideToast">
+  <view class="header-title-s"> 
+    <text>VIP专享</text>
+  </view>
+  <image mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/>
+  <image mode="scaleToFill" class="body_bg" src="{{imageUrl}}body_bg.png"/>
+
   <view class="content">
     <view class="header flex-space-b" a:if="{{_sid}}">
       <view class="flex-center">
@@ -50,8 +56,11 @@
           <view class="li-title">{{item.goods_name}}</view>
           <view class="flex-space-b" style="padding:8rpx 0 18rpx">
             <view class="li-all">
-              {{item.point}}
-              <text class="li-small">积分</text></view>
+              
+              <text class="li-small">{{item.point}}积分</text>
+              <text class="li-small">+{{item.amount}}元</text>
+
+            </view>
             <view  a:if="{{0 < item.valid_num}}" class="li-button" onTap="toDetail" data-id="{{item.id}}">立即兑换</view>
             <view  a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
 
@@ -61,7 +70,7 @@
         <view 
         class="bottom"
         style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
-        已抢{{((((item.total_num-item.valid_num)* 100/item.total_num).toFixed(0)))}}% 
+          已抢{{((((item.total_num-item.valid_num)* 100/item.total_num).toFixed(0)))}}% 
         </view>
       </view>
     </view>
