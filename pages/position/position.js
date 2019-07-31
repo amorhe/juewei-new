@@ -37,10 +37,6 @@ Page({
         that.getNearbyShop();
         that.setData({
           city:res.city
-        },()=> {
-           my.switchTab({
-            url: '/pages/home/goodslist/goodslist'
-          })
         })
       },
       fail() {
@@ -80,6 +76,9 @@ Page({
         const shopArray = shopArr1.concat(shopArr2);
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+        my.switchTab({
+          url: '/pages/home/goodslist/goodslist'
+        })
       } else if (res.code == 5 || res.data.length == 0) {
         this.setData({
           content:'您的定位地址无可配送门店',
