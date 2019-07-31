@@ -72,8 +72,8 @@ Page({
     clearInterval(this.data.a)
   },
 
-  onHide(){
-     clearInterval(this.data.a)
+  onHide() {
+    clearInterval(this.data.a)
   },
 
   /**
@@ -327,40 +327,40 @@ Page({
 
 
     let confirm = await this.confirmOrder()
+    log(confirm)
     if (!confirm) {
       return
     }
 
 
-    if (d.order_total_amount != 0) {
-      let r = await this.pay()
-      log(r.data.tradeNo)
-      if (r.code === 0) {
-        my.tradePay({
-          tradeNO: r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
-          success: res => {
-            log('s',res)
-            
-            if (res.resultCode == 9000) {
-              return my.redirectTo({
-                url: '../finish/finish?id=' + d.id + '&fail=' + false
-              });
-            }
+    if (d.order_total_amount == 0) {
+      return my.redirectTo({
+        url: '../finish/finish?id=' + d.id + '&fail=' + false
+      });
+    }
 
-          },
-          fail: res => {
-            log('fail')
+    let r = await this.pay()
+    log(r.data.tradeNo)
+    if (r.code === 0) {
+      my.tradePay({
+        tradeNO: r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+        success: res => {
+          log('s', res)
+
+          if (res.resultCode == 9000) {
             return my.redirectTo({
-              url: '../finish/finish?id=' + d.id + '&fail=' + true
+              url: '../finish/finish?id=' + d.id + '&fail=' + false
             });
           }
-        });
 
-      } else {
-        return my.redirectTo({
-          url: '../finish/finish?id=' + d.id + '&fail=' + true
-        });
-      }
+        },
+        fail: res => {
+          log('fail')
+          return my.redirectTo({
+            url: '../finish/finish?id=' + d.id + '&fail=' + true
+          });
+        }
+      });
     }
 
 

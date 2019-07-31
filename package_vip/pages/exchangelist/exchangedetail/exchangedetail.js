@@ -81,6 +81,13 @@ Page({
   },
 
 
+  onHide() {
+    clearInterval(this.data.a)
+  },
+
+
+
+
   /**
    * @function 获取订单详情
    */
