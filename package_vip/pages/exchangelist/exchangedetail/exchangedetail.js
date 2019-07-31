@@ -81,12 +81,18 @@ Page({
   },
 
 
+  onHide() {
+    clearInterval(this.data.a)
+  },
+
+
+
+
   /**
-   * @function 或其订单详情
+   * @function 获取订单详情
    */
   async getOrderDetail(id) {
-    const { _sid } = this.data;
-    let res = await ajax('/mini/vip/wap/order/order_detail', { _sid, id })
+    let res = await ajax('/mini/vip/wap/order/order_detail', { id })
     let _exchange_intro = await parseData(res.data.exchange_intro)
     let _intro = await parseData(res.data.intro)
 
@@ -140,7 +146,13 @@ Page({
    */
 
   async payNow() {
-    let { order_sn, id } = this.data.detail;
+    let { order_sn, id, order_amount } = this.data.detail;
+    // 订单不要钱的时候 直接 成功
+    if (order_amount == 0) {
+      return my.redirectTo({
+        url: '/package_vip/pagesfinish/finish?id=' + id + '&fail=' + false
+      });
+    }
     let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
     if (r.code === 0) {
       let { tradeNo } = r.data
@@ -152,23 +164,23 @@ Page({
       my.tradePay({
         tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
         success: res => {
-          if (res.resultCode == 900) {
+          if (res.resultCode == 9000) {
             return my.redirectTo({
-              url: '../..//finish/finish?id=' + id + '&fail=' + false
+              url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + false
             });
           }
         },
         fail: res => {
           log(res)
           return my.redirectTo({
-            url: '../../finish/finish?id=' + id + '&fail=' + true
+            url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
           });
         }
       });
 
     } else {
       return my.redirectTo({
-        url: '../../finish/finish?id=' + id + '&fail=' + true
+        url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
       });
     }
   },

@@ -23,21 +23,21 @@ Page({
     shop_name: '',
 
     d: {
-      "id": "17",
-      "order_point": "1",
-      "order_amount": 0,
-      "exchange_type": "1",
-      "uid": "295060",
-      "express_fee": 0.01,
-      "express_type": "2",
-      "receive_type": "1",
-      "order_total_amount": 0.01,
-      "goods_name": "33",
-      "goods_pic": "/static/check/image/goods_point/0PqRYnGJ1XUZRKuQ.jpg",
-      "order_sn": "jwd03190301s175060",
-      "limit_pay_minute": -3907,
-      "limit_pay_second": -29,
-      "code": 'xxx'
+      // "id": "17",
+      // "order_point": "1",
+      // "order_amount": 0,
+      // "exchange_type": "1",
+      // "uid": "295060",
+      // "express_fee": 0.01,
+      // "express_type": "2",
+      // "receive_type": "1",
+      // "order_total_amount": 0.01,
+      // "goods_name": "33",
+      // "goods_pic": "/static/check/image/goods_point/0PqRYnGJ1XUZRKuQ.jpg",
+      // "order_sn": "jwd03190301s175060",
+      // "limit_pay_minute": -3907,
+      // "limit_pay_second": -29,
+      // "code": 'xxx'
     },
 
     selectShop: false,
@@ -69,6 +69,10 @@ Page({
   },
 
   onUnload() {
+    clearInterval(this.data.a)
+  },
+
+  onHide() {
     clearInterval(this.data.a)
   },
 
@@ -301,7 +305,6 @@ Page({
       }
     }
 
-    log(1)
 
     if (d.receive_type == 2) {
       log(order_sn,
@@ -321,45 +324,43 @@ Page({
       }
     }
 
-    log(2)
 
 
     let confirm = await this.confirmOrder()
+    log(confirm)
     if (!confirm) {
       return
     }
 
-    log(3)
 
-    if (d.order_total_amount != 0) {
-      let r = await this.pay()
-      log(r.data.tradeNo)
-      if (r.code === 0) {
-        my.tradePay({
-          tradeNO: r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
-          success: res => {
-            log('s',res)
-            
-            if (res.resultCode == 900) {
-              return my.redirectTo({
-                url: '../finish/finish?id=' + d.id + '&fail=' + false
-              });
-            }
+    if (d.order_total_amount == 0) {
+      return my.redirectTo({
+        url: '../finish/finish?id=' + d.id + '&fail=' + false
+      });
+    }
 
-          },
-          fail: res => {
-            log('fail')
+    let r = await this.pay()
+    log(r.data.tradeNo)
+    if (r.code === 0) {
+      my.tradePay({
+        tradeNO: r.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+        success: res => {
+          log('s', res)
+
+          if (res.resultCode == 9000) {
             return my.redirectTo({
-              url: '../finish/finish?id=' + d.id + '&fail=' + true
+              url: '../finish/finish?id=' + d.id + '&fail=' + false
             });
           }
-        });
 
-      } else {
-        return my.redirectTo({
-          url: '../finish/finish?id=' + d.id + '&fail=' + true
-        });
-      }
+        },
+        fail: res => {
+          log('fail')
+          return my.redirectTo({
+            url: '../finish/finish?id=' + d.id + '&fail=' + true
+          });
+        }
+      });
     }
 
 

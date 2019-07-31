@@ -1,4 +1,4 @@
-import { ajax, parseData,getSid, log } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData, getSid, log } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -8,44 +8,44 @@ Page({
     openPoint: false,
     content: '',
     detail: {
-    //   "id": "355",
-    //   "goods_name": "123",
-    //   "total_num": "1",
-    //   "valid_num": "1",
-    //   "cate_id": "25",
-    //   "intro": "<p>123<\/p>",
-    //   "goods_type": "2",
-    //   "goods_detail_type": "4",
-    //   "gift_id": "473",
-    //   "exchange_type": "1",
-    //   "point": "1",
-    //   "amount": 0,
-    //   "start_time": "2019-06-22 00:00:00",
-    //   "end_time": "2019-07-31 23:59:59",
-    //   "receive_type": "2",
-    //   "get_start_time": "0000-00-00 00:00:00",
-    //   "get_end_time": "0000-00-00 00:00:00",
-    //   "scope_type": "3",
-    //   "company_id": "0",
-    //   "city_id": "1",
-    //   "district_id": "0",
-    //   "express_type": "1",
-    //   "express_fee": "0",
-    //   "exchange_limit_type": "1",
-    //   "exchange_limit_num": "111",
-    //   "exchange_day_num": "0",
-    //   "exchange_intro": "<p>123123<\/p>",
-    //   "sort_no": "12345",
-    //   "status": "2",
-    //   "create_time": "2019-06-22 14:47:58",
-    //   "update_time": "2019-06-22 14:47:58",
-    //   "goods_pic": [{
-    //     "id": "318",
-    //     "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg"
-    //   }, {
-    //     "id": "454",
-    //     "goods_pic": "\/static\/check\/image\/goods_point\/noTHmy1mTM09NrRh.png"
-    //   }]
+      //   "id": "355",
+      //   "goods_name": "123",
+      //   "total_num": "1",
+      //   "valid_num": "1",
+      //   "cate_id": "25",
+      //   "intro": "<p>123<\/p>",
+      //   "goods_type": "2",
+      //   "goods_detail_type": "4",
+      //   "gift_id": "473",
+      //   "exchange_type": "1",
+      //   "point": "1",
+      //   "amount": 0,
+      //   "start_time": "2019-06-22 00:00:00",
+      //   "end_time": "2019-07-31 23:59:59",
+      //   "receive_type": "2",
+      //   "get_start_time": "0000-00-00 00:00:00",
+      //   "get_end_time": "0000-00-00 00:00:00",
+      //   "scope_type": "3",
+      //   "company_id": "0",
+      //   "city_id": "1",
+      //   "district_id": "0",
+      //   "express_type": "1",
+      //   "express_fee": "0",
+      //   "exchange_limit_type": "1",
+      //   "exchange_limit_num": "111",
+      //   "exchange_day_num": "0",
+      //   "exchange_intro": "<p>123123<\/p>",
+      //   "sort_no": "12345",
+      //   "status": "2",
+      //   "create_time": "2019-06-22 14:47:58",
+      //   "update_time": "2019-06-22 14:47:58",
+      //   "goods_pic": [{
+      //     "id": "318",
+      //     "goods_pic": "\/static\/check\/image\/goods_point\/oXQW34ZBT6Pcbkx0.jpg"
+      //   }, {
+      //     "id": "454",
+      //     "goods_pic": "\/static\/check\/image\/goods_point\/noTHmy1mTM09NrRh.png"
+      //   }]
     }
   },
 
@@ -60,16 +60,20 @@ Page({
    * @function 获取当商品面详情
    */
   async getDetail(id) {
-    let { code, data: { exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
+    let { code, data: { goods_name,exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
     if (code === 100) {
       let _exchange_intro = await this.parseData(exchange_intro)
       let _intro = await this.parseData(intro)
+      my.setNavigationBar({
+        title: goods_name,
+      });
       this.setData({
         detail: {
           intro,
           _intro,
           exchange_intro,
           _exchange_intro,
+          goods_name,
           ...Data
         }
       })
@@ -202,9 +206,9 @@ Page({
 
   async showConfirm() {
     let _sid = await getSid()
-    if(!_sid){
+    if (!_sid) {
       return my.showToast({
-       content:'用户未登录'
+        content: '用户未登录'
       });
     }
 
