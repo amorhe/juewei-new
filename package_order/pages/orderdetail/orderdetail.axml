@@ -26,7 +26,7 @@
       <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status)}}">
           再来一单
       </view>
-      <view class="cancel-order red" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
+      <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
           评价订单
       </view>
       <view class="cancel-order" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status) && d.is_comment == 1}}">
@@ -61,7 +61,7 @@
               <view class="image">折</view>
               <view>
                  {{item.goods_name}}
-                <text>（{{item.remark}}）</text>
+                <text a:if="{{item.remark}}">（{{item.remark}}）</text>
               </view>
             </view>
           </view>

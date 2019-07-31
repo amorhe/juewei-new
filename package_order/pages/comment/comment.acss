@@ -1,4 +1,4 @@
-page{
+page {
   background: #f5f5f5
 }
 
@@ -9,6 +9,10 @@ page{
   background: white;
   box-sizing: border-box;
   border-top: 1rpx solid #fff;
+}
+
+.good{
+  transition: all .3s ease;
 }
 
 .title {
@@ -91,7 +95,7 @@ textarea {
 
 .pics {
   display: flex;
-  margin: 10rpx 0 0 0;
+  margin: 10rpx 0 24rpx 0;
 }
 
 .pics image {
@@ -108,11 +112,10 @@ textarea {
 .null {
   width: 98rpx;
   height: 98rpx;
-  border: 1rpx solid #eee;
-  
+  /* border: 1rpx solid #eee; */
 }
 
-.bot{
+.bot {
   background: #fff;
   position: fixed;
   width: 100vw;
@@ -122,21 +125,29 @@ textarea {
   border-top: 1rpx solid #fff;
 }
 
-.after::after{
+.after::after {
   content: '';
   height: 1421rpx;
   width: 100vw;
 }
 
-.bot .but{
-  width:670rpx;
-height:94rpx;
-line-height: 94rpx;
-background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
-border-radius:47rpx;
-font-size:36rpx;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(255,255,255,1);
-margin: 24rpx auto;
+.bot .but {
+  width: 670rpx;
+  height: 94rpx;
+  line-height: 94rpx;
+  background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
+  border-radius: 47rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  margin: 24rpx auto;
+}
+
+.pic-can-del {
+  position: absolute;
+  right: -12rpx;
+  top: -8rpx;
+  width: 32rpx !important;
+  height: 32rpx !important;
 }

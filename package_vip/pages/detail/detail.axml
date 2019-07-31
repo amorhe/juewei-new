@@ -11,10 +11,18 @@
       <view class="title">
         {{detail.goods_name}}
       </view>
-      <view class="coast">
-           {{detail.point}}
-        <text>积分</text>
-      </view>
+          <view class="coast" a:if="{{ detail.point == 0 && detail.amount == 0 }}">
+            免费领取
+          </view>
+          <view class="coast" a:if="{{ detail.point !=0 && detail.amount != 0 }}">
+           {{ detail.point}} <text>积分</text>  + {{ detail.amount/100}} <text>元</text>
+          </view>
+          <view class="coast" a:if="{{ detail.point !=0 && detail.amount == 0 }}">
+           {{ detail.point}} <text>积分</text>
+          </view>
+          <view class="coast" a:if="{{ detail.point ==0 && detail.amount != 0 }}">
+          {{ detail.amount/100}} <text>元</text>
+          </view>
       <view class="bottom" style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
       <view class="bottom">
         已抢{{(((detail.total_num-detail.valid_num)*100/detail.total_num)).toFixed(0)}}%
@@ -49,7 +57,17 @@
   <view class="btn" onTap="showConfirm">立即兑换</view>
   <view style="height:140rpx"></view>
 </view>
-<!-- 退出提示 -->
+<!--未登录提示 -->
+<modal show="{{loginOpened}}" showClose="{{ false }}">
+  <view class="modalInfo">
+      用户未登录
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm " onTap="onModalClose">取消</view>
+    <view class="modalButton cancel " onTap="onModalClick">登录</view>
+  </view>
+</modal>
+<!-- 消耗积分提示 -->
 <modal show="{{modalOpened}}" showClose="{{ false }}">
   <view class="modalInfo">
       {{content}}

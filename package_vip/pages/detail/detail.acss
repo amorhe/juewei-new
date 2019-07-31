@@ -8,7 +8,6 @@ page{
 }
 
 .header{
-  position: relative;
   height: 940rpx;
   border-radius: 0 0 20rpx 20rpx;
   background: white;

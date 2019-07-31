@@ -1,12 +1,12 @@
 <view class="myContent">
   <view class="myTop flexNormal">
     <view class="flexSpecial" onTap="isloginFn">
-      <image class="avatar" mode="scaleToFill" src="{{ loginId==0?userInfo.head_img?userInfo.head_img:imageUrl+'default_head1.png':imageUrl+'default_head2.png' }}"/>
+      <image class="avatar" mode="scaleToFill" src="{{ userInfo.user_id?userInfo.head_img?userInfo.head_img:imageUrl+'default_head1.png':imageUrl+'default_head2.png' }}"/>
       <view class="fontFourtyWeight">
         <!-- <text a:if="{{ userInfo.nick_name }}">{{ userInfo.nick_name }}</text>
         <text a:else>绝味会员</text> -->
 
-        <text>{{ loginId==0?userInfo.nick_name?userInfo.nick_name:'绝味会员':'登录' }}</text>
+        <text>{{ userInfo.user_id?userInfo.nick_name?userInfo.nick_name:'绝味会员':'登录' }}</text>
       </view>
       <!-- <view a:else class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view> -->
     </view>

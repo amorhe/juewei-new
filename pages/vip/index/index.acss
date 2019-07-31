@@ -4,8 +4,10 @@ page {
 }
 
 .header-title-s {
-  z-index: 1;
-  position: relative;
+  z-index: 9999;
+  position: fixed;
+  top: 0rpx;
+  width: 100vw;
   height: 150rpx;
   text-align: center;
   font-size: 36rpx;
@@ -13,25 +15,26 @@ page {
   color: rgba(255, 255, 255, 1);
 }
 
-.header-title-s text{
+.title_bg {
+  z-index: 9998;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 160rpx;
+}
+
+.header-title-s text {
   position: absolute;
   height: 44rpx;
-  bottom: 0rpx;
+  bottom: 30rpx;
   left: 30rpx;
 }
 
-.body_bg{
+.body_bg {
   position: absolute;
   top: 128rpx;
   width: 100vw;
   height: 328rpx;
-}
-
-.title_bg{
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  height: 128rpx;
 }
 
 .vip {
@@ -42,7 +45,7 @@ page {
 .content {
   z-index: 999;
   position: relative;
-  padding: 23rpx 32rpx;
+  padding: 23rpx 0;
 }
 
 .icon {
@@ -54,6 +57,7 @@ page {
 .header {
   font-size: 34rpx;
   color: white;
+  margin: 0 32rpx;
 }
 
 .total {
@@ -71,7 +75,7 @@ page {
 .title {
   font-size: 36rpx;
   color: #333;
-  margin: 32rpx 0 20rpx;
+  margin: 32rpx 32rpx 20rpx;
 }
 
 .two image {
@@ -97,7 +101,7 @@ page {
   flex-grow: 0;
   height: 80rpx;
   line-height: 80rpx;
-  margin-right: 48rpx;
+  margin-left: 32rpx;
   font-size: 34rpx;
   font-weight: 400;
 }
@@ -107,7 +111,6 @@ page {
   flex-grow: 0;
   height: 80rpx;
   line-height: 80rpx;
-  margin-right: 48rpx;
   color: #E60012;
   font-weight: 600;
 }
@@ -115,7 +118,8 @@ page {
 .ul {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between
+  justify-content: space-between;
+  margin: 47rpx 32rpx;
 }
 
 .ul .li {
@@ -124,6 +128,7 @@ page {
   border-radius: 8rpx;
   margin-bottom: 20rpx;
   overflow: hidden;
+  box-shadow: 0 2rpx 10rpx 0 rgba(153, 153, 153, 0.2);
 }
 
 .li>image {
@@ -153,7 +158,7 @@ page {
   line-height: 64rpx;
 }
 
-.li-all>.li-small {
+.li-all .li-small {
   font-size: 22rpx;
 }
 
@@ -203,8 +208,14 @@ page {
   margin: auto;
 }
 
+.sroll-view-wrap {
+  background: white;
+  position: sticky;
+  top: 150rpx;
+}
+
 .stickyClass {
   position: sticky;
-  top: -2rpx;
-  background: white
+  top: 150rpx;
+  box-sizing: content-box
 }

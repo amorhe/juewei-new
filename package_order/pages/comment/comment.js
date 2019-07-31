@@ -9,15 +9,7 @@ Page({
 
     com: {},
 
-    shopTabs: [
-      { key: '送餐快' },
-      { key: '餐品保存完好' },
-      { key: '服务态度好' },
-      { key: '准时到达' },
-      { key: '送货上门' },
-      { key: '穿着专业' },
-      { key: '风雨无阻' },
-    ],
+    shopTabs: [],
 
     order_on: '',
     dis_tag: 1,
@@ -38,6 +30,18 @@ Page({
       order_no
     })
 
+  },
+
+  /**
+   * @function 展开产品
+   */
+  openList(e) {
+    const { d } = this.data;
+    const { i } = e.currentTarget.dataset;
+    d.goods_list[i].open = true
+    this.setData({
+      d
+    })
   },
 
   /**
@@ -63,6 +67,7 @@ Page({
 
     let goods_list = res.data.goods_list.map(item => ({
       ...item,
+      open: false,
       goods_comment: {
         goods_code: "A1QLT26",
         level: 1,
@@ -72,9 +77,10 @@ Page({
         _tags: com.goods.low,
         content: "",
         img: "",
-        pics: []
+        pics: [],
       },
     }))
+    goods_list[0].open = true
     res.data.goods_list = goods_list
     if (res.code === 0) {
       this.setData({ d: res.data })
@@ -253,6 +259,25 @@ Page({
   },
 
   /**
+   * @function 删除评论图片
+   */
+
+  delDisPic(e) {
+    const { i, pic_index } = e.currentTarget.dataset
+    let { d } = this.data
+    let { goods_list } = d
+    let { pics } = goods_list[i].goods_comment
+
+    // d.goods_list[i].goods_comment.pics = 
+
+    pics.splice(pic_index, 1)
+
+    this.setData({
+      d
+    })
+  },
+
+  /**
    * @function 获取店铺评价详情
    */
 
@@ -283,31 +308,29 @@ Page({
 
   async doCommemt() {
     const { order_no, dis_level, currentShopSelect, dis_content, d } = this.data;
-    let goods_comment = d.goods_list.map(({ goods_code, goods_comment }) => {
-
-
-      return {
+    let goods_comment = d.goods_list.map(({ goods_code, goods_comment }) => (
+      {
         goods_code,
         level: goods_comment.level,
         tag: goods_comment.tags.join(','),
         img: goods_comment.pics.join(','),
         content: goods_comment.content
       }
-    })
+    ))
     log(goods_comment)
     let data = {
       order_no,
       dis_tag: currentShopSelect.join(','),
       dis_level,
       dis_content,
-      goods_comment:'('+JSON.stringify(goods_comment)+')',
+      goods_comment: '(' + JSON.stringify(goods_comment) + ')',
       plate: 1
     }
-     let res = await ajax('/juewei-api/comment/Create',data,'POST')
-     if(res.code === 0){
-       my.redirectTo({
-         url: './comment-success/comment-success', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
-       });
-     }
+    let res = await ajax('/juewei-api/comment/Create', data, 'POST')
+    if (res.code === 0) {
+      my.redirectTo({
+        url: './comment-success/comment-success', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+      });
+    }
   }
 });
