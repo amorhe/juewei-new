@@ -72,6 +72,10 @@ Page({
     clearInterval(this.data.a)
   },
 
+  onHide(){
+     clearInterval(this.data.a)
+  },
+
   /**
    * @function 添加地址
    */
@@ -301,7 +305,6 @@ Page({
       }
     }
 
-    log(1)
 
     if (d.receive_type == 2) {
       log(order_sn,
@@ -321,7 +324,6 @@ Page({
       }
     }
 
-    log(2)
 
 
     let confirm = await this.confirmOrder()
@@ -329,7 +331,6 @@ Page({
       return
     }
 
-    log(3)
 
     if (d.order_total_amount != 0) {
       let r = await this.pay()
