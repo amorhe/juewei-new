@@ -36,7 +36,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <view class="title">
+    <view class="title" a:if="{{positionList.lenght}}">
       为你推荐
     </view>
     <view class="flex-space-b two">

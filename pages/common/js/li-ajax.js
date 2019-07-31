@@ -1,6 +1,10 @@
 import { baseUrl } from './baseUrl'
 import parse from 'mini-html-parser2';
 
+
+/**
+ * @function 获取 sid
+ */
 export const getSid = () => {
   return new Promise((resolve, reject) => {
     my.getStorage({
@@ -39,25 +43,6 @@ export const ajax = async(url, data = {}, method = 'POST') => {
         my.hideLoading()
         resolve(res.data)
         log(res.data)
-      },
-    });
-  })
-}
-
-/**
- * @function 获取 sid
- */
-
-export const sid = async () => {
-  return new Promise(resolve => {
-    my.getAuthCode({
-      scopes: 'auth_base',
-      success: (res) => {
-        console.log(res)
-        ajax('/juewei-api/alimini/loginByAuth', {
-          ali_uid: res.authCode,
-          phone: '18640460506'
-        })
       },
     });
   })

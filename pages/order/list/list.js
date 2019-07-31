@@ -70,8 +70,8 @@ Page({
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page }, 'GET')
     if (code === 0) {
       listAll = [...data,...listAll]
-      let takeOutList = listAll.filter(({ dis_type }) => dis_type === 1)
-      let pickUpList = listAll.filter(({ dis_type }) => dis_type === 2)
+      let takeOutList = listAll.filter(({ dis_type }) => dis_type == 1)
+      let pickUpList = listAll.filter(({ dis_type }) => dis_type == 2)
       this.setData({
         takeOutList,
         pickUpList,
