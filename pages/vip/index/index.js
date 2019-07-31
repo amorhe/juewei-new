@@ -163,7 +163,10 @@ Page({
    * @function 跳转详情页面
    */
   toDetail(e) {
-    const { id } = e.currentTarget.dataset
+    const { id,valid_num } = e.currentTarget.dataset
+    if(0 == valid_num){
+      return
+    }
     my.navigateTo({
       url: '../../../package_vip/pages/detail/detail?id=' + id
     });

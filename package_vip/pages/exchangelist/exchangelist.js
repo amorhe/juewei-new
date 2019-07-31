@@ -11,23 +11,44 @@ Page({
     orderList: [],
 
     page_num: 1,
-    page_size: 100,
+    page_size: 10000,
 
     time: ''
   },
   async onShow() {
-    clearInterval(this.data.time)
-    await this.getOrderList()
+    let { page_num } = this.data;
+    await this.getOrderList(1)
   },
   onUnload() {
     clearInterval(this.data.time)
   },
+  onHide() {
+    clearInterval(this.data.time)
+  },
 
-  async getOrderList() {
-    let { page_num, page_size, time } = this.data;
+  // /**
+  // * @function 获取更对订单信息
+  // */
+
+  // async onReachBottom() {
+  //   // 页面被拉到底部
+  //   let { page_num } = this.data
+  //   ++page_num
+  //   await this.getOrderList(page_num)
+  //   this.setData({
+  //     page_num
+  //   })
+  // },
+
+
+  /**
+   * @function 获取订单列表
+   */
+  async getOrderList(page_num) {
+    let { page_size, time, orderList } = this.data;
     let res = await ajax('/mini/vip/wap/order/order_list', { page_num, page_size })
     if (res.code === 100) {
-      let orderList = res.data.data
+      orderList = [...res.data.data, ...orderList]
       time = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
@@ -44,7 +65,7 @@ Page({
             ...item,
           }
         })
-        log(time)
+
         this.setData({ orderList, time })
 
       }, 1000)
@@ -52,6 +73,9 @@ Page({
     }
   },
 
+  /**
+   * @function 跳转商品页
+   */
 
   toOrderDetail(e) {
     const { id } = e.currentTarget.dataset
@@ -60,11 +84,71 @@ Page({
     });
   },
 
+  /**
+   * @function 跳转到VIP首页
+   */
+
   switchTo() {
     my.switchTab({
       url: '/pages/vip/index/index', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
     });
-  }
+  },
+
+  /**
+   * @function 立即支付
+   */
+
+  async payNow(e) {
+    let { order_sn, id, order_amount } = e.currentTarget.dataset;
+    let res = await ajax('/mini/vip/wap/order/order_detail', { id })
+    if (res.code === 100) {
+    // 校验订单 地址信息
+      if (res.data.receive_type == 2 || res.data.receive_type == 1) {
+        if (!res.data.user_address_phone) {
+          return my.redirectTo({
+            url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
+          });
+        }
+      }
+      // 订单不要钱的时候 直接 成功
+      if (order_amount == 0) {
+        return my.redirectTo({
+          url: '/package_vip/pagesfinish/finish?id=' + id + '&fail=' + false
+        });
+      }
+      // 生成支付订单
+      let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+      if (r.code === 0) {
+        let { tradeNo } = r.data
+        if (!tradeNo) {
+          return my.showToast({
+            content: r.data.erroMSg
+          })
+        }
+        my.tradePay({
+          tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+          success: res => {
+            if (res.resultCode == 9000) {
+              return my.redirectTo({
+                url: '/package_vip/pagesfinish/finish?id=' + id + '&fail=' + false
+              });
+            }
+          },
+          fail: res => {
+            log(res)
+            return my.redirectTo({
+              url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
+            });
+          }
+        });
+
+      } else {
+        return my.redirectTo({
+          url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
+        });
+      }
+    }
+  },
 
 
 });
