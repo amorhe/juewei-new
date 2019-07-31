@@ -1,0 +1,19 @@
+<view class="shopUp">
+  <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
+  <navigator url="/package_my/pages/chooseshop/chooseshop" class="shopBoxs">
+    <view>
+      <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
+      <view class="shop_info">
+        <view class="fontThirtySix">{{title}}</view>
+        <view>在售商品：{{goods_num}}</view>
+        <view>{{address}}</view>
+      </view>
+    </view>
+    <view class="distanceView">
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      <view>距离{{distance}}米</view>
+    </view>
+  </navigator>
+</view>
+
+<my-component shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" scrollY="true" />

@@ -1,5 +1,5 @@
-<image class="goodsImage" mode="scaleToFill" a:if="{{type!=0}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
-<image class="goodsImage" mode="scaleToFill" a:if="{{type==0}}" src="{{imageUrl2 + goodsInfo.goods_img[0]}}"/>
+<image class="goodsImage" mode="scaleToFill" a:if="{{key!='套餐'}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
+<image class="goodsImage" mode="scaleToFill" a:if="{{key=='套餐'}}" src="{{imageUrl2 + goodsInfo.goods_img[0]}}"/>
 <view class="goodsWrap borderBottom">
   <view class="goodsTitle marginB">
     <view>
@@ -48,8 +48,10 @@
       </tab-content>
       <tab-content key="1">
         <view class="tab-content">
-         <view style="overflow-y:scroll">
-            <image a:for="{{goodsInfo.goods_img_intr}}" mode="widthFix" style="width:100%" src="{{item}}"/>
+         <view style="overflow-y:scroll;height:50vh">
+            <image mode="widthFix" style="width:100%" src="http://imgcdnjwd.juewei.com/img_intr/goods_intr_fwh.jpg"/>
+            <image mode="widthFix" style="width:100%" src="{{goodsInfo.goods_img_intr[0]}}"/>
+            <image mode="widthFix" style="width:100%" src="http://imgcdnjwd.juewei.com/img_intr/goods_intr_footer.jpg"/>
          </view>
         </view>
       </tab-content>

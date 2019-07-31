@@ -51,7 +51,7 @@ Page({
       }
     ],
     goodsInfo:{},
-    type:'',
+    key:'',
     index:'',
     dispatchArr:[],
     maskView:false,
@@ -63,7 +63,7 @@ Page({
     const goodsInfo = JSON.parse(e.goodsAll).last[e.index];
     this.setData({
       goodsInfo,
-      type:e.type,
+      key:e.key,
       index:e.index,
       goodsItem:JSON.parse(e.goodsAll),
       shopGoodsList:JSON.parse(e.shopGoodsList)

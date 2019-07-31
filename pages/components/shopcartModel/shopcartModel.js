@@ -1,4 +1,5 @@
 import {imageUrl} from '../../common/js/baseUrl'
+import {compare} from '../../common/js/time'
 var app = getApp();
 Component({
   data: {
@@ -12,7 +13,8 @@ Component({
     send_price:"",   //起送费
     dispatch_price: '', // 邮费
     isType:'',
-    content:''
+    content:'',
+    otherGoods:[]
   },
   props: {
    onClear: (data) => console.log(data),
@@ -25,7 +27,13 @@ Component({
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps){
-    // console.log(nextProps) 
+    nextProps.otherGoods.push(nextProps.priceAll * 100);
+    nextProps.otherGoods = [...new Set(nextProps.otherGoods)]
+    nextProps.otherGoods.sort(compare);
+    console.log(nextProps)
+    this.setData({
+      otherGoods:nextProps.otherGoods
+    })
   },
   didUpdate() {
    

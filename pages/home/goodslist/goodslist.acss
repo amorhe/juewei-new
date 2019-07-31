@@ -52,9 +52,9 @@ page {
 }
 
 .pagesScorll {
-  position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
   top: 88rpx;
-  left: 0;
   width: 750rpx;
   z-index: 1000;
   background: #fff

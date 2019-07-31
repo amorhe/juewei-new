@@ -1,127 +1,76 @@
-import {imageUrl} from '../../common/js/baseUrl';
-import {GetShopGoods,activityList} from '../../common/js/home'
-
+import { imageUrl } from '../../../pages/common/js/baseUrl'
+var app = getApp();
 Page({
   data: {
     imageUrl,
-    shop_id:8997,
-    title:'',
-    address:'',
-    distance:'',
-    goods_num:'',
-    shopGoodsList:[],
-    companyGoodsList:[],
-    typeList: {
-      "爆款": "hot",
-      "超辣": "kl",
-      "甜辣": "tl",
-      "微辣": "wl",
-      "不辣": "bl",
-      "招牌系列": "zhao_series",
-      "藤椒系列": "tj_series",
-      "素菜系列": "su_series",
-      "黑鸭系列": "hei_series",
-      "五香系列": "wu_series",
-      "解辣神器": "qqt_series"
-    },
-    activityAllObj:{},   
+     // 地图中心点
+    longitude: my.getStorageSync({key:'lng'}).data,
+    latitude: my.getStorageSync({key:'lat'}).data,
+    markersArray: [
+      {
+        longitude: 116.30051,
+        latitude: 39.918639,
+        iconPath: `${imageUrl}position_map1.png`,
+        width: 32,
+        height: 32
+      },
+      {
+        longitude: 116.3005,
+        latitude: 39.918639,
+        iconPath: `${imageUrl}position_map1.png`,
+        width: 15,
+        height: 15
+      }
+    ],
+    shopList: [],   //门店列表
+    type:''
   },
   onLoad(e) {
-    console.log(e)
-    this.getShopList(e.shop_id,e.company_id);
+    //  外卖
+    let data;
+    if (e.type == 1) {
+      data = my.getStorageSync({ key: 'takeout' }).data
+    }
+    //  自提
+    if (e.type == 2) {
+      data = my.getStorageSync({ key: 'self' }).data;
+    }
+    console.log(data);
+    let arr = data
+    .map(({ location }) => ({
+      longitude: location[0],
+      latitude: location[1]
+    }))
+    .map((item,index)=>{
+      if (index === 0) {
+        return {
+          ...item,
+          iconPath: `${imageUrl}position_map1.png`,
+          width: 32,
+          height: 32
+        }
+      }else{
+        return {
+          ...item,
+          iconPath: `${imageUrl}position_map1.png`,
+          width: 15,
+          height: 15
+        }
+      }
+    })
+    console.log(arr)
     this.setData({
-      distance:e.distance,
-      goods_num:e.goods_num,
-      title:e.title,
-      address:e.address
+      shopList: data,
+      markersArray: arr,
+      type:e.type
     })
   },
-  getShopList(shop_id,company_id){
-     my.request({
-      url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=156335816013`,
-      success: (conf) => {
-        // 该公司所有的商品
-         GetShopGoods(shop_id).then((res) => {
-          const shopGoodsList = res.data[`${shop_id}`];
-          const companyGoodsList = conf.data.data[`${company_id}`]
-          //  获取某公司下的某一个门店的所有商品
-          let arr = companyGoodsList.filter(item => {
-            return shopGoodsList.includes(item.sap_code)
-          })
-          
-          my.request({
-            url: 'https://images.juewei.com/prod/shop/goods_sort.json?v=1563417069075',
-            success: (data) => {
-              let _T = data.data.data.country
-              const { typeList } = this.data
-
-              let keys = Object.keys(typeList)
-
-              let list = keys.map(
-                item => ({
-                  key: item,
-                  values: arr.filter(_item => item === _item.cate_name || item === _item.taste_name)
-                })
-              )
-              let sortList = list.map(({ key, values }) => {
-                let _sort = typeList[key]
-                let _t = _T[_sort]
-
-                if (!_t) { return {key,last:[]} }
-
-                let last = []
-                _t.map(_item => {
-                  let cur = values.filter(({ goods_code }) => goods_code === _item)
-                  last = new Set([...last, ...cur])
-                })
-
-                return {
-                  key,
-                  last:[...last]
-                }
-              })
-            
-              console.log(sortList)
-              this.setData({
-                shopGoodsList: JSON.parse(JSON.stringify(sortList)),
-                companyGoodsList
-              },() => 
-                this.getActivityList(110100,110105,25,2,294785)     //营销活动
-              )
-            },
-          });
-
-
-        })
-      }
-    });
-  },
-  // 门店营销活动(折扣和套餐)
-  getActivityList(city_id,district_id,company_id,buy_type,user_id){
-    activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
-      console.log(res);
-      const companyGoodsList = this.data.companyGoodsList;
-      // 筛选在当前门店里面的折扣商品
-      let DIS= [],PKG = []
-      if(res.data.DIS) {
-        DIS =  res.data.DIS.filter(item => {
-          return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
-        }) 
-      }
-      
-      // 筛选在当前门店里面的套餐商品  
-      if(res.data.PKG) {
-        PKG=  res.data.PKG.filter(item => {
-          return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
-        })
-      }
-      let activityAllObj ={}
-      activityAllObj.DIS = DIS;
-      activityAllObj.PKG = PKG;
-      console.log(activityAllObj)
-      this.setData({
-        activityAllObj
-      })
+  // 选择门店
+  chooseshop(e) {
+    app.globalData.shop_id = e.currentTarget.dataset.id;   //商店id
+    app.globalData.type = this.data.type    //外卖自提
+    my.switchTab({ 
+      url: '/pages/home/goodslist/goodslist'
     })
-  },
+  }
 });

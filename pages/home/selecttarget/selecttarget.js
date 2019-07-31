@@ -12,15 +12,19 @@ Page({
   },
   onLoad() {
     if(app.globalData.address){
-      this.setData({
-        city: app.globalData.city,
-        addressIng: app.globalData.address
-      })
       const _sid = my.getStorageSync({key: '_sid'}).data;
       const lng = my.getStorageSync({key: 'lng'}).data;
       const lat = my.getStorageSync({key: 'lat'}).data;
       const location = `${lng},${lat}`;
       this.getAddressList(_sid,location,lat,lng);
+      // const nearAddress = my.getStorageSync({
+      //   key: 'nearPois', // 缓存数据的key
+      // }).data;
+      this.setData({
+        city: app.globalData.city,
+        addressIng: app.globalData.address
+      })
+
     }
   },
   // 切换城市
@@ -61,7 +65,7 @@ Page({
   rePosition(){
     var that = this;
     my.getLocation({
-      type:2,
+      type:3,
       success(res) {
         my.hideLoading();
         const mapPosition = bd_encrypt(res.longitude,res.latitude);
@@ -73,13 +77,12 @@ Page({
           key: 'lng', // 缓存数据的key
           data: mapPosition.bd_lng, // 要缓存的数据
         });
-        app.globalData.province = res.province;
-        app.globalData.city = res.city;
+        // app.globalData.province = res.province;
+        // app.globalData.city = res.city;
         app.globalData.address1 = res.streetNumber.street;
-        app.globalData.address2 = res.streetNumber.number;
         that.setData({
           city:res.city,
-          addressIng: res.streetNumber.street + res.streetNumber.number
+          addressIng: res.streetNumber.street
         })
       }
     })
@@ -95,8 +98,8 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-    app.globalData.province = e.currentTarget.dataset.info.province;
-    app.globalData.city = e.currentTarget.dataset.info.city;
+    // app.globalData.province = e.currentTarget.dataset.info.province;
+    // app.globalData.city = e.currentTarget.dataset.info.city;
     app.globalData.address = e.currentTarget.dataset.info.name;
     my.switchTab({
       url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数

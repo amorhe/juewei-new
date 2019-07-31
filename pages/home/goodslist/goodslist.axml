@@ -87,8 +87,8 @@ scope='userInfo'>授权登录</button> -->
   <image src="{{imageUrl2 + showListObj[3].pic_src[0]}}" />
 </view>
 
-<view style="height:200rpx;" hidden="{{!scroll_y}}"></view>
-<navigator url="/package_my/pages/chooseshop/chooseshop?type={{type}}" class="{{scroll_y?'pagesScorll':'pagesNormal'}}">
+<!-- <view style="height:200rpx;" hidden="{{!scroll_y}}"></view> -->
+<navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll">
   <!-- 推荐门店 -->
   <view class="shopDefault">
     <view>
@@ -117,9 +117,9 @@ scope='userInfo'>授权登录</button> -->
 </navigator>
 
 <!-- 购物车 -->
-<goods-list scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsAll}}" type="{{type}}" />
+<goods-list scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsAll}}" type="{{type}}" otherGoods="{{otherGoods}}"/>
 
 </view>
 
 <!-- 提示框 -->
-<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" />
+<!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

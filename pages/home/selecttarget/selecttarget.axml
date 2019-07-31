@@ -19,7 +19,7 @@
 <view class="positionIng">
   <view class="fontGray">当前定位</view>
   <view class="positionTxt">
-    <view>
+    <view onTap="switchAddress" data-info="{{addressIng}}">
       <image src="{{imageUrl}}position.png"/>
       <text>{{addressIng}}</text>
     </view>

@@ -1,0 +1,6 @@
+{
+    "defaultTitle": "门店自提",
+    "usingComponents": {
+      "my-component":"../../components/goods/goods"
+    }
+  }

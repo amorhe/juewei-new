@@ -9,7 +9,7 @@
   align-items: center;
   margin-top: 24rpx;
 }
-.positionTxt>view {
+.positionTxt>navigatorß {
   display: flex;
   align-items: center
 }

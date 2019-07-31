@@ -10,6 +10,7 @@
     "pages/home/orderform/remarks/remarks",
     "pages/home/orderform/selectaddress/selectaddress",
     "pages/home/goodslist/goodsdetail/goodsdetail",
+    "pages/home/selfshop/selfshop",
     "pages/home/switchshop/switchshop",
     "pages/home/orderform/agreement/agreement",
     "pages/vip/index/index",
@@ -58,8 +59,7 @@
         "pages/onlineservice/onlineservice",
         "pages/nearshop/nearshop",
         "pages/coupon/redeemCodeRecord/redeemCodeRecord",
-        "pages/coupon/couponRecord/couponRecord",
-        "pages/chooseshop/chooseshop"
+        "pages/coupon/couponRecord/couponRecord"
       ]
     }
   ],

@@ -1,9 +1,13 @@
 <view style="width:750rpx;height:100rpx;"></view>
 <view class="goodsBottom">
-  <!-- <view class="fullReduce">满48减8；满68减10；满98减20</view> -->
+  <view class="fullReduce">
+    <text a:if="{{otherGoods[otherGoods.length-1] / 100 == priceAll}}">只差{{otherGoods[otherGoods.length-2]/100-priceAll}}元,超值福利等着你!</text>
+    <text a:elif="{{priceAll>=otherGoods[0]/100}}">已购满{{otherGoods[0]/100}}元,去结算获取优惠!</text>
+    <text a:else>已购满{{otherGoods[otherGoods.indexOf(priceAll * 100) +1] / 100}}元,去结算享受换购优惠;满{{otherGoods[otherGoods.indexOf(priceAll * 100) -1] / 100}}元更高福利等着你!</text>
+  </view>
   <view class="shopcart">
-    <image class="shopcarImage" a:if="{{shopcartList.length==0}}" src="{{imageUrl}}shopcart_empty.png" />
-    <image onTap="openShopcart" a:if="{{shopcartList.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <image class="shopcarImage" a:if="{{shopcartList==null || shopcartList.length == 0}}" src="{{imageUrl}}shopcart_empty.png" />
+    <image onTap="openShopcart" a:if="{{shopcartList!=null && shopcartList.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
     <view class="addcount" a:if="{{shopcartList.length>0}}">{{shopcartList.length}}</view>
     <view class="haveGoods">
       <view a:if="{{shopcartList.length>0}}">
@@ -13,7 +17,7 @@
       <view>另需配送费{{dispatch_price}}元</view>
     </view>
     <view class="buyBtn" a:if="{{priceAll<send_price}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">立即购买</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">去结算</view>
   </view>
 </view>
 <!-- 购物车弹框 -->
@@ -56,7 +60,7 @@
       <view>另需配送费6元</view>
     </view>
     <view class="buyBtn" a:if="{{priceAll<send_price}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">立即购买</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">去结算</view>
   </view>
   <!-- <view class="shopcart" a:if="{{shopcartGoods.length==0}}">
     <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" />

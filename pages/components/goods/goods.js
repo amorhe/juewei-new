@@ -29,7 +29,7 @@ Component({
     shopcartList:[],
     goodsKey:"",
     goodsLast:'',
-    priceAll:''
+    priceAll:'',
   },
   onInit() {
     let shopcartList = my.getStorageSync({
@@ -42,7 +42,7 @@ Component({
       })
     }
     this.data.shopcartList = shopcartList;
-    this.data.priceAll = priceAll
+    this.data.priceAll = priceAll;
   },
   didMount() {
     const _sid = my.getStorageSync({key: '_sid'});
@@ -273,7 +273,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&type=' + e.currentTarget.dataset.type + '&index=' + e.currentTarget.dataset.index + '&shopGoodsList=' + JSON.stringify(this.data.shopGoodsList)
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&key=' + e.currentTarget.dataset.key + '&index=' + e.currentTarget.dataset.index + '&shopGoodsList=' + JSON.stringify(this.data.shopGoodsList)
       });
     },
     // 清空购物车
