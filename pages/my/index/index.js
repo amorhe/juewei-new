@@ -82,13 +82,13 @@ Page({
   },
   // 判断是否去登录
   isloginFn(){
-    if(!this.data.loginId==0){
+    if(this.data.userInfo.user_id){
       my.navigateTo({
-        url: '/pages/login/auth/auth'
+        url:'/package_my/pages/mycenter/mycenter'
       });
     }else{
       my.navigateTo({
-        url:'/package_my/pages/mycenter/mycenter'
+        url: '/pages/login/auth/auth'
       });
     }
   },
