@@ -58,6 +58,7 @@ page {
 .header {
   font-size: 34rpx;
   color: white;
+  margin: 0 32rpx;
 }
 
 .total {
@@ -75,7 +76,7 @@ page {
 .title {
   font-size: 36rpx;
   color: #333;
-  margin: 32rpx 0 20rpx;
+  margin: 32rpx 32rpx 20rpx;
 }
 
 .two image {
@@ -129,6 +130,7 @@ page {
   border-radius: 8rpx;
   margin-bottom: 20rpx;
   overflow: hidden;
+  box-shadow:0 2rpx 10rpx 0 rgba(153,153,153,0.2);
 }
 
 .li>image {

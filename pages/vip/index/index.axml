@@ -55,7 +55,7 @@
 
 
     <view class="ul">
-      <view class="li" a:for="{{goodsList}}">
+      <view class="li" a:for="{{goodsList}}" onTap="toDetail" data-id="{{item.id}}" data-valid_num="{{item.valid_num}}">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         <view class="center">
           <view class="li-title">{{item.goods_name}}</view>
@@ -73,10 +73,9 @@
               <text class="li-small" a:if="{{ item.point ==0 && item.amount != 0 }}">
                 {{ item.amount / 100}}元
               </text>
-              
 
             </view>
-            <view  a:if="{{0 < item.valid_num}}" class="li-button" onTap="toDetail" data-id="{{item.id}}">立即兑换</view>
+            <view  a:if="{{0 < item.valid_num}}" class="li-button">立即兑换</view>
             <view  a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
 
           </view>

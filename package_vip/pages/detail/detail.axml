@@ -11,10 +11,18 @@
       <view class="title">
         {{detail.goods_name}}
       </view>
-      <view class="coast">
-           {{detail.point}}
-        <text>积分</text>
-      </view>
+          <view class="coast" a:if="{{ detail.point == 0 && detail.amount == 0 }}">
+            免费领取
+          </view>
+          <view class="coast" a:if="{{ detail.point !=0 && detail.amount != 0 }}">
+           {{ detail.point}} <text>积分</text>  + {{ detail.amount/100}} <text>元</text>
+          </view>
+          <view class="coast" a:if="{{ detail.point !=0 && detail.amount == 0 }}">
+           {{ detail.point}} <text>积分</text>
+          </view>
+          <view class="coast" a:if="{{ detail.point ==0 && detail.amount != 0 }}">
+          {{ detail.amount/100}} <text>元</text>
+          </view>
       <view class="bottom" style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
       <view class="bottom">
         已抢{{(((detail.total_num-detail.valid_num)*100/detail.total_num)).toFixed(0)}}%
