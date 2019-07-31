@@ -292,6 +292,8 @@ Page({
         item.goods_img_detail_origin = [item.goods_img_detail_origin]
         item.goods_img_intr_origin = [item.goods_img_intr_origin]
       }
+
+
       obj1 = {
         "key": "折扣",
         "last": DIS
@@ -300,6 +302,14 @@ Page({
         "key": "套餐",
         "last": PKG
       }
+      // obj3 = {
+      //   "key":"包邮",
+      //   "last":FREE
+      // }
+      // obj4 = {
+      //   "key":"满减",
+      //   "last":FULL
+      // }
       this.data.shopGoodsList.unshift(obj1,obj2);
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       console.log(goodsNew)

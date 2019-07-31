@@ -30,6 +30,7 @@ Component({
     goodsKey:"",
     goodsLast:'',
     priceAll:'',
+    goods_count:0
   },
   onInit() {
     let shopcartList = my.getStorageSync({
@@ -54,20 +55,20 @@ Component({
         })
       }
     })
-    this.animation1 = my.createAnimation({
-      duration: 400,
-      timingFunction: 'linear', 
-      transformOrigin: '50% 50% 0',
-      success: function(res) { 
-      }
-    })
-    this.animation2 = my.createAnimation({
-      duration: 0,
-      timingFunction: 'linear', 
-      transformOrigin: '50% 50% 0',
-      success: function(res) { 
-      }
-    })
+    // this.animation1 = my.createAnimation({
+    //   duration: 400,
+    //   timingFunction: 'linear', 
+    //   transformOrigin: '50% 50% 0',
+    //   success: function(res) { 
+    //   }
+    // })
+    // this.animation2 = my.createAnimation({
+    //   duration: 0,
+    //   timingFunction: 'linear', 
+    //   transformOrigin: '50% 50% 0',
+    //   success: function(res) { 
+    //   }
+    // })
   },
   didUpdate() {
     this.setData({
@@ -156,13 +157,14 @@ Component({
         arraylist.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          // 'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          'good_quantity':goods_count,
           'goods_price':e.currentTarget.dataset.goods_price,
         })
         shopcartList.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity,
+          'goods_quantity':goods_count,
           'goods_price':e.currentTarget.dataset.goods_price,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,
@@ -206,7 +208,7 @@ Component({
       carArray.forEach(item => {
         priceAll += item.goods_price * item.goods_quantity
       })
-      // console.log(shopGoodsList)
+      console.log(shopGoodsList)
       this.setData({
         shopGoodsList,
         shopcartList:carArray,
