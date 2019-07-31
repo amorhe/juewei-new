@@ -1,53 +1,46 @@
 import {imageUrl} from '../common/js/baseUrl'
+import {bd_encrypt} from '../common/js/map'
+var app = getApp();
 
-var app=getApp(); //放在顶部
 Page({
-    data: {
-     logtxt:'',
-     imageUrl
-    },
-    onLoad() {
-      var that=this;
-      // my.getLocation({
-      //   success(res) {
-      //     console.log('my.getLocation=',res)
-      //     my.hideLoading();
-      //     // app.globalData.location.longitude = res.longitude;
-      //     // app.globalData.location.latitude = res.latitude;
-      //     my.setStorageSync({
-      //     key: 'lat', // 缓存数据的key
-      //     data: res.latitude, // 要缓存的数据
-      //   });
-      //   my.setStorageSync({
-      //     key: 'lng', // 缓存数据的key
-      //     data: res.longitude, // 要缓存的数据
-      //   });
-      //     that.setData({
-      //       logtxt: '定位成功'
-      //     });
-      //     setTimeout(function(){
-      //       my.redirectTo({
-      //           url: '/pages/home/goodslist/goodslist'
-      //       })
-      //     },1000)
-      //   },
-      //   fail() {
-      //     my.hideLoading();
-      //     my.alert({ title: '定位失败' });
-      //   },
-      // })
-    },
-    onShow() {
-      // 页面显示
-    },
-    onReady() {
-      // 页面加载完成
-      console.log('onready');
-    },
-    onHide() {
-      // 页面隐藏
-    },
-    onUnload() {
-      // 页面被关闭
-    },
+  data: {
+    imageUrl:imageUrl,
+    city:'定位中...'
+  },
+  onLoad() {
+    var that = this;
+    my.getLocation({
+      type:2,
+      success(res) {
+        my.hideLoading();
+        const mapPosition = bd_encrypt(res.longitude,res.latitude);
+        my.setStorageSync({
+          key: 'lat', // 缓存数据的key
+          data: mapPosition.bd_lat, // 要缓存的数据
+        });
+        my.setStorageSync({
+          key: 'lng', // 缓存数据的key
+          data: mapPosition.bd_lng, // 要缓存的数据
+        });
+        console.log(res)
+        app.globalData.province = res.province;
+        app.globalData.city = res.city;
+        app.globalData.address =  res.city + res.district + res.streetNumber.street + res.streetNumber.number;
+        app.globalData.position = res;
+        that.setData({
+          city:res.city
+        },()=> {
+           my.switchTab({
+            url: '/pages/home/goodslist/goodslist'
+          })
+        })
+      },
+      fail() {
+        my.hideLoading();
+        my.navigateTo({
+          url: '/pages/position/position'
+        })
+      },
+    })
+  },
 });
