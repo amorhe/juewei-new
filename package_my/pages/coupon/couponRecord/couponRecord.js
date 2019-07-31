@@ -12,7 +12,7 @@ Page({
   },
   getCouponsList(_sid){
     couponsList(_sid,'history').then((res) => {
-      if(res.DATA.use>0){
+      if(res.DATA.used>0){
         res.DATA.use.forEach(item => {
           item.start_time = formatTime(item.start_time,'Y-M-D');
           item.end_time = formatTime(item.end_time,'Y-M-D');
@@ -21,7 +21,7 @@ Page({
         console.log('暂无优惠券')
       }
       this.setData({
-        couponList:res.DATA.use,
+        couponList:res.DATA.used,
         tabs:this.data.tabs
       })
     })

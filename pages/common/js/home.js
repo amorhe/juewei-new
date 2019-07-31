@@ -33,7 +33,7 @@ export const upAliMiniFormId = (aliUid,formId) => ajax(ajaxUrl.upAliMiniFormId,{
 
 export const upAliMiniTradeNo = (aliUid,tradeNo) => ajax(ajaxUrl.upAliMiniTradeNo,{aliUid,tradeNo},"GET");
 
-export const couponsList = (_sid,get_use,money,phone,shop_id) => ajax(ajaxUrl.couponsList,{_sid,get_use,money,phone,shop_id});
+export const couponsList = (_sid,get_type,money,phone,shop_id) => ajax(ajaxUrl.couponsList,{_sid,get_type,money,phone,shop_id});
 
 export const getQRcode = (_sid) => ajax(ajaxUrl.getQRcode,{_sid},"GET");
 

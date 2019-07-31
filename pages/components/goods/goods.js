@@ -30,7 +30,6 @@ Component({
     goodsKey:"",
     goodsLast:'',
     priceAll:'',
-    goods_count:0
   },
   onInit() {
     let shopcartList = my.getStorageSync({
@@ -168,7 +167,7 @@ Component({
         shopcartList.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':goods_count,
+          'goods_quantity': e.currentTarget.dataset.goods_quantity,
           'goods_price':e.currentTarget.dataset.goods_price,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,
@@ -196,7 +195,6 @@ Component({
       }
       let buyNew = [],carArray=[];
       if(my.getStorageSync({key:'goodsList'}).data!=null && my.getStorageSync({key:'shopcartList'}).data!=null){
-        console.log(1)
         let oldArr = my.getStorageSync({key:'goodsList'}).data;
         let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
         oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
@@ -204,7 +202,6 @@ Component({
         buyNew = oldArr.concat(arraylist);
         carArray = oldAllArr.concat(shopcartList);
       }else{
-        console.log(2)
         const oldArr = [],oldAllArr=[];
         buyNew = oldArr.concat(arraylist);
         carArray = oldAllArr.concat(shopcartList);
