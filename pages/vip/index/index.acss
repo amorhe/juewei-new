@@ -158,7 +158,7 @@ page {
   line-height: 64rpx;
 }
 
-.li-all>.li-small {
+.li-all .li-small {
   font-size: 22rpx;
 }
 

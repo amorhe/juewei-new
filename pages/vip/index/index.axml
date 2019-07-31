@@ -1,5 +1,6 @@
 <view class="vip" onTap="hideToast">
-  <view class="header-title-s"> 
+  <!-- 头部 -->
+  <view class="header-title-s">
     <text>VIP专享</text>
   </view>
   <view style="height:140rpx"></view>
@@ -12,9 +13,9 @@
         当前积分：
         <view class="total">{{userPoint.points}}</view>
         <view style='position:relative;height:32rpx'>
-        <image class="icon" catchTap="showToast" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
-        <view class="toast" a:if="{{toast}}">冻结积分：{{userPoint.freeze_point}}</view>
-         </view>
+          <image class="icon" catchTap="showToast" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
+          <view class="toast" a:if="{{toast}}">冻结积分：{{userPoint.freeze_point}}</view>
+        </view>
       </view>
       <view class="flex-center" style="font-size:26rpx;height:32rpx" onTap="toExchangeList">
         兑换记录
@@ -22,7 +23,7 @@
       </view>
     </view>
     <!-- 未登录 -->
-     <view class="header flex-space-b" onTap="isloginFn" style="align-iten:flex-end" a:if="{{!_sid}}">
+    <view class="header flex-space-b" onTap="isloginFn" style="align-iten:flex-end" a:if="{{!_sid}}">
       <view class="flex-center">
         立即登录
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
@@ -35,59 +36,52 @@
         </swiper-item>
       </block>
     </swiper>
-
     <view class="title">
       为你推荐
     </view>
     <view class="flex-space-b two">
-      
       <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
         <image mode="scaleToFill" a:for="{{itemName.pic_src}}" src="{{imageUrl2 + item}}"/>
       </scroll-view>
-     
     </view>
     <view class="sroll-view-wrap">
-
-    <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
-      <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
-    </scroll-view>
+      <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
+        <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
+      </scroll-view>
     </view>
-
-
     <view class="ul">
       <view class="li" a:for="{{goodsList}}" onTap="toDetail" data-id="{{item.id}}" data-valid_num="{{item.valid_num}}">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         <view class="center">
           <view class="li-title">{{item.goods_name}}</view>
           <view class="flex-space-b" style="padding:8rpx 0 18rpx">
+            <!-- 价格 -->
             <view class="li-all">
-              <text class="li-small" a:if="{{ item.point == 0 && item.amount == 0 }}">
+              <text class="" a:if="{{ item.point == 0 && item.amount == 0 }}">
                免费领取
               </text>
-              <text class="li-small" a:if="{{ item.point !=0 && item.amount != 0 }}">
-               {{ item.point }}积分 + {{ item.amount / 100}} 元
+              <text a:if="{{ item.point !=0 && item.amount != 0 }}">
+               {{ item.point }}
+                <text class="li-small">积分</text>+{{ item.amount / 100}}
+                <text class="li-small">元</text>
               </text>
-              <text class="li-small" a:if="{{ item.point !=0 && item.amount == 0 }}">
-               {{ item.point }}积分
+              <text a:if="{{ item.point !=0 && item.amount == 0 }}">
+               {{ item.point }}
+                <text class="li-small">积分</text>
               </text>
-              <text class="li-small" a:if="{{ item.point ==0 && item.amount != 0 }}">
-                {{ item.amount / 100}}元
+              <text a:if="{{ item.point ==0 && item.amount != 0 }}">
+                {{ item.amount / 100}}
+                <text class="li-small">元</text>
               </text>
-
             </view>
-            <view  a:if="{{0 < item.valid_num}}" class="li-button">立即兑换</view>
-            <view  a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
-
+            <view a:if="{{0< item.valid_num}}" class="li-button">立即兑换</view>
+            <view a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
           </view>
         </view>
-
-        <view 
-        class="bottom"
-        style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
-          已抢{{((((item.total_num-item.valid_num)* 100/item.total_num).toFixed(0)))}}% 
+        <view class="bottom" style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
+          已抢{{((((item.total_num-item.valid_num)* 100/item.total_num).toFixed(0)))}}%
         </view>
       </view>
     </view>
-    
   </view>
 </view>
