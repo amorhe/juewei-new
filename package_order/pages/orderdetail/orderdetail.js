@@ -116,7 +116,17 @@ Page({
     this.setData({
       cancelReasonList
     })
-  }
+  },
+
+    /**
+   * @function 去评价页面
+   */
+  toComment(e) {
+    const { order_no } = e.currentTarget.dataset;
+    my.navigateTo({
+      url: '/package_order/pages/comment/comment?order_no=' + order_no
+    });
+  },
 });
 
 let data = {

@@ -17,7 +17,7 @@ Page({
     district_id: 110105,
     cate_id: 25,
     page_num: 1,
-    page_size: 100,
+    page_size: 10000,
     company_id: 1,
     city_id: 110100,
     release_channel: 1,
