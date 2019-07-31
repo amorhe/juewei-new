@@ -4,8 +4,10 @@ page {
 }
 
 .header-title-s {
-  z-index: 1;
-  position: relative;
+  z-index: 9999;
+  position: fixed;
+  top: 0rpx;
+  width: 100vw;
   height: 150rpx;
   text-align: center;
   font-size: 36rpx;
@@ -13,10 +15,20 @@ page {
   color: rgba(255, 255, 255, 1);
 }
 
+
+.title_bg{
+  z-index: 9998;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 160rpx;
+}
+
+
 .header-title-s text{
   position: absolute;
   height: 44rpx;
-  bottom: 0rpx;
+  bottom: 30rpx;
   left: 30rpx;
 }
 
@@ -26,14 +38,6 @@ page {
   width: 100vw;
   height: 328rpx;
 }
-
-.title_bg{
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  height: 128rpx;
-}
-
 .vip {
   /* background: linear-gradient(180deg, #FB5332 0,#FB5332 200rpx, rgba(255, 255, 255, 0) 300rpx); */
   min-height: 100vh;
@@ -42,7 +46,7 @@ page {
 .content {
   z-index: 999;
   position: relative;
-  padding: 23rpx 32rpx;
+  padding: 23rpx 0;
 }
 
 .icon {
@@ -115,7 +119,8 @@ page {
 .ul {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between
+  justify-content: space-between;
+  margin: 47rpx 32rpx;
 }
 
 .ul .li {
@@ -203,8 +208,14 @@ page {
   margin: auto;
 }
 
+.sroll-view-wrap{
+  background: white;
+    position: sticky;
+  top: 150rpx;
+}
+
 .stickyClass {
   position: sticky;
-  top: -2rpx;
-  background: white
+  top: 150rpx;
+  margin: 0 32rpx;
 }

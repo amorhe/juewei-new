@@ -2,6 +2,7 @@
   <view class="header-title-s"> 
     <text>VIP专享</text>
   </view>
+  <view style="height:140rpx"></view>
   <image mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/>
   <image mode="scaleToFill" class="body_bg" src="{{imageUrl}}body_bg.png"/>
 
@@ -45,9 +46,13 @@
       </scroll-view>
      
     </view>
+    <view class="sroll-view-wrap">
+
     <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
       <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
     </scroll-view>
+    </view>
+
 
     <view class="ul">
       <view class="li" a:for="{{goodsList}}">
@@ -56,9 +61,19 @@
           <view class="li-title">{{item.goods_name}}</view>
           <view class="flex-space-b" style="padding:8rpx 0 18rpx">
             <view class="li-all">
+              <text class="li-small" a:if="{{ item.point == 0 && item.amount == 0 }}">
+               免费领取
+              </text>
+              <text class="li-small" a:if="{{ item.point !=0 && item.amount != 0 }}">
+               {{ item.point }}积分 + {{ item.amount / 100}} 元
+              </text>
+              <text class="li-small" a:if="{{ item.point !=0 && item.amount == 0 }}">
+               {{ item.point }}积分
+              </text>
+              <text class="li-small" a:if="{{ item.point ==0 && item.amount != 0 }}">
+                {{ item.amount / 100}}元
+              </text>
               
-              <text class="li-small">{{item.point}}积分</text>
-              <text class="li-small">+{{item.amount}}元</text>
 
             </view>
             <view  a:if="{{0 < item.valid_num}}" class="li-button" onTap="toDetail" data-id="{{item.id}}">立即兑换</view>
