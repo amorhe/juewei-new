@@ -48,7 +48,7 @@ Page({
     page: 1
   },
 
-  async onShow() {
+  async onLoad() {
     const { page } = this.data
     await this.getOrderList(page)
   },
