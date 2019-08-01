@@ -268,7 +268,7 @@ Page({
 
   rmaddress() {
     var data = {
-      _sid: app.globalData._sid,
+      _sid: this.data._sid,
       address_id: this.data.addressId
     }
     deleteaddress(data).then(res => {
