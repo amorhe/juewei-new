@@ -465,3 +465,47 @@ page {
   color: white;
   align-self: flex-end
 }
+
+.code-img {
+  width: 380rpx;
+  height: 380rpx;
+  background: red;
+  padding: 24rpx;
+  margin: 24rpx;
+}
+
+.code-head {
+  text-align: right;
+}
+
+.code-wrap {
+  width: 580rpx;
+  padding: 10rpx 0 56rpx;
+  border-radius: 10rpx;
+  overflow: hidden
+}
+
+.code-phone {
+  font-size: 52rpx;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+}
+
+.close {
+  height: 32rpx;
+  width: 32rpx;
+}
+
+.code-pay {
+  width: 512rpx;
+  height: 94rpx;
+  line-height: 94rpx;
+  background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
+  border-radius: 47px;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  margin: 40rpx auto 0;
+}

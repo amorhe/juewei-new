@@ -1,5 +1,5 @@
-import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { ajax, parseData, redirect, log } from '../../../pages/common/js/li-ajax'
+import { imageUrl, imageUrl2, baseUrl } from '../../../pages/common/js/baseUrl'
+import { ajax, parseData, redirect, log,getSid } from '../../../pages/common/js/li-ajax'
 
 var app = getApp();
 Page({
@@ -9,6 +9,7 @@ Page({
     fail: false,
     open1: false,
     open2: false,
+    codeImg: '',
     // d: {
     //   "id": "26",
     //   "order_point": "1",
@@ -137,6 +138,14 @@ Page({
         })
         break;
       case 2:
+      let {code} = this.data.d
+      let _sid = await getSid()
+      let codeImg = baseUrl + '/juewei-api/coupons/getQRcode?' + '_sid=' + _sid + '&code=' + code
+      log(codeImg)
+       this.setData({
+          open2: true,
+          codeImg
+        })
         break
     }
   },
@@ -147,7 +156,8 @@ Page({
    * @function 去自提
    */
   toTakeOut() {
-    // app.golalData.type = 2
+    app.globalData.type = 2
+    log(app.globalData.type)
     my.navigateTo({
       url: '/pages/home/goodslist/goodslist'
     });
@@ -157,7 +167,9 @@ Page({
    * @function 去外卖
    */
   toTakeIn() {
-    // app.golalData.type = 1
+    app.globalData.type = 1
+    log(app.globalData.type)
+
     my.navigateTo({
       url: '/pages/home/goodslist/goodslist'
     });

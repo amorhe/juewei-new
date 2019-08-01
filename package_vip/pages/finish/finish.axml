@@ -188,7 +188,6 @@
   </view>
   <!-- 邮寄物品 -->
 </view>
-
 <!-- 限时优惠 -->
 <modal show="{{open1}}" showClose="{{ false }}">
   <view class="modalInfo">
@@ -199,9 +198,18 @@
     <view class="modalButton cancel " onTap="toTakeIn">外卖</view>
   </view>
 </modal>
-
-
 <!-- 专享 -->
-<modal show="{{open2}}" showClose="{{ false }}">
-  
+<modal class="code-wrap" show="{{open2}}" showClose="{{ false }}">
+  <view class="code-head">
+    <image class="close" mode="scaleToFill" src="{{imageUrl}}close1.png" catchTap="closeModel"/>
+  </view>
+  <image class="code-img" mode="scaleToFill" src="{{codeImg}}"/>
+
+  <view class="code-phone">
+    188 **** 8888
+  </view>
+
+  <view class="code-pay">
+    确认支付
+  </view>
 </modal>
