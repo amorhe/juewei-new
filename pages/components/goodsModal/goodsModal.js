@@ -39,14 +39,12 @@ Component({
           size: e.currentTarget.dataset.size,
           price:this.props.goodsItem.goods_format[0].goods_price / 100,
           sizeText:this.props.goodsItem.goods_format[0].type,
-          count:largeCount
         })
       }else if(e.currentTarget.dataset.size ==2){
         this.setData({
           size: e.currentTarget.dataset.size,
           price:this.props.goodsItem.goods_format[1].goods_price / 100,
           sizeText:this.props.goodsItem.goods_format[1].type,
-          count:smallCount
         })
       } 
     },
@@ -78,14 +76,14 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity) + 1,
-          'goods_price':e.currentTarget.dataset.goods_price
+          'goods_price':e.currentTarget.dataset.goods_price * 100
         })
         // 购物车展示的数据
         shopcartList.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity) + 1,
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price * 100,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,
           'taste_name': e.currentTarget.dataset.taste_name
@@ -96,7 +94,7 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_forma[0].goods_discount_user_limit),
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price * 100,
           'goods_type':1
         })
         // 购物车展示的数据
@@ -104,7 +102,7 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_forma[0].goods_discount_user_limit),
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price * 100,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,
           'goods_type':1,

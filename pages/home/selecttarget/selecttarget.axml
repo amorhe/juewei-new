@@ -19,9 +19,10 @@
 <view class="positionIng">
   <view class="fontGray">当前定位</view>
   <view class="positionTxt">
-    <view onTap="switchAddress" data-info="{{addressIng}}">
+    <view onTap="switchAddress" data-info="{{info}}" data-type="1">
       <image src="{{imageUrl}}position.png"/>
-      <text>{{addressIng}}</text>
+      <text a:if="{{!error}}">{{addressIng}}</text>
+      <text a:if="{{error}}">定位失败</text>
     </view>
     <view class="numberColor fontTwentySix" onTap="rePosition">重新定位</view>
   </view>
@@ -31,28 +32,13 @@
 <view class="delivery">
   <view class="fontGray">收货地址</view>
   <view class="addressList">
-    <view a:for="{{canUseAddress}}" a:if="{{canUseAddress.length>0}}">
+    <view a:for="{{canUseAddress}}" a:if="{{canUseAddress.length>0}}" onTap="switchPositionAddress" data-info="{{item}}">
       <view class="addressTxt">
         <view class="fontBold">{{item.user_address_address}}</view>
         <view a:if="{{item.tag!=0}}" class="{{item.tag==1?'addressTabbar bar1':item.tag==2?'addressTabbar bar2':'addressTabbar bar3'}}">{{item.tag==1?'家':item.tag==2?'公司':'学校'}}</view>
       </view>
       <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>
     </view>
-    <!-- <view>
-      <view class="addressTxt">
-        <view class="fontBold">紫檀大厦 606</view>
-        <view class="addressTabbar bar2">公司</view>
-      </view>
-      <view class="fontGray">小春（先生） 188 8888 8888</view>
-    </view>
-
-    <view>
-      <view class="addressTxt">
-        <view class="fontBold">紫檀大厦 606</view>
-        <view class="addressTabbar bar3">家</view>
-      </view>
-      <view class="fontGray">小春（先生） 188 8888 8888</view>
-    </view> -->
   </view>
   <navigator url="/package_my/pages/myaddress/addaddress/addaddress" class="addAddressTxt">
     <text>新增地址</text>
@@ -63,6 +49,9 @@
 <!-- 附近地址 -->
 <view class="nearAddressBox">
   <view class="fontGray">附近地址</view>
-  <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}">{{item.name}}</view>
+  <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}" data-type="3">{{item.name}}</view>
   <!-- <view class="nearList">北京传媒大学西校区</view> -->
 </view>
+
+<!-- 提示框 -->
+<!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

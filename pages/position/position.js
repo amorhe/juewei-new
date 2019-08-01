@@ -7,7 +7,7 @@ var app = getApp();
 Page({
   data: {
     imageUrl:imageUrl,
-    city:'定位中...'
+    city:'定位中...',
   },
   onLoad() {
     var that = this;
@@ -63,6 +63,7 @@ Page({
           this.setData({
             isOpen: status
           })
+          app.globalData.isOpen = status
           // 判断是否营业
           if (status == 1 || status == 3) {
             shopArr1.push(res.data[i]);
@@ -139,6 +140,7 @@ Page({
         this.setData({
           isOpen: status
         })
+        app.globalData.isOpen = status;
         // 判断是否营业
         if (status == 1 || status == 3) {
           shopArr1.push(res[i]);
@@ -163,7 +165,7 @@ Page({
        this.getLbsShop();
     }else{
       my.navigateTo({
-        url: '/pages/home/selecttarget/selecttarget'
+        url: '/pages/home/selecttarget/selecttarget?type=error'
       });
     }
   },

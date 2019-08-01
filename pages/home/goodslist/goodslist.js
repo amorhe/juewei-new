@@ -52,12 +52,13 @@ Page({
     otherGoods:[],   // 参与换购的商品
   },
   onLoad() {
-  
+    
   },
   onShow() {
       // 定位地址
     this.setData({
-      firstAddress: app.globalData.address
+      firstAddress: app.globalData.address,
+      isOpen: app.globalData.isOpen
     })
     // 初始化默认外卖
     if (this.data.type == 1) {

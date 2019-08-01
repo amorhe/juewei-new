@@ -199,7 +199,7 @@
               <view class="goodsNumber">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}"  data-goods_quantity="{{v.count + 1}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}"/>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}"/>
               </view>
             </view>
             <view class="goodsDiscount" a:if="{{item.key!='爆款'}}">
@@ -234,7 +234,7 @@
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" />
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_code}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}"/>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}"/>
                 <!-- 小红点 -->
                 <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view>
               </view>
