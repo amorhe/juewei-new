@@ -131,7 +131,7 @@ Page({
       key: 'lng', // 缓存数据的key
       data: position[0] // 要缓存的数据
     });
-    app.globalData.address = e.currentTarget.dataset.info.user_address_address;
+    app.globalData.address = e.currentTarget.dataset.info.user_address_map_addr;
     // my.switchTab({
     //   url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
     // });
@@ -153,6 +153,7 @@ Page({
           this.setData({
             isOpen: status
           })
+          app.globalData.isOpen = status;
           // 判断是否营业
           if (status == 1 || status == 3) {
             shopArr1.push(res.data[i]);
@@ -170,14 +171,19 @@ Page({
           url: '/pages/home/goodslist/goodslist'
         })
       } else if (res.code == 5 || res.data.length == 0) {
-        this.setData({
-          content:'您的定位地址无可配送门店',
-          confirmButtonText:'去自提',
-          cancelButtonText:'修改地址',
-          modalShow:true,
-          mask:true
-        })
-
+        // this.setData({
+        //   content:'您的定位地址无可配送门店',
+        //   confirmButtonText:'去自提',
+        //   cancelButtonText:'修改地址',
+        //   modalShow:true,
+        //   mask:true
+        // })
+        my.showToast({
+          content:'当前定位地址无可浏览的门店，请切换地址！',
+          success: (res) => {
+            
+          },
+        });
       }
 
     })
@@ -230,6 +236,7 @@ Page({
         this.setData({
           isOpen: status
         })
+        app.globalData.isOpen = status;
         // 判断是否营业
         if (status == 1 || status == 3) {
           shopArr1.push(res[i]);

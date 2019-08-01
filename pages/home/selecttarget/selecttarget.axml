@@ -52,3 +52,6 @@
   <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}" data-type="3">{{item.name}}</view>
   <!-- <view class="nearList">北京传媒大学西校区</view> -->
 </view>
+
+<!-- 提示框 -->
+<!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

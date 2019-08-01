@@ -1,7 +1,7 @@
 <view class="orderContainer">
   <!-- 外卖 -->
   <view class="addressView" a:if="{{orderType==1}}">
-    <navigator url="/pages/home/orderform/selectaddress/selectaddress?orderType={{orderType}}" class="noAddress">
+    <navigator open-type="redirect" url="/pages/home/orderform/selectaddress/selectaddress?orderType={{orderType}}" class="noAddress">
       <!-- 选择地址前 -->
       <text a:if="{{!address}}">选择收货地址</text>
       <!-- 选择地址后 -->

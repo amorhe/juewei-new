@@ -16,9 +16,13 @@ Page({
     orderType:''
   },
   onLoad(e) {
-    this.setData({
-      orderType:e.orderType
-    })
+    if(e.type) {
+      this.setData({
+        orderType:e.orderType
+      })
+    }
+  },
+  onShow(){
     this.getAddress();
   },
   radioChange(e) {

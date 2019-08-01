@@ -209,11 +209,11 @@ Page({
     })
     const goods = JSON.stringify(goodsList);
     const arr = my.getStorageSync({key:'takeout'}).data;
-    let shops ='';
-    for(let value of arr) {
-      shops += value.shop_id + ','
-    }
-    shops = shops.substr(0,shops.length-1);
+    // let shops ='';
+    // for(let value of arr) {
+    //   shops += value.shop_id + ','
+    // }
+    // shops = shops.substr(0,shops.length-1);
     let type = '',typeClass=''
     if(this.data.orderType == 1) {
       type = 1;
@@ -225,7 +225,7 @@ Page({
     }
     const address_id = my.getStorageSync({key:'address_id'}).data
     // 创建订单
-    createOrder(this.data.orderType,shop_id,goods,shops,11,remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
+    createOrder(this.data.orderType,shop_id,goods,shop_id,11,remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
       console.log(res);
       if(res.code == 0){
         // 支付宝调起支付
