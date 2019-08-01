@@ -41,7 +41,7 @@ color:rgba(51,51,51,1);
 
 .bottom{
 position: absolute;
-bottom: -56rpx;
+bottom: -50rpx;
 height: 32rpx;
 width: 750rpx;
 text-align: center;
