@@ -1,4 +1,4 @@
-<view>
+<view a:if="{{detail.goods_name}}">
   <view class="header">
     <swiper>
       <block a:for="{{detail.goods_pic}}">

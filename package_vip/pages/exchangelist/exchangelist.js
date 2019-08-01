@@ -102,14 +102,24 @@ Page({
     let { order_sn, id, order_amount } = e.currentTarget.dataset;
     let res = await ajax('/mini/vip/wap/order/order_detail', { id })
     if (res.code === 100) {
-    // 校验订单 地址信息
-      if (res.data.receive_type == 2 || res.data.receive_type == 1) {
-        if (!res.data.user_address_phone) {
-          return my.redirectTo({
-            url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
-          });
-        }
-      }
+      // 校验订单 地址信息
+      // if (res.data.receive_type == 2 || res.data.receive_type == 1) {
+      //   if (!res.data.user_address_phone) {
+    let { id, order_amount, receive_type, user_address_phone ,user_address_name,province,city,district,user_address_id,user_address_detail_address} = res.data
+
+      return my.navigateTo({
+        url: '/package_vip/pages/waitpay/waitpay?'
+          + 'order_sn=' + order_sn
+          + '&user_address_name=' + user_address_name
+          + '&user_address_phone=' + user_address_phone
+          + '&province=' + province
+          + '&city=' + city
+          + '&district=' + district
+          + '&user_address_id=' + user_address_id
+          + '&user_address_detail_address=' + user_address_detail_address
+      });
+      //   }
+      // }
       // 订单不要钱的时候 直接 成功
       if (order_amount == 0) {
         return my.redirectTo({

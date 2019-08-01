@@ -97,13 +97,13 @@ Page({
     let _intro = await parseData(res.data.intro)
 
     if (res.code === 100) {
-      if (res.data.receive_type == 2 || res.data.receive_type == 1) {
-        if (!res.data.user_address_phone && res.data.status == 0) {
-          return my.redirectTo({
-            url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
-          });
-        }
-      }
+      // if (res.data.receive_type == 2 || res.data.receive_type == 1) {
+      //   if (!res.data.user_address_phone && res.data.status == 0) {
+      //     return my.redirectTo({
+      //       url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
+      //     });
+      //   }
+      // }
 
       let { remaining_pay_minute, remaining_pay_second, ...item } = res.data
       let { a } = this.data
@@ -146,7 +146,23 @@ Page({
    */
 
   async payNow() {
-    let { order_sn, id, order_amount } = this.data.detail;
+    let { order_sn, id, order_amount, receive_type, user_address_phone ,user_address_name,province,city,district,user_address_id,user_address_detail_address} = this.data.detail;
+    // 校验订单 地址信息
+    // if (receive_type == 2 || receive_type == 1) {
+    //   if (!user_address_phone) {
+    return my.navigateTo({
+      url: '/package_vip/pages/waitpay/waitpay?'
+        + 'order_sn=' + order_sn
+        + '&user_address_name=' + user_address_name
+        + '&user_address_phone=' + user_address_phone
+        + '&province=' + province
+        + '&city=' + city
+        + '&district=' + district
+        + '&user_address_id=' + user_address_id
+        + '&user_address_detail_address=' + user_address_detail_address
+    });
+    //   }
+    // }
     // 订单不要钱的时候 直接 成功
     if (order_amount == 0) {
       return my.redirectTo({
