@@ -71,7 +71,7 @@
 
 </view>
 
-<navigator url="/package_my/pages/coupon/exchange/exchange" class="couponPosition" hidden="{{activeTab==1}}">
+<!-- <navigator url="/package_my/pages/coupon/exchange/exchange" class="couponPosition" hidden="{{activeTab==1}}">
   <image src="{{imageUrl}}exchange.png"/>
   <view>兑换优惠券</view>
-</navigator>
+</navigator> -->

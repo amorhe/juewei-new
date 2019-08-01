@@ -182,7 +182,13 @@ Page({
     })
   },
   // 弹框事件回调
-  onCounterPlusOne(){
+  onCounterPlusOne(data){
+    // 重新选择商品
+    if(data.isType == 'orderConfirm' && data.type == 1){
+      my.navigateBack({
+        delta:1
+      });
+    }
     this.setData({
       mask: false,
       modalShow: false
@@ -190,10 +196,6 @@ Page({
   },
   // 确认支付
   confirmPay(){
-    // this.setData({
-    //   mask: true,
-    //   modalShow: true
-    // })
     let remark = '';
     if(my.getStorageSync({key:'remark'}).data) {
       remark = my.getStorageSync({key:'remark'}).data

@@ -58,7 +58,6 @@ Page({
         }
       }
     })
-    console.log(arr)
     this.setData({
       shopList: data,
       markersArray: arr,
