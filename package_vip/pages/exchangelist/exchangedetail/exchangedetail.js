@@ -98,7 +98,7 @@ Page({
 
     if (res.code === 100) {
       if (res.data.receive_type == 2 || res.data.receive_type == 1) {
-        if (!res.data.user_address_phone) {
+        if (!res.data.user_address_phone && res.data.status == 0) {
           return my.redirectTo({
             url: '/package_vip/pages/waitpay/waitpay?order_sn=' + res.data.order_sn
           });
