@@ -13,8 +13,8 @@ Page({
       order_sn
     })
   },
-  async onShow() {
-    await this.getaddressList()
+  onShow() {
+    this.getaddressList()
   },
   back(e) {
     const { i } = e.currentTarget.dataset;
@@ -54,16 +54,27 @@ Page({
     });
   },
   getaddressList() {
+    var that = this
+    var _sid = my.getStorageSync({
+      key: '_sid', // 缓存数据的key
+    }).data;
     var data = {
-      _sid: app.globalData._sid,
+      _sid: _sid,
       type: 'normal'
     }
+    console.log(data,'data')
     addressList(data).then(res => {
-      console.log(res)
+      console.log(res,'地址列表返回')
       if (res.code == 0) {
-        this.setData({
+        that.setData({
           list: res.data
         })
+      }else{
+        my.showToast({
+          type: 'none',
+          content: res.msg,
+          duration: 2000,
+        });
       }
     })
   },
