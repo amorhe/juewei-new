@@ -232,7 +232,7 @@ Page({
               if(values.length ==0){
                 values = arr;
               }
-              let cur = values.filter(({ goods_code }) => goods_code === _item)
+              let cur = values.filter(({ goods_code }) => goods_code === _item.goods_channel + _item.goods_type + _item.company_goods_id)
               last = new Set([...last, ...cur])
             })
 
