@@ -1,3 +1,6 @@
 {
-  "backgroundColor": "#ffffff"
+  "backgroundColor": "#ffffff",
+  "usingComponents":{
+    "modal": "mini-antui/es/modal/index"
+  }
 }

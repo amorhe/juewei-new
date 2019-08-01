@@ -1,4 +1,4 @@
-<view class="bg">
+<view class="bg" a:if="{{d}}">
   <!-- 兑换完成页，页面分虚拟和邮寄实物和门店领取实物，并且页面分为成功和失败两种状态 -->
   <!-- 虚拟物品 成功 false => 假的 -->
   <view class="false" a:if="{{!fail}}">
@@ -19,7 +19,8 @@
          {{(d.order_point == 0 && d.order_amount == 0 )?'免费领取':''}}
         </view>
       </view>
-      <view class="btn">联系客服</view>
+      <view class="to-use" onTap="toUse" a:if="{{d.goods_detail_type == '1'}}">去使用</view>
+      <view class="btn" onTap="toUse" a:if="{{d.goods_detail_type != '1'}}">联系客服</view>
     </view>
     <!-- 到店领取 -->
     <view class="user-detail" a:if="{{d.receive_type == 1}}">
@@ -187,3 +188,28 @@
   </view>
   <!-- 邮寄物品 -->
 </view>
+<!-- 限时优惠 -->
+<modal show="{{open1}}" showClose="{{ false }}">
+  <view class="modalInfo">
+     限时优惠，立即使用
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm " onTap="toTakeOut">自提</view>
+    <view class="modalButton cancel " onTap="toTakeIn">外卖</view>
+  </view>
+</modal>
+<!-- 专享 -->
+<modal class="code-wrap" show="{{open2}}" showClose="{{ false }}">
+  <view class="code-head">
+    <image class="close" mode="scaleToFill" src="{{imageUrl}}close1.png" catchTap="closeModel"/>
+  </view>
+  <image class="code-img" mode="scaleToFill" src="{{codeImg}}"/>
+
+  <view class="code-phone">
+    188 **** 8888
+  </view>
+
+  <view class="code-pay">
+    确认支付
+  </view>
+</modal>
