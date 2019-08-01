@@ -118,7 +118,7 @@ Component({
     },
     // 选规格
     chooseSizeTap(e){
-      console.log(e)
+      // console.log(e)
       this.setData({
         maskView:true,
         goodsModal:true,
