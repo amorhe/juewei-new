@@ -20,7 +20,7 @@
                   <text>元</text>
                 </view>
                 <view class="couponMiddle">
-                  <view>{{item.full_money>0?'满减券':'立减券'}}</view>
+                  <view>{{item.way==0?'外卖专享券':item.way==1?'门店专享券':'全场通享券'}}</view>
                   <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
                   <view class="fontTwentyTwo" a:if="{{item.full_money>0}}">满{{item.full_money/100}}元可用</view>
                 </view>

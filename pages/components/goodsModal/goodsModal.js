@@ -7,7 +7,9 @@ Component({
     goodsIndex:'',
     price:'',
     sizeText:'',
-    count:0
+    count:0,
+    largeCount:0,
+    smallCount:0
   },
   props: {
     onCloseModal: (data) => console.log(data),
@@ -17,7 +19,11 @@ Component({
  
   },
    deriveDataFromProps(nextProps){
-    // console.log(nextProps) 
+    console.log(nextProps)
+    this.setData({
+      smallCount:nextProps.smallCount,
+      largeCount:nextProps.largeCount
+    })
   },
   didUpdate(prevProps, prevData) {
     
@@ -32,13 +38,15 @@ Component({
         this.setData({
           size: e.currentTarget.dataset.size,
           price:this.props.goodsItem.goods_format[0].goods_price / 100,
-          sizeText:this.props.goodsItem.goods_format[0].type
+          sizeText:this.props.goodsItem.goods_format[0].type,
+          count:largeCount
         })
       }else if(e.currentTarget.dataset.size ==2){
         this.setData({
           size: e.currentTarget.dataset.size,
           price:this.props.goodsItem.goods_format[1].goods_price / 100,
-          sizeText:this.props.goodsItem.goods_format[1].type
+          sizeText:this.props.goodsItem.goods_format[1].type,
+          count:smallCount
         })
       } 
     },
@@ -54,29 +62,29 @@ Component({
       })
     },
     addshopcart(e){
-      let {shopGoodsList,goodsKey,goodsLast,size,goodsItem} = this.data;
+      let {shopGoodsList,goodsKey,goodsLast,size} = this.data;
       let goodsCart = [],arraylist = [],shopcartList=[],carArray=[];
       // 大份
       if(size==1){
-        goodsItem.largeCount ++ 
+       this.props.goodsItem.largeCount ++ 
       }
       // 小份
       if(size==2){
-        goodsItem.smallCount ++
+        this.props.goodsItem.smallCount ++
       }
       // 非折扣
       if(e.currentTarget.dataset.key != '折扣'){
         arraylist.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity + 1,
+          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity) + 1,
           'goods_price':e.currentTarget.dataset.goods_price
         })
         // 购物车展示的数据
         shopcartList.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity + 1,
+          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity) + 1,
           'goods_price':e.currentTarget.dataset.goods_price,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,
@@ -115,9 +123,6 @@ Component({
        goodsCart = oldArr.concat(arraylist);
        carArray = oldAllArr.concat(shopcartList)
       } 
-      this.setData({
-        goodsItem
-      })
       my.setStorageSync({
         key: 'goodsList', 
         data: goodsCart, 
