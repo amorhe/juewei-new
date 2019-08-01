@@ -23,21 +23,21 @@ Page({
     shop_name: '',
 
     // d: {
-      // "id": "17",
-      // "order_point": "1",
-      // "order_amount": 0,
-      // "exchange_type": "1",
-      // "uid": "295060",
-      // "express_fee": 0.01,
-      // "express_type": "2",
-      // "receive_type": "1",
-      // "order_total_amount": 0.01,
-      // "goods_name": "33",
-      // "goods_pic": "/static/check/image/goods_point/0PqRYnGJ1XUZRKuQ.jpg",
-      // "order_sn": "jwd03190301s175060",
-      // "limit_pay_minute": -3907,
-      // "limit_pay_second": -29,
-      // "code": 'xxx'
+    // "id": "17",
+    // "order_point": "1",
+    // "order_amount": 0,
+    // "exchange_type": "1",
+    // "uid": "295060",
+    // "express_fee": 0.01,
+    // "express_type": "2",
+    // "receive_type": "1",
+    // "order_total_amount": 0.01,
+    // "goods_name": "33",
+    // "goods_pic": "/static/check/image/goods_point/0PqRYnGJ1XUZRKuQ.jpg",
+    // "order_sn": "jwd03190301s175060",
+    // "limit_pay_minute": -3907,
+    // "limit_pay_second": -29,
+    // "code": 'xxx'
     // },
 
     selectShop: false,
@@ -59,9 +59,9 @@ Page({
 
   },
   async onLoad(e) {
-    let { order_sn, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
+    let { order_sn, user_address_map_addr,user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
     this.setData({
-      order_sn, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
+      order_sn, user_address_map_addr,user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
     })
     region = await getRegion()
     this.getAddressList()
@@ -192,9 +192,11 @@ Page({
       });
     }
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
-    let parentid = region[curProvince].addrid + ',' +
-      region[curProvince].sub[curCity].addrid + ',' +
-      ((region[curProvince].sub[curCountry].sub[curCountry] && region[curProvince].sub[curCity].sub[curCountry].addrid) || 0)
+    let province = region[curProvince].addrid;
+    let city = region[curProvince].sub[curCity].addrid;
+    let district = (region[curProvince].sub[curCity].sub[curCountry] && region[curProvince].sub[curCity].sub[curCountry].addrid) || 0
+    let parentid = province + ',' + city + ',' + district
+    log(parentid)
     let res = await ajax('/mini/game/shop', { parentid })
     let lat = my.getStorageSync({ key: 'lat' }).data;
     let lng = my.getStorageSync({ key: 'lng' }).data;
@@ -367,8 +369,8 @@ Page({
   /**
    * @function 键盘失去焦点
    */
-  blur(e){
-    log(e,this)
+  blur(e) {
+    log(e, this)
   }
 
 });

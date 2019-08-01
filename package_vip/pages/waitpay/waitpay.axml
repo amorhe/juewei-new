@@ -14,7 +14,9 @@
     <view class="address" a:if="{{d.receive_type == 2 && user_address_name}}" onTap="toAddAddress">
       <view class="address-title">
         <view>{{user_address_name}} {{user_address_phone}}</view>
-        <view class="address-sm">{{province}}{{city}}{{district}}{{user_address_detail_address}}</view>
+        <!-- <view class="address-sm">{{province}}{{city}}{{district}}{{user_address_detail_address}}</view> -->
+        <view class="address-sm">{{user_address_map_addr}}</view>
+
       </view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -62,7 +64,7 @@
         <text class="total-j">积分</text>
          <text class="total-vip" a:if="{{d.order_amount != 0}}">+{{d.order_amount}}</text>
         <text class="total-sm" a:if="{{d.order_amount != 0}}">元</text>
-        <text class="total-vip" a:if="{{d.express_fee != 0}}">+{{d.express_fee/100}}</text>
+        <text class="total-vip" a:if="{{d.express_fee != 0}}">+{{d.express_fee}}</text>
         <text class="total-sm" a:if="{{d.express_fee != 0}}">元运费</text>
       </view>
     </view>
