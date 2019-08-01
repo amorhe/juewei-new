@@ -30,7 +30,7 @@ Component({
     nextProps.otherGoods.push(nextProps.priceAll * 100);
     nextProps.otherGoods = [...new Set(nextProps.otherGoods)]
     nextProps.otherGoods.sort(compare);
-    console.log(nextProps)
+    // console.log(nextProps)
     this.setData({
       otherGoods:nextProps.otherGoods
     })
@@ -79,6 +79,14 @@ Component({
     },
     // 立即购买
     goOrderSubmit(){
+      if(my.getStorageSync({
+        key: 'user_id', // 缓存数据的key
+      }).data==null){
+        my.navigateTo({
+          url:'/pages/login/auth/auth'
+        })
+        return
+      }
       if(this.props.shopcartGoods) {
         my.showToast({
           content:"请至少选择一件商品"
@@ -108,8 +116,8 @@ Component({
         success: (res) => {
           console.log(res)
           this.setData({
-            send_price:res.data.data['110100'].shop_send_price,
-            dispatch_price:res.data.data['110100'].shop_dispatch_price
+            send_price:res.data.data[app.globalData.position.cityAdcode].shop_send_price,
+            dispatch_price:res.data.data[app.globalData.position.districtAdcode].shop_dispatch_price
           })
         },
       });

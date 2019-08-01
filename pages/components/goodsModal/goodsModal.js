@@ -19,7 +19,7 @@ Component({
  
   },
    deriveDataFromProps(nextProps){
-    console.log(nextProps)
+    // console.log(nextProps)
     this.setData({
       smallCount:nextProps.smallCount,
       largeCount:nextProps.largeCount

@@ -18,6 +18,10 @@ App({
           key: 'ali_uid', // 缓存数据的key
           data: data.data.ali_uid, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: 'user_id', // 缓存数据的key
+          data: data.data.user_id, // 要缓存的数据
+        });
        })
       },
     });
