@@ -27,7 +27,7 @@ export const getSid = () => {
  * @param method 请求方式
  * @return Promise<any>
  */
-export const ajax = async(url, data = {}, method = 'POST') => {
+export const ajax = async (url, data = {}, method = 'POST') => {
   my.showLoading({
     content: '加载中...',
   });
@@ -113,5 +113,7 @@ export const getDistance = async (_lng, _lat) => {
     });
   })
 }
+
+
 
 

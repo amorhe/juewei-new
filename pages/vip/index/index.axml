@@ -10,8 +10,8 @@
   <view class="content">
     <view class="header flex-space-b" a:if="{{_sid}}">
       <view class="flex-center">
-        当前积分：
-        <view class="total">{{userPoint.points}}</view>
+        <text catchTap="toPointList" > 当前积分：</text>
+        <view catchTap="toPointList" class="total">{{userPoint.points}}</view>
         <view style='position:relative;height:32rpx'>
           <image class="icon" catchTap="showToast" mode="scaleToFill" src="{{imageUrl}}explain.png"/>
           <view class="toast" a:if="{{toast}}">冻结积分：{{userPoint.freeze_point}}</view>
