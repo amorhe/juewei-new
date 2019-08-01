@@ -7,13 +7,14 @@
     "pages/order/list/list",
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
-    "pages/login/auth/auth"
+    "pages/login/auth/auth",
+    "package_my/pages/nearshop/nearshop",
+    "package_my/pages/onlineservice/onlineservice"
   ],
   "subPackages": [
     {
       "root":"pages",
       "pages":[
-        "home/selecttarget/selecttarget",
         "home/orderform/orderform",
         "home/orderError/orderError",
         "home/orderfinish/orderfinish",
@@ -21,9 +22,10 @@
         "home/orderform/selectaddress/selectaddress",
         "home/goodslist/goodsdetail/goodsdetail",
         "home/selfshop/selfshop",
-        "home/switchshop/switchshop",
         "home/orderform/agreement/agreement",
-        "home/orderform/chooseCoupon/chooseCoupon"
+        "home/orderform/chooseCoupon/chooseCoupon",
+        "home/switchshop/switchshop",
+        "home/selecttarget/selecttarget"
       ]
     },
     {
@@ -61,8 +63,6 @@
         "pages/myaddress/addaddress/addaddress",
         "pages/myaddress/selectaddress/selectaddress",
         "pages/entitlement/entitlement",
-        "pages/onlineservice/onlineservice",
-        "pages/nearshop/nearshop",
         "pages/coupon/redeemCodeRecord/redeemCodeRecord",
         "pages/coupon/couponRecord/couponRecord"
       ]
