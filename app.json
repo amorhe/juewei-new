@@ -3,25 +3,29 @@
     "pages/position/position",
     "pages/home/goodslist/goodslist",
     "pages/my/index/index",
-    "pages/home/selecttarget/selecttarget",
-    "pages/home/orderform/orderform",
-    "pages/home/orderError/orderError",
-    "pages/home/orderfinish/orderfinish",
-    "pages/home/orderform/remarks/remarks",
-    "pages/home/orderform/selectaddress/selectaddress",
-    "pages/home/goodslist/goodsdetail/goodsdetail",
-    "pages/home/selfshop/selfshop",
-    "pages/home/switchshop/switchshop",
-    "pages/home/orderform/agreement/agreement",
     "pages/vip/index/index",
     "pages/order/list/list",
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
-    "pages/login/auth/auth",
-    "package_order/pages/comment/comment-success/comment-success",
-    "pages/home/orderform/chooseCoupon/chooseCoupon"
+    "pages/login/auth/auth"
   ],
   "subPackages": [
+    {
+      "root":"pages",
+      "pages":[
+        "home/selecttarget/selecttarget",
+        "home/orderform/orderform",
+        "home/orderError/orderError",
+        "home/orderfinish/orderfinish",
+        "home/orderform/remarks/remarks",
+        "home/orderform/selectaddress/selectaddress",
+        "home/goodslist/goodsdetail/goodsdetail",
+        "home/selfshop/selfshop",
+        "home/switchshop/switchshop",
+        "home/orderform/agreement/agreement",
+        "home/orderform/chooseCoupon/chooseCoupon"
+      ]
+    },
     {
       "root": "package_vip",
       "pages": [
@@ -38,7 +42,8 @@
       "root": "package_order",
       "pages": [
         "pages/orderdetail/orderdetail",
-        "pages/comment/comment"
+        "pages/comment/comment",
+        "pages/comment/comment-success/comment-success"
       ]
     },
     {

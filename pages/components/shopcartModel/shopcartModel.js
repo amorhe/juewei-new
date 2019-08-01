@@ -114,10 +114,9 @@ Component({
       my.request({
         url: `https://imgcdnjwd.juewei.com/static/check/api/shop/open-city.json?v=${timestamp}`,
         success: (res) => {
-          console.log(res)
           this.setData({
             send_price:res.data.data[app.globalData.position.cityAdcode].shop_send_price,
-            dispatch_price:res.data.data[app.globalData.position.districtAdcode].shop_dispatch_price
+            dispatch_price:res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
           })
         },
       });
