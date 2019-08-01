@@ -119,3 +119,8 @@ page {
 .marginBSixteen {
   margin-bottom: 16rpx;
 }
+.noShow {
+  width: 320rpx;
+  height: 320rpx;
+  margin: 207rpx 215rpx;
+}

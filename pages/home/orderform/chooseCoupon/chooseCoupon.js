@@ -5,10 +5,10 @@ Page({
   data: {
     tabs: [
       {
-        title: '优惠券3张'
+        title: '优惠券0张'
       },
       {
-        title: '兑换码5个'
+        title: '兑换码0个'
       },
     ],
     activeTab: 0,  // 初始选中
@@ -16,6 +16,7 @@ Page({
     imageUrl2,
     couponList:[],  // 优惠券列表
     exchangeList:[],  // 兑换列表
+    defaultcoupon:'',    // 默认选中的优惠券
   },
   onLoad() {
     const _sid = my.getStorageSync({key: '_sid'}).data;
@@ -30,11 +31,31 @@ Page({
         item.start_time = formatTime(item.start_time,'Y-M-D');
         item.end_time = formatTime(item.end_time,'Y-M-D');
       })
+      let index = res.DATA.use.findIndex(item => {
+        return item.code == res.DATA.max.code
+      });
+      
       this.setData({
         couponList:res.DATA.use,
-        tabs:this.data.tabs
+        tabs:this.data.tabs,
+        defaultcoupon:index
       })
     })
+  },
+  //  选择优惠券
+  radioChange(e){
+    console.log('你选择的优惠券是：', e.detail.value);
+    this.setData({
+      coupon_code: e.detail.value
+    })
+  },
+  chooseCouponed(){
+    my.setStorageSync({
+      coupon_code:this.data.coupon_code
+    })
+    my.navigateBack({
+      url: '/pages/home/orderform/orderform'
+    });
   },
   // 兑换码
   getExchangeCode(_sid){

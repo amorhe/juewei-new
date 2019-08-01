@@ -96,12 +96,12 @@
         </view>
       </view>
     </view>
-    <view class="track paddingBThirty borderBottomSolid">
+    <view class="track paddingBThirty borderBottomSolid" onTap="chooseCoupon">
       <view>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
         <text class="marginLSixteen">优惠券</text>
       </view>
-      <view onTap="chooseCoupon">
+      <view>
         <text class="colorNine" a:if="{{couponsDefault==null}}">无可用红包</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
@@ -111,7 +111,7 @@
     <view class="track paddingBThirty borderBottomSolid">
       <view>
         <image class="normalImage" mode="scaleToFill" src="../../common/img/free.png"/>
-        <text class="marginLSixteen">全场通享优惠券 满100减10</text>
+        <text class="marginLSixteen">{{couponsDefault.way==0?'外卖专享券':couponsDefault.way==1?'门店专享券':'全场通享券'}} 满{{couponsDefault.full_money / 100}}减{{couponsDefault.money / 100}}</text>
       </view>
     </view>
 

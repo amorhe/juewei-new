@@ -24,7 +24,7 @@ scope='userInfo'>授权登录</button> -->
 </view>
 
 <view class="homeSwiper">
-  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
+  <swiper indicator-dots="{{imgUrls.length>1?true:false}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
     <block a:for="{{imgUrls}}">
       <swiper-item>
         <image src="{{imageUrl2 + item.pic_src}}" class="slide-image" onTap="linkUrl" data-link="{{item.link_url}}" />

@@ -55,13 +55,14 @@ Page({
     
   },
   onShow() {
+    console.log(app.globalData)
       // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
       isOpen: app.globalData.isOpen
     })
     // 初始化默认外卖
-    if (this.data.type == 1) {
+    if (this.data.type == 1 && app.globalData.type == 1) {
       const shopArray = my.getStorageSync({
         key: 'takeout', // 缓存数据的key
       }).data;

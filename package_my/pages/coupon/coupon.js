@@ -5,10 +5,10 @@ Page({
   data: {
     tabs: [
       {
-        title: '优惠券3张'
+        title: '优惠券0张'
       },
       {
-        title: '兑换码5个'
+        title: '兑换码0个'
       },
     ],
     activeTab: 0,  // 初始选中

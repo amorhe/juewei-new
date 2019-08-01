@@ -50,5 +50,6 @@ App({
     phone:null, //获取手机号权限
     addressInfo:null,   //切换定位地址
     gifts:null,    //加购商品
+    type:1,     // 默认外卖
   }
 });
