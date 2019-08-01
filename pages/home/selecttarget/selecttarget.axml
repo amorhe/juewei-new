@@ -21,7 +21,8 @@
   <view class="positionTxt">
     <view onTap="switchAddress" data-info="{{info}}" data-type="1">
       <image src="{{imageUrl}}position.png"/>
-      <text>{{addressIng}}</text>
+      <text a:if="{{!error}}">{{addressIng}}</text>
+      <text a:if="{{error}}">定位失败</text>
     </view>
     <view class="numberColor fontTwentySix" onTap="rePosition">重新定位</view>
   </view>
@@ -38,21 +39,6 @@
       </view>
       <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>
     </view>
-    <!-- <view>
-      <view class="addressTxt">
-        <view class="fontBold">紫檀大厦 606</view>
-        <view class="addressTabbar bar2">公司</view>
-      </view>
-      <view class="fontGray">小春（先生） 188 8888 8888</view>
-    </view>
-
-    <view>
-      <view class="addressTxt">
-        <view class="fontBold">紫檀大厦 606</view>
-        <view class="addressTabbar bar3">家</view>
-      </view>
-      <view class="fontGray">小春（先生） 188 8888 8888</view>
-    </view> -->
   </view>
   <navigator url="/package_my/pages/myaddress/addaddress/addaddress" class="addAddressTxt">
     <text>新增地址</text>

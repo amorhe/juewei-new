@@ -163,7 +163,7 @@ Page({
        this.getLbsShop();
     }else{
       my.navigateTo({
-        url: '/pages/home/selecttarget/selecttarget'
+        url: '/pages/home/selecttarget/selecttarget?type=error'
       });
     }
   },
