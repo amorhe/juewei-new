@@ -162,13 +162,13 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price * 100,
         })
         shopcartList.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity': e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price *100,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,
           'taste_name': e.currentTarget.dataset.taste_name
@@ -179,14 +179,14 @@ Component({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price * 100,
           'goods_type': 1
         })
         shopcartList.push({
           'goods_code':e.currentTarget.dataset.goods_code,
           'goods_format':e.currentTarget.dataset.goods_format,
           'goods_quantity':e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price,
+          'goods_price':e.currentTarget.dataset.goods_price * 100,
           'goods_type': 1,
           'goods_img': e.currentTarget.dataset.goods_img,
           'goods_name': e.currentTarget.dataset.goods_name,

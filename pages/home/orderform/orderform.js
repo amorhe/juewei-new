@@ -68,14 +68,10 @@ Page({
     data.forEach(item => {
       priceAll += item.goods_price * item.goods_quantity
     })
-    my.setStorageSync({
-      key: 'orderType', // 缓存数据的key
-      data: e.orderType, // 要缓存的数据
-    });
     this.setData({
       shopcartGoods:data,
       priceAll,
-      orderType:my.getStorageSync({key: 'orderType'}).data
+      orderType:e.orderType
     })
 
     const shop_id = my.getStorageSync({key: 'shop_id'}).data;
@@ -209,7 +205,7 @@ Page({
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
     const goodsList = my.getStorageSync({key: 'goodsList'}).data;
     goodsList.forEach(item => {
-      item.goods_price = item.goods_price * 100
+      item.goods_price = item.goods_price
     })
     const goods = JSON.stringify(goodsList);
     const arr = my.getStorageSync({key:'takeout'}).data;

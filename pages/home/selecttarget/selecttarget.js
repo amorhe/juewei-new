@@ -11,20 +11,19 @@ Page({
     nearAddress:[]
   },
   onLoad() {
+    
+  },
+  onShow(){
     if(app.globalData.address){
       const _sid = my.getStorageSync({key: '_sid'}).data;
       const lng = my.getStorageSync({key: 'lng'}).data;
       const lat = my.getStorageSync({key: 'lat'}).data;
       const location = `${lng},${lat}`;
       this.getAddressList(_sid,location,lat,lng);
-      // const nearAddress = my.getStorageSync({
-      //   key: 'nearPois', // 缓存数据的key
-      // }).data;
       this.setData({
         city: app.globalData.city,
         addressIng: app.globalData.address
       })
-
     }
   },
   // 切换城市
@@ -41,9 +40,12 @@ Page({
   getAddressList(_sid,location,lat,lng){
     useraddress(_sid,'normal',location).then((res) => {
       let arr1 = [];
-      if(res.length>0){
-         arr1 = res.filter(item => item.user_address_is_dispatch == 1)
+      if(res.data.length>0){
+         arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
       }
+      this.setData({
+        canUseAddress: arr1
+      })
       // 百度附近POI
       let str = `https://api.map.baidu.com/place/v2/search?query=房地产$金融$公司企业$政府机构$医疗$酒店$美食$生活服务$教育培训$交通设施&location=${lat},${lng}&radius=1000&output=json&page_size=50&page_num=0&ak=${ak}`;
       str = encodeURI(str);
@@ -56,9 +58,6 @@ Page({
           })
         },
       });
-      this.setData({
-        canUseAddress: arr1
-      })
     })
   },
   // 重新定位
@@ -80,16 +79,25 @@ Page({
         // app.globalData.province = res.province;
         // app.globalData.city = res.city;
         app.globalData.address1 = res.streetNumber.street;
+        console.log(res)
         that.setData({
           city:res.city,
-          addressIng: res.streetNumber.street
+          addressIng: res.streetNumber.street,
+          info:res
         })
       }
     })
   },
   switchAddress(e){
     console.log(e)
-    const mapPosition = bd_encrypt(e.currentTarget.dataset.info.location.lng,e.currentTarget.dataset.info.location.lat);
+    let mapPosition = '';
+    switch(e.currentTarget.type){
+      case 1:
+        mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude,e.currentTarget.dataset.info.latitude);
+        break;
+      case 3: 
+        mapPosition = bd_encrypt(e.currentTarget.dataset.info.location.lng,e.currentTarget.dataset.info.location.lat);
+    }
     my.setStorageSync({
         key: 'lat', // 缓存数据的key
         data: mapPosition.bd_lat, // 要缓存的数据
@@ -101,6 +109,22 @@ Page({
     // app.globalData.province = e.currentTarget.dataset.info.province;
     // app.globalData.city = e.currentTarget.dataset.info.city;
     app.globalData.address = e.currentTarget.dataset.info.name;
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
+    });
+  },
+  switchPositionAddress(e){
+    console.log(e)
+    let position = e.currentTarget.dataset.info.user_address_lbs_baidu.split(',');
+    my.setStorageSync({
+        key: 'lat', // 缓存数据的key
+        data: position[1], // 要缓存的数据
+      });
+    my.setStorageSync({
+      key: 'lng', // 缓存数据的key
+      data: position[0] // 要缓存的数据
+    });
+    app.globalData.address = e.currentTarget.dataset.info.user_address_address;
     my.switchTab({
       url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
     });

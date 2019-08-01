@@ -1,7 +1,7 @@
 <view class="orderContainer">
   <!-- 外卖 -->
   <view class="addressView" a:if="{{orderType==1}}">
-    <navigator url="/pages/home/orderform/selectaddress/selectaddress" class="noAddress">
+    <navigator url="/pages/home/orderform/selectaddress/selectaddress?orderType={{orderType}}" class="noAddress">
       <!-- 选择地址前 -->
       <text a:if="{{!address}}">选择收货地址</text>
       <!-- 选择地址后 -->
@@ -64,7 +64,7 @@
             </view>
             <view>
               <text class="fontTwentyTwo">￥</text>
-              <text>{{item.goods_price}}</text>
+              <text>{{item.goods_price / 100}}</text>
             </view>
           </view>
         </view>
@@ -208,7 +208,7 @@
 
     <view class="repursePrice" a:if="{{repurseList.length>1}}">
       <text class="fontTwentySix">小计¥</text>
-      <text class="fontFourty fontBold">{{priceAll}}</text>
+      <text class="fontFourty fontBold">{{priceAll / 100}}</text>
     </view>
   </view>
 
