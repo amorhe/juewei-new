@@ -69,7 +69,7 @@ page {
   width: 686rpx;
   height: 260rpx;
   border-radius: 8rpx;
-  margin-top: 32rpx;
+  margin: 32rpx auto;
 }
 
 .title {

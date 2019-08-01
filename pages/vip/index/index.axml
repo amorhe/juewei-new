@@ -29,14 +29,14 @@
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
     </view>
-    <swiper class="banner" a:if="{{bannerList.lenght}}">
+    <swiper class="banner" a:if="{{bannerList.length}}">
       <block a:for="{{bannerList}}">
         <swiper-item >
           <image style="margin:0" class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
         </swiper-item>
       </block>
     </swiper>
-    <view class="title" a:if="{{positionList.lenght}}">
+    <view class="title" a:if="{{positionList.length}}">
       为你推荐
     </view>
     <view class="flex-space-b two">
