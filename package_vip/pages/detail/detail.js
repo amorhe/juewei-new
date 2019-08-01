@@ -198,6 +198,8 @@ Page({
       }
     }
 
+    this.onModalClose()
+
   },
 
   /**
@@ -205,12 +207,12 @@ Page({
    */
 
   async showConfirm() {
-    let _sid = await getSid()
-    if (!_sid) {
-      return my.showToast({
-        content: '用户未登录'
-      });
-    }
+    // let _sid = await getSid()
+    // if (!_sid) {
+    //   return my.showToast({
+    //     content: '用户未登录'
+    //   });
+    // }
 
     let { goods_name, point } = this.data.detail
 
@@ -245,6 +247,7 @@ Page({
    * @function 赚积分
   */
   async getMorePoint() {
+    this.onModalClose()
     my.navigateBack({
       delta: 1
     });
