@@ -22,7 +22,7 @@
     <view class="store" a:if="{{d.receive_type == 1}}">
       <view class="list">
         <view class="item">领取人</view>
-        <input placeholder="姓名" value="{{user_address_name}}" data-key="user_address_name" onInput="handelChange"/>
+        <input placeholder="姓名" value="{{user_address_name}}" data-key="user_address_name" onInput="handelChange" confirm-hold="{{false}}" onBlur="blur"/>
       </view>
       <view class="list">
         <view class="item">手机号</view>

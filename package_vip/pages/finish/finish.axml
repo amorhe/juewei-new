@@ -15,7 +15,8 @@
           {{d.goods_name}}
         </view>
         <view class="p-price">
-         {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+         {{d.order_point == 0 ? '' : d.order_point+'积分' }} {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
+         {{(d.order_point == 0 && d.order_amount == 0 )?'免费领取':''}}
         </view>
       </view>
       <view class="btn">联系客服</view>

@@ -362,9 +362,13 @@ Page({
         }
       });
     }
+  },
 
-
-
+  /**
+   * @function 键盘失去焦点
+   */
+  blur(e){
+    log(e,this)
   }
 
 });
