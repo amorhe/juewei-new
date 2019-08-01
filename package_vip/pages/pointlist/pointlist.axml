@@ -22,7 +22,7 @@
   </view>
   
   <view class="bottomview">
-    <view class="bottomprompt">仅显示最近一个月的积分明细</view>
+    <view class="bottomprompt">仅显示最近三个月的积分明细</view>
     <view class="bottomBorder"></view>
   </view>
 

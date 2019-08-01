@@ -209,4 +209,14 @@ Page({
 
   },
 
+  /**
+   * @function 去积分详情页面
+   */
+
+  toPointList(){
+    my.navigateTo({
+      url:'/package_vip/pages/pointlist/pointlist'
+    });
+  }
+
 });
