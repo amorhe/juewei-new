@@ -31,6 +31,7 @@ Page({
     let {list,pagesize} = this.data
     let res = await ajax('/mini/point_exchange/point_list', {pagenum,pagesize}, 'GET')
     if (res.code === 100) {
+      if(res.data.pagination.lastLage < pagenum){return}
       if(res.data.data.length == 0){return}
       this.setData({
         list: [...list,...res.data.data]
@@ -45,8 +46,7 @@ Page({
   },
 
   async getUserPoint(){
-    let {_sid} = this.data;
-    let res = await ajax('/mini/user/user_point',{_sid})
+    let res = await ajax('/mini/user/user_point',{})
     if(res.CODE === 'A100'){
       this.setData({
         userPoint:res.DATA

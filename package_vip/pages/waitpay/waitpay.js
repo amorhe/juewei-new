@@ -22,7 +22,7 @@ Page({
 
     shop_name: '',
 
-    d: {
+    // d: {
       // "id": "17",
       // "order_point": "1",
       // "order_amount": 0,
@@ -38,7 +38,7 @@ Page({
       // "limit_pay_minute": -3907,
       // "limit_pay_second": -29,
       // "code": 'xxx'
-    },
+    // },
 
     selectShop: false,
 
@@ -362,9 +362,13 @@ Page({
         }
       });
     }
+  },
 
-
-
+  /**
+   * @function 键盘失去焦点
+   */
+  blur(e){
+    log(e,this)
   }
 
 });

@@ -1,4 +1,4 @@
-<view class="bg">
+<view class="bg" a:if="{{detail.status_name}}">
   <!-- 兑换详记录情页 分为 官方兑换和 兑换码(非官方)兑换商品 -->
   <!-- 状态 -->
   <view class="state">
@@ -51,7 +51,7 @@
         <view class="address-sm">北京市朝阳区某某某某某某某某某某某某某街</view>
       </view>
     </view> -->
-    <view class="user-detail" a:if="{{detail.receive_type == 1}}">
+    <view class="user-detail" a:if="{{detail.receive_type == 1 && detail.user_address_name}}">
       <view class="user-list" a:if="{{detail.user_address_name}}">
         <view class="user-left">
         领取人
