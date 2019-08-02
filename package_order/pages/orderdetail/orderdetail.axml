@@ -71,8 +71,8 @@
           x{{item.goods_quantity}}
         </view>
         <view class="price">
-          <text class="del"> ￥{{item.goods_original_price}}</text>
-          <text>￥{{item.goods_price}}</text>
+          <text class="del"> ￥{{item.goods_original_price / 100}}</text>
+          <text>￥{{item.goods_price /100}}</text>
         </view>
       </view>
       <view class="post">
@@ -81,8 +81,8 @@
         </view>
         <view class="price">
           <view class="value">
-            <text class="del"> ￥{{d.dis_original_price}}</text>
-            <text>￥{{d.dis_price}}</text>
+            <text class="del"> ￥{{d.dis_original_price / 100}}</text>
+            <text>￥{{d.dis_price / 100}}</text>
           </view>
         </view>
       </view>
@@ -93,7 +93,7 @@
           活动满减
           </view>
           <view class="value">
-            <text>-￥{{d.minus_money}}</text>
+            <text>-￥{{d.minus_money / 100}}</text>
           </view>
         </view>
         <view class="reduce-item">
@@ -102,13 +102,13 @@
           优惠卷
           </view>
           <view class="value">
-            <text>-￥{{d.coupon_money}}</text>
+            <text>-￥{{d.coupon_money / 100}}</text>
           </view>
         </view>
       </view>
       <view class="total">
         实付￥
-        <text>{{d.real_price}}</text>
+        <text>{{d.real_price /100}}</text>
       </view>
     </view>
   </view>
