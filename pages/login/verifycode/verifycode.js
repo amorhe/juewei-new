@@ -14,7 +14,8 @@ Page({
     isnew:true,
     img_code:'',
     modalOpened:false,
-    getCode:true
+    getCode:true,
+    cursor:0
   },
   onLoad(e) {
     var ali_uid = my.getStorageSync({
@@ -99,8 +100,10 @@ Page({
   },
   inputValue(e){
     var value = e.detail.value
+    var cursor = value.length+1
     this.setData({
-      value:value
+      value:value,
+      cursor:cursor
     })
     if(value.length==4){
       this.onBlur()
