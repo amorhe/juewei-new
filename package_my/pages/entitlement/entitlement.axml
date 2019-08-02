@@ -1,6 +1,6 @@
 <view class="entitlement">
   <view class="cardView">
-    <image class="membercard" src="../../../pages/common/img/membercard.png" />
+    <image class="membercard" src="{{ imageUrl }}jwdcard.png" />
   </view>
   <view class="entInfo">
     <view class="vipTitle">VIP专享权益</view>
