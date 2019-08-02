@@ -124,3 +124,15 @@ page {
   height: 320rpx;
   margin: 207rpx 215rpx;
 }
+
+.good_box {
+  width: 20rpx;
+  height: 20rpx;
+  position: fixed;
+  border-radius: 50%;
+  overflow: hidden;
+  left: 50%;
+  top: 50%;
+  z-index: 99;
+  background: #E60012;
+}

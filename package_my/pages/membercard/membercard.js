@@ -1,8 +1,9 @@
 import {membercard} from '../../../pages/common/js/my'
-import {baseUrl} from '../../../pages/common/js/baseUrl'
+import {baseUrl,imageUrl} from '../../../pages/common/js/baseUrl'
 Page({
   data: {
-    imgSrc:''
+    imgSrc:'',
+    imageUrl
   },
   onLoad() {
     this.getQRcode();

@@ -30,6 +30,7 @@ Component({
     goodsKey:"",
     goodsLast:'',
     priceAll:'',
+    hide_good_box: true
   },
   onInit() {
     let shopcartList = my.getStorageSync({
@@ -43,6 +44,11 @@ Component({
     }
     this.data.shopcartList = shopcartList;
     this.data.priceAll = priceAll;
+
+    this.busPos = {};
+    this.busPos['x'] = 10;
+    this.busPos['y'] = app.globalData.hh - 16;
+    console.log('购物车坐标',this.busPos)
   },
   didMount() {
     const _sid = my.getStorageSync({key: '_sid'});
@@ -54,20 +60,7 @@ Component({
         })
       }
     })
-    // this.animation1 = my.createAnimation({
-    //   duration: 400,
-    //   timingFunction: 'linear', 
-    //   transformOrigin: '50% 50% 0',
-    //   success: function(res) { 
-    //   }
-    // })
-    // this.animation2 = my.createAnimation({
-    //   duration: 0,
-    //   timingFunction: 'linear', 
-    //   transformOrigin: '50% 50% 0',
-    //   success: function(res) { 
-    //   }
-    // })
+
   },
   didUpdate() {
     this.setData({
@@ -95,6 +88,31 @@ Component({
   },
   didUnmount() {},
   methods: {
+    // 小红点动画
+    startAnimation() {
+      var index = 0,
+      that = this,
+      bezier_points = that.linePos['bezier_points'],
+      len = bezier_points.length - 1;
+      this.setData({
+        hide_good_box: false,
+        bus_x: that.finger['x'],
+        bus_y: that.finger['y']
+      })
+      this.timer = setInterval(function () {
+      index++;
+      that.setData({
+        bus_x: bezier_points[index]['x'],
+        bus_y: bezier_points[index]['y']
+      })
+      if (index >= len) {
+        clearInterval(that.timer);
+        that.setData({
+          hide_good_box: true,
+        })
+      }
+      }, 15);
+    },
      // 优惠券过期提醒
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
@@ -225,16 +243,44 @@ Component({
         data: carArray, // 要缓存的数据
       });
       
-      // 加入购物车小红点动画效果
-      // my.createSelectorQuery().select(`.ball${e.currentTarget.dataset.type}${e.currentTarget.dataset.index}`).boundingClientRect().exec((ret) => {
-      //   this.animation1.translate(-ret[0].left+57,this.data.windowHeight - ret[0].top - 114).opacity(1).step();
-      //   this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation1.export();
-      //   // this.animation2.translate(0,0).opacity(1).step();
-      //   // this.data.shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].animationInfo = this.animation2.export();
-      //   // this.setData({
-      //   //   shopGoodsList: this.data.shopGoodsList
-      //   // });
-      // })
+
+      // 如果good_box正在运动
+
+      if (!this.data.hide_good_box) return;
+
+      this.finger = {};
+
+      var topPoint = {};
+
+      this.finger['x'] = e.detail.clientX;
+
+      this.finger['y'] = e.detail.clientY;
+
+      if (this.finger['y'] < this.busPos['y']) {
+
+      topPoint['y'] = this.finger['y'] - 150;
+
+      } else {
+
+      topPoint['y'] = this.busPos['y'] - 150;
+
+      }
+
+      topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
+
+      if (this.finger['x'] > this.busPos['x']) {
+
+      topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
+
+      } else {
+
+      topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
+
+      }
+
+      this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
+
+      this.startAnimation();
        
     },
     reduceshopcart(e){

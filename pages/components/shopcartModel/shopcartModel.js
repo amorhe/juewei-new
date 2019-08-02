@@ -27,13 +27,13 @@ Component({
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps){
-    nextProps.otherGoods.push(nextProps.priceAll * 100);
-    nextProps.otherGoods = [...new Set(nextProps.otherGoods)]
-    nextProps.otherGoods.sort(compare);
-    // console.log(nextProps)
-    this.setData({
-      otherGoods:nextProps.otherGoods
-    })
+    // nextProps.otherGoods.push(nextProps.priceAll * 100);
+    // nextProps.otherGoods = [...new Set(nextProps.otherGoods)]
+    // nextProps.otherGoods.sort(compare);
+    console.log(nextProps)
+    // this.setData({
+    //   otherGoods:nextProps.otherGoods
+    // })
   },
   didUpdate() {
    

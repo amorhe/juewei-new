@@ -1,7 +1,9 @@
-import {exchangeCoupon} from '../../../../pages/common/js/home'
+import {exchangeCoupon} from '../../../../pages/common/js/home';
+import {imageUrl} from '../../../../pages/common/js/baseUrl'
 Page({
   data: {
-    code:''
+    code:'',
+    imageUrl
   },
   onLoad() {},
   writeCode(e){

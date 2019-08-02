@@ -19,7 +19,7 @@
       <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png" onTap="toUrl" data-url="/package_my/pages/membercard/membercard"/>
     </view>
      <image class="vipcardPng" mode="scaleToFill" src="{{imageUrl}}position_tit.png"/>
-     <image class="qingxie" mode="scaleToFill" src="../../common/img/qingxie.png"/>
+     <image class="qingxie" mode="scaleToFill" src="{{imageUrl}}my_cardbg.png"/>
   </view>
   <!-- 下面的菜单 -->
   <view class="my_menu">

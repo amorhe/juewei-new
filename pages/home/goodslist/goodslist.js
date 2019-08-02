@@ -137,10 +137,11 @@ Page({
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
   },
+  // 关闭提醒
   closeOpen() {
-    // this.setData({
-    //   isClose: true
-    // })
+    this.setData({
+      isClose: true
+    })
   },
   // 切换外卖自提
   chooseTypes(e) {
@@ -214,14 +215,12 @@ Page({
           const { typeList } = this.data
 
           let keys = Object.keys(typeList);
-
           let list = keys.map(
             item => ({
               key: item,
               values: arr.filter(_item => item === _item.cate_name || item === _item.taste_name)
             })
           )
-
           let sortList = list.map(({ key, values }) => {
             let _sort = typeList[key]
             let _t = _T[_sort]
@@ -233,18 +232,18 @@ Page({
               if(values.length ==0){
                 values = arr;
               }
-              let cur = values.filter(({ goods_code }) => goods_code === _item.goods_channel + _item.goods_type + _item.company_goods_id)
+              let cur = values.filter(({ goods_code }) => goods_code === _item.goods_channel + _item.goods_type + _item.company_goods_id);
               last = new Set([...last, ...cur])
             })
-
             return {
               key,
               last:[...last]
-            }
+            }    
           })
           console.log(sortList)
+          let goodsli = sortList.filter(_item => _item.last.length>0);
           this.setData({
-            shopGoodsList: sortList,
+            shopGoodsList: goodsli,
             companyGoodsList
           })
           
@@ -257,7 +256,7 @@ Page({
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
       console.log(res);
-      const companyGoodsList = this.data.companyGoodsList;
+      let shopGoodsList = this.data.shopGoodsList;
       // 获取加价购商品
       if(res.data.MARKUP!=null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -276,17 +275,13 @@ Page({
 
       // 筛选在当前门店里面的折扣商品
       let DIS = [],PKG = []
-      if(res.data.DIS) {
-        DIS =  res.data.DIS.filter(item => {
-          return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
-        }) 
+      if(res.data.DIS && shopGoodsList.length>0) {
+        DIS = res.data.DIS.filter(item => shopGoodsList.map(_item => _item.last.findIndex(value => value.goods_id == item.goods_id) == -1))
       }
       
       // 筛选在当前门店里面的套餐商品  
-      if(res.data.PKG) {
-        PKG=  res.data.PKG.filter(item => {
-          return companyGoodsList.map(_item => _item.goods_id == item.goods_id)
-        })
+      if(res.data.PKG && shopcartGoods.length>0) {
+        PKG = res.data.PKG.filter(item => shopGoodsList.map(_item => _item.last.findIndex(value => value.goods_id == item.goods_id) == -1))
       }
       let obj1 = {}, obj2 = {};
       for(let item of PKG) {
@@ -295,7 +290,7 @@ Page({
         item.goods_img_intr_origin = [item.goods_img_intr_origin]
       }
 
-
+      console.log(shopGoodsList,DIS,PKG)
       obj1 = {
         "key": "折扣",
         "last": DIS
@@ -314,13 +309,14 @@ Page({
       // }
       this.data.shopGoodsList.unshift(obj1,obj2);
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
-      goodsNew = [...new Set(goodsNew)]
+      goodsNew = [...new Set(goodsNew)];
       // 判断购物车商品是否在当前门店内
       let shopcartlist = my.getStorageSync({key:'goodsList'}).data;
       let shopcartGoods = [];
       if(shopcartlist!= null) {
         shopcartGoods = shopcartlist.filter(_item => goodsNew.findIndex(values=> values.goods_code == _item.goods_code) == -1)
       }
+      console.log(goodsNew)
       this.setData({
         shopGoodsAll:goodsNew
       })

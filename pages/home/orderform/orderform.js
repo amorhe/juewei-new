@@ -58,7 +58,7 @@ Page({
     //     address:true
     //   })
     // }
-    if(my.getStorageSync({key: 'address_id'})) {
+    if(my.getStorageSync({key: 'address_id'}).data!=null) {
       this.getAddress(my.getStorageSync({key: 'address_id'}).data)
     }
     // 获取商品

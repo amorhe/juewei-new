@@ -13,7 +13,7 @@
         <view class="tab-content tabBox">
           <view class="couponUl">
             <view class="couponLi" a:for="{{couponList}}" a:if="{{couponList.length>0}}">
-              <image class="quan" src="../../../../pages/common/img/quan.png" mode="widthFix"/>
+              <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
               <view>
                 <view class="couponNumber">
                   <text>{{item.money/100}}</text>
@@ -40,7 +40,7 @@
                 <image class="qr" src="{{imageUrl}}qrcode.png"  />
               </view>
             </view>
-            <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="../../../pages/common/img/noCoupon.png"/>
+            <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
           </view>
 
           <view class="cardMiddle" hidden="{{activeTab==1}}">

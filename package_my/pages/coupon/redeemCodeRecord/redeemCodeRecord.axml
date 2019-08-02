@@ -6,6 +6,6 @@
       <view class="fontSmallGray">{{item.source==1?'活动赠品':'积分兑换'}}</view> 
       <view class="fontTwentyTwo">有效时间 {{item.gift_use_time}}</view>
     </view> 
-    <image class="guoqi" src="../../../../pages/common/img/guoqi.png" />            
+    <image class="guoqi" src="{{imageUrl}}overdue.png" />            
   </view>
 </view>

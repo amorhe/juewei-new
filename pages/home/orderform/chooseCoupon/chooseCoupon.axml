@@ -14,7 +14,7 @@
           <view class="couponUl">
             <radio-group class="radio-group" onChange="radioChange" name="coupon">
               <view class="couponLi" a:for="{{couponList}}" onTap="chooseCouponed">
-                <image class="quan" src="../../../../pages/common/img/quan.png" mode="widthFix"/>
+                <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
                 <view>
                   <view class="couponNumber">
                     <text>{{item.money/100}}</text>

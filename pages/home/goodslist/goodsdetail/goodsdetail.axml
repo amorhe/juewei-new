@@ -108,7 +108,7 @@
                   <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"/>
                 </view>
                 <view class="commontTag" a:if="{{item.tags.length>0}}">
-                  <image class="normalImage" mode="scaleToFill" src="../../../common/img/hands.png"/>
+                  <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
                   <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
                   <!-- <view>食材新鲜</view>
                   <view>包装精美</view> -->
@@ -158,7 +158,7 @@
                   <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"/>
                 </view>
                 <view class="commontTag">
-                  <image class="normalImage" mode="scaleToFill" src="../../../common/img/hands.png"/>
+                  <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
                   <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
                   <!-- <view>食材新鲜</view>
                   <view>包装精美</view> -->

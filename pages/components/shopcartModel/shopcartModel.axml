@@ -16,15 +16,18 @@
       </view>
       <view>另需配送费{{dispatch_price}}元</view>
     </view>
-    <view class="buyBtn" a:if="{{priceAll<send_price}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">去结算</view>
+    <!-- <view class="buyBtn" a:if="{{priceAll/100<send_price}}">￥{{send_price}}起送</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>send_price}}">去结算</view> -->
+    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartList.length==0}}">￥{{send_price}}起送</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>send_price && shopcartList.length>0}}">去结算</view>
+  </view>
   </view>
 </view>
 <!-- 购物车弹框 -->
 <view  a:if="{{showShopcar}}" class="shopcarContent">
   <!-- <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view> -->
   <view class="clearShopcar" onTap="clearShopcart">
-    <image src="../../common/img/deleteIcon.png" />
+    <image src="{{imageUrl}}deleteIcon.png" />
     <text>清空购物车</text>
   </view>
   <view class="shopcartWrap">
@@ -49,19 +52,7 @@
   </view>
   <view>
   <view class="nullView"></view>
-  <view class="shopcart" a:if="{{shopcartGoods.length>0}}">
-    <image class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount">{{shopcartGoods.length}}</view>
-    <view class="haveGoods">
-      <view>
-        <text>￥</text>
-        <text>{{priceAll}}</text>
-      </view>
-      <view>另需配送费6元</view>
-    </view>
-    <view class="buyBtn" a:if="{{priceAll<send_price}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll>send_price}}">去结算</view>
-  </view>
+ 
   <!-- <view class="shopcart" a:if="{{shopcartGoods.length==0}}">
     <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" />
     <view>另需配送费6元</view>

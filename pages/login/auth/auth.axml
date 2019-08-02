@@ -13,7 +13,7 @@
   <view class="bindButton {{ getCode?'':'bgColor' }}" onTap="getcodeFn">获取短信验证码</view>
   <button class="bindButton" open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
 scope='phoneNumber'>
-    <image class="alipayIcon" src="{{imageUrl}}alipay.png"/>
+    <image class="alipayIcon" src="{{imageUrl}}alipay2.png"/>
     <text>支付宝快捷登录</text>
   </button>
 </view>
