@@ -88,14 +88,14 @@
       <view class="li-button" onTap="redirect">
       返回VIP专享
       </view>
-      <view class="li-button gray">
+      <view class="li-button gray"  onTap="toOrderDetail" data-id="{{d.id}}">
       查看订单
       </view>
     </view>
     <!-- 无需发货 -->
     <view a:if="{{d.receive_type == 0}}">
-      <view class="copy" a:if="{{d.get_code}}">
-        <view class="copy-left">兑换码：{{d.get_code}}</view>
+      <view class="copy" a:if="{{d.gift_code}}">
+        <view class="copy-left">兑换码：{{d.gift_code}}</view>
         <view class="copy-right">复制</view>
       </view>
       <view class="explain" a:if="{{d.exchange_intro}}">

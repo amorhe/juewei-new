@@ -74,7 +74,7 @@
       <!--<view class="user-list" a:if="{{detail.shop_name}}"><view class="user-left"></view><view class="user-right"><view class="user-address">
            {{detail.province}} {{detail.city}} {{detail.district}} {{detail.address}}</view></view></view> -->
     </view>
-    <view class="get-shop" a:if="{{detail.code_img && detail.status != 0}}">
+    <view class="get-shop" a:if="{{detail.code_img && detail.status != 0 && detail.get_code}}">
       <view class="get-shop-title">
         取商品
       </view>
@@ -88,8 +88,8 @@
         兑换码 {{detail.get_code}}
       </view>
     </view>
-    <view class="code" a:if="{{detail.code}}">
-      <view class="code-title">兑换码：{{detail.code}}</view>
+    <view class="code" a:if="{{detail.gift_code}}">
+      <view class="code-title">兑换码：{{detail.gift_code}}</view>
       <view class="code-button">复制</view>
     </view>
     <view class="ul">

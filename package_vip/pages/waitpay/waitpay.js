@@ -44,6 +44,8 @@ Page({
 
     selectAddress: false,
 
+    user_address_map_addr:'',
+
     addressList: region,
     provinceList: [],
     cityList: [],

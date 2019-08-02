@@ -28,6 +28,7 @@ Page({
     const user_address_id = list[i].user_address_id
     const user_address_detail_address = list[i].user_address_detail_address
     const user_address_map_addr = list[i].user_address_map_addr
+    console.log(list)
     if (order_sn) {
 
       my.redirectTo({
@@ -40,7 +41,7 @@ Page({
           + '&district=' + district
           + '&user_address_id=' + user_address_id
           + '&user_address_detail_address=' + user_address_detail_address
-          + 'user_address_map_addr=' + user_address_map_addr
+          + '&user_address_map_addr=' + user_address_map_addr
       });
     }
   },

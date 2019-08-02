@@ -252,7 +252,7 @@ Page({
       case 2:
       let {code} = this.data.detail
       let _sid = await getSid()
-      let codeImg = baseUrl + '/juewei-api/coupons/getQRcode?' + '_sid=' + _sid + '&code=' + code
+      let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
       log(codeImg)
        this.setData({
           open2: true,
