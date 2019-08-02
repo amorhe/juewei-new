@@ -93,12 +93,30 @@
       <view class="code-button">复制</view>
     </view>
     <view class="ul">
-      <view class="li" a:if="{{detail.start_time !== '0000-00-00 00:00:00' && detail.start_time }}">
+      <view class="li" a:if="{{detail.conpon_valid_type == 2 }}">
         <view class="title">
           活动时间
         </view>
         <view class="value">
           {{detail.start_time}} 至 {{detail.end_time}}
+        </view>
+      </view>
+
+      <view class="li" a:if="{{ detail.conpon_valid_type==1 }}">
+        <view class="title">
+          商品有效时间
+        </view>
+        <view class="value">
+          {{detail.conpon_valid_day}}天
+        </view>
+      </view>
+
+      <view class="li" a:if="{{ detail.conpon_valid_type==0 }}">
+        <view class="title">
+          商品有效时间
+        </view>
+        <view class="value">
+          {{detail.end_time}}
         </view>
       </view>
       <view class="li" a:if="{{detail.exchange_intro}}">
