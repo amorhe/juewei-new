@@ -71,11 +71,11 @@ Page({
     this.setData({
       shopcartGoods:data,
       priceAll,
-      orderType:e.orderType
+      orderType:app.globalData.type
     })
 
     const shop_id = my.getStorageSync({key: 'shop_id'}).data;
-    if(e.orderType == 2) {
+    if(app.globalData.type == 2) {
       const self = my.getStorageSync({key: 'self'}).data;
       let arr = [
         {
@@ -217,17 +217,17 @@ Page({
     // }
     // shops = shops.substr(0,shops.length-1);
     let type = '',typeClass=''
-    if(this.data.orderType == 1) {
+    if(app.globalData.type == 1) {
       type = 1;
       typeClass = 2;
     }
-    if(this.data.orderType == 2) {
+    if(app.globalData.type == 2) {
       type = 3;
       typeClass = 4
     }
     const address_id = my.getStorageSync({key:'address_id'}).data
     // 创建订单
-    createOrder(this.data.orderType,shop_id,goods,shop_id,11,remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
+    createOrder(app.globalData.type,shop_id,goods,shop_id,11,remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
       console.log(res);
       if(res.code == 0){
         // 支付宝调起支付
