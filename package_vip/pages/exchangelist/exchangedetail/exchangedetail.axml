@@ -181,3 +181,19 @@
     确认支付
   </view>
 </modal>
+
+<popup show="{{cancleShow}}" position="bottom" onClose="onPopupClose">
+  <view style="width:750rpx; background: #fff;border-radius: 20rpx 20rpx 0 0;padding:0 0 20rpx 0" >
+    <view class="cancle-title">请选择取消原因</view>
+    <view class="cancel-list" a:for="{{cancelReasonList}}" onTap="selectReason" data-index="{{index}}">
+      <view class="cancle-left">
+        {{item.reason}}
+      </view>
+      <image  class="select" mode="scaleToFill" src="{{imageUrl}}select{{item.value?2:1}}.png"/>
+    </view>
+    <view class="cancel-buttons">
+      <view catchTap='closeModel'>暂不取消</view>
+      <view catchTap='doCancelOrder'>确认取消</view>
+    </view>
+  </view>
+</popup>

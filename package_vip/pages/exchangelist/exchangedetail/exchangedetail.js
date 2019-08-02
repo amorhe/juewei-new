@@ -1,5 +1,5 @@
 import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log,getSid } from '../../../../pages/common/js/li-ajax'
+import { ajax, parseData, log, getSid } from '../../../../pages/common/js/li-ajax'
 
 const app = getApp()
 
@@ -7,9 +7,10 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
-     fail: false,
+    fail: false,
     open1: false,
     open2: false,
+    cancleShow: false,
 
     // detail: {
     //   "id": "",
@@ -71,6 +72,11 @@ Page({
 
     // },
 
+    cancelReasonList: [
+      { reason: '下错单/临时不想要了', value: true },
+      { reason: '信息填写错误，重新下单', value: false },
+      { reason: '其他', value: false },
+    ],
     _exchange_intro: [],
     _intro: [],
 
@@ -81,7 +87,7 @@ Page({
     await this.getOrderDetail(id)
   },
 
-  onShow(){
+  onShow() {
     this.closeModel()
   },
 
@@ -155,7 +161,7 @@ Page({
    */
 
   async payNow() {
-    let { order_sn, id, order_amount, receive_type, user_address_phone ,user_address_name,province,city,district,user_address_id,user_address_detail_address} = this.data.detail;
+    let { order_sn, id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address } = this.data.detail;
     // 校验订单 地址信息
     // if (receive_type == 2 || receive_type == 1) {
     //   if (!user_address_phone) {
@@ -225,14 +231,15 @@ Page({
     });
   },
 
-   /**
-   * @function 关闭弹窗
-   */
+  /**
+  * @function 关闭弹窗
+  */
 
   closeModel() {
     this.setData({
       open1: false,
-      open2: false
+      open2: false,
+      cancleShow: false
     })
   },
 
@@ -250,11 +257,11 @@ Page({
         })
         break;
       case 2:
-      let {code} = this.data.detail
-      let _sid = await getSid()
-      let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
-      log(codeImg)
-       this.setData({
+        let { code } = this.data.detail
+        let _sid = await getSid()
+        let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
+        log(codeImg)
+        this.setData({
           open2: true,
           codeImg
         })
@@ -287,19 +294,43 @@ Page({
     });
   },
 
-/**
- * @function 核销
- */
+  /**
+   * @function 核销
+   */
 
-async wait(){
- let res = await ajax('/juewei-api/order/waiting',{},'GET')
- if(res.code == 0){
-  return this.closeModel()
- }
+  async wait() {
+    let res = await ajax('/juewei-api/order/waiting', {}, 'GET')
+    if (res.code == 0) {
+      return this.closeModel()
+    }
 
- return my.showToast({
-  content: res.msg,
- });
-}
+    return my.showToast({
+      content: res.msg,
+    });
+  },
+  /**
+   * @ 显示选择原因
+   */
+
+  showCancel() {
+    this.setData({
+      cancleShow : true
+    })
+  },
+  /**
+   * @function 选择原因
+   */
+
+  selectReason(e) {
+    const { cancelReasonList } = this.data;
+    const { index } = e.currentTarget.dataset;
+    cancelReasonList.forEach(item => item.value = false)
+    cancelReasonList[index].value = true
+
+    this.setData({
+      cancelReasonList
+    })
+  },
+
 
 });

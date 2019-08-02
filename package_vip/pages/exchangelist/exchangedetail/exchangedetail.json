@@ -2,6 +2,7 @@
   "defaultTitle": "兑换记录",
   "backgroundColor": "#F5402B",
   "usingComponents":{
-    "modal": "mini-antui/es/modal/index"
+    "modal": "mini-antui/es/modal/index",
+    "popup": "mini-antui/es/popup/index"
   }
 }
