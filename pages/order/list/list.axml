@@ -28,7 +28,7 @@
         </view>
         <view class="right">
           <text class="y">￥</text>
-          <text class="price">{{item.real_price}}</text>
+          <text class="price">{{item.real_price / 100}}</text>
         </view>
       </view>
       <view class="out-footer">
