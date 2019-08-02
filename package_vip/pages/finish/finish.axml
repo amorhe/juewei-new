@@ -19,8 +19,8 @@
          {{(d.order_point == 0 && d.order_amount == 0 )?'免费领取':''}}
         </view>
       </view>
-      <view class="to-use" onTap="toUse" a:if="{{d.goods_detail_type == '1'}}">去使用</view>
-      <view class="btn" onTap="toUse" a:if="{{d.goods_detail_type != '1'}}">联系客服</view>
+      <view class="to-use" onTap="toUse" a:if="{{['1'].includes(d.goods_detail_type)}}">去使用</view>
+      <view class="btn" a:if="{{['3','4'].includes(d.goods_detail_type)}}">联系客服</view>
     </view>
     <!-- 到店领取 -->
     <view class="user-detail" a:if="{{d.receive_type == 1}}">
@@ -58,6 +58,12 @@
           </view>
         </view>
       </view>
+       <view class="li-button" onTap="redirect">
+      返回VIP专享
+      </view>
+      <view class="li-button gray"  onTap="toOrderDetail" data-id="{{d.id}}">
+      查看订单
+      </view>
     </view>
     <!-- 公司邮寄 -->
     <view a:if="{{d.receive_type == 2}}">
@@ -88,14 +94,14 @@
       <view class="li-button" onTap="redirect">
       返回VIP专享
       </view>
-      <view class="li-button gray">
+      <view class="li-button gray"  onTap="toOrderDetail" data-id="{{d.id}}">
       查看订单
       </view>
     </view>
     <!-- 无需发货 -->
     <view a:if="{{d.receive_type == 0}}">
-      <view class="copy" a:if="{{d.get_code}}">
-        <view class="copy-left">兑换码：{{d.get_code}}</view>
+      <view class="copy" a:if="{{d.gift_code}}">
+        <view class="copy-left">兑换码：{{d.gift_code}}</view>
         <view class="copy-right">复制</view>
       </view>
       <view class="explain" a:if="{{d.exchange_intro}}">
@@ -112,7 +118,7 @@
       <view class="li-button" onTap="redirect">
       返回VIP专享
       </view>
-      <view class="li-button gray">
+      <view class="li-button gray" onTap="toOrderDetail" data-id="{{d.id}}">
       查看订单
       </view>
     </view>
@@ -206,10 +212,10 @@
   <image class="code-img" mode="scaleToFill" src="{{codeImg}}"/>
 
   <view class="code-phone">
-    188 **** 8888
+   {{d.user_phone.slice(0,3)}} **** {{d.user_phone.slice(7)}}
   </view>
 
-  <view class="code-pay">
+  <view class="code-pay" onTap="wait">
     确认支付
   </view>
 </modal>

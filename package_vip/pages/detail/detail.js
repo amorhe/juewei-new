@@ -6,6 +6,7 @@ Page({
     modalOpened: false,
     imageUrl2,
     openPoint: false,
+    loginOpened: false,
     content: '',
     detail: {
       //   "id": "355",
@@ -51,6 +52,10 @@ Page({
 
   parseData,
 
+  onShow() {
+    this.onModalClose()
+  },
+
   async onLoad(e) {
     const { id } = e
     await this.getDetail(id)
@@ -60,7 +65,7 @@ Page({
    * @function 获取当商品面详情
    */
   async getDetail(id) {
-    let { code, data: { goods_name,exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
+    let { code, data: { goods_name, exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
     if (code === 100) {
       let _exchange_intro = await this.parseData(exchange_intro)
       let _intro = await this.parseData(intro)
@@ -197,9 +202,6 @@ Page({
         });
       }
     }
-
-    this.onModalClose()
-
   },
 
   /**
@@ -207,12 +209,12 @@ Page({
    */
 
   async showConfirm() {
-    // let _sid = await getSid()
-    // if (!_sid) {
-    //   return my.showToast({
-    //     content: '用户未登录'
-    //   });
-    // }
+    let _sid = await getSid()
+    if (!_sid) {
+      return this.setData({
+        loginOpened: true
+      });
+    }
 
     let { goods_name, point } = this.data.detail
 
@@ -229,9 +231,9 @@ Page({
         openPoint: true
       })
     }
-
-
   },
+
+
 
   /**
    * @function 关闭modal
@@ -239,7 +241,8 @@ Page({
   onModalClose() {
     this.setData({
       openPoint: false,
-      modalOpened: false
+      modalOpened: false,
+      loginOpened: false
     })
   },
 
@@ -262,5 +265,15 @@ Page({
     if (res.CODE === 'A100') {
       return res.DATA.points
     }
+  },
+
+  /**
+   * @function 跳转登录页面
+   */
+  isloginFn() {
+    my.navigateTo({
+      url: '/pages/login/auth/auth'
+    });
+
   },
 });
