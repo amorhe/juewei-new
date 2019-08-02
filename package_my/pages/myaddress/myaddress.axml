@@ -15,7 +15,7 @@
       </view>
     </view>
     <view class="tiemright" catchTap="toUrl" data-item="{{ item }}">
-      <image class='editicon' src="../../../pages/common/img/edit.png"/>
+      <image class='editicon' src="{{ imageUrl }}edit.png"/>
     </view>
   </view>
 </view>
