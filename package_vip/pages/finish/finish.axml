@@ -58,6 +58,12 @@
           </view>
         </view>
       </view>
+       <view class="li-button" onTap="redirect">
+      返回VIP专享
+      </view>
+      <view class="li-button gray"  onTap="toOrderDetail" data-id="{{d.id}}">
+      查看订单
+      </view>
     </view>
     <!-- 公司邮寄 -->
     <view a:if="{{d.receive_type == 2}}">
