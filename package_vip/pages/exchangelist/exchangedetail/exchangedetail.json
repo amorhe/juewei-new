@@ -1,4 +1,7 @@
 {
   "defaultTitle": "兑换记录",
-  "backgroundColor": "#F5402B"
+  "backgroundColor": "#F5402B",
+  "usingComponents":{
+    "modal": "mini-antui/es/modal/index"
+  }
 }

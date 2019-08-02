@@ -91,8 +91,15 @@ Page({
     // redirect('/pages/vip/index/index')
   },
 
-  toOrder() {
+   /**
+   * @function 跳转商品页
+   */
 
+  toOrderDetail(e) {
+    const { id } = e.currentTarget.dataset
+    my.navigateTo({
+      url: '/package_vip/pages/exchangelist/exchangedetail/exchangedetail?id=' + id
+    });
   },
 
   /**
@@ -173,7 +180,21 @@ Page({
     my.navigateTo({
       url: '/pages/home/goodslist/goodslist'
     });
-  }
+  },
 
+/**
+ * @function 核销
+ */
+
+async wait(){
+ let res = await ajax('/juewei-api/order/waiting',{},'GET')
+ if(res.code == 0){
+  return this.closeModel()
+ }
+
+ return my.showToast({
+  content: res.msg,
+ });
+}
 });
 

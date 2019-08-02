@@ -1,10 +1,15 @@
-import { imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log } from '../../../../pages/common/js/li-ajax'
+import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
+import { ajax, parseData, log,getSid } from '../../../../pages/common/js/li-ajax'
+
+const app = getApp()
 
 Page({
   data: {
     imageUrl,
     imageUrl2,
+     fail: false,
+    open1: false,
+    open2: false,
 
     // detail: {
     //   "id": "",
@@ -74,6 +79,10 @@ Page({
     const { id } = e;
 
     await this.getOrderDetail(id)
+  },
+
+  onShow(){
+    this.closeModel()
   },
 
   onUnload() {
@@ -215,4 +224,82 @@ Page({
       }
     });
   },
+
+   /**
+   * @function 关闭弹窗
+   */
+
+  closeModel() {
+    this.setData({
+      open1: false,
+      open2: false
+    })
+  },
+
+  /**
+  * @function 使用优惠卷
+  */
+  async toUse() {
+    const { way } = this.data.detail
+    // way:用途 1:外卖专享 2:门店专享 3:全场通用
+    switch (way - 0) {
+      case 1:
+      case 3:
+        this.setData({
+          open1: true
+        })
+        break;
+      case 2:
+      let {code} = this.data.detail
+      let _sid = await getSid()
+      let codeImg = baseUrl + '/juewei-api/coupons/getQRcode?' + '_sid=' + _sid + '&code=' + code
+      log(codeImg)
+       this.setData({
+          open2: true,
+          codeImg
+        })
+        break
+    }
+  },
+
+
+
+  /**
+   * @function 去自提
+   */
+  toTakeOut() {
+    app.globalData.type = 2
+    log(app.globalData.type)
+    my.navigateTo({
+      url: '/pages/home/goodslist/goodslist'
+    });
+  },
+
+  /**
+   * @function 去外卖
+   */
+  toTakeIn() {
+    app.globalData.type = 1
+    log(app.globalData.type)
+
+    my.navigateTo({
+      url: '/pages/home/goodslist/goodslist'
+    });
+  },
+
+/**
+ * @function 核销
+ */
+
+async wait(){
+ let res = await ajax('/juewei-api/order/waiting',{},'GET')
+ if(res.code == 0){
+  return this.closeModel()
+ }
+
+ return my.showToast({
+  content: res.msg,
+ });
+}
+
 });
