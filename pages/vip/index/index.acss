@@ -78,6 +78,10 @@ page {
   margin: 32rpx 32rpx 20rpx;
 }
 
+.two{
+  margin-left: 32rpx; 
+}
+
 .two image {
   width: 333rpx;
   height: 180rpx;
