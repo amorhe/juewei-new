@@ -1,5 +1,5 @@
 import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log, getSid ,handleCopy,guide} from '../../../../pages/common/js/li-ajax'
+import { ajax, parseData, log, getSid ,handleCopy,guide,contact} from '../../../../pages/common/js/li-ajax'
 
 const app = getApp()
 
@@ -101,6 +101,8 @@ Page({
   },
 
   guide,
+
+  contact,
 
 
   /**
