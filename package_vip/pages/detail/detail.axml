@@ -44,7 +44,7 @@
      活动时间
     </view>
     <view class="footet-containt">
-     {{detail.start_time}}至{{detail.end_time}}
+     {{detail.start_time.split(' ')[0]}}至{{detail.end_time.split(' ')[0]}}
     </view>
     <view class="footer-title" a:if="{{detail.exchange_intro}}"> 
      兑换说明
