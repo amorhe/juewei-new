@@ -135,9 +135,22 @@ page {
   box-shadow: 0 2rpx 10rpx 0 rgba(153, 153, 153, 0.2);
 }
 
-.li>image {
+.li>.li-pic{
+  position: relative
+}
+
+.li>.li-pic>image {
   width: 333rpx;
   height: 333rpx;
+}
+
+.li>.li-pic>.pic-sm{
+  z-index: 9999;
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
+  width: 120rpx;
+  height: 120rpx;
 }
 
 .li>.center {
