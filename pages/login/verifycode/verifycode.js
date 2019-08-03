@@ -28,10 +28,11 @@ Page({
     this.timeDate()
   },
   bindFocus() {
+    var that = this
     // blur 事件和这个冲突
-    console.log(this.data.focus)
+    //console.log(this.data.focus)
     setTimeout(() => {
-      this.onFocus();
+      that.onFocus();
     }, 100);
   },
   onFocus() {
