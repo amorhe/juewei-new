@@ -71,6 +71,9 @@ Page({
     this.setData({
       fail: fail == 'true'
     })
+    my.setNavigationBar({
+        title:fail != 'true'?'兑换成功':'兑换失败',
+    });
     await this.getOdrderDetail(id)
 
   },

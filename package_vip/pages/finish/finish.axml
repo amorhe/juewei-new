@@ -37,7 +37,7 @@
         领取手机号码
         </view>
         <view class="user-right">
-        {{detail.user_address_phone}}
+        {{d.user_address_phone}}
         </view>
       </view>
       <view class="user-list" a:if="{{d.shop_name}}">
