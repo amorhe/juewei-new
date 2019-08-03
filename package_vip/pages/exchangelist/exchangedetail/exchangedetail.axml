@@ -3,7 +3,7 @@
   <!-- 状态 -->
   <view class="state">
     <view class="state-title">
-      {{detail.status_name}}
+     {{(detail.status_name == '未支付'  && detail.remaining_pay_minute > 0) ? '未支付' : '已关闭' }}
     </view>
     <view class="sub-state" a:if="{{detail.dis_time}}">
     发货时间：{{detail.dis_time.split(' ')[0]}}
@@ -21,7 +21,7 @@
     领取时间：{{detail.get_time.split(' ')[0]}}
     </view>
   </view>
-  <view class="buttons" a:if="{{detail.status == 0}}">
+  <view class="buttons" a:if="{{detail.status == 0 && detail.remaining_pay_minute>0}}">
     <view class="c-button" onTap="doCancelOrder">取消订单</view>
     <view class="o-button" onTap="payNow">立即支付</view>
   </view>
