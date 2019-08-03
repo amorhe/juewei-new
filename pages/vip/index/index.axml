@@ -52,7 +52,7 @@
         <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
       </scroll-view>
     </view>
-    <view class="ul">
+    <view class="ul" a:if="{{finish}}">
       <view class="li"  a:if="{{goodsList.length}}" a:for="{{goodsList}}" onTap="toDetail" data-id="{{item.id}}" data-valid_num="{{item.valid_num}}">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         <view class="center">

@@ -161,7 +161,7 @@
         {{detail.user_address_name}} {{detail.user_address_phone}}
       </view>
       <view class="address-footer">
-        {{ detail.user_address_detail_address || detail.user_address_address}}
+        {{ detail.user_address_address + detail.user_address_detail_address }}
       </view>
     </view>
     <view class="order detail-item">

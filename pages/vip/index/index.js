@@ -6,6 +6,8 @@ Page({
     imageUrl,
     imageUrl2,
 
+    finish:false,
+
     toast: false,
 
     _sid: '',
@@ -113,6 +115,7 @@ Page({
     let res = await ajax('/mini/vip/wap/goods/goods_list', goodslistOption)
     if (res.code === 100) {
       this.setData({
+        finish:true,
         goodsList: res.data.data
       })
     }
