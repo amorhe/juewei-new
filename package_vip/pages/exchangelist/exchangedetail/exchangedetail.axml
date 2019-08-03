@@ -3,7 +3,7 @@
   <!-- 状态 -->
   <view class="state">
     <view class="state-title">
-     {{(detail.status_name == '未支付'  && detail.remaining_pay_minute > 0) ? '未支付' : '已关闭' }}
+     {{(detail.status_name == '未支付'  && detail.remaining_pay_minute < 0) ? '已关闭' :detail.status_name}}
     </view>
     <view class="sub-state" a:if="{{detail.dis_time}}">
     发货时间：{{detail.dis_time.split(' ')[0]}}
