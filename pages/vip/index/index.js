@@ -38,7 +38,7 @@ Page({
 
 
   },
-  async onShow() {
+  async onLoad() {
     this.getBanner()
     this.getPositionList()
     this.getUserPoint()

@@ -13,6 +13,7 @@ page {
   font-size: 36rpx;
   font-weight: 500;
   color: rgba(255, 255, 255, 1);
+  text-align: center
 }
 
 .title_bg {
@@ -27,7 +28,9 @@ page {
   position: absolute;
   height: 44rpx;
   bottom: 30rpx;
-  left: 30rpx;
+  left: 0rpx;
+  right: 0;
+  margin: 0 auto
 }
 
 .body_bg {
@@ -146,12 +149,13 @@ page {
 }
 
 .li>.center>.li-title {
+  width: 320rpx;
   font-size: 28rpx;
   color: #333;
   font-weight: 600;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 100%;
+  overflow: hidden
 }
 
 .li-all {
