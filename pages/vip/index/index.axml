@@ -50,7 +50,15 @@
       </scroll-view>
     </view>
     <view class="ul" a:if="{{finish}}">
-      <view class="li" a:if="{{goodsList.length}}" a:for="{{goodsList}}" onTap="toDetail" data-id="{{item.id}}" data-valid_num="{{item.valid_num}}">
+      <view class="li" 
+      a:if="{{goodsList.length}}" 
+      a:for="{{goodsList}}" 
+      onTap="toDetail" 
+      data-id="{{item.id}}" 
+      data-valid_num="{{item.valid_num}}" 
+      data-exchange_day_num="{{item.exchange_day_num}}"
+      data-exchange_day_vaild_num="{{item.exchange_day_vaild_num}}"
+      >
         <view class="li-pic">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         <image mode="scaleToFill" class="pic-sm" src="{{imageUrl}}overdue.png" a:if="{{((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}"/>

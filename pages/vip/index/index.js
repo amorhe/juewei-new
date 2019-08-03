@@ -178,8 +178,9 @@ Page({
    * @function 跳转详情页面
    */
   toDetail(e) {
-    const { id, valid_num } = e.currentTarget.dataset
-    if (0 == valid_num) {
+    const { id, valid_num,exchange_day_num ,exchange_day_vaild_num} = e.currentTarget.dataset
+    log(id, valid_num,exchange_day_num ,exchange_day_vaild_num)
+    if ((valid_num)==0 || ((exchange_day_num-0)>0 && (exchange_day_vaild_num)==0)) {
       return
     }
     my.navigateTo({
