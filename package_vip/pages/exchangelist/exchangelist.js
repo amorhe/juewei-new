@@ -8,6 +8,8 @@ Page({
     imageUrl,
     imageUrl2,
 
+    finish:false,
+
     orderList: [],
 
     page_num: 1,
@@ -17,7 +19,7 @@ Page({
   },
   async onShow() {
     let { page_num } = this.data;
-    await this.getOrderList(1)
+    await this.getOrderList(page_num)
   },
   onUnload() {
     clearInterval(this.data.time)
@@ -65,8 +67,7 @@ Page({
             ...item,
           }
         })
-
-        this.setData({ orderList, time })
+        this.setData({ orderList,finish:true, time })
 
       }, 1000)
 

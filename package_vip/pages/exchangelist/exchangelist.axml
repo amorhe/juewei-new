@@ -1,4 +1,4 @@
-<view>
+<view a:if="{{finish}}">
   <!-- 兑换记录列表 -->
   <view class="list">
     <view class="item" a:for="{{orderList}}" data-id="{{item.id}}" onTap="toOrderDetail">
@@ -36,7 +36,7 @@
 </view>
 
 <!-- 空状态 -->
-<view class="none" a:if="{{ orderList.length === 0 }}" onTap="switchTo">
+<view class="none" a:if="{{ orderList.length === 0 && finish}}" onTap="switchTo">
   <image mode="scaleToFill" src="{{imageUrl}}bg_order.png"/>
   <view class="txt">暂无兑换记录</view>
   <view class="exchange-btn">去兑换</view>
