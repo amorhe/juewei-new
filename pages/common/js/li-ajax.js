@@ -149,7 +149,20 @@ export const guide = e => {
  * @function 联系客服
  */
 
-export const contact = () =>{
-   my.makePhoneCall({ number: '4009995917' });
+export const contact = () => {
+  my.makePhoneCall({ number: '4009995917' });
 }
 
+/**
+ * @function 获取导航高度
+ */
+
+export const getNavHeight = () => {
+  log(my.getSystemInfoSync())
+  let { titleBarHeight, statusBarHeight, model } = my.getSystemInfoSync()
+
+  return {
+    titleBarHeight,
+    statusBarHeight
+  }
+}

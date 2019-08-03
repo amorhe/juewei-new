@@ -8,7 +8,6 @@ page {
   position: fixed;
   top: 0rpx;
   width: 100vw;
-  height: 150rpx;
   text-align: center;
   font-size: 36rpx;
   font-weight: 500;
@@ -21,13 +20,11 @@ page {
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 160rpx;
 }
 
 .header-title-s text {
   position: absolute;
   height: 44rpx;
-  bottom: 30rpx;
   left: 0rpx;
   right: 0;
   margin: 0 auto
@@ -219,13 +216,6 @@ page {
 .sroll-view-wrap {
   background: white;
   position: sticky;
-  top: 150rpx;
-}
-
-.stickyClass {
-  position: sticky;
-  top: 150rpx;
-  box-sizing: content-box
 }
 
 .no-good {
