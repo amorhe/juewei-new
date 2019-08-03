@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2, baseUrl } from '../../../pages/common/js/baseUrl'
-import { ajax, parseData, redirect, log,getSid,handleCopy } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData, redirect, log, getSid, handleCopy,guide } from '../../../pages/common/js/li-ajax'
 
 var app = getApp();
 Page({
@@ -81,6 +81,7 @@ Page({
 
   handleCopy,
 
+  guide,
 
 
   redirect() {
@@ -93,9 +94,9 @@ Page({
     // redirect('/pages/vip/index/index')
   },
 
-   /**
-   * @function 跳转商品页
-   */
+  /**
+  * @function 跳转商品页
+  */
 
   toOrderDetail(e) {
     const { id } = e.currentTarget.dataset
@@ -147,11 +148,11 @@ Page({
         })
         break;
       case 2:
-      let {code} = this.data.d
-      let _sid = await getSid()
-      let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
-      log(codeImg)
-       this.setData({
+        let { code } = this.data.d
+        let _sid = await getSid()
+        let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
+        log(codeImg)
+        this.setData({
           open2: true,
           codeImg
         })
@@ -184,19 +185,19 @@ Page({
     });
   },
 
-/**
- * @function 核销
- */
+  /**
+   * @function 核销
+   */
 
-async wait(){
- let res = await ajax('/juewei-api/order/waiting',{},'GET')
- if(res.code == 0){
-  return this.closeModel()
- }
+  async wait() {
+    let res = await ajax('/juewei-api/order/waiting', {}, 'GET')
+    if (res.code == 0) {
+      return this.closeModel()
+    }
 
- return my.showToast({
-  content: res.msg,
- });
-}
+    return my.showToast({
+      content: res.msg,
+    });
+  }
 });
 

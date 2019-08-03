@@ -32,19 +32,21 @@
 
     <swiper a:if="{{bannerList.length}}" autoplay="{{true}}" duration="3000" interval="3000" circular="{{true}}" class="banner">
       <block a:for="{{bannerList}}">
-        <swiper-item >
-          <image style="margin:0" class="banner" mode="scaleToFill" src="{{imageUrl2 + item.pic_src}}"/>
+        <swiper-item>
+          <image style="margin:0" class="banner" mode="scaleToFill" onTap="linkTo" data-url="{{item.link_url}}" src="{{imageUrl2 + item.pic_src}}"/>
         </swiper-item>
       </block>
     </swiper>
     <view class="title" a:if="{{positionList.length}}">
       为你推荐
     </view>
+    <!-- 轮播二 -->
     <view class="flex-space-b two">
       <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
-        <image mode="scaleToFill" a:for="{{itemName.pic_src}}" src="{{imageUrl2 + item}}"/>
+        <image mode="scaleToFill" src="{{imageUrl2+ itemName.pic}}" data-url="{{itemName.url}}" onTap="linkTo"/>
       </scroll-view>
     </view>
+
     <view class="sroll-view-wrap">
       <scroll-view scroll-x="{{true}}" class="x stickyClass" style="position:{{menuFixed?'fixed':''}}" id="affix">
         <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>

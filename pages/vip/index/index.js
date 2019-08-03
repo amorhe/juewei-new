@@ -126,8 +126,16 @@ Page({
     let positionListOption = { city_id, district_id, company_id, release_channel }
     let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
     if (res.code === 100) {
+      let {pic_src,link_url}= res.data[0];
+      let positionList = pic_src.map((pic,index)=>{
+        return{
+          pic,
+          url:link_url[index]
+        }
+      })
+      
       this.setData({
-        positionList: res.data
+        positionList
       })
     }
   },
@@ -216,6 +224,17 @@ Page({
   toPointList(){
     my.navigateTo({
       url:'/package_vip/pages/pointlist/pointlist'
+    });
+  },
+
+  /**
+   * @function banner跳转页面
+   */
+
+  linkTo(e){
+    const {url} = e.currentTarget.dataset
+    my.navigateTo({
+      url
     });
   }
 

@@ -30,7 +30,7 @@ Page({
         type: 3
       }
     ],
-    curLabel: 1,
+    curLabel: 0,
 
     selectAddress: false,
 
@@ -43,6 +43,7 @@ Page({
     addressId: '',
     order: 0,
     _sid: '',
+    addressdetail:''
   },
   async onLoad(e) {
     var _sid = my.getStorageSync({ key: '_sid' }).data;
@@ -52,12 +53,46 @@ Page({
       this.getInfo(e.Id)
     } else {
       this.data.addressId = ''
+      this.getLocation()
     }
     if (e.order) {
       this.data.order = 1
     }
     region = await getRegion()
     this.getAddressList()
+  },
+  getLocation() {
+    var that = this
+    my.getLocation({
+      type: 3,
+      success(res) {
+        var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
+        my.request({
+          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + res.longitude + ',' + res.latitude + '&radius=2000',
+          success: (res) => {
+            var arr = []
+            res.data.contents.forEach(item => {
+              arr.push(item.shop_id)
+            })
+            that.data.shop_id = arr.join(',')
+          },
+        });
+        console.log(address,'address')
+        that.setData({
+          province: res.province,
+          city: res.city,
+          district: res.district,
+          longitude: res.longitude,
+          latitude: res.latitude,
+          address: address
+        })
+      },
+      fail() {
+        that.setData({
+          address: '定位失败'
+        })
+      },
+    })
   },
   // 地址详情
   getInfo(id) {
@@ -182,7 +217,36 @@ Page({
     let { value } = e.detail;
     this.setData({ [key]: value })
   },
+  phoneValue(e) {
+    var value = e.detail.value.replace(/\s+/g, "")
+    this.setData({
+      phone: value
+    })
+  },
+  closeFN() {
+    this.setData({
+      addressdetail: ''
+    })
+  },
   Addaddress() {
+    if (/^1\d{10}$/.test(this.data.phone)) {
+    } else {
+      my.showToast({
+        type: 'none',
+        content: '请输入正确手机号',
+        duration: 1000
+      });
+      return
+    }
+    console.log(this.data.addressdetail,'this.data.addressdetail ')
+    if (this.data.addressdetail.replace(/\s+/g, "") == '') {
+      my.showToast({
+        type: 'none',
+        content: '门牌号不可为空',
+        duration: 1000
+      });
+      return
+    }
     console.log(this.data.addressId)
     if (this.data.addressId) {
       var data = {
