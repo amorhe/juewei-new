@@ -53,7 +53,7 @@
       </scroll-view>
     </view>
     <view class="ul">
-      <view class="li" a:for="{{goodsList}}" onTap="toDetail" data-id="{{item.id}}" data-valid_num="{{item.valid_num}}">
+      <view class="li"  a:if="{{goodsList.length}}" a:for="{{goodsList}}" onTap="toDetail" data-id="{{item.id}}" data-valid_num="{{item.valid_num}}">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
         <view class="center">
           <view class="li-title">{{item.goods_name}}</view>
@@ -77,13 +77,26 @@
                 <text class="li-small">元</text>
               </text>
             </view>
-            <view a:if="{{0< item.valid_num}}" class="li-button">立即兑换</view>
-            <view a:if="{{0 === item.valid_num}}" class="li-button" style="background:#ccc">已抢光</view>
+            <view a:if="{{!((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}" class="li-button">立即兑换</view>
+            <view a:if="{{((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}" class="li-button" style="background:#ccc">已抢光</view>
           </view>
         </view>
-        <view class="bottom" style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num-item.valid_num)/item.total_num)*100 +'%)'}}">
-          已抢{{((((item.total_num-item.valid_num)* 100/item.total_num).toFixed(0)))}}%
+        <!--  exchange_day_num: "0" 每天兑换限额，当为0的时候系统是没有设置每天兑换限额的。
+              exchange_day_vaild_num: 0  每天剩余兑换次数
+              valid_num: "12"  总剩余库存
+              是否显示已对完的图标是通过这三个值来确认的
+              剩余库存为0 或者 （每天兑换限额不为零并且每天兑换剩余次数为0的时候） -->
+        <view class="bottom" a:if="{{item.exchange_day_num != 0}}" style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.exchange_day_num - item.exchange_day_vaild_num)/item.exchange_day_num)*100 +'%, white '+ ((item.exchange_day_num - item.exchange_day_vaild_num)/item.exchange_day_num)*100 +'%)'}}">
+          已抢{{((((item.exchange_day_num - item.exchange_day_vaild_num)*100/item.exchange_day_num).toFixed(0)))}}%
         </view>
+         <view class="bottom" a:if="{{item.exchange_day_num == 0}}" style="background:{{'linear-gradient(90deg, #FDE0E1 0, #FDE0E1 '+ ((item.total_num - item.valid_num)/item.total_num)*100 +'%, white '+ ((item.total_num - item.valid_num)/item.total_num)*100 +'%)'}}">
+          已抢{{((((item.total_num - item.valid_num)*100/item.total_num).toFixed(0)))}}%
+        </view>
+      </view>
+
+      <view class="no-good"  a:if="{{!goodsList.length}}">
+        <image mode="scaleToFill" src="{{imageUrl}}nogoods.png"/>
+        <view>更多精彩，敬请期待</view>
       </view>
     </view>
   </view>

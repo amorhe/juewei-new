@@ -8,7 +8,7 @@ Page({
     imageUrl,
     imageUrl2,
 
-    finish:false,
+    finish: false,
 
     orderList: [],
 
@@ -17,7 +17,7 @@ Page({
 
     time: ''
   },
-  async onLoad() {
+  async onShow() {
     let { page_num } = this.data;
     await this.getOrderList(page_num)
   },
@@ -50,7 +50,9 @@ Page({
     let { page_size, time, orderList } = this.data;
     let res = await ajax('/mini/vip/wap/order/order_list', { page_num, page_size })
     if (res.code === 100) {
-      orderList = [...res.data.data, ...orderList]
+      // orderList = [...res.data.data, ...orderList]
+      orderList = [...res.data.data]
+
       time = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
@@ -67,7 +69,7 @@ Page({
             ...item,
           }
         })
-        this.setData({ orderList,finish:true, time })
+        this.setData({ orderList, finish: true, time })
 
       }, 1000)
 
@@ -106,7 +108,7 @@ Page({
       // 校验订单 地址信息
       // if (res.data.receive_type == 2 || res.data.receive_type == 1) {
       //   if (!res.data.user_address_phone) {
-    let { id, order_amount, receive_type, user_address_phone ,user_address_name,province,city,district,user_address_id,user_address_detail_address} = res.data
+      let { id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address } = res.data
 
       return my.navigateTo({
         url: '/package_vip/pages/waitpay/waitpay?'

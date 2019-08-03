@@ -81,8 +81,8 @@ page {
   margin: 32rpx 32rpx 20rpx;
 }
 
-.two{
-  margin-left: 32rpx; 
+.two {
+  margin-left: 32rpx;
 }
 
 .two image {
@@ -226,4 +226,19 @@ page {
   position: sticky;
   top: 150rpx;
   box-sizing: content-box
+}
+
+.no-good {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  text-align: center;
+  margin: 0 auto
+}
+
+.no-good image {
+  width: 280rpx;
+  height: 280rpx;
+  margin: 20rpx;
 }

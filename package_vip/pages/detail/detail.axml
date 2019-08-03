@@ -12,7 +12,7 @@
         {{detail.goods_name}}
       </view>
           <view class="coast" a:if="{{ detail.point == 0 && detail.amount == 0 }}">
-            免费领取
+            <text>免费领取</text> 
           </view>
           <view class="coast" a:if="{{ detail.point !=0 && detail.amount != 0 }}">
            {{ detail.point}} <text>积分</text>  + {{ detail.amount/100}} <text>元</text>
@@ -23,8 +23,18 @@
           <view class="coast" a:if="{{ detail.point ==0 && detail.amount != 0 }}">
           {{ detail.amount/100}} <text>元</text>
           </view>
-      <view class="bottom" style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
-      <view class="bottom">
+           <!--  exchange_day_num: "0" 每天兑换限额，当为0的时候系统是没有设置每天兑换限额的。
+              exchange_day_vaild_num: 0  每天剩余兑换次数
+              valid_num: "12"  总剩余库存
+              是否显示已对完的图标是通过这三个值来确认的
+              剩余库存为0 或者 （每天兑换限额不为零并且每天兑换剩余次数为0的时候） -->
+      <view class="bottom" a:if="{{exchange_day_num!=0}}" style="width:{{((detail.exchange_day_num - detail.exchange_day_vaild_num)/detail.exchange_day_num) *100}}%;background:#FDE0E1"></view>
+      <view class="bottom" a:if="{{exchange_day_num!=0}}">
+        已抢{{(((detail.exchange_day_num-detail.exchange_day_vaild_num)*100/detail.exchange_day_num)).toFixed(0)}}%
+      </view>
+
+      <view class="bottom" a:if="{{exchange_day_num==0}}" style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
+      <view class="bottom" a:if="{{exchange_day_num==0}}">
         已抢{{(((detail.total_num-detail.valid_num)*100/detail.total_num)).toFixed(0)}}%
       </view>
     </view>
