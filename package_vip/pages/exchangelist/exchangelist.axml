@@ -4,7 +4,7 @@
     <view class="item" a:for="{{orderList}}" data-id="{{item.id}}" onTap="toOrderDetail">
       <view class="header">
         <view class="time">{{item.order_ctime.split(' ')[0]}}</view>
-        <view class="state">{{(item.status_name == '去支付' && item.remaining_pay_minute>0) ? '去支付' : '已关闭' }}</view>
+        <view class="state">{{(item.status_name == '未支付'  && item.remaining_pay_minute > 0) ? '未支付' : '已关闭' }}</view>
       </view>
       <view class="body">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>
