@@ -17,7 +17,7 @@ Page({
 
     time: ''
   },
-  async onShow() {
+  async onLoad() {
     let { page_num } = this.data;
     await this.getOrderList(page_num)
   },
