@@ -1,5 +1,5 @@
 import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log, getSid } from '../../../../pages/common/js/li-ajax'
+import { ajax, parseData, log, getSid ,handleCopy} from '../../../../pages/common/js/li-ajax'
 
 const app = getApp()
 
@@ -219,17 +219,7 @@ Page({
   /**
    * @function 剪切板
    */
-  handleCopy() {
-    my.setClipboard({
-      text: this.data.detail.order_sn,
-      success() {
-        my.showToast({
-          type: 'success',
-          content: '操作成功'
-        });
-      }
-    });
-  },
+  handleCopy,
 
   /**
   * @function 关闭弹窗

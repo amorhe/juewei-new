@@ -75,7 +75,7 @@
       </view>
       <view class="copy" a:if="{{d.get_code}}">
         <view class="copy-left">兑换码：{{d.get_code}}</view>
-        <view class="copy-right">复制</view>
+        <view class="copy-right" data-text="{{d.get_code}}" onTap="handleCopy">复制</view>
       </view>
       <view class="explain" a:if="{{d.exchange_intro}}">
         <view class="explain-title">兑换说明</view>
@@ -102,7 +102,7 @@
     <view a:if="{{d.receive_type == 0}}">
       <view class="copy" a:if="{{d.gift_code}}">
         <view class="copy-left">兑换码：{{d.gift_code}}</view>
-        <view class="copy-right">复制</view>
+        <view class="copy-right" data-text="{{d.gift_code}}" onTap="handleCopy">复制</view>
       </view>
       <view class="explain" a:if="{{d.exchange_intro}}">
         <view class="explain-title">兑换说明</view>

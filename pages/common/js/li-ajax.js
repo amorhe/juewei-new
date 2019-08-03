@@ -96,6 +96,23 @@ export const getRegion = async () => {
 }
 
 /**
+  * @function 剪切板
+  */
+export const handleCopy = (e) => {
+  const {text} = e.currentTarget.dataset
+  log(text)
+  my.setClipboard({
+    text,
+    success() {
+      my.showToast({
+        type: 'success',
+        content: '操作成功'
+      });
+    }
+  });
+}
+
+/**
  * @function 百度jdk
  * @param _lat 经纬度中超过能100的那个 => 经度
  * @param _lng 经纬度中 没有 超过 100的那个 => 纬度
