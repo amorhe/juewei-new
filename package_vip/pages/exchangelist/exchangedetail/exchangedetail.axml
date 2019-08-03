@@ -90,7 +90,7 @@
     </view>
     <view class="code" a:if="{{detail.gift_code}}">
       <view class="code-title">兑换码：{{detail.gift_code}}</view>
-      <view class="code-button">复制</view>
+      <view class="code-button" data-text="{{detail.gift_code}}" onTap="handleCopy">复制</view>
     </view>
     <view class="ul">
       <view class="li" a:if="{{detail.conpon_valid_type == 2 }}">
@@ -159,12 +159,12 @@
         </view>
         <view class="item-value">
           <text>{{detail.order_sn}}</text>
-          <view class="copy-button" onTap="handleCopy">复制</view>
+          <view class="copy-button" data-text="{{detail.order_sn}}" onTap="handleCopy">复制</view>
         </view>
       </view>
       <view class="order-item">
         <view class="item-name">
-      订单时间
+      订单时间 
         </view>
         <view class="item-value">
           <text>{{detail.order_ctime}}</text>
