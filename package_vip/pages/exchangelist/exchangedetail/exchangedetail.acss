@@ -296,13 +296,23 @@ page {
 }
 
 .get-code {
+  position: relative;
   padding: 24rpx;
   text-align: center
 }
 
+
 .get-code image {
   width: 300rpx;
   height: 300rpx;
+}
+
+.get-code .got{
+  width: 140rpx;
+  height: 140rpx;
+  position: absolute;
+  top: -30rpx;
+  right: 110rpx
 }
 
 .get-shop-tips {
