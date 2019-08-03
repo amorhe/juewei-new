@@ -135,12 +135,13 @@ export const getDistance = async (_lng, _lat) => {
  * @function 导航
  */
 
-export const guide = () => {
+export const guide = e => {
+  const { shop_longitude, shop_latitude, shop_name, address } = e.currentTarget.dataset
   my.openLocation({
-    longitude: '121.549697',
-    latitude: '31.227250',
-    name: '支付宝',
-    address: '杨高路地铁站',
+    longitude: shop_longitude,
+    latitude: shop_latitude,
+    name: shop_name,
+    address,
   });
 }
 
