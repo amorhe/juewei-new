@@ -1,5 +1,5 @@
 import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log, getSid ,handleCopy,guide,contact} from '../../../../pages/common/js/li-ajax'
+import { ajax, parseData, log, getSid ,handleCopy,guide,contact,getNavHeight} from '../../../../pages/common/js/li-ajax'
 
 const app = getApp()
 
@@ -83,7 +83,10 @@ Page({
   },
   async onLoad(e) {
     const { id } = e;
-
+    let navHeight = getNavHeight()
+    this.setData({
+      navHeight
+    })
     await this.getOrderDetail(id)
   },
 
