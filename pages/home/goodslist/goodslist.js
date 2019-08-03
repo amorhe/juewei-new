@@ -10,7 +10,6 @@ Page({
     imageUrl,
     imageUrl2,
     firstAddress: '紫檀大厦',
-    type: 1,  //默认外卖
     isClose: false,
     indicatorDots: true,
     autoplay: false,
@@ -61,7 +60,7 @@ Page({
       isOpen: app.globalData.isOpen
     })
     // 初始化默认外卖
-    if (this.data.type == 1 && app.globalData.type == 1) {
+    if (app.globalData.type == 1) {
        // 切换门店
         const shopArray = my.getStorageSync({
           key: 'takeout', // 缓存数据的key
@@ -148,18 +147,18 @@ Page({
     if (e.currentTarget.dataset.type == 'ziti') {
       let shopTakeOut = my.getStorageSync({key:'takeout'}).data;
       this.setData({
-        type: 2,
         shopTakeOut
       });
+      app.globalData.type =2;
       this.getCompanyGoodsList(shopTakeOut[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut[0].company_sale_id, 1);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut[0].company_sale_id); 
     } else {
       let shopTakeOut = my.getStorageSync({key:'self'}).data;
       this.setData({
-        type: 1,
         shopTakeOut
       })
+      app.globalData.type = 1;
       this.getCompanyGoodsList(shopTakeOut[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut[0].company_sale_id, 1);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut[0].company_sale_id); 
@@ -188,12 +187,12 @@ Page({
     my.request({
       url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=${str}`,
       success: (res) => {
+        console.log(res)
         // 该公司所有的商品
         this.setData({
           companyGoodsList:res.data.data[`${company_id}`]
         })
         this.getShopGoodsList(this.data.shopTakeOut[0].shop_id);
-        this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,company_id,this.data.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动
       }
     });
   },
@@ -209,9 +208,9 @@ Page({
        const str = new Date().getTime();
       my.request({
         url: `https://images.juewei.com/prod/shop/goods_sort.json?v=${str}`,
-        success: (res) => {
-          console.log(res.data.data.country);
-          let _T = res.data.data.country
+        success: (conf) => {
+          console.log(conf.data.data.country);
+          let _T = conf.data.data.country
           const { typeList } = this.data
 
           let keys = Object.keys(typeList);
@@ -224,7 +223,6 @@ Page({
           let sortList = list.map(({ key, values }) => {
             let _sort = typeList[key]
             let _t = _T[_sort]
-
             if (!_t) { return {key,last:[]} }
 
             let last = []
@@ -232,7 +230,7 @@ Page({
               if(values.length ==0){
                 values = arr;
               }
-              let cur = values.filter(({ goods_code }) => goods_code === _item.goods_channel + _item.goods_type + _item.company_goods_id);
+              let cur = values.filter(({ goods_code }) => goods_code === _item);
               last = new Set([...last, ...cur])
             })
             return {
@@ -240,11 +238,12 @@ Page({
               last:[...last]
             }    
           })
-          console.log(sortList)
-          let goodsli = sortList.filter(_item => _item.last.length>0);
+          // let goodsli = sortList.filter(_item => _item.last.length>0);
           this.setData({
-            shopGoodsList: goodsli,
+            shopGoodsList: sortList,
             companyGoodsList
+          },()=> {
+            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动
           })
           
         },
@@ -256,7 +255,7 @@ Page({
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
       console.log(res);
-      let shopGoodsList = this.data.shopGoodsList;
+      let companyGoodsList = this.data.companyGoodsList;
       // 获取加价购商品
       if(res.data.MARKUP!=null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -275,13 +274,12 @@ Page({
 
       // 筛选在当前门店里面的折扣商品
       let DIS = [],PKG = []
-      if(res.data.DIS && shopGoodsList.length>0) {
-        DIS = res.data.DIS.filter(item => shopGoodsList.map(_item => _item.last.findIndex(value => value.goods_id == item.goods_id) == -1))
+      if(res.data.DIS) {
+        DIS = res.data.DIS.filter(item => companyGoodsList.findIndex(value => value.goods_id == item.goods_id) == -1)
       }
-      
       // 筛选在当前门店里面的套餐商品  
-      if(res.data.PKG && shopcartGoods.length>0) {
-        PKG = res.data.PKG.filter(item => shopGoodsList.map(_item => _item.last.findIndex(value => value.goods_id == item.goods_id) == -1))
+      if(res.data.PKG) {
+        PKG = res.data.PKG.filter(item => companyGoodsList.findIndex(value => value.goods_id == item.goods_id) == -1);
       }
       let obj1 = {}, obj2 = {};
       for(let item of PKG) {
@@ -290,7 +288,6 @@ Page({
         item.goods_img_intr_origin = [item.goods_img_intr_origin]
       }
 
-      console.log(shopGoodsList,DIS,PKG)
       obj1 = {
         "key": "折扣",
         "last": DIS
@@ -316,7 +313,7 @@ Page({
       if(shopcartlist!= null) {
         shopcartGoods = shopcartlist.filter(_item => goodsNew.findIndex(values=> values.goods_code == _item.goods_code) == -1)
       }
-      console.log(goodsNew)
+      
       this.setData({
         shopGoodsAll:goodsNew
       })

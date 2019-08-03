@@ -16,13 +16,14 @@ Page({
       success(res) {
         my.hideLoading();
         console.log(res)
+       const mapPosition = bd_encrypt(res.longitude,res.latitude);
         my.setStorageSync({
           key: 'lat', // 缓存数据的key
-          data: res.latitude, // 要缓存的数据
+          data: mapPosition.bd_lat, // 要缓存的数据
         });
         my.setStorageSync({
           key: 'lng', // 缓存数据的key
-          data: res.longitude, // 要缓存的数据
+          data: mapPosition.bd_lng, // 要缓存的数据
         });
         // 缓存附近地址
         my.setStorageSync({

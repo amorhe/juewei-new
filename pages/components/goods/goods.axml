@@ -199,12 +199,16 @@
                 </view>
                 <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
               </view>
-              <view class="goodsNumber">
+              <view class="goodsNumber" a:if="{{v.goods_format.length==0}}">
                 <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}"  data-goods_quantity="{{v.count + 1}}"/>
                 <text a:if="{{v.count>0}}">{{v.count}}</text>
                 <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}"/>
                 <!-- 小红点 -->
                 <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
+              </view>
+              <view class="goodsSize" data-item="{{item}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
+                <view>选规格</view>
+                <view a:if="{{v.count}}">{{v.count}}</view>
               </view>
             </view>
             <view class="goodsDiscount" a:if="{{item.key!='爆款'}}">

@@ -24,6 +24,10 @@ App({
           key: 'user_id', // 缓存数据的key
           data: data.data.user_id, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: 'phone', // 缓存数据的key
+          data: data.data.phone, // 要缓存的数据
+        });
        })
       },
     });

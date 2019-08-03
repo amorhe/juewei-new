@@ -1,7 +1,7 @@
 <view class="memberContainer">
   <image class="membercard" src="{{imageUrl}}jwdcard.png" />
   <image class="membercode" src="{{imgSrc}}"/>
-  <view class="membernum">188 8888 8888</view>
+  <view class="membernum">{{phone}}</view>
   <view>向店员出示会员码享受会员权益</view>
   <view class="alipayBox">
     <image class="alipayIcon" src="{{imageUrl}}alipay2.png"/>

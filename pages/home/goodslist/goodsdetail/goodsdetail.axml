@@ -24,7 +24,8 @@
       </view>
     </view>
   <view>
-    <view class="fontTwentySix addShopcart" onTap="chooseSizeTap">加入购物车</view>
+    <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length==1}}">加入购物车</view>
+    <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">加入购物车</view>
   </view>
   </view>
 </view>
@@ -180,4 +181,4 @@
 <shopcart-model />
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" goodsKey="{{type}}" goodsLast="{{index}}" shopGoodsList="{{shopGoodsList}}" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsInfo}}" goodsKey="{{type}}" goodsLast="{{index}}" shopGoodsList="{{shopGoodsList}}" />

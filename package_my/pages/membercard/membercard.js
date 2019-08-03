@@ -3,10 +3,15 @@ import {baseUrl,imageUrl} from '../../../pages/common/js/baseUrl'
 Page({
   data: {
     imgSrc:'',
-    imageUrl
+    imageUrl,
+    phone:''
   },
   onLoad() {
     this.getQRcode();
+    const phone = my.getStorageSync({key:'phone'}).data;
+    this.setData({
+      phone
+    })
   },
   getQRcode(){
     const _sid = my.getStorageSync({key: '_sid'}).data;
