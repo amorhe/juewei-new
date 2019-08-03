@@ -50,9 +50,10 @@ Page({
     })
   },
   chooseCouponed(){
-    my.setStorageSync({
-      coupon_code:this.data.coupon_code
-    })
+    // my.setStorageSync({
+    //   coupon_code:this.data.coupon_code
+    // })
+    app.globalData.coupon_code = this.data.coupon_code;
     my.navigateBack({
       url: '/pages/home/orderform/orderform'
     });

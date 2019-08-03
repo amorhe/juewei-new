@@ -18,7 +18,7 @@ Component({
       days:1
     },          // 优惠券过期提醒     
     isShow: true,  // 优惠券过期提醒是否显示
-    shopGoodsList:[],   // 门店商品列表
+    // shopGoodsList:[],   // 门店商品列表
     companyGoodsList:[],   //公司所有商品
     activityAllObj:[],
     shopcartArr:[],     //购物车
@@ -30,9 +30,12 @@ Component({
     goodsKey:"",
     goodsLast:'',
     priceAll:'',
-    hide_good_box: true
+    hide_good_box: true,
+    num:0,
+    sumnum:0
   },
   onInit() {
+    // console.log(1111);
     let shopcartList = my.getStorageSync({
       key: 'shopcartList', // 缓存数据的key
     }).data; 
@@ -62,6 +65,9 @@ Component({
     })
 
   },
+  deriveDataFromProps(nextProps){
+    console.log(nextProps)
+  },
   didUpdate() {
     this.setData({
       scroll_y:this.props.scrollY,
@@ -73,18 +79,11 @@ Component({
       })
     }
     // 初始化加入购物车的商品数量
-    if(Object.keys(this.props.shopGoodsList).length>0){
-      this.props.shopGoodsList.forEach(val => {
-        val.last.forEach(v=> {
-          v.count = 0;
-          v.largeCount = 0;
-          v.smallCount = 0;
-        })
-      })
-      this.setData({
-        shopGoodsList:this.props.shopGoodsList,
-      })
-    }
+    // if(Object.keys(this.props.shopGoodsList).length>0){
+    //   this.setData({
+    //     shopGoodsList:this.props.shopGoodsList,
+    //   })
+    // }
   },
   didUnmount() {},
   methods: {
@@ -94,12 +93,14 @@ Component({
       that = this,
       bezier_points = that.linePos['bezier_points'],
       len = bezier_points.length - 1;
+      // console.log(bezier_points)
       this.setData({
         hide_good_box: false,
         bus_x: that.finger['x'],
         bus_y: that.finger['y']
       })
       this.timer = setInterval(function () {
+        // console.log('q',index,bezier_points[index]['x'],bezier_points[index]['y'])
       index++;
       that.setData({
         bus_x: bezier_points[index]['x'],
@@ -164,166 +165,172 @@ Component({
       })
     },
     addshopcart(e){
-      let { shopGoodsList } = this.data;
-      shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
-      // this.data.shopGoodsList = shopGoodsList;
-      console.log(shopGoodsList)
-      this.setData({
-        shopGoodsList
-      })
-      // let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
-      let arraylist = [],shopcartList=[];
-      
-      // 非折扣
-      if(e.currentTarget.dataset.key != '折扣'){
-        arraylist.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price * 100,
-        })
-        shopcartList.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity': e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price *100,
-          'goods_img': e.currentTarget.dataset.goods_img,
-          'goods_name': e.currentTarget.dataset.goods_name,
-          'taste_name': e.currentTarget.dataset.taste_name
-        })
-      }else{
-        //折扣
-        arraylist.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price * 100,
-          'goods_type': 1
-        })
-        shopcartList.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':e.currentTarget.dataset.goods_quantity,
-          'goods_price':e.currentTarget.dataset.goods_price * 100,
-          'goods_type': 1,
-          'goods_img': e.currentTarget.dataset.goods_img,
-          'goods_name': e.currentTarget.dataset.goods_name,
-          'taste_name': e.currentTarget.dataset.taste_name
-        })
+      let goods_car={};
+      let { num, sumnum}  = this.data;
+      num ++;
+      sumnum ++;
+      console.log(num,sumnum)
+      let goods_code = e.currentTarget.dataset.goods_code;
+      let goods_format = e.currentTarget.dataset.goods_format;
+      let oneGood = {
+        "goods_name": e.currentTarget.dataset.goods_name,
+        "taste_name": e.currentTarget.dataset.taste_name,
+        "goods_price": e.currentTarget.dataset.goods_price,
+        "num": num,
+        "sumnum": sumnum
       }
-      let buyNew = [],carArray=[];
-      if(my.getStorageSync({key:'goodsList'}).data!=null && my.getStorageSync({key:'shopcartList'}).data!=null){
-        let oldArr = my.getStorageSync({key:'goodsList'}).data;
-        let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
-        oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
-        oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
-        buyNew = oldArr.concat(arraylist);
-        carArray = oldAllArr.concat(shopcartList);
-      }else{
-        const oldArr = [],oldAllArr=[];
-        buyNew = oldArr.concat(arraylist);
-        carArray = oldAllArr.concat(shopcartList);
-      } 
-      app.globalData.shopcartList = carArray;
-      let priceAll = 0;
-      carArray.forEach(item => {
-        priceAll += item.goods_price * item.goods_quantity
-      })
-      
-      this.setData({
-        shopcartList:carArray,
-        priceAll
-      })
-      my.setStorageSync({
-        key: 'goodsList', // 缓存数据的key
-        data: buyNew, // 要缓存的数据
-      });
-       my.setStorageSync({
-        key: 'shopcartList', // 缓存数据的key
-        data: carArray, // 要缓存的数据
-      });
-      
-
-      // 如果good_box正在运动
-
-      if (!this.data.hide_good_box) return;
-
-      this.finger = {};
-
-      var topPoint = {};
-
-      this.finger['x'] = e.detail.clientX;
-
-      this.finger['y'] = e.detail.clientY;
-
-      if (this.finger['y'] < this.busPos['y']) {
-
-      topPoint['y'] = this.finger['y'] - 150;
-
-      } else {
-
-      topPoint['y'] = this.busPos['y'] - 150;
-
-      }
-
-      topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
-
-      if (this.finger['x'] > this.busPos['x']) {
-
-      topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
-
-      } else {
-
-      topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
-
-      }
-
-      this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
-
-      this.startAnimation();
-       
-    },
-    reduceshopcart(e){
-      let{ shopGoodsList } = this.data
-      shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count --;
-      this.data.shopGoodsList = shopGoodsList;
-      let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
-      let arraylist = [],shopcartList=[];
-      let buyNew = [],carArray=[];
-      if(my.getStorageSync({key:'goodsList'}).data!=null){
-        let oldArr = my.getStorageSync({key:'goodsList'}).data;
-        let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
-        if(oldArr){
-           oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
+      goods_car[`${goods_code}_${goods_format}`]=oneGood;
+      let buyNew = [];
+      let goodlist = my.getStorageSync({key:'goodsList'}).data;
+      if(goodlist!=null){
+        let goods_shop = {};
+        for(let key in goods_car){
+          if(!goodlist[key]){
+            let goods = {}
+            goods[key] = goods_car[key];
+            goods_shop = Object.assign(goodlist,goods)
+          }else{
+            goods_shop = Object.assign(goodlist,goods_car)
+          }
         }
-        if(oldAllArr){
-          oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
-        }
-        buyNew = oldArr.concat(arraylist);
-        carArray = oldAllArr.concat(shopcartList);
+        buyNew = Object.assign(goods_shop,goods_car);
       }else{
-        const oldArr = [],oldAllArr=[];
-        buyNew = oldArr.concat(arraylist);
-        carArray = oldAllArr.concat(shopcartList);
+        const goods_shop = {};
+        buyNew = Object.assign(goods_shop,goods_car);
       }
-      this.setData({
-        shopGoodsList
-      })
-      app.globalData.shopcartList = carArray;
       console.log(buyNew)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: buyNew, // 要缓存的数据
       });
-       my.setStorageSync({
-        key: 'shopcartList', // 缓存数据的key
-        data: carArray, // 要缓存的数据
-      });
+
+      // let { shopGoodsList } = this.data;
+      // shopGoodsList[e.currentTarget.dataset.type].last[e.currentTarget.dataset.index].count ++;
+      // // this.data.shopGoodsList = shopGoodsList;
+      // this.setData({
+      //   shopGoodsList
+      // })
+      // // let buyArr = shopGoodsList.map(item => item.last.filter(_item=> _item.count > 0));
+      // let arraylist = [],shopcartList=[];
+      
+      // // 非折扣
+      // if(e.currentTarget.dataset.key != '折扣'){
+      //   arraylist.push({
+      //     'goods_code':e.currentTarget.dataset.goods_code,
+      //     'goods_format':e.currentTarget.dataset.goods_format,
+      //     'goods_quantity':e.currentTarget.dataset.goods_quantity,
+      //     'goods_price':e.currentTarget.dataset.goods_price * 100,
+      //   })
+      //   shopcartList.push({
+      //     'goods_code':e.currentTarget.dataset.goods_code,
+      //     'goods_format':e.currentTarget.dataset.goods_format,
+      //     'goods_quantity': e.currentTarget.dataset.goods_quantity,
+      //     'goods_price':e.currentTarget.dataset.goods_price *100,
+      //     'goods_img': e.currentTarget.dataset.goods_img,
+      //     'goods_name': e.currentTarget.dataset.goods_name,
+      //     'taste_name': e.currentTarget.dataset.taste_name
+      //   })
+      // }else{
+      //   //折扣
+      //   arraylist.push({
+      //     'goods_code':e.currentTarget.dataset.goods_code,
+      //     'goods_format':e.currentTarget.dataset.goods_format,
+      //     'goods_quantity':e.currentTarget.dataset.goods_quantity,
+      //     'goods_price':e.currentTarget.dataset.goods_price * 100,
+      //     'goods_type': 1
+      //   })
+      //   shopcartList.push({
+      //     'goods_code':e.currentTarget.dataset.goods_code,
+      //     'goods_format':e.currentTarget.dataset.goods_format,
+      //     'goods_quantity':e.currentTarget.dataset.goods_quantity,
+      //     'goods_price':e.currentTarget.dataset.goods_price * 100,
+      //     'goods_type': 1,
+      //     'goods_img': e.currentTarget.dataset.goods_img,
+      //     'goods_name': e.currentTarget.dataset.goods_name,
+      //     'taste_name': e.currentTarget.dataset.taste_name
+      //   })
+      // }
+      // let buyNew = [],carArray=[];
+      // if(my.getStorageSync({key:'goodsList'}).data!=null && my.getStorageSync({key:'shopcartList'}).data!=null){
+      //   let oldArr = my.getStorageSync({key:'goodsList'}).data;
+      //   let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
+      //   oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code) == -1);
+      //   oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code) == -1)
+      //   buyNew = oldArr.concat(arraylist);
+      //   carArray = oldAllArr.concat(shopcartList);
+      // }else{
+      //   const oldArr = [],oldAllArr=[];
+      //   buyNew = oldArr.concat(arraylist);
+      //   carArray = oldAllArr.concat(shopcartList);
+      // } 
+      // app.globalData.shopcartList = carArray;
+      // let priceAll = 0;
+      // carArray.forEach(item => {
+      //   priceAll += item.goods_price * item.goods_quantity
+      // })
+      
+      // this.setData({
+      //   shopcartList:carArray,
+      //   priceAll
+      // })
+      // my.setStorageSync({
+      //   key: 'goodsList', // 缓存数据的key
+      //   data: buyNew, // 要缓存的数据
+      // });
+      //  my.setStorageSync({
+      //   key: 'shopcartList', // 缓存数据的key
+      //   data: carArray, // 要缓存的数据
+      // });
+      
+
+
+
+// 购物车小球动画
+      // 如果good_box正在运动
+
+      // if (!this.data.hide_good_box) return;
+
+      // this.finger = {};
+
+      // var topPoint = {};
+
+      // this.finger['x'] = e.detail.clientX;
+
+      // this.finger['y'] = e.detail.clientY;
+
+      // if (this.finger['y'] < this.busPos['y']) {
+
+      // topPoint['y'] = this.finger['y'] - 150;
+
+      // } else {
+
+      // topPoint['y'] = this.busPos['y'] - 150;
+
+      // }
+
+      // topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
+
+      // if (this.finger['x'] > this.busPos['x']) {
+
+      // topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
+
+      // } else {
+
+      // topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
+
+      // }
+
+      // this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
+      // this.startAnimation();
+       
+    },
+    reduceshopcart(e){
+  
     },
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&key=' + e.currentTarget.dataset.key + '&index=' + e.currentTarget.dataset.index + '&shopGoodsList=' + JSON.stringify(this.data.shopGoodsList)
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goodsAll=' + JSON.stringify(e.currentTarget.dataset.goodsAll) + '&goods_id=' + e.currentTarget.dataset.goods_id + '&key=' + e.currentTarget.dataset.key + '&index=' + e.currentTarget.dataset.index + '&shopGoodsList=' + JSON.stringify(this.props.shopGoodsList)
       });
     },
     // 清空购物车

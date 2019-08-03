@@ -49,6 +49,7 @@ Page({
     modalShow:false,
     mask:false,
     otherGoods:[],   // 参与换购的商品
+    type:1   // 默认外卖
   },
   onLoad() {
     
@@ -147,7 +148,8 @@ Page({
     if (e.currentTarget.dataset.type == 'ziti') {
       let shopTakeOut = my.getStorageSync({key:'takeout'}).data;
       this.setData({
-        shopTakeOut
+        shopTakeOut,
+        type:2
       });
       app.globalData.type =2;
       this.getCompanyGoodsList(shopTakeOut[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
@@ -156,7 +158,8 @@ Page({
     } else {
       let shopTakeOut = my.getStorageSync({key:'self'}).data;
       this.setData({
-        shopTakeOut
+        shopTakeOut,
+        type:1
       })
       app.globalData.type = 1;
       this.getCompanyGoodsList(shopTakeOut[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
@@ -307,19 +310,20 @@ Page({
       this.data.shopGoodsList.unshift(obj1,obj2);
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
+      console.log(goodsNew)
       // 判断购物车商品是否在当前门店内
-      let shopcartlist = my.getStorageSync({key:'goodsList'}).data;
-      let shopcartGoods = [];
-      if(shopcartlist!= null) {
-        shopcartGoods = shopcartlist.filter(_item => goodsNew.findIndex(values=> values.goods_code == _item.goods_code) == -1)
-      }
+      // let shopcartlist = my.getStorageSync({key:'goodsList'}).data;
+      // let shopcartGoods = [];
+      // if(shopcartlist!= null) {
+      //   shopcartGoods = shopcartlist.filter(_item => goodsNew.findIndex(values=> values.goods_code == _item.goods_code) == -1)
+      // }
       
       this.setData({
         shopGoodsAll:goodsNew
       })
-      my.setStorageSync({
-        goodsList: shopcartGoods
-      })
+      // my.setStorageSync({
+      //   goodsList: shopcartGoods
+      // })
       // 缓存门店商品
       my.setStorageSync({
         key: 'shopGoods', // 缓存数据的key

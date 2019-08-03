@@ -108,7 +108,7 @@
     </view>
     
     <!-- 优惠券 -->
-    <view class="track paddingBThirty borderBottomSolid">
+    <view class="track paddingBThirty borderBottomSolid" a:if="{{couponsDefault!=null}}">
       <view>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}present.png"/>
         <text class="marginLSixteen">{{couponsDefault.way==0?'外卖专享券':couponsDefault.way==1?'门店专享券':'全场通享券'}} 满{{couponsDefault.full_money / 100}}减{{couponsDefault.money / 100}}</text>

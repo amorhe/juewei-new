@@ -24,7 +24,7 @@
   </view>
 </view>
 <!-- 购物车弹框 -->
-<view  a:if="{{showShopcar}}" class="shopcarContent">
+<view a:if="{{showShopcar}}" class="shopcarContent">
   <!-- <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view> -->
   <view class="clearShopcar" onTap="clearShopcart">
     <image src="{{imageUrl}}deleteIcon.png" />

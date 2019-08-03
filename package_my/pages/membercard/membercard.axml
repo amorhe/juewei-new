@@ -4,7 +4,7 @@
   <view class="membernum">{{phone}}</view>
   <view>向店员出示会员码享受会员权益</view>
   <view class="alipayBox">
-    <image class="alipayIcon" src="{{imageUrl}}alipay2.png"/>
+    <image class="alipayIcon" src="{{imageUrl}}alipay.png"/>
     <view onTap="goPay">立即使用支付宝付款</view>
   </view>
 </view>
