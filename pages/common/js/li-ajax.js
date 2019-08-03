@@ -99,7 +99,7 @@ export const getRegion = async () => {
   * @function 剪切板
   */
 export const handleCopy = (e) => {
-  const {text} = e.currentTarget.dataset
+  const { text } = e.currentTarget.dataset
   log(text)
   my.setClipboard({
     text,
@@ -131,6 +131,17 @@ export const getDistance = async (_lng, _lat) => {
   })
 }
 
+/**
+ * @function 导航
+ */
 
+export const guide = () => {
+  my.openLocation({
+    longitude: '121.549697',
+    latitude: '31.227250',
+    name: '支付宝',
+    address: '杨高路地铁站',
+  });
+}
 
 
