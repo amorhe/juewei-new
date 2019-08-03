@@ -14,7 +14,8 @@ Component({
     dispatch_price: '', // 邮费
     isType:'',
     content:'',
-    otherGoods:[]
+    otherGoods:[],
+    shopcartList:[]
   },
   props: {
    onClear: (data) => console.log(data),
@@ -30,13 +31,13 @@ Component({
     // nextProps.otherGoods.push(nextProps.priceAll * 100);
     // nextProps.otherGoods = [...new Set(nextProps.otherGoods)]
     // nextProps.otherGoods.sort(compare);
-    // console.log(nextProps)
+    console.log(nextProps)
     // this.setData({
     //   otherGoods:nextProps.otherGoods
     // })
   },
   didUpdate() {
-   
+    
   },
   didUnmount() {},
   methods: {
@@ -73,7 +74,6 @@ Component({
       if(data.isType =='clearShopcart' && data.type == 1){
         // 清空购物车
         my.removeStorageSync({key:'goodsList'});
-        my.removeStorageSync({key:'shopcartList'});
         this.props.onClear();
       }
     },

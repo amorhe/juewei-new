@@ -49,7 +49,7 @@ Page({
     modalShow:false,
     mask:false,
     otherGoods:[],   // 参与换购的商品
-    type:1   // 默认外卖
+    type:1,   // 默认外卖
   },
   onLoad() {
     
@@ -190,7 +190,7 @@ Page({
     my.request({
       url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=${str}`,
       success: (res) => {
-        console.log(res)
+        console.log(res.data.data[`${company_id}`])
         // 该公司所有的商品
         this.setData({
           companyGoodsList:res.data.data[`${company_id}`]
@@ -312,18 +312,13 @@ Page({
       goodsNew = [...new Set(goodsNew)];
       console.log(goodsNew)
       // 判断购物车商品是否在当前门店内
-      // let shopcartlist = my.getStorageSync({key:'goodsList'}).data;
       // let shopcartGoods = [];
       // if(shopcartlist!= null) {
       //   shopcartGoods = shopcartlist.filter(_item => goodsNew.findIndex(values=> values.goods_code == _item.goods_code) == -1)
       // }
-      
       this.setData({
         shopGoodsAll:goodsNew
       })
-      // my.setStorageSync({
-      //   goodsList: shopcartGoods
-      // })
       // 缓存门店商品
       my.setStorageSync({
         key: 'shopGoods', // 缓存数据的key

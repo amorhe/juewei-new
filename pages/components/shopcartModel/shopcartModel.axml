@@ -6,20 +6,18 @@
     <text a:else>已购满{{otherGoods[otherGoods.indexOf(priceAll * 100) +1] / 100}}元,去结算享受换购优惠;满{{otherGoods[otherGoods.indexOf(priceAll * 100) -1] / 100}}元更高福利等着你!</text>
   </view> -->
   <view class="shopcart">
-    <image class="shopcarImage" a:if="{{shopcartList==null || shopcartList.length == 0}}" src="{{imageUrl}}shopcart_empty.png" />
-    <image onTap="openShopcart" a:if="{{shopcartList!=null && shopcartList.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount" a:if="{{shopcartList.length>0}}">{{shopcartList.length}}</view>
+    <image class="shopcarImage" a:if="{{shopcartAll==null || shopcartAll.length == 0}}" src="{{imageUrl}}shopcart_empty.png" />
+    <image onTap="openShopcart" a:if="{{shopcartAll!=null && shopcartAll.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount">{{shopcartAll.length}}</view>
     <view class="haveGoods">
-      <view a:if="{{shopcartList.length>0}}">
+      <view a:if="{{shopcartAll!=null && shopcartAll.length>0}}">
         <text>￥</text>
         <text>{{priceAll/100}}</text>
       </view>
       <view>另需配送费{{dispatch_price}}元</view>
     </view>
-    <!-- <view class="buyBtn" a:if="{{priceAll/100<send_price}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>send_price}}">去结算</view> -->
-    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartList.length==0}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>send_price && shopcartList.length>0}}">去结算</view>
+    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartAll.length==0}}">￥{{send_price}}起送</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>send_price && shopcartAll.length>0}}">去结算</view>
   </view>
   </view>
 </view>
@@ -31,7 +29,7 @@
     <text>清空购物车</text>
   </view>
   <view class="shopcartWrap">
-    <view class="goodsLi" a:for="{{shopcartList}}">
+    <view class="goodsLi" a:for="{{shopcartAll}}">
       <view class="goodsNameI">
         <view>
           <text>{{item.goods_name}}</text>
@@ -40,12 +38,12 @@
         <view>{{item.goods_format}}</view>
       </view>
       <view class="goodsPriceBox">
-        <text class="goodsOldPrice">￥28</text>
+        <text class="goodsOldPrice" a:if="{{item.goods_original_price}}">￥{{item.goods_original_price/100}}</text>
         <text class="numberColor">￥{{item.goods_price / 100}}</text>
       </view>
       <view class="goodsNumber">
         <image src="{{imageUrl}}goods_reduce.png" />
-        <text>{{item.goods_quantity}}</text>
+        <text>{{item.num}}</text>
         <image src="{{imageUrl}}goods_add.png" />
       </view>
     </view>

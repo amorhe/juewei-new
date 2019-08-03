@@ -200,26 +200,30 @@
                 <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==0}}">
-                <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_code}}"  data-goods_quantity="{{v.count + 1}}"/>
-                <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}"/>
+                <image a:if="{{shopcartlist[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}"/>
+                <text a:if="{{shopcartlist[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_`].sumnum>0}}">{{shopcartlist[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_`].sumnum}}</text>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format=""
+                 data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}"
+                 data-taste_name="{{v.taste_name?v.taste_name:''}}" data-goods_activity_code="{{v.goods_format[0].goods_activity_code}}" data-goods_discount="{{v.goods_format[0].goods_discount}}"
+                 data-goods_original_price="{{v.goods_format[0].goods_original_price}}" data-goods_discount_user_limit="{{v.goods_format[0].goods_discount_user_limit}}" data-key="{{item.key}}"/>
                 <!-- 小红点 -->
                 <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
               </view>
               <view class="goodsSize" data-item="{{item}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
-                <view a:if="{{v.count}}">{{v.count}}</view>
+                <!-- 购物车中该商品数量 -->
+                <view a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0 || shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[1].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`]?shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum:shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[1].type}`].sumnum}}</view>
               </view>
             </view>
             <view class="goodsDiscount" a:if="{{item.key!='爆款'}}">
               <image src="{{imageUrl}}discount.png" />
-              <text>{{v.goods_format[0].goods_order_limit}}折  限{{v.goods_format[0].goods_discount_user_limit}}份</text>
+              <text>{{v.goods_format[0].goods_discount/100}}折  限{{v.goods_format[0].goods_discount_user_limit}}份</text>
             </view>
           </view>
         </view>
 
         <!-- 超辣 -->
-        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goodsAll="{{item}}" data-goods_id="{{v.goods_id}}" data-type="{{index}}" data-index="{{i}}" a:if="{{item.key!='套餐' && item.key!='爆款' &&item.key!='折扣'}}" >
+        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_id="{{v.goods_id}}" data-type="{{index}}" data-index="{{i}}" a:if="{{item.key!='套餐' && item.key!='爆款' &&item.key!='折扣'}}" >
           <image src="{{v.goods_small_img[0]}}"/>
           <view class="goodsInfos">
             <view>
@@ -241,16 +245,16 @@
                 </view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
-                <image a:if="{{v.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" />
-                <text a:if="{{v.count>0}}">{{v.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format=" " data-goods_quantity="{{v.count + 1}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}"/>
+                <image a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}"/>
+                <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_`].sumnum}}</text>
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="" data-goods_price="{{v.goods_format[0].goods_price / 100}}" 
+                data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}"/>
                 <!-- 小红点 -->
                 <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
-                <!-- <view class="ball ball{{index}}{{i}}" animation="{{v.animationInfo}}" a:if="{{showAnmimation}}"></view> -->
               </view>
               <view class="goodsSize" data-item="{{item}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
-                <view a:if="{{v.count}}">{{v.count}}</view>
+                <view a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0 || shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[1].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`]?shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum:shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[1].type}`].sumnum}}</view>
               </view>
             </view>
           </view>
@@ -295,8 +299,8 @@
   </scroll-view>
 </view>
 <!-- 购物车 -->
-<shopcart-model orderType="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" otherGoods="{{otherGoods}}"/>
+<shopcart-model orderType="{{type}}" shopcartAll="{{shopcartAll}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" otherGoods="{{otherGoods}}"/>
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem.last[goodsLast]}}"/>
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="onCart"/>
 

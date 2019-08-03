@@ -3,27 +3,34 @@ Component({
   mixins: [],
   data: {
     imageUrl,
-    size:0,
+    size:999,
     goodsIndex:'',
-    price:'',
+    price:0,
     sizeText:'',
-    count:0,
-    largeCount:0,
-    smallCount:0
+    goods_activity_code:'',
+    goods_discount:0,
+    goods_original_price:0,
+    goods_discount_user_limit:0,
+    goods_format_all:'',
+    goodsList:{},
+    shopcartAll:[]
   },
   props: {
     onCloseModal: (data) => console.log(data),
-    onGetShopList: (data) => console.log(data)
+    onGetShopList: (data) => console.log(data),
+    onCart: (data) => console.log(data)
+  },
+  onInit(){
+    let goodsList = my.getStorageSync({key:'goodsList'}).data;
+    this.setData({
+      goodsList
+    })
   },
   didMount() {
  
   },
    deriveDataFromProps(nextProps){
     // console.log(nextProps)
-    this.setData({
-      smallCount:nextProps.smallCount,
-      largeCount:nextProps.largeCount
-    })
   },
   didUpdate(prevProps, prevData) {
     
@@ -34,19 +41,16 @@ Component({
   methods: {
     // 选择商品规格
     chooseSize(e){
-      if(e.currentTarget.dataset.size ==1){
-        this.setData({
+      this.setData({
           size: e.currentTarget.dataset.size,
-          price:this.props.goodsItem.goods_format[0].goods_price / 100,
-          sizeText:this.props.goodsItem.goods_format[0].type,
+          price:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_price / 100,
+          sizeText:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].type,
+          goods_activity_code:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_activity_code,
+          goods_discount:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_discount,
+          goods_original_price:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_original_price,
+          goods_discount_user_limit:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_original_price,
+          goods_format_all:this.props.goodsItem.goods_format
         })
-      }else if(e.currentTarget.dataset.size ==2){
-        this.setData({
-          size: e.currentTarget.dataset.size,
-          price:this.props.goodsItem.goods_format[1].goods_price / 100,
-          sizeText:this.props.goodsItem.goods_format[1].type,
-        })
-      } 
     },
     closeModal(data){
       const goodsModalObj = {
@@ -56,79 +60,112 @@ Component({
       this.props.onCloseModal(goodsModalObj);
       // 重新选择商品
       this.setData({
-        size:0
+        size:999
       })
     },
+    onCart(goodsList,shopcartAll){
+       this.props.onCart(goodsList,shopcartAll);
+    },
     addshopcart(e){
-      let {shopGoodsList,goodsKey,goodsLast,size} = this.data;
-      let goodsCart = [],arraylist = [],shopcartList=[],carArray=[];
-      // 大份
-      if(size==1){
-       this.props.goodsItem.largeCount ++ 
+      let goods_car={};
+      let goods_code = e.currentTarget.dataset.goods_code;
+      let goods_format = e.currentTarget.dataset.goods_format;
+      let types = [];
+      e.currentTarget.dataset.goods_format_all.forEach(item => {
+        types.push(item.type);
+      })
+      let goodlist = my.getStorageSync({key:'goodsList'}).data || {};
+      let sumnum=0;
+      for(let i=0;i< types.length;i++){
+        if(goodlist[`${goods_code}_${types[i]}`]){
+          sumnum += goodlist[`${goods_code}_${types[i]}`].num;
+        }
       }
-      // 小份
-      if(size==2){
-        this.props.goodsItem.smallCount ++
+      sumnum+=1;
+      // 统计总数
+      for(let i=0;i< types.length;i++){
+          if(goodlist[`${goods_code}_${types[i]}`]){
+            goodlist[`${goods_code}_${types[i]}`].sumnum = sumnum
+          }
       }
-      // 非折扣
-      if(e.currentTarget.dataset.key != '折扣'){
-        arraylist.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity) + 1,
-          'goods_price':e.currentTarget.dataset.goods_price * 100
-        })
-        // 购物车展示的数据
-        shopcartList.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity) + 1,
-          'goods_price':e.currentTarget.dataset.goods_price * 100,
-          'goods_img': e.currentTarget.dataset.goods_img,
-          'goods_name': e.currentTarget.dataset.goods_name,
-          'taste_name': e.currentTarget.dataset.taste_name
-        })
+      if(goodlist[`${goods_code}_${goods_format}`]){
+        goodlist[`${goods_code}_${goods_format}`].num++;  
       }else{
-        //折扣
-        arraylist.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_forma[0].goods_discount_user_limit),
-          'goods_price':e.currentTarget.dataset.goods_price * 100,
-          'goods_type':1
-        })
-        // 购物车展示的数据
-        shopcartList.push({
-          'goods_code':e.currentTarget.dataset.goods_code,
-          'goods_format':e.currentTarget.dataset.goods_format,
-          'goods_quantity':parseInt(e.currentTarget.dataset.goods_quantity + 1)-parseInt(e.currentTarget.dataset.goods_forma[0].goods_discount_user_limit),
-          'goods_price':e.currentTarget.dataset.goods_price * 100,
-          'goods_img': e.currentTarget.dataset.goods_img,
-          'goods_name': e.currentTarget.dataset.goods_name,
-          'goods_type':1,
-          'taste_name': e.currentTarget.dataset.taste_name
-        })
+        let oneGood ={};
+        if(e.currentTarget.dataset.key !="折扣"|| e.currentTarget.dataset.key!="套餐"){
+          oneGood = {
+            "goods_name": e.currentTarget.dataset.goods_name,
+            "taste_name": e.currentTarget.dataset.taste_name,
+            "goods_price": e.currentTarget.dataset.goods_price * 100,
+            "num": 1,
+            "sumnum": sumnum,
+            "goods_code":e.currentTarget.dataset.goods_code,
+            "goods_format":goods_format
+          }
+        }else{
+          oneGood = {
+            "goods_name": e.currentTarget.dataset.goods_name,
+            "taste_name": e.currentTarget.dataset.taste_name,
+            "goods_price": e.currentTarget.dataset.goods_price * 100,
+            "num": 1,
+            "sumnum": sumnum,
+            "goods_code": e.currentTarget.dataset.goods_code,
+            "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
+            "goods_discount": e.currentTarget.dataset.goods_discount,
+            "goods_original_price": e.currentTarget.dataset.goods_original_price,
+            "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
+            "goods_format":goods_format
+          }
+        }
+        goodlist[`${goods_code}_${goods_format}`]  = oneGood;
       }
-      if(my.getStorageSync({key:'goodsList'}).data!=null){
-        let oldArr = my.getStorageSync({key:'goodsList'}).data;
-        let oldAllArr = my.getStorageSync({key:'shopcartList'}).data;
-        oldArr = oldArr.filter(_item => arraylist.findIndex(value => value.goods_code == _item.goods_code  && value.goods_format == _item.goods_format)== -1);
-        oldAllArr = oldAllArr.filter(_item => shopcartList.findIndex(value => value.goods_code == _item.goods_code  && value.goods_format == _item.goods_format)== -1);
-        goodsCart = oldArr.concat(arraylist);
-        carArray = oldAllArr.concat(shopcartList)
+      console.log(goodlist)
+       let shopcartAll = [];
+      for(let keys in goodlist){
+        shopcartAll.push(goodlist[keys])
+      }
+      this.setData({
+        goodsList:goodlist,
+        shopcartAll
+      })
+      this.onCart(goodlist,shopcartAll);
+      my.setStorageSync({
+        key: 'goodsList', // 缓存数据的key
+        data: goodlist, // 要缓存的数据
+      });
+
+    },
+    reduceshopcart(e){
+      let code = e.currentTarget.dataset.goods_code;
+      let format = e.currentTarget.dataset.goods_format
+      let goodlist = my.getStorageSync({key:'goodsList'}).data;
+      let types = [];
+      e.currentTarget.dataset.goods_format_all.forEach(item => {
+        types.push(item.type);
+      })
+      for(let i=0;i< types.length;i++){
+        if(goodlist[`${code}_${types[i]}`]){
+           goodlist[`${code}_${types[i]}`].sumnum -= 1;
+        }
+      }
+      goodlist[`${code}_${format}`].num -=1;
+      let shopcartAll = [];
+      // 删除
+      if(goodlist[`${code}_${format}`].num==0){
+        shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${item.goods_format}` != `${code}_${format}`)
+        delete(goodlist[`${code}_${format}`]);
       }else{
-       const oldArr =[],oldAllArr=[];
-       goodsCart = oldArr.concat(arraylist);
-       carArray = oldAllArr.concat(shopcartList)
-      } 
+         shopcartAll = this.data.shopcartAll
+      }
+      this.onCart(goodlist,shopcartAll)
+      this.setData({
+        goodsList:goodlist,
+        shopcartAll
+      })
       my.setStorageSync({
-        key: 'goodsList', 
-        data: goodsCart, 
-      }); 
-      my.setStorageSync({
-        key: 'shopcartList', 
-        data: carArray, 
-      }); 
+        key: 'goodsList', // 缓存数据的key
+        data: goodlist, // 要缓存的数据
+      });
     }
   },
 });
