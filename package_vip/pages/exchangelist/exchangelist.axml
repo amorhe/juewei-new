@@ -4,7 +4,7 @@
     <view class="item" a:for="{{orderList}}" data-id="{{item.id}}" onTap="toOrderDetail">
       <view class="header">
         <view class="time">{{item.order_ctime.split(' ')[0]}}</view>
-        <view class="state">{{item.status_name.split(' ')[0]}}}</view>
+        <view class="state">{{item.status_name.split(' ')[0]}}</view>
       </view>
       <view class="body">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>

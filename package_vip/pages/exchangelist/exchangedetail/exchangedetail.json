@@ -1,5 +1,5 @@
 {
-  "defaultTitle": "兑换记录",
+  "defaultTitle": "兑换详情",
   "backgroundColor": "#F5402B",
   "usingComponents":{
     "modal": "mini-antui/es/modal/index",
