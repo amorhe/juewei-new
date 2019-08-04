@@ -11,14 +11,14 @@ Component({
     shopGoods:[],
     goodsInfo:'',
     send_price:"",   //起送费
-    dispatch_price: '', // 邮费
+    dispatch_price: '', // 配送费
     isType:'',
     content:'',
-    otherGoods:[],
-    shopcartList:[]
+    otherGoods:[]
   },
   props: {
    onClear: (data) => console.log(data),
+   onChangeShopcart: (data) => console.log(data)
   },
   onInit(){
     
@@ -28,13 +28,7 @@ Component({
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps){
-    // nextProps.otherGoods.push(nextProps.priceAll * 100);
-    // nextProps.otherGoods = [...new Set(nextProps.otherGoods)]
-    // nextProps.otherGoods.sort(compare);
-    console.log(nextProps)
-    // this.setData({
-    //   otherGoods:nextProps.otherGoods
-    // })
+    // console.log(nextProps)
   },
   didUpdate() {
     
@@ -48,6 +42,7 @@ Component({
         mask1: true
       })
     },
+    // 隐藏购物车
     hiddenShopcart(){
       this.setData({
         showShopcar: false,
@@ -63,8 +58,7 @@ Component({
         modalShow: true,
         isType:'clearShopcart',
         content:'是否清空购物车'
-      })
-      
+      }) 
     },
     onCounterPlusOne(data) {
       this.setData({
@@ -73,9 +67,69 @@ Component({
       })
       if(data.isType =='clearShopcart' && data.type == 1){
         // 清空购物车
+        app.globalData.goodsBuy = [];
         my.removeStorageSync({key:'goodsList'});
         this.props.onClear();
+        this.props.onChangeShopcart({},[],0);
       }
+    },
+    onChangeShopcart(goodlist,shopcartAll,priceAll){
+      this.props.onChangeShopcart(goodlist,shopcartAll,priceAll);
+    },
+    addshopcart(e){
+      let goodlist = my.getStorageSync({
+        key: 'goodsList', // 缓存数据的key
+      }).data || {};
+      let goods_code = e.currentTarget.dataset.goods_code;
+      let goods_format = e.currentTarget.dataset.goods_format
+      goodlist[`${goods_code}_${goods_format}`].num +=1;
+      let shopcartAll = [],priceAll=0;
+      for(let keys in goodlist){
+        priceAll += goodlist[`${goods_code}_${goods_format}`].goods_price * goodlist[`${goods_code}_${goods_format}`].num,
+        shopcartAll.push(goodlist[keys])
+      }
+      let arr = shopcartAll.filter(item => item.goods_code == goods_code)
+      for(let item of arr){
+        goodlist[`${item.goods_code}_${item.goods_format}`].sumnum +=1;
+      }
+      this.onChangeShopcart(goodlist,shopcartAll,priceAll)
+      my.setStorageSync({
+        key: 'goodsList', // 缓存数据的key
+        data: goodlist // 要缓存的数据
+      });
+    },
+    reduceshopcart(e){
+      let code = e.currentTarget.dataset.goods_code;
+      let format = e.currentTarget.dataset.goods_format
+      let goodlist = my.getStorageSync({key:'goodsList'}).data;
+      
+      goodlist[`${code}_${format}`].num -=1;
+      // 删除
+      let shopcartAll = [],priceAll=0;
+      priceAll = this.props.priceAll - goodlist[`${code}_${format}`].goods_price;
+      let arr = this.props.shopcartAll.filter(item => item.goods_code == code)
+      for(let item of arr){
+        goodlist[`${item.goods_code}_${item.goods_format}`].sumnum -=1;
+      }
+      if(goodlist[`${code}_${format}`].num==0){
+        shopcartAll = this.props.shopcartAll.filter(item => `${item.goods_code}_${item.goods_format}` != `${code}_${format}`)
+        delete(goodlist[`${code}_${format}`]);
+        this.setData({
+          mask: false,
+          modalShow: false,
+          showShopcar:false,
+          mask1: false
+        })
+      }else{
+        for(let keys in goodlist){
+          shopcartAll.push(goodlist[keys])
+        }
+      }
+      this.onChangeShopcart(goodlist,shopcartAll,priceAll);
+      my.setStorageSync({
+        key: 'goodsList', // 缓存数据的key
+        data: goodlist, // 要缓存的数据
+      });
     },
     // 立即购买
     goOrderSubmit(){
@@ -93,7 +147,6 @@ Component({
         });
         return 
       }
-      let goods = JSON.stringify(my.getStorageSync({key: 'goodsList'}).data);
       let shop_id;
       if(this.data.orderType == 1){
         shop_id = my.getStorageSync({
@@ -104,8 +157,11 @@ Component({
           key: 'self', // 缓存数据的key
         }).data[0].shop_id;
       }
+      app.globalData.goodsBuy = this.props.shopcartAll;
+      app.globalData.dispatch_price = this.data.dispatch_price;
+      app.globalData.priceAll = this.props.priceAll
       my.navigateTo({
-        url:'/pages/home/orderform/orderform?orderType=' + this.props.orderType
+        url:'/pages/home/orderform/orderform'
       });       
     },
     // 获取起送价格

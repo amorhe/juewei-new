@@ -63,8 +63,8 @@ Component({
         size:999
       })
     },
-    onCart(goodsList,shopcartAll){
-       this.props.onCart(goodsList,shopcartAll);
+    onCart(goodsList,shopcartAll,priceAll){
+       this.props.onCart(goodsList,shopcartAll,priceAll);
     },
     addshopcart(e){
       let goods_car={};
@@ -100,7 +100,8 @@ Component({
             "num": 1,
             "sumnum": sumnum,
             "goods_code":e.currentTarget.dataset.goods_code,
-            "goods_format":goods_format
+            "goods_format":goods_format,
+            "goods_img": e.currentTarget.dataset.goods_img
           }
         }else{
           oneGood = {
@@ -114,21 +115,23 @@ Component({
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
             "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
-            "goods_format":goods_format
+            "goods_format":goods_format,
+            "goods_img": e.currentTarget.dataset.goods_img
           }
         }
         goodlist[`${goods_code}_${goods_format}`]  = oneGood;
       }
       console.log(goodlist)
-       let shopcartAll = [];
+       let shopcartAll = [],priceAll=0;
       for(let keys in goodlist){
+        priceAll += goodlist[keys].goods_price * goodlist[keys].num,
         shopcartAll.push(goodlist[keys])
       }
       this.setData({
         goodsList:goodlist,
         shopcartAll
       })
-      this.onCart(goodlist,shopcartAll);
+      this.onCart(goodlist,shopcartAll,priceAll);
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -149,15 +152,18 @@ Component({
         }
       }
       goodlist[`${code}_${format}`].num -=1;
-      let shopcartAll = [];
+      let shopcartAll = [],priceAll=0;
+      priceAll = this.props.priceAll - goodlist[`${code}_${format}`].goods_price;
       // 删除
       if(goodlist[`${code}_${format}`].num==0){
         shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${item.goods_format}` != `${code}_${format}`)
         delete(goodlist[`${code}_${format}`]);
       }else{
-         shopcartAll = this.data.shopcartAll
+        for(let keys in goodlist){
+          shopcartAll.push(goodlist[keys])
+        }
       }
-      this.onCart(goodlist,shopcartAll)
+      this.onCart(goodlist,shopcartAll,priceAll)
       this.setData({
         goodsList:goodlist,
         shopcartAll

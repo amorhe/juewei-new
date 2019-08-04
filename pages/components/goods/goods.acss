@@ -238,7 +238,9 @@
 }
 .goodsNumber>text {
   align-self: center;
-  margin: 0 22rpx
+  margin: 0 22rpx!important;
+  color: #333!important;
+  font-weight: normal!important;
 }
 .goodsRules>view>view>text:nth-child(1) {
   color: #E60012;

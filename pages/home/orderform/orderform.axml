@@ -1,7 +1,7 @@
 <view class="orderContainer">
   <!-- 外卖 -->
   <view class="addressView" a:if="{{orderType==1}}">
-    <navigator open-type="redirect" url="/pages/home/orderform/selectaddress/selectaddress?orderType={{orderType}}" class="noAddress">
+    <navigator url="/pages/home/orderform/selectaddress/selectaddress" class="noAddress">
       <!-- 选择地址前 -->
       <text a:if="{{!address}}">选择收货地址</text>
       <!-- 选择地址后 -->
@@ -47,7 +47,7 @@
           <image class="ordergoodsImage" mode="scaleToFill" src="{{item.goods_img}}"/>
           <view>
             <view>
-              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_type}}"/>
+              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_discount}}"/>
               <text class="marginLEight">{{item.goods_name}}</text>
               <text class="fontSmallGray" a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
             </view>
@@ -56,11 +56,11 @@
         </view>
 
         <view class="listRight">
-          <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
+          <view class="ordergoodsCount">x{{item.num}}</view>
           <view class="flexNormal">
-            <view class="ordergoodsOld" a:if="{{item.goods_old_price}}">
+            <view class="ordergoodsOld" a:if="{{item.goods_original_price / 100}}">
               <text class="fontTwentyTwo">￥</text>
-              <text>{{item.goods_old_price}}</text>
+              <text>{{item.goods_original_price / 100}}</text>
             </view>
             <view>
               <text class="fontTwentyTwo">￥</text>
@@ -80,7 +80,7 @@
         </view>
         <view class="numberColor">
           <text class="fontTwentyTwo">￥</text>
-          <text>8</text>
+          <text>{{dispatch_price}}</text>
         </view>
       </view>
     </view>

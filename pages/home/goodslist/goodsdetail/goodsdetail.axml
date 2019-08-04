@@ -24,7 +24,16 @@
       </view>
     </view>
   <view>
-    <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length==1}}">加入购物车</view>
+    <!-- 无sku -->
+    <view a:if="{{goodsInfo.goods_format.length==1}}" class="goodsNumber">
+      <view a:if="{{!shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum==0}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" 
+      data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}">加入购物车</view>
+      <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}"  data-goods_format="{{goodsInfo.goods_format[0].type}}"/>
+      <text a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum}}</text>
+      <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" 
+      data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}"/>
+    </view>
+    <!-- sku商品 -->
     <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">加入购物车</view>
   </view>
   </view>
@@ -178,7 +187,7 @@
 
 <view style="height:100rpx;background:transparent"></view>
 <!-- 购物车 -->
-<shopcart-model />
+<shopcart-model shopcartAll="{{shopcartAll}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" onChangeShopcart="onchangeShopcart"/>
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsInfo}}" goodsKey="{{type}}" goodsLast="{{index}}" shopGoodsList="{{shopGoodsList}}" />
+<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>

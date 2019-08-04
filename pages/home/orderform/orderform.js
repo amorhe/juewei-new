@@ -48,30 +48,16 @@ Page({
     shopcartGoods:[],   //商品列表
     priceAll:'',
     goodsInfo:'',
-    addressInfo:{}
+    addressInfo:{},
+    dispatch_price:0    // 配送费
   },
   onLoad(e) {
-    // 获取地址
-    // if(e.addressInfo){
-    //   this.setData({
-    //     addressInfo:JSON.parse(e.addressInfo),
-    //     address:true
-    //   })
-    // }
-    if(my.getStorageSync({key: 'address_id'}).data!=null) {
-      this.getAddress(my.getStorageSync({key: 'address_id'}).data)
-    }
     // 获取商品
-    let data = my.getStorageSync({key: 'shopcartList'}).data;
-    //  计算价格
-    let priceAll = 0;
-    data.forEach(item => {
-      priceAll += item.goods_price * item.goods_quantity
-    })
     this.setData({
-      shopcartGoods:data,
-      priceAll,
-      orderType:app.globalData.type
+      shopcartGoods:app.globalData.goodsBuy,
+      priceAll:app.globalData.priceAll,
+      orderType:app.globalData.type,
+      dispatch_price: app.globalData.dispatch_price
     })
 
     const shop_id = my.getStorageSync({key: 'shop_id'}).data;
@@ -115,7 +101,11 @@ Page({
       })
     }
     this.getCouponsList();   //优惠券
-    let goods = JSON.stringify(my.getStorageSync({key: 'goodsList'}).data);
+    let goodsList = app.globalData.goodsBuy;
+    for(let item of goodsList){
+      item['goods_quantity'] = item['num']
+    }
+    let goods = JSON.stringify(goodsList);
     this.confirmOrder(shop_id,goods);
   // 加购商品
     console.log(app.globalData.gifts);
@@ -150,6 +140,11 @@ Page({
     //     })
     //      break;
     // }
+  },
+  onShow(){
+    if(my.getStorageSync({key: 'address_id'}).data!=null) {
+      this.getAddress(my.getStorageSync({key: 'address_id'}).data)
+    }
   },
   // 换购显示
   addRepurseTap(){
@@ -202,15 +197,23 @@ Page({
     }else{
       remark = '';
     }
+    if(app.globalData.type == 2 && !this.data.isCheck){
+      my.showToast({
+        content:'请同意到店自提协议',
+        success: (res) => {
+          
+        },
+      });
+      return
+    }
     const lng = my.getStorageSync({key:'lng'}).data;
     const lat = my.getStorageSync({key:'lat'}).data;
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
-    const goodsList = my.getStorageSync({key: 'goodsList'}).data;
-    goodsList.forEach(item => {
-      item.goods_price = item.goods_price
-    })
+    const goodsList = app.globalData.goodsBuy;
+    for(let item of goodsList){
+      item['goods_quantity'] = item['num']
+    }
     const goods = JSON.stringify(goodsList);
-    const arr = my.getStorageSync({key:'takeout'}).data;
     // let shops ='';
     // for(let value of arr) {
     //   shops += value.shop_id + ','
@@ -225,7 +228,7 @@ Page({
       type = 3;
       typeClass = 4
     }
-    const address_id = my.getStorageSync({key:'address_id'}).data
+    const address_id = my.getStorageSync({key:'address_id'}).data;
     // 创建订单
     createOrder(app.globalData.type,shop_id,goods,shop_id,11,remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
       console.log(res);

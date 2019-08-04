@@ -24,7 +24,7 @@ Component({
     animation:null,
     goodsItem:{},   //选择规格一条商品
     shopcartList:{},
-    priceAll:'',
+    priceAll:0,
     hide_good_box: true,
     shopcartAll:[]
   },
@@ -32,16 +32,16 @@ Component({
     let shopcartList = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data; 
-    let priceAll = 0,shopcartAll = [];;
+    let priceAll = 0,shopcartAll = [];
     for(let keys in shopcartList){
       priceAll += shopcartList[keys].goods_price * shopcartList[keys].num,
       shopcartAll.push(shopcartList[keys]);
     }
     this.setData({
-      shopcartList
+      shopcartList,
+      priceAll,
+      shopcartAll
     })
-    this.data.priceAll = priceAll;
-    this.data.shopcartAll = shopcartAll;
 
 
     this.busPos = {};
@@ -154,11 +154,22 @@ Component({
         // })
       })
     },
-    onCart(shopcartList,shopcartAll){
+    // sku商品
+    onCart(shopcartList,shopcartAll,priceAll){
       this.setData({
         shopcartList,
-        shopcartAll
+        shopcartAll,
+        priceAll
       })
+    },
+    // 购物车
+    onchangeShopcart(goodlist,shopcartAll,priceAll){
+      this.setData({
+        shopcartList:goodlist,
+        shopcartAll,
+        priceAll
+      })
+      this.onCart(goodlist,shopcartAll,priceAll)
     },
     addshopcart(e){
       let goods_car={};
@@ -178,8 +189,9 @@ Component({
             "goods_price": e.currentTarget.dataset.goods_price * 100,
             "num": 1,
             "sumnum": 1,
-            "goods_code":e.currentTarget.dataset.goods_code,
-            "goods_format": goods_format
+            "goods_code": e.currentTarget.dataset.goods_code,
+            "goods_format": goods_format,
+            "goods_img": e.currentTarget.dataset.goods_img
           }
         }else{
           oneGood = {
@@ -193,18 +205,21 @@ Component({
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
             "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
-            "goods_format": goods_format
+            "goods_format": goods_format,
+            "goods_img": e.currentTarget.dataset.goods_img
           }
         }
         goodlist[`${goods_code}_${goods_format}`]  = oneGood;
       }
-      let shopcartAll = [];
+      let shopcartAll = [],priceAll=0;
       for(let keys in goodlist){
+        priceAll += goodlist[keys].goods_price * goodlist[keys].num,
         shopcartAll.push(goodlist[keys])
       }
       this.setData({
         shopcartList: goodlist,
-        shopcartAll
+        shopcartAll,
+        priceAll
       })
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -252,21 +267,24 @@ Component({
     },
     reduceshopcart(e){
       let code = e.currentTarget.dataset.goods_code;
+      let format = e.currentTarget.dataset.goods_format
       let goodlist = my.getStorageSync({key:'goodsList'}).data;
-      let shopcartAll = [];
-      goodlist[`${code}_`].num -=1;
-      goodlist[`${code}_`].sumnum -= 1;
+      let shopcartAll = [],priceAll=0;
+      goodlist[`${code}_${format}`].num -=1;
+      goodlist[`${code}_${format}`].sumnum -= 1;
+      priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price
       // 删除
-      if(goodlist[`${code}_`].num==0){
-        shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_` != `${code}_`)
-        delete(goodlist[`${code}_`]);
+      if(goodlist[`${code}_${format}`].num==0){
+        shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)
+        delete(goodlist[`${code}_${format}`]);
       }else{
          shopcartAll = this.data.shopcartAll
       }
       
       this.setData({
         shopcartList:goodlist,
-        shopcartAll
+        shopcartAll,
+        priceAll
       })
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -276,7 +294,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code + '&shopGoodsList=' + JSON.stringify(this.props.shopGoodsList)
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code 
       });
     },
     // 清空购物车
@@ -284,9 +302,6 @@ Component({
       this.setData({
         shopcartList:{}
       })
-    },
-    onGetShopList(data){
-
     }
   },
 });

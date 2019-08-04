@@ -50,6 +50,7 @@ Page({
     mask:false,
     otherGoods:[],   // 参与换购的商品
     type:1,   // 默认外卖
+    shopGoods:[]   // 门店商品
   },
   onLoad() {
     
@@ -190,7 +191,7 @@ Page({
     my.request({
       url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=${str}`,
       success: (res) => {
-        console.log(res.data.data[`${company_id}`])
+        // console.log(res.data.data[`${company_id}`])
         // 该公司所有的商品
         this.setData({
           companyGoodsList:res.data.data[`${company_id}`]
@@ -244,7 +245,8 @@ Page({
           // let goodsli = sortList.filter(_item => _item.last.length>0);
           this.setData({
             shopGoodsList: sortList,
-            companyGoodsList
+            companyGoodsList,
+            shopGoods:arr
           },()=> {
             this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动
           })
@@ -258,7 +260,7 @@ Page({
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
       console.log(res);
-      let companyGoodsList = this.data.companyGoodsList;
+      let shopGoods = this.data.shopGoods;
       // 获取加价购商品
       if(res.data.MARKUP!=null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -278,11 +280,11 @@ Page({
       // 筛选在当前门店里面的折扣商品
       let DIS = [],PKG = []
       if(res.data.DIS) {
-        DIS = res.data.DIS.filter(item => companyGoodsList.findIndex(value => value.goods_id == item.goods_id) == -1)
+        DIS = res.data.DIS.filter(item => shopGoods.findIndex(value => value.goods_id == item.goods_id) == -1)
       }
       // 筛选在当前门店里面的套餐商品  
       if(res.data.PKG) {
-        PKG = res.data.PKG.filter(item => companyGoodsList.findIndex(value => value.goods_id == item.goods_id) == -1);
+        PKG = res.data.PKG.filter(item => shopGoods.findIndex(value => value.goods_id == item.goods_id) == -1);
       }
       let obj1 = {}, obj2 = {};
       for(let item of PKG) {
@@ -308,22 +310,48 @@ Page({
       //   "last":FULL
       // }
       this.data.shopGoodsList.unshift(obj1,obj2);
+      let goodsArr = [...DIS,...PKG,...this.data.shopGoods];    // 门店所有列表（一维数组）
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
-      console.log(goodsNew)
-      // 判断购物车商品是否在当前门店内
-      // let shopcartGoods = [];
-      // if(shopcartlist!= null) {
-      //   shopcartGoods = shopcartlist.filter(_item => goodsNew.findIndex(values=> values.goods_code == _item.goods_code) == -1)
-      // }
+      console.log(goodsArr)
+      // 判断购物车商品是否在当前门店内,不在的清除购物车
+      let shopcartAll = my.getStorageSync({
+        key: 'goodsList', // 缓存数据的key
+      }).data || {};
+      for(let value of goodsArr){
+        if(value.goods_format.length==0){
+          if(!shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
+            delete(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`])
+          }else{
+            my.showToast({
+              content: `购物车有${shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
+            });
+          }
+        }
+        if(value.goods_format.length>1){
+          for(let item of value.goods_format){
+            if(!shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
+              delete(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`])
+            }else{
+              my.showToast({
+                content: `购物车有${shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
+              })
+            }
+          }
+        }
+      }
+      
       this.setData({
         shopGoodsAll:goodsNew
       })
-      // 缓存门店商品
       my.setStorageSync({
-        key: 'shopGoods', // 缓存数据的key
-        data: JSON.stringify(goodsNew)
-      });
+        key: 'goodsList',
+        data: shopcartAll
+      })
+      my.setStorageSync({
+        key:'shopGoods',
+        data: goodsArr
+      })
     })
   },
   onHide() {

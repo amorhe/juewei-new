@@ -8,7 +8,7 @@
   <view class="shopcart">
     <image class="shopcarImage" a:if="{{shopcartAll==null || shopcartAll.length == 0}}" src="{{imageUrl}}shopcart_empty.png" />
     <image onTap="openShopcart" a:if="{{shopcartAll!=null && shopcartAll.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount">{{shopcartAll.length}}</view>
+    <view class="addcount" a:if="{{shopcartAll.length>0}}">{{shopcartAll.length}}</view>
     <view class="haveGoods">
       <view a:if="{{shopcartAll!=null && shopcartAll.length>0}}">
         <text>￥</text>
@@ -22,7 +22,7 @@
   </view>
 </view>
 <!-- 购物车弹框 -->
-<view a:if="{{showShopcar}}" class="shopcarContent">
+<view a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
   <!-- <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view> -->
   <view class="clearShopcar" onTap="clearShopcart">
     <image src="{{imageUrl}}deleteIcon.png" />
@@ -42,21 +42,14 @@
         <text class="numberColor">￥{{item.goods_price / 100}}</text>
       </view>
       <view class="goodsNumber">
-        <image src="{{imageUrl}}goods_reduce.png" />
+        <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
         <text>{{item.num}}</text>
-        <image src="{{imageUrl}}goods_add.png" />
+        <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
       </view>
     </view>
   </view>
   <view>
   <view class="nullView"></view>
- 
-  <!-- <view class="shopcart" a:if="{{shopcartGoods.length==0}}">
-    <image class="shopcarImage" src="{{imageUrl}}shopcart_empty.png" />
-    <view>另需配送费6元</view>
-    <view class="buyBtn">￥30起送</view>
-    <view class="buyBtn">未营业</view>
-  </view> -->
 </view>
 
 
@@ -64,6 +57,6 @@
 <!-- 弹框组件 -->
 <confirm content="{{content}}" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
 <!-- 遮罩层 -->
-<view a:if="{{mask1}}" class="mask" onTap="hiddenShopcart"></view>
+<view a:if="{{mask1 && shopcartAll.length>0}}" class="mask" onTap="hiddenShopcart"></view>
 
 
