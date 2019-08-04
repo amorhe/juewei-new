@@ -73,8 +73,8 @@ Component({
         this.props.onChangeShopcart({},[],0);
       }
     },
-    onChangeShopcart(goodlist,shopcartAll,priceAll){
-      this.props.onChangeShopcart(goodlist,shopcartAll,priceAll);
+    onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum){
+      this.props.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum);
     },
     addshopcart(e){
       let goodlist = my.getStorageSync({
@@ -83,16 +83,17 @@ Component({
       let goods_code = e.currentTarget.dataset.goods_code;
       let goods_format = e.currentTarget.dataset.goods_format
       goodlist[`${goods_code}_${goods_format}`].num +=1;
-      let shopcartAll = [],priceAll=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0;
       for(let keys in goodlist){
         priceAll += goodlist[`${goods_code}_${goods_format}`].goods_price * goodlist[`${goods_code}_${goods_format}`].num,
-        shopcartAll.push(goodlist[keys])
+        shopcartAll.push(goodlist[keys]),
+        shopcartNum += goodlist[`${goods_code}_${goods_format}`].num
       }
       let arr = shopcartAll.filter(item => item.goods_code == goods_code)
       for(let item of arr){
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum +=1;
       }
-      this.onChangeShopcart(goodlist,shopcartAll,priceAll)
+      this.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist // 要缓存的数据
@@ -105,8 +106,9 @@ Component({
       
       goodlist[`${code}_${format}`].num -=1;
       // 删除
-      let shopcartAll = [],priceAll=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0;
       priceAll = this.props.priceAll - goodlist[`${code}_${format}`].goods_price;
+      shopcartNum = this.props.shopcartNum - 1
       let arr = this.props.shopcartAll.filter(item => item.goods_code == code)
       for(let item of arr){
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum -=1;
@@ -125,7 +127,7 @@ Component({
           shopcartAll.push(goodlist[keys])
         }
       }
-      this.onChangeShopcart(goodlist,shopcartAll,priceAll);
+      this.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum);
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据

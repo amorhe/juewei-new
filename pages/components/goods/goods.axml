@@ -36,7 +36,7 @@
 </view>
 
 <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
-  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;">
+  <scroll-view scroll-y="{{scrollY}}" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;">
     <view class="goodsUl">
       <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}">
         <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{index+1}}_1.png"/>
@@ -47,7 +47,7 @@
     </view>
   </scroll-view>
 
-  <scroll-view scroll-y="{{scroll_y}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent" scroll-with-animation="true" scroll-animation-duration="50"> 
+  <scroll-view scroll-y="{{scrollY}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent" scroll-with-animation="true" scroll-animation-duration="50"> 
     <view>
             <!-- 折扣 -->
       <!-- <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}" onTap="goodsdetailContent" data-goodsAll="{{activityAllObj.DIS}}" data-goods_id="{{item.goods_id}}">
@@ -299,7 +299,7 @@
   </scroll-view>
 </view>
 <!-- 购物车 -->
-<shopcart-model orderType="{{type}}" shopcartAll="{{shopcartAll}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" otherGoods="{{otherGoods}}" onChangeShopcart="onchangeShopcart"/>
+<shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" otherGoods="{{otherGoods}}" onChangeShopcart="onchangeShopcart"/>
 
 <!-- 加入购物车选择商品规格 -->
 <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="onCart" priceAll="{{priceAll}}"/>

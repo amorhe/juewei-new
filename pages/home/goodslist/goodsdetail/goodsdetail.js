@@ -58,7 +58,8 @@ Page({
     shopcartList:{},
     shopcartAll:[],
     priceAll:0,
-    goodsLast:''
+    goodsLast:'',
+    shopcartNum:0
   },
   onLoad(e) {
     let goods = my.getStorageSync({
@@ -148,15 +149,17 @@ Page({
       }
       goodlist[`${goods_code}_${goods_format}`]  = oneGood;
     }
-    let shopcartAll = [],priceAll=0;
+    let shopcartAll = [],priceAll=0,shopcartNum=0;
     for(let keys in goodlist){
       priceAll += goodlist[keys].goods_price * goodlist[keys].num,
-      shopcartAll.push(goodlist[keys])
+      shopcartAll.push(goodlist[keys]),
+      shopcartNum += goodlist[keys].num
     }
     this.setData({
       shopcartList: goodlist,
       shopcartAll,
-      priceAll
+      priceAll,
+      shopcartNum
     })
     my.setStorageSync({
       key: 'goodsList', // 缓存数据的key
@@ -206,10 +209,11 @@ Page({
     let code = e.currentTarget.dataset.goods_code;
     let format = e.currentTarget.dataset.goods_format;
     let goodlist = my.getStorageSync({key:'goodsList'}).data;
-    let shopcartAll = [],priceAll=0;
+    let shopcartAll = [],priceAll=0,shopcartNum=0;
     goodlist[`${code}_${format}`].num -=1;
     goodlist[`${code}_${format}`].sumnum -= 1;
-    priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price
+    priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price;
+    shopcartNum = this.data.shopcartNum -1
     // 删除
     if(goodlist[`${code}_${format}`].num==0){
       shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)
@@ -221,7 +225,8 @@ Page({
     this.setData({
       shopcartList:goodlist,
       shopcartAll,
-      priceAll
+      priceAll,
+      shopcartNum
     })
     my.setStorageSync({
       key: 'goodsList', // 缓存数据的key

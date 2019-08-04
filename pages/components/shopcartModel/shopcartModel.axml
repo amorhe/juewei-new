@@ -8,9 +8,9 @@
   <view class="shopcart">
     <image class="shopcarImage" a:if="{{shopcartAll==null || shopcartAll.length == 0}}" src="{{imageUrl}}shopcart_empty.png" />
     <image onTap="openShopcart" a:if="{{shopcartAll!=null && shopcartAll.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-    <view class="addcount" a:if="{{shopcartAll.length>0}}">{{shopcartAll.length}}</view>
+    <view class="addcount" a:if="{{shopcartNum>0}}">{{shopcartNum}}</view>
     <view class="haveGoods">
-      <view a:if="{{shopcartAll!=null && shopcartAll.length>0}}">
+      <view a:if="{{shopcartNum>0}}">
         <text>￥</text>
         <text>{{priceAll/100}}</text>
       </view>

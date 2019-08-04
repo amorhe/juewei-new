@@ -317,25 +317,24 @@ Page({
       // 判断购物车商品是否在当前门店内,不在的清除购物车
       let shopcartAll = my.getStorageSync({
         key: 'goodsList', // 缓存数据的key
-      }).data || {};
+      }).data;
+      if(shopcartAll == null) return;
       for(let value of goodsArr){
         if(value.goods_format.length==0){
-          if(!shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
-            delete(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`])
-          }else{
+          if(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
             my.showToast({
               content: `购物车有${shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
             });
+            shopcartAll = shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`];
           }
         }
         if(value.goods_format.length>1){
           for(let item of value.goods_format){
-            if(!shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
-              delete(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`])
-            }else{
+            if(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
               my.showToast({
                 content: `购物车有${shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
               })
+              shopcartAll = shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]
             }
           }
         }

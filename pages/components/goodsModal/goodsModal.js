@@ -13,7 +13,7 @@ Component({
     goods_discount_user_limit:0,
     goods_format_all:'',
     goodsList:{},
-    shopcartAll:[]
+    shopcartAll:[],
   },
   props: {
     onCloseModal: (data) => console.log(data),
@@ -63,8 +63,8 @@ Component({
         size:999
       })
     },
-    onCart(goodsList,shopcartAll,priceAll){
-       this.props.onCart(goodsList,shopcartAll,priceAll);
+    onCart(goodsList,shopcartAll,priceAll,shopcartNum){
+       this.props.onCart(goodsList,shopcartAll,priceAll,shopcartNum);
     },
     addshopcart(e){
       let goods_car={};
@@ -122,16 +122,17 @@ Component({
         goodlist[`${goods_code}_${goods_format}`]  = oneGood;
       }
       console.log(goodlist)
-       let shopcartAll = [],priceAll=0;
+       let shopcartAll = [],priceAll=0,shopcartNum=0;
       for(let keys in goodlist){
         priceAll += goodlist[keys].goods_price * goodlist[keys].num,
-        shopcartAll.push(goodlist[keys])
+        shopcartAll.push(goodlist[keys]),
+        shopcartNum += goodsList[keys].num
       }
       this.setData({
         goodsList:goodlist,
         shopcartAll
       })
-      this.onCart(goodlist,shopcartAll,priceAll);
+      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum);
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -152,8 +153,9 @@ Component({
         }
       }
       goodlist[`${code}_${format}`].num -=1;
-      let shopcartAll = [],priceAll=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0;
       priceAll = this.props.priceAll - goodlist[`${code}_${format}`].goods_price;
+      shopcartNum = this.props.shopcartNum -= 1;
       // 删除
       if(goodlist[`${code}_${format}`].num==0){
         shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${item.goods_format}` != `${code}_${format}`)
@@ -163,7 +165,7 @@ Component({
           shopcartAll.push(goodlist[keys])
         }
       }
-      this.onCart(goodlist,shopcartAll,priceAll)
+      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum)
       this.setData({
         goodsList:goodlist,
         shopcartAll
