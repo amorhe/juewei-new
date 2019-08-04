@@ -20,7 +20,7 @@
         </view>
       </view>
       <view class="to-use" onTap="toUse" a:if="{{['1'].includes(d.goods_detail_type)}}">去使用</view>
-      <view class="btn" a:if="{{['3','4'].includes(d.goods_detail_type)}}">联系客服</view>
+      <view class="btn" a:if="{{['3','4'].includes(d.goods_detail_type)}}" onTap="contact">联系客服</view>
     </view>
     <!-- 到店领取 -->
     <view class="user-detail" a:if="{{d.receive_type == 1}}">
@@ -37,7 +37,7 @@
         领取手机号码
         </view>
         <view class="user-right">
-        {{detail.user_address_phone}}
+        {{d.user_address_phone}}
         </view>
       </view>
       <view class="user-list" a:if="{{d.shop_name}}">
@@ -148,7 +148,7 @@
           {{d.order_point}}积分 {{d.exchange_type == 2 ? '+' : ''}}  {{d.order_amount == 0 ? '' : d.order_amount + '元'}}
         </view>
       </view>
-      <view class="btn">联系客服</view>
+      <view class="btn" onTap="contact">联系客服</view>
     </view>
     <view class="user-detail" a:if="{{ d.receive_type == 1}}">
       <view class="user-list" a:if="{{d.user_address_name}}">

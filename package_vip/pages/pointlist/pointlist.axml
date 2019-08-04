@@ -13,7 +13,7 @@
   </view>
 </view>
 <view class="pitInfo">
-  <view class="listItem {{item.point_is_del==1?'freeze':''}}" data-point_id="{{item.point_id}}" a:for="{{list}}">
+  <view class="listItem {{item.point_is_del == 2?'freeze':''}}" data-point_id="{{item.point_id}}" a:for="{{list}}">
     <view>
       <view>{{item.point_content}}</view>
       <view class="itemTime">{{item.point_ctime}}</view>

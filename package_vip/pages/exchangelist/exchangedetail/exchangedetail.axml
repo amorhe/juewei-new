@@ -1,21 +1,34 @@
+ <!-- 头部 -->
+  <view class="header-title-s" style="height:{{navHeight.titleBarHeight + navHeight.statusBarHeight}}px">
+    <text style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">兑换详情</text>
+  </view>
+  <view style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px"></view>
+  <image style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px" mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/>
+  <image mode="scaleToFill" class="body_bg" src="{{imageUrl}}body_bg.png"/>
 <view class="bg" a:if="{{detail.status_name}}">
   <!-- 兑换详记录情页 分为 官方兑换和 兑换码(非官方)兑换商品 -->
   <!-- 状态 -->
   <view class="state">
     <view class="state-title">
-      {{detail.status_name}}
+     {{(detail.status_name == '未支付'  && detail.remaining_pay_minute < 0) ? '已关闭' :detail.status_name}}
+    </view>
+    <view class="sub-state" a:if="{{detail.dis_time}}">
+    发货时间：{{detail.dis_time.split(' ')[0]}}
+    </view>
+    <view class="sub-state" a:if="{{detail.dispatch_name}}">
+    {{detail.dispatch_name}} {{detail.dis_sn}} <image style="width:20rpx;height:20rpx" mode="scaleToFill" src="{{imageUrl}}close1.png"/>
     </view>
     <view class="sub-state" a:if="{{detail.status == 0}}">
     剩余时间：{{detail.remaining_pay_minute}}分{{detail.remaining_pay_second}}秒
     </view>
     <view class="sub-state" a:if="{{detail.get_start_time}}">
-    领取有效期：{{detail.get_start_time}} 至 {{detail.get_end_time}}
+    领取有效期：{{detail.get_start_time.split(' ')[0]}} 至 {{detail.get_end_time.split(' ')[0]}}
     </view>
     <view class="sub-state" a:if="{{detail.get_time != '0000-00-00 00:00:00'}}">
-    领取时间：{{detail.get_time}}
+    领取时间：{{detail.get_time.split(' ')[0]}}
     </view>
   </view>
-  <view class="buttons" a:if="{{detail.status == 0}}">
+  <view class="buttons" a:if="{{detail.status == 0 && detail.remaining_pay_minute>0}}">
     <view class="c-button" onTap="doCancelOrder">取消订单</view>
     <view class="o-button" onTap="payNow">立即支付</view>
   </view>
@@ -40,7 +53,7 @@
           {{ detail.order_amount}} 元
           </view>
           <view class="to-use" onTap="toUse" a:if="{{['1'].includes(detail.goods_detail_type)}}">去使用</view>
-          <view class="b-button" a:if="{{['3','4'].includes(detail.goods_detail_type)}}">联系客服</view>
+          <view class="b-button" a:if="{{['3','4'].includes(detail.goods_detail_type)}}" onTap="contact">联系客服</view>
         </view>
       </view>
     </view>
@@ -86,6 +99,8 @@
       </view>
       <view class="get-code">
         <image mode="scaleToFill" src="{{'data:image/png;base64,'+detail.code_img}}"/>
+        <image mode="scaleToFill" a:if="{{detail.status_name == '已领取'}}" class="got" src="{{imageUrl}}received.png"/>
+        <image mode="scaleToFill" a:if="{{detail.status_name == '已过期'}}" class="got" src="{{imageUrl}}overdue.png"/>
       </view>
       <view class="get-shop-tips">
         请将二维码出示给店员
@@ -104,7 +119,7 @@
           活动时间
         </view>
         <view class="value">
-          {{detail.start_time}} 至 {{detail.end_time}}
+          {{detail.start_time.split(' ')[0]}} 至 {{detail.end_time.split(' ')[0]}}
         </view>
       </view>
 
@@ -122,7 +137,7 @@
           商品有效时间
         </view>
         <view class="value">
-          {{detail.end_time}}
+          {{detail.end_time.split(' ')[0]}}
         </view>
       </view>
       <view class="li" a:if="{{detail.exchange_intro}}">
@@ -155,7 +170,7 @@
         {{detail.user_address_name}} {{detail.user_address_phone}}
       </view>
       <view class="address-footer">
-        {{ detail.user_address_detail_address || detail.user_address_address}}
+        {{ detail.user_address_address + detail.user_address_detail_address }}
       </view>
     </view>
     <view class="order detail-item">

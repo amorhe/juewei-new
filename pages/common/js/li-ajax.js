@@ -49,7 +49,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
 }
 
 /**
- * @function 获取 富文本 数组
+ * @function 获取富文本数组
  * @param string html字符串
  */
 export const parseData = async (html) => {
@@ -145,4 +145,24 @@ export const guide = e => {
   });
 }
 
+/**
+ * @function 联系客服
+ */
 
+export const contact = () => {
+  my.makePhoneCall({ number: '4009995917' });
+}
+
+/**
+ * @function 获取导航高度
+ */
+
+export const getNavHeight = () => {
+  log(my.getSystemInfoSync())
+  let { titleBarHeight, statusBarHeight, model } = my.getSystemInfoSync()
+
+  return {
+    titleBarHeight,
+    statusBarHeight
+  }
+}

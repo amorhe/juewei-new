@@ -1,14 +1,17 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, getSid, log } from '../../common/js/li-ajax'
+import { ajax, getSid, log, getNavHeight } from '../../common/js/li-ajax'
 
 Page({
   data: {
     imageUrl,
     imageUrl2,
 
+    finish: false,
+
     toast: false,
 
     _sid: '',
+    navHeight:'',
 
     menuTop: 0,
     menuFixed: false,
@@ -33,7 +36,7 @@ Page({
 
     list: [],
 
-    goodsList:[],
+    goodsList: [],
 
 
 
@@ -45,8 +48,11 @@ Page({
 
     let _sid = await getSid()
 
+    let navHeight = getNavHeight()
+
     this.setData({
-      _sid
+      _sid,
+      navHeight
     })
 
     await this.getCategory()
@@ -113,6 +119,7 @@ Page({
     let res = await ajax('/mini/vip/wap/goods/goods_list', goodslistOption)
     if (res.code === 100) {
       this.setData({
+        finish: true,
         goodsList: res.data.data
       })
     }
@@ -126,14 +133,14 @@ Page({
     let positionListOption = { city_id, district_id, company_id, release_channel }
     let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
     if (res.code === 100) {
-      let {pic_src,link_url}= res.data[0];
-      let positionList = pic_src.map((pic,index)=>{
-        return{
+      let { pic_src, link_url } = res.data[0];
+      let positionList = pic_src.map((pic, index) => {
+        return {
           pic,
-          url:link_url[index]
+          url: link_url[index]
         }
       })
-      
+
       this.setData({
         positionList
       })
@@ -171,8 +178,9 @@ Page({
    * @function 跳转详情页面
    */
   toDetail(e) {
-    const { id,valid_num } = e.currentTarget.dataset
-    if(0 == valid_num){
+    const { id, valid_num,exchange_day_num ,exchange_day_vaild_num} = e.currentTarget.dataset
+    log(id, valid_num,exchange_day_num ,exchange_day_vaild_num)
+    if ((valid_num)==0 || ((exchange_day_num-0)>0 && (exchange_day_vaild_num)==0)) {
       return
     }
     my.navigateTo({
@@ -221,9 +229,9 @@ Page({
    * @function 去积分详情页面
    */
 
-  toPointList(){
+  toPointList() {
     my.navigateTo({
-      url:'/package_vip/pages/pointlist/pointlist'
+      url: '/package_vip/pages/pointlist/pointlist'
     });
   },
 
@@ -231,8 +239,8 @@ Page({
    * @function banner跳转页面
    */
 
-  linkTo(e){
-    const {url} = e.currentTarget.dataset
+  linkTo(e) {
+    const { url } = e.currentTarget.dataset
     my.navigateTo({
       url
     });

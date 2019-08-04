@@ -70,7 +70,7 @@ Page({
       let _exchange_intro = await this.parseData(exchange_intro)
       let _intro = await this.parseData(intro)
       my.setNavigationBar({
-        title: goods_name,
+        title:'商品详情',
       });
       this.setData({
         detail: {
