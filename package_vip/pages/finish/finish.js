@@ -173,7 +173,7 @@ Page({
   toTakeOut() {
     app.globalData.type = 2
     log(app.globalData.type)
-    my.navigateTo({
+    my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     });
   },
@@ -185,7 +185,7 @@ Page({
     app.globalData.type = 1
     log(app.globalData.type)
 
-    my.navigateTo({
+    my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     });
   },
