@@ -35,6 +35,7 @@ Page({
 
     positionList: [],
 
+    new_user:[],
 
     list: [],
 
@@ -63,6 +64,8 @@ Page({
     this.getBanner()
     this.getPositionList()
     this.getUserPoint()
+
+    await this.getCouponsList()
 
     await this.getCategory()
     await this.getGoodsList()
@@ -252,6 +255,29 @@ Page({
     const { url } = e.currentTarget.dataset
     my.navigateTo({
       url
+    });
+  },
+
+  /**
+   * @function 获取礼包列表
+   */
+
+  async getCouponsList (){
+    let res =await ajax('/mini/coupons/list',{get_type:'new_user'})
+    if(res.CODE === 'A100'){
+      this.setData({
+        new_user:res.DATA.new_user
+      })
+    }
+  },
+
+  /**
+   * @function 去首页
+   */
+
+  switchTo(){
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist', 
     });
   }
 

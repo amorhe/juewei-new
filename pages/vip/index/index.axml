@@ -35,20 +35,28 @@
         </swiper-item>
       </block>
     </swiper>
-    <view class="title" a:if="{{positionList.length}}">
+    <view class="title" a:if="{{positionList.length}}" a:if="{{new_user.length}}">
       新人专享券包
     </view>
-    <view class="flex-space-b two">
-      <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
-        <image mode="scaleToFill" src="{{imageUrl2+ itemName.pic}}" data-url="{{itemName.url}}" onTap="linkTo"/>
+    <view class="flex-space-b two" a:if="{{new_user.length}}">
+      <scroll-view scroll-x="{{true}}" class="new">
+       <view class="new_card" style="background-image:url({{imageUrl}}coupon_bg2.png)" a:for="{{new_user}}">
+         <view class="new-left">
+           <text class="new-num">{{item.money/100}} </text> <text class="new-yuan">元</text>
+           <view class="new-use">满{{item.full_money/100}}元可用</view>
+         </view>
+         <view class="new-right new-button" onTap="switchTo">
+           立即使用
+         </view>
+       </view>
       </scroll-view>
     </view>
     <view class="title" a:if="{{positionList.length}}">
       为你推荐
     </view>
     <view class="flex-space-b two">
-      <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
-        <image mode="scaleToFill" src="{{imageUrl2+ itemName.pic}}" data-url="{{itemName.url}}" onTap="linkTo"/>
+      <scroll-view scroll-x="{{true}}" class="x" >
+        <image a:for="{{positionList}}" a:for-item="itemName" mode="scaleToFill" src="{{imageUrl2+ itemName.pic}}" data-url="{{itemName.url}}" onTap="linkTo"/>
       </scroll-view>
     </view>
     <view class="sroll-view-wrap" style="top:{{navHeight.titleBarHeight + navHeight.statusBarHeight - 2}}px" >

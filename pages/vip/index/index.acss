@@ -78,7 +78,7 @@ page {
 }
 
 .two {
-  margin-left: 32rpx;
+  margin: 0 32rpx;
 }
 
 .two image {
@@ -134,7 +134,7 @@ page {
   box-shadow: 0 2rpx 10rpx 0 rgba(153, 153, 153, 0.2);
 }
 
-.li>.li-pic{
+.li>.li-pic {
   position: relative
 }
 
@@ -143,7 +143,7 @@ page {
   height: 333rpx;
 }
 
-.li>.li-pic>.pic-sm{
+.li>.li-pic>.pic-sm {
   z-index: 9999;
   position: absolute;
   bottom: 10rpx;
@@ -243,4 +243,58 @@ page {
   width: 280rpx;
   height: 280rpx;
   margin: 20rpx;
+}
+
+.new {
+  width: 100%;
+  white-space: nowrap;
+  display: flex;
+  margin: 0.2rem 0px
+}
+
+.new_card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 310rpx;
+  height: 130rpx;
+  background-size: 310rpx;
+  flex-shrink: 0;
+  margin-left: 20rpx;
+}
+
+.new-num {
+  font-size: 60rpx;
+  font-weight: 500;
+  color: rgba(255, 204, 0, 1);
+}
+
+.new-yuan{
+   font-size: 28rpx;
+  font-weight: 500;
+  color: rgba(255, 204, 0, 1);
+}
+
+.new-left{
+  text-align: center;
+}
+
+.new-use{
+font-size:24rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(255,255,255,1);
+}
+
+.new-button{
+  width:160rpx;
+  height:60rpx;
+  background:rgba(255,204,0,1);
+  border-radius:32rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(255,51,24,1);
+  text-align: center;
+  line-height:60rpx;
 }
