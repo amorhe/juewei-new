@@ -20,7 +20,7 @@
       <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status)}}" catchTap="showCancel">
           取消订单
       </view>
-      <view class="topay con" a:if="{{[1,2,3].includes(d.order_status_info.order_status)}}">
+      <view class="topay con" a:if="{{[1,2,3].includes(d.order_status_info.order_status)}}" onTap="contact">
           联系客服
       </view>
       <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status)}}">
@@ -202,7 +202,7 @@
 </view>
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
   <view style="height: 518rpx; background: #fff">
-    <view class="order-trace">订单跟踪 <image onTap="hide" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
+    <view class="order-trace">订单跟踪 <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
     <view class="order-trace-ul">
       <view class="order-trace-li">
         <view class="order-trace-left">
@@ -229,8 +229,8 @@
       <image  class="select" mode="scaleToFill" src="{{imageUrl}}select{{item.value?2:1}}.png"/>
     </view>
     <view class="cancel-buttons">
-      <view catchTap='hideCancle'>暂不取消</view>
-      <view>确认取消</view>
+      <view catchTap='closeModel'>暂不取消</view>
+      <view catchTap='cancelOrder'>确认取消</view>
     </view>
   </view>
 </popup>

@@ -90,16 +90,13 @@ Page({
     await this.getOrderDetail(id)
   },
 
-  onShow() {
-    this.closeModel()
-  },
-
   onUnload() {
     clearInterval(this.data.a)
   },
 
 
   onHide() {
+    this.closeModel()
     clearInterval(this.data.a)
   },
 

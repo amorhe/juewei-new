@@ -38,7 +38,7 @@
         <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}">
           取消订单
         </view>
-        <view class="topay con" a:if="{{[1,2,3].includes(item.order_status)}}">
+        <view class="topay con" a:if="{{[1,2,3].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
         <view class="cancel-order red" catchTap="toComment" data-order_no="{{item.order_no}}" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}">

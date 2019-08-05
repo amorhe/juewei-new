@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax } from '../../../pages/common/js/li-ajax'
+import { log, ajax, contact } from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
@@ -36,11 +36,11 @@ Page({
     ],
 
     cancelReasonList: [
-      { reason: '下错单/临时不想要了', value: true },
-      { reason: '订单长时间未分配骑手', value: false },
-      { reason: '门店商品缺货/无法出货/已售完', value: false },
-      { reason: '联系不上门店/门店关门了', value: false },
-      { reason: '其他', value: false },
+      { reason: '下错单/临时不想要了', value: true, cancel_code: 9 },
+      { reason: '订单长时间未分配骑手', value: false, cancel_code: 1 },
+      { reason: '门店商品缺货/无法出货/已售完', value: false, cancel_code: 4 },
+      { reason: '联系不上门店/门店关门了', value: false, cancel_code: 5 },
+      { reason: '其他', value: false, cancel_code: 0 },
     ],
 
     payTypes: {
@@ -50,11 +50,23 @@ Page({
     postWay: {
       FNPS: '蜂鸟配送', MTPS: '美团配送', ZPS: '自配送'
     },
+
+    payStatusList: [],
     d: {}
   },
   async onLoad(e) {
     let { order_no } = e
     await this.getOrderDetail(order_no)
+  },
+
+  contact,
+
+  closeModel(){
+    this.setData({
+      showTop: false,
+      cancleShow: false
+    })
+    
   },
 
   /**
@@ -81,10 +93,8 @@ Page({
     })
   },
 
-  hide() {
-    this.setData({
-      showTop: false
-    })
+  onHide(){
+    this.closeModel()
   },
 
   /**
@@ -93,13 +103,7 @@ Page({
 
   showCancel() {
     this.setData({
-      cancleShow : true
-    })
-  },
-
-  hideCancle() {
-    this.setData({
-      cancleShow : false
+      cancleShow: true
     })
   },
 
@@ -118,7 +122,37 @@ Page({
     })
   },
 
-    /**
+  /**
+   * @function 取消订单
+   */
+
+  async cancelOrder() {
+    const { d, cancelReasonList } = this.data
+    let cancel_code = cancelReasonList.filter(item => item.value)[0].cancel_code
+    let res = await ajax('/juewei-api/order/cancel', { order_no: d.order_no, cancel_code, cancel_reason: '其他' })
+    if (res.code == 0) {
+      my.showToast({
+        content: '取消成功',
+        duration: 2000,
+        success: (res) => {
+          setTimeout(() => {
+            my.navigateBack({
+              delta: 1
+            });
+          }, 2000)
+        },
+      });
+    }else{
+      this.closeModel()
+      my.showToast({
+        content: res.msg,
+        duration: 2000,
+      });
+    }
+
+  },
+
+  /**
    * @function 去评价页面
    */
   toComment(e) {
