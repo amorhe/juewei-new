@@ -61,7 +61,7 @@
       >
         <view class="li-pic">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}"/>
-        <image mode="scaleToFill" class="pic-sm" src="{{imageUrl}}overdue.png" a:if="{{((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}"/>
+        <image mode="scaleToFill" class="pic-sm" src="{{imageUrl}}floridian.png" a:if="{{((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}"/>
         </view>
         <view class="center">
           <view class="li-title">{{item.goods_name}}</view>
@@ -85,7 +85,7 @@
                 <text class="li-small">元</text>
               </text>
             </view>
-            <view a:if="{{!((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}" class="li-button">立即兑换</view>
+            <view a:if="{{!((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}" class="li-button">抢</view>
             <view a:if="{{((item.valid_num)==0 || ((item.exchange_day_num-0)>0 && (item.exchange_day_vaild_num)==0))}}" class="li-button" style="background:#ccc">已抢光</view>
           </view>
         </view>

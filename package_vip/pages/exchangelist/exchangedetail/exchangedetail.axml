@@ -13,10 +13,11 @@
      {{(detail.status_name == '未支付'  && detail.remaining_pay_minute < 0) ? '已关闭' :detail.status_name}}
     </view>
     <view class="sub-state" a:if="{{detail.dis_time}}">
-    发货时间：{{detail.dis_time.split(' ')[0]}}
+    发货时间：{{detail.dis_time}}
     </view>
-    <view class="sub-state" a:if="{{detail.dispatch_name}}">
-    {{detail.dispatch_name}} {{detail.dis_sn}} <image style="width:20rpx;height:20rpx" mode="scaleToFill" src="{{imageUrl}}close1.png"/>
+    <view class="sub-state lex" a:if="{{detail.dispatch_name}}">
+      <text>{{detail.dispatch_name}} {{detail.dis_sn}} </text> 
+      <image data-text="{{detail.dis_sn}}" onTap="handleCopy" style="width:32rpx;height:32rpx;margin-left:1em;" mode="scaleToFill" src="{{imageUrl}}copy.png"/>
     </view>
     <view class="sub-state" a:if="{{detail.status == 0}}">
     剩余时间：{{detail.remaining_pay_minute}}分{{detail.remaining_pay_second}}秒

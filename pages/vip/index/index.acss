@@ -25,9 +25,8 @@ page {
 .header-title-s text {
   position: absolute;
   height: 44rpx;
-  left: 0rpx;
-  right: 0;
-  margin: 0 auto
+  left: 30rpx;
+  margin: auto
 }
 
 .body_bg {
@@ -149,7 +148,7 @@ page {
   position: absolute;
   bottom: 10rpx;
   right: 10rpx;
-  width: 120rpx;
+  width: 140rpx;
   height: 120rpx;
 }
 
@@ -181,7 +180,7 @@ page {
 }
 
 .li-button {
-  width: 140rpx;
+  width: 80rpx;
   height: 64rpx;
   line-height: 64rpx;
   text-align: center;
