@@ -40,7 +40,7 @@
     <view class="onPopupInfo">
       <view class="InfoItem ItemBorder" onTap="genderFN" data-sex='1'>男</view>
       <view class="InfoItem" onTap="genderFN" data-sex='2'>女</view>
-      <view class="InfoItem ItemMargin" onClose="onPopupClose">取消</view>
+      <view class="InfoItem ItemMargin" onTap="onPopupClose">取消</view>
     </view>
 </popup>
 
