@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, log } from '../../common/js/li-ajax'
+import { ajax, log,contact } from '../../common/js/li-ajax'
 
 
 Page({
@@ -52,6 +52,8 @@ Page({
     const { page } = this.data
     await this.getOrderList(page)
   },
+
+  contact,
 
   /**
    * @function 选择菜单
