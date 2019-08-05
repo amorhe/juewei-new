@@ -45,7 +45,7 @@
            <text class="new-num">10 </text> <text class="new-yuan">元</text>
            <view class="new-use">满68元可用</view>
          </view>
-         <view class="new-right new-button" >
+         <view class="new-right new-button" onTap="switchTo">
            立即使用
          </view>
        </view>

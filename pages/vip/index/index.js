@@ -253,6 +253,16 @@ Page({
     my.navigateTo({
       url
     });
+  },
+
+  /**
+   * @function 去首页
+   */
+
+  switchTo(){
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist', 
+    });
   }
 
 });
