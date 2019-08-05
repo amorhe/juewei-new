@@ -37,7 +37,7 @@
         <view class="fontBold">{{item.user_address_address}}</view>
         <view a:if="{{item.tag!=0}}" class="{{item.tag==1?'addressTabbar bar1':item.tag==2?'addressTabbar bar2':'addressTabbar bar3'}}">{{item.tag==1?'家':item.tag==2?'公司':'学校'}}</view>
       </view>
-      <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>
+      <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==1?'先生':'女士'}}） {{item.user_address_phone}}</view>
     </view>
   </view>
   <navigator url="/package_my/pages/myaddress/addaddress/addaddress" class="addAddressTxt">

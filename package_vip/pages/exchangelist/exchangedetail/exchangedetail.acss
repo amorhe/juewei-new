@@ -1,9 +1,15 @@
+.lex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 page {
   background: white;
 }
 
 .header-title-s {
-  z-index: 9999;
+  z-index: 2;
   position: fixed;
   top: 0rpx;
   width: 100vw;
@@ -15,7 +21,7 @@ page {
 }
 
 .title_bg {
-  z-index: 9998;
+  z-index: 1;
   position: fixed;
   top: 0;
   width: 100vw;
@@ -24,8 +30,7 @@ page {
 .header-title-s text {
   position: absolute;
   height: 44rpx;
-  left: 0rpx;
-  right: 0;
+  left: 60rpx;
   margin: 0 auto
 }
 

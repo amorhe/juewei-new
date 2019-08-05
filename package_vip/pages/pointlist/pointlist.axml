@@ -3,7 +3,7 @@
 </view> -->
 <view class="pointlistTop" onTap="hideToast">
   <view class="pittopItema">
-    <view>当前积分：  <text class="n">{{userPoint.points}}</text> </view>
+    <view>当前积分：  <text class="n">{{userPoint.points || 0}}</text> </view>
      <view class="pitrule" onTap="toUrl" data-url='/package_vip/pages/pointlist/rules/rules'>积分规则</view> 
   </view>
   <view class="pittopItemb" a:if="{{userPoint.freeze_point}}">
@@ -12,8 +12,8 @@
     <view class="toast" a:if="{{toast}}">订单积分24小时后解冻，冻结期间不能使用。</view>
   </view>
 </view>
-<view class="pitInfo">
-  <view class="listItem {{item.point_is_del == 2?'freeze':''}}" data-point_id="{{item.point_id}}" a:for="{{list}}">
+<view class="pitInfo" a:if="{{list.length && finish}}">
+  <view class="listItem {{item.point_is_del == 2?'freeze':''}}" data-point_id="{{item.point_id}}"  a:for="{{list}}">
     <view>
       <view>{{item.point_content}}</view>
       <view class="itemTime">{{item.point_ctime}}</view>
@@ -26,4 +26,9 @@
     <view class="bottomBorder"></view>
   </view>
 
+</view>
+
+<view class="no-good" a:if="{{list.length==0 && finish}}">
+   <image mode="scaleToFill" src="{{imageUrl}}bg_point.png"/>
+   <view>暂无积分</view>
 </view>

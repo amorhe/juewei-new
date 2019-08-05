@@ -64,7 +64,8 @@ Page({
       // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
-      isOpen: app.globalData.isOpen
+      isOpen: app.globalData.isOpen,
+      type:app.globalData.type
     })
     // 初始化默认外卖
     if (app.globalData.type == 1) {

@@ -84,7 +84,7 @@
 <view class="shop" a:if="{{selectShop && d}}">
   <view class="shop-search">
     <image class="search-icon" mode="scaleToFill" src="{{imageUrl}}search.png"/>
-    <input placeholder="小区/写字楼/学校等" />
+    <input placeholder="小区/写字楼/学校等"  onInput="search" />
   </view>
   <view class="shop-ul">
     <view class="shop-item" a:for="{{shopList}}" data-shop_name="{{item.shop_name}}" data-shop_id="{{item.shop_id}}" onTap="sureSelectShop">
