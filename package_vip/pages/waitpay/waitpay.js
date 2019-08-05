@@ -44,7 +44,7 @@ Page({
 
     selectAddress: false,
 
-    user_address_map_addr:'',
+    user_address_map_addr: '',
 
     addressList: region,
     provinceList: [],
@@ -57,13 +57,15 @@ Page({
     user_address_detail_address: '',
     province: '',
     city: '',
-    district: ''
+    district: '',
+
+    _shopList: ''
 
   },
   async onLoad(e) {
-    let { order_sn, user_address_map_addr,user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
+    let { order_sn, user_address_map_addr, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
     this.setData({
-      order_sn, user_address_map_addr,user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
+      order_sn, user_address_map_addr, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
     })
     region = await getRegion()
     this.getAddressList()
@@ -184,6 +186,18 @@ Page({
   },
 
   /**
+   * @function 搜索
+   */
+
+  async search(e) {
+    const {_shopList} = this.data;
+    const { value } = e.detail;
+    let shopList = _shopList.filter(({shop_name})=>shop_name.includes(value))
+    this.setData({
+      shopList
+    })
+  },
+  /**
    * @function 获取当前的商店列表，排序并展示
    */
   async doSelectShop() {
@@ -215,7 +229,8 @@ Page({
         .sort((a, b) => a._distance - b._distance)
       this.setData({
         selectShop: true,
-        shopList
+        shopList,
+        _shopList: shopList
       })
     }
   },
