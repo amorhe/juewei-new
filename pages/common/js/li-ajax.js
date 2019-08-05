@@ -166,3 +166,27 @@ export const getNavHeight = () => {
     statusBarHeight
   }
 }
+
+/**
+ * 获取 地址ID
+ */
+
+export const getAddressId = () => {
+  return new Promise((resolve, reject) => {
+    my.getLocation({
+      type: 2,
+      success(res) {
+        console.log('address', res)
+        const { cityAdcode, districtAdcode } = res
+        resolve({
+          city_id: cityAdcode,
+          district_id: districtAdcode
+        })
+      },
+      fail() {
+        my.hideLoading();
+        reject(my.alert({ title: '定位失败' }))
+      },
+    })
+  })
+}

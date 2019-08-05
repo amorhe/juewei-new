@@ -24,8 +24,7 @@ page {
 .header-title-s text {
   position: absolute;
   height: 44rpx;
-  left: 0rpx;
-  right: 0;
+  left: 40rpx;
   margin: 0 auto
 }
 

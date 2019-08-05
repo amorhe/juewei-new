@@ -25,9 +25,8 @@ page {
 .header-title-s text {
   position: absolute;
   height: 44rpx;
-  left: 0rpx;
-  right: 0;
-  margin: 0 auto
+  left: 30rpx;
+  margin: auto
 }
 
 .body_bg {

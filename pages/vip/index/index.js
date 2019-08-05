@@ -1,5 +1,7 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, getSid, log, getNavHeight } from '../../common/js/li-ajax'
+import { ajax, getSid, log, getNavHeight, getAddressId } from '../../common/js/li-ajax'
+
+const app = getApp()
 
 Page({
   data: {
@@ -11,14 +13,14 @@ Page({
     toast: false,
 
     _sid: '',
-    navHeight:'',
+    navHeight: '',
 
     menuTop: 0,
     menuFixed: false,
 
-    shop_id: 181,
+    shop_id: '',
     district_id: 110105,
-    cate_id: 25,
+    cate_id: 0,
     page_num: 1,
     page_size: 10000,
     company_id: 1,
@@ -42,9 +44,10 @@ Page({
 
   },
   async onShow() {
-    this.getBanner()
-    this.getPositionList()
-    this.getUserPoint()
+    let {
+      city_id,
+      district_id
+    } = await getAddressId()
 
     let _sid = await getSid()
 
@@ -52,8 +55,14 @@ Page({
 
     this.setData({
       _sid,
-      navHeight
+      navHeight,
+      city_id,
+      district_id
     })
+
+    this.getBanner()
+    this.getPositionList()
+    this.getUserPoint()
 
     await this.getCategory()
     await this.getGoodsList()
@@ -178,9 +187,9 @@ Page({
    * @function 跳转详情页面
    */
   toDetail(e) {
-    const { id, valid_num,exchange_day_num ,exchange_day_vaild_num} = e.currentTarget.dataset
-    log(id, valid_num,exchange_day_num ,exchange_day_vaild_num)
-    if ((valid_num)==0 || ((exchange_day_num-0)>0 && (exchange_day_vaild_num)==0)) {
+    const { id, valid_num, exchange_day_num, exchange_day_vaild_num } = e.currentTarget.dataset
+    log(id, valid_num, exchange_day_num, exchange_day_vaild_num)
+    if ((valid_num) == 0 || ((exchange_day_num - 0) > 0 && (exchange_day_vaild_num) == 0)) {
       return
     }
     my.navigateTo({
