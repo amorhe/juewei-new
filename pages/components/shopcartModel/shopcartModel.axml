@@ -1,7 +1,7 @@
 <view style="width:750rpx;height:100rpx;"></view>
 <view class="goodsBottom">
   <!-- <view class="fullReduce">
-    <text a:if="{{otherGoods[otherGoods.length-1] / 100 == priceAll}}">只差{{otherGoods[otherGoods.length-2]/100-priceAll}}元,超值福利等着你!</text>
+    <text a:if="{{priceAll}}">只差{{priceAll}}元,超值福利等着你!</text>
     <text a:elif="{{priceAll>=otherGoods[0]/100}}">已购满{{otherGoods[0]/100}}元,去结算获取优惠!</text>
     <text a:else>已购满{{otherGoods[otherGoods.indexOf(priceAll * 100) +1] / 100}}元,去结算享受换购优惠;满{{otherGoods[otherGoods.indexOf(priceAll * 100) -1] / 100}}元更高福利等着你!</text>
   </view> -->

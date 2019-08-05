@@ -1,6 +1,6 @@
 import {imageUrl,imageUrl2,ak} from '../../common/js/baseUrl'
 import {couponsExpire,MyNearbyShop,GetShopGoods} from '../../common/js/home'
-import {datedifference} from '../../common/js/time'
+import {datedifference,compare} from '../../common/js/time'
 var app = getApp();
 Component({
   mixins: [],
@@ -226,6 +226,9 @@ Component({
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
       }
+      console.log(this.props.fullActivity)
+      // let cur = this.props.fullActivity.push(priceAll).sort(compare);
+      // console.log(cur)
       this.setData({
         shopcartList: goodlist,
         shopcartAll,
@@ -293,8 +296,6 @@ Component({
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
       }
-      // priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price;
-      // shopcartNum = this.data.shopcartNum -1
       // 删除
       if(goodlist[`${code}_${format}`].num==0){
         shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)

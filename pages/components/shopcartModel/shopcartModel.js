@@ -188,6 +188,10 @@ Component({
           })
         },
       });
-    }
-  },
+    },
+    // activityModal(priceAll){
+    //   let curl = this.props.fullActivity.push(priceAll);
+    //   console.log(curl.sort(compare));
+    // }
+  }
 });
