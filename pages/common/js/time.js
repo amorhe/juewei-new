@@ -26,13 +26,16 @@ export const cur_dateTime = (start,end) => {
   }
 }
 
-// 比较两个数字大小
+// 比较两个数字大小,大到小
 export const compare = (property) => {
     return (a,b) => {
         var value1 = a[property];
         var value2 = b[property];
         return value2 - value1;
     }
+}
+export const sortNum =(a,b) =>{
+  return a - b
 }
 
 // 时间戳转时间

@@ -1,6 +1,6 @@
 import {imageUrl,imageUrl2,ak} from '../../common/js/baseUrl'
 import {couponsExpire,MyNearbyShop,GetShopGoods} from '../../common/js/home'
-import {datedifference,compare} from '../../common/js/time'
+import {datedifference,sortNum} from '../../common/js/time'
 var app = getApp();
 Component({
   mixins: [],
@@ -26,7 +26,9 @@ Component({
     priceAll:0,
     hide_good_box: true,
     shopcartAll:[],
-    shopcartNum:0
+    shopcartNum:0,
+    activityText:'',
+    index:0
   },
   onInit() {
     let goodlist = my.getStorageSync({
@@ -51,7 +53,8 @@ Component({
       shopcartAll,
       shopcartNum
     })
-
+    // 购物车上方活动提示
+    this.shopcartPrompt(this.props.fullActivity,priceAll);
 
     this.busPos = {};
     this.busPos['x'] = 10;
@@ -68,10 +71,9 @@ Component({
         })
       }
     })
-
   },
   deriveDataFromProps(nextProps){
-    // console.log(nextProps)
+    console.log(nextProps)
   },
   didUpdate() {
    
@@ -226,9 +228,9 @@ Component({
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
       }
-      console.log(this.props.fullActivity)
-      // let cur = this.props.fullActivity.push(priceAll).sort(compare);
-      // console.log(cur)
+      // 购物车活动提示
+      this.data.index ++;
+      this.shopcartPrompt(this.props.fullActivity,priceAll);
       this.setData({
         shopcartList: goodlist,
         shopcartAll,
@@ -308,13 +310,34 @@ Component({
         shopcartList:goodlist,
         shopcartAll,
         priceAll,
-        shopcartNum
+        shopcartNum,
+        index
       })
       console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
       });
+    },
+    // 购物车活动提示
+   shopcartPrompt(oldArr,priceAll){
+      let activityText = '';
+      for(let v of oldArr){
+        if(oldArr.findIndex(v => v>priceAll) != -1){
+          if(oldArr.findIndex(v => v>priceAll) == 0){
+            activityText=`只差${(oldArr[0] - priceAll)/100}元,超值福利等着你!`
+          }else if(oldArr.findIndex(v => v>priceAll) >0 && oldArr.findIndex(v => v>priceAll)< oldArr.length){
+            activityText = `已购满${oldArr[oldArr.findIndex(v => v>priceAll)-1] / 100}元,去结算享受换购优惠;满${oldArr[oldArr.findIndex(v => v>priceAll)] /100}元更高福利等着你!`
+          }else{
+            activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
+          }
+        }else{
+          activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
+        }
+      }
+      this.setData({
+        activityText
+      })
     },
     // 商品详情
     goodsdetailContent(e){

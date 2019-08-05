@@ -52,7 +52,6 @@ Page({
     type:1,   // 默认外卖
     shopGoods:[],   // 门店商品
     fullActivity:[],   // 购物车提示
-    activityText:''
   },
   onLoad() {
     my.getAuthCode({
@@ -274,7 +273,6 @@ Page({
         app.globalData.gifts = res.data.MARKUP.gifts;
         // 获取活动金额
         let newArr = Object.keys(res.data.MARKUP.gifts);
-        console.log(newArr)
         this.setData({
           fullActivity:newArr
         })
