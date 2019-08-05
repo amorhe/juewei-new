@@ -35,15 +35,15 @@
         </swiper-item>
       </block>
     </swiper>
-    <view class="title" a:if="{{positionList.length}}">
+    <view class="title" a:if="{{positionList.length}}" a:if="{{new_user.length}}">
       新人专享券包
     </view>
-    <view class="flex-space-b two">
+    <view class="flex-space-b two" a:if="{{new_user.length}}">
       <scroll-view scroll-x="{{true}}" class="new">
-       <view class="new_card" style="background-image:url({{imageUrl}}coupon_bg2.png)" a:for="{{10}}" a:for-item="itemName">
+       <view class="new_card" style="background-image:url({{imageUrl}}coupon_bg2.png)" a:for="{{new_user}}">
          <view class="new-left">
-           <text class="new-num">10 </text> <text class="new-yuan">元</text>
-           <view class="new-use">满68元可用</view>
+           <text class="new-num">{{item.money/100}} </text> <text class="new-yuan">元</text>
+           <view class="new-use">满{{item.full_money/100}}元可用</view>
          </view>
          <view class="new-right new-button" onTap="switchTo">
            立即使用
