@@ -35,9 +35,9 @@
               <view>
                 <view>
                   <text class="colorWhite fontTwentyTwo">更多使用规则</text>
-                  <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png" />
+                  <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png"/>
                 </view>
-                <image class="qr" src="{{imageUrl}}qrcode.png"  />
+                <image class="qr" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" onTap="showCode" />
               </view>
             </view>
             <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
@@ -75,3 +75,19 @@
   <image src="{{imageUrl}}exchange.png"/>
   <view>兑换优惠券</view>
 </navigator>
+
+<!-- 专享 -->
+<modal class="code-wrap" show="{{open2}}" showClose="{{ false }}">
+  <view class="code-head">
+    <image class="close" mode="scaleToFill" src="{{imageUrl}}close1.png" catchTap="closeModel"/>
+  </view>
+  <image class="code-img" mode="scaleToFill" src="{{codeImg}}"/>
+
+  <view class="code-phone">
+   {{phone.slice(0,3)}} **** {{phone.slice(7)}}
+  </view>
+
+  <view class="code-pay" onTap="wait">
+    确认支付
+  </view>
+</modal>

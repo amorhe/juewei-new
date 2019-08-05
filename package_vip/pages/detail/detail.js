@@ -52,7 +52,7 @@ Page({
 
   parseData,
 
-  onShow() {
+  onHide() {
     this.onModalClose()
   },
 

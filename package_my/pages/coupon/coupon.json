@@ -3,6 +3,7 @@
   "backgroundColor":"#f5f5f5",
   "usingComponents": {
     "tabs": "mini-antui/es/tabs/index",
-    "tab-content": "mini-antui/es/tabs/tab-content/index"
+    "tab-content": "mini-antui/es/tabs/tab-content/index",
+     "modal": "mini-antui/es/modal/index"
   }
 }
