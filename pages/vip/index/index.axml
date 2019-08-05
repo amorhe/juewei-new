@@ -1,7 +1,7 @@
 <view class="vip" onTap="hideToast">
   <!-- 头部 -->
   <view class="header-title-s" style="height:{{navHeight.titleBarHeight + navHeight.statusBarHeight}}px">
-    <text style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">VIP专享</text>
+    <text a:if="{{navHeight.statusBarHeight}}" style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">VIP专享</text>
   </view>
   <view style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px"></view>
   <image style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px" mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/>
@@ -36,9 +36,16 @@
       </block>
     </swiper>
     <view class="title" a:if="{{positionList.length}}">
+      新人专享券包
+    </view>
+    <view class="flex-space-b two">
+      <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
+        <image mode="scaleToFill" src="{{imageUrl2+ itemName.pic}}" data-url="{{itemName.url}}" onTap="linkTo"/>
+      </scroll-view>
+    </view>
+    <view class="title" a:if="{{positionList.length}}">
       为你推荐
     </view>
-    <!-- 轮播二 -->
     <view class="flex-space-b two">
       <scroll-view scroll-x="{{true}}" class="x" a:for="{{positionList}}" a:for-item="itemName">
         <image mode="scaleToFill" src="{{imageUrl2+ itemName.pic}}" data-url="{{itemName.url}}" onTap="linkTo"/>
@@ -102,7 +109,7 @@
         </view>
       </view>
       <view class="no-good" a:if="{{!goodsList.length}}">
-        <image mode="scaleToFill" src="{{imageUrl}}nogoods.png"/>
+        <image mode="scaleToFill" src="{{imageUrl}}nopoint.png"/>
         <view>更多精彩，敬请期待</view>
       </view>
     </view>

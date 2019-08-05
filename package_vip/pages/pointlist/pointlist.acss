@@ -132,3 +132,18 @@
   right: 0;
   margin: auto;
 }
+
+.no-good {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  text-align: center;
+  margin: 100rpx auto
+}
+
+.no-good image {
+  width: 280rpx;
+  height: 280rpx;
+  margin: 20rpx;
+}
