@@ -51,6 +51,8 @@ Page({
       FNPS: '蜂鸟配送', MTPS: '美团配送', ZPS: '自配送'
     },
 
+    timeArr:[],
+
     payStatusList: [],
     d: {}
   },
@@ -61,12 +63,12 @@ Page({
 
   contact,
 
-  closeModel(){
+  closeModel() {
     this.setData({
       showTop: false,
       cancleShow: false
     })
-    
+
   },
 
   /**
@@ -74,8 +76,30 @@ Page({
    */
   async getOrderDetail(order_no) {
     let res = await ajax('/juewei-api/order/detail', { order_no })
+    // //显示状态和时间的语句
+    // 1） 待支付，时间：data.order_ctime      //创建时间
+    // 2） 待取餐，时间：data.pay_time         //支付时间
+    // 3） 门店已接单，时间：data.get_time         //门店接单时间
+    // 4） 配送已接单，时间：data.dis_get_time     //物流接单时间
+    // 5） 骑手配送中，时间：data.dis_take_time    //配送员取货时间
+    // 6） 订单已完成，时间：data.dis_finish_time  //送达时间
+    // 7） 订单已取消，时间：data.cancel_time      //取消时间
+    let { order_ctime, pay_time, get_time, dis_get_time, dis_take_time, dis_finish_time, cancel_time } = res.data
+    let timeArr = Object
+      .values({ init: '0000-00-00 00:00:00', order_ctime, pay_time, get_time, dis_get_time, dis_take_time, dis_finish_time, cancel_time })
+      .map((time, item) => {
+        if (time != '0000-00-00 00:00:00') {
+          return item
+        }
+        return false
+      })
+    log(timeArr)
+  
     if (res.code === 0) {
-      this.setData({ d: res.data })
+      this.setData({ 
+        d: res.data,
+        timeArr
+         })
     }
   },
 
@@ -93,7 +117,7 @@ Page({
     })
   },
 
-  onHide(){
+  onHide() {
     this.closeModel()
   },
 
@@ -142,7 +166,7 @@ Page({
           }, 2000)
         },
       });
-    }else{
+    } else {
       this.closeModel()
       my.showToast({
         content: res.msg,
@@ -273,3 +297,46 @@ let data = {
   "shop_latitude": "39.916042",
   "order_no": "jwd0119070226362488" // 订单id
 }
+
+
+
+// data.order_status_info.order_status
+// 外卖显示数组
+// 0，等待支付   1
+// 1，支付成功   1,2
+// 2，商家接单/商家已确认 1,2,3
+// 3，正在配送/配送中    1,2,3,4,(判断5的时间是否存在，如果有显示5)
+// 4，确认收货/已送到/完成 1,2,3,4,5,6
+// 5，用户取消   1,7
+// 6，自动取消   1,7
+// 7，后台客服退单 1,2,7
+// 8，后台审核退单成功 1,7
+// 9，达达主动发起取消订单，1,2,3,7
+// 10：店pos取消 1,2,7
+
+
+// 例如 data.order_status_info.order_status=2
+// 页面显示   1,2,3
+
+// 待支付           00:00
+// 待取餐           00:10
+// 门店已接单       00:20
+
+
+// //显示状态和时间的语句
+// 1） 待支付，时间：data.order_ctime      //创建时间
+// 2） 待取餐，时间：data.pay_time         //支付时间
+// 6） 订单已完成，时间：data.dis_finish_time  //送达时间
+// 7） 订单已取消，时间：data.cancel_time      //取消时间
+// 自提显示数组
+// 0，等待支付 1
+// 1，支付成功 1,2
+// 2，商家接单/商家已确认 1,2
+// 3，正在配送/配送中 1,2
+// 4，确认收货/已送到/完成  1,2，6
+// 5，用户取消  1,7
+// 6，自动取消  1,7
+// 7，后台客服退单   1,2，7
+// 8，后台审核退单成功   1,2，7
+// 9，达达主动发起取消订单 1,2，7
+// 10：店pos取消   1,2，7
