@@ -6,8 +6,8 @@
     <text a:else>已购满{{otherGoods[otherGoods.indexOf(priceAll * 100) +1] / 100}}元,去结算享受换购优惠;满{{otherGoods[otherGoods.indexOf(priceAll * 100) -1] / 100}}元更高福利等着你!</text>
   </view> -->
   <view class="shopcart">
-    <image class="shopcarImage" a:if="{{shopcartAll==null || shopcartAll.length == 0}}" src="{{imageUrl}}shopcart_empty.png" />
-    <image onTap="openShopcart" a:if="{{shopcartAll!=null && shopcartAll.length>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <image class="shopcarImage" a:if="{{ shopcartNum== 0}}" src="{{imageUrl}}shopcart_empty.png" />
+    <image onTap="openShopcart" a:if="{{shopcartNum>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
     <view class="addcount" a:if="{{shopcartNum>0}}">{{shopcartNum}}</view>
     <view class="haveGoods">
       <view a:if="{{shopcartNum>0}}">
@@ -16,8 +16,8 @@
       </view>
       <view>另需配送费{{dispatch_price}}元</view>
     </view>
-    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartAll.length==0}}">￥{{send_price}}起送</view>
-    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>send_price && shopcartAll.length>0}}">去结算</view>
+    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartNum==0}}">￥{{send_price}}起送</view>
+    <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>=send_price && shopcartNum>0}}">去结算</view>
   </view>
   </view>
 </view>
@@ -37,14 +37,16 @@
         </view>
         <view>{{item.goods_format}}</view>
       </view>
-      <view class="goodsPriceBox">
-        <text class="goodsOldPrice" a:if="{{item.goods_original_price}}">￥{{item.goods_original_price/100}}</text>
-        <text class="numberColor">￥{{item.goods_price / 100}}</text>
-      </view>
-      <view class="goodsNumber">
-        <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
-        <text>{{item.num}}</text>
-        <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
+      <view class="flexNormal">
+        <view class="goodsPriceBox">
+          <!-- <text class="goodsOldPrice" a:if="{{item.goods_original_price}}">￥{{item.goods_original_price/100}}</text> -->
+          <text class="numberColor">￥{{item.num>item.goods_discount_user_limit?item.goods_discount_user_limit*item.goods_price/100 + (item.num-item.goods_discount_user_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
+        </view>
+        <view class="goodsNumber">
+          <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
+          <text>{{item.num}}</text>
+          <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
+        </view>
       </view>
     </view>
   </view>

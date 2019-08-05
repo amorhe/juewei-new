@@ -53,7 +53,12 @@ Page({
     shopGoods:[]   // 门店商品
   },
   onLoad() {
-    
+    my.getAuthCode({
+     scopes: ['auth_user','auth_life_msg'],
+     success: (res) => {
+         console.log(res)
+     },
+    });
   },
   onShow() {
       // 定位地址
@@ -314,6 +319,9 @@ Page({
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
       console.log(goodsArr)
+      this.setData({
+        shopGoodsAll:goodsNew
+      })
       // 判断购物车商品是否在当前门店内,不在的清除购物车
       let shopcartAll = my.getStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -340,9 +348,7 @@ Page({
         }
       }
       
-      this.setData({
-        shopGoodsAll:goodsNew
-      })
+      
       my.setStorageSync({
         key: 'goodsList',
         data: shopcartAll

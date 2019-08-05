@@ -190,4 +190,4 @@
 <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" onChangeShopcart="onchangeShopcart"/>
 
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>
+<goods-modal maskView="{{maskView}}" goodsKey="{{goodsKey}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>

@@ -88,3 +88,5 @@ export const add_lng_lat = (order_no,type,longitude,latitude) =>ajax(ajaxUrl.add
 export const getMarkActivity = (company_id,user_id) => ajax(ajaxUrl.getMarkActivity,{company_id,user_id});
 
 export const useraddressInfo = (address_id) => ajax(ajaxUrl.useraddressInfo,{address_id});
+
+export const AliMiniPay = (order_no) => ajax(ajaxUrl.AliMiniPay,{order_no});

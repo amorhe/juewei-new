@@ -467,10 +467,7 @@
   font-size: 22rpx
 } 
 .goodsPriceBox {
-  width: 126rpx;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center
+  margin-right: 88rpx;
 }
 .goodsOldPrice {
   color: #999;

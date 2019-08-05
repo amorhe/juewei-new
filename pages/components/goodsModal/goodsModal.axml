@@ -33,7 +33,7 @@
     class="{{size==999?'add_shopcart noChoose':'add_shopcart hasChoose'}}" disabled="{{size==999?'true':'false'}}" onTap="addshopcart" data-goods_code="{{goodsItem.goods_channel + goodsItem.goods_type + goodsItem.company_goods_id}}" 
     data-goods_format_all="{{goodsItem.goods_format}}" data-goods_format="{{sizeText}}" data-goods_price="{{price}}" data-goods_img="{{goodsItem.goods_small_img[0]}}" data-goods_name="{{goodsItem.goods_name}}" 
     data-taste_name="{{goodsItem.taste_name}}" data-goods_activity_code="{{goods_activity_code}}" data-goods_discount="{{goods_discount}}"
-    data-goods_original_price="{{goods_original_price}}" data-goods_discount_user_limit="{{goods_discount_user_limit}}" data-key="{{item.key}}">
+    data-goods_original_price="{{goods_original_price}}" data-goods_discount_user_limit="{{goods_discount_user_limit}}" data-key="{{goodsKey}}">
       <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}shopcart_1.png"/>
       <view class="marginLEight">加入购物车</view>
     </view>
@@ -41,7 +41,7 @@
     <view class="goodsNumber" a:if="{{goodsList[`${goodsItem.goods_channel}${goodsItem.goods_type}${goodsItem.company_goods_id}_${goodsItem.goods_format[size].type}`].num>0}}">
       <image a:if="{{goodsList[`${goodsItem.goods_channel}${goodsItem.goods_type}${goodsItem.company_goods_id}_${sizeText}`].num>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goods_code="{{goodsItem.goods_channel + goodsItem.goods_type + goodsItem.company_goods_id}}" data-goods_format="{{sizeText}}" data-goods_format_all="{{goodsItem.goods_format}}"/>
       <text a:if="{{goodsList[`${goodsItem.goods_channel}${goodsItem.goods_type}${goodsItem.company_goods_id}_${sizeText}`].num>0}}">{{goodsList[`${goodsItem.goods_channel}${goodsItem.goods_type}${goodsItem.company_goods_id}_${sizeText}`].num}}</text>
-      <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goods_code="{{goodsItem.goods_channel + goodsItem.goods_type + goodsItem.company_goods_id}}" data-goods_format="{{sizeText}}"  data-goods_format_all="{{goodsItem.goods_format}}"/>
+      <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goods_code="{{goodsItem.goods_channel + goodsItem.goods_type + goodsItem.company_goods_id}}" data-goods_format="{{sizeText}}" data-goods_format_all="{{goodsItem.goods_format}}" data-key="{{goodsKey}}"/>
       <!-- <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view> -->
     </view>
 

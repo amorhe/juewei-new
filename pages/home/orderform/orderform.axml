@@ -43,25 +43,25 @@
     <view class="ordershopName borderBottomSolid">{{shopObj.title}}</view>
     <view class="order_list">
       <view a:for="{{shopcartGoods}}">
-        <view class="listLeft">
-          <image class="ordergoodsImage" mode="scaleToFill" src="{{item.goods_img}}"/>
+        <view class="listLeft" a:if="{{!item.is_gifts}}">
+          <image  class="ordergoodsImage" mode="scaleToFill" src="{{item.good_img}}"/>
           <view>
             <view>
-              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_discount}}"/>
+              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_type=='DIS'}}"/>
               <text class="marginLEight">{{item.goods_name}}</text>
-              <text class="fontSmallGray" a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
+              <text class="fontSmallGray" a:if="{{item.taste_name}}">（{{item.goods_taste}}）</text>
             </view>
             <view class="fontSmallGray">{{item.goods_format}}</view>
-          </view>
+          </view> 
         </view>
-
+        <view class="listLeft" a:if="{{item.is_gifts}}">{{item.goods_name}}</view>
         <view class="listRight">
-          <view class="ordergoodsCount">x{{item.num}}</view>
+          <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
           <view class="flexNormal">
-            <view class="ordergoodsOld" a:if="{{item.goods_original_price / 100}}">
+            <!-- <view class="ordergoodsOld" a:if="{{item.goods_original_price / 100}}">
               <text class="fontTwentyTwo">￥</text>
               <text>{{item.goods_original_price / 100}}</text>
-            </view>
+            </view> -->
             <view>
               <text class="fontTwentyTwo">￥</text>
               <text>{{item.goods_price / 100}}</text>
@@ -74,13 +74,13 @@
     <view class="track">
       <text>配送费</text>
       <view>
-        <view class="ordergoodsOld">
+        <!-- <view class="ordergoodsOld">
           <text class="fontTwentyTwo">￥</text>
           <text>10</text>
-        </view>
+        </view> -->
         <view class="numberColor">
           <text class="fontTwentyTwo">￥</text>
-          <text>{{dispatch_price}}</text>
+          <text>{{orderInfo.dispatch_price/100}}</text>
         </view>
       </view>
     </view>
@@ -92,7 +92,7 @@
       <view>
         <view class="numberColor">
           <text class="fontTwentyTwo">-￥</text>
-          <text>8</text>
+          <text>{{orderInfo.full_reduce_price/100}}</text>
         </view>
       </view>
     </view>
@@ -102,7 +102,7 @@
         <text class="marginLSixteen">优惠券</text>
       </view>
       <view>
-        <text class="colorNine" a:if="{{couponsDefault==null}}">无可用红包</text>
+        <text class="colorNine" a:if="{{orderInfo.use_coupons.length==0}}">无可用红包</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
     </view>
@@ -123,11 +123,12 @@
       <view>
         <view class="fontTwentySix">
           <text>已优惠</text>
-          <text class="numberColor">¥35</text>
+          <text class="numberColor">¥{{orderInfo.goods_reduce_price/100}}</text>
         </view>
         <view class="marginLEight">
           <text class="fontTwentySix">小计¥</text>
-          <text class="fontFourtyWeight">{{priceAll/100}}</text>
+          <text class="fontFourtyWeight">{{orderInfo.allow_order_coupon_price
+/100}}</text>
         </view>
       </view>
     </view>
@@ -208,7 +209,7 @@
 
     <view class="repursePrice" a:if="{{repurseList.length>1}}">
       <text class="fontTwentySix">小计¥</text>
-      <text class="fontFourty fontBold">{{priceAll / 100}}</text>
+      <text class="fontFourty fontBold">{{orderInfo.allow_order_coupon_price / 100}}</text>
     </view>
   </view>
 
@@ -216,7 +217,7 @@
     <navigator url="/pages/home/orderform/remarks/remarks" class="flexNormal remarks paddingRTwenty">
       <view class="fontBold">备注</view>
       <view class="colorNine">
-        <text>口味偏好等要求</text>
+        <text class="remark">{{remark}}</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
     </navigator>
@@ -226,12 +227,12 @@
 <view class="null"></view>
 <!-- 底部支付 -->
 <view class="orderConfirm">
-  <view class="colorNine">已优惠¥3</view>
+  <view class="colorNine">已优惠¥{{orderInfo.full_reduce_price/100}}</view>
   <view class="orderPrimary">
     <view>
       <text>合计</text>
       <text class="numberColor">¥</text>
-      <text class="numberColor fontFourty fontBold">{{priceAll/100}}</text>
+      <text class="numberColor fontFourty fontBold">{{orderInfo.allow_order_coupon_price/100}}</text>
     </view>
     <button size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
   </view>

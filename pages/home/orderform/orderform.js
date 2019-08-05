@@ -1,5 +1,5 @@
 import {imageUrl} from '../../common/js/baseUrl'
-import {couponsList,confirmOrder,createOrder,useraddressInfo,add_lng_lat} from '../../common/js/home'
+import {couponsList,confirmOrder,createOrder,useraddressInfo,add_lng_lat,AliMiniPay} from '../../common/js/home'
 var app = getApp();
 Page({
   data: {
@@ -49,12 +49,11 @@ Page({
     priceAll:'',
     goodsInfo:'',
     addressInfo:{},
-    dispatch_price:0    // 配送费
+    dispatch_price:0,    // 配送费
+    remark:'口味偏好等要求'    // 备注
   },
   onLoad(e) {
-    // 获取商品
     this.setData({
-      shopcartGoods:app.globalData.goodsBuy,
       priceAll:app.globalData.priceAll,
       orderType:app.globalData.type,
       dispatch_price: app.globalData.dispatch_price
@@ -105,8 +104,15 @@ Page({
     for(let item of goodsList){
       item['goods_quantity'] = item['num']
     }
-    let goods = JSON.stringify(goodsList);
-    this.confirmOrder(shop_id,goods);
+    let goods = [],goodsObj = {};
+    app.globalData.goodsBuy.forEach(item => {
+      goodsObj['goods_code'] = item.goods_code;
+      goodsObj['goods_format'] = item.goods_format;
+      goodsObj['goods_quantity'] = item.goods_quantity;
+      goodsObj['goods_price'] = item.goods_price
+      goods.push(goodsObj)
+    })
+    this.confirmOrder(shop_id,JSON.stringify(goods));
   // 加购商品
     console.log(app.globalData.gifts);
     const gifts = app.globalData.gifts;
@@ -122,28 +128,15 @@ Page({
         })
      }
     }
-
-    // switch(this.data.type) {
-    //   case 0:
-    //     this.setData({
-    //       content: "有5个商品已失效，系统已清除，是否确认结算"
-    //     })
-    //      break;
-    //   case 1:
-    //     this.setData({
-    //       content: "有5个商品价格更新，系统已清更新，是否确认结算"
-    //     })
-    //      break;
-    //   case 2:
-    //     this.setData({
-    //       content: "有1个商品已失效，有5个商品价格更新，系统已清更新，是否确认结算"
-    //     })
-    //      break;
-    // }
   },
   onShow(){
     if(my.getStorageSync({key: 'address_id'}).data!=null) {
       this.getAddress(my.getStorageSync({key: 'address_id'}).data)
+    }
+    if(my.getStorageSync({key:'remark'}).data) {
+      this.setData({
+        remark:my.getStorageSync({key:'remark'}).data
+      })
     }
   },
   // 换购显示
@@ -191,18 +184,9 @@ Page({
   },
   // 确认支付
   confirmPay(){
-    let remark = '';
-    if(my.getStorageSync({key:'remark'}).data) {
-      remark = my.getStorageSync({key:'remark'}).data
-    }else{
-      remark = '';
-    }
     if(app.globalData.type == 2 && !this.data.isCheck){
       my.showToast({
-        content:'请同意到店自提协议',
-        success: (res) => {
-          
-        },
+        content:'请同意到店自提协议'
       });
       return
     }
@@ -230,32 +214,35 @@ Page({
     }
     const address_id = my.getStorageSync({key:'address_id'}).data;
     // 创建订单
-    createOrder(app.globalData.type,shop_id,goods,shop_id,11,remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
+    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
       console.log(res);
       if(res.code == 0){
-        // 支付宝调起支付
-        my.tradePay({
-          tradeNO: res.data.order_no, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
-          success: (res) => {
-           add_lng_lat(res.data.order_no,typeClass,lng,lat).then((conf) => {
-             console.log('成功',conf);
-             my.navigateTo({
-               url: '/pages/home/orderfinish/orderfinish', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
-               success: (res) => {
-                 
-               },
-             });
-           })
-          },
-          fail: (res) => {
-            my.navigateTo({
-               url: '/pages/home/orderError/orderError', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
-               success: (res) => {
-                 
-               },
+        AliMiniPay(res.data.order_no).then((val) => {
+          if(val.code==0){
+            // 支付宝调起支付
+            my.tradePay({
+              tradeNO: val.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+              success: (value) => {
+                // 支付成功
+                if(value.resultCode == 9000){
+                  add_lng_lat(res.data.order_no,typeClass,lng,lat).then((conf) => {
+                    my.reLaunch({
+                      url: '/pages/home/orderfinish/orderfinish?order_no=' + res.data.order_no, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+                    });
+                  })
+                }else if(value.resultCode == 4000){    // 支付失败
+                  my.reLaunch({
+                    url: '/pages/home/orderError/orderError', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+                  });
+                }else {
+                  my.redirectTo({
+                    url: '/package_order/pages/orderdetail/orderdetail?order_no=' + res.data.order_no, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+                  })
+                }
+              }
             });
           }
-        });
+        }) 
       }
     })
 
@@ -301,7 +288,30 @@ Page({
     confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
       console.log(res)    
       if(res.code == 0){
-
+        let goodsList = my.getStorageSync({key:'goodsList'}).data;
+        let goodsReal=[],goodsInvented=[],shopcartGoods=[]
+        for(let item of res.data.activity_list[''].goods_list){
+          if (item.is_gifts == 1&&item.goods_code=="") { 
+                goodsInvented.push(item)//赠品
+            } else if(item.is_gifts == 1&&item.goods_code!="") { 
+                if(item.gift_type==3||item.gift_type==4){
+                    goodsReal.push(item)
+                }else{
+                    goodsInvented.push(item)//赠品
+                }
+            }else { //非赠品
+                goodsReal.push(item)
+            } 
+        }
+        for(let val of goodsReal){
+          val['good_img'] = goodsList[`${val.goods_code}_${val.goods_format}`].goods_img;
+        }
+        shopcartGoods = [...goodsReal,...goodsInvented];
+        console.log(shopcartGoods)
+        this.setData({
+          shopcartGoods,
+          orderInfo:res.data.activity_list['']
+        })
       }else{
         this.setData({
           mask:true,

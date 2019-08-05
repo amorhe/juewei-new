@@ -28,7 +28,7 @@ Component({
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps){
-    // console.log(nextProps)
+    console.log(nextProps)
   },
   didUpdate() {
     
@@ -70,7 +70,7 @@ Component({
         app.globalData.goodsBuy = [];
         my.removeStorageSync({key:'goodsList'});
         this.props.onClear();
-        this.props.onChangeShopcart({},[],0);
+        this.props.onChangeShopcart({},[],0,0);
       }
     },
     onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum){
@@ -85,15 +85,23 @@ Component({
       goodlist[`${goods_code}_${goods_format}`].num +=1;
       let shopcartAll = [],priceAll=0,shopcartNum=0;
       for(let keys in goodlist){
-        priceAll += goodlist[`${goods_code}_${goods_format}`].goods_price * goodlist[`${goods_code}_${goods_format}`].num,
-        shopcartAll.push(goodlist[keys]),
-        shopcartNum += goodlist[`${goods_code}_${goods_format}`].num
+        if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+          my.showToast({
+            content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
+          });
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
+        }else{
+          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        shopcartAll.push(goodlist[keys]);
+        shopcartNum += goodlist[keys].num
       }
       let arr = shopcartAll.filter(item => item.goods_code == goods_code)
       for(let item of arr){
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum +=1;
       }
       this.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum)
+      console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist // 要缓存的数据
@@ -107,8 +115,15 @@ Component({
       goodlist[`${code}_${format}`].num -=1;
       // 删除
       let shopcartAll = [],priceAll=0,shopcartNum=0;
-      priceAll = this.props.priceAll - goodlist[`${code}_${format}`].goods_price;
-      shopcartNum = this.props.shopcartNum - 1
+      for(let keys in goodlist){
+        if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
+        }else{
+          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        shopcartAll.push(goodlist[keys]);
+        shopcartNum += goodlist[keys].num
+      }
       let arr = this.props.shopcartAll.filter(item => item.goods_code == code)
       for(let item of arr){
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum -=1;
@@ -116,13 +131,8 @@ Component({
       if(goodlist[`${code}_${format}`].num==0){
         shopcartAll = this.props.shopcartAll.filter(item => `${item.goods_code}_${item.goods_format}` != `${code}_${format}`)
         delete(goodlist[`${code}_${format}`]);
-        this.setData({
-          mask: false,
-          modalShow: false,
-          showShopcar:false,
-          mask1: false
-        })
       }else{
+        shopcartAll = [];
         for(let keys in goodlist){
           shopcartAll.push(goodlist[keys])
         }

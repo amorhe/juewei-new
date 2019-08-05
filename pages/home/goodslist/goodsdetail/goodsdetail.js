@@ -59,28 +59,36 @@ Page({
     shopcartAll:[],
     priceAll:0,
     goodsLast:'',
-    shopcartNum:0
+    shopcartNum:0,
+    goodsKey:''
   },
   onLoad(e) {
     let goods = my.getStorageSync({
       key: 'shopGoods'
     }).data;
-    let shopcartList = my.getStorageSync({key:'goodsList'}).data;
-    let goodsInfo = {},priceAll = 0,shopcartAll = [];
+    let goodlist = my.getStorageSync({key:'goodsList'}).data;
+    let goodsInfo = {},priceAll = 0,shopcartAll = [],shopcartNum=0;
     for(let value of goods){
       if(value.goods_code==e.goods_code){
         goodsInfo = value
       }
     }
-    for(let keys in shopcartList){
-      priceAll += shopcartList[keys].goods_price * shopcartList[keys].num,
-      shopcartAll.push(shopcartList[keys]);
+    for(let keys in goodlist){
+      if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
+      }else{
+        priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+      }
+      shopcartAll.push(goodlist[keys]);
+      shopcartNum += goodlist[keys].num;
     }
     this.setData({
       goodsInfo,
-      shopcartList,
+      shopcartList:goodlist,
       priceAll,
-      shopcartAll
+      shopcartAll,
+      shopcartNum,
+      goodsKey: e.goodsKey
     })
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
     this.getCommentList(goodsInfo.goods_code,1,10);
@@ -93,21 +101,23 @@ Page({
     })
   },
   // sku商品
-  onCart(shopcartList,shopcartAll,priceAll){
+  onCart(shopcartList,shopcartAll,priceAll,shopcartNum){
     this.setData({
       shopcartList,
       shopcartAll,
-      priceAll
+      priceAll,
+      shopcartNum
     })
   },
   // 购物车
-  onchangeShopcart(goodlist,shopcartAll,priceAll){
+  onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum){
     this.setData({
       shopcartList:goodlist,
       shopcartAll,
-      priceAll
+      priceAll,
+      shopcartNum
     })
-    this.onCart(goodlist,shopcartAll,priceAll)
+    this.onCart(goodlist,shopcartAll,priceAll,shopcartNum)
   },
   addshopcart(e){
     let goods_car={};
@@ -120,18 +130,7 @@ Page({
       goodlist[`${goods_code}_${goods_format}`].sumnum+=1;
     }else{
       let oneGood ={};
-      if(e.currentTarget.dataset.key !="折扣"|| e.currentTarget.dataset.key!="套餐"){
-        oneGood = {
-          "goods_name": e.currentTarget.dataset.goods_name,
-          "taste_name": e.currentTarget.dataset.taste_name,
-          "goods_price": e.currentTarget.dataset.goods_price * 100,
-          "num": 1,
-          "sumnum": 1,
-          "goods_code": e.currentTarget.dataset.goods_code,
-          "goods_format": goods_format,
-          "goods_img": e.currentTarget.dataset.goods_img
-        }
-      }else{
+      if(e.currentTarget.dataset.key =="折扣"){
         oneGood = {
           "goods_name": e.currentTarget.dataset.goods_name,
           "taste_name": e.currentTarget.dataset.taste_name,
@@ -146,14 +145,29 @@ Page({
           "goods_format": goods_format,
           "goods_img": e.currentTarget.dataset.goods_img
         }
+      }else{
+        oneGood = {
+          "goods_name": e.currentTarget.dataset.goods_name,
+          "taste_name": e.currentTarget.dataset.taste_name,
+          "goods_price": e.currentTarget.dataset.goods_price * 100,
+          "num": 1,
+          "sumnum": 1,
+          "goods_code": e.currentTarget.dataset.goods_code,
+          "goods_format": goods_format,
+          "goods_img": e.currentTarget.dataset.goods_img
+        }
       }
       goodlist[`${goods_code}_${goods_format}`]  = oneGood;
     }
     let shopcartAll = [],priceAll=0,shopcartNum=0;
-    for(let keys in goodlist){
-      priceAll += goodlist[keys].goods_price * goodlist[keys].num,
-      shopcartAll.push(goodlist[keys]),
-      shopcartNum += goodlist[keys].num
+    for(let keys in shopcartList){
+      if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
+      }else{
+        priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+      }
+      shopcartAll.push(goodlist[keys]);
+      shopcartNum += goodlist[keys].num;
     }
     this.setData({
       shopcartList: goodlist,
@@ -212,8 +226,17 @@ Page({
     let shopcartAll = [],priceAll=0,shopcartNum=0;
     goodlist[`${code}_${format}`].num -=1;
     goodlist[`${code}_${format}`].sumnum -= 1;
-    priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price;
-    shopcartNum = this.data.shopcartNum -1
+    for(let keys in shopcartList){
+      if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
+      }else{
+        priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+      }
+      shopcartAll.push(goodlist[keys]);
+      shopcartNum += goodlist[keys].num;
+    }
+    // priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price;
+    // shopcartNum = this.data.shopcartNum -1
     // 删除
     if(goodlist[`${code}_${format}`].num==0){
       shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)

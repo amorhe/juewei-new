@@ -228,3 +228,10 @@
   display: flex;
   flex-direction: column
 }
+.remark {
+  width: 500rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}

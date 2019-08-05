@@ -3,7 +3,7 @@
     <image class="successIcon" mode="scaleToFill" src="{{imageUrl}}success.png"/>
     <view class="fontThirtyFour">支付成功</view>
   </view>
-  <button size="default" class="checkOrder" hover-class="none">查看订单</button>
+  <button size="default" class="checkOrder" hover-class="none" onTap="checkOrder">查看订单</button>
   <view class="adView">
     <image mode="scaleToFill" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2045857670,768370412&fm=26&gp=0.jpg"/>
   </view>
