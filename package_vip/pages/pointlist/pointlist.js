@@ -7,7 +7,9 @@ Page({
     list: [],
     toast:false,
     pagenum:1,
-    pagesize:10
+    pagesize:10,
+
+    finish:false
   },
   async onLoad() {
     await this.getDetail(1)
@@ -34,7 +36,8 @@ Page({
       if(res.data.pagination.lastLage < pagenum){return}
       if(res.data.data.length == 0){return}
       this.setData({
-        list: [...list,...res.data.data]
+        list: [...list,...res.data.data],
+        finish:true
       })
     }
   },

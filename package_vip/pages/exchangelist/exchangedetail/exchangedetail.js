@@ -1,5 +1,5 @@
 import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log, getSid ,handleCopy,guide,contact,getNavHeight} from '../../../../pages/common/js/li-ajax'
+import { ajax, parseData, log, getSid, handleCopy, guide, contact, getNavHeight } from '../../../../pages/common/js/li-ajax'
 
 const app = getApp()
 
@@ -136,7 +136,6 @@ Page({
           --remaining_pay_minute
           remaining_pay_second = 59
         }
-        log(remaining_pay_second)
         this.setData({
           _exchange_intro,
           _intro,
@@ -271,8 +270,7 @@ Page({
    */
   toTakeOut() {
     app.globalData.type = 2
-    log(app.globalData.type)
-    my.navigateTo({
+    my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     });
   },
@@ -284,7 +282,7 @@ Page({
     app.globalData.type = 1
     log(app.globalData.type)
 
-    my.navigateTo({
+    my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     });
   },
@@ -309,7 +307,7 @@ Page({
 
   showCancel() {
     this.setData({
-      cancleShow : true
+      cancleShow: true
     })
   },
   /**
