@@ -76,9 +76,13 @@ Page({
               arr.push(item.shop_id)
             })
             that.data.shop_id = arr.join(',')
+            if (that.data.shop_id === '') {
+              this.setData({
+                modalidShow: true
+              })
+            }
           },
         });
-        console.log(address, 'address')
         that.setData({
           province: res.province,
           city: res.city,
@@ -294,7 +298,7 @@ Page({
       }
       updateaddress(data).then(res => {
         if (res.code == 0) {
-          my.showLoading();
+          my.hideLoading();
           my.navigateBack({
             url: '/package_my/pages/myaddress/myaddress'
           });
@@ -325,7 +329,7 @@ Page({
       }
       addressCreate(data).then(res => {
         if (res.code == 0) {
-          my.showLoading();
+          my.hideLoading();
           if (this.data.order == 1) {
             my.navigateBack({
               url: '/pages/home/orderform/selectaddress/selectaddress'
