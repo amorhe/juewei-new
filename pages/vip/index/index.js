@@ -54,7 +54,8 @@ Page({
 
     let company_id = my.getStorageSync({
       key: 'takeout', // 缓存数据的key
-    }).data[0].company_sale_id || 1;
+    })
+    company_id = company_id.data?company_id.data[0].company_sale_id : 1;
 
     log(app)
 
@@ -153,6 +154,9 @@ Page({
     let positionListOption = { city_id, district_id, company_id, release_channel }
     let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
     if (res.code === 100) {
+      if(!res.data.length){
+        return
+      }
       let { pic_src, link_url } = res.data[0];
       let positionList = pic_src.map((pic, index) => {
         return {
