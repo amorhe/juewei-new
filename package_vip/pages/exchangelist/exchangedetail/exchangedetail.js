@@ -93,6 +93,7 @@ Page({
   onUnload() {
     clearInterval(this.data.a)
     this.setData({ a: -1 })
+    this.setData=()=>{}
   },
 
 
@@ -100,6 +101,7 @@ Page({
     this.closeModel()
     clearInterval(this.data.a)
     this.setData({ a: -1 })
+    this.setData=()=>{}
   },
 
   guide,

@@ -75,11 +75,15 @@ Page({
   onUnload() {
     clearInterval(this.data.a)
     this.setData({ a: -1 })
+    this.setData = () => { }
+
   },
 
   onHide() {
     clearInterval(this.data.a)
     this.setData({ a: -1 })
+    this.setData = () => { }
+
   },
 
   /**
