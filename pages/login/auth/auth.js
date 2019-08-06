@@ -12,6 +12,9 @@ Page({
     imgUrl: ''
   },
   onLoad() {
+
+  },
+  onShow() {
     this.getAliId()
   },
   openModal() {
@@ -201,7 +204,7 @@ Page({
         }
         decryptPhone(data).then(res => {
           if (res.code == 0) {
-            that.loginByAuthFn(ali_uid, res.data.phone);
+            that.loginByAuthFn(that.data.ali_uid, res.data.phone);
           }
         })
       },
