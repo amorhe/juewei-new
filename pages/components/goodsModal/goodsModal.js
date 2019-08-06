@@ -190,6 +190,7 @@ Component({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
       });
-    }
+    },
+    
   },
 });

@@ -1,5 +1,6 @@
 import {imageUrl,imageUrl2} from '../../../common/js/baseUrl'
 import {commentList,DispatchCommentList} from '../../../common/js/home'
+var app = getApp();
 Page({
   data: {
     activeTab:0,
@@ -60,7 +61,10 @@ Page({
     priceAll:0,
     goodsLast:'',
     shopcartNum:0,
-    goodsKey:''
+    goodsKey:'',
+    activityText:'',
+    pagenum:1,
+    pagesize:10
   },
   onLoad(e) {
     let goods = my.getStorageSync({
@@ -91,8 +95,12 @@ Page({
       goodsKey: e.goodsKey
     })
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
-    this.getCommentList(goodsInfo.goods_code,1,10);
-    this.getDispatchCommentList(shop_id,1,10)
+    // 购物车活动提示
+    // console.log(app.globalData.fullActivity)
+    this.shopcartPrompt(app.globalData.fullActivity,priceAll)
+    // 评论
+    this.getCommentList(goodsInfo.goods_code,this.data.pagenum,this.data.pagesize);
+    this.getDispatchCommentList(shop_id,this.data.pagenum,this.data.pagesize)
   },
   closeModal(data){
     this.setData({
@@ -160,7 +168,7 @@ Page({
       goodlist[`${goods_code}_${goods_format}`]  = oneGood;
     }
     let shopcartAll = [],priceAll=0,shopcartNum=0;
-    for(let keys in shopcartList){
+    for(let keys in goodlist){
       if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
@@ -169,6 +177,8 @@ Page({
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num;
     }
+    // 购物车活动提示
+    this.shopcartPrompt(app.globalData.fullActivity,priceAll);
     this.setData({
       shopcartList: goodlist,
       shopcartAll,
@@ -226,7 +236,7 @@ Page({
     let shopcartAll = [],priceAll=0,shopcartNum=0;
     goodlist[`${code}_${format}`].num -=1;
     goodlist[`${code}_${format}`].sumnum -= 1;
-    for(let keys in shopcartList){
+    for(let keys in goodlist){
       if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
@@ -235,16 +245,13 @@ Page({
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num;
     }
-    // priceAll = this.data.priceAll - goodlist[`${code}_${format}`].goods_price;
-    // shopcartNum = this.data.shopcartNum -1
     // 删除
     if(goodlist[`${code}_${format}`].num==0){
       shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)
       delete(goodlist[`${code}_${format}`]);
-    }else{
-        shopcartAll = this.data.shopcartAll
     }
-    
+    // 购物车活动提示
+    this.shopcartPrompt(app.globalData.fullActivity,priceAll);
     this.setData({
       shopcartList:goodlist,
       shopcartAll,
@@ -256,6 +263,27 @@ Page({
       data: goodlist, // 要缓存的数据
     });
   }, 
+  // 购物车活动提示
+  shopcartPrompt(oldArr,priceAll){
+    let activityText = '';
+    for(let v of oldArr){
+      if(oldArr.findIndex(v => v>priceAll) != -1){
+        if(oldArr.findIndex(v => v>priceAll) == 0){
+          activityText=`只差${(oldArr[0] - priceAll)/100}元,超值福利等着你!`
+        }else if(oldArr.findIndex(v => v>priceAll) >0 && oldArr.findIndex(v => v>priceAll)< oldArr.length){
+          activityText = `已购满${oldArr[oldArr.findIndex(v => v>priceAll)-1] / 100}元,去结算享受换购优惠;满${oldArr[oldArr.findIndex(v => v>priceAll)] /100}元更高福利等着你!`
+        }else{
+          activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
+        }
+      }else{
+        activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
+      }
+    }
+    // console.log(activityText)
+    this.setData({
+      activityText
+    })
+  },
   // 清空购物车
   onClear(){
     this.setData({
@@ -270,6 +298,7 @@ Page({
   tabChange({index}) {
     this.setData({
       tabActive: index,
+      pagenum:1
     });
   },
   // 商品评价
@@ -277,7 +306,7 @@ Page({
     commentList(goods_code,pagenum,pagesize,1).then((res) => {
       console.log(res)
       this.setData({
-        commentArr:res
+        commentArr:[...res,...this.data.commentArr]
       })
     })
   },
@@ -286,7 +315,7 @@ Page({
     DispatchCommentList(shop_id,pagenum,pagesize,1).then((res) => {
       console.log(res);
       this.setData({
-        dispatchArr:res
+        dispatchArr:[...res,...this.data.dispatchArr]
       })
     })
   },
@@ -304,4 +333,9 @@ Page({
       goodsItem: e.currentTarget.dataset.item
     })
   },
+  onReachBottom(){
+    this.data.pagenum++;
+    this.getCommentList(goodsInfo.goods_code,this.data.pagenum,this.data.pagesize);
+    this.getDispatchCommentList(shop_id,this.data.pagenum,this.data.pagesize)
+  }
 });

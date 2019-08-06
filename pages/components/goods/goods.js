@@ -16,7 +16,7 @@ Component({
       money: 7,
       days:1
     },          // 优惠券过期提醒     
-    isShow: true,  // 优惠券过期提醒是否显示
+    isShow: false,  // 优惠券过期提醒是否显示
     companyGoodsList:[],   //公司所有商品
     activityAllObj:[],
     windowHeight:'',
@@ -28,7 +28,6 @@ Component({
     shopcartAll:[],
     shopcartNum:0,
     activityText:'',
-    index:0
   },
   onInit() {
     let goodlist = my.getStorageSync({
@@ -59,6 +58,10 @@ Component({
     this.busPos['y'] = app.globalData.hh - 16;
     console.log('购物车坐标',this.busPos)
   },
+  deriveDataFromProps(nextProps){
+    // console.log(nextProps)
+    this.shopcartPrompt(this.props.fullActivity,this.data.priceAll)
+  },
   didMount() {
     const _sid = my.getStorageSync({key: '_sid'});
     this.getcouponsExpire(_sid.data);
@@ -69,9 +72,6 @@ Component({
         })
       }
     })
-  },
-  deriveDataFromProps(nextProps){
-    // console.log(nextProps)
   },
   didUpdate() {
    
@@ -110,7 +110,8 @@ Component({
       couponsExpire(_sid).then((res) => {
         res.data.days = datedifference(res.data.start_time,res.data.end_time)
         this.setData({
-          couponsExpire:res.data
+          couponsExpire:res.data,
+          isShow:true
         })
         
       })
@@ -226,8 +227,6 @@ Component({
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
       }
-      // 购物车活动提示
-      this.shopcartPrompt(app.globalData.fullActivity,priceAll);
 
       this.setData({
         shopcartList: goodlist,
@@ -300,16 +299,13 @@ Component({
       if(goodlist[`${code}_${format}`].num==0){
         shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)
         delete(goodlist[`${code}_${format}`]);
-      }else{
-         shopcartAll = this.data.shopcartAll
       }
-      
+
       this.setData({
         shopcartList:goodlist,
         shopcartAll,
         priceAll,
-        shopcartNum,
-        index
+        shopcartNum
       })
       console.log(goodlist)
       my.setStorageSync({
@@ -341,7 +337,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code + '&goodsKey=' + e.currentTarget.dataset.key 
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code + '&goodsKey=' + e.currentTarget.dataset.key
       });
     },
     // 清空购物车
