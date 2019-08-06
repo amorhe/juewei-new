@@ -20,6 +20,7 @@
 <!-- 购物车弹框 -->
 <view a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
   <!-- <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view> -->
+  <view class="fullReduce fontSmall">{{activityText}}</view>
   <view class="clearShopcar" onTap="clearShopcart">
     <image src="{{imageUrl}}deleteIcon.png" />
     <text>清空购物车</text>
