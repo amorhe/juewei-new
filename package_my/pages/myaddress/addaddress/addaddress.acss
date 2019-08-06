@@ -183,7 +183,7 @@ input {
 
 .post-name {
   display: flex;
-  align-items: baseline;
+  /* align-items: baseline; */
 }
 
 .post-name-left {

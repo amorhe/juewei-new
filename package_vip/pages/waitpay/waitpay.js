@@ -74,10 +74,16 @@ Page({
 
   onUnload() {
     clearInterval(this.data.a)
+    this.setData({ a: -1 })
+    this.setData = () => { }
+
   },
 
   onHide() {
     clearInterval(this.data.a)
+    this.setData({ a: -1 })
+    this.setData = () => { }
+
   },
 
   /**
@@ -217,7 +223,7 @@ Page({
     let lat = my.getStorageSync({ key: 'lat' }).data;
     let lng = my.getStorageSync({ key: 'lng' }).data;
     if (!lat || !lng) {
-      let { longitude,latitude } = await getAddressId()
+      let { longitude, latitude } = await getAddressId()
       lat = latitude
       lng = longitude
     }

@@ -68,7 +68,7 @@ Page({
     //   "code": ""
     //   ,
 
-    //   a: ''
+      time: '',
 
     // },
 
@@ -91,13 +91,16 @@ Page({
   },
 
   onUnload() {
-    clearInterval(this.data.a)
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
+    this.setData=()=>{}
   },
 
 
   onHide() {
     this.closeModel()
-    clearInterval(this.data.a)
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
   },
 
   guide,
@@ -123,8 +126,8 @@ Page({
       // }
 
       let { remaining_pay_minute, remaining_pay_second, ...item } = res.data
-      let { a } = this.data
-      a = setInterval(() => {
+      let { time } = this.data
+      time = setInterval(() => {
         --remaining_pay_second
         if (remaining_pay_minute === 0 && remaining_pay_second == 0) {
           return clearInterval(a)
@@ -137,7 +140,7 @@ Page({
           _exchange_intro,
           _intro,
           detail: { ...item, remaining_pay_second, remaining_pay_minute },
-          a
+          time
         })
       }, 1000)
     }

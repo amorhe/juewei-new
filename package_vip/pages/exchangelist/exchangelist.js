@@ -18,12 +18,14 @@ Page({
 
     time: ''
   },
+
   async onLoad() {
     await this.getOrderList(1)
   },
   onUnload() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
+    this.setData=()=>{}
   },
   onHide() {
     clearInterval(this.data.time)
@@ -31,7 +33,7 @@ Page({
   },
 
   /**
-  * @function 获取更对订单信息
+  * @function 获取更多订单信息
   */
   // 页面被拉到底部
   async onReachBottom() {
@@ -45,7 +47,7 @@ Page({
         this.setData({
           page_num
         })
-      })
+      },300)
     })
   },
 
