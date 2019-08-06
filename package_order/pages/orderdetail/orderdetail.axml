@@ -201,18 +201,18 @@
   </view>
 </view>
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
-  <view style="height: 518rpx; background: #fff">
+  <view style="background: #fff">
     <view class="order-trace">订单跟踪 <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
     <view class="order-trace-ul">
-      <view class="order-trace-li">
+      <view class="order-trace-li" a:for="{{curOrderState}}">
         <view class="order-trace-left">
-          <image mode="scaleToFill" src="{{imageUrl}}order1.png"/>
-          <image mode="scaleToFill" src="{{imageUrl}}order3.png"/>
-          <view class="order-trace-state">已提交</view>
+          <image mode="scaleToFill" src="{{imageUrl}}order1.png" a:if="{{curOrderState.length - 1 != index}}"/>
+          <image mode="scaleToFill" src="{{imageUrl}}order3.png" a:if="{{curOrderState.length - 1 == index}}"/>
+          <view class="order-trace-state {{curOrderState.length - 1 == index?'active':''}}">{{item.state}}</view>
          
         </view>
         <view class="order-trace-right">
-           <view class="order-trace-time">12:00</view>
+           <view class="order-trace-time {{curOrderState.length - 1 == index?'active':''}}" >{{item.time.split(' ')[1]}}</view>
         </view>
       </view>
     </view>

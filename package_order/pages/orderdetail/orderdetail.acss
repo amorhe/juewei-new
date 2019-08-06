@@ -343,12 +343,28 @@ view.pay {
 
 .order-trace-li {
   display: flex;
-  align-items: center
+  align-items: center;
+  margin-bottom: 40rpx;
 }
 
 .order-trace-left {
   display: flex;
   flex: 1
+}
+
+.order-trace-state,.order-trace-time {
+font-size:28rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(153,153,153,1);
+margin-left: 10rpx;
+}
+
+.order-trace-state.active,.order-trace-time.active{
+font-size:28rpx;
+font-family:PingFangSC-Semibold;
+font-weight:600;
+color:rgba(51,51,51,1);
 }
 
 .order-trace-left image {
