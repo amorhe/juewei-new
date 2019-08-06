@@ -14,9 +14,9 @@
   </view>
 
   <view class="vipView">
-    <view class="flexNormal">
+    <view class="flexNormal" onTap="toUrl" data-url="/package_my/pages/membercard/membercard">
       <view>会员卡</view>
-      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png" onTap="toUrl" data-url="/package_my/pages/membercard/membercard"/>
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png"/>
     </view>
      <image class="vipcardPng" mode="scaleToFill" src="{{imageUrl}}position_tit.png"/>
      <image class="qingxie" mode="scaleToFill" src="{{imageUrl}}my_cardbg.png"/>
