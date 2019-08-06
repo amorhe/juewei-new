@@ -1,11 +1,11 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, log, contact ,isloginFn} from '../../common/js/li-ajax'
+import { ajax, log, contact, isloginFn } from '../../common/js/li-ajax'
 
 
 Page({
   data: {
     imageUrl,
-    loginOpened:false,
+    loginOpened: false,
     menuList: [
       { key: '官方外卖订单', value: '' },
       { key: '门店自提订单', value: '' }
@@ -53,9 +53,17 @@ Page({
     const { page } = this.data
     await this.getOrderList(page)
   },
-
-  onHide(){
+  onUnload() {
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
+    this.setData = () => { }
+  },
+  onHide() {
     this.onModalClose()
+
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
+    this.setData = () => { }
   },
 
   contact,
@@ -85,20 +93,45 @@ Page({
    * @function 获取订单列表
    */
   async getOrderList(page) {
+
     let { listAll } = this.data
+
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page }, 'GET')
     if (code === 0) {
+
+      let { time } = this.data
       listAll = [...data, ...listAll]
-      let takeOutList = listAll.filter(({ dis_type }) => dis_type == 1)
-      let pickUpList = listAll.filter(({ dis_type }) => dis_type == 2)
-      this.setData({
-        takeOutList,
-        pickUpList,
-        listAll
-      })
+      time = setInterval(() => {
+        listAll = listAll.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
+          remaining_pay_second--
+          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+            return clearInterval(time)
+          }
+          if (remaining_pay_second <= 0) {
+            --remaining_pay_minute
+            remaining_pay_second = 59
+          }
+          return {
+            remaining_pay_minute,
+            remaining_pay_second,
+            ...item,
+          }
+        })
+        let takeOutList = listAll.filter(({ dis_type }) => dis_type == 1)
+        let pickUpList = listAll.filter(({ dis_type }) => dis_type == 2)
+        this.setData({
+          takeOutList,
+          pickUpList,
+          listAll,
+          finish: true,
+          time,
+        }, () => my.hideLoading())
+
+      }, 1000)
+
     } else {
       this.setData({
-        loginOpened:true
+        loginOpened: true
       })
     }
   },
@@ -109,12 +142,19 @@ Page({
 
   async onReachBottom() {
     // 页面被拉到底部
-    let { page } = this.data
-    ++page
-    await this.getOrderList(page)
-    this.setData({
-      page
+    clearInterval(this.data.time)
+    my.showLoading({ content: '加载中...' });
+    this.setData({ time: -1 }, async () => {
+      setTimeout(async () => {
+        let { page } = this.data
+        ++page
+        await this.getOrderList(page)
+        this.setData({
+          page
+        })
+      }, 300)
     })
+
   },
 
   /**

@@ -46,8 +46,8 @@ Page({
         await this.getOrderList(page_num)
         this.setData({
           page_num
-        },1000)
-      })
+        })
+      },300)
     })
   },
 
