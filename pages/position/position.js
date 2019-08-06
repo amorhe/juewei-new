@@ -35,7 +35,7 @@ Page({
         app.globalData.address =  res.streetNumber.street;
         app.globalData.position = res;
         that.getLbsShop();
-        that.getNearbyShop();
+        // that.getNearbyShop();
         that.setData({
           city:res.city
         })
@@ -78,6 +78,7 @@ Page({
         const shopArray = shopArr1.concat(shopArr2);
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+        this.getNearbyShop();
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
         })
@@ -119,7 +120,7 @@ Page({
                   content: "当前定位地址无可浏览的门店，请切换地址！",
                   success: (res) => {
                     my.navigateTo({
-                      url: '/pages/home/selecttarget/selecttarget'
+                      url: '/pages/home/selecttarget/selecttarget?type=true'
                     });
                   },  
                 });
@@ -150,6 +151,10 @@ Page({
         }
       }
       const shopArray = shopArr1.concat(shopArr2);
+      app.globalData.type = 2;
+      my.switchTab({
+        url: '/pages/home/goodslist/goodslist'
+      })
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     })
@@ -163,10 +168,10 @@ Page({
         mask:e.mask,
         type:2
       })
-       this.getLbsShop();
+       this.getNearbyShop();
     }else{
       my.navigateTo({
-        url: '/pages/home/selecttarget/selecttarget?type=error'
+        url: '/pages/home/selecttarget/selecttarget?type=true'
       });
     }
   },

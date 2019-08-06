@@ -82,23 +82,28 @@ Page({
           key: 'lng', // 缓存数据的key
           data: mapPosition.bd_lng, // 要缓存的数据
         });
-        // app.globalData.province = res.province;
-        // app.globalData.city = res.city;
-        app.globalData.address1 = res.streetNumber.street;
-        console.log(res)
+        app.globalData.address = res.streetNumber.street;
+        my.showToast({
+          content:'定位成功！'
+        })
         that.setData({
           city:res.city,
           addressIng: res.streetNumber.street,
           info:res
         })
-        that.getLbsShop(mapPosition.bd_lng,mapPosition.bd_lat);
+        // that.getLbsShop(mapPosition.bd_lng,mapPosition.bd_lat);
+      },
+      fail(){
+        this.setData({
+          error:false
+        })
       }
     })
   },
   switchAddress(e){
     console.log(e)
     let mapPosition = '';
-    switch(e.currentTarget.type){
+    switch(e.currentTarget.dataset.type){
       case 1:
         mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude,e.currentTarget.dataset.info.latitude);
         break;
@@ -193,7 +198,7 @@ Page({
       url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=${str}`,
       success: (res) => {
         // 3公里有门店
-        if (res.data.contents.length > 0) {
+        if (res.data.contents && res.data.contents.length > 0) {
           this.getSelf(res.data.contents)
         } else {
           // 没有扩大搜索范围到100公里

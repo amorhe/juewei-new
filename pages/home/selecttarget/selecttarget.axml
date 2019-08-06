@@ -21,8 +21,8 @@
   <view class="positionTxt">
     <view onTap="switchAddress" data-info="{{info}}" data-type="1">
       <image src="{{imageUrl}}position.png"/>
-      <text a:if="{{!error}}">{{addressIng}}</text>
-      <text a:if="{{error}}">定位失败</text>
+      <text a:if="{{error}}">{{addressIng}}</text>
+      <text a:if="{{!error}}">定位失败</text>
     </view>
     <view class="numberColor fontTwentySix" onTap="rePosition">重新定位</view>
   </view>
