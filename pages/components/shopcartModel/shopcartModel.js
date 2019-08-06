@@ -15,16 +15,13 @@ Component({
     isType:'',
     content:'',
     otherGoods:[],
-    activityText:''
   },
   props: {
    onClear: (data) => console.log(data),
    onChangeShopcart: (data) => console.log(data)
   },
   onInit(){
-    this.setData({
-      activityText:app.globalData.activityText
-    })
+   
   },
   didMount() {
     // 获取起送费

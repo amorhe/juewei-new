@@ -333,11 +333,10 @@ Component({
           activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
         }
       }
-      app.globalData.activityText = activityText
       // console.log(activityText)
-      // this.setData({
-      //   activityText
-      // })
+      this.setData({
+        activityText
+      })
     },
     // 商品详情
     goodsdetailContent(e){
