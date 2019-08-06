@@ -1,9 +1,9 @@
-import {loginByAliUid} from './pages/common/js/login'
-import {baseUrl} from './pages/common/js/baseUrl'
+import { loginByAliUid } from './pages/common/js/login'
+import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
     // 第一次打开
-    var that=this;
+    var that = this;
     //贝塞尔曲线
     this.screenSize();
     // options.query == {number:1}
@@ -15,20 +15,36 @@ App({
           key: 'authCode', // 缓存数据的key
           data: res.authCode, // 要缓存的数据
         });
-       loginByAliUid(res.authCode).then((data) => {
-        my.setStorageSync({
-          key: 'ali_uid', // 缓存数据的key
-          data: data.data.ali_uid, // 要缓存的数据
-        });
-        my.setStorageSync({
-          key: 'user_id', // 缓存数据的key
-          data: data.data.user_id, // 要缓存的数据
-        });
-        my.setStorageSync({
-          key: 'phone', // 缓存数据的key
-          data: data.data.phone, // 要缓存的数据
-        });
-       })
+        loginByAliUid(res.authCode).then((data) => {
+          console.log(data, 'data')
+          if (data.code == 0 && data.data.user_id) {
+            my.setStorageSync({
+              key: 'ali_uid', // 缓存数据的key
+              data: data.data.ali_uid, // 要缓存的数据
+            });
+            my.setStorageSync({
+              key: 'user_id', // 缓存数据的key
+              data: data.data.user_id, // 要缓存的数据
+            });
+            my.setStorageSync({
+              key: 'phone', // 缓存数据的key
+              data: data.data.phone, // 要缓存的数据
+            });
+            my.setStorageSync({
+              key: '_sid', // 缓存数据的key
+              data: data.data._sid, // 要缓存的数据
+            });
+          }else{
+            my.setStorageSync({
+              key: 'ali_uid', // 缓存数据的key
+              data: data.data.ali_uid, // 要缓存的数据
+            });
+            my.setStorageSync({
+              key: '_sid', // 缓存数据的key
+              data: data.data._sid, // 要缓存的数据
+            });
+          }
+        })
       },
     });
   },
@@ -37,23 +53,23 @@ App({
     // console.log(options.query);
     // options.query == {number:1}
   },
-  onHide(){
+  onHide() {
     // 当小程序从前台进入后台时触发
   },
-  onError(error){
+  onError(error) {
     // 小程序执行出错时
     console.log(error);
   },
   //获取屏幕[宽、高]
-  screenSize () {
-  var that = this;
-  my.getSystemInfo({
-  success: function (res) {
-    that.globalData.ww = res.windowWidth;
-    that.globalData.hh = res.windowHeight;
-  }
-  })
- },
+  screenSize() {
+    var that = this;
+    my.getSystemInfo({
+      success: function(res) {
+        that.globalData.ww = res.windowWidth;
+        that.globalData.hh = res.windowHeight;
+      }
+    })
+  },
 
   /**
 
@@ -90,27 +106,27 @@ App({
     var changeY2 = (ey - cy) / part;
     //循环计算
     for (var i = 0; i <= part; i++) {
-    // 计算两个动点的坐标
-    var qx1 = sx + changeX1 * i;
+      // 计算两个动点的坐标
+      var qx1 = sx + changeX1 * i;
 
-    var qy1 = sy + changeY1 * i;
+      var qy1 = sy + changeY1 * i;
 
-    var qx2 = cx + changeX2 * i;
+      var qx2 = cx + changeX2 * i;
 
-    var qy2 = cy + changeY2 * i;
-    // 计算得到此时的一个贝塞尔曲线上的点
-    var lastX = qx1 + (qx2 - qx1) * i / part;
+      var qy2 = cy + changeY2 * i;
+      // 计算得到此时的一个贝塞尔曲线上的点
+      var lastX = qx1 + (qx2 - qx1) * i / part;
 
-    var lastY = qy1 + (qy2 - qy1) * i / part;
+      var lastY = qy1 + (qy2 - qy1) * i / part;
 
-    // 保存点坐标
-    var point = {};
+      // 保存点坐标
+      var point = {};
 
-    point['x'] = lastX;
+      point['x'] = lastX;
 
-    point['y'] = lastY;
+      point['y'] = lastY;
 
-    bezier_points.push(point);
+      bezier_points.push(point);
 
     }
 
@@ -118,7 +134,7 @@ App({
 
     return {
 
-    'bezier_points': bezier_points
+      'bezier_points': bezier_points
 
     };
 
@@ -128,13 +144,13 @@ App({
       longitude: null,
       latitude: null
     },
-    address:null,
-    _sid:null,
+    address: null,
+    _sid: null,
     userInfo: null, //拉去支付宝用户信息
-    authCode:null, //静默授权
-    phone:null, //获取手机号权限
-    addressInfo:null,   //切换定位地址
-    gifts:null,    //加购商品
-    type:1,     // 默认外卖
+    authCode: null, //静默授权
+    phone: null, //获取手机号权限
+    addressInfo: null,   //切换定位地址
+    gifts: null,    //加购商品
+    type: 1,     // 默认外卖
   }
 });

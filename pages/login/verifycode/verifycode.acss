@@ -24,8 +24,9 @@
 }
 
 .inputClass{
-  width: 0rpx;
-  height: 0rpx;
+  width: 110rpx;
+  height: 50rpx;
+  border: 1px solid #000;
   position: absolute;
   left: -1000rpx;
 }

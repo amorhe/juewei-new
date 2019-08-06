@@ -31,7 +31,7 @@ scope='phoneNumber'>
         <input placeholder="请按右图输入" value="{{img_code}}"  onInput="getcodeImg"/>
       </view>
       <view class="imgCode">
-        <image class="imgCodeIcon" src="{{ imgUrl }}"/>
+        <image class="imgCodeIcon" src="{{ imgUrl }}" onTap="newImg"/>
       </view>
     </view>
     <view>
