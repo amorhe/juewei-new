@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, getRegion } from '../../../pages/common/js/li-ajax'
+import { log, ajax, getRegion, getAddressId } from '../../../pages/common/js/li-ajax'
 import getDistance from '../../../pages/common/js/getdistance'
 
 let region = []
@@ -190,9 +190,9 @@ Page({
    */
 
   async search(e) {
-    const {_shopList} = this.data;
+    const { _shopList } = this.data;
     const { value } = e.detail;
-    let shopList = _shopList.filter(({shop_name})=>shop_name.includes(value))
+    let shopList = _shopList.filter(({ shop_name }) => shop_name.includes(value))
     this.setData({
       shopList
     })
@@ -216,6 +216,11 @@ Page({
     let res = await ajax('/mini/game/shop', { parentid })
     let lat = my.getStorageSync({ key: 'lat' }).data;
     let lng = my.getStorageSync({ key: 'lng' }).data;
+    if (!lat || !lng) {
+      let { longitude,latitude } = await getAddressId()
+      lat = latitude
+      lng = longitude
+    }
     if (res.CODE == 'A100') {
       let shopList = res.DATA
         .map(({ shop_gd_latitude, shop_gd_longitude, ...rest }) => {
