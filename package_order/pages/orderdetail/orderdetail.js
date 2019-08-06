@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, contact } from '../../../pages/common/js/li-ajax'
+import { log, ajax, contact,handleCopy } from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
@@ -65,6 +65,7 @@ Page({
   },
 
   contact,
+  handleCopy,
 
   closeModel() {
     this.setData({

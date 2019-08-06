@@ -112,12 +112,14 @@
       </view>
     </view>
   </view>
-  <view class="poster">
+
+  <view class="poster" a:if="{{d.dis_type==1}}">
     <view class="title">
       配送信息
     </view>
+
     <view class="list">
-      <view class="item" a:if="{{d.dis_tag}}">
+       <view class="item">
         <view class="label">
           配送方式
         </view>
@@ -126,7 +128,7 @@
         </view>
       </view>
       <view class="item" a:if="{{d.dis_tel}}">
-        <view class="label">
+        <view class="label" a:if="{{d.dis_name}}">
           配送骑手
         </view>
         <view class="value">
@@ -137,26 +139,8 @@
           </view>
         </view>
       </view>
-      <view class="item">
-        <view class="label">
-          配送方式
-        </view>
-        <view class="value">
-          <view>{{postWay[d.dis_tag]}}</view>
-        </view>
-      </view>
-      <view class="item">
-        <view class="label">
-          配送骑手
-        </view>
-        <view class="value">
-          <view class="dis">
-            <image style="width:32rpx;height:32rpx" mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.dis_tel}}" onTap="makePhoneCall"/>
-            <text>联系骑手</text>
-            <text>{{d.dis_name}}</text>
-          </view>
-        </view>
-      </view>
+     
+      
       <view class="item">
         <view class="label">
           收货地址
@@ -166,6 +150,45 @@
           <view>{{d.user_name}} {{d.user_phone}}</view>
         </view>
       </view>
+    </view>
+  </view>
+
+
+  <view class="poster" a:if="{{d.dis_type==2}}">
+    <view class="title">
+      自提信息
+    </view>
+    <view class="list">
+      <view class="item" a:if="{{123}}">
+        <view class="label">
+          自提时间
+        </view>
+        <view class="value">
+          <view>{{123}}</view>
+        </view>
+      </view>
+      
+      <view class="item">
+        <view class="label">
+          门店名称
+        </view>
+        <view class="value">
+          <view>{{postWay[d.dis_tag]}}</view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="label">
+          门店地址
+        </view>
+        <view class="value">
+          <view class="dis">
+            <image style="width:32rpx;height:32rpx" mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.dis_tel}}" onTap="makePhoneCall"/>
+            <text>联系骑手</text>
+            <text>{{d.dis_name}}</text>
+          </view>
+        </view>
+      </view>
+      
     </view>
   </view>
   <view class="poster">
@@ -178,7 +201,8 @@
           订单编号
         </view>
         <view class="value">
-          <view>{{d.order_no}}</view>
+          <view>{{d.order_no}}</view> <view class="classname"></view>
+          <view class="code-button" data-text="{{detail.gift_code}}" onTap="handleCopy">复制</view>
         </view>
       </view>
       <view class="item">
