@@ -1,11 +1,12 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
-import { ajax, log } from '../../../pages/common/js/li-ajax'
+import { ajax, log,isloginFn } from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
     userPoint:0,
     list: [],
     toast:false,
+    loginOpened: false,
     pagenum:1,
     pagesize:10,
 
@@ -15,6 +16,13 @@ Page({
     await this.getDetail(1)
     await this.getUserPoint()
   },
+
+  onHide(){
+    this.onModalClose()
+    this.hideToast()
+  },
+  isloginFn,
+
 
   async onReachBottom() {
     // 页面被拉到底部
@@ -54,7 +62,22 @@ Page({
       this.setData({
         userPoint:res.DATA
       })
+    }else{
+      this.setData({
+        loginOpened:true
+      })
     }
+  },
+
+  /**
+   * @function 关闭modal
+   */
+  onModalClose() {
+    this.setData({
+      openPoint: false,
+      modalOpened: false,
+      loginOpened: false
+    })
   },
 
   /**

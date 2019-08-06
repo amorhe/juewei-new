@@ -1,5 +1,5 @@
 {
-   "defaultTitle": "兑换详情",
+  "defaultTitle": "兑换详情",
   "titleBarColor": "#ff0000",
   "transparentTitle": "always",
   "usingComponents":{
