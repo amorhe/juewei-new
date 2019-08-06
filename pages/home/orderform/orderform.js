@@ -211,12 +211,15 @@ Page({
       type = 3;
       typeClass = 4
     }
-    const address_id = my.getStorageSync({key:'address_id'}).data;
-    if(!address_id){
-      my.showToast({
-        content:'请选择收货地址'
-      })
-      return
+    
+    let address_id = my.getStorageSync({key:'address_id'}).data;
+    if(app.globalData.type==1){
+      if(!address_id){
+        my.showToast({
+          content:'请选择收货地址'
+        })
+        return
+      }
     }
     // 创建订单
     createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type).then((res) => {

@@ -428,7 +428,7 @@
   left: 0;
   bottom: 100rpx;
   width: 750rpx;
-  z-index: 1004;
+  z-index: 1002;
   background: #F2F2F2
 }
 .fontSmall {

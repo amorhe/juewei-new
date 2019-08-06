@@ -321,38 +321,9 @@ Page({
       let goodsArr = [...DIS,...PKG,...this.data.shopGoods];    // 门店所有列表（一维数组）
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
-      console.log(goodsArr)
+      app.globalData.goodsArr = goodsArr;
       this.setData({
         shopGoodsAll:goodsNew
-      })
-      // 判断购物车商品是否在当前门店内
-      let goodsList = my.getStorageSync({
-        key: 'goodsList', // 缓存数据的key
-      }).data;
-      if(goodsList == null) return;
-      for(let value of goodsArr){
-        if(value.goods_format.length==1){
-          if(goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
-            my.showToast({
-              content: `购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
-            });
-            // goodsList = goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`];
-          }
-        }
-        if(value.goods_format.length>1){
-          for(let item of value.goods_format){
-            if(goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
-              my.showToast({
-                content: `购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
-              })
-              // goodsList = goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]
-            }
-          }
-        }
-      }
-      my.setStorageSync({
-        key: 'goodsList',
-        data: goodsList
       })
       my.setStorageSync({
         key:'shopGoods',

@@ -72,6 +72,9 @@ Component({
         this.props.onClear();
         this.props.onChangeShopcart({},[],0,0);
       }
+      if(data.isType == 'checkshopcart' && data.type == 1){
+
+      }
     },
     onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum){
       this.props.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum);
@@ -145,6 +148,7 @@ Component({
     },
     // 立即购买
     goOrderSubmit(){
+      // 未登录
       if(my.getStorageSync({
         key: 'user_id', // 缓存数据的key
       }).data==null){
@@ -153,12 +157,55 @@ Component({
         })
         return
       }
+      // 未选择商品
       if(this.props.shopcartGoods) {
         my.showToast({
           content:"请至少选择一件商品"
         });
         return 
       }
+      // 判断购物车商品是否在当前门店里
+      let goodsList = my.getStorageSync({
+        key: 'goodsList', // 缓存数据的key
+      }).data;
+      if(goodsList == null) return;
+      for(let value of app.globalData.goodsArr){
+          if(value.goods_format.length==1){
+          if(!goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
+            this.setData({
+              showShopcar: false,
+              mask1:false,
+              mask:true,
+              modalShow: true,
+              isType:'checkshopcart',
+              content:`购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
+            },()=> {
+              goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`] = value;
+            })
+          }
+        }
+        if(value.goods_format.length>1){
+          for(let item of value.goods_format){
+            if(goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
+              this.setData({
+              showShopcar: false,
+              mask1:false,
+              mask:true,
+              modalShow: true,
+              isType:'checkshopcart',
+              content:`购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
+            },()=> {
+              goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`] = value;
+            })
+            }
+          }
+        }
+      }
+      
+      my.setStorageSync({
+        key:'goodsList',
+        data: goodsList
+      })
       let shop_id;
       if(this.data.orderType == 1){
         shop_id = my.getStorageSync({
