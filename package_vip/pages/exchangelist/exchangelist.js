@@ -24,10 +24,12 @@ Page({
   onUnload() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
+    this.setData=()=>{}
   },
   onHide() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
+    this.setData=()=>{}
   },
 
   /**
