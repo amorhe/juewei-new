@@ -21,13 +21,14 @@ page {
 }
 
 .title_bg {
-  z-index: 1;
+  z-index: 999;
   position: fixed;
   top: 0;
   width: 100vw;
 }
 
 .header-title-s text {
+  z-index: 1000;
   position: absolute;
   height: 44rpx;
   left: 60rpx;
