@@ -41,6 +41,7 @@ Page({
       })
     } else {
       this.setData({
+        phone: phone,
         getCode: false
       })
     }
@@ -117,7 +118,7 @@ Page({
       if (code.code == 0 && code.msg == 'OK') {
         my.setStorageSync({
           key: 'count', // 缓存数据的key
-          data: count-''+ 1, // 要缓存的数据
+          data: count - '' + 1, // 要缓存的数据
         });
         this.setData({
           modalOpened: false,
