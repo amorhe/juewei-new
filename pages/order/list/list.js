@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, log, contact, isloginFn } from '../../common/js/li-ajax'
+import { ajax, log, contact, isloginFn,guide } from '../../common/js/li-ajax'
 
 
 Page({
@@ -61,12 +61,13 @@ Page({
   onHide() {
     this.onModalClose()
 
-    clearInterval(this.data.time)
-    this.setData({ time: -1 })
+    // clearInterval(this.data.time)
+    // this.setData({ time: -1 })
   },
 
   contact,
   isloginFn,
+  guide,
 
   /**
    * @function 关闭modal
