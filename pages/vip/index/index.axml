@@ -1,7 +1,7 @@
 <view class="vip" onTap="hideToast">
   <!-- 头部 -->
   <view class="header-title-s" style="height:{{navHeight.titleBarHeight + navHeight.statusBarHeight}}px">
-    <text a:if="{{navHeight.statusBarHeight}}" style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">VIP专享</text>
+    <!-- <text a:if="{{navHeight.statusBarHeight}}" style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">VIP专享</text> -->
   </view>
   <view style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px"></view>
   <image style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px" mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/>
