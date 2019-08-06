@@ -60,7 +60,7 @@
       </scroll-view>
     </view>
     <view class="sroll-view-wrap" style="top:{{navHeight.titleBarHeight + navHeight.statusBarHeight - 2}}px" >
-      <scroll-view scroll-x="{{true}}" class="x" id="affix">
+      <scroll-view scroll-x="{{true}}" class="x" style="margin:0 32rpx" id="affix">
         <view onTap="listChange" data-cur="{{index}}" a:for='{{list}}' class="{{index === cur? 'active':''}}">{{item.cate_name}}</view>
       </scroll-view>
     </view>
