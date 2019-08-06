@@ -38,10 +38,15 @@ Component({
       this.props.onCounterPlusOne(modalObj)
     },
     cancelTap() {
+      let isType = '';
+      if(this.props.isType == "checkshopcart"){
+        isType = 'checkshopcart'
+      }
       const modalObj = {
         modalShow:false,
         mask:false,
-        type:0
+        type:0,
+        isType:isType
       }
       this.props.onCounterPlusOne(modalObj)
     },

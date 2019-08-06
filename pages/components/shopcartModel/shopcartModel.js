@@ -8,13 +8,14 @@ Component({
     imageUrl,
     modalShow: false, //弹框
     mask1: false,
-    shopGoods:[],
-    goodsInfo:'',
     send_price:"",   //起送费
     dispatch_price: '', // 配送费
     isType:'',
     content:'',
     otherGoods:[],
+    confirmButtonText:'',
+    cancelButtonText: '',
+
   },
   props: {
    onClear: (data) => console.log(data),
@@ -57,10 +58,13 @@ Component({
         mask:true,
         modalShow: true,
         isType:'clearShopcart',
-        content:'是否清空购物车'
+        content:'是否清空购物车',
+        confirmButtonText:'确认',
+        cancelButtonText: '取消'
       }) 
     },
     onCounterPlusOne(data) {
+      console.log(data)
       this.setData({
         mask: data.mask,
         modalShow: data.modalShow
@@ -72,11 +76,23 @@ Component({
         this.props.onClear();
         this.props.onChangeShopcart({},[],0,0);
       }
-      if(data.isType == 'checkshopcart' && data.type == 1){
-
+      if(data.isType == 'checkshopcart' && data.type == 0 && this.props.shopcartNum >0){
+        // let shop_id;
+        // if(this.data.orderType == 1){
+        //   shop_id = my.getStorageSync({
+        //     key: 'takeout', // 缓存数据的key
+        //   }).data[0].shop_id;
+        // }else {
+        //   shop_id = my.getStorageSync({
+        //     key: 'self', // 缓存数据的key
+        //   }).data[0].shop_id;
+        // }
+        my.navigateTo({
+          url:'/pages/home/orderform/orderform'
+        }) 
       }
     },
-    onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum){
+    changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum){
       this.props.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum);
     },
     addshopcart(e){
@@ -103,7 +119,7 @@ Component({
       for(let item of arr){
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum +=1;
       }
-      this.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum)
+      this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum)
       console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -140,7 +156,7 @@ Component({
           shopcartAll.push(goodlist[keys])
         }
       }
-      this.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum);
+      this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum);
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -165,65 +181,72 @@ Component({
         return 
       }
       // 判断购物车商品是否在当前门店里
-      // let goodsList = my.getStorageSync({
-      //   key: 'goodsList', // 缓存数据的key
-      // }).data;
-      // console.log(app.globalData.goodsArr)
-      // if(goodsList == null) return;
-      // for(let value of app.globalData.goodsArr){
-      //     if(value.goods_format.length==1){
-      //     if(!goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
-      //       this.setData({
-      //         showShopcar: false,
-      //         mask1:false,
-      //         mask:true,
-      //         modalShow: true,
-      //         isType:'checkshopcart',
-      //         content:`购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
-      //       })
-      //     }else{
-      //       goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`] = value;
-      //     }
-      //   }
-      //   if(value.goods_format.length>1){
-      //     for(let item of value.goods_format){
-      //       if(!goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
-      //         this.setData({
-      //           showShopcar: false,
-      //           mask1:false,
-      //           mask:true,
-      //           modalShow: true,
-      //           isType:'checkshopcart',
-      //           content:`购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
-      //         })
-      //       }else{
-      //         goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`] = value;
-      //       }
-      //     }
-      //   }
-      // }
-      
-      // my.setStorageSync({
-      //   key:'goodsList',
-      //   data: goodsList
-      // })
-      let shop_id;
-      if(this.data.orderType == 1){
-        shop_id = my.getStorageSync({
-          key: 'takeout', // 缓存数据的key
-        }).data[0].shop_id;
-      }else {
-        shop_id = my.getStorageSync({
-          key: 'self', // 缓存数据的key
-        }).data[0].shop_id;
+      let goodsList = my.getStorageSync({
+        key: 'goodsList', // 缓存数据的key
+      }).data;
+      let num1 = 0,num2=0,shopcartAll=[],priceAll=0,shopcartNum=0;
+      if(goodsList == null) return;
+      for(let value of app.globalData.goodsArr){
+        for(let val in goodsList){
+          if(value.goods_format.length == 1){
+            if(val != `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`){
+              num1 += goodsList[val].num;
+              delete(goodsList[val]);
+            }
+          }
+          if(value.goods_format.length>1){
+            for(let item of value.goods_format){
+              if(val != `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`){
+                num2 += goodsList[val].num;
+                delete(goodsList[val]);   
+              }
+            } 
+          }
+        }
       }
-      app.globalData.goodsBuy = this.props.shopcartAll;
-      app.globalData.dispatch_price = this.data.dispatch_price;
-      app.globalData.priceAll = this.props.priceAll;
-     
+      for(let val in goodsList){
+        if(goodsList[val].goods_discount_user_limit && goodsList[val].num>goodsList[val].goods_discount_user_limit){
+          priceAll += goodsList[val].goods_price * goodsList[val].goods_discount_user_limit + (goodsList[val].num-goodsList[val].goods_discount_user_limit)* goodsList[val].goods_original_price;
+        }else{
+          priceAll += goodsList[val].goods_price * goodsList[val].num;
+        }
+        shopcartAll.push(goodsList[val]);
+        shopcartNum += goodsList[val].num
+      }
+      this.changeshopcart(goodsList,shopcartAll,priceAll,shopcartNum);
+      my.setStorageSync({
+        key:'goodsList',
+        data: goodsList
+      })
+      this.setData({
+        showShopcar: false,
+        mask1:false,
+        mask:true,
+        modalShow: true,
+        isType:'checkshopcart',
+        content:`购物车有${this.props.shopcartNum-shopcartNum}件商品不在当前门店售卖商品之内`,
+        confirmButtonText:'重新选择',
+        cancelButtonText: '继续结算'
+      })
+      return
+
+  // 正常下单
+      // let shop_id;
+      // if(this.data.orderType == 1){
+      //   shop_id = my.getStorageSync({
+      //     key: 'takeout', // 缓存数据的key
+      //   }).data[0].shop_id;
+      // }else {
+      //   shop_id = my.getStorageSync({
+      //     key: 'self', // 缓存数据的key
+      //   }).data[0].shop_id;
+      // }
+      // app.globalData.goodsBuy = this.props.shopcartAll;
+      // app.globalData.dispatch_price = this.data.dispatch_price;
+      // app.globalData.priceAll = this.props.priceAll;
       my.navigateTo({
         url:'/pages/home/orderform/orderform'
-      });       
+      }) 
     },
     // 获取起送价格
     getSendPrice(){

@@ -54,7 +54,7 @@
 
 </view>
 <!-- 弹框组件 -->
-<confirm content="{{content}}" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
+<confirm confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" content="{{content}}" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
 <!-- 遮罩层 -->
 <view a:if="{{mask1 && shopcartAll.length>0}}" class="mask" onTap="hiddenShopcart"></view>
 

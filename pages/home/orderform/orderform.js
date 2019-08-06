@@ -16,37 +16,12 @@ Page({
     orderType:1,  //1为外卖，2为自提
     longitude: 116.30051,
     latitude: 40.0511,
-    markersArray:[
-      // {
-      //   longitude: 116.30051,
-      //   latitude: 40.0511,
-      //   iconPath:`${imageUrl}position_map1.png`,
-      //   width: 45,
-      //   height: 45,
-      //   rotate:270
-      // },
-      // {
-      //   longitude:116.3005,
-      //   latitude: 40.1,
-      //   iconPath:`${imageUrl}position_map2.png`,
-      //   width: 72,
-      //   height: 72,
-      //   label:{
-      //     content:"距你2.5公里",
-      //     color:"#333",
-      //     fontSize:11,
-      //     borderRadius:30,
-      //     bgColor:"#ffffff",
-      //     padding:8,
-      //   }
-      // }
-    ],
+    markersArray:[],
     shopObj:{},   // 自提商店的详细信息
     couponsList:[],   //优惠券
     couponsDefault:null,
     full_money:0,
     shopcartGoods:[],   //商品列表
-    priceAll:'',
     goodsInfo:'',
     addressInfo:{},
     dispatch_price:0,    // 配送费
@@ -54,9 +29,7 @@ Page({
   },
   onLoad(e) {
     this.setData({
-      priceAll:app.globalData.priceAll,
       orderType:app.globalData.type,
-      dispatch_price: app.globalData.dispatch_price
     })
 
     const shop_id = my.getStorageSync({key: 'shop_id'}).data;
@@ -132,9 +105,9 @@ Page({
     if(my.getStorageSync({key: 'address_id'}).data!=null) {
       this.getAddress(my.getStorageSync({key: 'address_id'}).data)
     }
-    if(my.getStorageSync({key:'remark'}).data) {
+    if(app.globalData.remarks) {
       this.setData({
-        remark:my.getStorageSync({key:'remark'}).data
+        remark:app.globalData.remarks
       })
     }
   },
@@ -197,11 +170,6 @@ Page({
       item['goods_quantity'] = item['num']
     }
     const goods = JSON.stringify(goodsList);
-    // let shops ='';
-    // for(let value of arr) {
-    //   shops += value.shop_id + ','
-    // }
-    // shops = shops.substr(0,shops.length-1);
     let type = '',typeClass=''
     if(app.globalData.type == 1) {
       type = 1;
@@ -296,7 +264,6 @@ Page({
     confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
       console.log(res) 
       let goodsList = my.getStorageSync({key:'goodsList'}).data;
-      console.log(goodsList)  
       if(res.code == 0){
         let goodsReal=[],goodsInvented=[],shopcartGoods=[]
         for(let item of res.data.activity_list[''].goods_list){
@@ -304,7 +271,7 @@ Page({
                 goodsInvented.push(item)//赠品
             } else if(item.is_gifts == 1&&item.goods_code!="") { 
                 if(item.gift_type==3||item.gift_type==4){
-                    goodsReal.push(item)
+                    goodsReal.push(item) //  非赠品
                 }else{
                     goodsInvented.push(item)//赠品
                 }
