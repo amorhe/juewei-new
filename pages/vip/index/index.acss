@@ -90,7 +90,7 @@ page {
 
 .x {
   position: relative;
-  z-index: 999;
+  z-index: 9999;
   width: 100%;
   white-space: nowrap;
   display: flex;
@@ -230,6 +230,7 @@ page {
 .sroll-view-wrap {
   background: white;
   position: sticky;
+  z-index: 999999;
 }
 
 .no-good {
