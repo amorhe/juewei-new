@@ -8,7 +8,7 @@
     </view>
     <view class="board-time" a:if="{{d.order_status_info.order_status == 0}}">
       <text class="board-last">剩余时间：</text>
-      <text class="board-last-time">14分58秒</text>
+      <text class="board-last-time">{{d.remaining_pay_minute}}分{{d.remaining_pay_second}}秒</text>
     </view>
      <view class="board-time" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00' && d.dis_type==2}}" >
       <text class="board-last">自提时间：{{d.dis_finish_time}}</text>
@@ -29,27 +29,27 @@
       <view class="topay con" a:if="{{[1,2,3].includes(d.order_status_info.order_status)}}" onTap="contact">
           联系客服
       </view>
-      <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status)}}">
+      <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status) && d.order_status_info.order_status == 0}}">
           再来一单
       </view>
       <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
           评价订单
       </view>
-      <view class="cancel-order" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status) && d.is_comment == 1}}">
+      <view class="cancel-order"  data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status) && d.is_comment == 1}}">
           已评价
       </view>
       <!--<view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(d.order_status_info.order_status)}}">
           投诉</view> -->
     </view>
     <view class="buttons" a:if="{{d.order_status_info.order_status == 0}}">
-      <view class="cancel">取消订单</view>
-      <view class="pay">立即支付</view>
+      <view class="cancel" catchTap="showCancel">取消订单</view>
+      <view class="pay" onTap="payNow" data-order_no="{{d.order_no}}">立即支付</view>
     </view>
     <view class="cancelr" a:if="{{d.order_cancel_reason}}">
       {{d.order_cancel_reason}}
     </view>
     <view class="buttons" a:if="{{d.order_cancel_reason}}">
-      <view class="cancel">联系客服</view>
+      <view class="cancel" onTap="contact">联系客服</view>
       <view class="pay">再来一单</view>
     </view>
   </view>

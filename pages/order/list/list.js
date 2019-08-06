@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, log, contact, isloginFn,guide } from '../../common/js/li-ajax'
+import { ajax, log, contact, isloginFn, guide } from '../../common/js/li-ajax'
 
 
 Page({
@@ -49,9 +49,18 @@ Page({
     page: 1
   },
 
-  async onLoad() {
-    const { page } = this.data
-    await this.getOrderList(page)
+
+  async onShow() {
+    clearInterval(this.data.time)
+    this.setData({
+      time: -1,
+      page: 1,
+      listAll: []
+    }, async () => {
+      const { page } = this.data
+      await this.getOrderList(page)
+    })
+
   },
   onUnload() {
     clearInterval(this.data.time)

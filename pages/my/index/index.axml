@@ -3,23 +3,20 @@
     <view class="flexSpecial" onTap="isloginFn">
       <image class="avatar" mode="scaleToFill" src="{{ userInfo.user_id?userInfo.head_img?userInfo.head_img:imageUrl+'default_head1.png':imageUrl+'default_head2.png' }}"/>
       <view class="fontFourtyWeight">
-        <!-- <text a:if="{{ userInfo.nick_name }}">{{ userInfo.nick_name }}</text>
-        <text a:else>绝味会员</text> -->
-
+        <!--<text a:if="{{ userInfo.nick_name }}">{{ userInfo.nick_name }}</text><text a:else>绝味会员</text> -->
         <text>{{ userInfo.user_id?userInfo.nick_name?userInfo.nick_name:'绝味会员':'登录' }}</text>
       </view>
-      <!-- <view a:else class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view> -->
+      <!--<view a:else class="fontFourtyWeight" onTap="toUrl" data-url='/pages/login/auth/auth'>登录</view> -->
     </view>
     <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}settings.png" onTap="isloginFn"/>
   </view>
-
   <view class="vipView">
-    <view class="flexNormal">
+    <view class="flexNormal" onTap="toUrl" data-url="/package_my/pages/membercard/membercard">
       <view>会员卡</view>
-      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png" onTap="toUrl" data-url="/package_my/pages/membercard/membercard"/>
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}qrcode.png"/>
     </view>
-     <image class="vipcardPng" mode="scaleToFill" src="{{imageUrl}}position_tit.png"/>
-     <image class="qingxie" mode="scaleToFill" src="{{imageUrl}}my_cardbg.png"/>
+    <image class="vipcardPng" mode="scaleToFill" src="{{imageUrl}}position_tit.png"/>
+    <image class="qingxie" mode="scaleToFill" src="{{imageUrl}}my_cardbg.png"/>
   </view>
   <!-- 下面的菜单 -->
   <view class="my_menu">
@@ -27,10 +24,10 @@
     <view class="menuList">
       <view onTap="toUrl" data-url='/package_my/pages/coupon/coupon'>
         <view>
-         <view>
+          <view>
             <image mode="scaleToFill" src="{{imageUrl}}my_coupon.png"/>
             <view>卡券</view>
-         </view>
+          </view>
         </view>
       </view>
       <view onTap="toUrl" data-url='/package_vip/pages/pointlist/pointlist'>
@@ -57,19 +54,18 @@
           </view>
         </view>
       </view>
-      <view onTap="toUrl" data-url='/package_my/pages/entitlement/entitlement'>
+      <navigator url="/package_my/pages/entitlement/entitlement">
         <view>
           <view>
-            <image mode="scaleToFill" src="{{imageUrl}}menu_vip2.png"/>
-            <view>专享权益</view>
+            <view>
+              <image mode="scaleToFill" src="{{imageUrl}}menu_vip2.png"/>
+              <view>专享权益</view>
+            </view>
           </view>
         </view>
-      </view>
+      </navigator>
     </view>
   </view>
 </view>
-
-<!-- <navigator url="/package_my/pages/onlineservice/onlineservice">
-  <image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/>
-</navigator> -->
+<!--<navigator url="/package_my/pages/onlineservice/onlineservice"><image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/></navigator> -->
 <image class="customerService" mode="scaleToFill" onTap="makePhoneCall" src="{{imageUrl}}service.png"/>
