@@ -89,6 +89,8 @@ page {
 }
 
 .x {
+  position: relative;
+  z-index: 999;
   width: 100%;
   white-space: nowrap;
   display: flex;

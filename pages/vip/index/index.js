@@ -53,8 +53,8 @@ Page({
     let _sid = await getSid()
 
     let company_id = my.getStorageSync({
-      key: 'company_sale_id', // 缓存数据的key
-    }).data || 1;
+      key: 'takeout', // 缓存数据的key
+    }).data[0].company_sale_id || 1;
 
     log(app)
 
