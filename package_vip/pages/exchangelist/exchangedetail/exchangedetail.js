@@ -92,12 +92,14 @@ Page({
 
   onUnload() {
     clearInterval(this.data.a)
+    this.setData({ a: -1 })
   },
 
 
   onHide() {
     this.closeModel()
     clearInterval(this.data.a)
+    this.setData({ a: -1 })
   },
 
   guide,

@@ -31,7 +31,7 @@ Page({
   },
 
   /**
-  * @function 获取更对订单信息
+  * @function 获取更多订单信息
   */
   // 页面被拉到底部
   async onReachBottom() {
@@ -44,7 +44,7 @@ Page({
         await this.getOrderList(page_num)
         this.setData({
           page_num
-        })
+        },1000)
       })
     })
   },
