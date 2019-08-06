@@ -171,7 +171,8 @@ Component({
       }
       app.globalData.goodsBuy = this.props.shopcartAll;
       app.globalData.dispatch_price = this.data.dispatch_price;
-      app.globalData.priceAll = this.props.priceAll
+      app.globalData.priceAll = this.props.priceAll;
+     
       my.navigateTo({
         url:'/pages/home/orderform/orderform'
       });       
@@ -188,10 +189,6 @@ Component({
           })
         },
       });
-    },
-    // activityModal(priceAll){
-    //   let curl = this.props.fullActivity.push(priceAll);
-    //   console.log(curl.sort(compare));
-    // }
+    }
   }
 });

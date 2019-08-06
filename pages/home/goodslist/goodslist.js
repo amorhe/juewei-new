@@ -280,8 +280,9 @@ Page({
       }
       
       // 获取参与加价购商品的列表
-      app.globalData.otherGoods = res.data.MARKUP.goods;
-      
+      if(res.data.MARKUP.goods){
+        app.globalData.otherGoods = res.data.MARKUP.goods;
+      }
 
       // 筛选在当前门店里面的折扣商品
       let DIS = [],PKG = []
@@ -323,36 +324,34 @@ Page({
       this.setData({
         shopGoodsAll:goodsNew
       })
-      // 判断购物车商品是否在当前门店内,不在的清除购物车
-      let shopcartAll = my.getStorageSync({
+      // 判断购物车商品是否在当前门店内
+      let goodsList = my.getStorageSync({
         key: 'goodsList', // 缓存数据的key
       }).data;
-      if(shopcartAll == null) return;
+      if(goodsList == null) return;
       for(let value of goodsArr){
-        if(value.goods_format.length==0){
-          if(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
+        if(value.goods_format.length==1){
+          if(goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`]){
             my.showToast({
-              content: `购物车有${shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
+              content: `购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`].sumnum}件商品不在当前门店售卖商品之内`
             });
-            shopcartAll = shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`];
+            // goodsList = goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`];
           }
         }
         if(value.goods_format.length>1){
           for(let item of value.goods_format){
-            if(shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
+            if(goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]){
               my.showToast({
-                content: `购物车有${shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
+                content: `购物车有${goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`].sumnum}件商品不在当前门店售卖商品之内`
               })
-              shopcartAll = shopcartAll[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]
+              // goodsList = goodsList[`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`]
             }
           }
         }
       }
-      
-      
       my.setStorageSync({
         key: 'goodsList',
-        data: shopcartAll
+        data: goodsList
       })
       my.setStorageSync({
         key:'shopGoods',

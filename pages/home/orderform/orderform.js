@@ -114,7 +114,6 @@ Page({
     })
     this.confirmOrder(shop_id,JSON.stringify(goods));
   // 加购商品
-    console.log(app.globalData.gifts);
     const gifts = app.globalData.gifts;
     if(gifts.length>0){
       for(let key in gifts){
@@ -286,9 +285,10 @@ Page({
   // 订单确认
   confirmOrder(shop_id,goods){
     confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
-      console.log(res)    
+      console.log(res) 
+      let goodsList = my.getStorageSync({key:'goodsList'}).data;
+      console.log(goodsList)  
       if(res.code == 0){
-        let goodsList = my.getStorageSync({key:'goodsList'}).data;
         let goodsReal=[],goodsInvented=[],shopcartGoods=[]
         for(let item of res.data.activity_list[''].goods_list){
           if (item.is_gifts == 1&&item.goods_code=="") { 
