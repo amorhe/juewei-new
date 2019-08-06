@@ -28,8 +28,8 @@ Page({
     this.setData=()=>{}
   },
   onHide() {
-    clearInterval(this.data.time)
-    this.setData({ time: -1 })
+    // clearInterval(this.data.time)
+    // this.setData({ time: -1 })
   },
 
   /**

@@ -83,15 +83,15 @@
       </view>
       <view class="out-footer">
         <view class="topay" a:if="{{item.order_status == 0}}">
-          去支付（还剩14分20秒）
+         去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1].includes(item.order_status)}}">
           取消订单
         </view>
-        <view class="topay con" a:if="{{[1,2].includes(item.order_status)}}">
+        <view class="topay con" a:if="{{[1,2].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
-        <view class="topay con" a:if="{{[3].includes(item.order_status)}}">
+        <view class="topay con" a:if="{{[3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_longitude}}" data-shop_latitude="{{item.shop_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
           导航
         </view>
         <view class="cancel-order red" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">
@@ -103,7 +103,7 @@
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}">
           再来一单
         </view>
-        <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(item.order_status)}}">
+        <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
           投诉
         </view>
       </view>
@@ -115,7 +115,6 @@
     <view class="txt">暂无订单</view>
   </view>
 </view>
-
 <!--未登录提示 -->
 <modal show="{{loginOpened}}" showClose="{{ false }}">
   <view class="modalInfo">
