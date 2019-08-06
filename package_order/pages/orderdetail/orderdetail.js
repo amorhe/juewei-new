@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, contact,handleCopy } from '../../../pages/common/js/li-ajax'
+import { log, ajax, contact, handleCopy } from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
@@ -136,9 +136,7 @@ Page({
       let curState = res.data.order_status_info.order_status
       let curTimeArr = orderStatus[curState].timeArr
       curState === 3 && dis_take_time != '0000-00-00 00:00:00' ? curTimeArr.push(5) : curTimeArr
-      curOrderState = curTimeArr.map(item => {
-        return timeArr[item - 1]
-      })
+      curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
       log(curOrderState)
     }
@@ -189,10 +187,7 @@ Page({
       let curState = res.data.order_status_info.order_status
       let curTimeArr = orderStatus[curState].timeArr
 
-      curOrderState = curTimeArr.map(item => {
-
-        return timeArr[item - 1]
-      })
+      curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
       log(curOrderState)
     }
@@ -287,6 +282,42 @@ Page({
       url: '/package_order/pages/comment/comment?order_no=' + order_no
     });
   },
+
+  /**
+   * @function 立即支付
+   */
+   async payNow(){
+       const { order_no } = e.currentTarget.dataset;
+       let r = await ajax('/juewei-service/payment/AliMiniPay',{order_no},"POST")
+      if (r.code === 0) {
+      let { tradeNo } = r.data
+      if (!tradeNo) {
+        return my.showToast({
+          content: r.data.erroMSg
+        })
+      }
+      my.tradePay({
+        tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+        success: res => {
+          if (res.resultCode == 9000) {
+            return my.redirectTo({
+              url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + false
+            });
+          }
+        },
+        fail: res => {
+          return my.redirectTo({
+            url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
+          });
+        }
+      });
+
+    } else {
+      return my.redirectTo({
+        url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
+      });
+    }
+    }
 });
 
 let data = {

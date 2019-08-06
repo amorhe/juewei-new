@@ -42,14 +42,14 @@
           投诉</view> -->
     </view>
     <view class="buttons" a:if="{{d.order_status_info.order_status == 0}}">
-      <view class="cancel">取消订单</view>
-      <view class="pay">立即支付</view>
+      <view class="cancel" catchTap="showCancel">>取消订单</view>
+      <view class="pay" onTap="payNow">立即支付</view>
     </view>
     <view class="cancelr" a:if="{{d.order_cancel_reason}}">
       {{d.order_cancel_reason}}
     </view>
     <view class="buttons" a:if="{{d.order_cancel_reason}}">
-      <view class="cancel">联系客服</view>
+      <view class="cancel" onTap="contact">联系客服</view>
       <view class="pay">再来一单</view>
     </view>
   </view>
