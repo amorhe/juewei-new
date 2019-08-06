@@ -56,6 +56,7 @@ Page({
   // 判断是否去登录
   isloginFn() {
     if (this.data.userInfo.user_id) {
+      
       my.navigateTo({
         url: '/package_my/pages/mycenter/mycenter'
       });
