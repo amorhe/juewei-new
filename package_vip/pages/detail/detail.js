@@ -1,4 +1,4 @@
-import { ajax, parseData, getSid, log } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData, getSid, log,isloginFn } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -267,13 +267,5 @@ Page({
     }
   },
 
-  /**
-   * @function 跳转登录页面
-   */
-  isloginFn() {
-    my.navigateTo({
-      url: '/pages/login/auth/auth'
-    });
-
-  },
+  isloginFn
 });

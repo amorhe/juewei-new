@@ -190,3 +190,13 @@ export const getAddressId = () => {
     })
   })
 }
+
+/**
+ * @function 跳转登录页面
+ */
+export const isloginFn = () => {
+  my.navigateTo({
+    url: '/pages/login/auth/auth'
+  });
+
+}

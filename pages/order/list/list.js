@@ -1,16 +1,17 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, log,contact } from '../../common/js/li-ajax'
+import { ajax, log, contact ,isloginFn} from '../../common/js/li-ajax'
 
 
 Page({
   data: {
     imageUrl,
+    loginOpened:false,
     menuList: [
       { key: '官方外卖订单', value: '' },
       { key: '门店自提订单', value: '' }
     ],
 
-    listAll:[],
+    listAll: [],
 
     takeOutList: [],
     pickUpList: [],
@@ -53,7 +54,23 @@ Page({
     await this.getOrderList(page)
   },
 
+  onHide(){
+    this.onModalClose()
+  },
+
   contact,
+  isloginFn,
+
+  /**
+   * @function 关闭modal
+   */
+  onModalClose() {
+    this.setData({
+      openPoint: false,
+      modalOpened: false,
+      loginOpened: false
+    })
+  },
 
   /**
    * @function 选择菜单
@@ -68,16 +85,20 @@ Page({
    * @function 获取订单列表
    */
   async getOrderList(page) {
-    let {listAll} = this.data
+    let { listAll } = this.data
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page }, 'GET')
     if (code === 0) {
-      listAll = [...data,...listAll]
+      listAll = [...data, ...listAll]
       let takeOutList = listAll.filter(({ dis_type }) => dis_type == 1)
       let pickUpList = listAll.filter(({ dis_type }) => dis_type == 2)
       this.setData({
         takeOutList,
         pickUpList,
         listAll
+      })
+    } else {
+      this.setData({
+        loginOpened:true
       })
     }
   },
@@ -88,7 +109,7 @@ Page({
 
   async onReachBottom() {
     // 页面被拉到底部
-    let {page} = this.data
+    let { page } = this.data
     ++page
     await this.getOrderList(page)
     this.setData({
