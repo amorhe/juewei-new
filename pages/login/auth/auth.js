@@ -50,7 +50,17 @@ Page({
     this.setData({
       img_code: img_code
     })
-    console.log(img_code)
+  },
+  getImgcodeFn() {
+    if (this.data.img_code === '') {
+      my.showToast({
+        type: 'none',
+        duration: 1000,
+        content: '图片验证码不可为空'
+      });
+      return
+    }
+    this.getcodeFn()
   },
   // 获取短信验证码
   async getcodeFn() {
@@ -90,10 +100,11 @@ Page({
           data: new Date().toLocaleDateString(), // 要缓存的数据
         });
       }
-      if (count > 5 && !this.data.modalOpened && count <= 10) {
+      if (count > 5 && !this.data.modalOpened) {
+        my.hideLoading();
         this.setData({
           modalOpened: true,
-          imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=9789-4ui62bhsvvg4jautqijjk114h6&s=' + (new Date()).getTime()
+          imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=' + this.data._sid + '&s=' + (new Date()).getTime()
         })
         return
       }
@@ -106,7 +117,7 @@ Page({
       if (code.code == 0 && code.msg == 'OK') {
         my.setStorageSync({
           key: 'count', // 缓存数据的key
-          data: count + 1, // 要缓存的数据
+          data: count-''+ 1, // 要缓存的数据
         });
         this.setData({
           modalOpened: false,
@@ -134,7 +145,7 @@ Page({
   newImg() {
     this.setData({
       modalOpened: true,
-      imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=9789-4ui62bhsvvg4jautqijjk114h6&s=' + (new Date()).getTime()
+      imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=' + this.data._sid + '&s=' + (new Date()).getTime()
     })
   },
   getAliId() {
