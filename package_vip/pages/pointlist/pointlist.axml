@@ -32,3 +32,14 @@
    <image mode="scaleToFill" src="{{imageUrl}}bg_point.png"/>
    <view>暂无积分</view>
 </view>
+
+<!--未登录提示 -->
+<modal show="{{loginOpened}}" showClose="{{ false }}">
+  <view class="modalInfo">
+      用户未登录
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm " onTap="onModalClose">取消</view>
+    <view class="modalButton cancel " onTap="isloginFn">登录</view>
+  </view>
+</modal>

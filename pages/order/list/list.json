@@ -1,3 +1,7 @@
 {
-  "defaultTitle": "订单"
+  "defaultTitle": "订单",
+  "usingComponents":{
+    "popup": "mini-antui/es/popup/index",
+    "modal": "mini-antui/es/modal/index"
+  }
 }

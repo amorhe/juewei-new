@@ -35,7 +35,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <view class="title" a:if="{{positionList.length}}" a:if="{{new_user.length}}">
+    <view class="title" a:if="{{new_user.length}}">
       新人专享券包
     </view>
     <view class="flex-space-b two" a:if="{{new_user.length}}">
