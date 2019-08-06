@@ -3,7 +3,7 @@
     <view class="post-address">
       <view class="post-name">
         <view class="item post-name-left">联系人</view>
-        <input class="post-name-right" placeholder="姓名" maxlength="12" value="{{name}}" data-key="name" onInput="handelChange"/>
+        <input class="post-name-right" placeholder="姓名" maxlength="12" value="{{name}}" data-key="name" onInput="nameVlaue"/>
       </view>
       <view class="post-sex">
         <text class="item"></text>
@@ -29,7 +29,7 @@
         <view class="item">标签</view>
         <view onTap="changeCur" a:for="{{labelList}}" data-type="{{ item.type }}" class="label {{item.type==curLabel?'label-active':''}}"> {{item.name}}</view>
       </view>
-      <view onTap="Addaddress" class="wait-pay-btn" style="background:{{(name==='' && phone==='' && address==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
+      <view onTap="Addaddress" class="wait-pay-btn" style="background:{{(name==='' && phone==='' && addressdetail==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
         保存地址
       </view>
 
@@ -54,6 +54,19 @@
     </view>
 </modal>
 
+
+<!-- 退出提示 -->
+<modal
+    show="{{modalidShow}}"
+    showClose="{{ false }}"
+  >
+    <view class="modalInfo">
+      您所选的地址周边无可配送门店，请换个地址试试吧！
+    </view>
+    <view slot="footer" class="footerButton">
+      <view class="modalButton cancel" onTap="modalidShoFN">确定</view>
+    </view>
+</modal>
 
 
 

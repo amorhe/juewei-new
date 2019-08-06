@@ -60,6 +60,9 @@ Page({
       });
       return
     }
+    my.showLoading({
+      content: '发送中...',
+    });
     if (this.data.getCode) {
       var time = my.getStorageSync({
         key: 'time', // 缓存数据的key
@@ -106,6 +109,7 @@ Page({
           modalOpened: false,
           img_code: ''
         })
+        my.hideLoading();
         my.showToast({
           type: 'none',
           duration: 2000,
@@ -115,6 +119,7 @@ Page({
           url: '/pages/login/verifycode/verifycode?phone=' + data.phone
         });
       } else {
+        my.hideLoading();
         my.showToast({
           type: 'none',
           duration: 2000,
