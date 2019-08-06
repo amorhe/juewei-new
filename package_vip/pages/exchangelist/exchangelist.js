@@ -13,45 +13,59 @@ Page({
     orderList: [],
 
     page_num: 1,
-    page_size: 10000,
+    page_size: 10,
+    lastLage: 10,
 
     time: ''
   },
-  async onShow() {
-    let { page_num } = this.data;
-    await this.getOrderList(page_num)
+  async onLoad() {
+    await this.getOrderList(1)
   },
   onUnload() {
     clearInterval(this.data.time)
+    this.setData({ time: -1 })
   },
   onHide() {
     clearInterval(this.data.time)
+    this.setData({ time: -1 })
   },
 
-  // /**
-  // * @function 获取更对订单信息
-  // */
-
-  // async onReachBottom() {
-  //   // 页面被拉到底部
-  //   let { page_num } = this.data
-  //   ++page_num
-  //   await this.getOrderList(page_num)
-  //   this.setData({
-  //     page_num
-  //   })
-  // },
+  /**
+  * @function 获取更对订单信息
+  */
+  // 页面被拉到底部
+  async onReachBottom() {
+    clearInterval(this.data.time)
+    my.showLoading({ content: '加载中...' });
+    this.setData({ time: -1 }, async () => {
+      setTimeout(async () => {
+        let { page_num } = this.data
+        ++page_num
+        await this.getOrderList(page_num)
+        this.setData({
+          page_num
+        })
+      })
+    })
+  },
 
 
   /**
    * @function 获取订单列表
    */
   async getOrderList(page_num) {
-    let { page_size, time, orderList } = this.data;
+    let { page_size, time, orderList, lastLage } = this.data;
+    if (lastLage < page_num) {
+      return  my.hideLoading()
+    }
     let res = await ajax('/mini/vip/wap/order/order_list', { page_num, page_size })
     if (res.code === 100) {
-      // orderList = [...res.data.data, ...orderList]
-      orderList = [...res.data.data]
+      lastLage = res.data.pagination.lastLage
+      if (lastLage < page_num) {
+        return
+      }
+      orderList = [...orderList, ...res.data.data]
+      // orderList = [...res.data.data]
 
       time = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
@@ -69,7 +83,12 @@ Page({
             ...item,
           }
         })
-        this.setData({ orderList, finish: true, time })
+        this.setData({
+          orderList,
+          finish: true,
+          time,
+          lastLage
+        }, () => my.hideLoading())
 
       }, 1000)
 
