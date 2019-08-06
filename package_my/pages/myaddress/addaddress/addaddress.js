@@ -250,6 +250,14 @@ Page({
     })
   },
   Addaddress() {
+    if (this.data.name==='') {
+      my.showToast({
+        type: 'none',
+        content: '联系人不可为空',
+        duration: 1000
+      });
+      return
+    }
     if (/[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im.test(this.data.name)) {
       my.showToast({
         type: 'none',
