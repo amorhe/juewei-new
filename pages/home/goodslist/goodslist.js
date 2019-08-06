@@ -51,7 +51,7 @@ Page({
     otherGoods:[],   // 参与换购的商品
     type:1,   // 默认外卖
     shopGoods:[],   // 门店商品
-    fullActivity:[],   // 购物车提示
+    fullActivity:'',   // 购物车提示
   },
   onLoad() {
     my.getAuthCode({
@@ -252,7 +252,6 @@ Page({
           // let goodsli = sortList.filter(_item => _item.last.length>0);
           this.setData({
             shopGoodsList: sortList,
-            companyGoodsList,
             shopGoods:arr
           },()=> {
             this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动

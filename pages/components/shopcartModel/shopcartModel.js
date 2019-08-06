@@ -28,7 +28,7 @@ Component({
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps){
-    // console.log(nextProps)
+    console.log(nextProps)
   },
   didUpdate() {
     

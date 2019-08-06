@@ -11,7 +11,7 @@ Component({
     goods_discount:0,
     goods_original_price:0,
     goods_discount_user_limit:0,
-    goods_format_all:'',
+    // goods_format_all:'',
     goodsList:{},
     shopcartAll:[],
   },
@@ -49,7 +49,7 @@ Component({
           goods_discount:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_discount,
           goods_original_price:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_original_price,
           goods_discount_user_limit:this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_original_price,
-          goods_format_all:this.props.goodsItem.goods_format
+          // goods_format_all:this.props.goodsItem.goods_format
         })
     },
     closeModal(data){
@@ -163,7 +163,7 @@ Component({
       goodlist[`${code}_${format}`].num -=1;
       let shopcartAll = [],priceAll=0,shopcartNum=0;
       for(let keys in goodlist){
-        if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        if(goodlist[keys].goods_discount_user_limit!=null && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
@@ -171,8 +171,6 @@ Component({
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
       }
-      // priceAll = this.props.priceAll - goodlist[`${code}_${format}`].goods_price;
-      // shopcartnum = this.props.shopcartNum - 1;
       // 删除
       if(goodlist[`${code}_${format}`].num==0){
         shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${item.goods_format}` != `${code}_${format}`)

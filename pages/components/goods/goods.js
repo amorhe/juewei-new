@@ -36,7 +36,7 @@ Component({
     }).data; 
     let priceAll = 0,shopcartAll = [],shopcartNum=0;
     for(let keys in goodlist){
-      if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+      if(goodlist[keys].goods_discount_user_limit!=null && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
         my.showToast({
           content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
         });
@@ -73,7 +73,7 @@ Component({
     })
   },
   deriveDataFromProps(nextProps){
-    console.log(nextProps)
+    // console.log(nextProps)
   },
   didUpdate() {
    

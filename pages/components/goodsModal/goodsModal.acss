@@ -5,7 +5,7 @@
   position: fixed;
   left: 95rpx;
   top: 290rpx; 
-  z-index: 1200
+  z-index: 1300
 }
 .goodsTop {
   padding: 32rpx;
