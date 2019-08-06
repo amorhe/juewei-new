@@ -35,6 +35,6 @@ scope='phoneNumber'>
       </view>
     </view>
     <view>
-      <view class="addButton addButtonTrue" onTap="getcodeFn">提交</view>
+      <view class="addButton addButtonTrue" onTap="getImgcodeFn">提交</view>
     </view>
 </modal>

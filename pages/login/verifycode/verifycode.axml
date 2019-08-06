@@ -11,7 +11,7 @@
     <view class="inputInfo {{ value[1]?value[2]?'':'inputFocus':''  }}">{{ value[2] }}</view>
     <view class="inputInfo {{ value[2]?value[3]?'':'inputFocus':''  }}">{{ value[3] }}</view>
   </view> 
-  <input class="inputClass" focus="{{focus}}" cursor="{{ cursor }}" onFocus="onFocus" onConfirm="onBlur" onBlur="onBlur" maxlength="4" type="number" onInput="inputValue"/>
+  <input class="inputClass" focus="{{focus}}" cursor="{{ cursor }}" onFocus="onFocus" maxlength="4" type="number" onInput="inputValue"/>
   <view class="errorTitel" a:if="{{false}}">
     验证码输入错误，请重新输入
   </view>

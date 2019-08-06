@@ -43,7 +43,8 @@ Page({
     addressId: '',
     order: 0,
     _sid: '',
-    addressdetail:''
+    addressdetail: '',
+    modalidShow: false, // 无门店
   },
   async onLoad(e) {
     var _sid = my.getStorageSync({ key: '_sid' }).data;
@@ -75,9 +76,13 @@ Page({
               arr.push(item.shop_id)
             })
             that.data.shop_id = arr.join(',')
+            if (that.data.shop_id === '') {
+              this.setData({
+                modalidShow: true
+              })
+            }
           },
         });
-        console.log(address,'address')
         that.setData({
           province: res.province,
           city: res.city,
@@ -144,6 +149,11 @@ Page({
               arr.push(item.shop_id)
             })
             that.data.shop_id = arr.join(',')
+            if (that.data.shop_id === '') {
+              this.setData({
+                modalidShow: true
+              })
+            }
           },
         });
         that.setData({
@@ -217,6 +227,12 @@ Page({
     let { value } = e.detail;
     this.setData({ [key]: value })
   },
+  nameVlaue(e) {
+    var value = e.detail.value.replace(/(^\s*)|(\s*$)/g, "")
+    this.setData({
+      name: value
+    })
+  },
   phoneValue(e) {
     var value = e.detail.value.replace(/\s+/g, "")
     this.setData({
@@ -228,7 +244,28 @@ Page({
       addressdetail: ''
     })
   },
+  modalidShoFN() {
+    this.setData({
+      modalidShow: false
+    })
+  },
   Addaddress() {
+    if (this.data.name==='') {
+      my.showToast({
+        type: 'none',
+        content: '联系人不可为空',
+        duration: 1000
+      });
+      return
+    }
+    if (/[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im.test(this.data.name)) {
+      my.showToast({
+        type: 'none',
+        content: '联系人包含非法字符',
+        duration: 1000
+      });
+      return
+    }
     if (/^1\d{10}$/.test(this.data.phone)) {
     } else {
       my.showToast({
@@ -238,7 +275,6 @@ Page({
       });
       return
     }
-    console.log(this.data.addressdetail,'this.data.addressdetail ')
     if (this.data.addressdetail.replace(/\s+/g, "") == '') {
       my.showToast({
         type: 'none',
@@ -247,7 +283,9 @@ Page({
       });
       return
     }
-    console.log(this.data.addressId)
+    my.showLoading({
+      content: '保存中...',
+    });
     if (this.data.addressId) {
       var data = {
         _sid: this.data._sid,
@@ -268,6 +306,7 @@ Page({
       }
       updateaddress(data).then(res => {
         if (res.code == 0) {
+          my.hideLoading();
           my.navigateBack({
             url: '/package_my/pages/myaddress/myaddress'
           });
@@ -296,9 +335,9 @@ Page({
         detail_address: this.data.addressdetail, // 地址详情
         tag: this.data.curLabel, // 地址标签
       }
-      console.log(data, 'ssssssss')
       addressCreate(data).then(res => {
         if (res.code == 0) {
+          my.hideLoading();
           if (this.data.order == 1) {
             my.navigateBack({
               url: '/pages/home/orderform/selectaddress/selectaddress'

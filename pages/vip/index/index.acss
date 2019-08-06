@@ -91,7 +91,6 @@ page {
 .x {
   position: relative;
   z-index: 9999;
-  width: 100%;
   white-space: nowrap;
   display: flex;
   margin: 20rpx 0;
@@ -106,7 +105,7 @@ page {
   flex-grow: 0;
   height: 80rpx;
   line-height: 80rpx;
-  margin-left: 32rpx;
+  margin-right: 32rpx;
   font-size: 34rpx;
   font-weight: 400;
 }
@@ -263,7 +262,7 @@ page {
   height: 130rpx;
   background-size: 310rpx;
   flex-shrink: 0;
-  margin-left: 20rpx;
+  margin-right: 20rpx;
 }
 
 .new-num {

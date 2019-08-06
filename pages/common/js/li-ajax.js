@@ -177,10 +177,12 @@ export const getAddressId = () => {
       type: 2,
       success(res) {
         console.log('address', res)
-        const { cityAdcode, districtAdcode } = res
+        const { cityAdcode, districtAdcode,longitude,latitude } = res
         resolve({
           city_id: cityAdcode,
-          district_id: districtAdcode
+          district_id: districtAdcode,
+          longitude,
+          latitude
         })
       },
       fail() {
