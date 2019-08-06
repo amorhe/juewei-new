@@ -53,8 +53,6 @@ Component({
       shopcartAll,
       shopcartNum
     })
-    // 购物车上方活动提示
-    this.shopcartPrompt(this.props.fullActivity,priceAll);
 
     this.busPos = {};
     this.busPos['x'] = 10;
@@ -229,8 +227,8 @@ Component({
         shopcartNum += goodlist[keys].num
       }
       // 购物车活动提示
-      this.data.index ++;
-      this.shopcartPrompt(this.props.fullActivity,priceAll);
+      this.shopcartPrompt(app.globalData.fullActivity,priceAll);
+
       this.setData({
         shopcartList: goodlist,
         shopcartAll,
@@ -335,9 +333,11 @@ Component({
           activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
         }
       }
-      this.setData({
-        activityText
-      })
+      app.globalData.activityText = activityText
+      // console.log(activityText)
+      // this.setData({
+      //   activityText
+      // })
     },
     // 商品详情
     goodsdetailContent(e){

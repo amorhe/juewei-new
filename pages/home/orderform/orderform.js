@@ -212,6 +212,10 @@ Page({
       typeClass = 4
     }
     const address_id = my.getStorageSync({key:'address_id'}).data;
+    if(!address_id){
+
+    }
+    
     // 创建订单
     createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
       console.log(res);

@@ -51,7 +51,6 @@ Page({
     otherGoods:[],   // 参与换购的商品
     type:1,   // 默认外卖
     shopGoods:[],   // 门店商品
-    fullActivity:'',   // 购物车提示
   },
   onLoad() {
     my.getAuthCode({
@@ -272,9 +271,7 @@ Page({
         app.globalData.gifts = res.data.MARKUP.gifts;
         // 获取活动金额
         let newArr = Object.keys(res.data.MARKUP.gifts);
-        this.setData({
-          fullActivity:newArr
-        })
+        app.globalData.fullActivity = newArr
       }else{
          app.globalData.gifts = [];
       }

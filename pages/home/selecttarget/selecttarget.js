@@ -113,12 +113,8 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-    // app.globalData.province = e.currentTarget.dataset.info.province;
-    // app.globalData.city = e.currentTarget.dataset.info.city;
-    // app.globalData.address = e.currentTarget.dataset.info.name;
-    my.switchTab({
-      url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
-    });
+    app.globalData.address = e.currentTarget.dataset.info.name;
+    this.getLbsShop(mapPosition.bd_lng,mapPosition.bd_lat);
   },
   switchPositionAddress(e){
     console.log(e)
@@ -136,7 +132,6 @@ Page({
     //   url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
     // });
     this.getLbsShop(position[0],position[1]);
-    // this.getNearbyShop(position[0],position[1]);
   },
   // 外卖附近门店
   getLbsShop(lng,lat) {
