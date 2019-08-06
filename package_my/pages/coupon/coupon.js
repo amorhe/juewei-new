@@ -1,7 +1,7 @@
 import { imageUrl, imageUrl2, baseUrl } from '../../../pages/common/js/baseUrl'
 import { couponsList, exchangeCode } from '../../../pages/common/js/home'
 import { formatTime } from '../../../pages/common/js/time'
-import { getSid, log ,ajax} from '../../../pages/common/js/li-ajax'
+import { getSid, log, ajax } from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     open2: false,
@@ -38,6 +38,7 @@ Page({
       res.DATA.use.forEach(item => {
         item.start_time = formatTime(item.start_time, 'Y-M-D');
         item.end_time = formatTime(item.end_time, 'Y-M-D');
+        item.toggleRule = false
       })
       this.setData({
         couponList: res.DATA.use,
@@ -89,9 +90,9 @@ Page({
     })
   },
 
-   /**
-   * @function 核销
-   */
+  /**
+  * @function 核销
+  */
 
   async wait() {
     let res = await ajax('/juewei-api/order/waiting', {}, 'GET')
@@ -102,5 +103,24 @@ Page({
     return my.showToast({
       content: res.msg,
     });
+  },
+
+  /**
+   * @function 展示规则
+   */
+
+  toggleRule(e) {
+    const { index } = e.currentTarget.dataset;
+    let { couponList } = this.data
+    if (couponList[index].toggleRule) {
+      couponList[index].toggleRule = false
+    } else {
+      couponList.forEach(item => {
+        item.toggleRule = false;
+      })
+      couponList[index].toggleRule = true
+    }
+
+    this.setData({ couponList })
   }
 });
