@@ -251,8 +251,8 @@ Page({
   */
   async getMorePoint() {
     this.onModalClose()
-    my.navigateBack({
-      delta: 1
+     my.switchTab({
+      url: '/pages/home/goodslist/goodslist'
     });
   },
 

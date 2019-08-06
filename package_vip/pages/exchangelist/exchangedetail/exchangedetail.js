@@ -101,7 +101,6 @@ Page({
     this.closeModel()
     clearInterval(this.data.time)
     this.setData({ time: -1 })
-    this.setData=()=>{}
   },
 
   guide,
