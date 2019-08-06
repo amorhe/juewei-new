@@ -30,7 +30,7 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 0 40rpx;
+  margin: 0 0 10rpx;
 }
 
 .board-last {
@@ -272,6 +272,7 @@ view.pay {
   justify-content: center;
   align-items: center;
   background: white;
+  margin-top: 40rpx;
 }
 
 .out-footer view:last-child {

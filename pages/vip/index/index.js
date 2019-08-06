@@ -35,7 +35,7 @@ Page({
 
     positionList: [],
 
-    new_user:[],
+    new_user: [],
 
     list: [],
 
@@ -52,23 +52,31 @@ Page({
 
     let _sid = await getSid()
 
+    let company_id = my.getStorageSync({
+      key: 'takeout', // 缓存数据的key
+    }).data[0].company_sale_id || 1;
+
+    log(app)
+
     let navHeight = getNavHeight()
 
     this.setData({
       _sid,
       navHeight,
       city_id,
-      district_id
+      district_id,
+      company_id
+    }, async() => {
+
+      this.getBanner()
+      this.getPositionList()
+      this.getUserPoint()
+
+      await this.getCouponsList()
+
+      await this.getCategory()
+      await this.getGoodsList()
     })
-
-    this.getBanner()
-    this.getPositionList()
-    this.getUserPoint()
-
-    await this.getCouponsList()
-
-    await this.getCategory()
-    await this.getGoodsList()
     // this.initClientRect()
 
 
@@ -262,11 +270,11 @@ Page({
    * @function 获取礼包列表
    */
 
-  async getCouponsList (){
-    let res =await ajax('/mini/coupons/list',{get_type:'new_user'})
-    if(res.CODE === 'A100'){
+  async getCouponsList() {
+    let res = await ajax('/mini/coupons/list', { get_type: 'new_user' })
+    if (res.CODE === 'A100') {
       this.setData({
-        new_user:res.DATA.new_user
+        new_user: res.DATA.new_user
       })
     }
   },
@@ -275,9 +283,9 @@ Page({
    * @function 去首页
    */
 
-  switchTo(){
+  switchTo() {
     my.switchTab({
-      url: '/pages/home/goodslist/goodslist', 
+      url: '/pages/home/goodslist/goodslist',
     });
   }
 

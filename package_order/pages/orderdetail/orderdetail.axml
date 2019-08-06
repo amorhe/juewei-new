@@ -10,7 +10,13 @@
       <text class="board-last">剩余时间：</text>
       <text class="board-last-time">14分58秒</text>
     </view>
-    <view class="board-time" a:if="{{[4].includes(d.order_status_info.order_status)}}">
+     <view class="board-time" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00' && d.dis_type==2}}" >
+      <text class="board-last">自提时间：{{d.dis_finish_time}}</text>
+    </view>
+    <view class="board-time" a:if="{{d.shop_address && d.dis_type==2}}">
+      <text class="board-last" style="color:#999">门店地址：{{d.shop_address}}</text>
+    </view>
+    <view class="board-time" a:if="{{[4].includes(d.order_status_info.order_status) && d.dis_type==1}}">
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
     <view class="out-footer">
@@ -159,12 +165,12 @@
       自提信息
     </view>
     <view class="list">
-      <view class="item" a:if="{{123}}">
+      <view class="item" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00'}}" >
         <view class="label">
           自提时间
         </view>
         <view class="value">
-          <view>{{123}}</view>
+          <view>{{d.dis_finish_time}}</view>
         </view>
       </view>
       
@@ -173,7 +179,7 @@
           门店名称
         </view>
         <view class="value">
-          <view>{{postWay[d.dis_tag]}}</view>
+          <view>{{d.shop_name}}</view>
         </view>
       </view>
       <view class="item">
@@ -181,11 +187,7 @@
           门店地址
         </view>
         <view class="value">
-          <view class="dis">
-            <image style="width:32rpx;height:32rpx" mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.dis_tel}}" onTap="makePhoneCall"/>
-            <text>联系骑手</text>
-            <text>{{d.dis_name}}</text>
-          </view>
+           <view>{{d.shop_address}}</view>
         </view>
       </view>
       
