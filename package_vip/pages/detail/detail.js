@@ -1,4 +1,4 @@
-import { ajax, parseData, getSid, log,isloginFn } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData, getSid, log, isloginFn } from '../../../pages/common/js/li-ajax'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -58,6 +58,11 @@ Page({
 
   async onLoad(e) {
     const { id } = e
+    this.setData({ id })
+  },
+
+  async onShow() {
+    const { id } = this.data
     await this.getDetail(id)
   },
 
@@ -70,7 +75,7 @@ Page({
       let _exchange_intro = await this.parseData(exchange_intro)
       let _intro = await this.parseData(intro)
       my.setNavigationBar({
-        title:'商品详情',
+        title: '商品详情',
       });
       this.setData({
         detail: {
@@ -251,7 +256,7 @@ Page({
   */
   async getMorePoint() {
     this.onModalClose()
-     my.switchTab({
+    my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     });
   },
