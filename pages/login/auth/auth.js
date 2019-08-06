@@ -1,15 +1,18 @@
-import {imageUrl,baseUrl} from '../../common/js/baseUrl'
-import {sendCode,captcha,loginByAliUid,loginByAuth,getuserInfo,decryptPhone} from '../../common/js/login'
+import { imageUrl, baseUrl } from '../../common/js/baseUrl'
+import { sendCode, captcha, loginByAliUid, loginByAuth, getuserInfo, decryptPhone } from '../../common/js/login'
 var app = getApp(); //放在顶部
 Page({
   data: {
     imageUrl,
     baseUrl,
     modalOpened: false,
-    getCode:false,
-    phone:'',
-    img_code:'',
-    imgUrl:''
+    getCode: false,
+    phone: '',
+    img_code: '',
+    imgUrl: ''
+  },
+  onLoad() {
+    this.getAliId()
   },
   openModal() {
     this.setData({
@@ -26,34 +29,43 @@ Page({
       modalOpened: false,
     });
   },
-  inputValue(e){
+  inputValue(e) {
     var phone = e.detail.value
-    if(phone.length==11){
+    if (phone.length == 11) {
       this.setData({
-        phone:phone,
-        getCode:true
+        phone: phone,
+        getCode: true
       })
-    }else{
+    } else {
       this.setData({
-        getCode:false
+        getCode: false
       })
     }
   },
-  getcodeImg(e){
-     var img_code = e.detail.value
-     this.setData({
-       img_code:img_code
-     })
-     console.log(img_code)
+  getcodeImg(e) {
+    var img_code = e.detail.value
+    this.setData({
+      img_code: img_code
+    })
+    console.log(img_code)
   },
   // 获取短信验证码
-  async getcodeFn(){
-    if(this.data.getCode){
+  async getcodeFn() {
+    if (/^1\d{10}$/.test(this.data.phone)) {
+    } else {
+      my.showToast({
+        type: 'none',
+        content: '请输入有效手机号',
+        duration: 1000
+      });
+      return
+    }
+    if (this.data.getCode) {
       var time = my.getStorageSync({
         key: 'time', // 缓存数据的key
       }).data;
-      if(time){
-        if(time != new Date().toLocaleDateString()){
+      if (time) {
+        if (time != new Date().toLocaleDateString()) {
           my.removeStorageSync({
             key: 'time',
           });
@@ -62,75 +74,129 @@ Page({
           });
         }
       }
-      
+
       var count = my.getStorageSync({
         key: 'count', // 缓存数据的key
-      }).data||0;
-      if(count==0){
+      }).data || 0;
+      if (count == 0) {
         my.setStorageSync({
           key: 'time', // 缓存数据的key
           data: new Date().toLocaleDateString(), // 要缓存的数据
         });
       }
-      if(count>5&&!this.data.modalOpened&&count<=10){
+      if (count > 5 && !this.data.modalOpened && count <= 10) {
         this.setData({
-          modalOpened:true,
-          imgUrl:this.data.baseUrl+'/juewei-api/user/captcha?_sid=9789-4ui62bhsvvg4jautqijjk114h6&s='+(new Date()).getTime()
+          modalOpened: true,
+          imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=9789-4ui62bhsvvg4jautqijjk114h6&s=' + (new Date()).getTime()
         })
         return
       }
       var data = {
-        phone:this.data.phone,
-        img_code:this.data.img_code
+        _sid: this.data._sid,
+        phone: this.data.phone,
+        img_code: this.data.img_code
       }
       let code = await sendCode(data)
-
-      my.setStorageSync({
-        key: 'count', // 缓存数据的key
-        data: count+1, // 要缓存的数据
-      });
-      if(code.code==0&&code.msg=='OK'){
+      if (code.code == 0 && code.msg == 'OK') {
+        my.setStorageSync({
+          key: 'count', // 缓存数据的key
+          data: count + 1, // 要缓存的数据
+        });
         this.setData({
-          modalOpened:false,
-          img_code:''
+          modalOpened: false,
+          img_code: ''
         })
         my.showToast({
-          type:'none',
-          duration:2000,
-          content:'短信发送成功'
+          type: 'none',
+          duration: 2000,
+          content: '短信发送成功'
         });
         my.navigateTo({
-          url:'/pages/login/verifycode/verifycode?phone='+data.phone
+          url: '/pages/login/verifycode/verifycode?phone=' + data.phone
         });
-      }else{
+      } else {
         my.showToast({
-          type:'none',
-          duration:2000,
-          content:code.msg
+          type: 'none',
+          duration: 2000,
+          content: code.msg
         });
       }
+    }
+  },
+  newImg() {
+    this.setData({
+      modalOpened: true,
+      imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=9789-4ui62bhsvvg4jautqijjk114h6&s=' + (new Date()).getTime()
+    })
+  },
+  getAliId() {
+    var that = this
+    let ali_uid = my.getStorageSync({ key: 'ali_uid' }).data;
+    var _sid = my.getStorageSync({ key: '_sid' }).data;
+    if (ali_uid && _sid) {
+      this.setData({
+        ali_uid: ali_uid,
+        _sid: _sid
+      })
+    } else {
+      my.getAuthCode({
+        scopes: ['auth_base'],
+        success: (res) => {
+          my.setStorageSync({
+            key: 'authCode', // 缓存数据的key
+            data: res.authCode, // 要缓存的数据
+          });
+          loginByAliUid(res.authCode).then((data) => {
+            if (data.code == 0 && data.data.user_id) {
+              my.setStorageSync({
+                key: 'ali_uid', // 缓存数据的key
+                data: data.data.ali_uid, // 要缓存的数据
+              });
+              my.setStorageSync({
+                key: '_sid', // 缓存数据的key
+                data: data.data._sid, // 要缓存的数据
+              });
+              that.setData({
+                ali_uid: data.data.ali_uid,
+                _sid: data.data._sid
+              })
+            } else {
+              my.setStorageSync({
+                key: 'ali_uid', // 缓存数据的key
+                data: data.data.ali_uid, // 要缓存的数据
+              });
+              my.setStorageSync({
+                key: '_sid', // 缓存数据的key
+                data: data.data._sid, // 要缓存的数据
+              });
+              that.setData({
+                ali_uid: data.data.ali_uid,
+                _sid: data.data._sid
+              })
+            }
+          })
+        },
+      });
     }
   },
   // 授权获取用户信息
   onGetAuthorize(res) {
     var that = this
-   
+
     my.getPhoneNumber({
       success: (res) => {
         my.showLoading({
           content: '加载中...',
           delay: 1000,
         });
-        let ali_uid = my.getStorageSync({
-          key: 'ali_uid', // 缓存数据的key
-        }).data;
+
         let userInfo = JSON.parse(res.response); // 以下方的报文格式解析两层 response
         var data = {
-          response:userInfo.response
+          response: userInfo.response
         }
-        decryptPhone(data).then(res=>{
-          if(res.code==0){
-            that.loginByAuthFn(ali_uid,res.data.phone);
+        decryptPhone(data).then(res => {
+          if (res.code == 0) {
+            that.loginByAuthFn(ali_uid, res.data.phone);
           }
         })
       },
@@ -140,24 +206,24 @@ Page({
     });
   },
   // 授权登录
-  loginByAuthFn(ali_uid,phone) {
+  loginByAuthFn(ali_uid, phone) {
     console.log('授权函数')
-    loginByAuth(ali_uid, phone,'','').then((res) => {
-      if(res.code==0){
+    loginByAuth(ali_uid, phone, '', '').then((res) => {
+      if (res.code == 0) {
         my.setStorageSync({
           key: '_sid', // session_id
           data: res.data._sid,
         });
-        app.globalData._sid=res.data._sid
+        app.globalData._sid = res.data._sid
         this.getUserInfo(res.data._sid);
-      }else{
+      } else {
         my.showToast({
           type: 'none',
           content: res.msg,
           duration: 2000
         });
       }
-     
+
     })
   },
   // 用户信息
@@ -166,18 +232,17 @@ Page({
       app.globalData.userInfo = res.data;
       my.hideLoading();
       my.navigateBack({
-          delta: 1
+        delta: 1
       })
       //this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
       //this.getBannerList(110100, 110105, 1, 1);    //banner列表
       //this.getActivityList(110100,110105,1,this.data.type,res.data.user_id)     //营销活动
     })
   },
-  onLoad() {},
-  toUrl(e){
+  toUrl(e) {
     var url = e.currentTarget.dataset.url
     my.navigateTo({
-      url:url
+      url: url
     });
   },
 });
