@@ -25,7 +25,7 @@ Page({
   onUnload() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
-    this.setData=()=>{}
+    this.setData = () => { }
   },
   onHide() {
     // clearInterval(this.data.time)
@@ -47,7 +47,7 @@ Page({
         this.setData({
           page_num
         })
-      },300)
+      }, 300)
     })
   },
 
@@ -58,7 +58,7 @@ Page({
   async getOrderList(page_num) {
     let { page_size, time, orderList, lastLage } = this.data;
     if (lastLage < page_num) {
-      return  my.hideLoading()
+      return my.hideLoading()
     }
     let res = await ajax('/mini/vip/wap/order/order_list', { page_num, page_size })
     if (res.code === 100) {
