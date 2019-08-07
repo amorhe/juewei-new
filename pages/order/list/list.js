@@ -144,6 +144,8 @@ Page({
           }
         })
         menuList[cur].finish = true
+        menuList[cur].page++
+
         this.setData({
           takeOutList,
           pickUpList,
@@ -172,7 +174,6 @@ Page({
     my.showLoading({ content: '加载中...' });
     this.setData({ time: -1 }, async () => {
       setTimeout(async () => {
-        menuList[cur].page++
         this.setData({
           menuList
         }, async () => await this.getOrderList())

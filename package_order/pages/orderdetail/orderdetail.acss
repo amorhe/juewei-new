@@ -443,6 +443,7 @@ view.pay {
 }
 
 .get-code-p {
+  position: relative;
   width: 652rpx;
   height: 200rpx;
   background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
@@ -465,4 +466,12 @@ view.pay {
   color: rgba(255, 255, 255, 1);
   text-align: center;
   margin-top: 30rpx;
+}
+
+.get-code-p image {
+  position: absolute;
+  width: 140rpx;
+  height: 140rpx;
+  right: 20rpx;
+  top: 10rpx;
 }
