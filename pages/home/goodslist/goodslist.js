@@ -255,7 +255,7 @@ Page({
             shopGoodsList: sortList,
             shopGoods:arr
           },()=> {
-            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,'')     //营销活动 my.getStorageSync({key: 'user_id'}).data
+            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动
           })
           
         },
