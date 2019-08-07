@@ -3,6 +3,7 @@ import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
     // 第一次打开
+ 
     var that = this;
     //贝塞尔曲线
     this.screenSize();
@@ -49,6 +50,7 @@ App({
     });
   },
   onShow(options) {//多次执行
+    my.clearStorageSync();
     // 从后台被 scheme 重新打开
     // console.log(options.query);
     // options.query == {number:1}
