@@ -91,7 +91,7 @@
         <view class="topay con" a:if="{{[1,2].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
-        <view class="topay con" a:if="{{[3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_longitude}}" data-shop_latitude="{{item.shop_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
+        <view class="topay con" a:if="{{[3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
           导航
         </view>
         <view class="cancel-order red" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">
