@@ -8,3 +8,24 @@
     <image mode="scaleToFill" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2045857670,768370412&fm=26&gp=0.jpg"/>
   </view>
 </view>
+
+<!-- 百元 礼包券 -->
+<modal show="{{!show}}" showClose="{{ false }}">
+  <view class="wrap" style="background-image:url({{imageUrl}}redBg.png)">
+    <view class="ul">
+      <view class="li" style="background-image:url({{imageUrl}}couponBg.png)" a:for="{{new_user}}">
+          <view class="left">
+            <view><text class="num">{{item.money/100}}</text> <text class="price">元</text></view>
+            <view class="con">满{{item.full_money/100}}元可用</view>
+          </view>
+          <view class="center">
+            <view class="type">外卖专享</view>
+            <view class="time">{{item.end_time}}到期</view>
+          </view>
+          <view class="li-btn">
+            立即使用
+          </view>
+      </view>
+    </view>
+  </view>
+</modal>
