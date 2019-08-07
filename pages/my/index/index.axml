@@ -58,7 +58,7 @@
         <view>
           <view>
             <view>
-              <image mode="scaleToFill" src="{{imageUrl}}menu_vip2.png"/>
+              <image mode="scaleToFill" src="{{imageUrl}}my_quity.png"/>
               <view>专享权益</view>
             </view>
           </view>

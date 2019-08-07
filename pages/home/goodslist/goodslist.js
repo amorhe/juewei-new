@@ -266,6 +266,7 @@ Page({
   // 门店营销活动(折扣和套餐)
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
+     
       console.log(res);
       let shopGoods = this.data.shopGoods;
       console.log(shopGoods)
