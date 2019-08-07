@@ -22,6 +22,10 @@ export const getSid = () => {
   })
 }
 
+/**
+ * @function 判断登录状态
+ * @param {string} data 
+ */
 export const isLogin = async (data) => {
   return new Promise((resolve, reject) => {
     my.request({
@@ -67,6 +71,10 @@ export const ajax = async (url, data = {}, method = 'POST') => {
         resolve(res.data)
         log(res.data)
       },
+      fail(){
+        my.hideLoading()
+        reject()
+      }
     });
   })
 }
