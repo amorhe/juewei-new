@@ -6,9 +6,10 @@ Page({
     exchangeObj:{},
     imageUrl2
   },
-  onLoad() {
+  onLoad(e) {
+    const {id} = e
     const _sid = my.getStorageSync({key: '_sid'}).data;
-    this.getDetail(_sid,'178784','219','jwd03190326x545060');
+    this.getDetail(_sid,'178784',id,'jwd03190326x545060');
   },
   getDetail(_sid,gift_code_id,gift_id,order_id){
     exchangedetail(_sid,gift_code_id,gift_id,order_id).then(async (res) => {

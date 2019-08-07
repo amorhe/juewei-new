@@ -54,7 +54,7 @@
             <tab-content key="1">
               <view class="tab-content tabBox">
                 <view class="redeemCode">
-                  <view a:for="{{exchangeList}}" onTap="changedetail">
+                  <view a:for="{{exchangeList}}" data-gift_code_id="{{item.gift_code_id}}" data-gift_id="{{item.gift_id}}" data-order_id="{{item.order_id}}" onTap="changedetail">
                     <image class="codeSize" src="{{imageUrl2 + item.gift_img_url}}" />
                     <view class="redeemContent">
                       <view class="fontBold">{{item.gift_name}}</view>
