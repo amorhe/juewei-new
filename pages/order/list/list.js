@@ -101,7 +101,6 @@ Page({
     let { time, menuList, pickUpList } = this.data
     const { cur } = e.currentTarget.dataset
     if (this.data.cur === cur) { return }
-    clearInterval(time)
     this.setData({ cur }, () => {
       if (menuList[cur].page == 1 && !pickUpList.length) {
         this.getOrderList()
