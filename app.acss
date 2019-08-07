@@ -87,6 +87,9 @@ page {
   justify-content: space-between;
   align-items: center
 }
+.flexRow {
+  flex-direction: row!important
+}
 .marginLEight {
   margin-left: 8rpx;
 }

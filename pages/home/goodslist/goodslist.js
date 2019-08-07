@@ -54,14 +54,15 @@ Page({
     fullActivity:''
   },
   onLoad() {
-    my.getAuthCode({
-     scopes: ['auth_user','auth_life_msg'],
-     success: (res) => {
-         console.log(res)
-     },
-    });
+    // my.getAuthCode({
+    //  scopes: ['auth_user','auth_life_msg'],
+    //  success: (res) => {
+    //      console.log(res)
+    //  },
+    // });
   },
   onShow() {
+    console.log(app.globalData)
       // 定位地址
     this.setData({
       firstAddress: app.globalData.address,

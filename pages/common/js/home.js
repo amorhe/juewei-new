@@ -15,7 +15,7 @@ const ajaxUrl = {
   GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
   createOrder: '/juewei-api/order/create',       // 创建订单
   confirmOrder: '/juewei-api/order/confirm',        // 确认订单（商品加入购物车点击立即购买）
-  useraddress: '/juewei-api/useraddress/list',     // 我的地址，收货地址列表
+  useraddress: '/juewei-api/useraddress/listDis',     // 我的地址，收货地址列表
   exchangeCode: '/mini/user/exchange_code_list',     // 兑换码列表
   exchangeCoupon: '/mini/coupons/exchange_coupons',   // 兑换优惠券
   exchangedetail: '/mini/user/exchange_code_view',    // 兑换详情
@@ -53,7 +53,7 @@ export const NearbyShop = (data) => ajax(ajaxUrl.NearbyShop,{data});
 
 export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
 
-export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,coupon_code,gift,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,coupon_code,gift,notUse})
+export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse})
 // dispatch_type	是	int	1（外卖）2（自提）
 // shop_id	是	int	门店id
 // goods	是	json	购物车商品
@@ -71,7 +71,7 @@ export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,sourc
 
 export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.confirmOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
 
-export const useraddress = (_sid,type,location) => ajax(ajaxUrl.useraddress,{_sid,type,location});
+export const useraddress = (shop_id) => ajax(ajaxUrl.useraddress,{shop_id});
 
 export const exchangeCode = (_sid,get_type) => ajax(ajaxUrl.exchangeCode,{_sid,get_type});
 

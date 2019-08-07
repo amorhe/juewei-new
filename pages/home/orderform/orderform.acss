@@ -19,6 +19,7 @@
   /* display: flex;
   align-items: center; */
   padding: 26rpx 24rpx;
+  margin-top: 20rpx;
 }
 .noAddress {
   font-size: 40rpx;
@@ -124,6 +125,7 @@
   width: 130rpx;
   height: 104rpx;
   margin-right: 16rpx;
+  /* background: url('https://test-wap.juewei.com/m/ali-mini/image/gift.jpg') 0 0 / 100% 100% no-repeat; */
 }
 .repurseGoodsInfo>view {
   display: flex;
@@ -234,4 +236,9 @@
   text-overflow:ellipsis;
   white-space: nowrap;
   text-align: right;
+}
+.invented>text:nth-child(1){
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 16rpx;
 }

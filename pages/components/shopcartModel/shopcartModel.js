@@ -77,16 +77,7 @@ Component({
         this.props.onChangeShopcart({},[],0,0);
       }
       if(data.isType == 'checkshopcart' && data.type == 0 && this.props.shopcartNum >0){
-        // let shop_id;
-        // if(this.data.orderType == 1){
-        //   shop_id = my.getStorageSync({
-        //     key: 'takeout', // 缓存数据的key
-        //   }).data[0].shop_id;
-        // }else {
-        //   shop_id = my.getStorageSync({
-        //     key: 'self', // 缓存数据的key
-        //   }).data[0].shop_id;
-        // }
+        app.globalData.goodsBuy = this.props.shopcartAll;
         my.navigateTo({
           url:'/pages/home/orderform/orderform'
         }) 
@@ -167,7 +158,9 @@ Component({
       // 未登录
       if(my.getStorageSync({
         key: 'user_id', // 缓存数据的key
-      }).data==null){
+      }).data==null || !my.getStorageSync({
+        key: 'user_id', // 缓存数据的key
+      }).data){
         my.navigateTo({
           url:'/pages/login/auth/auth'
         })
@@ -186,64 +179,50 @@ Component({
       }).data;
       let num1 = 0,num2=0,shopcartAll=[],priceAll=0,shopcartNum=0;
       if(goodsList == null) return;
-      for(let value of app.globalData.goodsArr){
-        for(let val in goodsList){
-          if(value.goods_format.length == 1){
-            if(val != `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${value.goods_format.type}`){
-              num1 += goodsList[val].num;
-              delete(goodsList[val]);
-            }
-          }
-          if(value.goods_format.length>1){
-            for(let item of value.goods_format){
-              if(val != `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${item.type}`){
-                num2 += goodsList[val].num;
-                delete(goodsList[val]);   
-              }
-            } 
-          }
-        }
-      }
+      // console.log(app.globalData.goodsArr)
       for(let val in goodsList){
-        if(goodsList[val].goods_discount_user_limit && goodsList[val].num>goodsList[val].goods_discount_user_limit){
-          priceAll += goodsList[val].goods_price * goodsList[val].goods_discount_user_limit + (goodsList[val].num-goodsList[val].goods_discount_user_limit)* goodsList[val].goods_original_price;
-        }else{
-          priceAll += goodsList[val].goods_price * goodsList[val].num;
+        let iscart=false;
+        for(let value of app.globalData.goodsArr){
+            for(let fn of value.goods_format){
+              if(val==`${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`){
+                 iscart=true;
+                 break;
+              }
+            }
         }
-        shopcartAll.push(goodsList[val]);
-        shopcartNum += goodsList[val].num
+        // 无商品
+        if(iscart==false){
+          num += goodsList[val].num;
+          delete(goodsList[val]);
+          this.setData({
+            showShopcar: false,
+            mask1:false,
+            mask:true,
+            modalShow: true,
+            isType:'checkshopcart',
+            content:`购物车有${num}件商品不在当前门店售卖商品之内`,
+            confirmButtonText:'重新选择',
+            cancelButtonText: '继续结算'
+          })
+          return
+        }else{
+          //有商品
+          if(goodsList[val].goods_discount_user_limit && goodsList[val].num>goodsList[val].goods_discount_user_limit){
+            priceAll += goodsList[val].goods_price * goodsList[val].goods_discount_user_limit + (goodsList[val].num-goodsList[val].goods_discount_user_limit)* goodsList[val].goods_original_price;
+          }else{
+            priceAll += goodsList[val].goods_price * goodsList[val].num;
+          }
+          shopcartAll.push(goodsList[val]);
+          shopcartNum += goodsList[val].num
+          this.changeshopcart(goodsList,shopcartAll,priceAll,shopcartNum);
+          console.log('购物车全部商品都在该门店内')
+        }
       }
-      this.changeshopcart(goodsList,shopcartAll,priceAll,shopcartNum);
       my.setStorageSync({
         key:'goodsList',
         data: goodsList
       })
-      this.setData({
-        showShopcar: false,
-        mask1:false,
-        mask:true,
-        modalShow: true,
-        isType:'checkshopcart',
-        content:`购物车有${this.props.shopcartNum-shopcartNum}件商品不在当前门店售卖商品之内`,
-        confirmButtonText:'重新选择',
-        cancelButtonText: '继续结算'
-      })
-      return
-
-  // 正常下单
-      // let shop_id;
-      // if(this.data.orderType == 1){
-      //   shop_id = my.getStorageSync({
-      //     key: 'takeout', // 缓存数据的key
-      //   }).data[0].shop_id;
-      // }else {
-      //   shop_id = my.getStorageSync({
-      //     key: 'self', // 缓存数据的key
-      //   }).data[0].shop_id;
-      // }
-      // app.globalData.goodsBuy = this.props.shopcartAll;
-      // app.globalData.dispatch_price = this.data.dispatch_price;
-      // app.globalData.priceAll = this.props.priceAll;
+      app.globalData.goodsBuy = this.props.shopcartAll;
       my.navigateTo({
         url:'/pages/home/orderform/orderform'
       }) 

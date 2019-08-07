@@ -151,7 +151,6 @@ Page({
         }
       }
       const shopArray = shopArr1.concat(shopArr2);
-      app.globalData.type = 2;
       my.switchTab({
         url: '/pages/home/goodslist/goodslist'
       })
@@ -168,7 +167,8 @@ Page({
         mask:e.mask,
         type:2
       })
-       this.getNearbyShop();
+      app.globalData.type = 2;
+      this.getNearbyShop();
     }else{
       my.navigateTo({
         url: '/pages/home/selecttarget/selecttarget?type=true'
