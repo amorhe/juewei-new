@@ -55,11 +55,11 @@
   </view>
   <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00')}}">
     <view class="get-code-title" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
-      取餐码 
+      取餐码
     </view>
     <view class="get-code-code" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
      {{d.user_phone.slice(0,3)}}  {{d.user_phone.slice(4,7)}}  {{d.user_phone.slice(7)}} / {{+d.order_index}}
-     <image mode="scaleToFill" src="{{imageUrl}}received.png"/>
+      <image mode="scaleToFill" src="{{imageUrl}}received.png"/>
     </view>
   </view>
   <view class="good">

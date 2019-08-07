@@ -28,7 +28,7 @@
        <cover-view class="fontTwentyTwo paddingLeft">营业时间：{{item.start_time}}-{{item.end_time}}</cover-view> 
        <cover-view class="fontSmallGray paddingLeft">{{item.address}}</cover-view>
        <cover-view class="menuBtn">
-         <cover-view onTap="goNavigation" data-lng="{{item.longitude}}" data-lng="{{item.latitude}}" data-title="{{item.title}}" data-address="{{item.address}}">导航</cover-view>
+         <cover-view onTap="goNavigation" data-lat="{{item.location[0]}}" data-lng="{{item.location[0]}}" data-title="{{item.title}}" data-address="{{item.address}}">导航</cover-view>
          <cover-view onTap="goSelf" data-shop_id="{{item.shop_id}}" data-company_id="{{item.company_sale_id}}" data-title="{{item.title}}" data-address="{{item.address}}" data-goods_num="{{item.goods_num}}" data-distance="{{item.distance}}">去自提</cover-view>  
        </cover-view> 
 

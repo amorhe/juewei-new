@@ -80,6 +80,7 @@ Page({
   },
   // 去导航
   goNavigation(e){
+    console.log(e)
     my.openLocation({
       longitude: e.currentTarget.dataset.lng,
       latitude: e.currentTarget.dataset.lat,
