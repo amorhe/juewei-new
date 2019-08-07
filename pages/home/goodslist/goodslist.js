@@ -255,7 +255,7 @@ Page({
             shopGoodsList: sortList,
             shopGoods:arr
           },()=> {
-            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动
+            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,'')     //营销活动 my.getStorageSync({key: 'user_id'}).data
           })
           
         },
@@ -266,6 +266,7 @@ Page({
   // 门店营销活动(折扣和套餐)
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
+     
       console.log(res);
       let shopGoods = this.data.shopGoods;
       // 获取加价购商品
@@ -282,8 +283,10 @@ Page({
       }
       
       // 获取参与加价购商品的列表
-      if(res.data.MARKUP.goods){
+      if(res.data.MARKUP && res.data.MARKUP.goods){
         app.globalData.otherGoods = res.data.MARKUP.goods;
+      }else{
+        app.globalData.otherGoods=[];
       }
 
       // 筛选在当前门店里面的折扣商品
