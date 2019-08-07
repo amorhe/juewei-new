@@ -1,5 +1,6 @@
 import {imageUrl,ak} from '../../../pages/common/js/baseUrl'
 import {NearbyShop} from '../../../pages/common/js/home'
+import {guide} from '../../../pages/common/js/li-ajax'
 Page({
   data: {
     imageUrl,
@@ -79,13 +80,5 @@ Page({
     });
   },
   // 去导航
-  goNavigation(e){
-    console.log(e)
-    my.openLocation({
-      longitude: e.currentTarget.dataset.lng,
-      latitude: e.currentTarget.dataset.lat,
-      name: e.currentTarget.dataset.title,
-      address: e.currentTarget.dataset.address,
-    });
-  }
+  guide
 });

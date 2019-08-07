@@ -81,7 +81,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
 
 /**
  * @function 获取富文本数组
- * @param string html字符串
+ * @param {string} html字符串
  */
 export const parseData = async (html) => {
   return new Promise(resolve => {
