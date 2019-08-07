@@ -7,8 +7,8 @@ Page({
     imageUrl,
     loginOpened: false,
     menuList: [
-      { key: '官方外卖订单', value: '', page: 1, dis_type: 1 },
-      { key: '门店自提订单', value: '', page: 1, dis_type: 2 }
+      { key: '官方外卖订单', value: '', page: 1, dis_type: 1, finish: false },
+      { key: '门店自提订单', value: '', page: 1, dis_type: 2, finish: false }
     ],
 
     dis_type: 1,
@@ -52,9 +52,12 @@ Page({
   },
 
 
-  async onLoad() {
-    clearInterval(this.data.time)
-    await this.getOrderList()
+  async onShow() {
+    let { time, takeOutList, pickUpList, menuList, cur } = this.data
+    clearInterval(time)
+    if (menuList[cur].page == 1 && (!takeOutList.length || !pickUpList.length)) {
+      await this.getOrderList()
+    }
   },
   onUnload() {
     clearInterval(this.data.time)
@@ -79,7 +82,14 @@ Page({
     this.setData({
       openPoint: false,
       modalOpened: false,
-      loginOpened: false
+      loginOpened: false,
+      menuList: [
+        { key: '官方外卖订单', value: '', page: 1, dis_type: 1 },
+        { key: '门店自提订单', value: '', page: 1, dis_type: 2 }
+      ],
+      listAll: [],
+      takeOutList: [],
+      pickUpList: [],
     })
   },
 
@@ -88,11 +98,12 @@ Page({
    */
 
   async changeMenu(e) {
-    let { time, menuList } = this.data
+    let { time, menuList, pickUpList } = this.data
     const { cur } = e.currentTarget.dataset
+    if (this.data.cur === cur) { return }
     clearInterval(time)
     this.setData({ cur }, () => {
-      if (menuList[cur].page == 1 && cur == 1) {
+      if (menuList[cur].page == 1 && !pickUpList.length) {
         this.getOrderList()
       }
     })
@@ -108,7 +119,6 @@ Page({
     let { page, dis_type } = menuList[cur]
 
     clearInterval(time)
-
 
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
@@ -133,13 +143,13 @@ Page({
             ...item,
           }
         })
-
+        menuList[cur].finish = true
         this.setData({
           takeOutList,
           pickUpList,
           listAll,
-          finish: true,
           time,
+          menuList
         }, () => my.hideLoading())
 
       }, 1000)
