@@ -209,7 +209,7 @@ Page({
       notUse = 1
     }
     // 创建订单
-    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,JSON.stringify(gift),coupon_code,notUse).then((res) => {
+    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,gift,coupon_code,notUse).then((res) => {
       console.log(res);
       if(res.code == 0){
         AliMiniPay(res.data.order_no).then((val) => {
