@@ -268,6 +268,7 @@ Page({
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
       console.log(res);
       let shopGoods = this.data.shopGoods;
+      console.log(shopGoods)
       // 获取加价购商品
       if(res.data.MARKUP!=null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -283,7 +284,14 @@ Page({
       
       // 获取参与加价购商品的列表
       if(res.data.MARKUP.goods){
-        app.globalData.otherGoods = res.data.MARKUP.goods;
+        app.globalData.repurseGoods = res.data.MARKUP.goods;
+        for(let item of res.data.MARKUP.goods){
+          for(let value of shopGoods){
+            if(item.goods_code == value.sap_code){
+              value['huangou'] = 1;
+            }
+          }
+        }
       }
 
       // 筛选在当前门店里面的折扣商品
@@ -310,6 +318,7 @@ Page({
         "key": "套餐",
         "last": PKG
       }
+      
       // obj3 = {
       //   "key":"包邮",
       //   "last":FREE
@@ -323,6 +332,7 @@ Page({
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
       app.globalData.goodsArr = goodsArr;
+      console.log(goodsNew)
       this.setData({
         shopGoodsAll:goodsNew
       })

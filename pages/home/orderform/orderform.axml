@@ -136,7 +136,7 @@
 
   </view>
   <!-- 换购商品 -->
-  <view class="repurse" a:if="{{repurseList.length!=0}}">
+  <view class="repurse" a:if="{{repurseList.length!=0 && showRepurse}}">
     <view class="reqpurseBox">
       <view class="fontBold">超值换购</view>
       <view class="fontSmallGray marginLEight">只能换购一件商品</view>

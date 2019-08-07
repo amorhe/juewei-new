@@ -28,10 +28,11 @@ Page({
     remark:'口味偏好等要求',    // 备注
     goodsReal:[],          // 非赠品
     goodsInvented:[],      // 赠品
-    gifts:{},
-    gifts_price:'',
-    gift_id:'',
-    order_price:''
+    gifts:{},         // 选择的换购商品
+    gifts_price:'',   // 换购商品价格
+    gift_id:'',     // 换购商品id
+    order_price:'',    //订单总价
+    showRepurse:false  // 是否显示换购商品
   },
   onLoad(e) {
     this.setData({
@@ -84,7 +85,7 @@ Page({
     }
     // console.log(goodsList)  
     this.confirmOrder(shop_id,JSON.stringify(goodsList));
-  // 加购商品
+  // 加购商品列表
     const gifts = app.globalData.gifts;
     console.log(gifts)
     if(Object.keys(gifts).length>0){
@@ -266,7 +267,7 @@ Page({
   // 订单确认
   confirmOrder(shop_id,goods){
     confirmOrder(this.data.orderType,shop_id,goods,shop_id,"",[],0).then((res) => {
-      console.log(res) 
+      console.log(res)
       let goodsList = my.getStorageSync({key:'goodsList'}).data;
       if(res.code == 0){
         let goodsReal=[],goodsInvented=[];
@@ -282,6 +283,23 @@ Page({
         for(let val of goodsReal){
           val['good_img'] = goodsList[`${val.goods_code}_${val.goods_format}`].goods_img;
         }
+        // 参与加价购的商品
+        let repurseTotalPrice=0;
+        let repurseGoods = app.globalData.repurseGoods;
+        for(let item of repurseGoods){
+          for(let value of goodsReal){
+            if(item.goods_code == value.sap_code && value.goods_type!="DIS"){
+              repurseTotalPrice += value.goods_price * value.goods_quantity;
+              if(repurseTotalPrice >= this.data.full_money){
+                this.setData({
+                  showRepurse:true
+                })
+              }
+            }
+          }
+        }
+
+
         this.setData({
           goodsReal,
           goodsInvented,

@@ -20,7 +20,8 @@ page {
 .positionLeft {
   display: flex;
   align-items: center;
-  font-weight: 600
+  font-weight: 600;
+  font-size: 36rpx;
 }
 .positionLeft>image {
   width: 40rpx;
