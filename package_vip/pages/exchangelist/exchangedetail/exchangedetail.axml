@@ -138,7 +138,7 @@
           商品有效时间
         </view>
         <view class="value">
-          {{detail.end_time.split(' ')[0]}}
+         {{detail.end_time.split(' ')[0]}}
         </view>
       </view>
       <view class="li" a:if="{{detail.exchange_intro}}">

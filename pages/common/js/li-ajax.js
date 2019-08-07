@@ -9,15 +9,38 @@ export const getSid = () => {
   return new Promise((resolve, reject) => {
     my.getStorage({
       key: '_sid', // 缓存数据的key
-      success: (res) => {
-        resolve(res.data)
+      success: async (res) => {
+        if (await isLogin({ _sid: res.data })) {
+          resolve(res.data)
+        }
+        resolve('')
       },
       fail: err => {
-        reject(err)
+        reject('')
       }
     });
   })
 }
+
+export const isLogin = async (data) => {
+  return new Promise((resolve, reject) => {
+    my.request({
+      url: baseUrl + '/juewei-api/alimini/getUserInfo',
+      data,
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      success: (res) => {
+        my.hideLoading()
+        if (res.data.code == 30106) {
+          resolve(false)
+        } else if (res.data.code == 0 && res.data.data.user_id) {
+          resolve(true)
+        }
+      },
+    });
+  })
+}
+
 
 
 /**
@@ -177,7 +200,7 @@ export const getAddressId = () => {
       type: 2,
       success(res) {
         console.log('address', res)
-        const { cityAdcode, districtAdcode,longitude,latitude } = res
+        const { cityAdcode, districtAdcode, longitude, latitude } = res
         resolve({
           city_id: cityAdcode,
           district_id: districtAdcode,
@@ -201,4 +224,15 @@ export const isloginFn = () => {
     url: '/pages/login/auth/auth'
   });
 
+}
+
+/**
+ * @function 跳转
+ */
+
+export const liTo = e => {
+  const { url } = e.currentTarget.dataset;
+  my.navigateTo({
+    url
+  })
 }
