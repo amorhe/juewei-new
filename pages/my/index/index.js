@@ -37,6 +37,7 @@ Page({
   },
   // 获取用户信息
   async getUserInfo() {
+    var that = this
     let _sid = await this.getSid()
     let res = await getuserInfo(_sid.data || '')
     console.log(res, '我的页面')
@@ -47,18 +48,29 @@ Page({
       })
     }
     if (res.code == 0) {
-      this.setData({
-        loginId: res.code,
-        userInfo: res.data
-      })
+      var userInfo = res.data
+      my.getAuthCode({
+        scopes: ['auth_user', 'auth_life_msg'],
+        success: (res) => {
+          my.getAuthUserInfo({
+            success: (user) => {
+              userInfo.head_img = user.avatar
+              userInfo.nick_name = user.nickName
+              that.setData({
+                userInfo: userInfo
+              })
+            }
+          });
+        },
+      });
     }
   },
   // 判断是否去登录
   isloginFn() {
     if (this.data.userInfo.user_id) {
-      
+
       my.navigateTo({
-        url: '/package_my/pages/mycenter/mycenter'
+        url: '/package_my/pages/mycenter/mycenter?img='+this.data.userInfo.head_img+'&name='+this.data.userInfo.nick_name
       });
     } else {
       my.navigateTo({

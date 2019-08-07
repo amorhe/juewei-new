@@ -1,18 +1,18 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
 import { getRegion } from '../../../pages/common/js/li-ajax'
-import { UpdateAliUserInfo,UpdateUserInfo } from '../../../pages/common/js/my'
-import { getuserInfo,LoginOut } from '../../../pages/common/js/login'
+import { UpdateAliUserInfo, UpdateUserInfo } from '../../../pages/common/js/my'
+import { getuserInfo, LoginOut } from '../../../pages/common/js/login'
 var app = getApp()
-let region=[]
+let region = []
 Page({
   data: {
     imageUrl,
     showTop: false,
     modalOpened: false,
-    head_img:'', // 头像
-    nick_name:'', // 名字
-    userinfo:'', // 用户信息
-    sex:0,
+    head_img: '', // 头像
+    nick_name: '', // 名字
+    userinfo: '', // 用户信息
+    sex: 0,
     // 地址
     name: '',
 
@@ -33,14 +33,16 @@ Page({
     defaultAddress: [0, 0, 0]
   },
   onLoad(e) {
-    //this.UpdateInfo()
+    console.log(e)
+    if (e.img && e.name) {
+      this.getInfo(e.img,e.name)
+    }
   },
   async onShow() {
-    this.getInfo()
     console.log('执行')
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
-    region =  await getRegion()
+    region = await getRegion()
     this.getAddressList()
     this.getUserInfo()
   },
@@ -48,56 +50,56 @@ Page({
   getUserInfo() {
     var that = this
     var _sid = my.getStorageSync({
-      key:'_sid'
+      key: '_sid'
     }).data
-    console.log(_sid,'_ssssss')
+    console.log(_sid, '_ssssss')
     getuserInfo(_sid).then((res) => {
-      var province = region.filter(item=>{
-        return item.addrid==res.data.province_id
+      var province = region.filter(item => {
+        return item.addrid == res.data.province_id
       })[0]
-  
-      var city = province.sub.filter(item=>{
-        return item.addrid==res.data.city_id
+
+      var city = province.sub.filter(item => {
+        return item.addrid == res.data.city_id
       })[0]
-      var regions = city.sub.filter(item=>{
-        return item.addrid==res.data.region_id
+      var regions = city.sub.filter(item => {
+        return item.addrid == res.data.region_id
       })[0]
-      res.data.provinceName=province.name||''
-      res.data.cityName=city.name||''
-      res.data.regionName=regions.name||''
+      res.data.provinceName = province.name || ''
+      res.data.cityName = city.name || ''
+      res.data.regionName = regions.name || ''
       // console.log(res.data,'数据啊')
       that.setData({
-        userinfo:res.data
+        userinfo: res.data
       })
     })
   },
   // 选择性别
-  genderFN(e){
+  genderFN(e) {
     var that = this
     var data = e.currentTarget.dataset
-    var sex = data.sex==1?0:1
-    UpdateUserInfo({sex:data.sex}).then(res=>{
+    var sex = data.sex == 1 ? 0 : 1
+    UpdateUserInfo({ sex: data.sex }).then(res => {
       that.setData({
-        'userinfo.sex':sex,
+        'userinfo.sex': sex,
         showTop: false,
       })
     })
   },
   // 保存用户信息
-  saveUserInfo(data){
-    var data= {
-      sex:data.sex||'',
-      birthday:data.birthday||'',
-      province_id:data.province_id||'',
-      city_id:data.city_id||'',
-      region_id:data.region_id||''
+  saveUserInfo(data) {
+    var data = {
+      sex: data.sex || '',
+      birthday: data.birthday || '',
+      province_id: data.province_id || '',
+      city_id: data.city_id || '',
+      region_id: data.region_id || ''
     }
-    UpdateUserInfo(data).then((res)=>{
-      console.log(res,'用户保存')
+    UpdateUserInfo(data).then((res) => {
+      console.log(res, '用户保存')
     })
   },
   // 生日选择器
-  Taptime(){
+  Taptime() {
     var that = this
     my.datePicker({
       currentDate: '',
@@ -105,15 +107,15 @@ Page({
       endDate: '',
       success: (res) => {
         var birthday = res.date
-        UpdateUserInfo({birthday:birthday}).then(res=>{
+        UpdateUserInfo({ birthday: birthday }).then(res => {
           that.setData({
-            'userinfo.birthday':birthday
+            'userinfo.birthday': birthday
           })
         })
       },
     });
   },
- 
+
   getAddressList() {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
     let provinceList = region.map(({ addrid, name }) => ({ addrid, name }))
@@ -152,21 +154,21 @@ Page({
   hideSelectAddress() {
     var that = this
     var province = that.data.provinceList[that.data.defaultAddress[0]]
-    var curCity= that.data.cityList[that.data.defaultAddress[1]]
-    var region= that.data.countryList[that.data.defaultAddress[2]]
+    var curCity = that.data.cityList[that.data.defaultAddress[1]]
+    var region = that.data.countryList[that.data.defaultAddress[2]]
     var data = {
-      province_id:province.addrid,
-      city_id:curCity.addrid,
-      region_id:region.addrid
+      province_id: province.addrid,
+      city_id: curCity.addrid,
+      region_id: region.addrid
     }
-    UpdateUserInfo(data).then(res=>{
+    UpdateUserInfo(data).then(res => {
       that.setData({
-        'userinfo.province_id':province.addrid,
-        'userinfo.city_id':curCity.addrid,
-        'userinfo.region_id':region.addrid,
-        'userinfo.provinceName':province.name,
-        'userinfo.cityName':curCity.name,
-        'userinfo.regionName':region.name,
+        'userinfo.province_id': province.addrid,
+        'userinfo.city_id': curCity.addrid,
+        'userinfo.region_id': region.addrid,
+        'userinfo.provinceName': province.name,
+        'userinfo.cityName': curCity.name,
+        'userinfo.regionName': region.name,
         selectAddress: false
       })
     })
@@ -196,7 +198,7 @@ Page({
     });
   },
   // 退出登录
-  outLogin(){
+  outLogin() {
     this.setData({
       modalOpened: true,
     });
@@ -205,17 +207,17 @@ Page({
     var _sid = my.getStorageSync({
       key: '_sid', // 缓存数据的key
     }).data;
-    LoginOut(_sid).then(res=>{
+    LoginOut(_sid).then(res => {
       console.log(res)
-      if(res.code==0){
+      if (res.code == 0) {
         my.removeStorageSync({
           key: '_sid',
         });
         app.globalData._sid = ""
         my.switchTab({
-          url:'/pages/home/goodslist/goodslist'
+          url: '/pages/home/goodslist/goodslist'
         })
-      }else{
+      } else {
         my.showToast({
           type: 'none',
           content: res.msg,
@@ -233,39 +235,29 @@ Page({
     });
   },
   //页面跳转
-  toUrl(e){
+  toUrl(e) {
     var url = e.currentTarget.dataset.url
     my.navigateTo({
-      url:url
+      url: url
     });
   },
-  getInfo(){
+  getInfo(avatar, nickName) {
     var that = this
-    my.getAuthCode({
-      scopes: ['auth_user','auth_life_msg'],
-      success: (res) => { 
-        my.getAuthUserInfo({
-          success: (userInfo) => {
-            var _sid = my.getStorageSync({
-                  key: '_sid', // 缓存数据的key
-            }).data;
-            that.setData({
-              'userinfo.head_img':userInfo.avatar,
-              'userinfo.nick_name':userInfo.nickName
-            })
-            var data = {
-              _sid:_sid,
-              head_img: userInfo.avatar,
-              nick_name:userInfo.nickName
-            }
-            console.log(data,'更新')
-            UpdateAliUserInfo(data).then(res=>{
+    var _sid = my.getStorageSync({
+      key: '_sid', // 缓存数据的key
+    }).data;
+    that.setData({
+      'userinfo.head_img': avatar,
+      'userinfo.nick_name': nickName
+    })
+    var data = {
+      _sid: _sid,
+      head_img: avatar,
+      nick_name: nickName
+    }
+    UpdateAliUserInfo(data).then(res => {
 
-            })
-          }
-        });
-      },
-    });
+    })
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
