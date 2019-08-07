@@ -32,7 +32,7 @@ Page({
         })
         app.globalData.province = res.province;
         app.globalData.city = res.city;
-        app.globalData.address =  res.streetNumber.street;
+        app.globalData.address =  res.pois[0].name;
         app.globalData.position = res;
         that.getLbsShop();
         // that.getNearbyShop();
