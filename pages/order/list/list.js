@@ -7,9 +7,11 @@ Page({
     imageUrl,
     loginOpened: false,
     menuList: [
-      { key: '官方外卖订单', value: '' },
-      { key: '门店自提订单', value: '' }
+      { key: '官方外卖订单', value: '', page: 1, dis_type: 1, finish: false },
+      { key: '门店自提订单', value: '', page: 1, dis_type: 2, finish: false }
     ],
+
+    dis_type: 1,
 
     listAll: [],
 
@@ -51,16 +53,11 @@ Page({
 
 
   async onShow() {
-    clearInterval(this.data.time)
-    this.setData({
-      time: -1,
-      page: 1,
-      listAll: []
-    }, async () => {
-      const { page } = this.data
-      await this.getOrderList(page)
-    })
-
+    let { time, takeOutList, pickUpList, menuList, cur } = this.data
+    clearInterval(time)
+    if (menuList[cur].page == 1 && (!takeOutList.length || !pickUpList.length)) {
+      await this.getOrderList()
+    }
   },
   onUnload() {
     clearInterval(this.data.time)
@@ -85,7 +82,14 @@ Page({
     this.setData({
       openPoint: false,
       modalOpened: false,
-      loginOpened: false
+      loginOpened: false,
+      menuList: [
+        { key: '官方外卖订单', value: '', page: 1, dis_type: 1 },
+        { key: '门店自提订单', value: '', page: 1, dis_type: 2 }
+      ],
+      listAll: [],
+      takeOutList: [],
+      pickUpList: [],
     })
   },
 
@@ -93,23 +97,35 @@ Page({
    * @function 选择菜单
    */
 
-  changeMenu(e) {
+  async changeMenu(e) {
+    let { time, menuList, pickUpList } = this.data
     const { cur } = e.currentTarget.dataset
-    this.setData({ cur })
+    if (this.data.cur === cur) { return }
+    this.setData({ cur }, () => {
+      if (menuList[cur].page == 1 && !pickUpList.length) {
+        this.getOrderList()
+      }
+    })
   },
 
   /**
    * @function 获取订单列表
    */
-  async getOrderList(page) {
+  async getOrderList() {
 
-    let { listAll } = this.data
+    let { listAll, takeOutList, pickUpList, menuList, cur, time } = this.data
 
-    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page }, 'GET')
+    let { page, dis_type } = menuList[cur]
+
+    clearInterval(time)
+
+    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
 
       let { time } = this.data
-      listAll = [...data, ...listAll]
+      dis_type == 1
+        ? listAll = takeOutList = [...data, ...takeOutList]
+        : listAll = pickUpList = [...data, ...pickUpList]
       time = setInterval(() => {
         listAll = listAll.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
@@ -126,14 +142,15 @@ Page({
             ...item,
           }
         })
-        let takeOutList = listAll.filter(({ dis_type }) => dis_type == 1)
-        let pickUpList = listAll.filter(({ dis_type }) => dis_type == 2)
+        menuList[cur].finish = true
+        menuList[cur].page++
+
         this.setData({
           takeOutList,
           pickUpList,
           listAll,
-          finish: true,
           time,
+          menuList
         }, () => my.hideLoading())
 
       }, 1000)
@@ -149,21 +166,28 @@ Page({
    * @function 获取更对订单信息
    */
 
-  async onReachBottom() {
+  async getMore() {
     // 页面被拉到底部
+    let { menuList, cur } = this.data;
     clearInterval(this.data.time)
     my.showLoading({ content: '加载中...' });
     this.setData({ time: -1 }, async () => {
       setTimeout(async () => {
-        let { page } = this.data
-        ++page
-        await this.getOrderList(page)
         this.setData({
-          page
-        })
+          menuList
+        }, async () => await this.getOrderList())
+
       }, 300)
     })
+  },
 
+  /**
+   * @function 触底
+   */
+
+  async onReachBottom() {
+
+    this.getMore()
   },
 
   /**

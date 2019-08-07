@@ -14,9 +14,8 @@
     <view class="address" a:if="{{d.receive_type == 2 && user_address_name}}" onTap="toAddAddress">
       <view class="address-title">
         <view>{{user_address_name}} {{user_address_phone}}</view>
-        <!-- <view class="address-sm">{{province}}{{city}}{{district}}{{user_address_detail_address}}</view> -->
+        <!--<view class="address-sm">{{province}}{{city}}{{district}}{{user_address_detail_address}}</view> -->
         <view class="address-sm">{{user_address_map_addr}}</view>
-
       </view>
       <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -62,17 +61,19 @@
         <text class="total-title">合计</text>
         <text class="total-vip">{{d.order_point}}</text>
         <text class="total-j">积分</text>
-         <text class="total-vip" a:if="{{d.order_amount != 0}}">+{{d.order_amount}}</text>
+        <text class="total-vip" a:if="{{d.order_amount != 0}}">+{{d.order_amount}}</text>
         <text class="total-sm" a:if="{{d.order_amount != 0}}">元</text>
         <text class="total-vip" a:if="{{d.express_fee != 0}}">+{{d.express_fee}}</text>
         <text class="total-sm" a:if="{{d.express_fee != 0}}">元运费</text>
       </view>
     </view>
-    <view a:if="{{d.receive_type != 2}}" class="wait-pay-btn" onTap="payNow" style="background:{{(user_address_name==='' || user_address_phone==='' || address==='' || shop_name === '') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
+    <view a:if="{{d.receive_type != 2}}" class="wait-pay-btn" onTap="payNow" style="background:{{
+      (!user_address_name || !user_address_phone || !address || !shop_name) 
+      ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)'
+      : 'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
     马上支付
     </view>
-    <view a:if="{{d.receive_type == 2}}" class="wait-pay-btn" onTap="payNow" 
-    style="background:{{
+    <view a:if="{{d.receive_type == 2}}" class="wait-pay-btn" onTap="payNow" style="background:{{
       !user_address_name
       ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)'
       : 'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
@@ -84,7 +85,7 @@
 <view class="shop" a:if="{{selectShop && d}}">
   <view class="shop-search">
     <image class="search-icon" mode="scaleToFill" src="{{imageUrl}}search.png"/>
-    <input placeholder="小区/写字楼/学校等"  onInput="search" />
+    <input placeholder="小区/写字楼/学校等" onInput="search" />
   </view>
   <view class="shop-ul">
     <view class="shop-item" a:for="{{shopList}}" data-shop_name="{{item.shop_name}}" data-shop_id="{{item.shop_id}}" onTap="sureSelectShop">

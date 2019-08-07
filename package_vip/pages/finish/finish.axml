@@ -47,8 +47,8 @@
         <view class="user-right">
           <view class="shop-name"> {{d.shop_name}}</view>
           <view class="code-button"
-           data-shop_longitude="{{d.shop_longitude}}" 
-          data-shop_latitude="{{d.shop_latitude}}"
+           data-shop_longitude="{{d.shop_gd_longitude}}" 
+          data-shop_latitude="{{d.shop_gd_latitude}}"
           data-shop_name="{{d.shop_name}}"
           data-address="{{d.address}}"
           onTap="guide"
@@ -114,12 +114,12 @@
         <view class="explain-title">兑换说明</view>
         <rich-text nodes="{{d._exchange_intro}}"></rich-text>
       </view>
-      <view class="hint" a:if="{{d.get_code}}">
+      <view class="hint" a:if="{{d.gift_code}}" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
       温馨提示：可到VIP专享>兑换记录中查看
       </view>
-      <view class="hint" a:if="{{!d.get_code}}">
+      <view class="hint" a:if="{{!d.gift_code}}">
       温馨提示：可到
-        <text style="color:#108EE9">我的>卡劵</text> 中查看
+        <text style="color:#108EE9" data-url="/package_my/pages/coupon/coupon" onTap="liTo">我的>卡劵</text> 中查看
       </view>
       <view class="li-button" onTap="redirect">
       返回VIP专享

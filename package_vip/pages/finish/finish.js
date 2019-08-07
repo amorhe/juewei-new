@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2, baseUrl } from '../../../pages/common/js/baseUrl'
-import { ajax, parseData, redirect, log, getSid, handleCopy,guide,contact } from '../../../pages/common/js/li-ajax'
+import { ajax, parseData, redirect, log, getSid, handleCopy,guide,contact,liTo } from '../../../pages/common/js/li-ajax'
 
 var app = getApp();
 Page({
@@ -87,6 +87,8 @@ Page({
   guide,
 
   contact,
+
+  liTo,
 
 
   redirect() {

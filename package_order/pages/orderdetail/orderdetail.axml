@@ -10,18 +10,18 @@
       <text class="board-last">剩余时间：</text>
       <text class="board-last-time">{{d.remaining_pay_minute}}分{{d.remaining_pay_second}}秒</text>
     </view>
-     <view class="board-time" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00' && d.dis_type==2}}" >
+    <view class="board-time" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00' && d.dis_type==2}}">
       <text class="board-last">自提时间：{{d.dis_finish_time}}</text>
     </view>
-    <view class="board-time" a:if="{{d.shop_address && d.dis_type==2}}">
+    <view class="board-time" a:if="{{d.shop_address && d.dis_type==2 && !d.order_cancel_reason}}">
       <text class="board-last" style="color:#999">门店地址：{{d.shop_address}}</text>
     </view>
     <view class="board-time" a:if="{{[4].includes(d.order_status_info.order_status) && d.dis_type==1}}">
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
-    <view class="out-footer">
-      <view class="topay" a:if="{{item.order_status == 0}}">
-          去支付（还剩14分20秒）
+    <view class="out-footer" a:if="{{!d.order_cancel_reason}}">
+      <view class="topay" a:if="{{item.order_status == 0}}" onTap="payNow" data-order_no="{{d.order_no}}">
+          去支付（还剩{{d.remaining_pay_minute}}分{{d.remaining_pay_second}}秒）
       </view>
       <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status)}}" catchTap="showCancel">
           取消订单
@@ -35,7 +35,7 @@
       <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
           评价订单
       </view>
-      <view class="cancel-order"  data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status) && d.is_comment == 1}}">
+      <view class="cancel-order" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status) && d.is_comment == 1}}">
           已评价
       </view>
       <!--<view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(d.order_status_info.order_status)}}">
@@ -53,6 +53,15 @@
       <view class="pay">再来一单</view>
     </view>
   </view>
+  <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00')}}">
+    <view class="get-code-title" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
+      取餐码
+    </view>
+    <view class="get-code-code" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
+     {{d.user_phone.slice(0,3)}}  {{d.user_phone.slice(4,7)}}  {{d.user_phone.slice(7)}} / {{+d.order_index}}
+      <image mode="scaleToFill" src="{{imageUrl}}received.png"/>
+    </view>
+  </view>
   <view class="good">
     <view class="address">
       <view>{{d.shop_name}}</view>
@@ -64,7 +73,7 @@
         <view class="body">
           <view class="name">
             <view class="top">
-              <view class="image">折</view>
+              <view class="image" a:if="{{item.goods_code.substr(2,3)==='DIS' || item.goods_code.substr(2,3)==='PKG'}}">折</view>
               <view>
                  {{item.goods_name}}
                 <text a:if="{{item.remark}}">（{{item.remark}}）</text>
@@ -118,14 +127,12 @@
       </view>
     </view>
   </view>
-
   <view class="poster" a:if="{{d.dis_type==1}}">
     <view class="title">
       配送信息
     </view>
-
     <view class="list">
-       <view class="item">
+      <view class="item">
         <view class="label">
           配送方式
         </view>
@@ -145,8 +152,6 @@
           </view>
         </view>
       </view>
-     
-      
       <view class="item">
         <view class="label">
           收货地址
@@ -158,14 +163,12 @@
       </view>
     </view>
   </view>
-
-
   <view class="poster" a:if="{{d.dis_type==2}}">
     <view class="title">
       自提信息
     </view>
     <view class="list">
-      <view class="item" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00'}}" >
+      <view class="item" a:if="{{d.dis_finish_time != '0000-00-00 00:00:00'}}">
         <view class="label">
           自提时间
         </view>
@@ -173,7 +176,6 @@
           <view>{{d.dis_finish_time}}</view>
         </view>
       </view>
-      
       <view class="item">
         <view class="label">
           门店名称
@@ -187,10 +189,9 @@
           门店地址
         </view>
         <view class="value">
-           <view>{{d.shop_address}}</view>
+          <view>{{d.shop_address}}</view>
         </view>
       </view>
-      
     </view>
   </view>
   <view class="poster">
@@ -203,7 +204,8 @@
           订单编号
         </view>
         <view class="value">
-          <view>{{d.order_no}}</view> <view class="classname"></view>
+          <view>{{d.order_no}}</view>
+          <view class="classname"></view>
           <view class="code-button" data-text="{{detail.gift_code}}" onTap="handleCopy">复制</view>
         </view>
       </view>
@@ -228,23 +230,22 @@
 </view>
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
   <view style="background: #fff">
-    <view class="order-trace">订单跟踪 <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
+    <view class="order-trace">订单跟踪
+      <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
     <view class="order-trace-ul">
       <view class="order-trace-li" a:for="{{curOrderState}}">
         <view class="order-trace-left">
           <image mode="scaleToFill" src="{{imageUrl}}order1.png" a:if="{{curOrderState.length - 1 != index}}"/>
           <image mode="scaleToFill" src="{{imageUrl}}order3.png" a:if="{{curOrderState.length - 1 == index}}"/>
           <view class="order-trace-state {{curOrderState.length - 1 == index?'active':''}}">{{item.state}}</view>
-         
         </view>
         <view class="order-trace-right">
-           <view class="order-trace-time {{curOrderState.length - 1 == index?'active':''}}" >{{item.time.split(' ')[1]}}</view>
+          <view class="order-trace-time {{curOrderState.length - 1 == index?'active':''}}">{{item.time.split(' ')[1]}}</view>
         </view>
       </view>
     </view>
   </view>
 </popup>
-
 <popup show="{{cancleShow}}" position="bottom" onClose="onPopupClose">
   <view style="height: 711rpx; width:750rpx; background: #fff;border-radius: 20rpx 20rpx 0 0">
     <view class="cancle-title">请选择取消原因</view>
@@ -252,7 +253,7 @@
       <view class="cancle-left">
         {{item.reason}}
       </view>
-      <image  class="select" mode="scaleToFill" src="{{imageUrl}}select{{item.value?2:1}}.png"/>
+      <image class="select" mode="scaleToFill" src="{{imageUrl}}select{{item.value?2:1}}.png"/>
     </view>
     <view class="cancel-buttons">
       <view catchTap='closeModel'>暂不取消</view>

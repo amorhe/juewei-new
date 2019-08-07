@@ -62,9 +62,10 @@ Page({
     });
   },
   // 兑换详情
-  changedetail() {
+  changedetail(e) {
+    const { gift_code_id, gift_id, order_id } = e.currentTarget.dataset
     my.navigateTo({
-      url: '/package_my/pages/coupon/changedetails/changedetails'
+      url: '/package_my/pages/coupon/changedetails/changedetails?gift_code_id=' + gift_code_id + '&gift_id=' + gift_id + '&order_id=' + order_id
     })
   },
 

@@ -8,7 +8,9 @@
           <text>活动赠品</text>
         </view>
       </view>
-      <navigator url="/package_my/pages/onlineservice/onlineservice" class="contactBtn">联系客服</navigator>
+      <!-- <navigator url="/package_my/pages/onlineservice/onlineservice" class="contactBtn">联系客服</navigator> -->
+      <view class="contactBtn" catchTap="contact">联系客服</view>
+
     </view>
     <view class="redeemCodeDetail borderBottom">
       <view>
@@ -33,19 +35,19 @@
       </view> -->
       <view>
         <view class="typeFont">使用范围</view>
-        <view>{{exchangeObj.gift_application_store}}</view>
+        <rich-text nodes="{{exchangeObj.gift_application_store}}"></rich-text>
       </view>
       <view>
         <view class="typeFont">兑换说明</view>
-        <view>{{exchangeObj.gift_exchange_process}}</view>
+        <rich-text nodes="{{exchangeObj.gift_exchange_process}}"></rich-text>
       </view>
       <view>
         <view class="typeFont">商品详情</view>
-        <view>{{exchangeObj.gift_desciption}}</view>
+        <rich-text nodes="{{exchangeObj.gift_desciption}}"></rich-text>
       </view>
       <view>
         <view class="typeFont">客服电话</view>
-        <view>{{exchangeObj.gift_service_telephone}}</view>
+        <rich-text nodes="{{exchangeObj.gift_service_telephone}}"></rich-text>
       </view>
     </view>
 
