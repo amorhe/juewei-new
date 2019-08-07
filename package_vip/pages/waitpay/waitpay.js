@@ -82,7 +82,7 @@ Page({
   onHide() {
     clearInterval(this.data.a)
     this.setData({ a: -1 })
-    this.setData = () => { }
+    // this.setData = () => { }
 
   },
 

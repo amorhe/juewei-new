@@ -71,13 +71,13 @@
       (!user_address_name || !user_address_phone || !address || !shop_name) 
       ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)'
       : 'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
-    马上支付1
+    马上支付
     </view>
     <view a:if="{{d.receive_type == 2}}" class="wait-pay-btn" onTap="payNow" style="background:{{
       !user_address_name
       ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)'
       : 'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
-    马上支付2
+    马上支付
     </view>
   </view>
 </view>
