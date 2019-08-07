@@ -202,3 +202,14 @@ export const isloginFn = () => {
   });
 
 }
+
+/**
+ * @function 跳转
+ */
+
+export const liTo = e =>{
+  const {url} = e.currentTarget.dataset;
+  my.navigateTo({
+    url
+  })
+}
