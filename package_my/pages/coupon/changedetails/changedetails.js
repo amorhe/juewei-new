@@ -1,23 +1,28 @@
-import {exchangedetail} from '../../../../pages/common/js/home'
-import {imageUrl2} from '../../../../pages/common/js/baseUrl'
-import {parseData} from '../../../../pages/common/js/li-ajax'
+import { exchangedetail } from '../../../../pages/common/js/home'
+import { imageUrl2 } from '../../../../pages/common/js/baseUrl'
+import { parseData, contact } from '../../../../pages/common/js/li-ajax'
 Page({
   data: {
-    exchangeObj:{},
+    exchangeObj: {},
     imageUrl2
   },
   onLoad(e) {
-    const {id} = e
-    const _sid = my.getStorageSync({key: '_sid'}).data;
-    this.getDetail(_sid,'178784',id,'jwd03190326x545060');
+    const { gift_code_id, gift_id, order_id } = e
+    const _sid = my.getStorageSync({ key: '_sid' }).data;
+    this.getDetail({ _sid, gift_code_id, gift_id, order_id });
   },
-  getDetail(_sid,gift_code_id,gift_id,order_id){
-    exchangedetail(_sid,gift_code_id,gift_id,order_id).then(async (res) => {
-      if(res.CODE == 'a100') {
+  contact,
+
+  getDetail({ _sid, gift_code_id, gift_id, order_id }) {
+    exchangedetail(_sid, gift_code_id, gift_id, order_id).then(async (res) => {
+      if (res.CODE == 'A100') {
+        res.DATA.gift_application_store = await parseData(res.DATA.gift_application_store);
         res.DATA.gift_desciption = await parseData(res.DATA.gift_desciption);
         res.DATA.gift_exchange_process = await parseData(res.DATA.gift_exchange_process)
+        res.DATA.gift_service_telephone = await parseData(res.DATA.gift_service_telephone)
+
         this.setData({
-          exchangeObj:res.DATA
+          exchangeObj: res.DATA
         })
       }
     })
