@@ -254,7 +254,7 @@ Page({
     if (this.data.name==='') {
       my.showToast({
         type: 'none',
-        content: '联系人不可为空',
+        content: '请输入联系人',
         duration: 1000
       });
       return
