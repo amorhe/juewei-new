@@ -19,7 +19,7 @@ Page({
     latitude: 40.0511,
     markersArray:[],
     shopObj:{},   // 自提商店的详细信息
-    couponsList:[],   //优惠券
+    couponslist:[],   //优惠券列表
     couponsDefault:null,
     full_money:0,
     goodsInfo:'',
@@ -32,13 +32,21 @@ Page({
     gifts_price:'',   // 换购商品价格
     gift_id:'',     // 换购商品id
     order_price:'',    //订单总价
-    showRepurse:false  // 是否显示换购商品
+    showRepurse:false,  // 是否显示换购商品
+    coupon_money:0,     // 优惠金额
+    goodsList:[]
   },
   onLoad(e) {
     this.setData({
       orderType:app.globalData.type,
     })
-
+    let goodsList = app.globalData.goodsBuy;
+    for(let item of goodsList){
+      item['goods_quantity'] = item['num']
+    } 
+    this.setData({
+      goodsList
+    })
     const shop_id = my.getStorageSync({key: 'shop_id'}).data;
     if(app.globalData.type == 2) {
       const self = my.getStorageSync({key: 'self'}).data;
@@ -79,12 +87,6 @@ Page({
         shopObj:self[0]
       })
     }
-    let goodsList = app.globalData.goodsBuy;
-    for(let item of goodsList){
-      item['goods_quantity'] = item['num']
-    }
-    // console.log(goodsList)  
-    this.confirmOrder(shop_id,JSON.stringify(goodsList));
   // 加购商品列表
     const gifts = app.globalData.gifts;
     console.log(gifts)
@@ -102,14 +104,30 @@ Page({
     }
   },
   onShow(){
+    // 选择地址
     if(my.getStorageSync({key: 'address_id'}).data!=null) {
       this.getAddress(my.getStorageSync({key: 'address_id'}).data)
     }
+    // 备注
     if(app.globalData.remarks) {
       this.setData({
         remark:app.globalData.remarks
       })
     }
+    if(app.globalData.coupon_code){
+      this.setData({
+        coupon_code:app.globalData.coupon_code
+      })
+    }
+    
+    let gift = [];
+    if(this.data.gifts[this.data.gift_id]){
+      gift.push(this.data.gifts[this.data.gift_id]);
+      this.setData({
+        gift
+      })
+    }
+    this.confirmOrder(my.getStorageSync({key: 'shop_id'}).data,JSON.stringify(this.data.goodsList));
   },
   // 换购显示
   addRepurseTap(e){
@@ -125,19 +143,19 @@ Page({
     }
     if(e.currentTarget.dataset.cash==0 && e.currentTarget.dataset.point==0){
       gifts_price = `¥0`;
-      order_price = `¥${this.data.orderInfo.allow_order_coupon_price/100}`;
+      order_price = `¥${this.data.orderInfo.real_price/100}`;
     }
     if(e.currentTarget.dataset.cash==0 && e.currentTarget.dataset.point!=0){
       gifts_price = `${e.currentTarget.dataset.point}积分`;
-      order_price = `¥${this.data.orderInfo.allow_order_coupon_price/100}+${e.currentTarget.dataset.point}积分`
+      order_price = `¥${this.data.orderInfo.real_price/100}+${e.currentTarget.dataset.point}积分`
     }
     if(e.currentTarget.dataset.cash!=0 && e.currentTarget.dataset.point==0){
       gifts_price = ` ¥${e.currentTarget.dataset.cash/100}`;
-      order_price = `¥${e.currentTarget.dataset.cash/100 + this.data.orderInfo.allow_order_coupon_price/100}`
+      order_price = `¥${e.currentTarget.dataset.cash/100 + this.data.orderInfo.real_price/100}`
     }
     if(e.currentTarget.dataset.cash!=0 && e.currentTarget.dataset.point!=0){
       gifts_price = `¥${e.currentTarget.dataset.cash/100}+${e.currentTarget.dataset.point}积分`;
-      order_price = `¥${e.currentTarget.dataset.cash/100+ this.data.orderInfo.allow_order_coupon_price/100}+${e.currentTarget.dataset.point}积分`
+      order_price = `¥${e.currentTarget.dataset.cash/100+ this.data.orderInfo.real_price/100}+${e.currentTarget.dataset.point}积分`
     }
     this.setData({
       gifts,
@@ -151,7 +169,7 @@ Page({
     this.setData({
       gifts:{},
       gift_id:'',
-      order_price:`¥${this.data.orderInfo.allow_order_coupon_price/100}`
+      order_price:`¥${this.data.orderInfo.real_price/100 }`
     })
   },
   // 弹框事件回调
@@ -198,18 +216,12 @@ Page({
         return
       }
     }
-    let gift = [],coupon_code='',notUse=0;
-    if(this.data.gifts[this.data.gift_id]){
-      gift.push(this.data.gifts[this.data.gift_id]);
-    }
-    if(!app.globalData.coupon_code){
-      coupon_code = this.data.orderInfo.use_coupons[0]
-    }else{
-      coupon_code = app.globalData.coupon_code;
+    let notUse=0;
+    if(app.globalData.coupon_code){
       notUse = 1
     }
     // 创建订单
-    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,gift,coupon_code,notUse).then((res) => {
+    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,this.data.gift,this.data.orderInfo.use_coupons[0],notUse).then((res) => {
       console.log(res);
       if(res.code == 0){
         AliMiniPay(res.data.order_no).then((val) => {
@@ -221,6 +233,9 @@ Page({
                 // 支付成功
                 if(value.resultCode == 9000){
                   add_lng_lat(res.data.order_no,typeClass,lng,lat).then((conf) => {
+                    my.removeStorageSync({
+                      key: 'goodsList', // 缓存数据的key
+                    });
                     my.reLaunch({
                       url: '/pages/home/orderfinish/orderfinish?order_no=' + res.data.order_no, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
                     });
@@ -230,6 +245,9 @@ Page({
                     url: '/pages/home/orderError/orderError', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
                   });
                 }else {
+                  my.removeStorageSync({
+                    key: 'goodsList', // 缓存数据的key
+                  });
                   my.redirectTo({
                     url: '/package_order/pages/orderdetail/orderdetail?order_no=' + res.data.order_no, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
                   })
@@ -238,6 +256,10 @@ Page({
             });
           }
         }) 
+      }else{
+        my.showToast({
+          content:res.msg
+        })
       }
     })
 
@@ -259,14 +281,18 @@ Page({
     })
   },
   // 选择优惠券
-  chooseCoupon(){
+  chooseCoupon(e){
     my.navigateTo({
-      url: '/pages/home/orderform/chooseCoupon/chooseCoupon'
+      url: '/pages/home/orderform/chooseCoupon/chooseCoupon?coupon=' + e.currentTarget.dataset.coupon + '&money=' + e.currentTarget.dataset.money
     });
   },
   // 订单确认
-  confirmOrder(shop_id,goods){
-    confirmOrder(this.data.orderType,shop_id,goods,shop_id,"",[],0).then((res) => {
+  confirmOrder(shop_id,goods,coupon_code){
+    let notUse = 0;
+    if(app.globalData.coupon_code){
+      notUse = 1
+    }
+    confirmOrder(this.data.orderType,shop_id,goods,shop_id,this.data.coupon_code,this.data.couponslist,notUse).then((res) => {
       console.log(res)
       let goodsList = my.getStorageSync({key:'goodsList'}).data;
       if(res.code == 0){
@@ -299,12 +325,20 @@ Page({
           }
         }
 
-
+        //  优惠券
+        let coupon_money = 0;
+        if(res.data.activity_list[''].reduce_detail.length==1){
+          coupon_money = res.data.activity_list[''].reduce_detail[0].coupon.reduce
+        }else if(res.data.activity_list[''].reduce_detail.length>1){
+          coupon_money = res.data.activity_list[''].reduce_detail[res.data.activity_list[''].reduce_detail.findIndex(val => Math.max(val.coupon.reduce))].coupon.reduce;
+        }
+        
         this.setData({
           goodsReal,
           goodsInvented,
           orderInfo:res.data.activity_list[''],
-          order_price:`¥${res.data.activity_list[''].allow_order_coupon_price/100}`
+          order_price:`¥${res.data.activity_list[''].real_price/100}`,
+          coupon_money
         })
       }else{
         this.setData({

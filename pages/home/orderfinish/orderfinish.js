@@ -11,7 +11,7 @@ Page({
     this.setData({
       order_no: e.order_no
     }),
-      this.getCouponsList()
+    this.getCouponsList();
   },
 
 

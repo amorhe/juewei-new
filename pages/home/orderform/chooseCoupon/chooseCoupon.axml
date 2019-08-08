@@ -1,6 +1,6 @@
 <view class="couponUl">
 <radio-group>
-  <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" a:if="{{couponList.length>0}}" onTap="chooseCouponed">
+  <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" a:if="{{couponList.length>0}}" catchTap="chooseCouponed" data-coupon_code="{{item.code}}">
     <image class="quan"  src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
     <view>
       <view class="couponNumber">
@@ -12,7 +12,7 @@
         <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
         <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
       </view>
-      <radio value="{{item.code}}" checked="{{defaultcoupon==index}}" color="#fce263"/>
+      <radio value="{{item.code}}" checked="{{item.code == defaultcoupon}}" color="#fce263"/>
     </view>
     <view>
       <view class="whiteCircleLeft"></view>
@@ -24,7 +24,6 @@
         <text class="colorWhite fontTwentyTwo">更多使用规则</text>
         <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s"/>
       </view>
-      <!-- <image class="qr" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" catchTap="showCode" /> -->
     </view>
     <view class="rule">
       <view a:if="{{item.gift_usage_rule}}">1、{{item.gift_usage_rule}}</view>

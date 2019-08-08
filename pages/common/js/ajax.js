@@ -1,5 +1,9 @@
 import {baseUrl} from './baseUrl';
 export const ajax = (url,data={},method="POST") => {
+  my.showLoading({
+  content: '加载中...',
+  delay: 1000,
+  });
   let headers;
   if(method == "POST"){
     headers = {'content-type': 'application/x-www-form-urlencoded'};
@@ -13,6 +17,7 @@ export const ajax = (url,data={},method="POST") => {
       data,
       method,
       success: (res) => {
+        my.hideLoading();
         resolve(res.data);
       },
       fail:(err) => {

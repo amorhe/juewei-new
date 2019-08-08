@@ -60,7 +60,10 @@ Component({
   },
   deriveDataFromProps(nextProps){
     // console.log(nextProps)
-    this.shopcartPrompt(this.props.fullActivity,this.data.priceAll)
+    this.shopcartPrompt(this.props.fullActivity,this.data.priceAll);
+    if(!my.getStorageSync({key:'goodsList'}).data){
+      this.onchangeShopcart({},[],0,0);
+    }
   },
   didMount() {
     const _sid = my.getStorageSync({key: '_sid'});
@@ -169,7 +172,7 @@ Component({
         priceAll,
         shopcartNum
       })
-      // this.onCart(goodlist,shopcartAll,priceAll,shopcartNum)
+      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum)
     },
     addshopcart(e){
       console.log(e)

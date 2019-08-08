@@ -9,7 +9,7 @@
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
-          <image class="ImageFourty" catchTap="editAddress" mode="scaleToFill" src="{{imageUrl}}edit.png"/>
+          <image class="ImageFourty" catchTap="editAddress" mode="scaleToFill" src="{{imageUrl}}edit.png" data-id="{{item.user_address_id}}"/>
         </view>
       </radio-group>
 
@@ -22,7 +22,7 @@
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
-          <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}edit.png"/>
+          <image class="ImageFourty" catchTap="editAddress" mode="scaleToFill" src="{{imageUrl}}edit.png" data-id="{{item.user_address_id}}"/>
         </view>
     </view>
    </view>

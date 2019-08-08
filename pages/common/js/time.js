@@ -34,6 +34,7 @@ export const compare = (property) => {
         return value2 - value1;
     }
 }
+// 小到大
 export const sortNum =(a,b) =>{
   return a - b
 }

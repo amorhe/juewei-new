@@ -12,7 +12,7 @@ Component({
     goods_original_price:0,
     goods_discount_user_limit:0,
     // goods_format_all:'',
-    goodsList:{},
+    // goodsList:{},
     shopcartAll:[],
   },
   props: {
@@ -21,16 +21,17 @@ Component({
     onCart: (data) => console.log(data)
   },
   onInit(){
-    let goodsList = my.getStorageSync({key:'goodsList'}).data;
-    this.setData({
-      goodsList
-    })
+  
   },
   didMount() {
  
   },
    deriveDataFromProps(nextProps){
     // console.log(nextProps)
+    let goodsList = my.getStorageSync({key:'goodsList'}).data;
+    this.setData({
+      goodsList
+    })
   },
   didUpdate(prevProps, prevData) {
     
