@@ -1,15 +1,15 @@
 <view class="addressView">
-   <view a:if="{{addressList.length>0}}">
+   <view a:if="{{addressList.length>0}}" class="addressBox">
       <radio-group class="radio-group" name="lib">
-        <view class="borderBottomSolid" a:for="{{addressList}}" catchTap="chooseAddress" data-id="{{item.user_address_id}}">
+        <view class="borderBottomSolid" a:for="{{addressList}}" onTap="chooseAddress" data-id="{{item.user_address_id}}">
           <view class="flexSpecial">
             <radio value="{{item.user_address_id}}" checked="{{item.is_default==1}}" color="#E60012"/>
             <view class="receiverView">
-              <view>{{item.user_address_address + item.user_address_detail_address}}</view>
+              <view>{{item.user_address_map_addr + item.user_address_detail_address}}</view>
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
-          <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}edit.png"/>
+          <image class="ImageFourty" catchTap="editAddress" mode="scaleToFill" src="{{imageUrl}}edit.png"/>
         </view>
       </radio-group>
 
@@ -18,7 +18,7 @@
       <view class="borderBottomSolid addressUl colorNine" a:for="{{addressListNoUse}}" onTap="chooseNewAddress">
           <view class="flexSpecial">
             <view class="receives">
-              <view>{{item.user_address_address + item.user_address_detail_address}}</view>
+              <view>{{item.user_address_map_addr + item.user_address_detail_address}}</view>
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
@@ -26,7 +26,10 @@
         </view>
     </view>
    </view>
-   <image class='nullImg' a:if="{{addressList.length== 0}}" src="{{ imageUrl }}bg_address.png"/>
+   <view  class="nostatus" a:if="{{addressList.length== 0}}">
+     <image class='nullImg' src="{{ imageUrl }}bg_address.png"/>
+     <text>暂无配送地址</text>
+   </view>
 <!-- 添加新地址 -->
    <view style="height:96rpx;"></view>
    <navigator url="/package_my/pages/myaddress/addaddress/addaddress?order=1" class="addView">

@@ -13,10 +13,10 @@ Page({
     var that = this;
     my.getLocation({
       type:3,
-      success(res) {
+      success(res){
         my.hideLoading();
         console.log(res)
-       const mapPosition = bd_encrypt(res.longitude,res.latitude);
+        const mapPosition = bd_encrypt(res.longitude,res.latitude);
         my.setStorageSync({
           key: 'lat', // 缓存数据的key
           data: mapPosition.bd_lat, // 要缓存的数据

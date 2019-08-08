@@ -102,6 +102,11 @@ Page({
   },
   switchAddress(e){
     console.log(e)
+    if(!error){
+      my.showToast({
+        content:'定位失败，请选择其他收货地址！'
+      });
+    }
     let mapPosition = '';
     switch(e.currentTarget.dataset.type){
       case 1:
@@ -140,8 +145,6 @@ Page({
   },
   // 外卖附近门店
   getLbsShop(lng,lat) {
-    // const lng = my.getStorageSync({key:'lng'}).data;
-    // const lat = my.getStorageSync({key:'lat'}).data;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -190,8 +193,6 @@ Page({
   },
   // 自提附近门店
   getNearbyShop(lng,lat) {
-    // const lng = my.getStorageSync({key:'lng'}).data;
-    // const lat = my.getStorageSync({key:'lat'}).data;
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({

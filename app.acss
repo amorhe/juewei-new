@@ -139,3 +139,17 @@ page {
   z-index: 99;
   background: #E60012;
 }
+.nostatus {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 320rpx;
+  margin-top: -180rpx;
+  margin-left: -160rpx;
+  text-align: center;
+}
+.nostatus>image {
+  width: 320rpx;
+  height: 320rpx;
+  margin-bottom: 32rpx;
+}

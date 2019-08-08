@@ -72,5 +72,10 @@ Page({
         
       },
     });
-  }
+  },
+  // editAddress(){
+  //   my.navigateTo({
+  //     url: 
+  //   });
+  // }
 });

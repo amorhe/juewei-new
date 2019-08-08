@@ -128,8 +128,7 @@
         </view>
         <view class="marginLEight">
           <text class="fontTwentySix">小计¥</text>
-          <text class="fontFourtyWeight">{{orderInfo.allow_order_coupon_price
-/100}}</text>
+          <text class="fontFourtyWeight">{{orderInfo.allow_order_coupon_price/100}}</text>
         </view>
       </view>
     </view>
