@@ -280,6 +280,10 @@ Page({
       this.setData({
         new_user: res.DATA.new_user
       })
+    }else{
+      this.setData({
+        new_user:[]
+      })
     }
   },
 
