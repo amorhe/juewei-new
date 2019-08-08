@@ -268,5 +268,16 @@ Page({
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     })
   },
-
+  // 新增地址
+  addAddressTap(){
+    if(!my.getStorageSync({key:'user_id'}).data){
+      my.navigateTo({
+        url: '/pages/login/auth/auth'
+      });
+    }else{
+      my.navigateTo({
+        url:"/package_my/pages/myaddress/addaddress/addaddress"
+      });
+    }
+  }
 });

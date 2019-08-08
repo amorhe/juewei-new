@@ -16,7 +16,6 @@ Page({
   getCouponsList(_sid){
     couponsList(_sid,'history').then((res) => {
       res.DATA.used.forEach(item => {
-        console.log(formatTime(item.start_time,'Y-M-D'));
         item.start_time = formatTime(item.start_time,'Y-M-D');
         item.end_time = formatTime(item.end_time,'Y-M-D');
       })
