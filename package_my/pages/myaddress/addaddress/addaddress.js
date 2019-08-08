@@ -44,7 +44,8 @@ Page({
     order: 0,
     _sid: '',
     addressdetail: '',
-    modalidShow: false, // 无门店
+    modalidShow: false, // 无门店,
+    detailAdd:'',
   },
   async onLoad(e) {
     var _sid = my.getStorageSync({ key: '_sid' }).data;
@@ -90,7 +91,8 @@ Page({
           district: res.district,
           longitude: res.longitude,
           latitude: res.latitude,
-          address: address
+          address: address,
+          detailAdd: res.province+res.city+res.district+res.streetNumber.street+res.streetNumber.number
         })
       },
       fail() {
@@ -115,6 +117,7 @@ Page({
         phone: data.user_address_phone, // 手机号
         map_address: data.user_address_map_addr, // 定位地址
         address: data.user_address_detail_address, // 收货地址
+        detailAdd:data.user_address_detail_address,
         province: data.province,// 省
         city: data.city, // 市
         district: data.district, // 区
@@ -131,14 +134,17 @@ Page({
     var that = this
     my.chooseLocation({
       success: (res) => {
-        var address = res.name ? res.name : res.address
+        var resadd = res.address
+        var map_address = res.name ? res.name : res.address
+        console.log(res,'选择')
         my.request({
           url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
           success: (res) => {
             that.setData({
               province: res.data.result.addressComponent.province,
               city: res.data.result.addressComponent.city,
-              district: res.data.result.addressComponent.district
+              district: res.data.result.addressComponent.district,
+              detailAdd: res.data.result.addressComponent.province+res.data.result.addressComponent.city+res.data.result.addressComponent.district+resadd
             })
           },
         });
@@ -160,7 +166,7 @@ Page({
         that.setData({
           longitude: res.longitude,
           latitude: res.latitude,
-          address: address
+          map_address: map_address
         })
       },
       fail(err) {
@@ -294,14 +300,14 @@ Page({
         sex: this.data.sex,
         name: this.data.name, // 收货人姓名
         phone: this.data.phone, // 手机号
-        map_address: this.data.address, // 定位地址
+        map_address: this.data.map_address, // 定位地址
         address: this.data.addressdetail, // 收货地址
         province: this.data.province,// 省
         city: this.data.city, // 市
         district: this.data.district, // 区
         longitude: this.data.longitude, // 经度
         latitude: this.data.latitude, // 纬度
-        detail_address: this.data.address, // 地址详情
+        detail_address: this.data.detailAdd, // 地址详情
         check_edit: false,
         tag: this.data.curLabel, // 地址标签
       }
@@ -320,20 +326,21 @@ Page({
         }
       })
     } else {
+      // 添加
       var data = {
         _sid: this.data._sid,
         sex: this.data.sex,
         name: this.data.name, // 收货人姓名
         phone: this.data.phone, // 手机号
         map_address: this.data.address, // 定位地址
-        address: this.data.addressdetail, // 收货地址
+        detail_address: this.data.detailAdd, // 地址详情
         province: this.data.province,// 省
         city: this.data.city, // 市
         district: this.data.district, // 区
         longitude: this.data.longitude, // 经度
         latitude: this.data.latitude, // 纬度
         shop_id: this.data.shop_id, // 门店
-        detail_address: this.data.address, // 地址详情
+        address: this.data.addressdetail, // 收货地址
         tag: this.data.curLabel, // 地址标签
       }
       addressCreate(data).then(res => {
