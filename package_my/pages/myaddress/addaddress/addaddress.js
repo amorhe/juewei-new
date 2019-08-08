@@ -91,7 +91,7 @@ Page({
           district: res.district,
           longitude: res.longitude,
           latitude: res.latitude,
-          address: address,
+          map_address: address,
           detailAdd: res.province+res.city+res.district+res.streetNumber.street+res.streetNumber.number
         })
       },
@@ -332,7 +332,7 @@ Page({
         sex: this.data.sex,
         name: this.data.name, // 收货人姓名
         phone: this.data.phone, // 手机号
-        map_address: this.data.address, // 定位地址
+        map_address: this.data.map_address, // 定位地址
         detail_address: this.data.detailAdd, // 地址详情
         province: this.data.province,// 省
         city: this.data.city, // 市
