@@ -284,7 +284,7 @@ Page({
       }
       
       // 获取参与加价购商品的列表
-      if(res.data.MARKUP.goods){
+      if(res.data.MARKUP && res.data.MARKUP.goods){
         app.globalData.repurseGoods = res.data.MARKUP.goods;
         for(let item of res.data.MARKUP.goods){
           for(let value of shopGoods){
