@@ -17,7 +17,9 @@ Page({
   onLoad(e) {
     if(e.type){
       this.setData({
-        isSuccess:true
+        isSuccess:true,
+        city: app.globalData.city,
+        addressIng: app.globalData.address
       })
     }
   },
@@ -28,10 +30,6 @@ Page({
       const lat = my.getStorageSync({key: 'lat'}).data;
       const location = `${lng},${lat}`;
       this.getAddressList(_sid,location,lat,lng);
-      this.setData({
-        city: app.globalData.city,
-        addressIng: app.globalData.address
-      })
     }
   },
   // 切换城市
