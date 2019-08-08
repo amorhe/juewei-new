@@ -17,7 +17,7 @@
       <view class="select-address list" onTap="chooseLocation">
         <view class="item">地址</view>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
-        <view class="real-address">{{address}}</view>
+        <view class="real-address">{{map_address}}</view>
         <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
       <view class="list">
