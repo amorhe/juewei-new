@@ -128,12 +128,10 @@
         </view>
         <view class="marginLEight">
           <text class="fontTwentySix">小计¥</text>
-          <text class="fontFourtyWeight">{{orderInfo.allow_order_coupon_price
-/100}}</text>
+          <text class="fontFourtyWeight">{{orderInfo.allow_order_coupon_price/100}}</text>
         </view>
       </view>
     </view>
-
   </view>
   <!-- 换购商品 -->
   <view class="repurse" a:if="{{repurseList.length!=0 && showRepurse}}">
