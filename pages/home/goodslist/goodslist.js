@@ -128,10 +128,12 @@ Page({
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);//banner
         this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id);
       }else{
+        console.log(shopArray)
         this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
         this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
         const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
+        console.log(status)
         this.setData({
           isOpen:status,
           shopTakeOut: shopArray
@@ -165,8 +167,11 @@ Page({
   },
   // 切换外卖自提
   chooseTypes(e) {
+    if(!my.getStorageSync({key:'takeout'}).data){
+      return
+    }
     if (e.currentTarget.dataset.type == 'ziti') {
-      let shopTakeOut = my.getStorageSync({key:'takeout'}).data;
+      let shopTakeOut = my.getStorageSync({key:'self'}).data;
       this.setData({
         shopTakeOut,
         type:2
@@ -176,7 +181,7 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut[0].company_sale_id, 1);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut[0].company_sale_id); 
     } else {
-      let shopTakeOut = my.getStorageSync({key:'self'}).data;
+      let shopTakeOut = my.getStorageSync({key:'takeout'}).data;
       this.setData({
         shopTakeOut,
         type:1

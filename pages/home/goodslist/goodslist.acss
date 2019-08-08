@@ -22,11 +22,18 @@ page {
   align-items: center;
   font-weight: 600;
   font-size: 36rpx;
+  
 }
 .positionLeft>image {
   width: 40rpx;
   height: 40rpx;
   margin-right: 2rpx;
+}
+.positionLeft>text {
+  max-width: 330rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .positionRight {
   width: 200rpx;
