@@ -106,7 +106,8 @@ Component({
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
             "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
             "goods_format":goods_format,
-            "goods_img": e.currentTarget.dataset.goods_img
+            "goods_img": e.currentTarget.dataset.goods_img,
+            "sap_code": e.currentTarget.dataset.sap_code
           } 
         }else{
           oneGood = {
@@ -117,7 +118,8 @@ Component({
             "sumnum": sumnum,
             "goods_code":e.currentTarget.dataset.goods_code,
             "goods_format":goods_format,
-            "goods_img": e.currentTarget.dataset.goods_img
+            "goods_img": e.currentTarget.dataset.goods_img,
+            "sap_code": e.currentTarget.dataset.sap_code
           }
         }
         goodlist[`${goods_code}_${goods_format}`]  = oneGood;

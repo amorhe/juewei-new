@@ -45,19 +45,19 @@ Page({
     })
   },
   getAddress(){
-    const location = (my.getStorageSync({key: 'lng'}).data,my.getStorageSync({key: 'lat'}).data);
-    // 可以使用
-    useraddress(my.getStorageSync({key: '_sid'}).data,"normal",location).then((res) => {
+    useraddress(my.getStorageSync({key: 'shop_id'}).data).then((res) => {
       console.log(res);
+      let addressList = [],addressListNoUse=[];
+      for(let value of res.data){
+        if(value.is_dis == 1){
+          addressList.push(value)
+        }else{
+          addressListNoUse.push(value)
+        }
+      }
       this.setData({
-        addressList:res.data
-      })
-    })
-    // 不能使用
-     useraddress(my.getStorageSync({key: '_sid'}).data,"normal").then((res) => {
-      console.log(res.data)
-      this.setData({
-        addressListNoUse:res.data
+        addressList,
+        addressListNoUse
       })
     })
   },

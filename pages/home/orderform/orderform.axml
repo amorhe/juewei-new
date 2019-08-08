@@ -42,7 +42,7 @@
   <view class="orderList_box">
     <view class="ordershopName borderBottomSolid">{{shopObj.title}}</view>
     <view class="order_list">
-      <view a:for="{{shopcartGoods}}">
+      <view a:for="{{goodsReal}}">
         <view class="listLeft" a:if="{{!item.is_gifts}}">
           <image  class="ordergoodsImage" mode="scaleToFill" src="{{item.good_img}}"/>
           <view>
@@ -74,10 +74,6 @@
     <view class="track">
       <text>配送费</text>
       <view>
-        <!-- <view class="ordergoodsOld">
-          <text class="fontTwentyTwo">￥</text>
-          <text>10</text>
-        </view> -->
         <view class="numberColor">
           <text class="fontTwentyTwo">￥</text>
           <text>{{orderInfo.dispatch_price/100}}</text>
@@ -103,16 +99,20 @@
       </view>
       <view>
         <text class="colorNine" a:if="{{orderInfo.use_coupons.length==0}}">无可用红包</text>
+        <text class="colorNine" a:if="{{orderInfo.use_coupons.length>0}}">- ¥{{orderInfo.reduce_price/100}}</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
     </view>
     
     <!-- 赠品 -->
-    <view class="track paddingBThirty borderBottomSolid">
+    <view class="track paddingBThirty borderBottomSolid" a:for="{{goodsInvented}}">
       <view>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}present.png"/>
-        <!-- <text class="marginLSixteen">{{couponsDefault.way==1?'外卖专享券':couponsDefault.way==2?'门店专享券':'全场通享券'}} 满{{couponsDefault.full_money / 100}}减{{couponsDefault.money / 100}}</text> -->
-         <!-- <text class="marginLSixteen">{{}}</text> -->
+        <text class="marginLSixteen">{{item.goods_name}}</text>
+      </view>
+      <view class="invented">
+        <text>¥{{item.goods_original_price/100}}</text>
+        <text class="numberColor">¥{{item.goods_price/100}}</text>
       </view>
     </view>
 
@@ -136,7 +136,7 @@
 
   </view>
   <!-- 换购商品 -->
-  <view class="repurse" a:if="{{repurseList.length!=0}}">
+  <view class="repurse" a:if="{{repurseList.length!=0 && showRepurse}}">
     <view class="reqpurseBox">
       <view class="fontBold">超值换购</view>
       <view class="fontSmallGray marginLEight">只能换购一件商品</view>
@@ -145,72 +145,63 @@
     <scroll-view class="repurseView" scroll-x a:if="{{repurseList.length>1}}">
      <view style="width:{{581*repurseList.length}}rpx">
        <view class="repurseGoodsInfo" a:for="{{repurseList}}">
-         <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.gift_img_url}}"/>
+         <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{imageUrl2 + item.gift_img_url}}"/>
+         <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url==''}}" src="{{imageUrl}}coupon_default.png"/>
          <view>
            <view>
              <text>{{item.gift_name}}</text>
-             <!-- <text class="fontSmallGray">（{{item.taste_name}}）</text> -->
            </view>
 
            <view class="flexNormal">
              <view class="repurseBottom fontSmallGray">
                 <view>
-                  <text class="repurseNumbers">10人</text>
-                  <text>参与换购</text>
-                </view>
-                <view>
-                  <text class="numberColor">￥{{item.cash}}</text>
-                  <text class="purseGoodsOld">￥{{item.gift_price}}</text>
+                  <text class="numberColor">{{item.cash==0 && item.point==0?'免费':item.cash==0 && item.point!=0?`${item.point}积分`:`¥${item.cash/100}`}}</text>
+                  <text class="purseGoodsOld">￥{{item.gift_price/100}}</text>
                 </view>
              </view>
-              <view class="goodsNumber">
-                  <image a:if="{{item.goods_count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" data-index="{{index}}"/>
-                  <text a:if="{{item.goods_count>0}}">{{item.goods_count}}</text>
-                  <image a:if="{{!item.goods_choose}}" mode="scaleToFill" src="{{imageUrl}}goods_add2.png"/>
-                  <image a:if="{{item.goods_choose}}" src="{{imageUrl}}goods_add.png" onTap="addBtnTap" data-index="{{index}}"/>
-              </view>
            </view>
          </view>
+         <view class="goodsNumber flexRow" a:if="{{gifts[item.id].num}}">
+            <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
+            <text>{{gifts[item.id].num}}</text>
+            <image mode="scaleToFill" src="{{imageUrl}}goods_add2.png"/>
+         </view>
+         <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" data-activity_id="{{item.activity_id}}" 
+         data-gift_id="{{item.gift_id}}" data-id="{{item.id}}" data-cash="{{item.cash}}" data-point="{{item.point}}" 
+         data-gift_price="{{item.gift_price}}" a:if="{{!gifts[item.id].num}}">换购</button>  
        </view>
      </view>
     </scroll-view>
 
-    <!-- 换购商品只有1个 -->
+    <!-- 换购商品只有一个 -->
     <view class="repurseGoodsInfo" a:for="{{repurseList}}" style="width:654rpx" a:if="{{repurseList.length==1}}">
-      <image class="repurseGoodsImage" mode="scaleToFill" src="{{item.gift_img_url}}"/>
+      <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{imageUrl2 + item.gift_img_url}}"/>
+      <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url==''}}" src="{{imageUrl}}coupon_default.png"/>
       <view>
         <view>
           <text>{{item.gift_name}}</text>
-          <!-- <text class="fontSmallGray">（{{item.taste_name}}）</text> -->
         </view>
 
         <view class="flexNormal">
           <view class="repurseBottom fontSmallGray">
             <view>
-              <text class="repurseNumbers">10人</text>
-              <text>参与换购</text>
+              <text class="numberColor">{{item.cash==0 && item.point==0?'免费':item.cash==0 && item.point!=0?`${item.point}积分`:`¥${item.cash/100}`}}</text>
+              <text class="purseGoodsOld">￥{{item.gift_price/100}}</text>
             </view>
-            <view>
-              <text class="numberColor">￥{{item.cash}}</text>
-              <text class="purseGoodsOld">￥{{item.gift_price}}</text>
-            </view>
-          </view>
-          <view class="goodsNumber">
-            <!-- <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
-            <text>{{countN}}</text>
-            <image src="{{imageUrl}}goods_add.png" onTap="addBtnTap"/> -->
-            <image a:if="{{item.goods_count>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" data-index="{{index}}"/>
-            <text a:if="{{item.goods_count>0}}">{{item.goods_count}}</text>
-            <image src="{{imageUrl}}goods_add.png" onTap="addBtnTap" data-index="{{index}}"/>
           </view>
         </view>
       </view>
-      <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" a:if="{{countN==0}}">换购</button>  
+      <view class="goodsNumber flexRow" a:if="{{gifts[item.id].num}}">
+        <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
+        <text>{{gifts[item.id].num}}</text>
+        <image mode="scaleToFill" src="{{imageUrl}}goods_add2.png"/>
+      </view>
+      <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" a:if="{{!gifts[item.id].num}}">换购</button>  
     </view>
 
-    <view class="repursePrice" a:if="{{repurseList.length>1}}">
-      <text class="fontTwentySix">小计¥</text>
-      <text class="fontFourty fontBold">{{orderInfo.allow_order_coupon_price / 100}}</text>
+    <view class="repursePrice" a:if="{{gifts[gift_id].num}}">
+      <text class="fontTwentySix">小计</text>
+      <text class="fontFourty fontBold">{{gifts_price}}</text>
     </view>
   </view>
 
@@ -232,24 +223,24 @@
   <view class="orderPrimary">
     <view>
       <text>合计</text>
-      <text class="numberColor">¥</text>
-      <text class="numberColor fontFourty fontBold">{{orderInfo.allow_order_coupon_price/100}}</text>
+      <!-- <text class="numberColor">¥</text> -->
+      <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
     <button size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
   </view>
 </view>
 
 <!-- 换购提示 -->
-<view class="repurseToast fontTwentyTwo" a:if="{{repurseList.length!=0}}">
+<!-- <view class="repurseToast fontTwentyTwo" a:if="{{repurseList.length!=0}}">
   <view>
     <text class="fontSmallGray">加</text>
-    <text class="numberColor">￥{{repurseList[0].goods_price}}</text>
+    <text class="numberColor">￥{{repurseList[0].gift_price}}</text>
     <text class="fontSmallGray">超级换购</text>
-    <text>「{{reqpurseList[0].goods_name}}」</text>
+    <text>「{{reqpurseList[0].gift_name}}」</text>
     <text class="fontSmallGray">等商品</text>
   </view>
   <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_low.png"/>
-</view>
+</view> -->
 
 <!-- 各种订单商品状态 -->
 <confirm content="{{content}}" confirmButtonText="重新选择" cancelButtonText="继续结算" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="orderConfirm"/>

@@ -1,9 +1,10 @@
-import {imageUrl} from '../../common/js/baseUrl'
+import {imageUrl,imageUrl2} from '../../common/js/baseUrl'
 import {couponsList,confirmOrder,createOrder,useraddressInfo,add_lng_lat,AliMiniPay} from '../../common/js/home'
 var app = getApp();
 Page({
   data: {
     imageUrl,
+    imageUrl2,
     isCheck: false,  //协议
     // 换购商品列表
     repurseList:[],
@@ -21,11 +22,17 @@ Page({
     couponsList:[],   //优惠券
     couponsDefault:null,
     full_money:0,
-    shopcartGoods:[],   //商品列表
     goodsInfo:'',
     addressInfo:{},
     dispatch_price:0,    // 配送费
-    remark:'口味偏好等要求'    // 备注
+    remark:'口味偏好等要求',    // 备注
+    goodsReal:[],          // 非赠品
+    goodsInvented:[],      // 赠品
+    gifts:{},         // 选择的换购商品
+    gifts_price:'',   // 换购商品价格
+    gift_id:'',     // 换购商品id
+    order_price:'',    //订单总价
+    showRepurse:false  // 是否显示换购商品
   },
   onLoad(e) {
     this.setData({
@@ -72,23 +79,16 @@ Page({
         shopObj:self[0]
       })
     }
-    this.getCouponsList();   //优惠券
     let goodsList = app.globalData.goodsBuy;
     for(let item of goodsList){
       item['goods_quantity'] = item['num']
     }
-    let goods = [],goodsObj = {};
-    app.globalData.goodsBuy.forEach(item => {
-      goodsObj['goods_code'] = item.goods_code;
-      goodsObj['goods_format'] = item.goods_format;
-      goodsObj['goods_quantity'] = item.goods_quantity;
-      goodsObj['goods_price'] = item.goods_price
-      goods.push(goodsObj)
-    })
-    this.confirmOrder(shop_id,JSON.stringify(goods));
-  // 加购商品
+    // console.log(goodsList)  
+    this.confirmOrder(shop_id,JSON.stringify(goodsList));
+  // 加购商品列表
     const gifts = app.globalData.gifts;
-    if(gifts.length>0){
+    console.log(gifts)
+    if(Object.keys(gifts).length>0){
       for(let key in gifts){
         gifts[key].forEach(val => {
           val.goods_count = 0;
@@ -112,33 +112,46 @@ Page({
     }
   },
   // 换购显示
-  addRepurseTap(){
+  addRepurseTap(e){
+    let gifts = {},gifts_price='',order_price='';
+    gifts[e.currentTarget.dataset.id] = {
+      "activity_id": e.currentTarget.dataset.activity_id,
+      "gift_id": e.currentTarget.dataset.gift_id,
+      "id": e.currentTarget.dataset.id,
+      "num": 1,
+      "cash": e.currentTarget.dataset.cash,
+      "point": e.currentTarget.dataset.point,
+      "gift_price": e.currentTarget.dataset.gift_price
+    }
+    if(e.currentTarget.dataset.cash==0 && e.currentTarget.dataset.point==0){
+      gifts_price = `¥0`;
+      order_price = `¥${this.data.orderInfo.allow_order_coupon_price/100}`;
+    }
+    if(e.currentTarget.dataset.cash==0 && e.currentTarget.dataset.point!=0){
+      gifts_price = `${e.currentTarget.dataset.point}积分`;
+      order_price = `¥${this.data.orderInfo.allow_order_coupon_price/100}+${e.currentTarget.dataset.point}积分`
+    }
+    if(e.currentTarget.dataset.cash!=0 && e.currentTarget.dataset.point==0){
+      gifts_price = ` ¥${e.currentTarget.dataset.cash/100}`;
+      order_price = `¥${e.currentTarget.dataset.cash/100 + this.data.orderInfo.allow_order_coupon_price/100}`
+    }
+    if(e.currentTarget.dataset.cash!=0 && e.currentTarget.dataset.point!=0){
+      gifts_price = `¥${e.currentTarget.dataset.cash/100}+${e.currentTarget.dataset.point}积分`;
+      order_price = `¥${e.currentTarget.dataset.cash/100+ this.data.orderInfo.allow_order_coupon_price/100}+${e.currentTarget.dataset.point}积分`
+    }
     this.setData({
-      countN:1
+      gifts,
+      gift_id:e.currentTarget.dataset.id,
+      gifts_price,
+      order_price
     })
   },
   // 减
   reduceBtnTap(e){
-    this.data.repurseList[e.currentTarget.dataset.index].goods_count --;
-    this.data.repurseList.forEach((item,index) => {
-      if(index != e.currentTarget.dataset.index && this.data.repurseList[e.currentTarget.dataset.index].goods_count == 0){
-        item.goods_choose = true
-      }
-    })
     this.setData({
-      repurseList:this.data.repurseList
-    })
-  },
-  // 加
-  addBtnTap(e){
-    this.data.repurseList[e.currentTarget.dataset.index].goods_count ++;
-    this.data.repurseList.forEach((item,index) => {
-      if(index != e.currentTarget.dataset.index){
-        item.goods_choose = false
-      }
-    })
-    this.setData({
-      repurseList:this.data.repurseList
+      gifts:{},
+      gift_id:'',
+      order_price:`¥${this.data.orderInfo.allow_order_coupon_price/100}`
     })
   },
   // 弹框事件回调
@@ -165,11 +178,7 @@ Page({
     const lng = my.getStorageSync({key:'lng'}).data;
     const lat = my.getStorageSync({key:'lat'}).data;
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
-    const goodsList = app.globalData.goodsBuy;
-    for(let item of goodsList){
-      item['goods_quantity'] = item['num']
-    }
-    const goods = JSON.stringify(goodsList);
+    const goods = JSON.stringify(this.data.goodsReal);
     let type = '',typeClass=''
     if(app.globalData.type == 1) {
       type = 1;
@@ -189,8 +198,18 @@ Page({
         return
       }
     }
+    let gift = [],coupon_code='',notUse=0;
+    if(this.data.gifts[this.data.gift_id]){
+      gift.push(this.data.gifts[this.data.gift_id]);
+    }
+    if(!app.globalData.coupon_code){
+      coupon_code = this.data.orderInfo.use_coupons[0]
+    }else{
+      coupon_code = app.globalData.coupon_code;
+      notUse = 1
+    }
     // 创建订单
-    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type).then((res) => {
+    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,gift,coupon_code,notUse).then((res) => {
       console.log(res);
       if(res.code == 0){
         AliMiniPay(res.data.order_no).then((val) => {
@@ -245,48 +264,47 @@ Page({
       url: '/pages/home/orderform/chooseCoupon/chooseCoupon'
     });
   },
-  // 查找用户可用优惠券
-  getCouponsList(){
-    const _sid = my.getStorageSync({key:'_sid'}).data;
-    couponsList(_sid,'use').then((res) => {
-      console.log(res)
-      if(res.DATA.use){
-        this.setData({
-          couponsList:res.DATA.use,
-          couponsDefault:res.DATA.max
-        })
-      }
-      
-    })
-  },
   // 订单确认
   confirmOrder(shop_id,goods){
-    confirmOrder(this.data.orderType,shop_id,goods,shop_id).then((res) => {
-      console.log(res) 
+    confirmOrder(this.data.orderType,shop_id,goods,shop_id,"",[],0).then((res) => {
+      console.log(res)
       let goodsList = my.getStorageSync({key:'goodsList'}).data;
       if(res.code == 0){
-        let goodsReal=[],goodsInvented=[],shopcartGoods=[]
+        let goodsReal=[],goodsInvented=[];
         for(let item of res.data.activity_list[''].goods_list){
-          if (item.is_gifts == 1&&item.goods_code=="") { 
-                goodsInvented.push(item)//赠品
-            } else if(item.is_gifts == 1&&item.goods_code!="") { 
-                if(item.gift_type==3||item.gift_type==4){
-                    goodsReal.push(item) //  非赠品
-                }else{
-                    goodsInvented.push(item)//赠品
-                }
-            }else { //非赠品
-                goodsReal.push(item)
-            } 
+          if(item.is_gifts == 1) {
+            // 赠品
+            goodsInvented.push(item)
+          }else{
+            // 非赠品
+            goodsReal.push(item)
+          }
         }
         for(let val of goodsReal){
           val['good_img'] = goodsList[`${val.goods_code}_${val.goods_format}`].goods_img;
         }
-        shopcartGoods = [...goodsReal,...goodsInvented];
-        console.log(shopcartGoods)
+        // 参与加价购的商品
+        let repurseTotalPrice=0;
+        let repurseGoods = app.globalData.repurseGoods;
+        for(let item of repurseGoods){
+          for(let value of goodsReal){
+            if(item.goods_code == value.sap_code && value.goods_type!="DIS"){
+              repurseTotalPrice += value.goods_price * value.goods_quantity;
+              if(repurseTotalPrice >= this.data.full_money){
+                this.setData({
+                  showRepurse:true
+                })
+              }
+            }
+          }
+        }
+
+
         this.setData({
-          shopcartGoods,
-          orderInfo:res.data.activity_list['']
+          goodsReal,
+          goodsInvented,
+          orderInfo:res.data.activity_list[''],
+          order_price:`¥${res.data.activity_list[''].allow_order_coupon_price/100}`
         })
       }else{
         this.setData({
