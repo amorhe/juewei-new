@@ -7,11 +7,11 @@
         <view a:if="{{ item.tag==1 }}" class="spanClass spajiaColor">家</view>
         <view a:if="{{ item.tag==2 }}" class="spanClass spangsColor">公司</view>
         <view a:if="{{ item.tag==3 }}" class="spanClass spanColor">学校</view>
-        <text>{{item.user_address_map_addr}} {{item.user_address_detail_address}}</text>
+        <text>{{item.user_address_map_addr}} {{item.user_address_address}}</text>
       </view>
       <view class="itemInfo">
         {{ item.user_address_name }}
-        <text>{{ item.user_address_sex==1?'（先生）':'（女士）' }}</text>{{item.user_address_phone}}
+        <text>{{ item.user_address_sex==0?'（先生）':'（女士）' }}</text>{{item.user_address_phone}}
       </view>
     </view>
     <view class="tiemright" catchTap="toUrl" data-item="{{ item }}">

@@ -67,6 +67,7 @@ Page({
     my.getLocation({
       type: 3,
       success(res) {
+        console.log(res)
         var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
         my.request({
           url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + res.longitude + ',' + res.latitude + '&radius=2000',
@@ -113,14 +114,14 @@ Page({
         name: data.user_address_name, // 收货人姓名
         phone: data.user_address_phone, // 手机号
         map_address: data.user_address_map_addr, // 定位地址
-        address: data.user_address_address, // 收货地址
+        address: data.user_address_detail_address, // 收货地址
         province: data.province,// 省
         city: data.city, // 市
         district: data.district, // 区
         longitude: lbsArr[0], // 经度
         latitude: lbsArr[1], // 纬度
         shop_id: '', // 门店
-        addressdetail: data.user_address_detail_address, // 地址详情
+        addressdetail: data.user_address_address, // 地址详情
         curLabel: data.tag
       })
     })
@@ -294,13 +295,13 @@ Page({
         name: this.data.name, // 收货人姓名
         phone: this.data.phone, // 手机号
         map_address: this.data.address, // 定位地址
-        address: this.data.address, // 收货地址
+        address: this.data.addressdetail, // 收货地址
         province: this.data.province,// 省
         city: this.data.city, // 市
         district: this.data.district, // 区
         longitude: this.data.longitude, // 经度
         latitude: this.data.latitude, // 纬度
-        detail_address: this.data.addressdetail, // 地址详情
+        detail_address: this.data.address, // 地址详情
         check_edit: false,
         tag: this.data.curLabel, // 地址标签
       }
@@ -325,14 +326,14 @@ Page({
         name: this.data.name, // 收货人姓名
         phone: this.data.phone, // 手机号
         map_address: this.data.address, // 定位地址
-        address: this.data.address, // 收货地址
+        address: this.data.addressdetail, // 收货地址
         province: this.data.province,// 省
         city: this.data.city, // 市
         district: this.data.district, // 区
         longitude: this.data.longitude, // 经度
         latitude: this.data.latitude, // 纬度
         shop_id: this.data.shop_id, // 门店
-        detail_address: this.data.addressdetail, // 地址详情
+        detail_address: this.data.address, // 地址详情
         tag: this.data.curLabel, // 地址标签
       }
       addressCreate(data).then(res => {

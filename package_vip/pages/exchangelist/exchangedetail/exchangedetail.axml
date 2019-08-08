@@ -84,8 +84,8 @@
           <view class="shop-name"> {{detail.shop_name}}</view>
           <view 
           class="code-button" 
-          data-shop_longitude="{{detail.shop_longitude}}" 
-          data-shop_latitude="{{detail.shop_latitude}}"
+          data-shop_longitude="{{detail.shop_gd_longitude }}" 
+          data-shop_latitude="{{detail.shop_gd_latitude}}"
           data-shop_name="{{detail.shop_name}}"
           data-address="{{detail.address}}"
           onTap="guide">导航</view>
