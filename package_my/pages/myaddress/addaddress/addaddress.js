@@ -1,6 +1,7 @@
 import { imageUrl, ak } from '../../../../pages/common/js/baseUrl'
 import { getRegion } from '../../../../pages/common/js/li-ajax'
 import { addressCreate, addressinfo, updateaddress, deleteaddress } from '../../../../pages/common/js/address'
+import {bd_encrypt} from '../../../../pages/common/js/map'
 let region = []
 var app = getApp()
 Page({
@@ -70,6 +71,7 @@ Page({
       success(res) {
         console.log(res)
         var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
+        let map_position = bd_encrypt(res.longitude,res.latitude);
         my.request({
           url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + res.longitude + ',' + res.latitude + '&radius=2000',
           success: (res) => {
@@ -89,8 +91,8 @@ Page({
           province: res.province,
           city: res.city,
           district: res.district,
-          longitude: res.longitude,
-          latitude: res.latitude,
+          longitude: map_position.bd_lng,
+          latitude: map_position.bd_lat,
           map_address: address,
           detailAdd: res.province+res.city+res.district+res.streetNumber.street+res.streetNumber.number
         })
@@ -136,6 +138,7 @@ Page({
       success: (res) => {
         var resadd = res.address
         var map_address = res.name ? res.name : res.address
+        let map_position = bd_encrypt(res.longitude,res.latitude);
         console.log(res,'选择')
         my.request({
           url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
@@ -164,8 +167,8 @@ Page({
           },
         });
         that.setData({
-          longitude: res.longitude,
-          latitude: res.latitude,
+          longitude: map_position.bd_lng,
+          latitude: map_position.bd_lat,
           map_address: map_address
         })
       },

@@ -39,6 +39,7 @@ Page({
       showHotCities:true,
       success: (res) => {
         console.log(res)
+        
       },
     });
   },

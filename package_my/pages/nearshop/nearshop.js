@@ -28,12 +28,12 @@ Page({
     shopList:[],    // 附近门店列表
   },
   onLoad() {
-    this.nearShop();
+    const lng = my.getStorageSync({key:'lng'}).data;
+    const lat = my.getStorageSync({key:'lat'}).data;
+    this.nearShop(lng,lat);
   },
   // 获取附近门店
-  nearShop(){
-    const lng = 116.54828;
-    const lat = 39.918639;
+  nearShop(lng,lat){
     my.request({
       url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
       success: (res) => {
@@ -79,6 +79,15 @@ Page({
       url: '/pages/home/selfshop/selfshop?shop_id=' + e.currentTarget.dataset.shop_id + '&company_id=' + e.currentTarget.dataset.company_id + '&title=' + e.currentTarget.dataset.title + '&address=' + e.currentTarget.dataset.address + '&goods_num=' + e.currentTarget.dataset.goods_num + '&distance=' + e.currentTarget.dataset.distance 
     });
   },
-  // 去导航
-  guide
+  // 切换城市
+  choosecityTap(){
+    my.chooseCity({
+      showLocatedCity:true,
+      showHotCities:true,
+      success: (res) => {
+        console.log(res)
+        
+      },
+    });
+  },
 });

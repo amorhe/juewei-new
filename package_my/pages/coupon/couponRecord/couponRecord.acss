@@ -1,3 +1,4 @@
+@import '../coupon.acss';
 .listAll {
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@
 }
 .couponLi {
   width:686rpx;
-  height:264rpx;
+  /* height:264rpx; */
   background:#fff;
   border-radius: 10rpx;
   padding: 28rpx 24rpx 0 32rpx;
