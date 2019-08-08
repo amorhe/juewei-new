@@ -234,6 +234,10 @@ Page({
           key: '_sid', // session_id
           data: res.data._sid,
         });
+        my.setStorageSync({
+          key: 'user_id', // 缓存数据的key
+          data: res.data.user_id, // 要缓存的数据
+        });
         app.globalData._sid = res.data._sid
         this.getUserInfo(res.data._sid);
       } else {

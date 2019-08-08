@@ -132,7 +132,6 @@
         </view>
       </view>
     </view>
-
   </view>
   <!-- 换购商品 -->
   <view class="repurse" a:if="{{repurseList.length!=0 && showRepurse}}">

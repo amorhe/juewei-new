@@ -58,6 +58,10 @@ Page({
           key: '_sid', // 缓存数据的key
           data: res.data._sid, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: 'user_id', // 缓存数据的key
+          data: res.data.user_id, // 要缓存的数据
+        });
         my.navigateBack({
           delta: 2
         })
