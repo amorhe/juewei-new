@@ -15,7 +15,7 @@ const ajaxUrl = {
   GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
   createOrder: '/juewei-api/order/create',       // 创建订单
   confirmOrder: '/juewei-api/order/confirm',        // 确认订单（商品加入购物车点击立即购买）
-  useraddress: '/juewei-api/useraddress/listDis',     // 我的地址，收货地址列表
+  useraddress: '/juewei-api/useraddress/listDis',     // 我的地址，可配送收货地址列表
   exchangeCode: '/mini/user/exchange_code_list',     // 兑换码列表
   exchangeCoupon: '/mini/coupons/exchange_coupons',   // 兑换优惠券
   exchangedetail: '/mini/user/exchange_code_view',    // 兑换详情
@@ -25,6 +25,7 @@ const ajaxUrl = {
   getMarkActivity: '/mini/activity/markup/mark/getMarkActivity',             // 加价购列表
   AliMiniPay: '/juewei-service/payment/AliMiniPay',               // 支付生成交易号
   useraddressInfo: '/juewei-api/useraddress/info',               // 地址详情
+  addressList: '/juewei-api/useraddress/list',              // 定位页我的地址列表
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -90,3 +91,6 @@ export const getMarkActivity = (company_id,user_id) => ajax(ajaxUrl.getMarkActiv
 export const useraddressInfo = (address_id) => ajax(ajaxUrl.useraddressInfo,{address_id});
 
 export const AliMiniPay = (order_no) => ajax(ajaxUrl.AliMiniPay,{order_no});
+
+
+export const addressList = (_sid,type,location) => ajax(ajaxUrl.addressList,{_sid,type,location});

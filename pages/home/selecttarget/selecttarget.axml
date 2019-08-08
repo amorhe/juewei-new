@@ -1,8 +1,3 @@
-<!-- <view>
-  商城引导定位页面
-  <view>{{logtxt}}</view>
-</view> -->
-
 <view class="searchView">
   <view>
     <view class="positionAddress" onTap="choosecityTap">
@@ -11,7 +6,7 @@
     </view>
     <view class="searchBox">
       <image class="searchIcon" src="{{imageUrl}}search.png" />
-      <input type="text" placeholder="小区/写字楼/学校等" placeholder-class="colorGray"  />
+      <input value="{{inputAddress}}" confirm-type="搜索" onInput="handleSearch" onConfirm="searchShop" type="text" placeholder="小区/写字楼/学校等" placeholder-class="colorGray"  />
     </view>
   </view>
 </view> 
@@ -19,10 +14,10 @@
 <view class="positionIng">
   <view class="fontGray">当前定位</view>
   <view class="positionTxt">
-    <view onTap="switchAddress" data-info="{{info}}" data-type="1">
+    <view class="flexSpecial" onTap="switchAddress" data-info="{{info}}" data-type="1">
       <image src="{{imageUrl}}position.png"/>
-      <text a:if="{{error}}">{{addressIng}}</text>
-      <text a:if="{{!error}}">定位失败</text>
+      <text a:if="{{isSuccess}}">{{addressIng}}</text>
+      <text a:if="{{!isSuccess}}">定位失败</text>
     </view>
     <view class="numberColor fontTwentySix" onTap="rePosition">重新定位</view>
   </view>
@@ -34,7 +29,7 @@
   <view class="addressList">
     <view a:for="{{canUseAddress}}" a:if="{{canUseAddress.length>0}}" onTap="switchPositionAddress" data-info="{{item}}">
       <view class="addressTxt">
-        <view class="fontBold">{{item.user_address_map_addr + item.user_address_detail_address}}</view>
+        <view class="fontBold">{{item.user_address_map_addr}} {{item.user_address_detail_address}}</view>
         <view a:if="{{item.tag!=0}}" class="{{item.tag==1?'addressTabbar bar1':item.tag==2?'addressTabbar bar2':'addressTabbar bar3'}}">{{item.tag==1?'家':item.tag==2?'公司':'学校'}}</view>
       </view>
       <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>

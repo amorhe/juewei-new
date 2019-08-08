@@ -66,7 +66,6 @@ Page({
       // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
-      isOpen: app.globalData.isOpen,
       type:app.globalData.type
     })
     // 初始化默认外卖
@@ -83,11 +82,13 @@ Page({
             return item.shop_id != this.data.switchShop_id
           })
           const arr = arr1.concat(arr2);
-          this.setData({
-            shopTakeOut: arr
-          })
           my.setStorageSync({ key: 'takeout', data: arr });
           my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
+          const status = cur_dateTime(arr[0].start_time, arr[0].end_time);
+          this.setData({
+            isOpen:status,
+            shopTakeOut: arr
+          })
           this.getCompanyGoodsList(arr[0].company_sale_id);
           this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id, 1);//banner
           this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, arr[0].company_sale_id); 
@@ -95,9 +96,12 @@ Page({
           this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
           this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
           this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
+          const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
           this.setData({
-            shopTakeOut: shopArray
+            shopTakeOut: shopArray,
+            isOpen:status
           })
+          my.setStorageSync({ key: 'takeout', data: shopArray });
           my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
         }
     } else {
@@ -113,7 +117,9 @@ Page({
           return item.shop_id != this.data.switchShop_id
         })
         const arr = arr1.concat(arr2);
+        const status = cur_dateTime(arr[0].start_time, arr[0].end_time);
         this.setData({
+          isOpen:status,
           shopTakeOut: arr
         })
         my.setStorageSync({ key: 'self', data: arr });
@@ -125,9 +131,13 @@ Page({
         this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品(第一个为当前门店)
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
         this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
+        const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
         this.setData({
+          isOpen:status,
           shopTakeOut: shopArray
         })
+        my.setStorageSync({ key: 'self', data: shopArray });
+        my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
       }
     }
     if (this.data.imgUrls.length > 1) {

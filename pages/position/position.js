@@ -61,9 +61,6 @@ Page({
       if (res.code == 0 && res.data.length > 0) {
         for (let i = 0; i < res.data.length; i++) {
           const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
-          this.setData({
-            isOpen: status
-          })
           app.globalData.isOpen = status
           // 判断是否营业
           if (status == 1 || status == 3) {
@@ -138,11 +135,6 @@ Page({
     const shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
       for (let i = 0; i < res.length; i++) {
-        const status = cur_dateTime(res[i].start_time, res[i].end_time);
-        this.setData({
-          isOpen: status
-        })
-        app.globalData.isOpen = status;
         // 判断是否营业
         if (status == 1 || status == 3) {
           shopArr1.push(res[i]);
