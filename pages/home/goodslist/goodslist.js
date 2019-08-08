@@ -98,6 +98,7 @@ Page({
           this.setData({
             shopTakeOut: shopArray
           })
+          my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
         }
     } else {
       const shopArray = my.getStorageSync({
