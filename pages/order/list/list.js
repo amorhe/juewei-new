@@ -64,6 +64,50 @@ Page({
 
   },
 
+  // 下拉刷新
+  async onPullDownRefresh() {
+    // 重置数据
+    let _menuList = [
+      {
+        key: '官方外卖订单',
+        value: '',
+        page: 1,
+        dis_type: 1,
+        finish: false,
+        fun: 'getTakeOutList',
+        timer: -1
+      },
+      {
+        key: '门店自提订单',
+        value: '',
+        page: 1,
+        dis_type: 2,
+        finish: false,
+        fun: 'getPickUpList',
+        timer: -1
+      }
+    ]
+    let _takeOutList = []
+    let _pickUpList = []
+
+    // 清空所有计时器
+    const { menuList } = this.data
+    menuList.forEach(({ timer }) => clearInterval(timer))
+
+    // 拉取最新数据
+
+    this.setData({
+      menuList: _menuList,
+      takeOutList: _takeOutList,
+      pickUpList: _pickUpList
+    }, async() => {
+      await this.getMore()
+
+      my.stopPullDownRefresh()
+    })
+
+
+  },
 
   async onShow() {
     let { takeOutList, pickUpList, menuList, cur } = this.data
