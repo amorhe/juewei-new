@@ -29,7 +29,7 @@
   <view class="addressList">
     <view a:for="{{canUseAddress}}" a:if="{{canUseAddress.length>0}}" onTap="switchPositionAddress" data-info="{{item}}">
       <view class="addressTxt">
-        <view class="fontBold">{{item.user_address_map_addr}} {{item.user_address_detail_address}}</view>
+        <view class="fontBold">{{item.user_address_map_addr}} {{item.user_address_address}}</view>
         <view a:if="{{item.tag!=0}}" class="{{item.tag==1?'addressTabbar bar1':item.tag==2?'addressTabbar bar2':'addressTabbar bar3'}}">{{item.tag==1?'家':item.tag==2?'公司':'学校'}}</view>
       </view>
       <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>
