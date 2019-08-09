@@ -39,7 +39,6 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       success: (res) => {
-        log(res)
         my.hideLoading()
         const {data} = res
         const code = data.CODE || data.code

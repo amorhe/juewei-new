@@ -2,7 +2,7 @@ import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
 import { log } from '../../../pages/common/js/li-ajax'
 import { reqOrderList, reqOrderDetail } from '../../../pages/common/js/vip'
 
-
+const app = getApp()
 Page({
   data: {
     imageUrl,
@@ -19,6 +19,47 @@ Page({
     time: ''
   },
 
+  reset() {
+    const { time } = this.data
+    clearInterval(time)
+    this.setData({
+      finish: false,
+
+      orderList: [],
+
+      page_num: 1,
+      page_size: 10,
+      lastLage: 10,
+
+      time: ''
+    }, async () => {
+      await this.getOrderList(1)
+      my.stopPullDownRefresh()
+    })
+
+
+  },
+
+  /**
+  * @function 触底
+  */
+
+  async onPullDownRefresh() {
+    this.reset()
+  },
+
+
+  async onShow() {
+    log(app.globalData.refresh)
+    if (app.globalData.refresh) {
+      app.globalData.refresh = false;
+
+      return this.reset()
+
+
+    }
+
+  },
   async onLoad() {
     await this.getOrderList(1)
   },
@@ -67,13 +108,12 @@ Page({
         return
       }
       orderList = [...orderList, ...res.data.data]
-      // orderList = [...res.data.data]
 
       time = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return clearInterval(time)
+            return this.reset()
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute

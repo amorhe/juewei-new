@@ -155,9 +155,18 @@ Page({
     const { order_sn } = this.data.detail
     let res = await reqCancelOrder(order_sn)
     if (res.code === 100) {
-      my.navigateBack({
-        delta: 1
+      app.globalData.refresh = true
+      my.showToast({
+        type: 'success',
+        content: '取消成功',
       });
+
+      setTimeout(() => {
+        my.navigateBack({
+          delta: 1
+        });
+      }, 1000)
+
     }
   },
 

@@ -76,6 +76,6 @@ export const reqCancelOrder = order_sn => ajax('/mini/vip/wap/trade/cancel_order
 export const reqWait = () => ajax('/juewei-api/order/waiting', {}, 'GET')
 
 /**
-   * @function 获取积分详情
-   */
+ * @function 获取积分详情
+ */
 export const reqPointList = ({ pagenum, pagesize }) => ajax('/mini/point_exchange/point_list', { pagenum, pagesize }, 'GET')
