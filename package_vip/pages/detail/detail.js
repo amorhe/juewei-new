@@ -1,4 +1,5 @@
 import { ajax, parseData, getSid, log, isloginFn } from '../../../pages/common/js/li-ajax'
+import { reqDetail, reqCreateOrder } from '../../../pages/common/js/vip'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -70,7 +71,7 @@ Page({
    * @function 获取当商品面详情
    */
   async getDetail(id) {
-    let { code, data: { goods_name, exchange_intro, intro, ...Data } } = await ajax('/mini/vip/wap/goods/goods_detail', { id })
+    let { code, data: { goods_name, exchange_intro, intro, ...Data } } = await reqDetail(id)
     if (code === 100) {
       let _exchange_intro = await this.parseData(exchange_intro)
       let _intro = await this.parseData(intro)
@@ -103,7 +104,7 @@ Page({
       'goods[amount]': amount,
       'pay_type': 11
     }
-    let { code, data, msg } = await ajax('/mini/vip/wap/trade/create_order', params)
+    let { code, data, msg } = await reqCreateOrder(params)
     if (code === 100) {
       return data
     }

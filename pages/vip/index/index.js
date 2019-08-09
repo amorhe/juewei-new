@@ -1,5 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, getSid, log, getNavHeight, getAddressId } from '../../common/js/li-ajax'
+import { getSid, log, getNavHeight, getAddressId } from '../../common/js/li-ajax'
+import { reqCategory, reqBanner, reqGoodsList, reqPositionList, reqUserPoint, reqCouponsList } from '../../common/js/vip'
 
 const app = getApp()
 
@@ -55,7 +56,7 @@ Page({
     let company_id = my.getStorageSync({
       key: 'takeout', // 缓存数据的key
     })
-    company_id = company_id.data?company_id.data[0].company_sale_id : 1;
+    company_id = company_id.data ? company_id.data[0].company_sale_id : 1;
 
     log(app)
 
@@ -67,7 +68,7 @@ Page({
       city_id,
       district_id,
       company_id
-    }, async() => {
+    }, async () => {
 
       this.getBanner()
       this.getPositionList()
@@ -97,7 +98,7 @@ Page({
    */
   async getCategory() {
     const { cur } = this.data;
-    let res = await ajax('/mini/vip/wap/category/category', { type: 1 })
+    let res = await reqCategory(1)
     if (res.code === 100) {
       this.setData({ list: res.data, cate_id: res.data[cur].id })
     }
@@ -109,7 +110,7 @@ Page({
   async getBanner() {
     const { city_id, district_id, release_channel } = this.data;
     const bannerListOption = { city_id, district_id, release_channel }
-    let res = await ajax('/mini/vip/wap/banner/banner_list', bannerListOption)
+    let res = await reqBanner(bannerListOption)
     if (res.code === 100) {
       this.setData({ bannerList: res.data })
     }
@@ -137,7 +138,7 @@ Page({
       page_num,
       page_size
     }
-    let res = await ajax('/mini/vip/wap/goods/goods_list', goodslistOption)
+    let res = await reqGoodsList(goodslistOption)
     if (res.code === 100) {
       this.setData({
         finish: true,
@@ -152,9 +153,9 @@ Page({
   async getPositionList() {
     let { city_id, district_id, company_id, release_channel } = this.data;
     let positionListOption = { city_id, district_id, company_id, release_channel }
-    let res = await ajax('/mini/vip/wap/show_position/list', positionListOption)
+    let res = await reqPositionList(positionListOption)
     if (res.code === 100) {
-      if(!res.data.length){
+      if (!res.data.length) {
         return
       }
       let { pic_src, link_url } = res.data[0];
@@ -176,7 +177,7 @@ Page({
    */
   async getUserPoint() {
     let { _sid } = this.data;
-    let res = await ajax('/mini/user/user_point', { _sid })
+    let res = await reqUserPoint()
     if (res.CODE === 'A100') {
       this.setData({
         userPoint: res.DATA
@@ -275,14 +276,14 @@ Page({
    */
 
   async getCouponsList() {
-    let res = await ajax('/mini/coupons/list', { get_type: 'new_user' })
+    let res = await reqCouponsList()
     if (res.CODE === 'A100') {
       this.setData({
         new_user: res.DATA.new_user
       })
-    }else{
+    } else {
       this.setData({
-        new_user:[]
+        new_user: []
       })
     }
   },
