@@ -157,7 +157,6 @@ Page({
     if (res.code === 100) {
       app.globalData.refresh = true
       my.showToast({
-        type: 'success',
         content: '取消成功',
       });
 
