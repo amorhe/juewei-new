@@ -30,6 +30,7 @@ Component({
     activityText:'',
   },
   onInit() {
+    console.log('qwejqe2')
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data; 

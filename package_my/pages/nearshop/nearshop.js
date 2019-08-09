@@ -26,11 +26,32 @@ Page({
       }
     ],
     shopList:[],    // 附近门店列表
+    inputAddress:'',
+    city:''
   },
   onLoad() {
     const lng = my.getStorageSync({key:'lng'}).data;
     const lat = my.getStorageSync({key:'lat'}).data;
     this.nearShop(lng,lat);
+  },
+  handleSearch(e){
+    this.setData({
+      inputAddress:e.detail.value
+    })
+  },
+  addressSearch(){
+    let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
+    url = encodeURI(url);
+    my.request({
+      url,
+      success: (res) => {
+        console.log(res)
+        my.hideKeyboard();
+        const lng = res.data.result.location.lng;
+        const lat = res.data.result.location.lat;
+        this.nearShop(lng,lat);
+      },
+    });
   },
   // 获取附近门店
   nearShop(lng,lat){
@@ -86,7 +107,9 @@ Page({
       showHotCities:true,
       success: (res) => {
         console.log(res)
-        
+        this.setData({
+          city
+        })
       },
     });
   },

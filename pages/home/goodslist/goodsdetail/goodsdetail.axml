@@ -20,7 +20,8 @@
         <text>￥</text>
         <text a:if="{{goodsInfo.goods_format.length>1}}">{{goodsInfo.goods_format[0].goods_price / 100 < goodsInfo.goods_format[1].goods_price / 100 ? goodsInfo.goods_format[0].goods_price / 100 :goodsInfo.goods_format[1].goods_price / 100}}</text>
         <text a:if="{{goodsInfo.goods_format.length==1}}">{{goodsInfo.goods_format[0].goods_price / 100}}</text>
-        <text>/ {{goodsInfo.goods_unit}}</text>
+        <text a:if="{{goodsInfo.goods_format.length==1}}">/ {{goodsInfo.goods_unit}}</text>
+        <text a:if="{{goodsInfo.goods_format.length>1}}">/ 起</text>
       </view>
     </view>
   <view>

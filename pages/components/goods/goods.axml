@@ -195,7 +195,8 @@
               <view>
                 <view>
                   <text>￥</text>
-                  <text>{{v.goods_format[0].goods_price / 100}}</text>
+                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
+                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
                   <text a:if="{{v.goods_format.length>1}}">/ 起</text>
                   <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
                 </view>
