@@ -240,7 +240,7 @@ Page({
   nameVlaue(e) {
     var value = e.detail.value.replace(/(^\s*)|(\s*$)/g, "")
     this.setData({
-      name: value
+      'name': value
     })
   },
   phoneValue(e) {
