@@ -85,6 +85,7 @@ Page({
           my.setStorageSync({ key: 'takeout', data: arr });
           my.setStorageSync({key:'shop_id',data:arr[0].shop_id});
           const status = cur_dateTime(arr[0].start_time, arr[0].end_time);
+          // console.log(status)
           this.setData({
             isOpen:status,
             shopTakeOut: arr
@@ -133,7 +134,7 @@ Page({
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id, 1);//banner
         this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
         const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
-        console.log(status)
+        // console.log(status)
         this.setData({
           isOpen:status,
           shopTakeOut: shopArray
