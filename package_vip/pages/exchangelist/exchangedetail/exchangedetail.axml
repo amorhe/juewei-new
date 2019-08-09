@@ -222,7 +222,7 @@
   </view>
 </modal>
 
-<popup show="{{cancleShow}}" position="bottom" onClose="onPopupClose">
+<popup show="{{cancleShow}}" position="bottom">
   <view style="width:750rpx; background: #fff;border-radius: 20rpx 20rpx 0 0;padding:0 0 20rpx 0" >
     <view class="cancle-title">请选择取消原因</view>
     <view class="cancel-list" a:for="{{cancelReasonList}}" onTap="selectReason" data-index="{{index}}">

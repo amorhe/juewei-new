@@ -1,6 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { ajax, log } from '../../../pages/common/js/li-ajax'
-
+import { log } from '../../../pages/common/js/li-ajax'
+import { reqOrderList, reqOrderDetail } from '../../../pages/common/js/vip'
 
 
 Page({
@@ -60,7 +60,7 @@ Page({
     if (lastLage < page_num) {
       return my.hideLoading()
     }
-    let res = await ajax('/mini/vip/wap/order/order_list', { page_num, page_size })
+    let res = await reqOrderList({ page_num, page_size })
     if (res.code === 100) {
       lastLage = res.data.pagination.lastLage
       if (lastLage < page_num) {
@@ -124,7 +124,7 @@ Page({
 
   async payNow(e) {
     let { order_sn, id, order_amount } = e.currentTarget.dataset;
-    let res = await ajax('/mini/vip/wap/order/order_detail', { id })
+    let res = await reqOrderDetail(id)
     if (res.code === 100) {
       // 校验订单 地址信息
       // if (res.data.receive_type == 2 || res.data.receive_type == 1) {
@@ -142,45 +142,6 @@ Page({
           + '&user_address_id=' + user_address_id
           + '&user_address_detail_address=' + user_address_detail_address
       });
-      //   }
-      // }
-      // 订单不要钱的时候 直接 成功
-      if (order_amount == 0) {
-        return my.redirectTo({
-          url: '/package_vip/pagesfinish/finish?id=' + id + '&fail=' + false
-        });
-      }
-      // 生成支付订单
-      let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
-      if (r.code === 0) {
-        let { tradeNo } = r.data
-        if (!tradeNo) {
-          return my.showToast({
-            content: r.data.erroMSg
-          })
-        }
-        my.tradePay({
-          tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
-          success: res => {
-            if (res.resultCode == 9000) {
-              return my.redirectTo({
-                url: '/package_vip/pagesfinish/finish?id=' + id + '&fail=' + false
-              });
-            }
-          },
-          fail: res => {
-            log(res)
-            return my.redirectTo({
-              url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
-            });
-          }
-        });
-
-      } else {
-        return my.redirectTo({
-          url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
-        });
-      }
     }
   },
 
