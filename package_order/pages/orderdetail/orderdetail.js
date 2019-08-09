@@ -1,5 +1,7 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, contact, handleCopy } from '../../../pages/common/js/li-ajax'
+import { log, ajax, contact, handleCopy, guide } from '../../../pages/common/js/li-ajax'
+
+const app = getApp()
 Page({
   data: {
     imageUrl,
@@ -12,7 +14,7 @@ Page({
       '待支付',
       '订单已提交',
       '商家已接单',
-      '正在配送',
+      '商家已接单',
       '已送达',
       '订单已取消',
       '订单已取消',
@@ -26,8 +28,8 @@ Page({
       '待支付',
       '订单已提交',
       '商家已接单',
-      '待取餐',
-      '已取餐',
+      '等待取餐',
+      '订单已完成',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -57,7 +59,8 @@ Page({
     timeArr: [],
 
     payStatusList: [],
-    d: {}
+    d: {},
+    dis_type: -1,
   },
   async onLoad(e) {
     let { order_no } = e
@@ -79,6 +82,7 @@ Page({
 
   contact,
   handleCopy,
+  guide,
 
   closeModel() {
     this.setData({
@@ -221,7 +225,8 @@ Page({
           d: { ...item, remaining_pay_second, remaining_pay_minute },
           time,
           timeArr,
-          curOrderState
+          curOrderState,
+          dis_type
         })
       }, 1000)
 
@@ -281,8 +286,10 @@ Page({
     let cancel_code = cancelReasonList.filter(item => item.value)[0].cancel_code
     let res = await ajax('/juewei-api/order/cancel', { order_no: d.order_no, cancel_code, cancel_reason: '其他' })
     if (res.code == 0) {
-      my.navigateBack({
-        delta: 1
+      log('取消成功')
+      app.globalData.refresh = true
+      my.switchTab({
+        url: '/pages/order/list/list',
       });
     } else {
       this.closeModel()
@@ -308,6 +315,8 @@ Page({
    * @function 立即支付
    */
   async payNow(e) {
+    const { channel } = this.data.d
+    if (channel != 1) { return }
     const { order_no } = e.currentTarget.dataset;
     let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no }, "POST")
     if (r.code === 0) {
@@ -339,6 +348,21 @@ Page({
         url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
       });
     }
+  },
+
+
+  /**
+   * @function 再来一单
+   */
+
+  buyAgain() {
+    const { dis_type } = this.data
+    app.globalData.type = dis_type;
+    log(app.globalData.type)
+
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist'
+    });
   }
 });
 

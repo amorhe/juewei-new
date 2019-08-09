@@ -28,11 +28,11 @@
         </view>
         <view class="right">
           <text class="y">￥</text>
-          <text class="price">{{item.real_price / 100}}</text>
+          <text class="price">{{(item.real_price / 100).toFixed(2)}}</text>
         </view>
       </view>
       <view class="out-footer">
-        <view class="topay" a:if="{{item.order_status == 0}}">
+        <view class="topay" a:if="{{item.order_status == 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
           去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}">
@@ -47,7 +47,7 @@
         <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}">
           已评价
         </view>
-        <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}">
+        <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
         <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
@@ -78,11 +78,11 @@
         </view>
         <view class="right">
           <text class="y">￥</text>
-          <text class="price">{{item.real_price/100}}</text>
+          <text class="price">{{(item.real_price/100).toFixed(2)}}</text>
         </view>
       </view>
       <view class="out-footer">
-        <view class="topay" a:if="{{item.order_status == 0}}">
+        <view class="topay" a:if="{{item.order_status == 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
          去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1].includes(item.order_status)}}">
@@ -100,7 +100,7 @@
         <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}">
           已评价
         </view>
-        <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}">
+        <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
         <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">

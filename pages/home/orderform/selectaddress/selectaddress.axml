@@ -1,5 +1,5 @@
 <view class="addressView">
-   <view a:if="{{addressList.length>0}}" class="addressBox">
+    <view a:if="{{addressList.length>0}}" class="addressBox">
       <radio-group class="radio-group" name="lib">
         <view class="borderBottomSolid" a:for="{{addressList}}" onTap="chooseAddress" data-id="{{item.user_address_id}}">
           <view class="flexSpecial">
@@ -12,8 +12,8 @@
           <image class="ImageFourty" catchTap="editAddress" mode="scaleToFill" src="{{imageUrl}}edit.png" data-id="{{item.user_address_id}}"/>
         </view>
       </radio-group>
-
-    <view class="noUseView">
+    </view>
+    <view class="noUseView" a:if="{{ addressListNoUse.length>0 }}" >
       <view class="viewTitle">以下地址超出配送范围</view>
       <view class="borderBottomSolid addressUl colorNine" a:for="{{addressListNoUse}}" onTap="chooseNewAddress">
           <view class="flexSpecial">
@@ -25,8 +25,9 @@
           <image class="ImageFourty" catchTap="editAddress" mode="scaleToFill" src="{{imageUrl}}edit.png" data-id="{{item.user_address_id}}"/>
         </view>
     </view>
-   </view>
-   <view  class="nostatus" a:if="{{addressList.length== 0}}">
+   
+
+   <view class="nostatus" a:if="{{addressList.length== 0 && addressListNoUse.length==0}}">
      <image class='nullImg' src="{{ imageUrl }}bg_address.png"/>
      <text>暂无配送地址</text>
    </view>

@@ -35,7 +35,6 @@ Page({
   },
   getAddress(){
     useraddress(my.getStorageSync({key: 'shop_id'}).data).then((res) => {
-      console.log(res);
       let addressList = [],addressListNoUse=[];
       for(let value of res.data){
         if(value.is_dis == 1){
