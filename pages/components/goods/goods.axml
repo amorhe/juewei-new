@@ -196,7 +196,8 @@
                 <view>
                   <text>￥</text>
                   <text>{{v.goods_format[0].goods_price / 100}}</text>
-                  <text>/ {{v.goods_unit}}</text>
+                  <text a:if="{{v.goods_format.length>1}}">/ 起</text>
+                  <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
                 </view>
                 <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
               </view>
@@ -245,7 +246,8 @@
                   <text>￥</text>
                   <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
                   <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
-                  <text>/ {{v.goods_unit}}</text>
+                  <text a:if="{{v.goods_format.length>1}}">/ 起</text>
+                  <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
                 </view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
