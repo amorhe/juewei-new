@@ -173,7 +173,13 @@
         </view>
         <view class="user-right">
           <view class="shop-name"> {{d.shop_name}}</view>
-          <view class="code-button">导航</view>
+          <view class="code-button"
+           data-shop_longitude="{{d.shop_gd_longitude}}" 
+          data-shop_latitude="{{d.shop_gd_latitude}}"
+          data-shop_name="{{d.shop_name}}"
+          data-address="{{d.address}}"
+          onTap="guide"
+          >导航</view>
         </view>
       </view>
       <view class="user-list" a:if="{{d.shop_name}}">

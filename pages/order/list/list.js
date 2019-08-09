@@ -1,7 +1,7 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
 import { ajax, log, contact, isloginFn, guide } from '../../common/js/li-ajax'
 
-
+const app = getApp()
 Page({
   data: {
     imageUrl,
@@ -51,7 +51,7 @@ Page({
       '订单已提交',
       '商家已接单',
       '待取餐',
-      '已取餐',
+      '订单已完成',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -67,7 +67,7 @@ Page({
 
   async onShow() {
     let { takeOutList, pickUpList, menuList, cur } = this.data
-    clearInterval(menuList[cur].timer)
+    // clearInterval(menuList[cur].timer)
     if (menuList[cur].page == 1 && (!takeOutList.length || !pickUpList.length)) {
       await this[menuList[cur]['fun']]()
     }
@@ -215,7 +215,7 @@ Page({
 
   async getMore() {
     // 页面被拉到底部
-    const{menuList,cur} = this.data;
+    const { menuList, cur } = this.data;
     my.showLoading({ content: '加载中...' });
     setTimeout(async () => {
       await this[menuList[cur]['fun']]()
@@ -240,6 +240,7 @@ Page({
       url: '/package_order/pages/orderdetail/orderdetail?order_no=' + order_no
     });
   },
+
   /**
    * @function 去评价页面
    */
@@ -249,6 +250,21 @@ Page({
       url: '/package_order/pages/comment/comment?order_no=' + order_no
     });
   },
+
+  /**
+   * @function 再来一单
+   */
+
+  buyAgain() {
+     const { menuList, cur } = this.data;
+    
+    app.globalData.type = menuList[cur].dis_type;
+    log(app.globalData.type)
+
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist'
+    });
+  }
 
 });
 

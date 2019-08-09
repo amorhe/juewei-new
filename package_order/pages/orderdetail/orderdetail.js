@@ -1,5 +1,7 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
-import { log, ajax, contact, handleCopy } from '../../../pages/common/js/li-ajax'
+import { log, ajax, contact, handleCopy, guide } from '../../../pages/common/js/li-ajax'
+
+const app = getApp()
 Page({
   data: {
     imageUrl,
@@ -27,7 +29,7 @@ Page({
       '订单已提交',
       '商家已接单',
       '待取餐',
-      '已取餐',
+      '订单已完成',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -57,7 +59,8 @@ Page({
     timeArr: [],
 
     payStatusList: [],
-    d: {}
+    d: {},
+    dis_type: -1,
   },
   async onLoad(e) {
     let { order_no } = e
@@ -79,7 +82,8 @@ Page({
 
   contact,
   handleCopy,
-
+  guide,
+  
   closeModel() {
     this.setData({
       showTop: false,
@@ -221,7 +225,8 @@ Page({
           d: { ...item, remaining_pay_second, remaining_pay_minute },
           time,
           timeArr,
-          curOrderState
+          curOrderState,
+          dis_type
         })
       }, 1000)
 
@@ -339,6 +344,21 @@ Page({
         url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
       });
     }
+  },
+
+
+  /**
+   * @function 再来一单
+   */
+
+  buyAgain() {
+    const { dis_type } = this.data
+    app.globalData.type = dis_type;
+    log(app.globalData.type)
+
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist'
+    });
   }
 });
 
