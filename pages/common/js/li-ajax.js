@@ -10,10 +10,7 @@ export const getSid = () => {
     my.getStorage({
       key: '_sid', // 缓存数据的key
       success: async (res) => {
-        if (await isLogin({ _sid: res.data })) {
-          resolve(res.data)
-        }
-        resolve('')
+        resolve(res.data)
       },
       fail: err => {
         reject('')
@@ -21,31 +18,6 @@ export const getSid = () => {
     });
   })
 }
-
-/**
- * @function 判断登录状态
- * @param {string} data 
- */
-export const isLogin = async (data) => {
-  return new Promise((resolve, reject) => {
-    my.request({
-      url: baseUrl + '/juewei-api/alimini/getUserInfo',
-      data,
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      success: (res) => {
-        my.hideLoading()
-        if (res.data.code == 30106) {
-          resolve(false)
-        } else if (res.data.code == 0 && res.data.data.user_id) {
-          resolve(true)
-        }
-      },
-    });
-  })
-}
-
-
 
 /**
  * @function ajax 请求
@@ -67,12 +39,22 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       success: (res) => {
+        log(res)
         my.hideLoading()
-        // 未登录的code code=30106  CODE=A103 code=101
-        if([30106,'A103',101].includes(res.code)){
-          reject()
+        const {data} = res
+        const code = data.CODE || data.code
+    
+        if ([100, 'A100', 0].includes(code)) {
+          resolve(res.data)
+        } else if ([30106, 'A103', 101].includes(code)) {
+          return my.navigateTo({
+            url: '/pages/login/auth/auth'
+          });
+        } else {
+          reject({ errormsg: rest.msg, code: -1 });
         }
-        resolve(res.data)
+
+
         log(res.data)
       },
       fail: (err) => {
