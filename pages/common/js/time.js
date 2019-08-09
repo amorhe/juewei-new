@@ -17,7 +17,7 @@ export const cur_dateTime = (start,end) => {
   var mytime = new Date().toLocaleDateString();
   var time1 = new Date(`${mytime} ${start}`).getTime();
   var time2 = new Date(`${mytime} ${end}`).getTime();
-  console.log(timestamp,mytime,time1,time2)
+  // console.log(timestamp,mytime,time1,time2)
   if(time2 - timestamp < 1000 * 3600) {
     return  3    // 不足一小时
   }else if( time2 - timestamp > 1000 * 3600 && timestamp < time2 && timestamp > time1) {
