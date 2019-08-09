@@ -50,7 +50,7 @@ Page({
       '待支付',
       '订单已提交',
       '商家已接单',
-      '待取餐',
+      '等待取餐',
       '订单已完成',
       '订单已取消',
       '订单已取消',
@@ -256,8 +256,8 @@ Page({
    */
 
   buyAgain() {
-     const { menuList, cur } = this.data;
-    
+    const { menuList, cur } = this.data;
+
     app.globalData.type = menuList[cur].dis_type;
     log(app.globalData.type)
 
