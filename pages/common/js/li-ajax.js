@@ -71,9 +71,11 @@ export const ajax = async (url, data = {}, method = 'POST') => {
         resolve(res.data)
         log(res.data)
       },
-      fail:(err)=>{
+      fail: (err) => {
         my.hideLoading()
-        reject(err)
+        reject(my.alert({
+          title: err
+        }))
       }
     });
   })

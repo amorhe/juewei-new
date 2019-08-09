@@ -10,10 +10,10 @@
 </view>
 
 <!-- 百元 礼包券 -->
-<modal show="{{!show}}" showClose="{{ false }}">
-  <view class="wrap" style="background-image:url({{imageUrl}}redBg.png)">
-    <view class="ul">
-      <view class="li" style="background-image:url({{imageUrl}}couponBg.png)" a:for="{{new_user}}">
+<modal show="{{newUserShow}}" showClose="{{ false }}" >
+  <view class="wrap" style="background-image:url({{imageUrl}}redBg.png)" onTap="close">
+    <view class="ul" catchTap="">
+      <view class="li" style="background-image:url({{imageUrl}}couponBg.png)" a:for="{{new_user}}" catchTap="toTakeIn">
           <view class="left">
             <view><text class="num">{{item.money/100}}</text> <text class="price">元</text></view>
             <view class="con">满{{item.full_money/100}}元可用</view>
