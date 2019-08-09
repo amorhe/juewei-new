@@ -83,7 +83,7 @@ Page({
   contact,
   handleCopy,
   guide,
-  
+
   closeModel() {
     this.setData({
       showTop: false,
@@ -313,6 +313,8 @@ Page({
    * @function 立即支付
    */
   async payNow(e) {
+    const { channel } = this.data.d
+    if (channel != 1) { return }
     const { order_no } = e.currentTarget.dataset;
     let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no }, "POST")
     if (r.code === 0) {
