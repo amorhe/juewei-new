@@ -26,7 +26,7 @@ const ajaxUrl = {
   AliMiniPay: '/juewei-service/payment/AliMiniPay',               // 支付生成交易号
   useraddressInfo: '/juewei-api/useraddress/info',               // 地址详情
   addressList: '/juewei-api/useraddress/list',              // 定位页我的地址列表
-  
+
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});
@@ -71,7 +71,7 @@ export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,sourc
 // latitude	是	str	风控参数：下单纬度
 // type	是	int	风控参数：下单类型，1:外卖去下单；2:外卖确定支付；3:自提去下单；4:自提确认支付
 
-export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse) => ajax(ajaxUrl.confirmOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse})
+export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse,fsp_id) => ajax(ajaxUrl.confirmOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse,fsp_id})
 
 export const useraddress = (shop_id) => ajax(ajaxUrl.useraddress,{shop_id});
 

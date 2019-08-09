@@ -11,8 +11,8 @@
         <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
         <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
       </view>
-      <image catchTap="selectTapTrue" data-index="{{index}}" data-code="{{item.code}}" a:if="{{!couponChoosed[`e${index}`] || defaultcoupon==''}}" class="select" mode="scaleToFill" src="{{imageUrl}}select3.png"/>
-      <image catchTap="selectTapFalse" a:if="{{couponChoosed[`e${index}`] && defaultcoupon==item.code}}" class="select" mode="scaleToFill" src="{{imageUrl}}select4.png"/>
+      <image catchTap="selectTapTrue" data-index="{{index}}" data-code="{{item.code}}" a:if="{{!couponChoosed[`e${index}`]}}" class="select" mode="scaleToFill" src="{{imageUrl}}select3.png"/>
+      <image catchTap="selectTapFalse" a:if="{{couponChoosed[`e${index}`]}}" class="select" mode="scaleToFill" src="{{imageUrl}}select4.png"/>
     </view>
     <view>
       <view class="whiteCircleLeft"></view>

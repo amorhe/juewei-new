@@ -11,8 +11,6 @@ Component({
     goods_discount:0,
     goods_original_price:0,
     goods_discount_user_limit:0,
-    // goods_format_all:'',
-    // goodsList:{},
     shopcartAll:[],
   },
   props: {
@@ -64,8 +62,8 @@ Component({
         size:999
       })
     },
-    onCart(goodsList,shopcartAll,priceAll,shopcartNum){
-       this.props.onCart(goodsList,shopcartAll,priceAll,shopcartNum);
+    onCart(goodsList,shopcartAll,priceAll,shopcartNum,priceFree){
+       this.props.onCart(goodsList,shopcartAll,priceAll,shopcartNum,priceFree);
     },
     addshopcart(e){
       console.log(e)
@@ -125,7 +123,7 @@ Component({
         }
         goodlist[`${goods_code}_${goods_format}`]  = oneGood;
       }
-       let shopcartAll = [],priceAll=0,shopcartNum=0;
+       let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
         if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           my.showToast({
@@ -134,6 +132,7 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -142,7 +141,7 @@ Component({
         goodsList:goodlist,
         shopcartAll
       })
-      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum);
+      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree);
       console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -164,12 +163,13 @@ Component({
         }
       }
       goodlist[`${code}_${format}`].num -=1;
-      let shopcartAll = [],priceAll=0,shopcartNum=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
         if(goodlist[keys].goods_discount_user_limit!=null && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -183,7 +183,7 @@ Component({
           shopcartAll.push(goodlist[keys])
         }
       }
-      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum)
+      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
       this.setData({
         goodsList:goodlist,
         shopcartAll

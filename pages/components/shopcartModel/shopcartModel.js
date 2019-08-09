@@ -30,11 +30,13 @@ Component({
   },
   deriveDataFromProps(nextProps){
     // console.log(nextProps)
+    // 判断是不是起送
     if(app.globalData.type==1){
       this.setData({
         type:1
       })
     }
+    // 判断是不是起购
     if(app.globalData.type==2){
       this.setData({
         type:2

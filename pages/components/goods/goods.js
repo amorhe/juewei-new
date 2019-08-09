@@ -23,7 +23,9 @@ Component({
     hide_good_box: true,
     shopcartAll:[],
     shopcartNum:0,
-    activityText:'',
+    activityText:'',   // 购物车活动提示内容
+    priceFree:0,
+    freeText:'' // 购物车包邮提示内容
   },
   onInit() {
     this.busPos = {};
@@ -36,7 +38,7 @@ Component({
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data; 
-    let priceAll = 0,shopcartAll = [],shopcartNum=0;
+    let priceAll = 0,shopcartAll = [],shopcartNum=0,priceFree=0;
     for(let keys in goodlist){
       if(goodlist[keys].goods_discount_user_limit!=null && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
         my.showToast({
@@ -45,6 +47,7 @@ Component({
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num
@@ -53,10 +56,11 @@ Component({
       shopcartList:goodlist,
       priceAll,
       shopcartAll,
-      shopcartNum
+      shopcartNum,
+      priceFree
     })
     // 购物车活动提示
-    this.shopcartPrompt(nextProps.fullActivity,this.data.priceAll);
+    this.shopcartPrompt(nextProps.fullActivity,this.data.priceAll,nextProps.freeMoney);
     if(!my.getStorageSync({key:'goodsList'}).data){
       this.onchangeShopcart({},[],0,0);
     }
@@ -153,23 +157,25 @@ Component({
       // })
     },
     // sku商品
-    onCart(shopcartList,shopcartAll,priceAll,shopcartNum){
+    onCart(shopcartList,shopcartAll,priceAll,shopcartNum,priceFree){
       this.setData({
         shopcartList,
         shopcartAll,
         priceAll,
-        shopcartNum
+        shopcartNum,
+        priceFree
       })
     },
     // 购物车
-    onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum){
-      this.setData({
-        shopcartList:goodlist,
-        shopcartAll,
-        priceAll,
-        shopcartNum
-      })
-      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum)
+    onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree){
+      // this.setData({
+      //   shopcartList:goodlist,
+      //   shopcartAll,
+      //   priceAll,
+      //   shopcartNum,
+      //   priceFree
+      // })
+      this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
     },
     addshopcart(e){
       console.log(e)
@@ -213,7 +219,7 @@ Component({
         }
         goodlist[`${goods_code}_${goods_format}`]  = oneGood;
       }
-      let shopcartAll = [],priceAll=0,shopcartNum=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
         if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           my.showToast({
@@ -222,6 +228,7 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -231,7 +238,8 @@ Component({
         shopcartList: goodlist,
         shopcartAll,
         priceAll,
-        shopcartNum
+        shopcartNum,
+        priceFree
       })
       console.log(goodlist)
       my.setStorageSync({
@@ -282,7 +290,7 @@ Component({
       let code = e.currentTarget.dataset.goods_code;
       let format = e.currentTarget.dataset.goods_format
       let goodlist = my.getStorageSync({key:'goodsList'}).data;
-      let shopcartAll = [],priceAll=0,shopcartNum=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       goodlist[`${code}_${format}`].num -=1;
       goodlist[`${code}_${format}`].sumnum -= 1;
       for(let keys in goodlist){
@@ -290,6 +298,7 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -304,7 +313,8 @@ Component({
         shopcartList:goodlist,
         shopcartAll,
         priceAll,
-        shopcartNum
+        shopcartNum,
+        priceFree
       })
       console.log(goodlist)
       my.setStorageSync({
@@ -313,24 +323,32 @@ Component({
       });
     },
     // 购物车活动提示
-   shopcartPrompt(oldArr,priceAll){
-      let activityText = '';
+   shopcartPrompt(oldArr,priceAll,priceFree){
+      let activityText = '',freeText='';
       for(let v of oldArr){
         if(oldArr.findIndex(v => v>priceAll) != -1){
           if(oldArr.findIndex(v => v>priceAll) == 0){
-            activityText=`只差${(oldArr[0] - priceAll)/100}元,超值福利等着你!`
+            activityText=`只差${(oldArr[0] - priceAll)/100}元,超值福利等着你!`;
           }else if(oldArr.findIndex(v => v>priceAll) >0 && oldArr.findIndex(v => v>priceAll)< oldArr.length){
             activityText = `已购满${oldArr[oldArr.findIndex(v => v>priceAll)-1] / 100}元,去结算享受换购优惠;满${oldArr[oldArr.findIndex(v => v>priceAll)] /100}元更高福利等着你!`
           }else{
-            activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
+            activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`;
           }
         }else{
-          activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
+          activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`;
         }
       }
-      // console.log(activityText)
+      if(priceAll == 0){
+        freeText = `满${priceFree/100}元 免配送费`
+      }else if(priceAll<priceFree){
+        freeText = `还差${priceFree/100-priceAll/100}元 免配送费`
+      }else{
+        freeText = `已满${priceFree/100}元 免配送费`
+      }
+      // console.log(freeText)
       this.setData({
-        activityText
+        activityText,
+        freeText
       })
     },
     // 商品详情

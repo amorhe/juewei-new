@@ -34,7 +34,8 @@ Page({
     order_price:'',    //订单总价
     showRepurse:false,  // 是否显示换购商品
     coupon_money:0,     // 优惠金额
-    goodsList:[]
+    goodsList:[],
+    notUse:false
   },
   onLoad(e) {
     this.setData({
@@ -112,8 +113,20 @@ Page({
     }
     if(app.globalData.coupon_code){
       this.setData({
-        coupon_code:app.globalData.coupon_code
+        coupon_code:app.globalData.coupon_code,
       })
+    }
+    if(app.globalData.notUse==1){
+      this.setData({
+        notUse:true
+      })
+    }else{
+      this.setData({
+        notUse:false
+      })
+    }
+    if(app.globalData.address_id){
+      this.getAddress(app.globalData.address_id)
     }
     
     let gift = [];
@@ -207,7 +220,7 @@ Page({
       typeClass = 4
     }
     
-    let address_id = my.getStorageSync({key:'address_id'}).data;
+    let address_id = app.globalData.address_id;
     if(app.globalData.type==1){
       if(!address_id){
         my.showToast({
@@ -218,7 +231,7 @@ Page({
     }
     let notUse = 0;
     if(app.globalData.notUse){
-      notUse = app.globalData.notUse
+      notUse = app.globalData.notUse;
     }
     // 创建订单
     createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,this.data.gift,this.data.orderInfo.use_coupons[0],notUse).then((res) => {
@@ -292,8 +305,7 @@ Page({
     if(app.globalData.notUse){
       notUse = app.globalData.notUse
     }
-    console.log(notUse)
-    confirmOrder(this.data.orderType,shop_id,goods,shop_id,this.data.coupon_code,this.data.couponslist,notUse).then((res) => {
+    confirmOrder(this.data.orderType,shop_id,goods,shop_id,this.data.coupon_code,this.data.couponslist,notUse,app.globalData.freeId).then((res) => {
       console.log(res)
       let goodsList = my.getStorageSync({key:'goodsList'}).data;
       if(res.code == 0){

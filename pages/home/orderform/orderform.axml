@@ -98,8 +98,9 @@
         <text class="marginLSixteen">优惠券</text>
       </view>
       <view>
-        <text class="colorNine" a:if="{{orderInfo.use_coupons.length==0}}">无可用红包</text>
-        <text class="colorNine" a:if="{{orderInfo.use_coupons.length>0}}">- ¥{{coupon_money/100}}</text>
+        <text class="colorNine" a:if="{{orderInfo.use_coupons.length==0 && !notUse}}">无可用红包</text>
+        <text class="colorNine" a:if="{{notUse}}">点击选择</text>
+        <text class="colorNine" a:if="{{orderInfo.use_coupons.length>0 && !notUse}}">- ¥{{coupon_money/100}}</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
       </view>
     </view>

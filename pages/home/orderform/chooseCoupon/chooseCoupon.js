@@ -25,6 +25,7 @@ Page({
 
   // 优惠券
   getCouponsList(_sid,money) {
+    this.data.couponChoosed = {};
     couponsList(_sid, 'use',money,my.getStorageSync({key:'shop_id'}).data).then((res) => {
       console.log(res)
       res.DATA.use.forEach(item => {
@@ -35,15 +36,19 @@ Page({
       })
       // 已选中的优惠券
       if(app.globalData.coupon_code){
+        if(app.globalData.notUse==0){
+          this.data.couponChoosed[`e${res.DATA.use.findIndex(item => item.code == app.globalData.coupon_code)}`] = app.globalData.coupon_code;
+        }
         this.setData({
-          defaultcoupon: app.globalData.coupon_code,
-          couponList: res.DATA.use
+          couponList: res.DATA.use,
+          couponChoosed:this.data.couponChoosed
         })
       }else{
         // 默认选择的优惠券
+        this.data.couponChoosed[`e${res.DATA.use.findIndex(item => item.code == res.DATA.max.code)}`] = res.DATA.max.code;
         this.setData({
-          defaultcoupon:res.DATA.max.code,
-          couponList: res.DATA.use
+          couponList: res.DATA.use,
+          couponChoosed:this.data.couponChoosed
         })
       }
 
@@ -51,12 +56,9 @@ Page({
   },
   chooseCouponed(e){
     app.globalData.coupon_code = e.currentTarget.dataset.coupon_code;
-    console.log(this.data.couponChoosed)
     if(Object.keys(this.data.couponChoosed).length==0){
       app.globalData.notUse = 1;
-      console.log('1')
     }else{
-      console.log('2')
       app.globalData.notUse = 0
     }
     my.navigateBack({
@@ -68,8 +70,7 @@ Page({
     let couponChoosed = {};
     couponChoosed[`e${e.currentTarget.dataset.index}`] = e.currentTarget.dataset.code;
     this.setData({
-      couponChoosed,
-      defaultcoupon:e.currentTarget.dataset.code
+      couponChoosed
     })
   },
   selectTapFalse(e){

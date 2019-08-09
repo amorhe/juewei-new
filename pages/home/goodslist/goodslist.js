@@ -20,7 +20,7 @@ Page({
     province_id: '',  //省
     city_id: '',  // 市
     region_id: '',  //区
-    showListObj: {},   // 展位
+    showListObj: [],   // 展位
     isOpen: '',     //门店是否营业
     shopTakeOut: [],   // 附近门店列表
     shopGoodsList: [],         // 门店商品列表
@@ -51,7 +51,8 @@ Page({
     otherGoods:[],   // 参与换购的商品
     type:1,   // 默认外卖
     shopGoods:[],   // 门店商品
-    fullActivity:''
+    fullActivity:'',
+    freeMoney:''
   },
   onLoad() {
     // my.getAuthCode({
@@ -328,6 +329,14 @@ Page({
         item.goods_img_intr_origin = [item.goods_img_intr_origin]
       }
 
+      // 包邮活动
+      if(res.data.FREE){
+        app.globalData.freeId = res.data.FREE.id;
+        this.setData({
+          freeMoney:res.data.FREE.money
+        })
+      }
+
       obj1 = {
         "key": "折扣",
         "last": DIS
@@ -337,14 +346,6 @@ Page({
         "last": PKG
       }
       
-      // obj3 = {
-      //   "key":"包邮",
-      //   "last":FREE
-      // }
-      // obj4 = {
-      //   "key":"满减",
-      //   "last":FULL
-      // }
       this.data.shopGoodsList.unshift(obj1,obj2);
       let goodsArr = [...DIS,...PKG,...this.data.shopGoods];    // 门店所有列表（一维数组）
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
@@ -386,4 +387,10 @@ Page({
       }
     })
   },
+  //  活动链接
+  imageLink(e){
+    my.navigateTo({
+      url:e.currentTarget.dataset.link
+    });
+  }
 });
