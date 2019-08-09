@@ -104,10 +104,6 @@ Page({
     }
   },
   onShow(){
-    // 选择地址
-    if(my.getStorageSync({key: 'address_id'}).data!=null) {
-      this.getAddress(my.getStorageSync({key: 'address_id'}).data)
-    }
     // 备注
     if(app.globalData.remarks) {
       this.setData({
@@ -180,6 +176,10 @@ Page({
         delta:1
       });
     }
+    // 继续结算
+    if(data.isType == 'orderConfirm' && data.type == 0){
+      this.confirmOrder(my.getStorageSync({key: 'shop_id'}).data,JSON.stringify(this.data.goodsList));
+    }
     this.setData({
       mask: false,
       modalShow: false
@@ -216,9 +216,9 @@ Page({
         return
       }
     }
-    let notUse=0;
-    if(app.globalData.coupon_code){
-      notUse = 1
+    let notUse = 0;
+    if(app.globalData.notUse){
+      notUse = app.globalData.notUse
     }
     // 创建订单
     createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,this.data.gift,this.data.orderInfo.use_coupons[0],notUse).then((res) => {
@@ -287,11 +287,12 @@ Page({
     });
   },
   // 订单确认
-  confirmOrder(shop_id,goods,coupon_code){
+  confirmOrder(shop_id,goods){
     let notUse = 0;
-    if(app.globalData.coupon_code){
-      notUse = 1
+    if(app.globalData.notUse){
+      notUse = app.globalData.notUse
     }
+    console.log(notUse)
     confirmOrder(this.data.orderType,shop_id,goods,shop_id,this.data.coupon_code,this.data.couponslist,notUse).then((res) => {
       console.log(res)
       let goodsList = my.getStorageSync({key:'goodsList'}).data;
@@ -346,7 +347,7 @@ Page({
           modalShow:true,
           showShopcar:false,
           isType:'orderConfirm',
-          content: res.msg + '系统已清更新,是否确认结算'
+          content: res.msg + '，系统已经更新,是否确认结算'
         })
       }
     })

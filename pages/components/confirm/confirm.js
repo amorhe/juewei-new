@@ -42,6 +42,9 @@ Component({
       if(this.props.isType == "checkshopcart"){
         isType = 'checkshopcart'
       }
+      if(this.props.isType=="orderConfirm"){
+        isType = 'orderConfirm'
+      } 
       const modalObj = {
         modalShow:false,
         mask:false,

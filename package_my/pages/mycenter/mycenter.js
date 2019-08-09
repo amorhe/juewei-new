@@ -57,7 +57,6 @@ Page({
       var province = region.filter(item => {
         return item.addrid == res.data.province_id
       })[0]
-
       var city = province.sub.filter(item => {
         return item.addrid == res.data.city_id
       })[0]

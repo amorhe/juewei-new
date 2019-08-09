@@ -15,6 +15,7 @@ Component({
     otherGoods:[],
     confirmButtonText:'',
     cancelButtonText: '',
+    type:''
 
   },
   props: {
@@ -22,7 +23,6 @@ Component({
    onChangeShopcart: (data) => console.log(data)
   },
   onInit(){
-   
   },
   didMount() {
     // 获取起送费
@@ -30,6 +30,16 @@ Component({
   },
   deriveDataFromProps(nextProps){
     // console.log(nextProps)
+    if(app.globalData.type==1){
+      this.setData({
+        type:1
+      })
+    }
+    if(app.globalData.type==2){
+      this.setData({
+        type:2
+      })
+    }
   },
   didUpdate() {
     
@@ -156,11 +166,7 @@ Component({
     // 立即购买
     goOrderSubmit(){
       // 未登录
-      if(my.getStorageSync({
-        key: 'user_id', // 缓存数据的key
-      }).data==null || !my.getStorageSync({
-        key: 'user_id', // 缓存数据的key
-      }).data){
+      if(my.getStorageSync({key: 'user_id'}).data==null || my.getStorageSync({key:'_sid'}).data==null){
         my.navigateTo({
           url:'/pages/login/auth/auth'
         })

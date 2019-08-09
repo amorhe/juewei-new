@@ -1,4 +1,4 @@
-<view class="closeIng" a:if="{{isShow && couponsExpire.days}}">
+<view class="closeIng" a:if="{{isShow}}">
   <!-- 满减 -->
   <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days!=0}}">
     <text>您的满</text>

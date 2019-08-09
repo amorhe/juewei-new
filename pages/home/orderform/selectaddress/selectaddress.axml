@@ -34,7 +34,7 @@
    <view style="height:96rpx;"></view>
    <navigator url="/package_my/pages/myaddress/addaddress/addaddress?order=1" class="addView">
      <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}add.png"/>
-     <view class="fontThirtySix marginLSixteen">新增收获地址</view>
+     <view class="fontThirtySix marginLSixteen">新增收货地址</view>
    </navigator>
 </view>
 

@@ -26,6 +26,7 @@ const ajaxUrl = {
   AliMiniPay: '/juewei-service/payment/AliMiniPay',               // 支付生成交易号
   useraddressInfo: '/juewei-api/useraddress/info',               // 地址详情
   addressList: '/juewei-api/useraddress/list',              // 定位页我的地址列表
+  
 } 
 
 export const bannerList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.bannerList,{city_id,district_id,company_id,release_channel});

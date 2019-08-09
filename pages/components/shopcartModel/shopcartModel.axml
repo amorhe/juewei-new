@@ -12,14 +12,13 @@
       </view>
       <view>另需配送费{{dispatch_price}}元</view>
     </view>
-    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartNum==0}}">￥{{send_price}}起送</view>
+    <view class="buyBtn" a:if="{{priceAll/100<send_price || shopcartNum==0}}">￥{{send_price}}起<text a:if="{{type==1}}">送</text><text a:if="{{type==2}}">购</text></view>
     <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{priceAll/100>=send_price && shopcartNum>0}}">去结算</view>
   </view>
   </view>
 </view>
 <!-- 购物车弹框 -->
 <view a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
-  <!-- <view class="fullReduce fontSmall">下单减8元，再买10元可减10元</view> -->
   <view class="fullReduce fontSmall" a:if="{{activityText!=''}}">{{activityText}}</view>
   <view class="clearShopcar" onTap="clearShopcart">
     <image src="{{imageUrl}}deleteIcon.png" />

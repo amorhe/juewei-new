@@ -7,11 +7,13 @@ Page({
   data: {
     open2: false,
     codeImg: '',
-    activeTab: 0,  // 初始选中
+    active:[],
+    activeIndex:'',
     imageUrl,
     imageUrl2,
     couponList:[],  // 优惠券列表
     defaultcoupon:'',    // 默认选中的优惠券
+    couponChoosed:{}
   },
   onLoad(e) {
     const _sid = my.getStorageSync({ key: '_sid' }).data;
@@ -28,10 +30,10 @@ Page({
       res.DATA.use.forEach(item => {
         item.start_time = formatTime(item.start_time, 'Y-M-D');
         item.end_time = formatTime(item.end_time, 'Y-M-D');
-        item.toggleRule = false
+        item.toggleRule = false,
+        item.isChecked = false
       })
       // 已选中的优惠券
-      console.log(app.globalData.coupon_code)
       if(app.globalData.coupon_code){
         this.setData({
           defaultcoupon: app.globalData.coupon_code,
@@ -47,18 +49,33 @@ Page({
 
     })
   },
-    //  选择优惠券
-  radioChange(e){
-    console.log('你选择的优惠券是：', e.detail.value);
-    this.setData({
-      coupon_code: e.detail.value
-    })
-  },
   chooseCouponed(e){
     app.globalData.coupon_code = e.currentTarget.dataset.coupon_code;
+    console.log(this.data.couponChoosed)
+    if(Object.keys(this.data.couponChoosed).length==0){
+      app.globalData.notUse = 1;
+      console.log('1')
+    }else{
+      console.log('2')
+      app.globalData.notUse = 0
+    }
     my.navigateBack({
       url: '/pages/home/orderform/orderform'
     });
+  },
+  // 切换是否选中
+  selectTapTrue(e){
+    let couponChoosed = {};
+    couponChoosed[`e${e.currentTarget.dataset.index}`] = e.currentTarget.dataset.code;
+    this.setData({
+      couponChoosed,
+      defaultcoupon:e.currentTarget.dataset.code
+    })
+  },
+  selectTapFalse(e){
+    this.setData({
+      couponChoosed:{}
+    })
   },
 
   /**

@@ -11,11 +11,7 @@ Component({
     maskView:false,
     goodsModal:false,
     scrollT:0,
-    couponsExpire:{
-      full_money: 10,
-      money: 7,
-      days:1
-    },          // 优惠券过期提醒     
+    couponsExpire:{},          // 优惠券过期提醒     
     isShow: false,  // 优惠券过期提醒是否显示
     companyGoodsList:[],   //公司所有商品
     activityAllObj:[],
@@ -30,6 +26,13 @@ Component({
     activityText:'',
   },
   onInit() {
+    this.busPos = {};
+    this.busPos['x'] = 10;
+    this.busPos['y'] = app.globalData.hh - 16;
+    console.log('购物车坐标',this.busPos)
+  },
+  deriveDataFromProps(nextProps){
+    // console.log(nextProps)
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data; 
@@ -52,15 +55,8 @@ Component({
       shopcartAll,
       shopcartNum
     })
-
-    this.busPos = {};
-    this.busPos['x'] = 10;
-    this.busPos['y'] = app.globalData.hh - 16;
-    console.log('购物车坐标',this.busPos)
-  },
-  deriveDataFromProps(nextProps){
-    // console.log(nextProps)
-    this.shopcartPrompt(this.props.fullActivity,this.data.priceAll);
+    // 购物车活动提示
+    this.shopcartPrompt(nextProps.fullActivity,this.data.priceAll);
     if(!my.getStorageSync({key:'goodsList'}).data){
       this.onchangeShopcart({},[],0,0);
     }
@@ -111,6 +107,7 @@ Component({
      // 优惠券过期提醒
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
+        console.log(res)
         res.data.days = datedifference(res.data.start_time,res.data.end_time)
         this.setData({
           couponsExpire:res.data,
