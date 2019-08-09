@@ -235,13 +235,19 @@ view.pay {
   margin-top: 24rpx;
 }
 
+.item .value{
+  text-align: right
+}
+
 .item .label {
   font-size: 28rpx;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
 }
 
-.item .value {
+
+
+.label.flex,.value.flex {
   display: flex;
   align-items: center;
 }
