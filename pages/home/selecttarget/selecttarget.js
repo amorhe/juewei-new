@@ -135,12 +135,12 @@ Page({
       });
     }
     let mapPosition = '';
-    switch(e.currentTarget.dataset.type){
+    switch(parseInt(e.currentTarget.dataset.type)){
       case 1:
         mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude,e.currentTarget.dataset.info.latitude);
         break;
       case 3: 
-        mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude,e.currentTarget.dataset.info.latitude);
+        mapPosition = bd_encrypt(e.currentTarget.dataset.info.location.lng, e.currentTarget.dataset.info.location.lat);
     }
     my.setStorageSync({
         key: 'lat', // 缓存数据的key
