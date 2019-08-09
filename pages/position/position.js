@@ -105,9 +105,9 @@ Page({
         if (res.data.contents.length > 0) {
           this.getSelf(res.data.contents)
         } else {
-          // 没有扩大搜索范围到100000公里
+          // 没有扩大搜索范围到100公里
           my.request({
-            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=10000000000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
+            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
             success: (conf) => {
               if (conf.data.contents.length > 0) {
                 this.getSelf(conf.data.contents)

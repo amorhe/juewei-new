@@ -11,7 +11,7 @@ const ajaxUrl = {
   activityList: '/mini/Mini_activity/list',   // 商城页面营销活动
   showPositionList: '/mini/index/wap/show_position/list',   // 公众号展位列表
   GetLbsShop: '/juewei-api/shop/GetLbsShop',    // 根据经纬度获取外卖附近门店
-  NearbyShop: '/juewei-api/shop/MyNearbyShop',      // 根据经纬度获取自提附近门店
+  NearbyShop: '/juewei-api/shop/NearbyShop',      // 根据经纬度获取自提附近门店
   GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
   createOrder: '/juewei-api/order/create',       // 创建订单
   confirmOrder: '/juewei-api/order/confirm',        // 确认订单（商品加入购物车点击立即购买）
