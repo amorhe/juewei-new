@@ -66,6 +66,11 @@ Page({
 
   // 下拉刷新
   async onPullDownRefresh() {
+    this.refresh()
+  },
+
+  // 刷新
+  async refresh() {
     // 重置数据
     let _menuList = [
       {
@@ -100,7 +105,7 @@ Page({
       menuList: _menuList,
       takeOutList: _takeOutList,
       pickUpList: _pickUpList
-    }, async() => {
+    }, async () => {
       await this.getMore()
 
       my.stopPullDownRefresh()
@@ -109,9 +114,20 @@ Page({
 
   },
 
+
+  
+
   async onShow() {
+    // app.globalData.refresh = true
+    log(app.globalData.refresh)
+     if (app.globalData.refresh == true) {
+       my.showToast({
+         content:'取消成功'
+       });
+      app.globalData.refresh = false
+      return this.refresh();
+    }
     let { takeOutList, pickUpList, menuList, cur } = this.data
-    // clearInterval(menuList[cur].timer)
     if (menuList[cur].page == 1 && (!takeOutList.length || !pickUpList.length)) {
       await this[menuList[cur]['fun']]()
     }
@@ -150,6 +166,8 @@ Page({
       pickUpList: [],
     })
   },
+
+  
 
   /**
    * @function 选择菜单

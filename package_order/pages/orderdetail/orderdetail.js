@@ -286,8 +286,10 @@ Page({
     let cancel_code = cancelReasonList.filter(item => item.value)[0].cancel_code
     let res = await ajax('/juewei-api/order/cancel', { order_no: d.order_no, cancel_code, cancel_reason: '其他' })
     if (res.code == 0) {
-      my.navigateBack({
-        delta: 1
+      log('取消成功')
+      app.globalData.refresh = true
+      my.switchTab({
+        url: '/pages/order/list/list',
       });
     } else {
       this.closeModel()

@@ -68,6 +68,10 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       success: (res) => {
         my.hideLoading()
+        // 未登录的code code=30106  CODE=A103 code=101
+        if([30106,'A103',101].includes(res.code)){
+          reject()
+        }
         resolve(res.data)
         log(res.data)
       },
