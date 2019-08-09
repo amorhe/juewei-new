@@ -1,23 +1,24 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
-import { ajax, log,isloginFn } from '../../../pages/common/js/li-ajax'
+import { log, isloginFn } from '../../../pages/common/js/li-ajax'
+import { reqPointList, reqUserPoint } from '../../../pages/common/js/vip'
 Page({
   data: {
     imageUrl,
-    userPoint:0,
+    userPoint: 0,
     list: [],
-    toast:false,
+    toast: false,
     loginOpened: false,
-    pagenum:1,
-    pagesize:10,
+    pagenum: 1,
+    pagesize: 10,
 
-    finish:false
+    finish: false
   },
   async onLoad() {
     await this.getDetail(1)
     await this.getUserPoint()
   },
 
-  onHide(){
+  onHide() {
     this.onModalClose()
     this.hideToast()
   },
@@ -38,14 +39,14 @@ Page({
    * @function 获取积分详情
    */
   async getDetail(pagenum) {
-    let {list,pagesize} = this.data
-    let res = await ajax('/mini/point_exchange/point_list', {pagenum,pagesize}, 'GET')
+    let { list, pagesize } = this.data
+    let res = await reqPointList({ pagenum, pagesize })
     if (res.code === 100) {
-      if(res.data.pagination.lastLage < pagenum){return}
-      if(res.data.data.length == 0){return}
+      if (res.data.pagination.lastLage < pagenum) { return }
+      if (res.data.data.length == 0) { return }
       this.setData({
-        list: [...list,...res.data.data],
-        finish:true
+        list: [...list, ...res.data.data],
+        finish: true
       })
     }
   },
@@ -56,15 +57,15 @@ Page({
     });
   },
 
-  async getUserPoint(){
-    let res = await ajax('/mini/user/user_point',{})
-    if(res.CODE === 'A100'){
+  async getUserPoint() {
+    let res = await reqUserPoint()
+    if (res.CODE === 'A100') {
       this.setData({
-        userPoint:res.DATA
+        userPoint: res.DATA
       })
-    }else{
+    } else {
       this.setData({
-        loginOpened:true
+        loginOpened: true
       })
     }
   },

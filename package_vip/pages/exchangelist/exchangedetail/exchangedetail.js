@@ -1,5 +1,6 @@
 import { baseUrl, imageUrl, imageUrl2 } from '../../../../pages/common/js/baseUrl'
-import { ajax, parseData, log, getSid, handleCopy, guide, contact, getNavHeight } from '../../../../pages/common/js/li-ajax'
+import { parseData, log, getSid, handleCopy, guide, contact, getNavHeight } from '../../../../pages/common/js/li-ajax'
+import { reqOrderDetail, reqCancelOrder, reqWait } from '../../../../pages/common/js/vip'
 
 const app = getApp()
 
@@ -68,7 +69,7 @@ Page({
     //   "code": ""
     //   ,
 
-      time: '',
+    time: '',
 
     // },
 
@@ -93,7 +94,7 @@ Page({
   onUnload() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
-    this.setData=()=>{}
+    this.setData = () => { }
   },
 
 
@@ -112,7 +113,7 @@ Page({
    * @function 获取订单详情
    */
   async getOrderDetail(id) {
-    let res = await ajax('/mini/vip/wap/order/order_detail', { id })
+    let res = await reqOrderDetail(id)
     let _exchange_intro = await parseData(res.data.exchange_intro)
     let _intro = await parseData(res.data.intro)
 
@@ -152,11 +153,19 @@ Page({
 
   async doCancelOrder() {
     const { order_sn } = this.data.detail
-    let res = await ajax('/mini/vip/wap/trade/cancel_order', { order_sn }, 'POST')
+    let res = await reqCancelOrder(order_sn)
     if (res.code === 100) {
-      my.navigateBack({
-        delta: 1
+      app.globalData.refresh = true
+      my.showToast({
+        content: '取消成功',
       });
+
+      setTimeout(() => {
+        my.navigateBack({
+          delta: 1
+        });
+      }, 1000)
+
     }
   },
 
@@ -180,44 +189,7 @@ Page({
         + '&user_address_id=' + user_address_id
         + '&user_address_detail_address=' + user_address_detail_address
     });
-    //   }
-    // }
-    // 订单不要钱的时候 直接 成功
-    if (order_amount == 0) {
-      return my.redirectTo({
-        url: '/package_vip/pagesfinish/finish?id=' + id + '&fail=' + false
-      });
-    }
-    let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
-    if (r.code === 0) {
-      let { tradeNo } = r.data
-      if (!tradeNo) {
-        return my.showToast({
-          content: r.data.erroMSg
-        })
-      }
-      my.tradePay({
-        tradeNO: tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
-        success: res => {
-          if (res.resultCode == 9000) {
-            return my.redirectTo({
-              url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + false
-            });
-          }
-        },
-        fail: res => {
-          log(res)
-          return my.redirectTo({
-            url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
-          });
-        }
-      });
 
-    } else {
-      return my.redirectTo({
-        url: '/package_vip/pages/finish/finish?id=' + id + '&fail=' + true
-      });
-    }
   },
 
   /**
@@ -292,7 +264,7 @@ Page({
    */
 
   async wait() {
-    let res = await ajax('/juewei-api/order/waiting', {}, 'GET')
+    let res = await reqWait()
     if (res.code == 0) {
       return this.closeModel()
     }

@@ -1,6 +1,6 @@
 import { imageUrl, imageUrl2, baseUrl } from '../../../pages/common/js/baseUrl'
-import { ajax, parseData, redirect, log, getSid, handleCopy,guide,contact,liTo } from '../../../pages/common/js/li-ajax'
-
+import { parseData, redirect, log, getSid, handleCopy, guide, contact, liTo } from '../../../pages/common/js/li-ajax'
+import { reqOrderDetail, reqWait } from '../../../pages/common/js/vip'
 var app = getApp();
 Page({
   data: {
@@ -72,7 +72,7 @@ Page({
       fail: fail == 'true'
     })
     my.setNavigationBar({
-        title:fail != 'true'?'兑换成功':'兑换失败',
+      title: fail != 'true' ? '兑换成功' : '兑换失败',
     });
     await this.getOdrderDetail(id)
 
@@ -116,7 +116,7 @@ Page({
    * 获取商品详情
    */
   async getOdrderDetail(id) {
-    let { code, data: { intro, exchange_intro, ...Data } } = await ajax('/mini/vip/wap/order/order_detail', { id })
+    let { code, data: { intro, exchange_intro, ...Data } } = await reqOrderDetail(id)
     if (code === 100) {
       this.setData({
         d: {
@@ -197,7 +197,7 @@ Page({
    */
 
   async wait() {
-    let res = await ajax('/juewei-api/order/waiting', {}, 'GET')
+    let res = await reqWait()
     if (res.code == 0) {
       return this.closeModel()
     }

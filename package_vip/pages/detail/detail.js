@@ -1,5 +1,5 @@
-import { ajax, parseData, getSid, log, isloginFn } from '../../../pages/common/js/li-ajax'
-import { reqDetail, reqCreateOrder } from '../../../pages/common/js/vip'
+import { parseData, getSid, log, isloginFn } from '../../../pages/common/js/li-ajax'
+import { reqDetail, reqCreateOrder, reqConfirmOrder, reqPay, reqUserPoint } from '../../../pages/common/js/vip'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
 Page({
@@ -122,7 +122,7 @@ Page({
 
   async confirmOrder(order_sn) {
     let params = { order_sn }
-    let { code, data } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+    let { code, data } = await reqConfirmOrder(params)
     return code === 100
   },
 
@@ -130,7 +130,7 @@ Page({
    * @function 支付订单
    */
   async pay(order_sn) {
-    let { code, data } = await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+    let { code, data } = await reqPay(order_sn)
     return { code, data }
   },
 
@@ -267,7 +267,7 @@ Page({
   * @function 获取用户积分
   */
   async getUserPoint() {
-    let res = await ajax('/mini/user/user_point', {})
+    let res = await reqUserPoint()
     if (res.CODE === 'A100') {
       return res.DATA.points
     }
