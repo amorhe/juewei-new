@@ -1,7 +1,7 @@
 import { imageUrl, ak } from '../../../../pages/common/js/baseUrl'
 import { getRegion } from '../../../../pages/common/js/li-ajax'
 import { addressCreate, addressinfo, updateaddress, deleteaddress } from '../../../../pages/common/js/address'
-import {bd_encrypt} from '../../../../pages/common/js/map'
+import { bd_encrypt } from '../../../../pages/common/js/map'
 let region = []
 var app = getApp()
 Page({
@@ -46,7 +46,8 @@ Page({
     _sid: '',
     addressdetail: '',
     modalidShow: false, // 无门店,
-    detailAdd:'',
+    detailAdd: '',
+    clickadd: false
   },
   async onLoad(e) {
     var _sid = my.getStorageSync({ key: '_sid' }).data;
@@ -71,7 +72,7 @@ Page({
       success(res) {
         console.log(res)
         var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
-        let map_position = bd_encrypt(res.longitude,res.latitude);
+        let map_position = bd_encrypt(res.longitude, res.latitude);
         my.request({
           url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + res.longitude + ',' + res.latitude + '&radius=2000',
           success: (res) => {
@@ -94,7 +95,7 @@ Page({
           longitude: map_position.bd_lng,
           latitude: map_position.bd_lat,
           map_address: address,
-          detailAdd: res.province+res.city+res.district+res.streetNumber.street+res.streetNumber.number
+          detailAdd: res.province + res.city + res.district + res.streetNumber.street + res.streetNumber.number
         })
       },
       fail() {
@@ -119,7 +120,7 @@ Page({
         phone: data.user_address_phone, // 手机号
         map_address: data.user_address_map_addr, // 定位地址
         address: data.user_address_detail_address, // 收货地址
-        detailAdd:data.user_address_detail_address,
+        detailAdd: data.user_address_detail_address,
         province: data.province,// 省
         city: data.city, // 市
         district: data.district, // 区
@@ -138,8 +139,8 @@ Page({
       success: (res) => {
         var resadd = res.address
         var map_address = res.name ? res.name : res.address
-        let map_position = bd_encrypt(res.longitude,res.latitude);
-        console.log(res,'选择')
+        let map_position = bd_encrypt(res.longitude, res.latitude);
+        console.log(res, '选择')
         my.request({
           url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
           success: (res) => {
@@ -147,7 +148,7 @@ Page({
               province: res.data.result.addressComponent.province,
               city: res.data.result.addressComponent.city,
               district: res.data.result.addressComponent.district,
-              detailAdd: res.data.result.addressComponent.province+res.data.result.addressComponent.city+res.data.result.addressComponent.district+resadd
+              detailAdd: res.data.result.addressComponent.province + res.data.result.addressComponent.city + res.data.result.addressComponent.district + resadd
             })
           },
         });
@@ -260,7 +261,8 @@ Page({
     })
   },
   Addaddress() {
-    if (this.data.name==='') {
+    var that = this
+    if (this.data.name === '') {
       my.showToast({
         type: 'none',
         content: '请输入联系人',
@@ -293,9 +295,12 @@ Page({
       });
       return
     }
-    my.showLoading({
-      content: '保存中...',
-    });
+    if (this.data.clickadd) {
+      return
+    }
+    this.setData({
+      clickadd: true
+    })
     if (this.data.addressId) {
       var data = {
         _sid: this.data._sid,
@@ -315,8 +320,10 @@ Page({
         tag: this.data.curLabel, // 地址标签
       }
       updateaddress(data).then(res => {
+        that.setData({
+          clickadd: false
+        })
         if (res.code == 0) {
-          my.hideLoading();
           my.navigateBack({
             url: '/package_my/pages/myaddress/myaddress'
           });
@@ -347,8 +354,10 @@ Page({
         tag: this.data.curLabel, // 地址标签
       }
       addressCreate(data).then(res => {
+        that.setData({
+          clickadd: false
+        })
         if (res.code == 0) {
-          my.hideLoading();
           if (this.data.order == 1) {
             my.navigateBack({
               url: '/pages/home/orderform/selectaddress/selectaddress'

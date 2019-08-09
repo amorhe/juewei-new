@@ -101,7 +101,7 @@ Page({
           data: new Date().toLocaleDateString(), // 要缓存的数据
         });
       }
-      if (count > 5 && !this.data.modalOpened) {
+      if (count == 5 && !this.data.modalOpened) {
         my.hideLoading();
         this.setData({
           modalOpened: true,
