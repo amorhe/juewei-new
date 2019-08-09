@@ -83,7 +83,7 @@ Page({
   contact,
   handleCopy,
   guide,
-  
+
   closeModel() {
     this.setData({
       showTop: false,
@@ -286,8 +286,10 @@ Page({
     let cancel_code = cancelReasonList.filter(item => item.value)[0].cancel_code
     let res = await ajax('/juewei-api/order/cancel', { order_no: d.order_no, cancel_code, cancel_reason: '其他' })
     if (res.code == 0) {
-      my.navigateBack({
-        delta: 1
+      log('取消成功')
+      app.globalData.refresh = true
+      my.switchTab({
+        url: '/pages/order/list/list',
       });
     } else {
       this.closeModel()
@@ -313,6 +315,8 @@ Page({
    * @function 立即支付
    */
   async payNow(e) {
+    const { channel } = this.data.d
+    if (channel != 1) { return }
     const { order_no } = e.currentTarget.dataset;
     let r = await ajax('/juewei-service/payment/AliMiniPay', { order_no }, "POST")
     if (r.code === 0) {
