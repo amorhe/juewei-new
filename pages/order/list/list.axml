@@ -18,7 +18,7 @@
            {{item.order_ctime}}
           </view>
         </view>
-        <view class="out-item-state">
+        <view class="out-item-state" style="color:{{item.order_status == 0? '#E60012' : ''}}">
           {{takeOutState[item.order_status]}}
         </view>
       </view>
@@ -68,7 +68,7 @@
            {{item.order_ctime}}
           </view>
         </view>
-        <view class="out-item-state">
+        <view class="out-item-state" style="color:{{item.order_status == 0? '#E60012' : ''}}">
           {{pickUpState[item.order_status]}}
         </view>
       </view>

@@ -34,7 +34,7 @@ Page({
     pickUpList: [],
 
     takeOutState: [
-      '待支付',
+      '等待支付',
       '订单已提交',
       '商家已接单',
       '正在配送',
@@ -48,7 +48,7 @@ Page({
     ],
 
     pickUpState: [
-      '待支付',
+      '等待支付',
       '订单已提交',
       '商家已接单',
       '等待取餐',
@@ -240,7 +240,7 @@ Page({
         takeOutList = takeOutList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return clearInterval(time)
+            return clearInterval(timer)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
@@ -256,10 +256,9 @@ Page({
         menuList[cur].timer = timer
 
         for (let i = 0; i < takeOutList.length; i++) {
-          const { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
+          let { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
             return this.refresh()
-            break;
           }
         }
 
@@ -295,7 +294,7 @@ Page({
         pickUpList = pickUpList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return clearInterval(time)
+            return clearInterval(timer)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
@@ -310,7 +309,12 @@ Page({
         menuList[cur].timer = timer
         menuList[cur].finish = true
 
-
+        for (let i = 0; i < takeOutList.length; i++) {
+          let { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
+          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+            return this.refresh()
+          }
+        }
         this.setData({
           pickUpList,
           menuList
