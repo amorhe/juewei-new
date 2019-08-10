@@ -14,8 +14,8 @@ Page({
         page: 1,
         dis_type: 1,
         finish: false,
-        fun: 'getTakeOutList',
-        timer: -1
+        timer: -1,
+        list:[]
       },
       {
         key: '门店自提订单',
@@ -23,15 +23,12 @@ Page({
         page: 1,
         dis_type: 2,
         finish: false,
-        fun: 'getPickUpList',
-        timer: -1
+        timer: -1,
+        list:[]
       }
     ],
 
     dis_type: 1,
-
-    takeOutList: [],
-    pickUpList: [],
 
     takeOutState: [
       '等待支付',
@@ -81,7 +78,8 @@ Page({
         dis_type: 1,
         finish: false,
         fun: 'getTakeOutList',
-        timer: -1
+        timer: -1,
+        list:[]
       },
       {
         key: '门店自提订单',
@@ -90,11 +88,11 @@ Page({
         dis_type: 2,
         finish: false,
         fun: 'getPickUpList',
-        timer: -1
+        timer: -1,
+        list:[]
       }
     ]
-    let _takeOutList = []
-    let _pickUpList = []
+  
 
     // 清空所有计时器
     const { menuList } = this.data
@@ -104,8 +102,7 @@ Page({
 
     this.setData({
       menuList: _menuList,
-      takeOutList: _takeOutList,
-      pickUpList: _pickUpList
+     
     }, async () => {
       await this.getMore()
 
@@ -131,8 +128,8 @@ Page({
       return this.refresh();
     }
     let { takeOutList, pickUpList, menuList, cur } = this.data
-    if (menuList[cur].page == 1 && (!takeOutList.length || !pickUpList.length)) {
-      await this[menuList[cur]['fun']]()
+    if (menuList[cur].page == 1 && (!menuList[cur].list.length)) {
+      await this.getOrderList()
     }
   },
   onUnload() {
@@ -143,7 +140,7 @@ Page({
     this.setData = () => { }
   },
   onHide() {
-    this.onModalClose()
+    // this.onModalClose()
 
     // clearInterval(this.data.time)
     // this.setData({ time: -1 })
@@ -182,8 +179,8 @@ Page({
           page: 1,
           dis_type: 1,
           finish: false,
-          fun: 'getTakeOutList',
-          timer: -1
+          timer: -1,
+          list:[]
         },
         {
           key: '门店自提订单',
@@ -191,15 +188,12 @@ Page({
           page: 1,
           dis_type: 2,
           finish: false,
-          fun: 'getPickUpList',
-          timer: -1
+          timer: -1,
+          list:[]
         }
       ],
 
       dis_type: 1,
-
-      takeOutList: [],
-      pickUpList: [],
     })
   },
 
@@ -214,87 +208,32 @@ Page({
     const { cur } = e.currentTarget.dataset
     if (this.data.cur === cur) { return }
     this.setData({ cur }, () => {
-      if (menuList[cur].page == 1 && !pickUpList.length) {
-        this[menuList[cur]['fun']]()
+      if (menuList[cur].page == 1 && !menuList[cur].length) {
+       this.getOrderList()
       }
     })
   },
 
-  /**
-   * @function 获取外卖订单列表
-   */
-  async getTakeOutList() {
-
-    let { takeOutList, menuList, cur } = this.data
-
-    let { page, dis_type, timer } = menuList[cur]
-    menuList[cur].page++
-    clearInterval(timer)
-
-    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
-    if (code === 0) {
-
-      takeOutList = [...takeOutList, ...data]
-
-      timer = setInterval(() => {
-        takeOutList = takeOutList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
-          remaining_pay_second--
-          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return clearInterval(timer)
-          }
-          if (remaining_pay_second <= 0) {
-            --remaining_pay_minute
-            remaining_pay_second = 59
-          }
-          return {
-            remaining_pay_minute,
-            remaining_pay_second,
-            ...item,
-          }
-        })
-        menuList[cur].finish = true
-        menuList[cur].timer = timer
-
-        for (let i = 0; i < takeOutList.length; i++) {
-          let { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
-          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return this.refresh()
-          }
-        }
-
-        this.setData({
-          takeOutList,
-          menuList
-        }, () => my.hideLoading())
-
-      }, 1000)
-
-    } else {
-      this.open()
-    }
-  },
-
-
 
   /**
-   * @function 获取自提订单列表
+   * @function 获取订单列表
    */
-  async getPickUpList() {
+  async getOrderList() {
 
-    let { pickUpList, menuList, cur } = this.data
+    let { menuList, cur } = this.data
 
-    let { page, dis_type, timer } = menuList[cur]
+    let { page, dis_type, timer, list } = menuList[cur]
     menuList[cur].page++
 
     clearInterval(timer)
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
-      pickUpList = [...pickUpList, ...data]
+      list = [...list, ...data]
       timer = setInterval(() => {
-        pickUpList = pickUpList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
+        list = list.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return clearInterval(timer)
+            clearInterval(timer)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
@@ -308,15 +247,15 @@ Page({
         })
         menuList[cur].timer = timer
         menuList[cur].finish = true
-
-        for (let i = 0; i < takeOutList.length; i++) {
-          let { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
+        menuList[cur].list = list
+        for (let i = 0; i < list.length; i++) {
+          let { remaining_pay_second, remaining_pay_minute } = list[i]
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
             return this.refresh()
           }
         }
+        
         this.setData({
-          pickUpList,
           menuList
         }, () => my.hideLoading())
       }, 1000)
@@ -335,7 +274,7 @@ Page({
     const { menuList, cur } = this.data;
     my.showLoading({ content: '加载中...' });
     setTimeout(async () => {
-      await this[menuList[cur]['fun']]()
+      await this.getOrderList()
     }, 300)
   },
 
