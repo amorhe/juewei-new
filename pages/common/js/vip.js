@@ -79,3 +79,8 @@ export const reqWait = () => ajax('/juewei-api/order/waiting', {}, 'GET')
  * @function 获取积分详情
  */
 export const reqPointList = ({ pagenum, pagesize }) => ajax('/mini/point_exchange/point_list', { pagenum, pagesize }, 'GET')
+
+/**
+ * @function 获取公众号支付前订单详情
+ */
+export const reqOrderInfo = order_sn => ajax('/mini/vip/wap/order/order_info', order_sn)

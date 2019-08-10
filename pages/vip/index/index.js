@@ -51,6 +51,7 @@ Page({
       district_id
     } = await getAddressId()
 
+    await this.getUserPoint()
     let _sid = await getSid()
 
     let company_id = my.getStorageSync({
@@ -69,15 +70,12 @@ Page({
       district_id,
       company_id
     }, async () => {
-
       this.getBanner()
       this.getPositionList()
-      this.getUserPoint()
-
-      await this.getCouponsList()
 
       await this.getCategory()
       await this.getGoodsList()
+      await this.getCouponsList()
     })
     // this.initClientRect()
 
@@ -176,7 +174,6 @@ Page({
    * @function 获取用户积分
    */
   async getUserPoint() {
-    let { _sid } = this.data;
     let res = await reqUserPoint()
     if (res.CODE === 'A100') {
       this.setData({

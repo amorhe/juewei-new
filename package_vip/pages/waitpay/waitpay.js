@@ -1,5 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
 import { log, ajax, getRegion, getAddressId } from '../../../pages/common/js/li-ajax'
+import { reqOrderInfo, reqConfirmOrder,reqPay } from '../../../pages/common/js/vip'
 import getDistance from '../../../pages/common/js/getdistance'
 
 let region = []
@@ -99,12 +100,14 @@ Page({
    */
   async getOrderInfo(order_sn) {
     let { showSelectAddress, a } = this.data;
-    let { code, data: { order_sn: _order_sn, limit_pay_minute, limit_pay_second, ...rest } } = await ajax('/mini/vip/wap/order/order_info', order_sn)
+    let { code, data: { order_sn: _order_sn, limit_pay_minute, limit_pay_second, ...rest } } = await reqOrderInfo(order_sn)
     if (code === 100) {
       a = setInterval(() => {
         --limit_pay_second
         if (limit_pay_minute === 0 && limit_pay_second == 0) {
-          return clearInterval(a)
+          return my.navigateBack({
+             delta: 1
+          });
         }
         if (limit_pay_second <= 0) {
           --limit_pay_minute
@@ -275,7 +278,7 @@ Page({
         shop_id,
         shop_name,
       }
-      let { code, msg } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      let { code, msg } = await reqConfirmOrder(params)
       if (code !== 100) {
         my.showToast({
           content: msg
@@ -294,7 +297,7 @@ Page({
         user_address_id,
         province, city, district,
       }
-      let { code, msg } = await ajax('/mini/vip/wap/trade/confirm_order', params)
+      let { code, msg } = await reqConfirmOrder(params)
       if (code !== 100) {
         my.showToast({
           content: msg
@@ -311,7 +314,7 @@ Page({
    */
   async pay() {
     let { order_sn } = this.data;
-    return await ajax('/juewei-service/payment/AliMiniPay', { order_no: order_sn })
+    return await reqPay(order_sn)
   },
 
   /**

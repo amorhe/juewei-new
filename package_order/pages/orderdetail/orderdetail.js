@@ -96,7 +96,8 @@ Page({
    * @function 获取订单详情
    */
   async getOrderDetail() {
-    let { curOrderState, order_no } = this.data
+    let { curOrderState, order_no ,time} = this.data
+    clearInterval(time)
     let res = await ajax('/juewei-api/order/detail', { order_no })
 
     let timeArr
@@ -214,8 +215,7 @@ Page({
       time = setInterval(() => {
         --remaining_pay_second
         if (remaining_pay_minute === 0 && remaining_pay_second == 0) {
-          this.getOrderDetail(order_no)
-          return clearInterval(a)
+          return this.getOrderDetail(order_no)
         }
         if (remaining_pay_second <= 0) {
           --remaining_pay_minute
