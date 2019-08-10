@@ -27,7 +27,8 @@ Page({
     ],
     shopList:[],    // 附近门店列表
     inputAddress:'',
-    city:''
+    city:'',
+    activeIndex:0
   },
   guide,
   onLoad() {
@@ -58,8 +59,27 @@ Page({
   },
   // 切换门店
   switchShop(e){
-    console.log(e)
-    this.nearShop(e.currentTarget.dataset.lng,e.currentTarget.dataset.lat);
+    let arr = this.data.markersArray.map((item,index) => {
+      if(index == e.currentTarget.dataset.index) {
+        return {
+          ...item,
+          iconPath:`${imageUrl}position_map1.png`,
+          width: 32,
+          height: 32
+        }
+      }else{
+        return {
+        ...item,
+          iconPath:`${imageUrl}position_map1.png`,
+          width: 15,
+          height: 15
+        }
+      }
+    })
+    this.setData({
+      markersArray:arr,
+      activeIndex:e.currentTarget.dataset.index
+    })
   },
   // 获取附近门店
   nearShop(lng,lat){

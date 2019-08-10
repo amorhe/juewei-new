@@ -38,7 +38,7 @@ Page({
       showLocatedCity:true,
       showHotCities:true,
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         this.setData({
           city:res.city
         })
@@ -57,7 +57,7 @@ Page({
     my.request({
       url,
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         my.hideKeyboard();
         const _sid = my.getStorageSync({key: '_sid'}).data;
         const lng = res.data.result.location.lng;
@@ -70,7 +70,7 @@ Page({
   // 地址列表
   getAddressList(_sid,location,lat,lng){
     addressList(_sid,'normal',location).then((res) => {
-      console.log(res)
+      // console.log(res)
       let arr1 = [];
       if(res.data.length>0){
          arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
@@ -128,7 +128,7 @@ Page({
     })
   },
   switchAddress(e){
-    console.log(e)
+    // console.log(e)
     if(!this.data.isSuccess){
       my.showToast({
         content:'定位失败，请选择其他收货地址！'
@@ -188,7 +188,6 @@ Page({
         shopArr2.sort(compare('goods_num'));
         const shopArray = shopArr1.concat(shopArr2);
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
         app.globalData.address = chooseAddress;
         this.getNearbyShop(lng,lat);
         my.switchTab({
@@ -271,7 +270,7 @@ Page({
   // 新增地址
   addAddressTap(){
     // 判断 是否登录
-    if(my.getStorageSync({key: 'user_id'}).data!=null || my.getStorageSync({key:'_sid'}).data!=null){
+    if(my.getStorageSync({key: 'user_id'}).data==null){
       my.navigateTo({
         url: '/pages/login/auth/auth'
       });

@@ -182,7 +182,7 @@ Component({
       },1000)
       
       // 未登录
-      if(my.getStorageSync({key: 'user_id'}).data==null || my.getStorageSync({key:'_sid'}).data==null){
+      if(my.getStorageSync({key: 'user_id'}).data==null){
         my.navigateTo({
           url:'/pages/login/auth/auth'
         })

@@ -36,10 +36,21 @@ export const compare = (property) => {
     }
 }
 // 小到大
-export const sortNum =(a,b) =>{
-  return a - b
+export const sortNum = (property) =>{
+  return (a,b) => {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value1 - value2;
+    }
 }
-
+// export const filterShop = (a,b) => {
+//   var value1 = a.goods_num,
+//       value2 = b.goods_num;
+//   if(value1 <= value2){
+//       return a.distance - b.distance;
+//   }
+//   return value2 - value1;
+// } 
 // 时间戳转时间
 export const formatTime = (number,format) => {  
   

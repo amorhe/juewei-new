@@ -1,7 +1,7 @@
 import {imageUrl,ak} from '../common/js/baseUrl'
 import {bd_encrypt} from '../common/js/map'
 import {GetLbsShop,NearbyShop} from '../common/js/home'
-import {cur_dateTime,compare} from '../common/js/time'
+import {cur_dateTime,compare,sortNum} from '../common/js/time'
 var app = getApp();
 
 Page({
@@ -15,7 +15,7 @@ Page({
       type:3,
       success(res){
         my.hideLoading();
-        console.log(res)
+        // console.log(res)
         const mapPosition = bd_encrypt(res.longitude,res.latitude);
         my.setStorageSync({
           key: 'lat', // 缓存数据的key
@@ -35,7 +35,6 @@ Page({
         app.globalData.address =  res.pois[0].name;
         app.globalData.position = res;
         that.getLbsShop();
-        // that.getNearbyShop();
         that.setData({
           city:res.city
         })
@@ -70,11 +69,18 @@ Page({
           }
         }
         // 按照goods_num做降序排列
-        shopArr1.sort(compare('goods_num'));
-        shopArr2.sort(compare('goods_num'));
-        const shopArray = shopArr1.concat(shopArr2);
+        let shopArray = shopArr1.concat(shopArr2);
+        shopArray.sort((a,b) => {
+          var value1 = a.goods_num,
+              value2 = b.goods_num;
+          if(value1 <= value2){
+              return a.distance - b.distance;
+          }
+          return value2 - value1;
+        });
+        shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+        // my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
         this.getNearbyShop();
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
@@ -105,7 +111,7 @@ Page({
         if (res.data.contents.length > 0) {
           this.getSelf(res.data.contents)
         } else {
-          // 没有扩大搜索范围到100公里
+          // 没有扩大搜索范围到1000000公里
           my.request({
             url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
             success: (conf) => {
@@ -134,7 +140,6 @@ Page({
     const shopArr1 = [];
     const shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
-      // console.log(res)
       for (let i = 0; i < res.length; i++) {
         // 判断是否营业
         if (status == 1 || status == 3) {
@@ -143,12 +148,17 @@ Page({
           shopArr2.push(res[i]);
         }
       }
+      // 根据距离最近排序
+      shopArr1.sort(sortNum('distance'));
+      shopArr2.sort(sortNum('distance'));
       const shopArray = shopArr1.concat(shopArr2);
       my.switchTab({
         url: '/pages/home/goodslist/goodslist'
       })
+      shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
-      my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+      // my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
+      // console.log(shopArray)
     })
   },
   onCounterPlusOne(e){
