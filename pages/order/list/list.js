@@ -116,13 +116,13 @@ Page({
 
 
   async onShow() {
+    // 校验用户是否登录
     await reqUserPoint()
     let _sid = await getSid()
     this.setData({
       loginOpened: !_sid
     })
-    // app.globalData.refresh = true
-    log(app.globalData.refresh)
+    // 校验是否 需要刷新
     if (app.globalData.refresh == true) {
       my.showToast({
         content: '取消成功'
@@ -234,7 +234,7 @@ Page({
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
 
-      takeOutList = [...data, ...takeOutList]
+      takeOutList = [...takeOutList, ...data]
 
       timer = setInterval(() => {
         takeOutList = takeOutList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
@@ -282,7 +282,7 @@ Page({
     clearInterval(timer)
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
-      pickUpList = [...data, ...pickUpList]
+      pickUpList = [...pickUpList, ...data]
       timer = setInterval(() => {
         pickUpList = pickUpList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
