@@ -35,7 +35,8 @@ Page({
     showRepurse:false,  // 是否显示换购商品
     coupon_money:0,     // 优惠金额
     goodsList:[],
-    notUse:false
+    notUse:false,
+    isClick:true
   },
   onLoad(e) {
     this.setData({
@@ -229,6 +230,19 @@ Page({
         return
       }
     }
+    // js节流防短时间重复点击
+    if(this.data.isClick==false){
+      return
+    }
+    this.setData({
+      isClick:false
+    })
+    setTimeout(()=>{
+      this.setData({
+        isClick:true
+      })
+    },1000);
+    
     let notUse = 0;
     if(app.globalData.notUse){
       notUse = app.globalData.notUse;

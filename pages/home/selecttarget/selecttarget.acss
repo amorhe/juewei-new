@@ -67,7 +67,7 @@
 }
 
 .nearAddressBox {
-  padding: 30rpx 32rpx 26rpx;
+  padding: 30rpx 0 26rpx;
 }
 .nearList {
   height: 88rpx;

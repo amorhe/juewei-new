@@ -168,6 +168,19 @@ Component({
     },
     // 立即购买
     goOrderSubmit(){
+      // js节流防短时间重复点击
+      if(this.data.btnClick == false){ 
+        return
+      }
+      this.setData({
+        btnClick:false
+      })
+      setTimeout(()=>{
+        this.setData({
+          btnClick:true
+        })
+      },1000)
+      
       // 未登录
       if(my.getStorageSync({key: 'user_id'}).data==null || my.getStorageSync({key:'_sid'}).data==null){
         my.navigateTo({
@@ -186,7 +199,7 @@ Component({
       let goodsList = my.getStorageSync({
         key: 'goodsList', // 缓存数据的key
       }).data;
-      let num1 = 0,num2=0,shopcartAll=[],priceAll=0,shopcartNum=0;
+      let num = 0,shopcartAll=[],priceAll=0,shopcartNum=0;
       if(goodsList == null) return;
       console.log(app.globalData.goodsArr)
       for(let val in goodsList){
@@ -199,8 +212,9 @@ Component({
               }
             }
         }
-        // 无商品
+        // you商品下架
         if(iscart==false){
+          console.log(val)
           num += goodsList[val].num;
           delete(goodsList[val]);
           this.setData({

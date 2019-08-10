@@ -34,11 +34,13 @@ Page({
     const lat = my.getStorageSync({key:'lat'}).data;
     this.nearShop(lng,lat);
   },
+  // 输入
   handleSearch(e){
     this.setData({
       inputAddress:e.detail.value
     })
   },
+  // 搜索
   addressSearch(){
     let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
     url = encodeURI(url);
@@ -52,6 +54,11 @@ Page({
         this.nearShop(lng,lat);
       },
     });
+  },
+  // 切换门店
+  switchShop(e){
+    console.log(e)
+    this.nearShop(e.currentTarget.dataset.lng,e.currentTarget.dataset.lat);
   },
   // 获取附近门店
   nearShop(lng,lat){
@@ -106,7 +113,6 @@ Page({
       showLocatedCity:true,
       showHotCities:true,
       success: (res) => {
-        console.log(res)
         this.setData({
           city
         })
