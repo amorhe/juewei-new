@@ -116,13 +116,13 @@ Page({
 
 
   async onShow() {
+    // 校验用户是否登录
     await reqUserPoint()
     let _sid = await getSid()
     this.setData({
       loginOpened: !_sid
     })
-    // app.globalData.refresh = true
-    log(app.globalData.refresh)
+    // 校验是否 需要刷新
     if (app.globalData.refresh == true) {
       my.showToast({
         content: '取消成功'
@@ -234,13 +234,13 @@ Page({
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
 
-      takeOutList = [...data, ...takeOutList]
+      takeOutList = [...takeOutList, ...data]
 
       timer = setInterval(() => {
         takeOutList = takeOutList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return this.refresh();
+            return clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
@@ -253,8 +253,16 @@ Page({
           }
         })
         menuList[cur].finish = true
-
         menuList[cur].timer = timer
+
+        for (let i = 0; i < takeOutList.length; i++) {
+          const { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
+          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+            return this.refresh()
+            break;
+          }
+        }
+
         this.setData({
           takeOutList,
           menuList
@@ -282,12 +290,12 @@ Page({
     clearInterval(timer)
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
     if (code === 0) {
-      pickUpList = [...data, ...pickUpList]
+      pickUpList = [...pickUpList, ...data]
       timer = setInterval(() => {
         pickUpList = pickUpList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return this.refresh();
+            return clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute

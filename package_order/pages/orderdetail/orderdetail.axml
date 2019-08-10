@@ -52,12 +52,12 @@
     <view class="cancelr" a:if="{{d.order_cancel_reason}}">
       {{d.order_cancel_reason}}
     </view>
-    <view class="cancelr" a:if="{{d.channel != 1}}" style="color:#999">
+    <view class="cancelr" a:if="{{d.channel != 1 && d.order_status_info.order_status == 0}}" style="color:#999">
      订单不支持跨平台操作，请去微信平台操作。
     </view>
     <view class="buttons" a:if="{{d.order_cancel_reason}}">
       <view class="cancel" onTap="contact">联系客服</view>
-      <view class="pay">再来一单</view>
+      <view class="pay" catchTap="buyAgain">再来一单</view>
     </view>
   </view>
   <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00')}}">
@@ -238,7 +238,7 @@
           </view>
         </view>
         </view>
-        <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
+        <popup show="{{showTop}}" position="bottom">
           <view style="background: #fff">
             <view class="order-trace">订单跟踪
               <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
@@ -256,7 +256,7 @@
             </view>
           </view>
         </popup>
-        <popup show="{{cancleShow}}" position="bottom" onClose="onPopupClose">
+        <popup show="{{cancleShow}}" position="bottom">
           <view style="height: 711rpx; width:750rpx; background: #fff;border-radius: 20rpx 20rpx 0 0">
             <view class="cancle-title">请选择取消原因</view>
             <view class="cancel-list" a:for="{{cancelReasonList}}" onTap="selectReason" data-index="{{index}}">
