@@ -44,7 +44,7 @@
         <view class="cancel-order" catchTap="toComment" data-order_no="{{item.order_no}}" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}">
           评价订单
         </view>
-        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}">
+        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}" catchTap="contact">
           已评价
         </view>
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
@@ -97,7 +97,7 @@
         <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">
           评价订单
         </view>
-        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}">
+        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}" catchTap="contact">
           已评价
         </view>
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
