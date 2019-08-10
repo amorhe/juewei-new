@@ -15,7 +15,7 @@ Page({
         dis_type: 1,
         finish: false,
         timer: -1,
-        list:[]
+        list: []
       },
       {
         key: '门店自提订单',
@@ -24,7 +24,7 @@ Page({
         dis_type: 2,
         finish: false,
         timer: -1,
-        list:[]
+        list: []
       }
     ],
 
@@ -79,7 +79,7 @@ Page({
         finish: false,
         fun: 'getTakeOutList',
         timer: -1,
-        list:[]
+        list: []
       },
       {
         key: '门店自提订单',
@@ -89,10 +89,10 @@ Page({
         finish: false,
         fun: 'getPickUpList',
         timer: -1,
-        list:[]
+        list: []
       }
     ]
-  
+
 
     // 清空所有计时器
     const { menuList } = this.data
@@ -102,7 +102,7 @@ Page({
 
     this.setData({
       menuList: _menuList,
-     
+
     }, async () => {
       await this.getMore()
 
@@ -125,12 +125,13 @@ Page({
         content: '取消成功'
       });
       app.globalData.refresh = false
-      return this.refresh();
     }
-    let { takeOutList, pickUpList, menuList, cur } = this.data
-    if (menuList[cur].page == 1 && (!menuList[cur].list.length)) {
-      await this.getOrderList()
-    }
+
+    return this.refresh();
+    // let { takeOutList, pickUpList, menuList, cur } = this.data
+    // if (menuList[cur].page == 1 && !menuList[cur].list.length) {
+    //   await this.getOrderList()
+    // }
   },
   onUnload() {
     let { menuList, cur } = this.data
@@ -180,7 +181,7 @@ Page({
           dis_type: 1,
           finish: false,
           timer: -1,
-          list:[]
+          list: []
         },
         {
           key: '门店自提订单',
@@ -189,7 +190,7 @@ Page({
           dis_type: 2,
           finish: false,
           timer: -1,
-          list:[]
+          list: []
         }
       ],
 
@@ -209,7 +210,7 @@ Page({
     if (this.data.cur === cur) { return }
     this.setData({ cur }, () => {
       if (menuList[cur].page == 1 && !menuList[cur].length) {
-       this.getOrderList()
+        this.getOrderList()
       }
     })
   },
@@ -254,7 +255,7 @@ Page({
             return this.refresh()
           }
         }
-        
+
         this.setData({
           menuList
         }, () => my.hideLoading())
