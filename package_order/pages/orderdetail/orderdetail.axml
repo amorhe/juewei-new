@@ -41,7 +41,7 @@
       <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="contact">
           投诉
       </view>
-      <view class="cancel-order red" a:if="{{[3].includes(d.order_status_info.order_status) && dis_type==2}}" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.address}}" catchTap="guide">
+      <view class="cancel-order red" a:if="{{[3].includes(d.order_status_info.order_status) && dis_type==2}}" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.shop_address}}" catchTap="guide">
           导航
       </view>
     </view>
