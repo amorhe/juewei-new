@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     imageUrl,
-    _sid:'',
+    _sid: '',
     loginOpened: false,
     menuList: [
       {
@@ -119,7 +119,7 @@ Page({
     await reqUserPoint()
     let _sid = await getSid()
     this.setData({
-      loginOpened:!_sid
+      loginOpened: !_sid
     })
     // app.globalData.refresh = true
     log(app.globalData.refresh)
@@ -157,7 +157,7 @@ Page({
    * @function 打开用户登录弹窗
    */
   open() {
-      // 清空所有计时器
+    // 清空所有计时器
     const { menuList } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
     this.setData({
@@ -170,7 +170,7 @@ Page({
    * @function 关闭modal
    */
   onModalClose() {
-      // 清空所有计时器
+    // 清空所有计时器
     const { menuList } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
     this.setData({
@@ -228,7 +228,7 @@ Page({
     let { takeOutList, menuList, cur } = this.data
 
     let { page, dis_type, timer } = menuList[cur]
-
+    menuList[cur].page++
     clearInterval(timer)
 
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
@@ -253,7 +253,7 @@ Page({
           }
         })
         menuList[cur].finish = true
-        menuList[cur].page++
+
         menuList[cur].timer = timer
         this.setData({
           takeOutList,
@@ -277,6 +277,7 @@ Page({
     let { pickUpList, menuList, cur } = this.data
 
     let { page, dis_type, timer } = menuList[cur]
+    menuList[cur].page++
 
     clearInterval(timer)
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
@@ -300,7 +301,7 @@ Page({
         })
         menuList[cur].timer = timer
         menuList[cur].finish = true
-        menuList[cur].page++
+
 
         this.setData({
           pickUpList,
