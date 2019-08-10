@@ -2,6 +2,8 @@ import { parseData, getSid, log, isloginFn } from '../../../pages/common/js/li-a
 import { reqDetail, reqCreateOrder, reqConfirmOrder, reqPay, reqUserPoint } from '../../../pages/common/js/vip'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
 
+const app = getApp()
+
 Page({
   data: {
     modalOpened: false,

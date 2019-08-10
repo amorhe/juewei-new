@@ -39,22 +39,25 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       success: (res) => {
+        log(res.data)
+
         my.hideLoading()
-        const {data} = res
-        const code = data.CODE || data.code
-    
+        const code = res.data.CODE || res.data.code
         if ([100, 'A100', 0].includes(code)) {
           resolve(res.data)
         } else if ([30106, 'A103', 101].includes(code)) {
-          return my.navigateTo({
-            url: '/pages/login/auth/auth'
+          // return my.navigateTo({
+          //   url: '/pages/login/auth/auth'
+          // });
+          my.setStorageSync({
+            key: '_sid', // 缓存数据的key
+            data: '', // 要缓存的数据
           });
+          resolve({ code: -1, data: '' })
         } else {
           reject({ errormsg: rest.msg, code: -1 });
         }
 
-
-        log(res.data)
       },
       fail: (err) => {
         my.hideLoading()

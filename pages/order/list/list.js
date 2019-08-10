@@ -1,6 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { ajax, log, contact, isloginFn, guide } from '../../common/js/li-ajax'
-
+import { ajax, log, contact, isloginFn, guide,getSid } from '../../common/js/li-ajax'
+import { reqUserPoint } from '../../common/js/vip'
 const app = getApp()
 Page({
   data: {
@@ -114,16 +114,31 @@ Page({
 
   },
 
+  /**
+    * @function 获取用户积分
+    */
+  async getUserPoint() {
+    let res = await reqUserPoint()
+    if (res.CODE === 'A100') {
+      this.setData({
+        userPoint: res.DATA
+      })
+    }
+  },
 
-  
 
   async onShow() {
+    await this.getUserPoint()
+    let _sid = await getSid()
+    this.setData({
+      loginOpened:!_sid
+    })
     // app.globalData.refresh = true
     log(app.globalData.refresh)
-     if (app.globalData.refresh == true) {
-       my.showToast({
-         content:'取消成功'
-       });
+    if (app.globalData.refresh == true) {
+      my.showToast({
+        content: '取消成功'
+      });
       app.globalData.refresh = false
       return this.refresh();
     }
@@ -167,7 +182,7 @@ Page({
     })
   },
 
-  
+
 
   /**
    * @function 选择菜单
