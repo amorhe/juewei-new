@@ -240,7 +240,7 @@ Page({
         takeOutList = takeOutList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return this.refresh();
+            return clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
@@ -253,8 +253,16 @@ Page({
           }
         })
         menuList[cur].finish = true
-
         menuList[cur].timer = timer
+
+        for (let i = 0; i < takeOutList.length; i++) {
+          const { remaining_pay_second, remaining_pay_minute } = takeOutList[i]
+          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+            return this.refresh()
+            break;
+          }
+        }
+
         this.setData({
           takeOutList,
           menuList
@@ -287,7 +295,7 @@ Page({
         pickUpList = pickUpList.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return this.refresh();
+            return clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute

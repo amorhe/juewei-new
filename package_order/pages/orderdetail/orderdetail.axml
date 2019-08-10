@@ -238,7 +238,7 @@
           </view>
         </view>
         </view>
-        <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
+        <popup show="{{showTop}}" position="bottom">
           <view style="background: #fff">
             <view class="order-trace">订单跟踪
               <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
@@ -256,7 +256,7 @@
             </view>
           </view>
         </popup>
-        <popup show="{{cancleShow}}" position="bottom" onClose="onPopupClose">
+        <popup show="{{cancleShow}}" position="bottom">
           <view style="height: 711rpx; width:750rpx; background: #fff;border-radius: 20rpx 20rpx 0 0">
             <view class="cancle-title">请选择取消原因</view>
             <view class="cancel-list" a:for="{{cancelReasonList}}" onTap="selectReason" data-index="{{index}}">
