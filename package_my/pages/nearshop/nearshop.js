@@ -29,6 +29,7 @@ Page({
     inputAddress:'',
     city:''
   },
+  guide,
   onLoad() {
     const lng = my.getStorageSync({key:'lng'}).data;
     const lat = my.getStorageSync({key:'lat'}).data;

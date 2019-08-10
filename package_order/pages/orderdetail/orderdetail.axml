@@ -52,12 +52,12 @@
     <view class="cancelr" a:if="{{d.order_cancel_reason}}">
       {{d.order_cancel_reason}}
     </view>
-    <view class="cancelr" a:if="{{d.channel != 1}}" style="color:#999">
+    <view class="cancelr" a:if="{{d.channel != 1 && d.order_status_info.order_status == 0}}" style="color:#999">
      订单不支持跨平台操作，请去微信平台操作。
     </view>
     <view class="buttons" a:if="{{d.order_cancel_reason}}">
       <view class="cancel" onTap="contact">联系客服</view>
-      <view class="pay">再来一单</view>
+      <view class="pay" catchTap="buyAgain">再来一单</view>
     </view>
   </view>
   <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00')}}">
