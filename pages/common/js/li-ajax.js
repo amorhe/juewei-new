@@ -39,7 +39,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       success: (res) => {
-        log(res.data)
+        // log(res.data)
 
         my.hideLoading()
         const code = res.data.CODE || res.data.code
@@ -62,7 +62,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       fail: (err) => {
         my.hideLoading()
         reject(my.alert({
-          title: err
+          title: '服务器错误'
         }))
       }
     });
