@@ -41,9 +41,9 @@ Component({
     let priceAll = 0,shopcartAll = [],shopcartNum=0,priceFree=0;
     for(let keys in goodlist){
       if(goodlist[keys].goods_discount_user_limit!=null && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
-        my.showToast({
-          content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
-        });
+        // my.showToast({
+        //   content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
+        // });
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
@@ -112,11 +112,17 @@ Component({
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
         console.log(res)
-        res.data.days = datedifference(res.data.start_time,res.data.end_time)
-        this.setData({
-          couponsExpire:res.data,
-          isShow:true
-        })
+        if(res.data.length>0){
+          res.data.days = datedifference(res.data.start_time,res.data.end_time)
+          this.setData({
+            couponsExpire:res.data,
+            isShow:true
+          })
+        }else{
+          this.setData({
+            isShow:false
+          })
+        }
         
       })
     },
@@ -178,7 +184,6 @@ Component({
       this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
     },
     addshopcart(e){
-      console.log(e)
       let goods_car={};
       let goods_code = e.currentTarget.dataset.goods_code;
       let goods_format = e.currentTarget.dataset.goods_format;
@@ -195,7 +200,7 @@ Component({
             "goods_price": e.currentTarget.dataset.goods_price * 100,
             "num": 1,
             "sumnum": 1,
-            "goods_code": e.currentTarget.dataset.goods_code,
+            "goods_code": e.currentTarget.dataset.goods_activity_code,
             "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,

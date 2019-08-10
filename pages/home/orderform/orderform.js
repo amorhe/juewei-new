@@ -319,8 +319,15 @@ Page({
             goodsReal.push(item)
           }
         }
+        
+        // console.log(goodsReal)
+        
         for(let val of goodsReal){
-          val['good_img'] = goodsList[`${val.goods_code}_${val.goods_format}`].goods_img;
+          if(val.goods_type == 'PKG'){
+            val['goods_img'] = imageUrl2 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0]
+          }else{
+            val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
+          }
         }
         // 参与加价购的商品
         let repurseTotalPrice=0;

@@ -99,7 +99,7 @@ Component({
             "goods_price": e.currentTarget.dataset.goods_price * 100,
             "num": 1,
             "sumnum": sumnum,
-            "goods_code": e.currentTarget.dataset.goods_code,
+            "goods_code": e.currentTarget.dataset.goods_activity_code,
             "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,

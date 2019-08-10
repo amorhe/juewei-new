@@ -12,9 +12,8 @@ Page({
     firstAddress: '紫檀大厦',
     isClose: false,
     indicatorDots: true,
-    autoplay: false,
-    vertical: false,
-    interval: 1000,
+    autoplay: true,
+    interval: 2000,
     circular: true,
     imgUrls: ['../../common/img/banner.png'],
     province_id: '',  //省
@@ -273,7 +272,11 @@ Page({
             shopGoodsList: sortList,
             shopGoods:arr
           },()=> {
-            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,my.getStorageSync({key: 'user_id'}).data)     //营销活动
+            let user_id = 1;
+            if(my.getStorageSync({key:'user_id'}).data){
+              user_id = my.getStorageSync({key:'user_id'}).data
+            }
+            this.getActivityList(app.globalData.cityAdcode,app.globalData.districtAdcode,this.data.shopTakeOut[0].company_sale_id,app.globalData.type,user_id)     //营销活动
           })
           
         },
@@ -316,11 +319,11 @@ Page({
       // 筛选在当前门店里面的折扣商品
       let DIS = [],PKG = []
       if(res.data.DIS) {
-        DIS = res.data.DIS.filter(item => shopGoods.findIndex(value => value.goods_id == item.goods_id) == -1)
+        DIS = res.data.DIS.filter(item => shopGoods.findIndex(value => value.sap_code == item.goods_sap_code) != -1)
       }
       // 筛选在当前门店里面的套餐商品  
       if(res.data.PKG) {
-        PKG = res.data.PKG.filter(item => shopGoods.findIndex(value => value.goods_id == item.goods_id) == -1);
+        PKG = res.data.PKG.filter(item => shopGoods.findIndex(value => value.sap_code == item.goods_sap_code) != -1);
       }
       let obj1 = {}, obj2 = {};
       for(let item of PKG) {
@@ -387,8 +390,14 @@ Page({
       }
     })
   },
-  //  活动链接
+  //  活动跳转链接
   imageLink(e){
+    my.navigateTo({
+      url:e.currentTarget.dataset.link
+    });
+  },
+  // banner图跳转链接
+  linkUrl(e){
     my.navigateTo({
       url:e.currentTarget.dataset.link
     });

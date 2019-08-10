@@ -137,7 +137,6 @@ Page({
     let goods_car={};
     let goods_code = e.currentTarget.dataset.goods_code;
     let goods_format = e.currentTarget.dataset.goods_format;
-
     let goodlist = my.getStorageSync({key:'goodsList'}).data || {};
     if(goodlist[`${goods_code}_${goods_format}`]){
       goodlist[`${goods_code}_${goods_format}`].num+=1;
@@ -151,7 +150,7 @@ Page({
           "goods_price": e.currentTarget.dataset.goods_price * 100,
           "num": 1,
           "sumnum": 1,
-          "goods_code": e.currentTarget.dataset.goods_code,
+          "goods_code": e.currentTarget.dataset.goods_activity_code,
           "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
           "goods_discount": e.currentTarget.dataset.goods_discount,
           "goods_original_price": e.currentTarget.dataset.goods_original_price,

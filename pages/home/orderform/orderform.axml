@@ -44,7 +44,7 @@
     <view class="order_list">
       <view a:for="{{goodsReal}}">
         <view class="listLeft" a:if="{{!item.is_gifts}}">
-          <image  class="ordergoodsImage" mode="scaleToFill" src="{{item.good_img}}"/>
+          <image  class="ordergoodsImage" mode="scaleToFill" src="{{item.goods_img}}"/>
           <view>
             <view>
               <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_type=='DIS'}}"/>

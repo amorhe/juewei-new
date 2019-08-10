@@ -15,7 +15,8 @@ Component({
     otherGoods:[],
     confirmButtonText:'',
     cancelButtonText: '',
-    type:''
+    type:'',
+    btnClick:true
 
   },
   props: {
@@ -187,7 +188,7 @@ Component({
       }).data;
       let num1 = 0,num2=0,shopcartAll=[],priceAll=0,shopcartNum=0;
       if(goodsList == null) return;
-      // console.log(app.globalData.goodsArr)
+      console.log(app.globalData.goodsArr)
       for(let val in goodsList){
         let iscart=false;
         for(let value of app.globalData.goodsArr){
@@ -210,7 +211,8 @@ Component({
             isType:'checkshopcart',
             content:`购物车有${num}件商品不在当前门店售卖商品之内`,
             confirmButtonText:'重新选择',
-            cancelButtonText: '继续结算'
+            cancelButtonText: '继续结算',
+            btnClick:true
           })
           return
         }else{
