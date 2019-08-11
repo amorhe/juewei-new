@@ -214,8 +214,9 @@ Page({
       let { time } = this.data
       time = setInterval(() => {
         --remaining_pay_second
-        if (remaining_pay_minute === 0 && remaining_pay_second == 0) {
-          return this.getOrderDetail(order_no)
+        if (remaining_pay_minute === 0 && remaining_pay_second == -1) {
+          clearInterval(time)
+          // return this.getOrderDetail(order_no)
         }
         if (remaining_pay_second <= 0) {
           --remaining_pay_minute

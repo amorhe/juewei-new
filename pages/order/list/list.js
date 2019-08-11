@@ -128,10 +128,6 @@ Page({
     }
 
     return this.refresh();
-    // let { takeOutList, pickUpList, menuList, cur } = this.data
-    // if (menuList[cur].page == 1 && !menuList[cur].list.length) {
-    //   await this.getOrderList()
-    // }
   },
   onUnload() {
     let { menuList, cur } = this.data
@@ -209,9 +205,11 @@ Page({
     const { cur } = e.currentTarget.dataset
     if (this.data.cur === cur) { return }
     this.setData({ cur }, () => {
-      if (menuList[cur].page == 1 && !menuList[cur].length) {
-        this.getOrderList()
-      }
+
+    this.refresh()
+      // if (menuList[cur].page == 1 && !menuList[cur].length) {
+      //   this.getOrderList()
+      // }
     })
   },
 
@@ -249,12 +247,12 @@ Page({
         menuList[cur].timer = timer
         menuList[cur].finish = true
         menuList[cur].list = list
-        for (let i = 0; i < list.length; i++) {
-          let { remaining_pay_second, remaining_pay_minute } = list[i]
-          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            return this.refresh()
-          }
-        }
+        // for (let i = 0; i < list.length; i++) {
+        //   let { remaining_pay_second, remaining_pay_minute } = list[i]
+        //   if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+        //     return this.refresh()
+        //   }
+        // }
 
         this.setData({
           menuList

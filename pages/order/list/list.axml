@@ -18,8 +18,8 @@
            {{item.order_ctime}}
           </view>
         </view>
-        <view class="out-item-state" style="color:{{item.order_status == 0? '#E60012' : ''}}">
-          {{takeOutState[item.order_status]}}
+        <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
+         {{(item.order_status == 0 && item.remaining_pay_minute > 0)?takeOutState[item.order_status]:'订单已取消'}}
         </view>
       </view>
       <view class="out-body">
@@ -32,7 +32,7 @@
         </view>
       </view>
       <view class="out-footer">
-        <view class="topay" a:if="{{item.order_status == 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
+        <view class="topay" a:if="{{item.order_status == 0 && item.remaining_pay_minute > 0 }}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
           去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}">
@@ -68,8 +68,8 @@
            {{item.order_ctime}}
           </view>
         </view>
-        <view class="out-item-state" style="color:{{item.order_status == 0? '#E60012' : ''}}">
-          {{pickUpState[item.order_status]}}
+        <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
+          {{(item.order_status == 0 && item.remaining_pay_minute > 0)?takeOutState[item.order_status]:'订单已取消'}}
         </view>
       </view>
       <view class="out-body">
@@ -82,7 +82,7 @@
         </view>
       </view>
       <view class="out-footer">
-        <view class="topay" a:if="{{item.order_status == 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
+        <view class="topay" a:if="{{item.order_status == 0 && item.remaining_pay_minute > 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
          去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1].includes(item.order_status)}}">

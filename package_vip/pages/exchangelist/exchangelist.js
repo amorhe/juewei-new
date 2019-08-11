@@ -112,8 +112,8 @@ Page({
       time = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute = -1, remaining_pay_second = -1, ...item }) => {
           remaining_pay_second--
-          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            clearInterval(timer)
+          if (remaining_pay_second === 0 && remaining_pay_minute === -1) {
+            clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
