@@ -99,7 +99,7 @@ Component({
             "goods_price": e.currentTarget.dataset.goods_price * 100,
             "num": 1,
             "sumnum": sumnum,
-            "goods_code": e.currentTarget.dataset.goods_activity_code,
+            "goods_code": e.currentTarget.dataset.goods_code,
             "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
@@ -125,13 +125,16 @@ Component({
       }
        let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
-        if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        if(e.currentTarget.dataset.goods_discount && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           my.showToast({
             content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
           });
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          // priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        if(!goodlist[keys].goods_discount){
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
@@ -169,6 +172,9 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          // priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        if(!goodlist[keys].goods_discount){
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);

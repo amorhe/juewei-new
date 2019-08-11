@@ -1,4 +1,4 @@
-<view class="{{showShopcar?'contanier':''}}">
+<view class="{{showShopcar?'contanier':''}}" a:if="{{!isSelf}}">
 <!-- 定位 -->
 <view class="goodsPosition">
   <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" >
@@ -114,11 +114,30 @@
     </view>
   </view>
 </navigator>
-
-<!-- 商品列表 -->
-<goods-list scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
-
 </view>
 
+<view class="shopUp" a:if="{{isSelf}}">
+  <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
+  <navigator url="/package_my/pages/chooseshop/chooseshop" class="shopBoxs">
+    <view>
+      <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
+      <view class="shop_info">
+        <view class="fontThirtySix">{{shopTakeOut.title}}</view>
+        <view>在售商品：{{shopTakeOut.goods_num}}</view>
+        <view>{{shopTakeOut.address}}</view>
+      </view>
+    </view>
+    <view class="distanceView">
+      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+      <view>距离{{shopTakeOut.distance}}米</view>
+    </view>
+  </navigator>
+</view>
+
+
+<view style="padding-right:36rpx">
+  <!-- 商品列表 -->
+  <goods-list scrollY="{{scroll_y}}" shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
+</view>
 <!-- 提示框 -->
 <!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

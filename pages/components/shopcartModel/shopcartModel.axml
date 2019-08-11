@@ -42,7 +42,7 @@
         <view class="goodsNumber">
           <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
           <text>{{item.num}}</text>
-          <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>
+          <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" data-goods_discount="{{item.goods_discount}}"/>
         </view>
       </view>
     </view>

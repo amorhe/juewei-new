@@ -92,3 +92,55 @@ page {
   width: 336rpx;
   height: 336rpx;
 }
+
+.shopUp {
+  position: relative;
+  height: 349rpx;
+}
+.shopLogo {
+  width: 750rpx;
+  height: 298rpx;
+}
+.shopBoxs {
+  width:686rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0 2rpx 10rpx 0 rgba(153,153,153,0.2);
+  border-radius:10rpx;
+  position: absolute;
+  left: 32rpx;
+  bottom: 23rpx;
+  /* margin-top: -123rpx;
+  margin-left: 32rpx; */
+  box-sizing: border-box;
+  padding: 24rpx 16rpx;
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  /* position: -webkit-sticky;
+  position: sticky;
+  top: 0;*/
+  z-index: 1000; 
+}
+.shopBoxs>view:nth-child(1){
+  display: flex
+}
+
+.shop_info,.shopBoxs>view:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+.shop_info {
+  margin-left: 10rpx;
+  width: 430rpx;
+}
+.shop_info>view:nth-child(3),.distanceView>view {
+  color: #999;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.distanceView {
+  align-items: flex-end
+}

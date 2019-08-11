@@ -44,8 +44,12 @@ Page({
     })
     let goodsList = app.globalData.goodsBuy;
     for(let item of goodsList){
-      item['goods_quantity'] = item['num']
+      item['goods_quantity'] = item['num'];
+      if(item.goods_discount){
+        item.goods_code = item.goods_activity_code
+      }
     } 
+    console.log(goodsList)
     this.setData({
       goodsList
     })
@@ -137,6 +141,7 @@ Page({
         gift
       })
     }
+
     this.confirmOrder(my.getStorageSync({key: 'shop_id'}).data,JSON.stringify(this.data.goodsList));
   },
   // 换购显示

@@ -29,7 +29,7 @@
        <cover-view onTap="switchShop" data-index="{{index}}" class="modalTap"></cover-view>
        <cover-view class="menuBtn">
          <cover-view onTap="guide" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_longitude="{{item.shop_gd_longitude}}" data-shop_name="{{item.title}}" data-address="{{item.address}}">导航</cover-view>
-         <cover-view onTap="goSelf" data-shop_id="{{item.shop_id}}" data-company_id="{{item.company_sale_id}}" data-title="{{item.title}}" data-address="{{item.address}}" data-goods_num="{{item.goods_num}}" data-distance="{{item.distance}}">去自提</cover-view>  
+         <cover-view onTap="goSelf" data-info="{{item}}" data-shop_id="{{item.shop_id}}" data-company_id="{{item.company_sale_id}}" data-title="{{item.title}}" data-address="{{item.address}}" data-goods_num="{{item.goods_num}}" data-distance="{{item.distance}}">去自提</cover-view>  
        </cover-view> 
 
      </cover-view>

@@ -47,6 +47,8 @@ Component({
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+      }
+      if(!goodlist[keys].goods_discount){
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
@@ -57,10 +59,11 @@ Component({
       priceAll,
       shopcartAll,
       shopcartNum,
-      priceFree
+      priceFree,
+      freeMoney:nextProps.freeMoney
     })
     // 购物车活动提示
-    this.shopcartPrompt(nextProps.fullActivity,this.data.priceAll,nextProps.freeMoney);
+    this.shopcartPrompt(nextProps.fullActivity,this.data.priceAll,priceFree);
     if(!my.getStorageSync({key:'goodsList'}).data){
       this.onchangeShopcart({},[],0,0);
     }
@@ -174,13 +177,6 @@ Component({
     },
     // 购物车
     onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree){
-      // this.setData({
-      //   shopcartList:goodlist,
-      //   shopcartAll,
-      //   priceAll,
-      //   shopcartNum,
-      //   priceFree
-      // })
       this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
     },
     addshopcart(e){
@@ -200,7 +196,7 @@ Component({
             "goods_price": e.currentTarget.dataset.goods_price * 100,
             "num": 1,
             "sumnum": 1,
-            "goods_code": e.currentTarget.dataset.goods_activity_code,
+            "goods_code": e.currentTarget.dataset.goods_code,
             "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
@@ -226,14 +222,17 @@ Component({
       }
       let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
-        if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        if(e.currentTarget.dataset.goods_discount && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           my.showToast({
             content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
           });
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-          priceFree += goodlist[keys].goods_price * goodlist[keys].num
+          // priceFree += goodlist[keys].goods_price * goodlist[keys].num
+        }
+        if(!goodlist[keys].goods_discount){
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -246,7 +245,7 @@ Component({
         shopcartNum,
         priceFree
       })
-      console.log(goodlist)
+      console.log(goodlist,shopcartAll)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -303,6 +302,9 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          // priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        if(!goodlist[keys].goods_discount){
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
@@ -343,12 +345,12 @@ Component({
           activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`;
         }
       }
-      if(priceAll == 0){
-        freeText = `满${priceFree/100}元 免配送费`
-      }else if(priceAll<priceFree){
-        freeText = `还差${priceFree/100-priceAll/100}元 免配送费`
+      if(priceFree == 0){
+        freeText = `满${this.data.freeMoney/100}元 免配送费`
+      }else if(priceFree<this.data.freeMoney){
+        freeText = `还差${this.data.freeMoney/100-priceFree/100}元 免配送费`
       }else{
-        freeText = `已满${priceFree/100}元 免配送费`
+        freeText = `已满${this.data.freeMoney/100}元 免配送费`
       }
       // console.log(freeText)
       this.setData({
@@ -359,7 +361,7 @@ Component({
     // 商品详情
     goodsdetailContent(e){
       my.navigateTo({
-        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code + '&goodsKey=' + e.currentTarget.dataset.key
+        url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code + '&goodsKey=' + e.currentTarget.dataset.key + '&freeMoney=' + e.currentTarget.dataset.freeMoney
       });
     },
     // 清空购物车

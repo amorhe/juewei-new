@@ -7,6 +7,7 @@ var app = getApp(); //放在顶部
 Page({
   data: {
     scroll_y: false,
+    isSelf:false,
     imageUrl,
     imageUrl2,
     firstAddress: '紫檀大厦',
@@ -63,6 +64,11 @@ Page({
       firstAddress: app.globalData.address,
       type:app.globalData.type
     })
+    if(app.globalData.isSelf){
+      this.setData({
+        isSelf:true
+      })
+    }
     // 初始化默认外卖
     let shopArray = [];
     if(app.globalData.shopIng){
@@ -340,7 +346,8 @@ Page({
   },
   onPageScroll: function(e) {
     my.createSelectorQuery().select('#pagesinfo').boundingClientRect().exec((ret) => {
-      if(ret[0].top<=127) {
+      // console.log(ret)
+      if(ret[0].top<=104) {
         this.setData({
           scroll_y:true
         })

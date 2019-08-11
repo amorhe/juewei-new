@@ -87,7 +87,7 @@ Component({
         app.globalData.goodsBuy = [];
         my.removeStorageSync({key:'goodsList'});
         this.props.onClear();
-        this.props.onChangeShopcart({},[],0,0);
+        this.props.onChangeShopcart({},[],0,0,0);
       }
       if(data.isType == 'checkshopcart' && data.type == 0 && this.props.shopcartNum >0){
         app.globalData.goodsBuy = this.props.shopcartAll;
@@ -96,8 +96,8 @@ Component({
         }) 
       }
     },
-    changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum){
-      this.props.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum);
+    changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree){
+      this.props.onChangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree);
     },
     addshopcart(e){
       let goodlist = my.getStorageSync({
@@ -106,15 +106,18 @@ Component({
       let goods_code = e.currentTarget.dataset.goods_code;
       let goods_format = e.currentTarget.dataset.goods_format
       goodlist[`${goods_code}_${goods_format}`].num +=1;
-      let shopcartAll = [],priceAll=0,shopcartNum=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
-        if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+        if(e.currentTarget.dataset.goods_discount && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           my.showToast({
             content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
           });
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        if(!goodlist[keys].goods_discount){
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -123,7 +126,7 @@ Component({
       for(let item of arr){
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum +=1;
       }
-      this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum)
+      this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
       console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -137,12 +140,15 @@ Component({
       
       goodlist[`${code}_${format}`].num -=1;
       // 删除
-      let shopcartAll = [],priceAll=0,shopcartNum=0;
+      let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
       for(let keys in goodlist){
         if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        if(!goodlist[keys].goods_discount){
+          priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -160,7 +166,7 @@ Component({
           shopcartAll.push(goodlist[keys])
         }
       }
-      this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum);
+      this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree);
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -199,7 +205,7 @@ Component({
       let goodsList = my.getStorageSync({
         key: 'goodsList', // 缓存数据的key
       }).data;
-      let num = 0,shopcartAll=[],priceAll=0,shopcartNum=0;
+      let num = 0,shopcartAll=[],priceAll=0,shopcartNum=0,priceFree=0;
       if(goodsList == null) return;
       console.log(app.globalData.goodsArr)
       for(let val in goodsList){
@@ -236,9 +242,12 @@ Component({
           }else{
             priceAll += goodsList[val].goods_price * goodsList[val].num;
           }
+          if(!goodlist[keys].goods_discount){
+            priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+          }
           shopcartAll.push(goodsList[val]);
           shopcartNum += goodsList[val].num
-          this.changeshopcart(goodsList,shopcartAll,priceAll,shopcartNum);
+          this.changeshopcart(goodsList,shopcartAll,priceAll,shopcartNum,priceFree);
           console.log('购物车全部商品都在该门店内')
         }
       }

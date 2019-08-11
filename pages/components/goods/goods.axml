@@ -49,131 +49,11 @@
 
   <scroll-view scroll-y="{{scrollY}}" style="box-sizing:border-box;;width:530rpx;float:right;height:100%" scroll-into-view="{{goodsType}}" onScroll="scrollEvent" scroll-with-animation="true" scroll-animation-duration="50"> 
     <view>
-            <!-- 折扣 -->
-      <!-- <view id="1" class="zhekou" a:if="{{activityAllObj.DIS.length>0}}" a:for="{{activityAllObj.DIS}}" onTap="goodsdetailContent" data-goodsAll="{{activityAllObj.DIS}}" data-goods_id="{{item.goods_id}}">
-        <view class="goodsTypeEv">折扣</view>
-        <view class="goodsBox">
-          <view class="discountImg">
-            <image class="discountPng" src="{{imageUrl}}discount_img.png" />
-            <image class="goodsImage1" src="{{item.goods_img[0]}}"/>
-          </view>
-          <view class="goodsWrap">
-            <view class="goodsTitle marginB">
-              <view>
-                <view class="goodsName">{{item.goods_name}}</view>
-                <view class="goodsKind">
-                  <text>（超辣）</text>
-                </view>
-              </view>
-              <view class="goodsSoldNum">
-                <text>已售:</text>
-                <text class="numberColor">{{item.goods_buy_sum}}</text>
-                <text>{{item.goods_unit}}</text>
-              </view>
-            </view>
-            <view class="goodsRules">
-              <view>
-                <view>
-                  <text>￥</text>
-                  <text>{{item.goods_format[0].goods_price / 100}}</text>
-                  <text>/ {{item.goods_unit}}</text>
-                </view>
-                <view class="oldPrice">¥{{item.goods_format[0].goods_original_price / 100}}/{{item.goods_unit}}</view>
-              </view>
-              <view class="goodsNumber">
-                <image a:if="{{item.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{item.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
-                <text a:if="{{item.count>0}}">{{item.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}" />
-              </view>
-            </view>
-            <view class="goodsDiscount">
-              <image src="{{imageUrl}}discount.png" />
-              <text>{{item.goods_format[0].goods_order_limit}}折  限{{item.goods_discount_user_limit}}份</text>
-            </view>
-          </view>
-        </view>
-      </view> -->
-      <!-- 套餐 -->
-      <!-- <view id="2" class="taocan" a:if="{{activityAllObj.PKG.length>0}}" a:for="{{activityAllObj.PKG}}" onTap="goodsdetailContent" data-goodsAll="{{activityAllObj.PKG}}" data-goods_id="{{item.goods_id}}">
-        <view class="goodsTypeEv">套餐</view>
-        <view class="goodsBox">
-          <image class="goodsImage1" src="{{imageUrl2 + item.goods_img}}"/>
-          <view class="goodsWrap">
-            <view class="goodsName">{{item.goods_name}}</view>
-            <view class="goodsKind marginB">
-              <text a:for="{{item.pkg_goods}}" a:for-index="i" a:for-item="v">
-                <text><text a:if="{{i!=0}}">+</text>{{v.pkg_goods_name}}</text>
-                <text class="fontSmall">({{v.pkg_goods_taste}})/{{v.pkg_goods_format}}*{{v.goods_num}}</text>
-              </text>
-            </view>
-            <view class="goodsRules">
-              <view>
-                <view>
-                  <text>￥</text>
-                  <text>{{item.goods_format[0].goods_price / 100}}</text>
-                  <text>/ {{item.goods_unit}}</text>
-                </view>
-                <view class="oldPrice">¥{{item.goods_format[0].goods_original_price / 100}}/{{item.goods_unit}}</view>
-              </view>
-              <view class="goodsNumber">
-                <image a:if="{{item.count>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goodsId="{{item.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
-                <text a:if="{{item.count>0}}">{{item.count}}</text>
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goodsId="{{v.goods_id}}" data-index="{{i}}" data-type="{{index}}"/>
-              </view>
-            </view>
-            <view class="goodsDiscount">
-              <image src="{{imageUrl}}discount.png" />
-              <text>{{item.goods_format[0].goods_order_limit}}折  限{{item.goods_format[0].goods_discount_user_limit}}份</text>
-            </view>
-          </view>
-        </view>
-      </view> -->
-      <!-- 爆款 -->
-      <!-- <view id="3">
-        <view class="goodsTypeEv">爆款</view>
-        <view class="goodsBox">
-          <image class="goodsImage1" src="{{item.goods_img[0]}}"/>
-          <view class="goodsWrap">
-            <view class="goodsTitle marginB">
-              <view>
-                <view class="goodsName">{{item.goods_name}}</view>
-                <view class="goodsKind">
-                  <text>（{{item.taste_name}}）</text>
-                </view>
-              </view>
-              <view class="goodsSoldNum">
-                <text>已售:</text>
-                <text class="numberColor">{{item.goods_buy_sum}}</text>
-                <text>{{item.goods_unit}}</text>
-              </view>
-            </view>
-            <view class="goodsRules">
-              <view>
-                <view>
-                  <text>￥</text>
-                  <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100< v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
-                  <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
-                  <text>/ {{v.goods_unit}}</text>
-                </view>
-                <view class="oldPrice">¥30/份</view>
-              </view>
-            <view class="goodsSize" catchTap="chooseSizeTap"  a:if="{{v.goods_format.length>1}}">
-              <view>选规格</view>
-              <view>2</view>
-            </view>
-            </view>
-            <view class="goodsDiscount">
-              <image src="{{imageUrl}}discount.png" />
-              <text>6折  限1份</text>
-            </view>
-          </view>
-        </view>
-      </view> -->
       <view id="{{index + 1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
         <view class="goodsTypeEv">{{item.key}}</view>
 
         <!-- 折扣套餐爆款 -->
-        <view class="goodsBox" a:for="{{item.last}}" a:for-index="i" a:for-item="v" catchTap="goodsdetailContent" data-goods_code="{{v.goods_code}}" data-goods_id="{{v.goods_id}}" data-shop_id="{{v}}" data-key="{{item.key}}" a:if="{{item.key=='套餐'||item.key=='爆款'||item.key=='折扣'}}">
+        <view class="goodsBox" a:for="{{item.last}}" a:for-index="i" a:for-item="v" catchTap="goodsdetailContent" data-freeMoney="{{freeMoney}}" data-goods_code="{{v.goods_code}}" data-goods_id="{{v.goods_id}}" data-shop_id="{{v}}" data-key="{{item.key}}" a:if="{{item.key=='套餐'||item.key=='爆款'||item.key=='折扣'}}">
           <view class="discountImg">
             <image a:if="{{item.key=='折扣'}}" class="discountPng" src="{{imageUrl}}discount_img.png" />
             <image a:if="{{item.huangou==1}}" class="discountPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png"/>
@@ -197,7 +77,7 @@
                   <text>￥</text>
                   <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
                   <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
-                  <text a:if="{{v.goods_format.length>1}}">/ 起</text>
+                  <text a:if="{{v.goods_format.length>1}}">起</text>
                   <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
                 </view>
                 <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
@@ -226,7 +106,7 @@
         </view>
 
         <!-- 超辣 -->
-        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-goods_code="{{v.goods_code}}" data-key="{{item.key}}" data-goods_id="{{v.goods_id}}" a:if="{{item.key!='套餐' && item.key!='爆款' &&item.key!='折扣'}}" >
+        <view class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" onTap="goodsdetailContent" data-freeMoney="{{freeMoney}}" data-goods_code="{{v.goods_code}}" data-key="{{item.key}}" data-goods_id="{{v.goods_id}}" a:if="{{item.key!='套餐' && item.key!='爆款' &&item.key!='折扣'}}" >
           <view class="discountImg">
             <image a:if="{{v.huangou==1}}" class="huangouPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png"/>
             <image class="goods_ss_img" src="{{v.goods_small_img[0]}}"/>
@@ -247,7 +127,7 @@
                   <text>￥</text>
                   <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100 < v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
                   <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
-                  <text a:if="{{v.goods_format.length>1}}">/ 起</text>
+                  <text a:if="{{v.goods_format.length>1}}">起</text>
                   <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
                 </view>
               </view>

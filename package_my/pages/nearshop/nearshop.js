@@ -1,6 +1,7 @@
 import {imageUrl,ak} from '../../../pages/common/js/baseUrl'
 import {NearbyShop} from '../../../pages/common/js/home'
 import {guide} from '../../../pages/common/js/li-ajax'
+var app = getApp();
 Page({
   data: {
     imageUrl,
@@ -9,22 +10,7 @@ Page({
     // latitude: 39.918639,
     longitude: my.getStorageSync({key:'lng'}).data,
     latitude: my.getStorageSync({key:'lat'}).data,
-    markersArray:[
-      {
-        longitude: 116.30051,
-        latitude: 40.0511,
-        iconPath:`${imageUrl}position_map1.png`,
-        width: 32,
-        height: 32
-      },
-      {
-        longitude: 116.3005,
-        latitude: 40.054,
-        iconPath:`${imageUrl}position_map1.png`,
-        width: 15,
-        height: 15
-      }
-    ],
+    markersArray:[],
     shopList:[],    // 附近门店列表
     inputAddress:'',
     city:'',
@@ -124,9 +110,17 @@ Page({
   },
   // 去自提
   goSelf(e){
-    my.navigateTo({
-      url: '/pages/home/selfshop/selfshop?shop_id=' + e.currentTarget.dataset.shop_id + '&company_id=' + e.currentTarget.dataset.company_id + '&title=' + e.currentTarget.dataset.title + '&address=' + e.currentTarget.dataset.address + '&goods_num=' + e.currentTarget.dataset.goods_num + '&distance=' + e.currentTarget.dataset.distance 
+    app.globalData.isSelf = true;
+    app.globalData.shopIng = e.currentTarget.dataset.info
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
+      success: (res) => {
+        
+      },
     });
+    // my.navigateTo({
+    //   url: '/pages/home/selfshop/selfshop?shop_id=' + e.currentTarget.dataset.shop_id + '&company_id=' + e.currentTarget.dataset.company_id + '&title=' + e.currentTarget.dataset.title + '&address=' + e.currentTarget.dataset.address + '&goods_num=' + e.currentTarget.dataset.goods_num + '&distance=' + e.currentTarget.dataset.distance 
+    // });
   },
   // 切换城市
   choosecityTap(){

@@ -24,33 +24,7 @@ Page({
     imageUrl,
     imageUrl2,
     // 评论
-    commentArr:[
-      {
-        imgAvatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1025011724,3729989080&fm=27&gp=0.jpg',
-        name:'绝味1',
-        star:5,
-        comment_time:'2019.06.19 12:28',
-        comment_text:'第一次订这个，味道超级好',
-        imgUrls:['https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=780072152,3543775531&fm=26&gp=0.jpg','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1578146793,4217461747&fm=26&gp=0.jpg',
-        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1549818796,3596703153&fm=26&gp=0.jpg']
-      },
-      {
-        imgAvatar:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=311097710,965735535&fm=27&gp=0.jpg',
-        name:'绝味2',
-        star:3,
-        comment_time:'2019.06.19 12:28',
-        comment_text:'第一次订这个，味道超级好',
-        imgUrls:['https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=780072152,3543775531&fm=26&gp=0.jpg']
-      },
-      {
-        imgAvatar:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=311097710,965735535&fm=27&gp=0.jpg',
-        name:'绝味2',
-        star:3,
-        comment_time:'2019.06.19 12:28',
-        comment_text:'第一次订这个，味道超级好',
-        imgUrls:[]
-      }
-    ],
+    commentArr:[],
     key:'',
     index:'',
     dispatchArr:[],
@@ -65,10 +39,11 @@ Page({
     activityText:'',
     pagenum:1,
     pagesize:10,
-    priceFree:0,
-    freeText:''
+    freeText:'',
+    freeMoney:0
   },
   onLoad(e) {
+    // console.log(e)
     let goods = my.getStorageSync({
       key: 'shopGoods'
     }).data;
@@ -80,10 +55,13 @@ Page({
       }
     }
     for(let keys in goodlist){
-      if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+      if(goodlist[keys].goods_discount_user_limit!=null  && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        
+      }
+      if(!goodlist[keys].goods_discount){
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
@@ -96,11 +74,11 @@ Page({
       shopcartAll,
       shopcartNum,
       goodsKey: e.goodsKey,
-      priceFree
+      freeMoney:e.freeMoney
     })
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
+    // console.log(priceFree)
     // 购物车活动提示
-    // console.log(app.globalData.fullActivity)
     this.shopcartPrompt(app.globalData.fullActivity,priceAll,priceFree)
     // 评论
     this.getCommentList(goodsInfo.goods_code,this.data.pagenum,this.data.pagesize);
@@ -121,16 +99,10 @@ Page({
       shopcartNum,
       priceFree
     })
+    this.shopcartPrompt(app.globalData.fullActivity,priceAll,priceFree);
   },
   // 购物车
   onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree){
-    // this.setData({
-    //   shopcartList:goodlist,
-    //   shopcartAll,
-    //   priceAll,
-    //   shopcartNum,
-    //   priceFree
-    // })
     this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
   },
   addshopcart(e){
@@ -150,7 +122,7 @@ Page({
           "goods_price": e.currentTarget.dataset.goods_price * 100,
           "num": 1,
           "sumnum": 1,
-          "goods_code": e.currentTarget.dataset.goods_activity_code,
+          "goods_code": e.currentTarget.dataset.goods_code,
           "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
           "goods_discount": e.currentTarget.dataset.goods_discount,
           "goods_original_price": e.currentTarget.dataset.goods_original_price,
@@ -176,17 +148,22 @@ Page({
     }
     let shopcartAll = [],priceAll=0,shopcartNum=0,priceFree=0;
     for(let keys in goodlist){
-      if(goodlist[keys].goods_discount_user_limit && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
+      if(e.currentTarget.dataset.goods_discount && goodlist[keys].num>goodlist[keys].goods_discount_user_limit){
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        // priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+      }
+      if(!goodlist[keys].goods_discount){
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num;
     }
+    // console.log(priceFree)
     // 购物车活动提示
     this.shopcartPrompt(app.globalData.fullActivity,priceAll,priceFree);
+    this.onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
     this.setData({
       shopcartList: goodlist,
       shopcartAll,
@@ -249,7 +226,10 @@ Page({
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
       }else{
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-        priceFree += goodlist[keys].goods_price * goodlist[keys].num
+        // priceFree += goodlist[keys].goods_price * goodlist[keys].num
+      }
+      if(!goodlist[keys].goods_discount){
+        priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num;
@@ -261,6 +241,7 @@ Page({
     }
     // 购物车活动提示
     this.shopcartPrompt(app.globalData.fullActivity,priceAll,priceFree);
+    this.onchangeShopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
     this.setData({
       shopcartList:goodlist,
       shopcartAll,
@@ -288,12 +269,12 @@ Page({
         activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`
       }
     }
-    if(priceAll == 0){
-        freeText = `满${priceFree/100}元 免配送费`
-      }else if(priceAll<priceFree){
-        freeText = `还差${priceFree-priceAll}元 免配送费`
+    if(priceFree == 0){
+        freeText = `满${this.data.freeMoney/100}元 免配送费`
+      }else if(priceFree<this.data.freeMoney){
+        freeText = `还差${this.data.freeMoney/100-priceFree/100}元 免配送费`
       }else{
-        freeText = `已满${priceFree/100}元 免配送费`
+        freeText = `已满${this.data.freeMoney/100}元 免配送费`
       }
     // console.log(activityText)
     this.setData({
