@@ -59,6 +59,7 @@ Page({
      
   },
   onShow() {
+    console.log(1)
     // 定位地址
     this.setData({
       firstAddress: app.globalData.address,

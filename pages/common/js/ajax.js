@@ -26,10 +26,10 @@ export const ajax = (url,data={},method="POST") => {
         if(rest.code==0 || rest.code=="A100" || rest.code==100){
             resolve(rest.data);
         }else if(rest.code==30106 || rest.code=="A103" || rest.code==101){
-            //nologin
-            my.navigateTo({
-              url: '/pages/login/auth/auth'
-            });
+          //nologin
+          my.navigateTo({
+            url: '/pages/login/auth/auth'
+          });
         }else{
            //tiaocuowuye
             reject({ errormsg: rest.msg, code: -1 });

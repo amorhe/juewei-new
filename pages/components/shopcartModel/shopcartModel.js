@@ -242,8 +242,8 @@ Component({
           }else{
             priceAll += goodsList[val].goods_price * goodsList[val].num;
           }
-          if(!goodlist[keys].goods_discount){
-            priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+          if(!goodsList[val].goods_discount){
+            priceFree += goodsList[val].goods_price * goodsList[val].num;
           }
           shopcartAll.push(goodsList[val]);
           shopcartNum += goodsList[val].num
