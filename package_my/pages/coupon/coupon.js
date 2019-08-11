@@ -34,7 +34,8 @@ Page({
   // 优惠券
   getCouponsList(_sid) {
     couponsList(_sid, 'use').then((res) => {
-      this.data.tabs[0].title = `优惠券${res.DATA.use.length}张`;
+      const { tabs } = this.data
+      tabs[0].title = `优惠券${res.DATA.use.length}张`;
       res.DATA.use.forEach(item => {
         item.start_time = formatTime(item.start_time, 'Y-M-D');
         item.end_time = formatTime(item.end_time, 'Y-M-D');
@@ -42,7 +43,7 @@ Page({
       })
       this.setData({
         couponList: res.DATA.use,
-        tabs: this.data.tabs
+        tabs
       })
     })
   },
@@ -50,9 +51,11 @@ Page({
   getExchangeCode(_sid) {
     exchangeCode(_sid, 'use').then((res) => {
       console.log(res)
-      this.data.tabs[1].title = `兑换码${res.DATA.length}个`;
+      const { tabs } = this.data
+      tabs[1].title = `兑换码${res.DATA.length}个`;
       this.setData({
-        exchangeList: res.DATA
+        exchangeList: res.DATA,
+        tabs
       })
     })
   },

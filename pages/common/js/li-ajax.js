@@ -179,9 +179,7 @@ export const contact = () => {
  */
 
 export const getNavHeight = () => {
-  log(my.getSystemInfoSync())
   let { titleBarHeight, statusBarHeight, model } = my.getSystemInfoSync()
-
   return {
     titleBarHeight,
     statusBarHeight
