@@ -49,7 +49,7 @@ Page({
         item.goods_code = item.goods_activity_code
       }
     } 
-    console.log(goodsList)
+    // console.log(goodsList)
     this.setData({
       goodsList
     })
@@ -254,7 +254,7 @@ Page({
     }
     // 创建订单
     createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,this.data.gift,this.data.orderInfo.use_coupons[0],notUse).then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.code == 0){
         AliMiniPay(res.data.order_no).then((val) => {
           if(val.code==0){
@@ -361,8 +361,6 @@ Page({
             for(let value of goodsReal){
               if(item.goods_code == value.sap_code && value.goods_type!="DIS"){
                 repurseTotalPrice += value.goods_price * value.goods_quantity;
-                console.log('qwe',repurseTotalPrice)
-                console.log('qwe',this.data.full_money)
                 if(repurseTotalPrice >= this.data.full_money){
                   this.setData({
                     showRepurse:true
