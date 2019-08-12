@@ -107,7 +107,7 @@ Page({
         isOpen:status,
         shopTakeOut: shopArray[0]
       })
-      console.log(shopArray)
+      // console.log(shopArray)
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     }
   },
@@ -208,7 +208,7 @@ Page({
       my.request({
         url: `https://images.juewei.com/prod/shop/goods_sort.json?v=${str}`,
         success: (conf) => {
-          console.log(conf.data.data.country);
+          // console.log(conf.data.data.country);
           let _T = conf.data.data.country
           const { typeList } = this.data
 
@@ -257,7 +257,7 @@ Page({
   // 门店营销活动(折扣和套餐)
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
-      // console.log(res);
+      console.log(res);
       let shopGoods = this.data.shopGoods;
       // console.log(shopGoods)
       // 获取加价购商品
@@ -273,7 +273,7 @@ Page({
          app.globalData.gifts = [];
       }
       
-      // 获取参与加价购商品的列表
+      // 获取参与加价购商品的列表（可换购）
       if(res.data.MARKUP && res.data.MARKUP.goods){
         app.globalData.repurseGoods = res.data.MARKUP.goods;
         for(let item of res.data.MARKUP.goods){

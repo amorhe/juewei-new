@@ -345,12 +345,14 @@ Component({
           activityText = `已购满${oldArr[oldArr.length-1]/100}元,去结算获取优惠!`;
         }
       }
-      if(priceFree == 0){
-        freeText = `满${this.data.freeMoney/100}元 免配送费`
-      }else if(priceFree<this.data.freeMoney){
-        freeText = `还差${this.data.freeMoney/100-priceFree/100}元 免配送费`
-      }else{
-        freeText = `已满${this.data.freeMoney/100}元 免配送费`
+      if(this.data.freeMoney>0){
+        if(priceFree == 0){
+          freeText = `满${this.data.freeMoney/100}元 免配送费`
+        }else if(priceFree<this.data.freeMoney){
+          freeText = `还差${this.data.freeMoney/100-priceFree/100}元 免配送费`
+        }else{
+          freeText = `已满${this.data.freeMoney/100}元 免配送费`
+        }
       }
       // console.log(freeText)
       this.setData({

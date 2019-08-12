@@ -66,7 +66,7 @@ Component({
        this.props.onCart(goodsList,shopcartAll,priceAll,shopcartNum,priceFree);
     },
     addshopcart(e){
-      console.log(e)
+      // console.log(e)
       let goods_car={};
       let goods_code = e.currentTarget.dataset.goods_code;
       let goods_format = e.currentTarget.dataset.goods_format;
