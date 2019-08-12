@@ -217,15 +217,18 @@ Page({
       sourceType: ['camera', 'album'],
       count: 1,
       success: (res) => {
+        my.showLoading({
+          content: '图片上传中...',
+        });
         my.uploadFile({
           url: baseUrl + '/juewei-api/comment/UploadCommentImg',
-
           fileType: 'image',
           fileName: 'imgFile',
           filePath: res.apFilePaths[0],
           dataType: 'json',
 
           success: (result) => {
+            my.hideLoading()
             let { d } = this.data
             let { goods_list } = d
             let { pics } = goods_list[i].goods_comment
@@ -233,7 +236,6 @@ Page({
             let p = /\"path\"\:\"(\S*)\"\}\,/
             log(result.data.match(p))
             pics = [...pics, result.data.match(p)[1]]
-
             log(pics, d)
             d.goods_list[i].goods_comment.pics = pics
 
@@ -241,12 +243,13 @@ Page({
               d
             })
           },
-          // fail: (error) => {
-          //   log(error)
-          //   my.showToast({
-          //     content: 'fail',
-          //   });
-          // }
+          fail: (error) => {
+            log(error)
+            my.hideLoading()
+            my.showToast({
+              content: '图片上传失败',
+            });
+          }
         });
       },
       fail: (err) => {
