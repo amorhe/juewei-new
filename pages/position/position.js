@@ -152,13 +152,13 @@ Page({
       shopArr1.sort(sortNum('distance'));
       shopArr2.sort(sortNum('distance'));
       const shopArray = shopArr1.concat(shopArr2);
-      my.switchTab({
-        url: '/pages/home/goodslist/goodslist'
-      })
       shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
       // my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
-      // console.log(shopArray)
+      console.log(shopArray)
+      my.switchTab({
+        url: '/pages/home/goodslist/goodslist'
+      })
     })
   },
   onCounterPlusOne(e){
