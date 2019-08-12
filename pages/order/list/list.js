@@ -137,7 +137,7 @@ Page({
     this.setData = () => { }
   },
   onHide() {
-    // this.onModalClose()
+    this.onModalClose()
 
     // clearInterval(this.data.time)
     // this.setData({ time: -1 })

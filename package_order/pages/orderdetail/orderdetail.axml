@@ -128,7 +128,7 @@
           优惠券
           </view>
           <view class="value">
-            <text>-￥{{(d.minus_money / 100).toFixed(2)}}</text>
+            <text>-￥{{(d.coupon_money / 100).toFixed(2)}}</text>
           </view>
         </view>
       </view>
