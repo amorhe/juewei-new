@@ -116,9 +116,10 @@ Page({
     // 校验用户是否登录
     await reqUserPoint()
     let _sid = await getSid()
-    this.setData({
-      loginOpened: !_sid
-    })
+    // this.setData({
+    //   loginOpened: !_sid
+    // })
+    if(!_sid){return isloginFn()}
     // 校验是否 需要刷新
     if (app.globalData.refresh == true) {
       my.showToast({
