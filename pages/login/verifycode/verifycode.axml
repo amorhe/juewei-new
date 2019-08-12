@@ -11,14 +11,14 @@
     <view class="inputInfo {{ value[1]?value[2]?'':'inputFocus':''  }}">{{ value[2] }}</view>
     <view class="inputInfo {{ value[2]?value[3]?'':'inputFocus':''  }}">{{ value[3] }}</view>
   </view> 
-  <input class="inputClass" focus="{{focus}}" cursor="{{ cursor }}" onFocus="onFocus" maxlength="4" type="number" onInput="inputValue"/>
+  <input class="inputClass" focus="{{focus}}" cursor="{{ cursor }}" onFocus="onFocus" maxlength="{{4}}" type="number" onInput="inputValue"/>
   <view class="errorTitel" a:if="{{false}}">
     验证码输入错误，请重新输入
   </view>
   <view a:if="{{isnew}}">
     <text class="timeClass">{{countTime}}秒</text>后重新获取验证码
   </view>
-   <view a:else onTap="timeDate" data-is='1'>
+   <view class="top" a:else onTap="timeDate" data-is='1'>
     重新获取验证码
   </view>
 </view>

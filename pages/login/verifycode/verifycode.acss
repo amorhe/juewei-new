@@ -23,12 +23,19 @@
   line-height: 50rpx; 
 }
 
+.top{
+  position: relative;
+  z-index: 999;
+}
+
 .inputClass{
-  width: 110rpx;
-  height: 50rpx;
-  border: 1px solid #000;
   position: absolute;
-  left: -1000rpx;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  border: none;
 }
 
 .bindButton{
