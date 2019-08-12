@@ -102,10 +102,8 @@ Page({
 
     this.setData({
       menuList: _menuList,
-
     }, async () => {
       await this.getMore()
-
       my.stopPullDownRefresh()
     })
 
@@ -119,7 +117,7 @@ Page({
     // this.setData({
     //   loginOpened: !_sid
     // })
-    if(!_sid){return isloginFn()}
+    if (!_sid) { return isloginFn() }
     // 校验是否 需要刷新
     if (app.globalData.refresh == true) {
       my.showToast({
@@ -202,16 +200,21 @@ Page({
    */
 
   async changeMenu(e) {
-    let { menuList, pickUpList } = this.data
-    const { cur } = e.currentTarget.dataset
-    if (this.data.cur === cur) { return }
-    this.setData({ cur }, () => {
-
-    this.refresh()
-      // if (menuList[cur].page == 1 && !menuList[cur].length) {
-      //   this.getOrderList()
-      // }
-    })
+    let { menuList } = this.data
+    my.showLoading({
+      content: '加载中...',
+    });
+    // 清空所有计时器
+    menuList.forEach(({ timer }) => clearInterval(timer))
+    setTimeout(() => {
+      const { cur } = e.currentTarget.dataset
+      if (this.data.cur === cur) { return }
+      this.setData({ cur }, () => {
+        setTimeout(() => {
+          this.refresh()
+        })
+      }, 0)
+    }, 0)
   },
 
 
@@ -225,8 +228,9 @@ Page({
     let { page, dis_type, timer, list } = menuList[cur]
     menuList[cur].page++
 
-    clearInterval(timer)
+    menuList.forEach(({ timer }) => clearInterval(timer))
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
+
     if (code === 0) {
       list = [...list, ...data]
       timer = setInterval(() => {
@@ -248,17 +252,12 @@ Page({
         menuList[cur].timer = timer
         menuList[cur].finish = true
         menuList[cur].list = list
-        // for (let i = 0; i < list.length; i++) {
-        //   let { remaining_pay_second, remaining_pay_minute } = list[i]
-        //   if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-        //     return this.refresh()
-        //   }
-        // }
 
         this.setData({
           menuList
         }, () => my.hideLoading())
       }, 1000)
+
 
     } else {
       this.open()

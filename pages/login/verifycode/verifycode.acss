@@ -1,3 +1,9 @@
+page{
+  height: 50vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 .bindPhone{
   padding: 90rpx 40rpx 0;
   box-sizing: border-box;
@@ -23,12 +29,20 @@
   line-height: 50rpx; 
 }
 
+.top{
+  position: relative;
+  z-index: 999;
+}
+
 .inputClass{
-  width: 110rpx;
-  height: 50rpx;
-  border: 1px solid #000;
   position: absolute;
-  left: -1000rpx;
+  opacity: 0;
+  top: 0;
+  left: -100rpx;
+  width: 100vw;
+  height: 50vh;
+  border: none;
+  color: transparent
 }
 
 .bindButton{

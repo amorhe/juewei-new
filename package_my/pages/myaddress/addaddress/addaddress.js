@@ -244,7 +244,7 @@ Page({
     this.setData({
       addressdetail: ''
     })
-  },
+  }, 
   modalidShoFN() {
     this.setData({
       modalidShow: false
