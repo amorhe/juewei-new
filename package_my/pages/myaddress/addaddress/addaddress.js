@@ -235,24 +235,10 @@ Page({
 
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
-    let { value } = e.detail;
-    this.setData({ [key]: value })
-  },
-  nameVlaue(e) {
     let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
     let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-    let name = e.detail.value.trim().replace(regEn,'').replace(regCn,'')
-
-
-    this.setData({
-      name
-    })
-  },
-  phoneValue(e) {
-    var value = e.detail.value.replace(/\s+/g, "")
-    this.setData({
-      phone: value
-    })
+    let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '')
+    this.setData({ [key]: value })
   },
   closeFN() {
     this.setData({
