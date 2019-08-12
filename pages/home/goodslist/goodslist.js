@@ -107,6 +107,7 @@ Page({
         isOpen:status,
         shopTakeOut: shopArray[0]
       })
+      console.log(shopArray)
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     }
   },

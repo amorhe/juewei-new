@@ -15,7 +15,7 @@
 <view class="null"></view>
 
 <view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
-  <view a:if="{{isOpen == 2}}">您的定位地址门店未在营业时间 营业时间：{{shopTakeOut[0].start_time}}-{{shopTakeOut[0].end_time}}</view>
+  <view a:if="{{isOpen == 2}}">您的定位地址门店未在营业时间 营业时间：{{shopTakeOut.start_time}}-{{shopTakeOut.end_time}}</view>
   <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
   <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
 </view>
