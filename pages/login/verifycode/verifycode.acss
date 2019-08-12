@@ -1,3 +1,9 @@
+page{
+  height: 50vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 .bindPhone{
   padding: 90rpx 40rpx 0;
   box-sizing: border-box;
@@ -32,10 +38,11 @@
   position: absolute;
   opacity: 0;
   top: 0;
-  left: 0;
+  left: -100rpx;
   width: 100vw;
-  height: 100vh;
+  height: 50vh;
   border: none;
+  color: transparent
 }
 
 .bindButton{

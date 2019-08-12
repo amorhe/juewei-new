@@ -102,10 +102,8 @@ Page({
 
     this.setData({
       menuList: _menuList,
-
     }, async () => {
       await this.getMore()
-
       my.stopPullDownRefresh()
     })
 
@@ -203,6 +201,9 @@ Page({
 
   async changeMenu(e) {
     let { menuList } = this.data
+    my.showLoading({
+      content: '加载中...',
+    });
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
     setTimeout(() => {
@@ -213,7 +214,7 @@ Page({
           this.refresh()
         })
       }, 0)
-    }, 1000)
+    }, 0)
   },
 
 
@@ -228,8 +229,8 @@ Page({
     menuList[cur].page++
 
     menuList.forEach(({ timer }) => clearInterval(timer))
-
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
+
     if (code === 0) {
       list = [...list, ...data]
       timer = setInterval(() => {
