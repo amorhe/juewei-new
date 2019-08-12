@@ -234,12 +234,15 @@ Page({
             let { goods_list } = d
             let { pics } = goods_list[i].goods_comment
             log(result.data)
-            let p = /\"path\"\:\"(\S*)\"\}\,/
-            log(result.data.match(p))
-            pics = [...pics, result.data.match(p)[1]]
-            log(pics, d)
+            let r = JSON.parse(result.data)
+            if (r.code != 0) {
+              return my.showToast({ content: r.msg })
+            }
+            // let p = /\"path\"\:\"(\S*)\"\}\,/
+            // log(result.data.match(p))
+            // pics = [...pics, result.data.match(p)[1]]
+            pics = [...pics, r.data.path]
             d.goods_list[i].goods_comment.pics = pics
-
             this.setData({
               d
             })

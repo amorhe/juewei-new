@@ -235,20 +235,10 @@ Page({
 
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
-    let { value } = e.detail;
+    let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
+    let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
+    let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '')
     this.setData({ [key]: value })
-  },
-  nameVlaue(e) {
-    var value = e.detail.value.replace(/(^\s*)|(\s*$)/g, "")
-    this.setData({
-      'name': value
-    })
-  },
-  phoneValue(e) {
-    var value = e.detail.value.replace(/\s+/g, "")
-    this.setData({
-      phone: value
-    })
   },
   closeFN() {
     this.setData({
@@ -306,7 +296,7 @@ Page({
         _sid: this.data._sid,
         address_id: this.data.addressId,
         sex: this.data.sex,
-        name: this.data.name, // 收货人姓名
+        name: this.data.name.trim(), // 收货人姓名
         phone: this.data.phone, // 手机号
         map_address: this.data.map_address, // 定位地址
         address: this.data.addressdetail, // 收货地址

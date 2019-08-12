@@ -22,7 +22,7 @@
 
 <view class="bottomView" onTap="addressFn">
   <image class='addIcon' src="{{imageUrl}}add.png"/>
-  <text>新增收获地址</text>
+  <text>新增收货地址</text>
 </view>
 <view style="height:60rpx"></view>
 
