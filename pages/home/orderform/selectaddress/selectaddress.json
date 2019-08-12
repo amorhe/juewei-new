@@ -1,6 +1,7 @@
 {
     "defaultTitle": "选择地址",
     "titleBarColor": "#E60012",
+    "backgroundColor": "#fff",
     "usingComponents": {
       "confirm": "../../../components/confirm/confirm"
     }

@@ -14,7 +14,7 @@ Page({
       '待支付',
       '订单已提交',
       '商家已接单',
-      '商家已接单',
+      '正在配送',
       '已送达',
       '订单已取消',
       '订单已取消',
@@ -28,8 +28,8 @@ Page({
       '待支付',
       '订单已提交',
       '商家已接单',
-      '等待取餐',
-      '订单已完成',
+      '待取餐',
+      '已取餐',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -214,8 +214,9 @@ Page({
       let { time } = this.data
       time = setInterval(() => {
         --remaining_pay_second
-        if (remaining_pay_minute === 0 && remaining_pay_second == 0) {
-          return this.getOrderDetail(order_no)
+        if (remaining_pay_minute === 0 && remaining_pay_second == -1) {
+          clearInterval(time)
+          // return this.getOrderDetail(order_no)
         }
         if (remaining_pay_second <= 0) {
           --remaining_pay_minute

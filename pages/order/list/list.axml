@@ -7,8 +7,8 @@
     </view>
   </view>
   <!-- 官方外卖订单 -->
-  <view class="out-list" a:if="{{cur === 0 && takeOutList.length && menuList[cur].finish}}">
-    <view class="out-item" a:for="{{takeOutList}}" onTap="toDetail" data-order_no="{{item.order_no}}">
+  <view class="out-list" a:if="{{cur === 0 && menuList[cur].list.length && menuList[cur].finish}}">
+    <view class="out-item" a:for="{{ menuList[cur].list}}" onTap="toDetail" data-order_no="{{item.order_no}}">
       <view class="out-header">
         <view class="out-header-title">
           <view class="top">
@@ -18,8 +18,8 @@
            {{item.order_ctime}}
           </view>
         </view>
-        <view class="out-item-state">
-          {{takeOutState[item.order_status]}}
+        <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
+         {{(item.order_status == 0 && item.remaining_pay_minute > 0)?takeOutState[item.order_status]:'订单已取消'}}
         </view>
       </view>
       <view class="out-body">
@@ -32,33 +32,33 @@
         </view>
       </view>
       <view class="out-footer">
-        <view class="topay" a:if="{{item.order_status == 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
+        <view class="topay" a:if="{{item.order_status == 0 && item.remaining_pay_minute > 0 }}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
           去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}">
           取消订单
         </view>
-        <view class="topay con" a:if="{{[1,2,3].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[1,2,3].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
-        <view class="cancel-order red" catchTap="toComment" data-order_no="{{item.order_no}}" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}">
+        <view class="cancel-order" catchTap="toComment" data-order_no="{{item.order_no}}" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}">
           评价订单
         </view>
-        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}">
+        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}" catchTap="contact">
           已评价
         </view>
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
-        <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
           投诉
         </view>
       </view>
     </view>
   </view>
   <!-- 门店自提订单 -->
-  <view class="come-list out-list" a:if="{{cur === 1 && pickUpList.length}}">
-    <view class="out-item" a:for="{{pickUpList}}" onTap="toDetail" data-order_no="{{item.order_no}}">
+  <view class="come-list out-list" a:if="{{cur === 1 && menuList[cur].list.length}}">
+    <view class="out-item" a:for="{{menuList[cur].list}}" onTap="toDetail" data-order_no="{{item.order_no}}">
       <view class="out-header">
         <view class="out-header-title">
           <view class="top">
@@ -68,8 +68,8 @@
            {{item.order_ctime}}
           </view>
         </view>
-        <view class="out-item-state">
-          {{pickUpState[item.order_status]}}
+        <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
+          {{(item.order_status == 0 && item.remaining_pay_minute > 0)?takeOutState[item.order_status]:'订单已取消'}}
         </view>
       </view>
       <view class="out-body">
@@ -82,35 +82,35 @@
         </view>
       </view>
       <view class="out-footer">
-        <view class="topay" a:if="{{item.order_status == 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
+        <view class="topay" a:if="{{item.order_status == 0 && item.remaining_pay_minute > 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
          去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
         <view class="cancel-order" a:if="{{[1].includes(item.order_status)}}">
           取消订单
         </view>
-        <view class="topay con" a:if="{{[1,2].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
-        <view class="topay con" a:if="{{[3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
+        <view class="cancel-order" a:if="{{[3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
           导航
         </view>
-        <view class="cancel-order red" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">
+        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">
           评价订单
         </view>
-        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}">
+        <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 1}}" catchTap="contact">
           已评价
         </view>
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
-        <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
           投诉
         </view>
       </view>
     </view>
   </view>
   <!-- 空状态 -->
-  <view class="none" a:if="{{(cur===0&& menuList[cur].finish && takeOutList.length === 0) || (cur===1&& menuList[cur].finish&& pickUpList.length === 0) }}">
+  <view class="none" a:if="{{(menuList[cur].finish && menuList[cur].list.length === 0) }}">
     <image mode="scaleToFill" src="{{imageUrl}}bg_order.png"/>
     <view class="txt">暂无订单</view>
   </view>
