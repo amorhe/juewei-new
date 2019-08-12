@@ -247,7 +247,7 @@
     <view class="order-trace">订单跟踪
       <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
     <view class="order-trace-ul">
-      <view class="order-trace-li" a:for="{{curOrderState}}">
+      <view class="order-trace-li" a:for="{{curOrderState}}" a:if="{{item.time.split(' ')[1] != '00:00:00'}}">
         <view class="order-trace-left">
           <image mode="scaleToFill" src="{{imageUrl}}order1.png" a:if="{{curOrderState.length - 1 != index}}"/>
           <image mode="scaleToFill" src="{{imageUrl}}order3.png" a:if="{{curOrderState.length - 1 == index}}"/>

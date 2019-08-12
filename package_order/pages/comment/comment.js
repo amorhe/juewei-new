@@ -217,6 +217,7 @@ Page({
       sourceType: ['camera', 'album'],
       count: 1,
       success: (res) => {
+        log(res)
         my.showLoading({
           content: '图片上传中...',
         });
@@ -225,7 +226,7 @@ Page({
           fileType: 'image',
           fileName: 'imgFile',
           filePath: res.apFilePaths[0],
-          dataType: 'json',
+          // dataType: 'json',
 
           success: (result) => {
             my.hideLoading()
