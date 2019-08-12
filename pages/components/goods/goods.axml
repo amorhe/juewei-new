@@ -146,40 +146,6 @@
             </view>
           </view>
         </view>
-        <!-- 折扣组合 -->
-        <!-- <view class="goodsContent">
-          <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2623594133,1066000174&fm=26&gp=0.jpg"/>
-          <view class="goodsInfos">
-            <view>
-              <text class="goodsName">人气组合套餐</text>
-              <text class="goodsKind">（超辣）</text>
-            </view>
-            <view class="goodsZuhe">招牌鸭脖(超辣)/大份*2+招牌鸭舌(超辣)*2+招牌鸭锁骨(超辣)*2</view>
-            <view class="goodsSoldNum marginUD">
-              <text>已售：</text>
-              <text class="numberColor" style="font-size:22rpx;">888</text>
-              <text>份</text>
-            </view>
-            <view class="goodsRules goodsCount">
-              <view>
-                <view>
-                  <text>￥</text>
-                  <text>25</text>
-                  <text>/ 份</text>
-                </view>
-              </view>
-              <view class="goodsNumber">
-                <image src="{{imageUrl}}goods_reduce.png" />
-                <text>1</text>
-                <image src="{{imageUrl}}goods_add.png" />
-              </view>
-            </view>
-            <view class="goodsDiscount">
-              <image src="{{imageUrl}}discount.png" />
-              <text>6折  限1份</text>
-            </view>
-          </view>
-        </view> -->
 
       </view>
     </view>

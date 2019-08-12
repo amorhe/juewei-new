@@ -158,12 +158,13 @@ Component({
       })
     },
     scrollEvent(e){
-      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
-      //   let num = ret[0].findIndex(item => item.top>=104.5)
-      //   this.setData({
-      //     goodsType:num
-      //   })
-      // })
+      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
+        let num = ret[0].findIndex(item => item.top>=104.5);
+        console.log(num)
+        // this.setData({
+        //   goodsType:num
+        // })
+      })
     },
     // sku商品
     onCart(shopcartList,shopcartAll,priceAll,shopcartNum,priceFree){
@@ -245,7 +246,7 @@ Component({
         shopcartNum,
         priceFree
       })
-      console.log(goodlist,shopcartAll)
+      // console.log(goodlist,shopcartAll)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
