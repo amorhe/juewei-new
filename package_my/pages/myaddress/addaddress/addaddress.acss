@@ -135,12 +135,12 @@
   margin: 100rpx auto 0;
 }
 
-.rmButton{
+.rmButton {
   box-sizing: border-box;
   background: #fff;
   color: #000;
-  border:1px solid #000;
-  margin-top:40rpx;
+  border: 1px solid #000;
+  margin-top: 40rpx;
 }
 
 .address-sm {
@@ -187,12 +187,17 @@ input {
 }
 
 .post-name-left {
+  height: 72rpx;
+  line-height: 72rpx;
+  margin: 0;
   font-size: 28rpx;
   font-weight: 400;
   color: rgba(51, 51, 51, 1);
 }
 
 .post-name-right {
+  height: 72rpx;
+  line-height: 72rpx;
   flex: 1;
   font-size: 28rpx;
   font-weight: 400;
@@ -201,7 +206,7 @@ input {
   background: transparent;
   border-bottom: 1px solid #eee;
   margin: 0;
-  padding: 0 0 20rpx;
+  /* padding: 0 0 20rpx; */
 }
 
 .post-sex {
@@ -257,16 +262,16 @@ input {
   font-weight: 300;
 }
 
-.pop-top text.title{
-font-size:34rpx;
-font-weight:500;
-color:rgba(51,51,51,1);
+.pop-top text.title {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
 }
 
 .pop-top text.sure {
-font-size:28rpx;
-font-weight:400;
-color:rgba(230,0,18,1);
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(230, 0, 18, 1);
 }
 
 .my-pop {
@@ -311,96 +316,97 @@ color:rgba(230,0,18,1);
 }
 
 /* 门店 */
-.shop{
+
+.shop {
   background: white;
-  padding:  32rpx 32rpx 0;
+  padding: 32rpx 32rpx 0;
 }
 
-.shop-search{
+.shop-search {
   display: flex;
   align-items: center;
   width: 620rpx;
   height: 64rpx;
   line-height: 64rpx;
   border-radius: 32rpx;
-  padding:0 32rpx ;
+  padding: 0 32rpx;
   background: #eee;
 }
 
-.search-icon{
+.search-icon {
   width: 24rpx;
   height: 24rpx;
   margin-right: 10rpx
 }
 
-.shop-ul{
+.shop-ul {
   padding: 28rpx 0 0;
 }
 
-.shop-item{
+.shop-item {
   display: flex;
   padding: 24rpx 0;
   border-bottom: 1px solid #eee;
 }
 
-.shop-detail{
+.shop-detail {
   flex: 1
 }
 
-.shop-detail-top{
+.shop-detail-top {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10rpx;
 }
 
-
-.shop-title{
-font-size:28rpx;
-font-weight:600;
-color:rgba(51,51,51,1);
+.shop-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
 }
 
-.shop-distance{
-display: flex;
-font-size:28rpx;
-font-weight:400;
-color:#E60012;
+.shop-distance {
+  display: flex;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #E60012;
 }
 
-.shop-address{
-font-size:22rpx;
-font-weight:400;
-color:rgba(153,153,153,1);
+.shop-address {
+  font-size: 22rpx;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
 }
 
-.shop-position{
+.shop-position {
   width: 32rpx;
   height: 32rpx;
   margin-right: 10rpx;
 }
 
-
-
 /* 弹框 */
 
-.modalInfo{
+.modalInfo {
   padding: 50rpx 0;
 }
 
-.footerButton{
+.footerButton {
   display: flex;
 }
-.modalButton{
+
+.modalButton {
   flex: 1;
   text-align: center;
 }
-.am-modal-footer{
-  background: rgba(0,0,0,0)
+
+.am-modal-footer {
+  background: rgba(0, 0, 0, 0)
 }
 
-.confirm{
+.confirm {
   color: #999;
 }
-.cancel{
+
+.cancel {
   color: #E60012;
 }
