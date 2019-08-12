@@ -3,7 +3,7 @@
     <view class="post-address">
       <view class="post-name">
         <view class="item post-name-left">联系人</view>
-        <input class="post-name-right" placeholder="姓名" maxlength="12" value="{{name}}" data-key="name" onInput="nameVlaue"/>
+        <input class="post-name-right" placeholder="姓名" maxlength="12" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="nameVlaue" onBlur="nameVlaue"/>
       </view>
       <view class="post-sex">
         <text class="item"></text>
@@ -12,7 +12,7 @@
       </view>
       <view class="list">
         <view class="item">电话</view>
-        <input placeholder="手机号码" value="{{phone}}" maxlength="11"  data-key="phone" onInput="phoneValue"/>
+        <input placeholder="手机号码" type="numberpad" value="{{phone}}" maxlength="11"  data-key="phone" onInput="phoneValue"/>
       </view>
       <view class="select-address list" onTap="chooseLocation">
         <view class="item">地址</view>
