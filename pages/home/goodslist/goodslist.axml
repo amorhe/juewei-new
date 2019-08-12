@@ -1,120 +1,120 @@
-<view class="{{showShopcar?'contanier':''}}" a:if="{{!isSelf}}">
-<!-- 定位 -->
-<view class="goodsPosition">
-  <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" >
-    <image src="{{imageUrl}}position.png"/>
-    <text>{{firstAddress}}</text>
-    <image src="{{imageUrl}}arrow_right1.png"/>
-  </navigator>
-  <view class="positionRight">
-    <view class="{{type==1?'activeType':''}}" onTap="chooseTypes" data-type='waimai'>外卖</view>
-    <view class="{{type==2?'activeType':''}}" onTap="chooseTypes" data-type='ziti'>自提</view>
-  </view>
-</view>
-
-<view class="null"></view>
-
-<view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
-  <view a:if="{{isOpen == 2}}">您的定位地址门店未在营业时间 营业时间：{{shopTakeOut.start_time}}-{{shopTakeOut.end_time}}</view>
-  <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
-  <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
-</view>
-
-<view class="homeSwiper">
-  <swiper indicator-dots="{{imgUrls.length>1?true:false}}" autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
-    <block a:for="{{imgUrls}}">
-      <swiper-item>
-        <image src="{{imageUrl2 + item.pic_src}}" class="slide-image" onTap="linkUrl" data-link="{{item.link_url}}" />
-      </swiper-item>
-    </block>
-  </swiper>
-</view>
-
-<image src="{{imageUrl}}advantage.png" class="goodsMessage" />
-
-<!-- 四个分类 -->
-<view class="fourType">
-  <navigator url="/package_my/pages/membercard/membercard">
-    <view>
-      <image src="{{imageUrl}}home_membercard.png" />
-      <view>会员卡</view>
-    </view>
-  </navigator>
-  <navigator url="/pages/vip/index/index" open-type="switchTab">
-    <view>
-      <image src="{{imageUrl}}home_vip.png" />
-      <view>VIP专享</view>
-    </view>
-  </navigator>
-  <navigator url="/package_my/pages/coupon/coupon">
-    <view>
-      <image src="{{imageUrl}}home_coupon.png" />
-      <view>卡券</view>
-    </view>
-  </navigator>
-  <navigator url="/package_my/pages/nearshop/nearshop">
-    <view>
-      <image src="{{imageUrl}}home_nearshop.png" />
-      <view>附近门店</view>
-    </view>
-  </navigator>
-</view>
-
-<!-- 活动展位 -->
-<view a:for="{{showListObj}}">
-  <!-- 类型1 -->
-  <view class="activityBox1 marginBEight" a:if="{{item.type==1}}">
-    <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
-  </view>
-  <!-- 类型2 -->
-  <view class="activityBox marginBEight" a:if="{{item.type==2}}">
-    <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
-    <view>
-      <image src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.pic_src[1]}}" onTap="imageLink"/>
-      <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{imageUrl2 + item.pic_src[2]}}" onTap="imageLink"/>
+<view a:if="{{!isSelf}}">
+  <!-- 定位 -->
+  <view class="goodsPosition">
+    <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" >
+      <image src="{{imageUrl}}position.png"/>
+      <text>{{firstAddress}}</text>
+      <image src="{{imageUrl}}arrow_right1.png"/>
+    </navigator>
+    <view class="positionRight">
+      <view class="{{type==1?'activeType':''}}" catchTap="chooseTypes" data-type='waimai'>外卖</view>
+      <view class="{{type==2?'activeType':''}}" catchTap="chooseTypes" data-type='ziti'>自提</view>
     </view>
   </view>
 
-  <!-- 类型3 -->
-  <view class="activityBox3 marginBEight" a:if="{{item.type==3}}">
-    <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
-    <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.pic_src[1]}}" onTap="imageLink"/>
-  </view>
-  <!-- 类型4 -->
-  <view class="activityWrap marginBEight" a:if="{{item.type==4}}">
-    <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
-  </view>
-</view>
+  <view class="null"></view>
 
-<navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll">
-  <!-- 推荐门店 -->
-  <view class="shopDefault">
-    <view>
-      <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
-      <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
-      <view class="shopMessage">
-        <view>{{shopTakeOut.title}}</view>
-        <view>在售商品数{{shopTakeOut.goods_num}}</view>
+  <view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
+    <view a:if="{{isOpen == 2}}">您的定位地址门店未在营业时间 营业时间：{{shopTakeOut.start_time}}-{{shopTakeOut.end_time}}</view>
+    <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
+    <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
+  </view>
+
+  <view class="homeSwiper">
+    <swiper indicator-dots="{{imgUrls.length>1?true:false}}" autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
+      <block a:for="{{imgUrls}}">
+        <swiper-item>
+          <image src="{{imageUrl2 + item.pic_src}}" class="slide-image" onTap="linkUrl" data-link="{{item.link_url}}" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <image src="{{imageUrl}}advantage.png" class="goodsMessage" />
+
+  <!-- 四个分类 -->
+  <view class="fourType">
+    <navigator url="/package_my/pages/membercard/membercard">
+      <view>
+        <image src="{{imageUrl}}home_membercard.png" />
+        <view>会员卡</view>
+      </view>
+    </navigator>
+    <navigator url="/pages/vip/index/index" open-type="switchTab">
+      <view>
+        <image src="{{imageUrl}}home_vip.png" />
+        <view>VIP专享</view>
+      </view>
+    </navigator>
+    <navigator url="/package_my/pages/coupon/coupon">
+      <view>
+        <image src="{{imageUrl}}home_coupon.png" />
+        <view>卡券</view>
+      </view>
+    </navigator>
+    <navigator url="/package_my/pages/nearshop/nearshop">
+      <view>
+        <image src="{{imageUrl}}home_nearshop.png" />
+        <view>附近门店</view>
+      </view>
+    </navigator>
+  </view>
+
+  <!-- 活动展位 -->
+  <view a:for="{{showListObj}}">
+    <!-- 类型1 -->
+    <view class="activityBox1 marginBEight" a:if="{{item.type==1}}">
+      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+    </view>
+    <!-- 类型2 -->
+    <view class="activityBox marginBEight" a:if="{{item.type==2}}">
+      <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+      <view>
+        <image src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.pic_src[1]}}" onTap="imageLink"/>
+        <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{imageUrl2 + item.pic_src[2]}}" onTap="imageLink"/>
       </view>
     </view>
 
-    <view>
-      <view class="shopDefaultRight">
-        <view>
-          <image src="{{imageUrl}}position.png"/>
-          <view>距离{{shopTakeOut.distance}}米</view>
-        </view>
-        <view>
-          <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
-          <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
-          <view class="typeBtn2">自提</view>
+    <!-- 类型3 -->
+    <view class="activityBox3 marginBEight" a:if="{{item.type==3}}">
+      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.pic_src[1]}}" onTap="imageLink"/>
+    </view>
+    <!-- 类型4 -->
+    <view class="activityWrap marginBEight" a:if="{{item.type==4}}">
+      <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+    </view>
+  </view>  
+</view>
+<!-- <view style="height:152rpx" a:if="{{}}"></view> -->
+<navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll" a:if="{{!isSelf}}">
+    <!-- 推荐门店 -->
+    <view class="shopDefault">
+      <view>
+        <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
+        <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
+        <view class="shopMessage">
+          <view>{{shopTakeOut.title}}</view>
+          <view>在售商品数{{shopTakeOut.goods_num}}</view>
         </view>
       </view>
-      <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+
+      <view>
+        <view class="shopDefaultRight">
+          <view>
+            <image src="{{imageUrl}}position.png"/>
+            <view>距离{{shopTakeOut.distance}}米</view>
+          </view>
+          <view>
+            <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
+            <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
+            <view class="typeBtn2">自提</view>
+          </view>
+        </view>
+        <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+      </view>
     </view>
-  </view>
-</navigator>
-</view>
+  </navigator>
 
 <view class="shopUp" a:if="{{isSelf}}">
   <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>

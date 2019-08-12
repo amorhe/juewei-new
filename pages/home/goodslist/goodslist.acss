@@ -109,17 +109,12 @@ page {
   position: absolute;
   left: 32rpx;
   bottom: 23rpx;
-  /* margin-top: -123rpx;
-  margin-left: 32rpx; */
   box-sizing: border-box;
   padding: 24rpx 16rpx;
   display: flex;
   justify-content: space-between;
   background: #fff;
-  /* position: -webkit-sticky;
-  position: sticky;
-  top: 0;*/
-  z-index: 1000; 
+  z-index: 100
 }
 .shopBoxs>view:nth-child(1){
   display: flex

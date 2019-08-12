@@ -158,13 +158,13 @@ Component({
       })
     },
     scrollEvent(e){
-      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
-        let num = ret[0].findIndex(item => item.top>=104.5);
-        console.log(num)
-        // this.setData({
-        //   goodsType:num
-        // })
-      })
+      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
+      //   let num = ret[0].findIndex(item => item.top>=104.5);
+      //   console.log(num)
+      //   this.setData({
+      //     goodsType:num
+      //   })
+      // })
     },
     // sku商品
     onCart(shopcartList,shopcartAll,priceAll,shopcartNum,priceFree){

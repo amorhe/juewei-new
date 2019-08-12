@@ -2,6 +2,9 @@ page {
   font-size: 28rpx;
   color: #333;
 }
+*, ::before, ::after{
+-webkit-tap-highlight-color:rgba(255,255,255, 0)
+}
 
 .mask {
   width: 100vw;
