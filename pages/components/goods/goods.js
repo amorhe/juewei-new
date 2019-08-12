@@ -115,7 +115,7 @@ Component({
     getcouponsExpire(_sid){
       couponsExpire(_sid).then((res) => {
         // console.log(res)
-        if(res.data.length>0){
+        if(Object.keys(res.data).length>0){
           res.data.days = datedifference(res.data.start_time,res.data.end_time)
           this.setData({
             couponsExpire:res.data,
