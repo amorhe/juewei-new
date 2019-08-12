@@ -62,5 +62,5 @@ Page({
     my.switchTab({ 
       url: '/pages/home/goodslist/goodslist'
     })
-  }
+  },
 });

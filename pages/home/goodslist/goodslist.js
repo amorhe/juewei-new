@@ -273,8 +273,12 @@ Page({
       }
       
       // 获取参与加价购商品的列表（可换购）
-      if(res.data.MARKUP && res.data.MARKUP.goods){
-        app.globalData.repurseGoods = res.data.MARKUP.goods;
+      if(res.data.MARKUP !=null){
+        if(res.data.MARKUP.goods.length==0){
+          app.globalData.repurseGoods = [];
+        }else{
+           app.globalData.repurseGoods = res.data.MARKUP.goods;
+        }
         for(let item of res.data.MARKUP.goods){
           for(let value of shopGoods){
             if(item.goods_code == value.sap_code){
@@ -322,7 +326,7 @@ Page({
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
       app.globalData.goodsArr = goodsArr;
-      // console.log(goodsNew)
+      console.log(goodsNew)
       this.setData({
         shopGoodsAll:goodsNew
       })

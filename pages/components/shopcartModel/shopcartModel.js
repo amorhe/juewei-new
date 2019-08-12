@@ -16,8 +16,8 @@ Component({
     confirmButtonText:'',
     cancelButtonText: '',
     type:'',
-    btnClick:true
-
+    btnClick:true,
+    freeId:false
   },
   props: {
    onClear: (data) => console.log(data),
@@ -35,6 +35,15 @@ Component({
     if(app.globalData.type==1){
       this.setData({
         type:1
+      })
+    }
+    if(app.globalData.freeId){
+      this.setData({
+        freeId:true
+      })
+    }else{
+      this.setData({
+        freeId:false
       })
     }
     // 判断是不是起购
@@ -127,7 +136,7 @@ Component({
         goodlist[`${item.goods_code}_${item.goods_format}`].sumnum +=1;
       }
       this.changeshopcart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree)
-      console.log(goodlist)
+      // console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist // 要缓存的数据

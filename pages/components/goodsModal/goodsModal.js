@@ -145,7 +145,7 @@ Component({
         shopcartAll
       })
       this.onCart(goodlist,shopcartAll,priceAll,shopcartNum,priceFree);
-      console.log(goodlist)
+      // console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据

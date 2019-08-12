@@ -1,7 +1,7 @@
 import {imageUrl,ak} from '../../common/js/baseUrl'
 import {addressList,GetLbsShop,NearbyShop} from '../../common/js/home'
 import {bd_encrypt} from '../../common/js/map'
-import {cur_dateTime,compare} from '../../common/js/time'
+import {cur_dateTime,compare,sortNum} from '../../common/js/time'
 var app = getApp();
 Page({
   data: {
@@ -12,7 +12,8 @@ Page({
     nearAddress:[],   // 附近地址
     isSuccess:false,
     info:'',   // 一条地址信息
-    inputAddress:''  //手动输入的地址
+    inputAddress:'',  //手动输入的地址
+    loginOpened:false
   },
   onLoad(e) {
     if(e.type){
@@ -84,7 +85,6 @@ Page({
       my.request({
         url: str,
         success: (res) => {
-          // console.log(res.data.results)
           this.setData({
             nearAddress:res.data.results
           })
@@ -128,11 +128,16 @@ Page({
     })
   },
   switchAddress(e){
-    // console.log(e)
-    if(!this.data.isSuccess){
+    if(!this.data.isSuccess && e.currentTarget.dataset.address==''){
       my.showToast({
         content:'定位失败，请选择其他收货地址！'
       });
+    }
+    if(e.currentTarget.dataset.address!=''){
+      my.switchTab({
+        url:'/pages/home/goodslist/goodslist'
+      });
+      return
     }
     let mapPosition = '';
     switch(parseInt(e.currentTarget.dataset.type)){
@@ -151,6 +156,7 @@ Page({
       data: mapPosition.bd_lng, // 要缓存的数据
     });
     this.getLbsShop(mapPosition.bd_lng,mapPosition.bd_lat,e.currentTarget.dataset.info.name);
+    this.getNearbyShop(mapPosition.bd_lng,mapPosition.bd_lat)
   },
   switchPositionAddress(e){
     console.log(e)
@@ -164,18 +170,20 @@ Page({
       data: position[0] // 要缓存的数据
     });
     this.getLbsShop(position[0],position[1],e.currentTarget.dataset.info.user_address_map_addr);
+    this.getNearbyShop(position[0],position[1])
   },
   // 外卖附近门店
-  getLbsShop(lng,lat,chooseAddress) {
+  getLbsShop(lng,lat,address) {
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
+    app.globalData.address = address
     GetLbsShop(location).then((res) => {
       console.log(res)
       if (res.code == 0 && res.data.length > 0) {
         for (let i = 0; i < res.data.length; i++) {
           const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
-          app.globalData.isOpen = status;
+          app.globalData.isOpen = status
           // 判断是否营业
           if (status == 1 || status == 3) {
             shopArr1.push(res.data[i]);
@@ -184,29 +192,30 @@ Page({
           }
         }
         // 按照goods_num做降序排列
-        shopArr1.sort(compare('goods_num'));
-        shopArr2.sort(compare('goods_num'));
-        const shopArray = shopArr1.concat(shopArr2);
+        let shopArray = shopArr1.concat(shopArr2);
+        shopArray.sort((a,b) => {
+          var value1 = a.goods_num,
+              value2 = b.goods_num;
+          if(value1 <= value2){
+              return a.distance - b.distance;
+          }
+          return value2 - value1;
+        });
+        shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        app.globalData.address = chooseAddress;
-        this.getNearbyShop(lng,lat);
+        this.getNearbyShop();
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
         })
-      } else if (res.code == 5 || res.data.length == 0) {
-        // this.setData({
-        //   content:'您的定位地址无可配送门店',
-        //   confirmButtonText:'去自提',
-        //   cancelButtonText:'修改地址',
-        //   modalShow:true,
-        //   mask:true
-        // })
-        my.showToast({
-          content:'当前选择的地址无可浏览的门店，请选择其他地址！',
-          success: (res) => {
-            
-          },
-        });
+      } else {
+        this.setData({
+          loginOpened:true
+        })
+        // 提示切换地址
+        // my.showToast({
+        //   content: "当前选择地址无可浏览的门店，请切换地址！", 
+        // });
+
       }
 
     })
@@ -222,22 +231,20 @@ Page({
         if (res.data.contents && res.data.contents.length > 0) {
           this.getSelf(res.data.contents)
         } else {
-          // 没有扩大搜索范围到100公里
+          // 没有扩大搜索范围到1000000公里
           my.request({
-            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=100000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
+            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
             success: (conf) => {
-              if (conf.data.contents > 0) {
+              if (conf.data.contents && conf.data.contents.length > 0) {
                 this.getSelf(conf.data.contents)
               } else {
                 // 提示切换地址
-                my.showToast({
-                  content: "当前定位地址无可浏览的门店，请切换地址！",
-                  success: (res) => {
-                    my.navigateTo({
-                      url: '/pages/home/selecttarget/selecttarget'
-                    });
-                  },  
-                });
+                // my.showToast({
+                //   content: "当前选择地址无可浏览的门店，请切换地址！" 
+                // });
+                this.setData({
+                  loginOpened:true
+                })
               }
             },
           });
@@ -248,13 +255,12 @@ Page({
   },
   // 自提
   getSelf(obj) {
-    const shopArr1 = [];
-    const shopArr2 = [];
+    let shopArr1 = [];
+    let shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
-      console.log(res)
       for (let i = 0; i < res.length; i++) {
-        const status = cur_dateTime(res[i].start_time, res[i].end_time);
-        app.globalData.isOpen = status;
+        let status = cur_dateTime(res[i].start_time, res[i].end_time);
+        app.globalData.isOpen = status
         // 判断是否营业
         if (status == 1 || status == 3) {
           shopArr1.push(res[i]);
@@ -262,9 +268,12 @@ Page({
           shopArr2.push(res[i]);
         }
       }
+      // 根据距离最近排序
+      shopArr1.sort(sortNum('distance'));
+      shopArr2.sort(sortNum('distance'));
       const shopArray = shopArr1.concat(shopArr2);
+      shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
-      my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     })
   },
   // 新增地址
@@ -279,5 +288,14 @@ Page({
         url:"/package_my/pages/myaddress/addaddress/addaddress"
       });
     }
+  },
+  onModalRepurse(){
+    app.globalData.type = 2;
+    this.setData({
+      loginOpened:false
+    })
+    my.switchTab({
+      url:'/pages/home/goodslist/goodslist'
+    })
   }
 });

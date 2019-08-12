@@ -35,6 +35,7 @@ Page({
         app.globalData.address =  res.pois[0].name;
         app.globalData.position = res;
         that.getLbsShop();
+        that.getNearbyShop();
         that.setData({
           city:res.city
         })
@@ -80,8 +81,6 @@ Page({
         });
         shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        // my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
-        this.getNearbyShop();
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
         })
@@ -108,7 +107,7 @@ Page({
       url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=${str}`,
       success: (res) => {
         // 3公里有门店
-        if (res.data.contents.length > 0) {
+        if (res.data.contents && res.data.contents.length > 0) {
           this.getSelf(res.data.contents)
         } else {
           // 没有扩大搜索范围到1000000公里
@@ -137,10 +136,12 @@ Page({
   },
   // 自提
   getSelf(obj) {
-    const shopArr1 = [];
-    const shopArr2 = [];
+    let shopArr1 = [];
+    let shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
       for (let i = 0; i < res.length; i++) {
+        let status = cur_dateTime(res[i].start_time, res[i].end_time);
+        app.globalData.isOpen = status;
         // 判断是否营业
         if (status == 1 || status == 3) {
           shopArr1.push(res[i]);
@@ -154,24 +155,22 @@ Page({
       const shopArray = shopArr1.concat(shopArr2);
       shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
-      // my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
-      console.log(shopArray)
-      my.switchTab({
-        url: '/pages/home/goodslist/goodslist'
-      })
     })
   },
   onCounterPlusOne(e){
-    console.log(e)
     // 点击左边去自提
     if(e.type==1 && e.isType=="noShop") {
+      console.log(e)
       this.setData({
         modalShow:e.modalShow,
         mask:e.mask,
         type:2
       })
       app.globalData.type = 2;
-      this.getNearbyShop();
+      // this.getNearbyShop();
+      my.switchTab({
+        url: '/pages/home/goodslist/goodslist'
+      })
     }else{
       my.navigateTo({
         url: '/pages/home/selecttarget/selecttarget?type=true'

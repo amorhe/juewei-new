@@ -14,7 +14,7 @@
 <view class="positionIng">
   <view class="fontGray">当前定位</view>
   <view class="positionTxt">
-    <view class="flexSpecial" onTap="switchAddress" data-info="{{info}}" data-type="1">
+    <view class="flexSpecial" onTap="switchAddress" data-info="{{info}}" data-type="1" data-address="{{addressIng}}">
       <image src="{{imageUrl}}position.png"/>
       <text a:if="{{isSuccess}}">{{addressIng}}</text>
       <text a:if="{{!isSuccess}}">定位失败</text>
@@ -45,8 +45,16 @@
 <view class="nearAddressBox">
   <view class="fontGray">附近地址</view>
   <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}" data-type="3">{{item.name}}</view>
-  <!-- <view class="nearList">北京传媒大学西校区</view> -->
 </view>
 
 <!-- 提示框 -->
 <!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->
+<!--未登录提示 -->
+<modal show="{{loginOpened}}" showClose="{{ false }}">
+  <view class="modalInfo">
+      当前选择地址无可浏览的门店!
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton" onTap="onModalRepurse">去自提</view>
+  </view>
+</modal>

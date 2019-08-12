@@ -1,4 +1,5 @@
 @import '../../../package_my/pages/nearshop/nearshop.acss';
+@import'../../order/list/list.acss';
 .positionIng {
   padding: 18rpx 32rpx 16rpx;
   border-bottom: 16rpx #F5F5F5 solid

@@ -350,19 +350,29 @@ Page({
         }
         // 参与加价购的商品
         let repurseTotalPrice=0;
-        let repurseGoods = app.globalData.repurseGoods;
-        for(let item of repurseGoods){
-          for(let value of goodsReal){
-            if(item.goods_code == value.sap_code && value.goods_type!="DIS"){
-              repurseTotalPrice += value.goods_price * value.goods_quantity;
-              if(repurseTotalPrice >= this.data.full_money){
-                this.setData({
-                  showRepurse:true
-                })
+        if(app.globalData.repurseGoods.length == 0){
+          if(res.data.activity_list[''].real_price >= this.data.full_money){
+            this.setData({
+              showRepurse:true
+            })
+          }
+        }else{
+          for(let item of app.globalData.repurseGoods){
+            for(let value of goodsReal){
+              if(item.goods_code == value.sap_code && value.goods_type!="DIS"){
+                repurseTotalPrice += value.goods_price * value.goods_quantity;
+                console.log('qwe',repurseTotalPrice)
+                console.log('qwe',this.data.full_money)
+                if(repurseTotalPrice >= this.data.full_money){
+                  this.setData({
+                    showRepurse:true
+                  })
+                }
               }
             }
           }
         }
+        
 
         //  优惠券
         let coupon_money = 0;

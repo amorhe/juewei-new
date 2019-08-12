@@ -1,5 +1,5 @@
 import {imageUrl,ak} from '../../../pages/common/js/baseUrl'
-import {NearbyShop} from '../../../pages/common/js/home'
+import {MyNearbyShop} from '../../../pages/common/js/home'
 import {guide} from '../../../pages/common/js/li-ajax'
 var app = getApp();
 Page({
@@ -73,7 +73,7 @@ Page({
       url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
       success: (res) => {
         const obj = res.data.contents;
-        NearbyShop(JSON.stringify(obj)).then((conf) => {
+        MyNearbyShop(JSON.stringify(obj)).then((conf) => {
           console.log(conf)
           let arr = conf
           .map(({location}) => ({
