@@ -84,7 +84,7 @@ Page({
         })
         my.setStorageSync({key:'shop_id',data:app.globalData.shopIng.shop_id});
       }
-      console.log(app.globalData.shopIng)
+      // console.log(app.globalData.shopIng)
       this.setData({
         jingxuan:app.globalData.shopIng.jingxuan || false
       })
