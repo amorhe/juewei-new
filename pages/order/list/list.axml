@@ -19,12 +19,12 @@
           </view>
         </view>
         <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
-         {{(item.order_status == 0 && item.remaining_pay_minute > 0)?takeOutState[item.order_status]:'订单已取消'}}
+         {{(item.order_status == 0 && item.remaining_pay_minute < 0)? '订单已取消' : takeOutState[item.order_status]}}
         </view>
       </view>
       <view class="out-body">
         <view class="left">
-          {{item.goods[0].goods_name + '('+ item.goods[0].goods_taste +')'}} 等{{item.goods.length}}件商品
+          {{item.goods[0].goods_name }} <text a:if="{{item.goods[0].goods_taste}}">{{ '('+ item.goods[0].goods_taste +')'}}</text>  等{{item.goods.length}}件商品
         </view>
         <view class="right">
           <text class="y">￥</text>
@@ -69,7 +69,7 @@
           </view>
         </view>
         <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
-          {{(item.order_status == 0 && item.remaining_pay_minute > 0)?takeOutState[item.order_status]:'订单已取消'}}
+          {{(item.order_status == 0 && item.remaining_pay_minute < 0)? '订单已取消' : takeOutState[item.order_status]}}
         </view>
       </view>
       <view class="out-body">
