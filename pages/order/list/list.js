@@ -178,6 +178,11 @@ Page({
     })
   },
 
+  makePhoneCall(e) {
+    const { dis_tel } = e.currentTarget.dataset
+    my.makePhoneCall({ number:dis_tel });
+  },
+
 
   /**
    * @function 关闭modal
