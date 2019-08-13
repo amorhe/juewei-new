@@ -87,7 +87,7 @@ Component({
       })
     },
     onCounterPlusOne(data) {
-      console.log(data)
+      // console.log(data)
       this.setData({
         mask: data.mask,
         modalShow: data.modalShow
@@ -188,9 +188,6 @@ Component({
       if (this.data.btnClick == false) {
         return
       }
-      // if(){
-      //   return
-      // }
       this.setData({
         btnClick: false
       })
@@ -199,7 +196,11 @@ Component({
           btnClick: true
         })
       }, 1000)
-
+      
+      //  数据加载完成前防止点击
+      if(!app.globalData.goodsArr){
+        return
+      }
       // 未登录
       if (my.getStorageSync({ key: 'user_id' }).data == null) {
         my.navigateTo({
