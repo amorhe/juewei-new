@@ -373,5 +373,10 @@ Page({
     my.navigateTo({
       url:e.currentTarget.dataset.link
     });
+  },
+  navigate(e){
+    my.navigateTo({
+      url:e.currentTarget.dataset.url
+    });
   }
 });
