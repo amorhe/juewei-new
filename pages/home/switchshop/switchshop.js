@@ -3,9 +3,8 @@ var app = getApp();
 Page({
   data: {
     imageUrl,
-     // 地图中心点
-    longitude: my.getStorageSync({key:'lng'}).data,
-    latitude: my.getStorageSync({key:'lat'}).data,
+    longitude:0,// 地图中心点
+    latitude:0,
     markersArray: [],
     shopList: [],   //门店列表
     type:''
@@ -63,4 +62,10 @@ Page({
       url: '/pages/home/goodslist/goodslist'
     })
   },
+  onShow(){
+     this.setData({
+       longitude: my.getStorageSync({key:'lng'}).data,
+       latitude: my.getStorageSync({key:'lat'}).data,
+    })
+  }
 });
