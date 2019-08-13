@@ -73,6 +73,7 @@ Page({
     // 初始化默认外卖
     let shopArray = [];
     if(app.globalData.shopIng){
+      console.log('shopArray',app.globalData.shopIng);
       if(my.getStorageSync({key:'shop_id'}).data!=app.globalData.shop_id){
         this.getCompanyGoodsList(app.globalData.shopIng.company_sale_id); //获取公司所有商品
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, app.globalData.shopIng.company_sale_id);//banner
@@ -98,6 +99,7 @@ Page({
           key: 'self', // 缓存数据的key
         }).data;
       }
+      console.log('shopArray',shopArray);
       this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
@@ -113,6 +115,7 @@ Page({
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
   },
+
   // 关闭提醒
   closeOpen() {
     this.setData({
@@ -131,6 +134,7 @@ Page({
       }else{
         shopTakeOut = my.getStorageSync({key:'self'}).data[0]
       }
+      console.log('shopTakeOut',app.globalData.shopIng,shopTakeOut);
       this.setData({
         shopTakeOut,
         type:2
