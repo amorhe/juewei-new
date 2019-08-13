@@ -1,6 +1,12 @@
 .activeFont {
   font-weight: bold
 }
+
+page{
+  background: #fff;
+}
+
+
 .couponUl {
   padding: 16rpx 32rpx;
   background: #F5F5F5;
@@ -254,3 +260,10 @@
 .rule view{
  line-height: 1.5
 } 
+
+.noShow{
+  display: block;
+  width: 320rpx;
+  height: 320rpx;
+  margin: 200rpx auto;
+}

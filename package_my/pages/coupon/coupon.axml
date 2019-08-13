@@ -49,7 +49,7 @@
                   <view>7、若您对本活动规则有任何疑问，绝味鸭脖将会在法律允许的范围内对本活动规则给与必要的说明和解释，联系绝味鸭脖全国在线闪电客服400-999-5917</view>
                 </view>
               </view>
-              <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
+              <image mode="scaleToFill" a:if="{{couponList.length!==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
             </view>
             <view class="cardMiddle" hidden="{{activeTab==1}}">
               <navigator url="/package_my/pages/coupon/couponRecord/couponRecord">查看历史优惠券</navigator>
@@ -70,6 +70,7 @@
                 </view>
               </view>
             </view>
+             <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
             <navigator url="/package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord" class="fontSmallGray codeMiddle">查看历史兑换码</navigator>
           </view>
         </tab-content>

@@ -1,7 +1,7 @@
 {
   "defaultTitle": "兑换详情",
   "titleBarColor": "#ff0000",
-  "transparentTitle": "always",
+  "transparentTitle": "auto",
   "usingComponents":{
     "modal": "mini-antui/es/modal/index",
     "popup": "mini-antui/es/popup/index"
