@@ -21,10 +21,10 @@
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
     <view class="out-footer" a:if="{{!d.order_cancel_reason}}">
-      <view class="cancel-order" a:if="{{[1,2,3,4].includes(d.order_status_info.order_status) && ([2,3,4].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' )}}" catchTap="showCancel">
+      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status) && !([2,3,4].includes(d.order_status_info.order_status) && d.dis_tag == 'ZPS' )}}" catchTap="showCancel">
           取消订单
       </view>
-      <view class="cancel-order" a:if="{{([2].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' && d.order_status_info.dis_status == 2 )}}" catchTap="makePhoneCall">
+      <view class="cancel-order" a:if="{{([2,3].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' && [2,4].includes(d.order_status_info.dis_status) && !['','0000-00-00 00:00:00'].includes(d.dis_get_time))}}"  data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
           联系骑手
       </view>
       <view class="red cancel-order" a:if="{{[1,2,3,4,5,6,7,8,9,10].includes(d.order_status_info.order_status) && !([4].includes(d.order_status_info.order_status) && d.dis_tag == 'ZPS' )}}" catchTap="contact">
@@ -77,7 +77,9 @@
     </view>
     <view class="good-list">
       <view class="good-item" a:for="{{d.goods_list}}">
-        <image mode="scaleToFill" src="{{item.goods_img ? item.goods_img : imageUrl + 'received.png' }}"/>
+        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG'}}" src="{{item.goods_img ? item.goods_img : imageUrl + 'activity_default.png' }}"/>
+        <image amode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ imageUrl2 + item.goods_img }}"/>
+
         <view class="body">
           <view class="name">
             <view class="top">

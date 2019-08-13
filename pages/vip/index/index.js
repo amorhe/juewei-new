@@ -46,20 +46,12 @@ Page({
 
   },
   async onShow() {
-    let {
-      city_id,
-      district_id
-    } = await getAddressId()
 
     await this.getUserPoint()
     let _sid = await getSid()
 
-    let company_id = my.getStorageSync({
-      key: 'takeout', // 缓存数据的key
-    })
-    company_id = company_id.data ? company_id.data[0].company_sale_id : 1;
-
-    log(app)
+    log(app.globalData)
+    const {company_sale_id:company_id,city_id,shop_id,district_id} = app.globalData.shopTakeOut
 
     let navHeight = getNavHeight()
 
@@ -68,7 +60,8 @@ Page({
       navHeight,
       city_id,
       district_id,
-      company_id
+      company_id,
+      shop_id
     }, async () => {
       this.getBanner()
       this.getPositionList()
