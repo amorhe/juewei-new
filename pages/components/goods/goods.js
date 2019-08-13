@@ -168,12 +168,13 @@ Component({
       })
     },
     scrollEvent(e){
+      // console.log(e)
       // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
-      //   let num = ret[0].findIndex(item => item.top>=104.5);
-      //   console.log(num)
-      //   this.setData({
-      //     goodsType:num
-      //   })
+      //   console.log(ret)
+      //   // let num = ret[0].findIndex(item => item.top>=104.5);
+      //   // this.setData({
+      //   //   goodsType:num
+      //   // })
       // })
     },
     // sku商品
