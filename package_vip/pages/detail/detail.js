@@ -219,9 +219,10 @@ Page({
   async showConfirm() {
     let _sid = await getSid()
     if (!_sid) {
-      return this.setData({
-        loginOpened: true
-      });
+      // return this.setData({
+      //   loginOpened: true
+      // });
+      return isloginFn()
     }
 
     let { goods_name, point } = this.data.detail
