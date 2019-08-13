@@ -122,9 +122,10 @@ Page({
 
 
   async onShow() {
-    const {timers} = this.data;
+    const { timers } = this.data;
+
     log(timers)
-    timers.forEach(item=>clearInterval(item))
+    timers.forEach(item => clearInterval(item))
 
     // 校验用户是否登录
     await reqUserPoint()
@@ -156,11 +157,6 @@ Page({
     let { menuList, cur, timers } = this.data
     clearInterval(menuList[cur].timer)
     timers.forEach(item => clearInterval(item))
-    menuList[cur].timer = -1
-    this.setData({ menuList })
-
-    // clearInterval(this.data.time)
-    // this.setData({ time: -1 })
   },
 
   contact,
@@ -286,6 +282,7 @@ Page({
           menuList[cur].list = list
           menuList[loading] = false
           timers.push(timer)
+          if (timers.length > 100) { timer = [] }
           this.setData({
             menuList,
             timers,
@@ -296,6 +293,7 @@ Page({
 
       } else {
         this.open()
+        my.hideLoading()
       }
     })
 
