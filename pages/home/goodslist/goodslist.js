@@ -85,7 +85,6 @@ Page({
         })
         my.setStorageSync({key:'shop_id',data:app.globalData.shopIng.shop_id});
       }
-      // console.log(app.globalData.shopIng)
       this.setData({
         jingxuan:app.globalData.shopIng.jingxuan || false
       })
@@ -99,7 +98,6 @@ Page({
           key: 'self', // 缓存数据的key
         }).data;
       }
-      // console.log('shopArray',shopArray);
       this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
@@ -108,10 +106,15 @@ Page({
         isOpen:status,
         shopTakeOut: shopArray[0]
       })
-      // console.log(shopArray)
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     }
+    // console.log(this.data.shopTakeOut);
     app.globalData.shopTakeOut = this.data.shopTakeOut;
+
+    my.setStorageSync({
+      key:'vip_address',
+      data:app.globalData.shopTakeOut
+    })
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用

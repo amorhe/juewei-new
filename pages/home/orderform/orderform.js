@@ -37,7 +37,8 @@ Page({
     goodsList: [],
     notUse: false,
     isClick: true,
-    phone: ''   // 手机号
+    phone: '',   // 手机号
+    newArr:[],    // 变更商品列表
   },
   onLoad(e) {
     let goodsList = app.globalData.goodsBuy;
@@ -90,7 +91,7 @@ Page({
     })
     // 加购商品列表
     const gifts = app.globalData.gifts;
-    console.log(gifts)
+    // console.log(gifts)
     if (Object.keys(gifts).length > 0) {
       for (let key in gifts) {
         gifts[key].forEach(val => {
@@ -136,7 +137,6 @@ Page({
         gift
       })
     }
-
     this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(this.data.goodsList));
   },
   // 换购显示
@@ -192,7 +192,22 @@ Page({
     }
     // 继续结算
     if (data.isType == 'orderConfirm' && data.type == 0) {
-      // this.data.goodsList 
+      // let arr = this.data.newArr.map(_item => {
+      //  this.data.goodsList.map(item => {
+      //     if(`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`){
+      //        item.goods_price = _item.goodsPrice
+      //     }
+          
+      //   })
+      // })
+      for(let _item of this.data.newArr){
+        for(let item of this.data.goodsList){
+          if(`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`){
+            item.goods_price = _item.goodsPrice
+          }
+        }
+      }
+      
       this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(this.data.goodsList));
     }
     this.setData({
@@ -326,7 +341,7 @@ Page({
       notUse = app.globalData.notUse
     }
     confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, this.data.couponslist, notUse, app.globalData.freeId).then((res) => {
-      // console.log(res)
+      console.log(res)
       let goodsList = my.getStorageSync({ key: 'goodsList' }).data;
       if (res.code == 0) {
         let goodsReal = [], goodsInvented = [];
@@ -392,7 +407,8 @@ Page({
           modalShow: true,
           showShopcar: false,
           isType: 'orderConfirm',
-          content: res.msg + '，系统已经更新,是否确认结算'
+          content: res.msg + '，系统已经更新,是否确认结算',
+          newArr:res.data
         })
       }
     })
