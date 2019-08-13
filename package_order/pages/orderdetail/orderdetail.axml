@@ -3,7 +3,7 @@
   <view style="height:1rpx"></view>
   <view class="board">
     <view class="board-state" onTap="show">  
-      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 0 && d.dis_status == 2 ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0) ?'订单已取消': pickUpState[d.order_status_info.order_status] )}}
+      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 2 && d.dis_status == 2 ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0) ?'订单已取消': pickUpState[d.order_status_info.order_status] )}}
       <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -77,7 +77,7 @@
     </view>
     <view class="good-list">
       <view class="good-item" a:for="{{d.goods_list}}">
-        <image mode="scaleToFill" src="{{item.goods_img}}"/>
+        <image mode="scaleToFill" src="{{item.goods_img ? item.goods_img : imageUrl + 'received.png' }}"/>
         <view class="body">
           <view class="name">
             <view class="top">
