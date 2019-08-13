@@ -50,8 +50,8 @@ Page({
     await this.getUserPoint()
     let _sid = await getSid()
 
-    log(app)
-    const {company_sale_id:company_id,city_id,shop_id,district_id} = app.globalData
+    log(app.globalData)
+    const {company_sale_id:company_id,city_id,shop_id,district_id} = app.globalData.shopTakeOut
 
     let navHeight = getNavHeight()
 
