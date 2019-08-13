@@ -44,7 +44,6 @@
 .pointlistTop {
   z-index: 999;
   position: sticky;
-  top: 130rpx;
   padding: 32rpx;
   color: #fff;
 }
