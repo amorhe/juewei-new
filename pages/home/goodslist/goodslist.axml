@@ -137,7 +137,7 @@
 
 <view style="padding-right:36rpx">
   <!-- 商品列表 -->
-  <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
+  <goods-list  shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
 </view>
 <!-- 提示框 -->
 <!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

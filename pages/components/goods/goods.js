@@ -144,7 +144,7 @@ Component({
     // 选择系列
     chooseGoodsType(e) {
       my.pageScrollTo({
-        scrollTop:this.data.pagesinfoTop * 2
+        scrollTop:this.data.pagesinfoTop + 130
       });
       this.setData({
         goodsType: e.currentTarget.dataset.type

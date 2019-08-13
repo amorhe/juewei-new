@@ -6,7 +6,7 @@
       <text a:if="{{!address}}">选择收货地址</text>
       <!-- 选择地址后 -->
       <view a:if="{{address}}">
-        <view class="fontFourty fontBold marginBEight">{{addressInfo.user_address_address + addressInfo.user_address_detail_address}}</view>
+        <view class="fontFourty fontBold marginBEight">{{addressInfo.user_address_map_addr + addressInfo.user_address_address}}</view>
         <view class="fontGray fontTwentySix">{{addressInfo.user_address_name}}（{{addressInfo.user_address_sex == 0?'先生':'女士'}}） {{addressInfo.user_address_phone}}</view>
       </view>
       <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
@@ -16,7 +16,7 @@
   <view class="deliverView" a:if="{{orderType==2}}">
     <view class="fontThirtySix fontBold">{{shopObj.address}}</view>
     <view class="mapBox">
-      <map style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"></map>
+      <map style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="18"></map>
     </view>
     <view class="deliverMiddle flexNormal">
       <view>

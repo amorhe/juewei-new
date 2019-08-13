@@ -5,7 +5,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
-    isCheck: false,  //协议
+    isCheck: true,  //协议
     // 换购商品列表
     repurseList:[],
     countN:0,
@@ -15,8 +15,8 @@ Page({
     type:0,
     content:"",
     orderType:1,  //1为外卖，2为自提
-    longitude: 116.30051,
-    latitude: 40.0511,
+    longitude: null,
+    latitude: null,
     markersArray:[],
     shopObj:{},   // 自提商店的详细信息
     couponslist:[],   //优惠券列表
@@ -40,9 +40,6 @@ Page({
     phone:''   // 手机号
   },
   onLoad(e) {
-    this.setData({
-      orderType:app.globalData.type,
-    })
     let goodsList = app.globalData.goodsBuy;
     for(let item of goodsList){
       item['goods_quantity'] = item['num'];
@@ -50,27 +47,28 @@ Page({
         item.goods_code = item.goods_activity_code
       }
     } 
-    // console.log(goodsList)
     const shop_id = my.getStorageSync({key: 'shop_id'}).data;
     const self = app.globalData.shopTakeOut;
     const phone = my.getStorageSync({
       key: 'phone', // 缓存数据的key
     }).data;
+    const longitude = my.getStorageSync({key: 'lng'}).data;
+    const latitude = my.getStorageSync({key: 'lat', }).data;
     let arr = [
       {
-        longitude: this.data.longitude,
-        latitude: this.data.latitude,
+        longitude:self.location[0],
+        latitude: self.location[1],
         iconPath:`${imageUrl}position_map1.png`,
-        width: 45,
-        height: 45,
+        width: 20,
+        height: 20,
         rotate:270
       },
       {
         longitude:self.location[0],
         latitude: self.location[1],
         iconPath:`${imageUrl}position_map2.png`,
-        width: 72,
-        height: 72,
+        width: 36,
+        height: 36,
         label:{
           content:`距你${self.distance}米`,
           color:"#333",
@@ -83,10 +81,12 @@ Page({
     ]
     this.setData({
       shopObj:self,
-      longitude:my.getStorageSync({key: 'lng'}).data,
-      latitude: my.getStorageSync({key: 'lat', }).data,
+      longitude,
+      latitude,
       markersArray: arr,
-      goodsList
+      goodsList,
+      orderType:app.globalData.type,
+      phone
     })
   // 加购商品列表
     const gifts = app.globalData.gifts;
@@ -247,8 +247,12 @@ Page({
     if(app.globalData.notUse){
       notUse = app.globalData.notUse;
     }
+    let remark = '';
+    if(app.globalData.remarks){
+      remark = app.globalData.remarks
+    }
     // 创建订单
-    createOrder(app.globalData.type,shop_id,goods,shop_id,11,this.data.remark,'阿里小程序',address_id,lng,lat,type,this.data.gift,this.data.orderInfo.use_coupons[0],notUse).then((res) => {
+    createOrder(app.globalData.type,shop_id,goods,shop_id,11,remark,'阿里小程序',address_id,lng,lat,type,this.data.gift,this.data.orderInfo.use_coupons[0],notUse).then((res) => {
       // console.log(res);
       if(res.code == 0){
         AliMiniPay(res.data.order_no).then((val) => {

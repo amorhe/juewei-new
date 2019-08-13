@@ -305,7 +305,7 @@ Page({
     commentList(goods_code,pagenum,pagesize,1).then((res) => {
       console.log(res)
       this.setData({
-        commentArr:[...res,...this.data.commentArr]
+        commentArr:res
       })
     })
   },
@@ -314,7 +314,7 @@ Page({
     DispatchCommentList(shop_id,pagenum,pagesize,1).then((res) => {
       console.log(res);
       this.setData({
-        dispatchArr:[...res,...this.data.dispatchArr]
+        dispatchArr:res
       })
     })
   },

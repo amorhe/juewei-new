@@ -135,7 +135,6 @@ Page({
       }else{
         shopTakeOut = my.getStorageSync({key:'self'}).data[0]
       }
-      console.log('shopTakeOut',app.globalData.shopIng,shopTakeOut);
       this.setData({
         shopTakeOut,
         type:2
@@ -375,6 +374,14 @@ Page({
     });
   },
   navigate(e){
+    if(my.getStorageSync({
+      key: 'user_id', // 缓存数据的key
+    }).data == null){
+      my.navigateTo({
+        url: '/pages/login/auth/auth'
+      });
+      return
+    }
     my.navigateTo({
       url:e.currentTarget.dataset.url
     });
