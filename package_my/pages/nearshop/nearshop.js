@@ -1,13 +1,12 @@
 import {imageUrl,ak} from '../../../pages/common/js/baseUrl'
 import {MyNearbyShop} from '../../../pages/common/js/home'
 import {guide} from '../../../pages/common/js/li-ajax'
+import {cur_dateTime} from '../../../pages/common/js/time'
 var app = getApp();
 Page({
   data: {
     imageUrl,
     // 地图中心点
-    // longitude: 116.54828,
-    // latitude: 39.918639,
     longitude: my.getStorageSync({key:'lng'}).data,
     latitude: my.getStorageSync({key:'lat'}).data,
     markersArray:[],
@@ -74,7 +73,11 @@ Page({
       success: (res) => {
         const obj = res.data.contents;
         MyNearbyShop(JSON.stringify(obj)).then((conf) => {
-          console.log(conf)
+          conf.forEach(item => {
+            if(cur_dateTime(item.start_time,item.end_time) != 2){
+              item['isOpen'] = true
+            }
+          })
           let arr = conf
           .map(({location}) => ({
             longitude: location[0],
@@ -97,7 +100,8 @@ Page({
               }
             }
           })
-          console.log(arr);
+          // console.log(arr);
+          console.log(conf)
           this.setData({
             markersArray: arr,
             shopList: conf

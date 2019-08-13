@@ -40,7 +40,8 @@ Page({
     pagenum:1,
     pagesize:10,
     freeText:'',
-    freeMoney:0
+    freeMoney:0,
+    goodsInfo:{}
   },
   onLoad(e) {
     // console.log(e)
@@ -89,6 +90,17 @@ Page({
       maskView:data.maskView,
       goodsModal:data.goodsModal
     })
+  },
+  changeMenu(e){
+    this.setData({
+      activeTab:e.currentTarget.dataset.cur
+    })
+  },
+  changeTab(e){
+    this.setData({
+      tabActive: e.currentTarget.dataset.cur,
+      pagenum:1
+    });
   },
   // sku商品
   onCart(shopcartList,shopcartAll,priceAll,shopcartNum,priceFree){
@@ -288,17 +300,6 @@ Page({
       shopcartList:{}
     })
   },
-  handleTabClick({ index }) {
-    this.setData({
-      activeTab: index,
-    });
-  },
-  tabChange({index}) {
-    this.setData({
-      tabActive: index,
-      pagenum:1
-    });
-  },
   // 商品评价
   getCommentList(goods_code,pagenum,pagesize){
     commentList(goods_code,pagenum,pagesize,1).then((res) => {
@@ -333,7 +334,8 @@ Page({
   },
   onReachBottom(){
     this.data.pagenum++;
-    this.getCommentList(goodsInfo.goods_code,this.data.pagenum,this.data.pagesize);
+    const shop_id = my.getStorageSync({key:'shop_id'}).data;
+    this.getCommentList(this.data.goodsInfo.goods_code,this.data.pagenum,this.data.pagesize);
     this.getDispatchCommentList(shop_id,this.data.pagenum,this.data.pagesize)
   }
 });

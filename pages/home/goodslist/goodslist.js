@@ -59,7 +59,7 @@ Page({
      
   },
   onShow() {
-    console.log(1)
+    // console.log(1)
     // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
@@ -109,6 +109,7 @@ Page({
       // console.log(shopArray)
       my.setStorageSync({key:'shop_id',data:shopArray[0].shop_id});
     }
+    app.globalData.shopTakeOut = this.data.shopTakeOut;
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
@@ -155,6 +156,7 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id); 
     }
+    app.globalData.shopTakeOut = this.data.shopTakeOut;
   },
   // 首页banner列表
    getBannerList(city_id, district_id, company_id) {
@@ -342,25 +344,18 @@ Page({
   onUnload() {
     // 页面被关闭
   },
-  xiadan() {
-    my.alert({ title: '点击' });
-    //判断用户信息是否存在
-    if (app.globalData.location.longitude !== null && app.globalData.userInfo === null) {
-      //获取用户信息
-    }
-  },
   onPageScroll: function(e) {
     my.createSelectorQuery().select('#pagesinfo').boundingClientRect().exec((ret) => {
       // console.log(ret)
-      if(ret[0].top<=104) {
-        this.setData({
-          scroll_y:true
-        })
-      }else{
-        this.setData({
-          scroll_y:false
-        })
-      }
+      // if(ret[0].top<=104) {
+      //   this.setData({
+      //     scroll_y:true
+      //   })
+      // }else{
+      //   this.setData({
+      //     scroll_y:false
+      //   })
+      // }
     })
   },
   //  活动跳转链接

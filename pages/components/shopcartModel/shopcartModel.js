@@ -231,7 +231,6 @@ Component({
           for (let fn of value.goods_format) {
             if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
               shopcartObj[val] = goodsList[val];
-              // console.log(shopcartObj)
               if (shopcartObj[val].goods_discount_user_limit != undefined && shopcartObj[val].num > shopcartObj[val].goods_discount_user_limit) {
                 priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_discount_user_limit + (shopcartObj[val].num - goodsList[val].goods_discount_user_limit) * shopcartObj[val].goods_original_price;
               } else {
@@ -241,32 +240,36 @@ Component({
                 priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
               }
               shopcartAll.push(shopcartObj[val]);
-              shopcartNum += shopcartObj[val].num
+              shopcartNum += shopcartObj[val].num;
             }
           }
         }
-        this.changeshopcart(shopcartObj, shopcartAll, priceAll, shopcartNum, priceFree);
-        my.setStorageSync({
-          key: 'goodsList',
-          data: shopcartObj
-        })
-        app.globalData.goodsBuy = this.props.shopcartAll;
       }
       // you商品下
-        if (num - shopcartNum!=0) {
-          return this.setData({
-            showShopcar: false,
-            mask1: false,
-            mask: true,
-            modalShow: true,
-            isType: 'checkshopcart',
-            content: `购物车有${num - shopcartNum}件商品不在当前门店售卖商品之内`,
-            confirmButtonText: '重新选择',
-            cancelButtonText: '继续结算',
-            btnClick: true
-          })
+     shopcartNum = Object.entries(shopcartObj).reduce((pre,cur)=>{
+        const {num} =cur[1]
+        return pre + num
+      },0)
+      this.changeshopcart(shopcartObj, shopcartAll, priceAll, shopcartNum, priceFree);
+      my.setStorageSync({
+        key: 'goodsList',
+        data: shopcartObj
+      })
+      app.globalData.goodsBuy = this.props.shopcartAll;
+      if (num - shopcartNum>0) {
+        return this.setData({
+          showShopcar: false,
+          mask1: false,
+          mask: true,
+          modalShow: true,
+          isType: 'checkshopcart',
+          content: `购物车有${num - shopcartNum}件商品不在当前门店售卖商品之内`,
+          confirmButtonText: '重新选择',
+          cancelButtonText: '继续结算',
+          btnClick: true
+        })
 
-        }
+      }
       // console.log(shopcartObj)
       my.navigateTo({
         url: '/pages/home/orderform/orderform'

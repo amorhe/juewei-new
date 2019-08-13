@@ -18,177 +18,134 @@
     <view>
       <view>
         <text>￥</text>
-        <text a:if="{{goodsInfo.goods_format.length>1}}">{{goodsInfo.goods_format[0].goods_price / 100 < goodsInfo.goods_format[1].goods_price / 100 ? goodsInfo.goods_format[0].goods_price / 100 :goodsInfo.goods_format[1].goods_price / 100}}</text>
+        <text a:if="{{goodsInfo.goods_format.length>1}}">{{goodsInfo.goods_format[0].goods_price / 100< goodsInfo.goods_format[1].goods_price / 100 ? goodsInfo.goods_format[0].goods_price / 100 :goodsInfo.goods_format[1].goods_price / 100}}</text>
         <text a:if="{{goodsInfo.goods_format.length==1}}">{{goodsInfo.goods_format[0].goods_price / 100}}</text>
         <text a:if="{{goodsInfo.goods_format.length==1}}">/ {{goodsInfo.goods_unit}}</text>
         <text a:if="{{goodsInfo.goods_format.length>1}}">/ 起</text>
       </view>
     </view>
-  <view>
-    <!-- 无sku -->
-    <view a:if="{{goodsInfo.goods_format.length==1}}" class="goodsNumber">
-      <view a:if="{{!shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum==0}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" 
-      data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}">加入购物车</view>
-      <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}"  data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
-      <text a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum}}</text>
-      <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" 
-      data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
+    <view>
+      <!-- 无sku -->
+      <view a:if="{{goodsInfo.goods_format.length==1}}" class="goodsNumber">
+        <view a:if="{{!shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum==0}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}">加入购物车</view>
+        <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
+        <text a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum}}</text>
+        <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
+      </view>
+      <!-- sku商品 -->
+      <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">加入购物车</view>
     </view>
-    <!-- sku商品 -->
-    <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">加入购物车</view>
-  </view>
   </view>
 </view>
 <!-- 简介、详情 -->
-<view class="borderBottom">
-  <tabs
-    tabs="{{tabs}}"
-    activeTab="{{activeTab}}"
-    onTabClick="handleTabClick"
-    onChange="handleTabClick"
-    tabBarActiveTextColor="#E60012"
-    tabBarUnderlineColor="#E60012"
-    activeCls="activeFont"
-    swipeable="false"
-  >
-    <block>
-      <tab-content key="0">
-        <view class="tab-content">
-          <view class="goodsintro">{{goodsInfo.goods_introduce}}</view>
-        </view>
-      </tab-content>
-      <tab-content key="1">
-        <view class="tab-content">
-         <view style="overflow-y:scroll;height:50vh">
-            <image mode="widthFix" style="width:100%" src="http://imgcdnjwd.juewei.com/img_intr/goods_intr_fwh.jpg"/>
-            <image mode="widthFix" style="width:100%" src="{{goodsInfo.goods_img_intr[0]}}"/>
-            <image mode="widthFix" style="width:100%" src="http://imgcdnjwd.juewei.com/img_intr/goods_intr_footer.jpg"/>
-         </view>
-        </view>
-      </tab-content>
-    </block>
-  </tabs>
+<view>
+  <view class="menus">
+    <view data-cur="{{index}}" onTap="changeMenu" class="menu {{activeTab === index ? 'active':''}}" a:for="{{tabs}}">
+        {{item.title}}
+    </view>
+  </view>
+  <view class="goodsintro" a:if="{{activeTab==0}}">{{goodsInfo.goods_introduce}}</view>
+  <view class="goodsImages" a:if="{{activeTab==1}}">
+    <image mode="scaleToFill" style="width:100%" src="http://imgcdnjwd.juewei.com/img_intr/goods_intr_fwh.jpg"/>
+    <image mode="scaleToFill" style="width:100%" src="{{goodsInfo.goods_img_intr[0]}}"/>
+    <image mode="scaleToFill" style="width:100%" src="http://imgcdnjwd.juewei.com/img_intr/goods_intr_footer.jpg"/>
+  </view>
 </view>
-
 <!-- 口味、配送 -->
 <view>
-  <tabs
-    tabs="{{tabsT}}"
-    activeTab="{{tabActive}}"
-    onTabClick="tabChange"
-    tabBarActiveTextColor="#E60012"
-    tabBarUnderlineColor="#E60012"
-    activeCls="activeFont"
-    onChange="tabChange"
-    swipeable="false"
-  >
-    <block>
-      <tab-content key="0">
-        <view class="tab-content">
-          <view class="goodsintro">
-            <!-- 好评率 -->
-            <view class="percentView">
-              <view style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{(commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100}}%</view>
-            </view>
-          </view>
-          <view class="tagView">
-            <!-- 选中class为 tagActive -->
-            <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
-          </view>
-          <!-- 评论列表 -->
-          <view class="commontList">
-            <view a:for="{{commentArr.data}}">
-              <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+  <view class="menus">
+    <view data-cur="{{index}}" onTap="changeTab" class="menu {{tabActive === index ? 'active':''}}" a:for="{{tabsT}}">
+          {{item.title}}
+    </view>
+  </view>
+  <view a:if="{{tabActive==0}}">
+    <view class="goodsintro">
+      <!-- 好评率 -->
+      <view class="percentView">
+        <view style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{(commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100}}%</view>
+      </view>
+    </view>
+    <view class="tagView">
+      <!-- 选中class为 tagActive -->
+      <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
+    </view>
+    <!-- 评论列表 -->
+    <view class="commontList">
+      <view a:for="{{commentArr.data}}">
+        <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+        <view>
+          <view class="commontUser">
+            <view>
               <view>
-                <view class="commontUser">
-                  <view>
-                    <view>
-                      <view>{{item.nick_name}}</view>
-                      <view class="commontImageView">
-                        <image class="normalImage" a:for="{{item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_2.png"/>
-                        <image class="normalImage" a:for="{{5-item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_1.png"/>
-                      </view>
-                    </view>
-                  </view>
-                  <view class="fontSmallGray">{{item.takeout_goods_comment_ctime}}</view>
+                <view>{{item.nick_name}}</view>
+                <view class="commontImageView">
+                  <image class="normalImage" a:for="{{item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_2.png"/>
+                  <image class="normalImage" a:for="{{5-item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_1.png"/>
                 </view>
-
-                <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content}}</view>
-
-                <view a:if="{{item.imgUrls.length>0}}">
-                  <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"/>
-                </view>
-                <view class="commontTag" a:if="{{item.tags.length>0}}">
-                  <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
-                  <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
-                  <!-- <view>食材新鲜</view>
-                  <view>包装精美</view> -->
-                </view>
-                <view class="fontSmallGray">购买时间：{{item.order_ctime}}</view>
               </view>
-
-
             </view>
+            <view class="fontSmallGray">{{item.takeout_goods_comment_ctime}}</view>
           </view>
-
+          <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content}}</view>
+          <view a:if="{{item.imgUrls.length>0}}">
+            <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"/>
+          </view>
+          <view class="commontTag" a:if="{{item.tags.length>0}}">
+            <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
+            <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
+            <!--<view>食材新鲜</view><view>包装精美</view> -->
+          </view>
+          <view class="fontSmallGray">购买时间：{{item.order_ctime}}</view>
         </view>
-      </tab-content>
-      <tab-content key="1">
-        <view class="tab-content">
-          <view class="goodsintro">
-            <!-- 好评率 -->
-            <view class="percentView">
-              <view style="width:{{686 * (dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0)}}rpx">好评率{{(dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0) * 100}}%</view>
-            </view>
-          </view>
-          <view class="tagView">
-            <!-- 选中class为 tagActive -->
-            <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
-          </view>
-           <!-- 评论列表 -->
-          <view class="commontList">
-            <view a:for="{{dispatchArr.data}}">
-              <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+      </view>
+    </view>
+  </view>
+  <view a:if="{{tabActive==1}}">
+    <view class="goodsintro">
+      <!-- 好评率 -->
+      <view class="percentView">
+        <view style="width:{{686 * (dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0)}}rpx">好评率{{(dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0) * 100}}%</view>
+      </view>
+    </view>
+    <view class="tagView">
+      <!-- 选中class为 tagActive -->
+      <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
+    </view>
+    <!-- 评论列表 -->
+    <view class="commontList">
+      <view a:for="{{dispatchArr.data}}">
+        <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+        <view>
+          <view class="commontUser">
+            <view>
               <view>
-                <view class="commontUser">
-                  <view>
-                    <view>
-                      <view>{{item.nick_name}}</view>
-                      <view class="commontImageView">
-                        <image class="normalImage" a:for="{{item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_2.png"/>
-                        <image class="normalImage" a:for="{{5-item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_1.png"/>
-                      </view>
-                    </view>
-                  </view>
-                  <view class="fontSmallGray">{{item.takeout_order_comment_ctime}}</view>
+                <view>{{item.nick_name}}</view>
+                <view class="commontImageView">
+                  <image class="normalImage" a:for="{{item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_2.png"/>
+                  <image class="normalImage" a:for="{{5-item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_1.png"/>
                 </view>
-
-                <view class="commontText fontTwentySix">{{item.takeout_order_comment_content}}</view>
-
-                <view a:if="{{item.imgUrls.length>0}}">
-                  <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"/>
-                </view>
-                <view class="commontTag">
-                  <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
-                  <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
-                  <!-- <view>食材新鲜</view>
-                  <view>包装精美</view> -->
-                </view>
-                <view class="fontSmallGray">购买时间：{{item.takeout_order_comment_utime}}</view>
               </view>
-
-
             </view>
+            <view class="fontSmallGray">{{item.takeout_order_comment_ctime}}</view>
           </view>
+          <view class="commontText fontTwentySix">{{item.takeout_order_comment_content}}</view>
+          <view a:if="{{item.imgUrls.length>0}}">
+            <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"/>
+          </view>
+          <view class="commontTag">
+            <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
+            <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
+            <!--<view>食材新鲜</view><view>包装精美</view> -->
+          </view>
+          <view class="fontSmallGray">购买时间：{{item.takeout_order_comment_utime}}</view>
         </view>
-      </tab-content>
-    </block>
-  </tabs>
+      </view>
+    </view>
+  </view>
 </view>
 
 <view style="height:100rpx;background:transparent"></view>
 <!-- 购物车 -->
 <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" activityText="{{activityText}}" freeText="{{freeText}}" onClear="onClear" onChangeShopcart="onchangeShopcart"/>
-
 <!-- 加入购物车选择商品规格 -->
 <goods-modal maskView="{{maskView}}" goodsKey="{{goodsKey}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>

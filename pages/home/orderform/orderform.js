@@ -35,8 +35,9 @@ Page({
     showRepurse:false,  // 是否显示换购商品
     coupon_money:0,     // 优惠金额
     goodsList:[],
-    notUse:false,
-    isClick:true
+    notUse:false,    
+    isClick:true,
+    phone:''   // 手机号
   },
   onLoad(e) {
     this.setData({
@@ -50,49 +51,43 @@ Page({
       }
     } 
     // console.log(goodsList)
+    const shop_id = my.getStorageSync({key: 'shop_id'}).data;
+    const self = app.globalData.shopTakeOut;
+    const phone = my.getStorageSync({
+      key: 'phone', // 缓存数据的key
+    }).data;
+    let arr = [
+      {
+        longitude: this.data.longitude,
+        latitude: this.data.latitude,
+        iconPath:`${imageUrl}position_map1.png`,
+        width: 45,
+        height: 45,
+        rotate:270
+      },
+      {
+        longitude:self.location[0],
+        latitude: self.location[1],
+        iconPath:`${imageUrl}position_map2.png`,
+        width: 72,
+        height: 72,
+        label:{
+          content:`距你${self.distance}米`,
+          color:"#333",
+          fontSize:11,
+          borderRadius:30,
+          bgColor:"#ffffff",
+          padding:8,
+        }
+      }
+    ]
     this.setData({
+      shopObj:self,
+      longitude:my.getStorageSync({key: 'lng'}).data,
+      latitude: my.getStorageSync({key: 'lat', }).data,
+      markersArray: arr,
       goodsList
     })
-    const shop_id = my.getStorageSync({key: 'shop_id'}).data;
-    if(app.globalData.type == 2) {
-      const self = my.getStorageSync({key: 'self'}).data;
-      let arr = [
-        {
-          longitude: this.data.longitude,
-          latitude: this.data.latitude,
-          iconPath:`${imageUrl}position_map1.png`,
-          width: 45,
-          height: 45,
-          rotate:270
-        },
-        {
-          longitude:self[0].location[0],
-          latitude: self[0].location[1],
-          iconPath:`${imageUrl}position_map2.png`,
-          width: 72,
-          height: 72,
-          label:{
-            content:`距你${self[0].distance}米`,
-            color:"#333",
-            fontSize:11,
-            borderRadius:30,
-            bgColor:"#ffffff",
-            padding:8,
-          }
-        }
-      ]
-      this.setData({
-        shopObj:self[0],
-        longitude:my.getStorageSync({key: 'lng'}).data,
-        latitude: my.getStorageSync({key: 'lat', }).data,
-        markersArray: arr
-      })
-    }else{
-      const self = my.getStorageSync({key: 'takeout'}).data;
-      this.setData({
-        shopObj:self[0]
-      })
-    }
   // 加购商品列表
     const gifts = app.globalData.gifts;
     console.log(gifts)

@@ -25,7 +25,7 @@
       </view>
       <view>
         <text class="colorNine marginBEight">会员电话</text>
-        <text>{{shopObj.shop_phone}}</text>
+        <text>{{phone}}</text>
       </view>
     </view>
     <view class="flexSpecial">

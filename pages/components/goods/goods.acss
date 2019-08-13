@@ -7,7 +7,9 @@
   background: #F9E1E0;
   font-size: 22rpx;
   box-sizing: border-box;
-  position: relative;
+  position: sticky;
+  top: 208rpx;
+  z-index: 100
 }
 .closeIng>image {
   width: 24rpx;

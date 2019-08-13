@@ -25,13 +25,20 @@ Component({
     shopcartNum:0,
     activityText:'',   // 购物车活动提示内容
     priceFree:0,
-    freeText:'' // 购物车包邮提示内容
+    freeText:'', // 购物车包邮提示内容
+    pagesinfoTop:0
   },
   onInit() {
     this.busPos = {};
     this.busPos['x'] = 10;
     this.busPos['y'] = app.globalData.hh - 16;
-    console.log('购物车坐标',this.busPos)
+    // console.log('购物车坐标',this.busPos);
+    my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret)=>{
+      // console.log(ret)
+      this.setData({
+        pagesinfoTop:ret[0].top 
+      })
+    })
   },
   deriveDataFromProps(nextProps){
     // console.log(nextProps)
@@ -136,6 +143,9 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
+      my.pageScrollTo({
+        scrollTop:this.data.pagesinfoTop
+      });
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
@@ -230,7 +240,6 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num-goodlist[keys].goods_discount_user_limit)* goodlist[keys].goods_original_price;
         }else{
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-          // priceFree += goodlist[keys].goods_price * goodlist[keys].num
         }
         if(!goodlist[keys].goods_discount){
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
@@ -324,7 +333,7 @@ Component({
         shopcartNum,
         priceFree
       })
-      console.log(goodlist)
+      // console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据

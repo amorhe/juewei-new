@@ -1,4 +1,5 @@
 @import '../../../components/goods/goods.acss';
+/* @import '../../../order/list/list.acss'; */
 .goodsImage {
   width: 750rpx;
   height: 592rpx;
@@ -124,6 +125,49 @@
   font-size: 22rpx;
   line-height: 32rpx;
 }
-.am-tabs,.am-tabs-tab-bar-wrap,.am-tabs-content-wrap{
+/* .am-tabs,.am-tabs-tab-bar-wrap,.am-tabs-content-wrap{
   height: 60vh!important
+} */
+.goodsImages>image {
+  display: block;
+}
+
+.menus {
+  position: sticky;
+  box-sizing: border-box;
+  width: 750rpx;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  padding: 26rpx;
+}
+
+.menu {
+  /* width: 50%; */
+  text-align: center;
+  width: 168px;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+}
+
+.menu.active {
+  position: relative;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(230, 0, 18, 1);
+}
+
+.menu.active::after {
+  content: '';
+  width: 2em;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: #E60012;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -26rpx;
+  margin: auto;
 }
