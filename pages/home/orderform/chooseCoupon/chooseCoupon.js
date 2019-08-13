@@ -69,9 +69,13 @@ Page({
   selectTapTrue(e){
     let couponChoosed = {};
     couponChoosed[`e${e.currentTarget.dataset.index}`] = e.currentTarget.dataset.code;
+    app.globalData.notUse = 0
     this.setData({
       couponChoosed
     })
+    my.navigateBack({
+      url: '/pages/home/orderform/orderform'
+    });
   },
   selectTapFalse(e){
     this.setData({

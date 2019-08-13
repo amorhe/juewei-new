@@ -168,7 +168,7 @@ Component({
       })
     },
     scrollEvent(e){
-      console.log(e)
+      // console.log(e)
       // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
       //   console.log(ret)
       //   // let num = ret[0].findIndex(item => item.top>=104.5);

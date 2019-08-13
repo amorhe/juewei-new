@@ -17,8 +17,9 @@ Component({
     confirmButtonText: '',
     cancelButtonText: '',
     type: '',
-    btnClick: true,
-    freeId: false
+    btnClick: true,  
+    freeId: false,   // 是否有包邮活动
+    isTake:false
   },
   props: {
     onClear: (data) => console.log(data),
@@ -35,7 +36,13 @@ Component({
     // 判断是不是起送
     if (app.globalData.type == 1) {
       this.setData({
-        type: 1
+        type: 1,
+        isTake:true
+      })
+    }else{
+      this.setData({
+        type: 2,
+        isTake:false
       })
     }
     if (app.globalData.freeId) {
@@ -45,12 +52,6 @@ Component({
     } else {
       this.setData({
         freeId: false
-      })
-    }
-    // 判断是不是起购
-    if (app.globalData.type == 2) {
-      this.setData({
-        type: 2
       })
     }
   },
@@ -196,7 +197,7 @@ Component({
           btnClick: true
         })
       }, 1000)
-      
+
       //  数据加载完成前防止点击
       if(!app.globalData.goodsArr){
         return

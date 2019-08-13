@@ -132,6 +132,7 @@ Page({
       my.showToast({
         content:'定位失败，请选择其他收货地址！'
       });
+      return
     }
     if(e.currentTarget.dataset.address!=''){
       my.switchTab({
@@ -156,10 +157,11 @@ Page({
       data: mapPosition.bd_lng, // 要缓存的数据
     });
     this.getLbsShop(mapPosition.bd_lng,mapPosition.bd_lat,e.currentTarget.dataset.info.name);
-    this.getNearbyShop(mapPosition.bd_lng,mapPosition.bd_lat)
+    this.getNearbyShop(mapPosition.bd_lng,mapPosition.bd_lat,e.currentTarget.dataset.info.name)
   },
+  // 
   switchPositionAddress(e){
-    console.log(e)
+    // console.log(e)
     let position = e.currentTarget.dataset.info.user_address_lbs_baidu.split(',');
     my.setStorageSync({
         key: 'lat', // 缓存数据的key
@@ -170,14 +172,14 @@ Page({
       data: position[0] // 要缓存的数据
     });
     this.getLbsShop(position[0],position[1],e.currentTarget.dataset.info.user_address_map_addr);
-    this.getNearbyShop(position[0],position[1])
+    this.getNearbyShop(position[0],position[1],e.currentTarget.dataset.info.user_address_map_addr)
   },
   // 外卖附近门店
   getLbsShop(lng,lat,address) {
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
-    app.globalData.address = address
+    app.globalData.address = address;
     GetLbsShop(location).then((res) => {
       console.log(res)
       if (res.code == 0 && res.data.length > 0) {
@@ -221,7 +223,7 @@ Page({
     })
   },
   // 自提附近门店
-  getNearbyShop(lng,lat) {
+  getNearbyShop(lng,lat,address) {
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
@@ -229,14 +231,14 @@ Page({
       success: (res) => {
         // 3公里有门店
         if (res.data.contents && res.data.contents.length > 0) {
-          this.getSelf(res.data.contents)
+          this.getSelf(res.data.contents,address)
         } else {
           // 没有扩大搜索范围到1000000公里
           my.request({
             url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
             success: (conf) => {
               if (conf.data.contents && conf.data.contents.length > 0) {
-                this.getSelf(conf.data.contents)
+                this.getSelf(conf.data.contents,address)
               } else {
                 // 提示切换地址
                 // my.showToast({
@@ -254,7 +256,7 @@ Page({
     });
   },
   // 自提
-  getSelf(obj) {
+  getSelf(obj,address) {
     let shopArr1 = [];
     let shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
@@ -273,6 +275,7 @@ Page({
       shopArr2.sort(sortNum('distance'));
       const shopArray = shopArr1.concat(shopArr2);
       shopArray[0]['jingxuan'] = true;
+      app.globalData.address = address;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
     })
   },
