@@ -189,10 +189,18 @@ Page({
     }
   },
   onHide() {
+    this.setData({
+      isnew: false,
+      countTime: 60,
+    })
     clearInterval(timeCount)
   },
   onUnload() {
     // 页面被关闭
+    this.setData({
+      isnew: false,
+      countTime: 60,
+    })
     clearInterval(timeCount)
   },
 });
