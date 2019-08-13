@@ -188,6 +188,9 @@ Component({
       if (this.data.btnClick == false) {
         return
       }
+      // if(){
+      //   return
+      // }
       this.setData({
         btnClick: false
       })
@@ -223,8 +226,6 @@ Component({
         priceFree = 0, // 满多少包邮
         shopcartObj = {}; //商品列表 
       if (goodsList == null) return;
-      // console.log(app.globalData.goodsArr);
-      // console.log('11qq', goodsList)
       for (let val in goodsList) {
         num += goodsList[val].num;
         for (let value of app.globalData.goodsArr) {

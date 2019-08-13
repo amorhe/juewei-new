@@ -21,7 +21,7 @@
         <text a:if="{{goodsInfo.goods_format.length>1}}">{{goodsInfo.goods_format[0].goods_price / 100< goodsInfo.goods_format[1].goods_price / 100 ? goodsInfo.goods_format[0].goods_price / 100 :goodsInfo.goods_format[1].goods_price / 100}}</text>
         <text a:if="{{goodsInfo.goods_format.length==1}}">{{goodsInfo.goods_format[0].goods_price / 100}}</text>
         <text a:if="{{goodsInfo.goods_format.length==1}}">/ {{goodsInfo.goods_unit}}</text>
-        <text a:if="{{goodsInfo.goods_format.length>1}}">/ 起</text>
+        <text a:if="{{goodsInfo.goods_format.length>1}}"> 起</text>
       </view>
     </view>
     <view>
@@ -71,7 +71,7 @@
       <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
     <!-- 评论列表 -->
-    <view class="commontList">
+    <view class="commontList" a:if="{{commentArr.data.length> 0}}">
       <view a:for="{{commentArr.data}}">
         <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
         <view>
@@ -100,6 +100,10 @@
         </view>
       </view>
     </view>
+    <view class="nullBox" style="margin-top:100rpx;height:635rpx" a:if="{{commentArr.data.length== 0}}">
+      <image class='nullImg' src="{{ imageUrl }}bg_nocomment.png"/>
+      <text>暂无评论</text>
+    </view>
   </view>
   <view a:if="{{tabActive==1}}">
     <view class="goodsintro">
@@ -114,7 +118,7 @@
       <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
     <!-- 评论列表 -->
-    <view class="commontList">
+    <view a:if="{{dispatchArr.data.length> 0}}" class="commontList">
       <view a:for="{{dispatchArr.data}}">
         <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
         <view>
@@ -143,11 +147,12 @@
         </view>
       </view>
     </view>
-
-
+    <view class="nullBox" style="margin-top:100rpx;height:635rpx" a:if="{{dispatchArr.data.length== 0}}">
+      <image class='nullImg' src="{{ imageUrl }}bg_nocomment.png"/>
+      <text>暂无评论</text>
+    </view>
   </view>
 </view>
-
 <view style="height:100rpx;background:transparent"></view>
 <!-- 购物车 -->
 <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" activityText="{{activityText}}" freeText="{{freeText}}" onClear="onClear" onChangeShopcart="onchangeShopcart"/>

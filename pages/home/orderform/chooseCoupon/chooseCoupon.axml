@@ -1,4 +1,4 @@
-<view class="couponUl">
+<view class="couponUl" a:if="{{couponList.length> 0}}">
   <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" a:if="{{couponList.length>0}}" catchTap="chooseCouponed" data-coupon_code="{{item.code}}">
     <image class="quan"  src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
     <view>
@@ -38,4 +38,9 @@
     </view>
     
   </view>
+</view>
+
+<view class="nullBox" style="height:100vh;padding-top:207rpx;box-sizing:border-box" a:if="{{couponList.length== 0}}">
+    <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
+    <text>暂无优惠券</text>
 </view>

@@ -4,6 +4,7 @@
 .couponUl {
   padding: 16rpx 32rpx;
   background: #F5F5F5;
+  min-height: 100vh;
 }
 .couponLi {
   width:686rpx;

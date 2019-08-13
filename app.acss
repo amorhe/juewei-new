@@ -156,3 +156,15 @@ page {
   height: 320rpx;
   margin-bottom: 32rpx;
 }
+.nullBox {
+  width: 100%;
+  text-align: center;
+  background: #fff
+}
+.nullImg {
+  width: 320rpx;
+  height: 320rpx;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 32rpx;
+}

@@ -192,6 +192,7 @@ Page({
     }
     // 继续结算
     if(data.isType == 'orderConfirm' && data.type == 0){
+      // this.data.goodsList 
       this.confirmOrder(my.getStorageSync({key: 'shop_id'}).data,JSON.stringify(this.data.goodsList));
     }
     this.setData({
