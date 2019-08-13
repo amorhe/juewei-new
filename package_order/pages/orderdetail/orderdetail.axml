@@ -3,7 +3,7 @@
   <view style="height:1rpx"></view>
   <view class="board">
     <view class="board-state" onTap="show">  
-      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ?'订单已取消': takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0) ?'订单已取消': pickUpState[d.order_status_info.order_status] )}}
+      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 0 && d.dis_status == 2 ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0) ?'订单已取消': pickUpState[d.order_status_info.order_status] )}}
       <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -21,13 +21,16 @@
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
     <view class="out-footer" a:if="{{!d.order_cancel_reason}}">
-      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status)}}" catchTap="showCancel">
+      <view class="cancel-order" a:if="{{[1,2,3,4].includes(d.order_status_info.order_status) && ([2,3,4].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' )}}" catchTap="showCancel">
           取消订单
       </view>
-      <view class="topay con" a:if="{{[1,2,3].includes(d.order_status_info.order_status)}}" catchTap="contact">
+      <view class="cancel-order" a:if="{{([2].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' && d.dis_status == 2 )}}" catchTap="contact">
+          联系骑手
+      </view>
+      <view class="topay con" a:if="{{[1,2,3,4,5,6,7,8,9,10].includes(d.order_status_info.order_status) && ([4].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' )}}" catchTap="contact">
           联系客服
       </view>
-      <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="buyAgain">
+      <view class="cancel-order" a:if="{{[5,6,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="buyAgain">
           再来一单
       </view>
       <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
@@ -88,11 +91,11 @@
           <view class="size">{{item.goods_format}}</view>
         </view>
         <view class="num">
-          x{{item.goods_quantity}}
+         ×{{item.goods_quantity}}
         </view>
         <view class="price">
-          <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price / 100).toFixed(2)}}</text>
-          <text>￥{{(item.goods_price /100).toFixed(2)}}</text>
+          <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price / 100)}}</text>
+          <text>￥{{(item.goods_price /100)}}</text>
         </view>
       </view>
       <view class="post">
@@ -101,8 +104,8 @@
         </view>
         <view class="price">
           <view class="value">
-            <text class="del" a:if="{{d.dis_original_price != d.dis_price}}"> ￥{{(d.dis_original_price / 100).toFixed(2)}}</text>
-            <text>￥{{(d.dis_price / 100).toFixed(2)}}</text>
+            <text class="del" a:if="{{d.dis_original_price != d.dis_price}}"> ￥{{(d.dis_original_price / 100)}}</text>
+            <text>￥{{(d.dis_price / 100)}}</text>
           </view>
         </view>
       </view>
@@ -113,7 +116,7 @@
           活动满减
           </view>
           <view class="value">
-            <text>-￥{{(d.activity_money / 100).toFixed(2)}}</text>
+            <text>-￥{{(d.activity_money / 100)}}</text>
           </view>
         </view>
         <view class="reduce-item">
@@ -122,13 +125,13 @@
           优惠券
           </view>
           <view class="value">
-            <text>-￥{{(d.coupon_money / 100).toFixed(2)}}</text>
+            <text>-￥{{(d.coupon_money / 100)}}</text>
           </view>
         </view>
       </view>
       <view class="total">
         实付￥
-        <text>{{(d.real_price /100).toFixed(2)}}</text>
+        <text>{{(d.real_price /100)}}</text>
       </view>
     </view>
   </view>
