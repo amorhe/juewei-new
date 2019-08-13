@@ -3,7 +3,7 @@ page {
   color: #333;
 }
 *, ::before, ::after{
--webkit-tap-highlight-color:rgba(255,255,255, 0)
+-webkit-tap-highlight-color:rgba(255,255,255, 0)!important;
 }
 
 .mask {

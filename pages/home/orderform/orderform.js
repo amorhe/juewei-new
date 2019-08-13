@@ -188,34 +188,41 @@ Page({
       key: 'goodsList'
     }).data;
     let newShopcart = {}, newGoodsArr = [];
-    for (let _item of this.data.newArr) {
-      for (let item of this.data.goodsList) {
-        // 商品价格变更
-        if (_item.type == 1) {
-          if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
-            item.goods_price = _item.goodsPrice;
-          }
-          newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
-          newGoodsArr.push(item);
-        } else {
-          // 商品下架
-          if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
+    if (this.data.newArr.length>0) {
+      for (let _item of this.data.newArr) {
+        for (let item of this.data.goodsList) {
+          // 商品价格变更
+          if (_item.type == 1) {
+            if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
+              item.goods_price = _item.goodsPrice;
+            }
             newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
             newGoodsArr.push(item);
+          } else {
+            // 商品下架
+            if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
+              newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
+              newGoodsArr.push(item);
+            }
           }
         }
       }
+    }else{
+      newShopcart = goodlist
     }
     my.setStorageSync({
       key: 'goodsList', // 缓存数据的key
       data: newShopcart, // 要缓存的数据
     });
-    this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(newGoodsArr));
     // 重新选择商品
     if (data.isType == 'orderConfirm' && data.type == 1) {
       my.navigateBack({
         delta: 1
       });
+    }
+    // 继续结算
+    if(data.isType == 'orderConfirm' && data.type == 0){
+      this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(newGoodsArr));
     }
     this.setData({
       mask: false,
@@ -278,6 +285,17 @@ Page({
     createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, this.data.gift, this.data.orderInfo.use_coupons[0], notUse).then((res) => {
       // console.log(res);
       if (res.code == 0) {
+        if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
+          add_lng_lat(res.data.order_no, typeClass, lng, lat).then((conf) => {
+            my.removeStorageSync({
+              key: 'goodsList', // 缓存数据的key
+            });
+            my.reLaunch({
+              url: '/pages/home/orderfinish/orderfinish?order_no=' + res.data.order_no, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+            });
+          })
+          return
+        }
         AliMiniPay(res.data.order_no).then((val) => {
           if (val.code == 0) {
             // 支付宝调起支付
@@ -408,7 +426,7 @@ Page({
           order_price: `¥${res.data.activity_list[''].real_price / 100}`,
           coupon_money
         })
-      } else {
+      } else if (res.code == 277) {
         this.setData({
           mask: true,
           modalShow: true,
@@ -416,6 +434,15 @@ Page({
           isType: 'orderConfirm',
           content: res.msg + '，系统已经更新,是否确认结算',
           newArr: res.data
+        })
+      } else {
+        this.setData({
+          mask: true,
+          modalShow: true,
+          showShopcar: false,
+          isType: 'orderConfirm',
+          content: res.msg + '，系统已经更新,是否确认结算',
+          newArr:[]
         })
       }
     })
