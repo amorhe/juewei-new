@@ -155,7 +155,6 @@ Page({
     this.onModalClose()
     let { menuList, cur, timers } = this.data
     clearInterval(menuList[cur].timer)
-
     timers.forEach(item => clearInterval(item))
     menuList[cur].timer = -1
     this.setData({ menuList })
@@ -252,7 +251,6 @@ Page({
 
     let { menuList, cur, timers } = this.data
     let { page, dis_type, timer, list, loading } = menuList[cur]
-    log(loading)
     if (loading) { return }
     menuList[cur].page++
     menuList.forEach(({ timer }) => clearInterval(timer))
