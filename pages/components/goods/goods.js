@@ -168,6 +168,9 @@ Component({
       })
     },
     scrollEvent(e){
+      my.pageScrollTo({
+        scrollTop:this.data.pagesinfoTop + 130
+      });
       // console.log(e)
       // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret)=>{
       //   console.log(ret)
