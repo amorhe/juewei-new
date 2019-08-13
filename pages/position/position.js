@@ -57,7 +57,7 @@ Page({
     const shopArr1 = [];
     const shopArr2 = [];
     GetLbsShop(location).then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.code == 0 && res.data.length > 0) {
         for (let i = 0; i < res.data.length; i++) {
           const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);

@@ -303,7 +303,7 @@ Page({
   // 商品评价
   getCommentList(goods_code,pagenum,pagesize){
     commentList(goods_code,pagenum,pagesize,1).then((res) => {
-      console.log(res)
+      // console.log(res)
       this.setData({
         commentArr:res
       })
@@ -312,7 +312,7 @@ Page({
   // 配送评价
   getDispatchCommentList(shop_id,pagenum,pagesize){
     DispatchCommentList(shop_id,pagenum,pagesize,1).then((res) => {
-      console.log(res);
+      // console.log(res);
       this.setData({
         dispatchArr:res
       })

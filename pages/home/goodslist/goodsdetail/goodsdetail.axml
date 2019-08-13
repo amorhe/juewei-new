@@ -62,7 +62,8 @@
     <view class="goodsintro">
       <!-- 好评率 -->
       <view class="percentView">
-        <view style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{(commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100}}%</view>
+        <view a:if="{{commentArr.statistics}}" style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{((commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100).toFixed(2)}}%</view>
+        <view a:if="{{!commentArr.statistics}}">好评率0%</view>
       </view>
     </view>
     <view class="tagView">
@@ -104,7 +105,8 @@
     <view class="goodsintro">
       <!-- 好评率 -->
       <view class="percentView">
-        <view style="width:{{686 * (dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0)}}rpx">好评率{{(dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0) * 100}}%</view>
+        <view a:if="{{dispatchArr.statistics}}" style="width:{{686 * (dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0)}}rpx">好评率{{((dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0) * 100).toFixed(2)}}%</view>
+        <view a:if="{{!dispatchArr.statistics}}">好评率0%</view>
       </view>
     </view>
     <view class="tagView">
@@ -141,6 +143,8 @@
         </view>
       </view>
     </view>
+
+
   </view>
 </view>
 

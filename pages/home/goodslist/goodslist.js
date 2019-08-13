@@ -73,7 +73,7 @@ Page({
     // 初始化默认外卖
     let shopArray = [];
     if(app.globalData.shopIng){
-      console.log('shopArray',app.globalData.shopIng);
+      // console.log('shopArray',app.globalData.shopIng);
       if(my.getStorageSync({key:'shop_id'}).data!=app.globalData.shop_id){
         this.getCompanyGoodsList(app.globalData.shopIng.company_sale_id); //获取公司所有商品
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, app.globalData.shopIng.company_sale_id);//banner
@@ -99,7 +99,7 @@ Page({
           key: 'self', // 缓存数据的key
         }).data;
       }
-      console.log('shopArray',shopArray);
+      // console.log('shopArray',shopArray);
       this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id); 
@@ -164,7 +164,7 @@ Page({
   // 首页banner列表
    getBannerList(city_id, district_id, company_id) {
      bannerList(city_id, district_id, company_id, 1).then( (data) => {
-      console.log(data)
+      // console.log(data)
       if (data.data.length > 1) {
         this.setData({
           indicatorDots: true,
@@ -261,7 +261,7 @@ Page({
   // 门店营销活动(折扣和套餐)
   getActivityList(city_id,district_id,company_id,buy_type,user_id){
     activityList(city_id,district_id,company_id,buy_type,user_id).then((res) => {
-      console.log(res);
+      // console.log(res);
       let shopGoods = this.data.shopGoods;
       // console.log(shopGoods)
       // 获取加价购商品
@@ -331,7 +331,7 @@ Page({
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length>0);
       goodsNew = [...new Set(goodsNew)];
       app.globalData.goodsArr = goodsArr;
-      console.log(goodsNew)
+      // console.log(goodsNew)
       this.setData({
         shopGoodsAll:goodsNew
       })
