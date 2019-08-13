@@ -1,6 +1,6 @@
 {
   "defaultTitle": "VIP专享",
   "titleBarColor": "#ff0000",
-  "transparentTitle": "always",
+  "transparentTitle": "auto",
   "allowsBounceVertical": "NO"
 }

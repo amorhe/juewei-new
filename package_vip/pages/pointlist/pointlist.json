@@ -1,6 +1,7 @@
 {
   "defaultTitle": "积分",
-  "titleBarColor": "#FB5332",
+  "titleBarColor": "#ff0000",
+  "transparentTitle": "always",
    "usingComponents":{
     "popup": "mini-antui/es/popup/index",
     "modal": "mini-antui/es/modal/index"
