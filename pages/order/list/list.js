@@ -30,6 +30,8 @@ Page({
       }
     ],
 
+    timers: [-1],
+
     dis_type: 1,
 
     takeOutState: [
@@ -73,7 +75,8 @@ Page({
 
   // 刷新
   async refresh() {
-    const { menuList } = this.data
+    const { menuList, timers } = this.data
+
     // 重置数据
     let _menuList = [
       {
@@ -103,6 +106,7 @@ Page({
 
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
 
     // 拉取最新数据
     setTimeout(() => {
@@ -118,6 +122,10 @@ Page({
 
 
   async onShow() {
+    const {timers} = this.data;
+    log(timers)
+    timers.forEach(item=>clearInterval(item))
+
     // 校验用户是否登录
     await reqUserPoint()
     let _sid = await getSid()
@@ -136,16 +144,19 @@ Page({
     return this.refresh();
   },
   onUnload() {
-    let { menuList, cur } = this.data
+    let { menuList, cur, timers } = this.data
     clearInterval(menuList[cur].timer)
+    timers.forEach(item => clearInterval(item))
     menuList[cur].timer = -1
     this.setData({ menuList })
     this.setData = () => { }
   },
   onHide() {
     this.onModalClose()
-    let { menuList, cur } = this.data
+    let { menuList, cur, timers } = this.data
     clearInterval(menuList[cur].timer)
+
+    timers.forEach(item => clearInterval(item))
     menuList[cur].timer = -1
     this.setData({ menuList })
 
@@ -162,8 +173,9 @@ Page({
    */
   open() {
     // 清空所有计时器
-    const { menuList } = this.data
+    const { menuList, timers } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     this.setData({
       loginOpened: true
     })
@@ -175,8 +187,9 @@ Page({
    */
   onModalClose() {
     // 清空所有计时器
-    const { menuList } = this.data
+    const { menuList, timers } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     this.setData({
       loginOpened: false,
       menuList: [
@@ -213,12 +226,13 @@ Page({
    */
 
   async changeMenu(e) {
-    let { menuList } = this.data
+    let { menuList, timers } = this.data
     my.showLoading({
       content: '加载中...',
     });
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     const { cur } = e.currentTarget.dataset
     if (this.data.cur === cur) { return my.hideLoading() }
     setTimeout(() => {
@@ -236,19 +250,21 @@ Page({
    */
   async getOrderList() {
 
-    let { menuList, cur } = this.data
+    let { menuList, cur, timers } = this.data
     let { page, dis_type, timer, list, loading } = menuList[cur]
     log(loading)
     if (loading) { return }
     menuList[cur].page++
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
-     my.showLoading({
+    my.showLoading({
       content: '加载中...',
     });
     menuList[loading] = true
     this.setData({ loading: true }, () => {
       menuList.forEach(({ timer }) => clearInterval(timer))
+      timers.forEach(item => clearInterval(item))
       if (code === 0) {
         list = [...list, ...data]
         timer = setInterval(() => {
@@ -271,8 +287,10 @@ Page({
           menuList[cur].finish = true
           menuList[cur].list = list
           menuList[loading] = false
+          timers.push(timer)
           this.setData({
             menuList,
+            timers,
             loading: false
           }, () => my.hideLoading())
         }, 1000)
