@@ -137,7 +137,7 @@ App({
       title: '绝味鸭脖',
       desc: '会员专享服务，便捷 实惠 放心。',
       imageUrl: baseUrl.imageUrl+'jwdlogo.png',
-      bgImgUrl: baseUrl.imageUrl+'jwdlogo.png',
+      bgImgUrl: baseUrl.imageUrl+'share_default.png',
       path: 'pages/position/position'
     };
   },
