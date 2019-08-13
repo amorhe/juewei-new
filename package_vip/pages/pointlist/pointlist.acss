@@ -1,8 +1,51 @@
-.pointlistTop {
-  position: sticky;
+.header-title-s {
+  z-index: 2;
+  position: fixed;
+  top: 0rpx;
+  width: 100vw;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  text-align: center
+}
+
+.title_bg {
+  z-index: 999;
+  position: fixed;
   top: 0;
+  width: 100vw;
+}
+
+.header-title-s text {
+  z-index: 1000;
+  position: absolute;
+  height: 44rpx;
+  left: 60rpx;
+  margin: 0 auto
+}
+
+.body_bg {
+  z-index: 99;
+  background: linear-gradient(135deg, rgba(251, 83, 50, 1) 0%, rgba(230, 0, 18, 1) 100%);
+  position: fixed;
+  top: 0rpx;
+  width: 100vw;
+  height: 240rpx;
+}
+
+.bg {
+  z-index: 1;
+  position: relative;
+  /* background: linear-gradient(180deg, #F5402B 0, #F5402B 150rpx, rgba(255, 255, 255, 0) 380rpx); */
+  /* min-height: 100vh; */
+}
+
+.pointlistTop {
+  z-index: 999;
+  position: sticky;
+  top: 130rpx;
   padding: 32rpx;
-  background: #FB5332;
   color: #fff;
 }
 
@@ -45,6 +88,8 @@
 }
 
 .pitInfo {
+  position: relative;
+  z-index: 9;
   padding: 0 32rpx;
   box-sizing: border-box;
 }
@@ -104,7 +149,7 @@
   border-top: 1px solid #eee;
 }
 
-.toast{
+.toast {
   z-index: 99999;
   position: absolute;
   width: 240rpx;
@@ -118,7 +163,7 @@
   text-align: center
 }
 
-.toast::before{
+.toast::before {
   z-index: -1;
   position: absolute;
   content: '';
@@ -148,25 +193,27 @@
   margin: 20rpx;
 }
 
-.modalInfo{
+.modalInfo {
   padding: 50rpx 0;
 }
 
-.footerButton{
+.footerButton {
   display: flex;
 }
-.modalButton{
+
+.modalButton {
   flex: 1;
   text-align: center;
 }
-.am-modal-footer{
-  background: rgba(0,0,0,0)
+
+.am-modal-footer {
+  background: rgba(0, 0, 0, 0)
 }
 
-
-.confirm{
+.confirm {
   color: #999;
 }
-.cancel{
+
+.cancel {
   color: #E60012;
 }

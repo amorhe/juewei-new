@@ -31,9 +31,9 @@ page {
 
 .body_bg {
   position: absolute;
-  top: 128rpx;
+  top: 0;
   width: 100vw;
-  height: 328rpx;
+  height: 428rpx;
 }
 
 .vip {

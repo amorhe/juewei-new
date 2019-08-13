@@ -38,9 +38,9 @@ page {
 .body_bg {
   z-index: 0;
   position: absolute;
-  top: 128rpx;
+  top: 0rpx;
   width: 100vw;
-  height: 328rpx;
+  height: 428rpx;
 }
 
 

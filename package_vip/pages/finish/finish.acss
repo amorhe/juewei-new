@@ -111,6 +111,11 @@ page {
   margin-top: 20rpx;
 }
 
+.hr{
+   padding-top: 20rpx;
+  border-top: 1rpx solid #eee;
+}
+
 .li-button {
   width: 670rpx;
   height: 96rpx;
