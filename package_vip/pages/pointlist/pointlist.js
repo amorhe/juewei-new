@@ -1,5 +1,5 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
-import { log, isloginFn } from '../../../pages/common/js/li-ajax'
+import { log, isloginFn ,getNavHeight} from '../../../pages/common/js/li-ajax'
 import { reqPointList, reqUserPoint } from '../../../pages/common/js/vip'
 Page({
   data: {
@@ -13,6 +13,14 @@ Page({
 
     finish: false
   },
+
+  async onShow() {
+    let navHeight = getNavHeight()
+     this.setData({
+      navHeight
+    })
+  },
+
   async onLoad() {
     await this.getDetail(1)
     await this.getUserPoint()

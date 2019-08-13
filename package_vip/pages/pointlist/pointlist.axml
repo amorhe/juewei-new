@@ -1,6 +1,14 @@
 <!-- <view>
   积分明细列表
 </view> -->
+ <!-- 头部 -->
+ <view class="header-title-s" style="height:{{navHeight.titleBarHeight + navHeight.statusBarHeight}}px">
+    <!-- <text a:if="{{navHeight.statusBarHeight}}" style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">VIP专享</text> -->
+  </view>
+  <view style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px"></view>
+  <!-- <image style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px" mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/> -->
+  <!-- <image mode="scaleToFill" class="body_bg" src="{{imageUrl}}body_bg.png"/> -->
+  <view class="body_bg"></view>
 <view class="pointlistTop" onTap="hideToast">
   <view class="pittopItema">
     <view>当前积分：  <text class="n">{{userPoint.points || 0}}</text> </view>
