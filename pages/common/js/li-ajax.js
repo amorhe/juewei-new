@@ -54,7 +54,10 @@ export const ajax = async (url, data = {}, method = 'POST') => {
             data: '', // 要缓存的数据
           });
           resolve({ code: -1, data: '' })
-        } else {
+        } else if (code == 3212) {
+          resolve(res.data)
+        }
+        else {
           reject({ errormsg: rest.msg, code: -1 });
         }
 

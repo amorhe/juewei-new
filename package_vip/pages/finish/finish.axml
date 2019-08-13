@@ -46,13 +46,7 @@
         </view>
         <view class="user-right">
           <view class="shop-name"> {{d.shop_name}}</view>
-          <view class="code-button"
-           data-shop_longitude="{{d.shop_gd_longitude}}" 
-          data-shop_latitude="{{d.shop_gd_latitude}}"
-          data-shop_name="{{d.shop_name}}"
-          data-address="{{d.address}}"
-          onTap="guide"
-          >导航</view>
+          <view class="code-button" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.address}}" onTap="guide">导航</view>
         </view>
       </view>
       <view class="user-list" a:if="{{d.shop_name}}">
@@ -64,10 +58,13 @@
           </view>
         </view>
       </view>
-       <view class="li-button" onTap="redirect">
+      <view class="hint hr" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
+      温馨提示：可到VIP专享>兑换记录中查看
+      </view>
+      <view class="li-button" onTap="redirect">
       返回VIP专享
       </view>
-      <view class="li-button gray"  onTap="toOrderDetail" data-id="{{d.id}}">
+      <view class="li-button gray" onTap="toOrderDetail" data-id="{{d.id}}">
       查看订单
       </view>
     </view>
@@ -90,17 +87,17 @@
         在<text>http://www.ebeecake.com</text> 输入兑换码兑换；<view>活动所有权归本公司所有。</view></view> -->
       </view>
       <!--<view class="explain" a:if="{{d.intro}}"><view class="explain-title">商品</view><rich-text nodes="{{d._intro}}"></rich-text><view class="explain-detail"><view>全场通用</view><view>活动所有权归本公司所有。</view></view></view> -->
-      <view class="hint" a:if="{{d.get_code}}">
+      <view class="hint" a:if="{{!d.get_code}}" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
       温馨提示：可到VIP专享>兑换记录中查看
       </view>
-      <view class="hint" a:if="{{!d.get_code}}">
+      <view class="hint" a:if="{{d.get_code}}">
       温馨提示：可到
         <text style="color:#108EE9">我的>卡劵</text> 中查看
       </view>
       <view class="li-button" onTap="redirect">
       返回VIP专享
       </view>
-      <view class="li-button gray"  onTap="toOrderDetail" data-id="{{d.id}}">
+      <view class="li-button gray" onTap="toOrderDetail" data-id="{{d.id}}">
       查看订单
       </view>
     </view>
@@ -173,13 +170,7 @@
         </view>
         <view class="user-right">
           <view class="shop-name"> {{d.shop_name}}</view>
-          <view class="code-button"
-           data-shop_longitude="{{d.shop_gd_longitude}}" 
-          data-shop_latitude="{{d.shop_gd_latitude}}"
-          data-shop_name="{{d.shop_name}}"
-          data-address="{{d.address}}"
-          onTap="guide"
-          >导航</view>
+          <view class="code-button" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.address}}" onTap="guide">导航</view>
         </view>
       </view>
       <view class="user-list" a:if="{{d.shop_name}}">
@@ -222,11 +213,9 @@
     <image class="close" mode="scaleToFill" src="{{imageUrl}}close1.png" catchTap="closeModel"/>
   </view>
   <image class="code-img" mode="scaleToFill" src="{{codeImg}}"/>
-
   <view class="code-phone">
    {{d.user_phone.slice(0,3)}} **** {{d.user_phone.slice(7)}}
   </view>
-
   <view class="code-pay" onTap="wait">
     确认支付
   </view>

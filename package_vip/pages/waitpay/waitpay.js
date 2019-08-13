@@ -322,6 +322,7 @@ Page({
    */
   async payNow() {
     let { d, order_sn, user_address_id, province, city, district, user_address_phone, shop_id, shop_name, user_address_name } = this.data;
+
     if (d.receive_type == 1) {
       if (!order_sn ||
         !user_address_name ||
@@ -337,13 +338,9 @@ Page({
     }
 
 
+
+
     if (d.receive_type == 2) {
-      log(order_sn,
-        user_address_name
-        , user_address_phone
-        , province
-        , city
-        , district)
       if (!order_sn ||
         !user_address_name ||
         !user_address_phone ||
@@ -354,6 +351,7 @@ Page({
         return
       }
     }
+
 
 
 
@@ -383,6 +381,9 @@ Page({
               url: '../finish/finish?id=' + d.id + '&fail=' + false
             });
           }
+           return my.redirectTo({
+            url: '../finish/finish?id=' + d.id + '&fail=' + true
+          });
 
         },
         fail: res => {
