@@ -1,22 +1,28 @@
-import {imageUrl,ak} from '../common/js/baseUrl'
-import {bd_encrypt} from '../common/js/map'
-import {GetLbsShop,NearbyShop} from '../common/js/home'
-import {cur_dateTime,compare,sortNum} from '../common/js/time'
+import { imageUrl, ak } from '../common/js/baseUrl'
+import { bd_encrypt } from '../common/js/map'
+import { GetLbsShop, NearbyShop } from '../common/js/home'
+import { cur_dateTime, compare, sortNum } from '../common/js/time'
 var app = getApp();
 
 Page({
   data: {
-    imageUrl:imageUrl,
-    city:'定位中...',
+    imageUrl: imageUrl,
+    city: '定位中...',
   },
   onLoad() {
+    my.removeStorageSync({
+      key: 'takeout', // 缓存数据的key
+    });
+    my.removeStorageSync({
+      key: 'self', // 缓存数据的key
+    });
     var that = this;
     my.getLocation({
-      type:3,
-      success(res){
+      type: 3,
+      success(res) {
         my.hideLoading();
         // console.log(res)
-        const mapPosition = bd_encrypt(res.longitude,res.latitude);
+        const mapPosition = bd_encrypt(res.longitude, res.latitude);
         my.setStorageSync({
           key: 'lat', // 缓存数据的key
           data: mapPosition.bd_lat, // 要缓存的数据
@@ -27,17 +33,17 @@ Page({
         });
         // 缓存附近地址
         my.setStorageSync({
-          key:'nearPois',
-          data:res.pois
+          key: 'nearPois',
+          data: res.pois
         })
         app.globalData.province = res.province;
         app.globalData.city = res.city;
-        app.globalData.address =  res.pois[0].name;
+        app.globalData.address = res.pois[0].name;
         app.globalData.position = res;
         that.getLbsShop();
         that.getNearbyShop();
         that.setData({
-          city:res.city
+          city: res.city
         })
       },
       fail() {
@@ -48,11 +54,12 @@ Page({
         })
       },
     })
+
   },
   // 外卖附近门店
   getLbsShop() {
-    const lng = my.getStorageSync({key:'lng'}).data;
-    const lat = my.getStorageSync({key:'lat'}).data;
+    const lng = my.getStorageSync({ key: 'lng' }).data;
+    const lat = my.getStorageSync({ key: 'lat' }).data;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -71,11 +78,11 @@ Page({
         }
         // 按照goods_num做降序排列
         let shopArray = shopArr1.concat(shopArr2);
-        shopArray.sort((a,b) => {
+        shopArray.sort((a, b) => {
           var value1 = a.goods_num,
-              value2 = b.goods_num;
-          if(value1 <= value2){
-              return a.distance - b.distance;
+            value2 = b.goods_num;
+          if (value1 <= value2) {
+            return a.distance - b.distance;
           }
           return value2 - value1;
         });
@@ -86,11 +93,11 @@ Page({
         })
       } else if (res.code == 5 || res.data.length == 0) {
         this.setData({
-          content:'您的定位地址无可配送门店',
-          confirmButtonText:'去自提',
-          cancelButtonText:'修改地址',
-          modalShow:true,
-          mask:true
+          content: '您的定位地址无可配送门店',
+          confirmButtonText: '去自提',
+          cancelButtonText: '修改地址',
+          modalShow: true,
+          mask: true
         })
 
       }
@@ -99,8 +106,8 @@ Page({
   },
   // 自提附近门店
   getNearbyShop() {
-    const lng = my.getStorageSync({key:'lng'}).data;
-    const lat = my.getStorageSync({key:'lat'}).data;
+    const lng = my.getStorageSync({ key: 'lng' }).data;
+    const lat = my.getStorageSync({ key: 'lat' }).data;
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
@@ -124,7 +131,7 @@ Page({
                     my.navigateTo({
                       url: '/pages/home/selecttarget/selecttarget?type=true'
                     });
-                  },  
+                  },
                 });
               }
             },
@@ -157,21 +164,21 @@ Page({
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
     })
   },
-  onCounterPlusOne(e){
+  onCounterPlusOne(e) {
     // 点击左边去自提
-    if(e.type==1 && e.isType=="noShop") {
+    if (e.type == 1 && e.isType == "noShop") {
       console.log(e)
       this.setData({
-        modalShow:e.modalShow,
-        mask:e.mask,
-        type:2
+        modalShow: e.modalShow,
+        mask: e.mask,
+        type: 2
       })
       app.globalData.type = 2;
       // this.getNearbyShop();
       my.switchTab({
         url: '/pages/home/goodslist/goodslist'
       })
-    }else{
+    } else {
       my.navigateTo({
         url: '/pages/home/selecttarget/selecttarget?type=true'
       });

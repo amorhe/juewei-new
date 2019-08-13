@@ -38,7 +38,7 @@ Page({
     notUse: false,
     isClick: true,
     phone: '',   // 手机号
-    newArr:[],    // 变更商品列表
+    newArr: [],    // 变更商品列表
   },
   onLoad(e) {
     let goodsList = app.globalData.goodsBuy;
@@ -184,31 +184,38 @@ Page({
   },
   // 弹框事件回调
   onCounterPlusOne(data) {
+    let goodlist = my.getStorageSync({
+      key: 'goodsList'
+    }).data;
+    let newShopcart = {}, newGoodsArr = [];
+    for (let _item of this.data.newArr) {
+      for (let item of this.data.goodsList) {
+        // 商品价格变更
+        if (_item.type == 1) {
+          if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
+            item.goods_price = _item.goodsPrice;
+          }
+          newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
+          newGoodsArr.push(item);
+        } else {
+          // 商品下架
+          if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
+            newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
+            newGoodsArr.push(item);
+          }
+        }
+      }
+    }
+    my.setStorageSync({
+      key: 'goodsList', // 缓存数据的key
+      data: newShopcart, // 要缓存的数据
+    });
+    this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(newGoodsArr));
     // 重新选择商品
     if (data.isType == 'orderConfirm' && data.type == 1) {
       my.navigateBack({
         delta: 1
       });
-    }
-    // 继续结算
-    if (data.isType == 'orderConfirm' && data.type == 0) {
-      // let arr = this.data.newArr.map(_item => {
-      //  this.data.goodsList.map(item => {
-      //     if(`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`){
-      //        item.goods_price = _item.goodsPrice
-      //     }
-          
-      //   })
-      // })
-      for(let _item of this.data.newArr){
-        for(let item of this.data.goodsList){
-          if(`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`){
-            item.goods_price = _item.goodsPrice
-          }
-        }
-      }
-      
-      this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(this.data.goodsList));
     }
     this.setData({
       mask: false,
@@ -408,7 +415,7 @@ Page({
           showShopcar: false,
           isType: 'orderConfirm',
           content: res.msg + '，系统已经更新,是否确认结算',
-          newArr:res.data
+          newArr: res.data
         })
       }
     })
