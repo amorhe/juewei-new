@@ -222,14 +222,11 @@ Page({
 
   async changeMenu(e) {
     let { menuList, timers } = this.data
-    my.showLoading({
-      content: '加载中...',
-    });
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
     timers.forEach(item => clearInterval(item))
     const { cur } = e.currentTarget.dataset
-    if (this.data.cur === cur) { return my.hideLoading() }
+    if (this.data.cur === cur) { return }
     setTimeout(() => {
       this.setData({ cur }, () => {
         setTimeout(() => {
@@ -306,7 +303,6 @@ Page({
   async getMore() {
     // 页面被拉到底部
     const { menuList, cur } = this.data;
-    my.showLoading({ content: '加载中...' });
     setTimeout(async () => {
       await this.getOrderList()
     }, 300)

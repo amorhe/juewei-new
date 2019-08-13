@@ -11,25 +11,27 @@ Page({
     orderState: [],
 
     takeOutState: [
-      '待支付',
+      '等待支付',
       '订单已提交',
       '商家已接单',
-      '正在配送',
-      '已送达',
+      '骑手正在送货',
+      '订单已完成',
       '订单已取消',
       '订单已取消',
       '订单已取消',
       '订单已取消',
       '订单已取消',
-      '订单已取消'
+      '订单已取消',
+      '骑手已接单',
     ],
 
     pickUpState: [
-      '待支付',
-      '订单已提交',
+      '等待支付',
+      '等待接单',
       '商家已接单',
-      '待取餐',
-      '已取餐',
+      '等待取餐',
+      '等待取餐',
+      '订单已完成',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -96,7 +98,7 @@ Page({
    * @function 获取订单详情
    */
   async getOrderDetail() {
-    let { curOrderState, order_no ,time} = this.data
+    let { curOrderState, order_no, time } = this.data
     clearInterval(time)
     let res = await ajax('/juewei-api/order/detail', { order_no })
 
@@ -364,7 +366,7 @@ Page({
     my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     });
-  }
+  },
 });
 
 let data = {
