@@ -282,7 +282,7 @@ Page({
           menuList[cur].list = list
           menuList[loading] = false
           timers.push(timer)
-          if (timers.length > 100) { timer = [] }
+          if (timers.length > 10) { timers = [] }
           this.setData({
             menuList,
             timers,
