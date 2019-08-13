@@ -11,7 +11,7 @@ Page({
     // 地址
     name: '',
 
-    sex: 0,
+    sex: 1,
 
     phone: '',
 
