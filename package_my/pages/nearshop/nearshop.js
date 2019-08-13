@@ -20,7 +20,17 @@ Page({
     const lng = my.getStorageSync({key:'lng'}).data;
     const lat = my.getStorageSync({key:'lat'}).data;
     this.nearShop(lng,lat);
+    this.setData({
+      selfshop:false
+    })
   },
+  onShow(){
+    this.setData({
+      longitude: my.getStorageSync({key:'lng'}).data,
+      latitude: my.getStorageSync({key:'lat'}).data
+    })
+  },
+ 
   // 输入
   handleSearch(e){
     this.setData({
@@ -116,15 +126,16 @@ Page({
   goSelf(e){
     app.globalData.isSelf = true;
     app.globalData.shopIng = e.currentTarget.dataset.info
-    my.switchTab({
+    my.navigateTo({
       url: '/pages/home/goodslist/goodslist', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
       success: (res) => {
         
       },
     });
-    // my.navigateTo({
-    //   url: '/pages/home/selfshop/selfshop?shop_id=' + e.currentTarget.dataset.shop_id + '&company_id=' + e.currentTarget.dataset.company_id + '&title=' + e.currentTarget.dataset.title + '&address=' + e.currentTarget.dataset.address + '&goods_num=' + e.currentTarget.dataset.goods_num + '&distance=' + e.currentTarget.dataset.distance 
-    // });
+  },
+  onUnload(){//退出后销毁
+    app.globalData.isSelf = false;
+    app.globalData.shopIng = null;
   },
   // 切换城市
   choosecityTap(){

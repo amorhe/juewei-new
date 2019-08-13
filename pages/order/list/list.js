@@ -15,7 +15,8 @@ Page({
         dis_type: 1,
         finish: false,
         timer: -1,
-        list: []
+        list: [],
+        loading: false
       },
       {
         key: '门店自提订单',
@@ -24,9 +25,12 @@ Page({
         dis_type: 2,
         finish: false,
         timer: -1,
-        list: []
+        list: [],
+        loading: false
       }
     ],
+
+    timers: [-1],
 
     dis_type: 1,
 
@@ -60,6 +64,8 @@ Page({
 
     cur: 0,
 
+
+
   },
 
   // 下拉刷新
@@ -69,6 +75,8 @@ Page({
 
   // 刷新
   async refresh() {
+    const { menuList, timers } = this.data
+
     // 重置数据
     let _menuList = [
       {
@@ -79,7 +87,8 @@ Page({
         finish: false,
         fun: 'getTakeOutList',
         timer: -1,
-        list: []
+        list: [],
+        loading: menuList[0].loading
       },
       {
         key: '门店自提订单',
@@ -89,28 +98,35 @@ Page({
         finish: false,
         fun: 'getPickUpList',
         timer: -1,
-        list: []
+        list: [],
+        loading: menuList[1].loading
       }
     ]
 
 
     // 清空所有计时器
-    const { menuList } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
 
     // 拉取最新数据
-
-    this.setData({
-      menuList: _menuList,
-    }, async () => {
-      await this.getMore()
-      my.stopPullDownRefresh()
+    setTimeout(() => {
+      this.setData({
+        menuList: _menuList,
+      }, async () => {
+        await this.getMore()
+        my.stopPullDownRefresh()
+      })
     })
 
   },
 
 
   async onShow() {
+    const { timers } = this.data;
+
+    log(timers)
+    timers.forEach(item => clearInterval(item))
+
     // 校验用户是否登录
     await reqUserPoint()
     let _sid = await getSid()
@@ -129,17 +145,18 @@ Page({
     return this.refresh();
   },
   onUnload() {
-    let { menuList, cur } = this.data
+    let { menuList, cur, timers } = this.data
     clearInterval(menuList[cur].timer)
+    timers.forEach(item => clearInterval(item))
     menuList[cur].timer = -1
     this.setData({ menuList })
     this.setData = () => { }
   },
   onHide() {
     this.onModalClose()
-
-    // clearInterval(this.data.time)
-    // this.setData({ time: -1 })
+    let { menuList, cur, timers } = this.data
+    clearInterval(menuList[cur].timer)
+    timers.forEach(item => clearInterval(item))
   },
 
   contact,
@@ -151,8 +168,9 @@ Page({
    */
   open() {
     // 清空所有计时器
-    const { menuList } = this.data
+    const { menuList, timers } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     this.setData({
       loginOpened: true
     })
@@ -164,8 +182,9 @@ Page({
    */
   onModalClose() {
     // 清空所有计时器
-    const { menuList } = this.data
+    const { menuList, timers } = this.data
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     this.setData({
       loginOpened: false,
       menuList: [
@@ -176,7 +195,8 @@ Page({
           dis_type: 1,
           finish: false,
           timer: -1,
-          list: []
+          list: [],
+          loading: menuList[0].loading
         },
         {
           key: '门店自提订单',
@@ -185,7 +205,8 @@ Page({
           dis_type: 2,
           finish: false,
           timer: -1,
-          list: []
+          list: [],
+          loading: menuList[1].loading
         }
       ],
 
@@ -200,15 +221,16 @@ Page({
    */
 
   async changeMenu(e) {
-    let { menuList } = this.data
+    let { menuList, timers } = this.data
     my.showLoading({
       content: '加载中...',
     });
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
+    const { cur } = e.currentTarget.dataset
+    if (this.data.cur === cur) { return my.hideLoading() }
     setTimeout(() => {
-      const { cur } = e.currentTarget.dataset
-      if (this.data.cur === cur) { return }
       this.setData({ cur }, () => {
         setTimeout(() => {
           this.refresh()
@@ -223,45 +245,58 @@ Page({
    */
   async getOrderList() {
 
-    let { menuList, cur } = this.data
-
-    let { page, dis_type, timer, list } = menuList[cur]
+    let { menuList, cur, timers } = this.data
+    let { page, dis_type, timer, list, loading } = menuList[cur]
+    if (loading) { return }
     menuList[cur].page++
-
     menuList.forEach(({ timer }) => clearInterval(timer))
+    timers.forEach(item => clearInterval(item))
     let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
+    my.showLoading({
+      content: '加载中...',
+    });
+    menuList[loading] = true
+    this.setData({ loading: true }, () => {
+      menuList.forEach(({ timer }) => clearInterval(timer))
+      timers.forEach(item => clearInterval(item))
+      if (code === 0) {
+        list = [...list, ...data]
+        timer = setInterval(() => {
+          list = list.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
+            remaining_pay_second--
+            if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+              clearInterval(timer)
+            }
+            if (remaining_pay_second <= 0) {
+              --remaining_pay_minute
+              remaining_pay_second = 59
+            }
+            return {
+              remaining_pay_minute,
+              remaining_pay_second,
+              ...item,
+            }
+          })
+          menuList[cur].timer = timer
+          menuList[cur].finish = true
+          menuList[cur].list = list
+          menuList[loading] = false
+          timers.push(timer)
+          if (timers.length > 10) { timers = [] }
+          this.setData({
+            menuList,
+            timers,
+            loading: false
+          }, () => my.hideLoading())
+        }, 1000)
 
-    if (code === 0) {
-      list = [...list, ...data]
-      timer = setInterval(() => {
-        list = list.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
-          remaining_pay_second--
-          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
-            clearInterval(timer)
-          }
-          if (remaining_pay_second <= 0) {
-            --remaining_pay_minute
-            remaining_pay_second = 59
-          }
-          return {
-            remaining_pay_minute,
-            remaining_pay_second,
-            ...item,
-          }
-        })
-        menuList[cur].timer = timer
-        menuList[cur].finish = true
-        menuList[cur].list = list
 
-        this.setData({
-          menuList
-        }, () => my.hideLoading())
-      }, 1000)
+      } else {
+        this.open()
+        my.hideLoading()
+      }
+    })
 
-
-    } else {
-      this.open()
-    }
   },
 
   /**

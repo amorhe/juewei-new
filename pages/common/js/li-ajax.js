@@ -33,14 +33,14 @@ export const ajax = async (url, data = {}, method = 'POST') => {
   let _sid = await getSid()
   data._sid = _sid
   return new Promise((resolve, reject) => {
-    my.request({
+    let task = my.request({
       url: baseUrl + url,
       data,
       method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       success: (res) => {
         // log(res.data)
-
+        res.data.task = task
         my.hideLoading()
         const code = res.data.CODE || res.data.code
         if ([100, 'A100', 0].includes(code)) {

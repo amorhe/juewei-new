@@ -72,26 +72,17 @@ App({
       }
     })
   },
-
   /**
-
       * @param sx 起始点x坐标
-
       * @param sy 起始点y坐标
-
       * @param cx 控制点x坐标
-
       * @param cy 控制点y坐标
-
       * @param ex 结束点x坐标
-
       * @param ey 结束点y坐标
-
       * @param part 将起始点到控制点的线段分成的份数，数值越高，计算出的曲线越精确
-
       * @return 贝塞尔曲线坐标
 
-    */
+  */
   bezier(points, part) {
     let sx = points[0]['x'];
     let sy = points[0]['y'];
@@ -140,6 +131,15 @@ App({
 
     };
 
+  },
+  onShareAppMessage(){
+    return {
+      title: '绝味鸭脖',
+      desc: '会员专享服务，便捷 实惠 放心。',
+      imageUrl: baseUrl.imageUrl+'jwdlogo.png',
+      bgImgUrl: baseUrl.imageUrl+'jwdlogo.png',
+      path: 'pages/position/position'
+    };
   },
   globalData: {
     location: { //获取地区

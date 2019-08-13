@@ -118,7 +118,7 @@
 
 <view class="shopUp" a:if="{{isSelf}}">
   <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
-  <navigator url="/package_my/pages/chooseshop/chooseshop" class="shopBoxs">
+  <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" pen-type="navigate">
     <view>
       <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
       <view class="shop_info">

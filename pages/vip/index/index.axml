@@ -28,7 +28,7 @@
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
       </view>
     </view>
-    <swiper a:if="{{bannerList.length}}" autoplay="{{true}}" indicator-dots="{{true}}" duration="{{2000}}" circular="{{true}}" class="banner">
+    <swiper a:if="{{bannerList.length}}" autoplay="{{true}}" indicator-active-color="#E60012" indicator-color="#E8E8E8" interval="3000" indicator-dots="{{true}}" circular="{{true}}" duration="1000" class="banner">
       <block a:for="{{bannerList}}">
         <swiper-item>
           <image style="margin:0" class="banner" mode="scaleToFill" onTap="linkTo" data-url="{{item.link_url}}" src="{{imageUrl2 + item.pic_src}}"/>
