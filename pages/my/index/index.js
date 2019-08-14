@@ -49,6 +49,9 @@ Page({
     }
     if (res.code == 0) {
       var userInfo = res.data
+      that.setData({
+        userInfo: userInfo
+      })
       my.getAuthCode({
         scopes: ['auth_user', 'auth_life_msg'],
         success: (res) => {
@@ -70,7 +73,7 @@ Page({
     if (this.data.userInfo.user_id) {
 
       my.navigateTo({
-        url: '/package_my/pages/mycenter/mycenter?img='+this.data.userInfo.head_img+'&name='+this.data.userInfo.nick_name
+        url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
       });
     } else {
       my.navigateTo({

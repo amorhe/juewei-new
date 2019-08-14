@@ -131,6 +131,7 @@ Page({
   },
   // 获取短信验证码
   async getcodeFn() {
+    var that = this
     if (this.data.getCode) {
       var time = my.getStorageSync({
         key: 'time', // 缓存数据的key
@@ -180,6 +181,9 @@ Page({
         })
         // 成功
       } else {
+        that.setData({
+          imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=' + this.data._sid + '&s=' + (new Date()).getTime()
+        })
         my.showToast({
           type: 'none',
           duration: 2000,

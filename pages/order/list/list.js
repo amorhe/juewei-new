@@ -7,6 +7,7 @@ Page({
     imageUrl,
     _sid: '',
     loginOpened: false,
+    refresFinsish: false,
     menuList: [
       {
         key: '官方外卖订单',
@@ -35,7 +36,7 @@ Page({
     dis_type: 1,
 
     takeOutState: [
-       '等待支付',
+      '等待支付',
       '订单已提交',
       '商家已接单',
       '骑手正在送货',
@@ -50,7 +51,7 @@ Page({
     ],
 
     pickUpState: [
-       '等待支付',
+      '等待支付',
       '等待接单',
       '商家已接单',
       '等待取餐',
@@ -77,7 +78,8 @@ Page({
 
   // 刷新
   async refresh() {
-    const { menuList, timers } = this.data
+    const { menuList, timers, refresFinsish } = this.data
+    if (refresFinsish) { return }
 
     // 重置数据
     let _menuList = [
@@ -114,6 +116,7 @@ Page({
     setTimeout(() => {
       this.setData({
         menuList: _menuList,
+        refresFinsish: true,
       }, async () => {
         await this.getMore()
         my.stopPullDownRefresh()
@@ -143,6 +146,7 @@ Page({
       });
       app.globalData.refresh = false
     }
+
 
     return this.refresh();
   },
@@ -180,7 +184,7 @@ Page({
 
   makePhoneCall(e) {
     const { dis_tel } = e.currentTarget.dataset
-    my.makePhoneCall({ number:dis_tel });
+    my.makePhoneCall({ number: dis_tel });
   },
 
 
@@ -255,7 +259,7 @@ Page({
     menuList[cur].page++
     menuList.forEach(({ timer }) => clearInterval(timer))
     timers.forEach(item => clearInterval(item))
-    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 10, page, dis_type }, 'GET')
+    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 20, page, dis_type }, 'GET')
     my.showLoading({
       content: '加载中...',
     });
@@ -290,7 +294,8 @@ Page({
           this.setData({
             menuList,
             timers,
-            loading: false
+            loading: false,
+            refresFinsish:false
           }, () => my.hideLoading())
         }, 1000)
 

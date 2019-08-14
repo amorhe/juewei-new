@@ -1,13 +1,6 @@
 <view class="couponContainer">
   <view>
-    <tabs 
-    tabs="{{tabs}}" 
-    onTabClick="handleTabClick" 
-    activeTab="{{activeTab}}" 
-    tabBarActiveTextColor="#E60012" 
-    tabBarUnderlineColor="#E60012" 
-    swipeable="{{false}}"
-    activeCls="activeFont">
+    <tabs tabs="{{tabs}}" onTabClick="handleTabClick" activeTab="{{activeTab}}" tabBarActiveTextColor="#E60012" tabBarUnderlineColor="#E60012" swipeable="{{false}}" activeCls="activeFont">
       <block>
         <tab-content key="0">
           <view class="tab-content tabBox">
@@ -24,7 +17,7 @@
                     <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
                     <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
                   </view>
-                  <view class="useBtn fontTwentySix">立即使用</view>
+                  <view class="useBtn fontTwentySix" data-way="{{item.way}}" data-code="{{item.code}}" catchTap="toUse">立即使用</view>
                 </view>
                 <view>
                   <view class="whiteCircleLeft"></view>
@@ -36,7 +29,8 @@
                     <text class="colorWhite fontTwentyTwo">更多使用规则</text>
                     <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s"/>
                   </view>
-                  <image class="qr" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" catchTap="showCode" />
+                  <image class="qr" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" catchTap="showCode" a:if="{{item.way == 3}}" />
+                  <image class="qr"  data-code="{{item.code}}" a:if="{{item.way != 3}}" />
                 </view>
                 <view class="rule">
                   <view a:if="{{item.gift_usage_rule}}">1、{{item.gift_usage_rule}}</view>
@@ -70,7 +64,7 @@
                 </view>
               </view>
             </view>
-             <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
+            <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
             <navigator url="/package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord" class="fontSmallGray codeMiddle">查看历史兑换码</navigator>
           </view>
         </tab-content>
@@ -93,5 +87,16 @@
   </view>
   <view class="code-pay" onTap="wait">
     确认支付
+  </view>
+</modal>
+
+<!-- 限时优惠 -->
+<modal show="{{open1}}" showClose="{{ false }}">
+  <view class="modalInfo">
+     限时优惠，立即使用
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm " onTap="toTakeOut">自提</view>
+    <view class="modalButton cancel " onTap="toTakeIn">外卖</view>
   </view>
 </modal>

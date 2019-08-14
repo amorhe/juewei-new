@@ -148,7 +148,9 @@ Page({
     let res = await reqPositionList(positionListOption)
     if (res.code === 100) {
       if (!res.data.length) {
-        return
+        return this.setData({
+        positionList:[]
+      })
       }
       let { pic_src, link_url } = res.data[0];
       let positionList = pic_src.map((pic, index) => {

@@ -235,16 +235,22 @@ Page({
 
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
+    let s = /^[a-zA-Z0-9_\u4e00-\u9fa5]{0,20}$/
     let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
     let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-    let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '')
+    let patrn = /[`…~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；……‘’，。￣、…＠＃％＾＆×＿＋｛｝｜＂＞＜]/im;
+    // let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '').replace(patrn,'')
+    let value = e.detail.value.trim()
+    if(!s.test(value)){
+      return value = this.data[key]
+    }
     this.setData({ [key]: value })
   },
   closeFN() {
     this.setData({
       addressdetail: ''
     })
-  }, 
+  },
   modalidShoFN() {
     this.setData({
       modalidShow: false
@@ -269,6 +275,13 @@ Page({
       return
     }
     if (/^1\d{10}$/.test(this.data.phone)) {
+    }else if(this.data.phone===''){
+      my.showToast({
+        type: 'none',
+        content: '请填写电话',
+        duration: 1000
+      });
+      return
     } else {
       my.showToast({
         type: 'none',
@@ -280,7 +293,7 @@ Page({
     if (this.data.addressdetail.replace(/\s+/g, "") == '') {
       my.showToast({
         type: 'none',
-        content: '门牌号不可为空',
+        content: '请输入门牌号',
         duration: 1000
       });
       return

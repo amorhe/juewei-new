@@ -66,6 +66,7 @@ Page({
   },
   // 获取短信验证码
   async getcodeFn() {
+    var that = this
     if (/^1\d{10}$/.test(this.data.phone)) {
     } else {
       my.showToast({
@@ -135,6 +136,9 @@ Page({
           url: '/pages/login/verifycode/verifycode?phone=' + data.phone
         });
       } else {
+        that.setData({
+          imgUrl: this.data.baseUrl + '/juewei-api/user/captcha?_sid=' + this.data._sid + '&s=' + (new Date()).getTime()
+        })
         my.hideLoading();
         my.showToast({
           type: 'none',
