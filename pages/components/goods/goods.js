@@ -193,9 +193,9 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
-      my.pageScrollTo({
-        scrollTop: app.globalData.pagesinfoTop
-      });
+      // my.pageScrollTo({
+      //   scrollTop: app.globalData.pagesinfoTop
+      // });
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
@@ -218,9 +218,9 @@ Component({
       })
     },
     scrollEvent(e) {
-      my.pageScrollTo({
-        scrollTop: app.globalData.pagesinfoTop
-      });
+      // my.pageScrollTo({
+      //   scrollTop: app.globalData.pagesinfoTop
+      // });
       // ret.push(e.detail.scrollTop);
       // ret.sort((a, b) => a - b);
       // let sum = ret.findIndex(item => item == e.detail.scrollTop) - 1;
