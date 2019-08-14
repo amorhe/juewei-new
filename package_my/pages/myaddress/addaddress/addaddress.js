@@ -235,16 +235,22 @@ Page({
 
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
+    let s = /^[a-zA-Z0-9_\u4e00-\u9fa5]{0,20}$/
     let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
     let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-    let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '')
+    let patrn = /[`…~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；……‘’，。￣、…＠＃％＾＆×＿＋｛｝｜＂＞＜]/im;
+    // let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '').replace(patrn,'')
+    let value = e.detail.value.trim()
+    if(!s.test(value)){
+      return value = this.data[key]
+    }
     this.setData({ [key]: value })
   },
   closeFN() {
     this.setData({
       addressdetail: ''
     })
-  }, 
+  },
   modalidShoFN() {
     this.setData({
       modalidShow: false
