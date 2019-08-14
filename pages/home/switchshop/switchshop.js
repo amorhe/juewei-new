@@ -19,7 +19,6 @@ Page({
     if (e.type == 2) {
       data = my.getStorageSync({ key: 'self' }).data;
     }
-    console.log(data);
     let hI =0;
     if(app.globalData.hI){
       hI = app.globalData.hI

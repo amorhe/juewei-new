@@ -1,6 +1,7 @@
 import { parseData, getSid, log, isloginFn } from '../../../pages/common/js/li-ajax'
 import { reqDetail, reqCreateOrder, reqConfirmOrder, reqPay, reqUserPoint } from '../../../pages/common/js/vip'
 import { imageUrl2 } from '../../../pages/common/js/baseUrl'
+import { upformId } from '../../../pages/common/js/time'
 
 const app = getApp()
 
@@ -274,6 +275,9 @@ Page({
     if (res.CODE === 'A100') {
       return res.DATA.points
     }
+  },
+  onSubmit(e){
+    upformId(e.detail.formId);
   },
 
   isloginFn

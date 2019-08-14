@@ -1,5 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
 import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay } from '../../common/js/home'
+import { upformId } from '../../common/js/time'
 var app = getApp();
 Page({
   data: {
@@ -188,7 +189,7 @@ Page({
       key: 'goodsList'
     }).data;
     let newShopcart = {}, newGoodsArr = [];
-    if (this.data.newArr.length>0) {
+    if (this.data.newArr.length > 0) {
       for (let _item of this.data.newArr) {
         for (let item of this.data.goodsList) {
           // 商品价格变更
@@ -207,7 +208,7 @@ Page({
           }
         }
       }
-    }else{
+    } else {
       newShopcart = goodlist
     }
     my.setStorageSync({
@@ -221,7 +222,7 @@ Page({
       });
     }
     // 继续结算
-    if(data.isType == 'orderConfirm' && data.type == 0){
+    if (data.isType == 'orderConfirm' && data.type == 0) {
       this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(newGoodsArr));
     }
     this.setData({
@@ -366,7 +367,7 @@ Page({
       notUse = app.globalData.notUse
     }
     confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, this.data.couponslist, notUse, app.globalData.freeId).then((res) => {
-      console.log(res)
+      // console.log(res)
       let goodsList = my.getStorageSync({ key: 'goodsList' }).data;
       if (res.code == 0) {
         let goodsReal = [], goodsInvented = [];
@@ -389,21 +390,23 @@ Page({
         }
         // 参与加价购的商品
         let repurseTotalPrice = 0;
-        if (app.globalData.repurseGoods.length == 0) {
-          if (res.data.activity_list[''].real_price >= this.data.full_money) {
-            this.setData({
-              showRepurse: true
-            })
-          }
-        } else {
-          for (let item of app.globalData.repurseGoods) {
-            for (let value of goodsReal) {
-              if (item.goods_code == value.sap_code && value.goods_type != "DIS") {
-                repurseTotalPrice += value.goods_price * value.goods_quantity;
-                if (repurseTotalPrice >= this.data.full_money) {
-                  this.setData({
-                    showRepurse: true
-                  })
+        if (app.globalData.repurseGoods) {
+          if (app.globalData.repurseGoods.length == 0) {
+            if (res.data.activity_list[''].real_price >= this.data.full_money) {
+              this.setData({
+                showRepurse: true
+              })
+            }
+          } else {
+            for (let item of app.globalData.repurseGoods) {
+              for (let value of goodsReal) {
+                if (item.goods_code == value.sap_code && value.goods_type != "DIS") {
+                  repurseTotalPrice += value.goods_price * value.goods_quantity;
+                  if (repurseTotalPrice >= this.data.full_money) {
+                    this.setData({
+                      showRepurse: true
+                    })
+                  }
                 }
               }
             }
@@ -442,10 +445,13 @@ Page({
           showShopcar: false,
           isType: 'orderConfirm',
           content: res.msg + '，系统已经更新,是否确认结算',
-          newArr:[]
+          newArr: []
         })
       }
     })
   },
-
+  // 模版消息
+  onSubmit(e) {
+    upformId(e.detail.formId);
+  }
 });

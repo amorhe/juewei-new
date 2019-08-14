@@ -2,18 +2,22 @@
 @import'../../order/list/list.acss';
 .positionIng {
   padding: 18rpx 32rpx 16rpx;
-  border-bottom: 16rpx #F5F5F5 solid
+  border-bottom: 16rpx #F5F5F5 solid;
+  background: #fff
 }
+
 .positionTxt {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 24rpx;
 }
+
 .positionTxt>navigatorß {
   display: flex;
   align-items: center
 }
+
 .positionTxt image {
   width: 32rpx;
   height: 32rpx;
@@ -23,42 +27,51 @@
 .delivery {
   padding: 30rpx 32rpx 26rpx;
   border-bottom: 24rpx #F5F5F5 solid;
+  background: #fff
 }
+
 .addressList {
   margin-top: 14rpx;
 }
+
 .addressList>view {
   display: flex;
   flex-direction: column;
   border-bottom: 1rpx #eee solid;
   padding: 16rpx 0;
 }
+
 .addressTxt {
   display: flex;
   align-items: center;
-  margin-bottom: 8rpx
+  margin-bottom: 8rpx;
 }
+
 .addressTabbar {
-  width:64rpx;
-  height:32rpx;
-  border-radius:4rpx;
+  width: 64rpx;
+  height: 32rpx;
+  border-radius: 4rpx;
   font-size: 22rpx;
   text-align: center;
   line-height: 32rpx;
   margin-left: 16rpx
 }
+
 .bar1 {
   color: #8FD75F;
-  background:rgba(143,215,95,.2);
+  background: rgba(143, 215, 95, .2);
 }
+
 .bar2 {
   color: #108EE9;
-  background:rgba(16,142,233,.2);
+  background: rgba(16, 142, 233, .2);
 }
+
 .bar3 {
   color: #E60012;
-  background:rgba(255,241,240,1);
+  background: rgba(255, 241, 240, 1);
 }
+
 .addAddressTxt {
   margin-top: 26rpx;
   color: #E60012;
@@ -68,10 +81,20 @@
 }
 
 .nearAddressBox {
-  padding: 30rpx 0 26rpx;
+  padding: 30rpx 32rpx 26rpx;
+  background: #fff
 }
+
 .nearList {
   height: 88rpx;
   border-bottom: 1rpx #eee solid;
   line-height: 88rpx;
+}
+
+.addClass {
+  display: block;
+  max-width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

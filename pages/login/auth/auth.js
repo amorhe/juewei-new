@@ -1,5 +1,6 @@
 import { imageUrl, baseUrl } from '../../common/js/baseUrl'
 import { sendCode, captcha, loginByAliUid, loginByAuth, getuserInfo, decryptPhone } from '../../common/js/login'
+import { upformId } from '../../common/js/time'
 var app = getApp(); //放在顶部
 Page({
   data: {
@@ -262,9 +263,6 @@ Page({
       my.navigateBack({
         delta: 1
       })
-      //this.getBannerList(res.data.city_id, res.data.region_id, 1, 1);
-      //this.getBannerList(110100, 110105, 1, 1);    //banner列表
-      //this.getActivityList(110100,110105,1,this.data.type,res.data.user_id)     //营销活动
     })
   },
   toUrl(e) {
@@ -273,4 +271,7 @@ Page({
       url: url
     });
   },
+  onSubmit(e){
+    upformId(e.detail.formId);
+  }
 });

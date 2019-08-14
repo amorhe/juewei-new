@@ -1,4 +1,4 @@
-import { imageUrl, ak } from '../../../../pages/common/js/baseUrl'
+import { imageUrl, ak,geotable_id } from '../../../../pages/common/js/baseUrl'
 Page({
   data: {
     imageUrl,
@@ -28,7 +28,7 @@ Page({
   setIcon(long, lat) {
     var that = this
     my.request({
-      url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + long + ',' + lat + '&radius=2000',
+      url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + long + ',' + lat + '&radius=2000',
       success: (res) => {
         console.log(res, '门店id')
         var arr = [

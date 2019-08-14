@@ -1,4 +1,4 @@
-import { imageUrl, ak } from '../../../../pages/common/js/baseUrl'
+import { imageUrl, ak, geotable_id } from '../../../../pages/common/js/baseUrl'
 import { getRegion } from '../../../../pages/common/js/li-ajax'
 import { addressCreate, addressinfo, updateaddress, deleteaddress } from '../../../../pages/common/js/address'
 import { bd_encrypt } from '../../../../pages/common/js/map'
@@ -74,7 +74,7 @@ Page({
         var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
         let map_position = bd_encrypt(res.longitude, res.latitude);
         my.request({
-          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + res.longitude + ',' + res.latitude + '&radius=2000',
+          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
           success: (res) => {
             var arr = []
             res.data.contents.forEach(item => {
@@ -153,7 +153,7 @@ Page({
           },
         });
         my.request({
-          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=134917&location=' + res.longitude + ',' + res.latitude + '&radius=2000',
+          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
           success: (res) => {
             var arr = []
             res.data.contents.forEach(item => {
@@ -275,6 +275,13 @@ Page({
       return
     }
     if (/^1\d{10}$/.test(this.data.phone)) {
+    }else if(this.data.phone===''){
+      my.showToast({
+        type: 'none',
+        content: '请填写电话',
+        duration: 1000
+      });
+      return
     } else {
       my.showToast({
         type: 'none',
@@ -286,7 +293,7 @@ Page({
     if (this.data.addressdetail.replace(/\s+/g, "") == '') {
       my.showToast({
         type: 'none',
-        content: '门牌号不可为空',
+        content: '请输入门牌号',
         duration: 1000
       });
       return

@@ -1,7 +1,7 @@
 import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
 import { bannerList, showPositionList, activityList, GetLbsShop, NearbyShop, GetShopGoods } from '../../common/js/home'
 import { getuserInfo, loginByAuth } from '../../common/js/login'
-import { cur_dateTime, compare } from '../../common/js/time'
+import { cur_dateTime, compare, upformId } from '../../common/js/time'
 import { bd_encrypt } from '../../common/js/map'
 var app = getApp(); //放在顶部
 Page({
@@ -108,7 +108,6 @@ Page({
       })
       my.setStorageSync({ key: 'shop_id', data: shopArray[0].shop_id });
     }
-    // console.log(this.data.shopTakeOut);
     app.globalData.shopTakeOut = this.data.shopTakeOut;
 
     my.setStorageSync({
@@ -319,7 +318,6 @@ Page({
           freeMoney: res.data.FREE.money
         })
       }
-
       obj1 = {
         "key": "折扣",
         "last": DIS
@@ -338,12 +336,14 @@ Page({
       this.setData({
         shopGoodsAll: goodsNew
       })
+      my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret) => {
+        app.globalData.pagesinfoTop = ret[0].top
+      })
       my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
         let top = ret[0][0].top;
         let arr = ret[0].map((item, index) => {
           return item.top = item.top - top - 37;
         })
-        // console.log(arr);
         app.globalData.ret = arr;
       })
       my.setStorageSync({
@@ -370,6 +370,7 @@ Page({
       url: e.currentTarget.dataset.link
     });
   },
+  // 会员卡，卡券
   navigate(e) {
     if (my.getStorageSync({
       key: 'user_id', // 缓存数据的key
@@ -382,5 +383,8 @@ Page({
     my.navigateTo({
       url: e.currentTarget.dataset.url
     });
+  },
+  onSubmit(e) {
+    upformId(e.detail.formId);
   }
 });
