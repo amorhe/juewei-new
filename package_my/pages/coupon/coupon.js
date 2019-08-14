@@ -110,16 +110,17 @@ Page({
           open1: true
         })
         break;
-      // case 2:
-      //   let { code } = this.data.d
-      //   let _sid = await getSid()
-      //   let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
-      //   log(codeImg)
-      //   this.setData({
-      //     open2: true,
-      //     codeImg
-      //   })
-      //   break
+      case 2:
+      this.showCode(e)
+        // let { code } = this.data.d
+        // let _sid = await getSid()
+        // let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
+        // log(codeImg)
+        // this.setData({
+        //   open2: true,
+        //   codeImg
+        // })
+        break
     }
   },
 

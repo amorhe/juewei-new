@@ -17,7 +17,7 @@
                     <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
                     <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
                   </view>
-                  <view class="useBtn fontTwentySix" data-way="{{item.way}}" catchTap="toUse">立即使用</view>
+                  <view class="useBtn fontTwentySix" data-way="{{item.way}}" data-code="{{item.code}}" catchTap="toUse">立即使用</view>
                 </view>
                 <view>
                   <view class="whiteCircleLeft"></view>
