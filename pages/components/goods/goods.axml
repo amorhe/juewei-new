@@ -40,8 +40,8 @@
     <view class="goodsUl">
       <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}">
         <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{type[item.key]}}_1.png"/>
-        <image a:if="{{goodsType == index + 1 && goodsType!=13}}" src="{{imageUrl}}m_{{type[item.key]}}_2.png"/>
-         <!-- <image a:if="{{goodsType == 13}}" src="{{imageUrl}}m_13_2.png"/> -->
+        <image a:if="{{goodsType == index + 1 && item.key!='解辣神器'}}" src="{{imageUrl}}m_{{type[item.key]}}_2.png"/>
+         <image a:if="{{goodsType == index + 1 && item.key=='解辣神器'}}" src="{{imageUrl}}m_13_3.png"/>
         <view class="{{goodsType== index + 1?'activeView':''}}">{{item.key}}</view>
       </view>
     </view>

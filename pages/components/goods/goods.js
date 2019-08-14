@@ -155,12 +155,12 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
-      my.createSelectorQuery().selectViewport().scrollOffset().exec((ret) => {
-        console.log(ret)
-        my.pageScrollTo({
-          scrollTop: ret[0].scrollTop
-        });
-      })
+      // my.createSelectorQuery().selectViewport().scrollOffset().exec((ret) => {
+      //   console.log(ret)
+      //   my.pageScrollTo({
+      //     scrollTop: ret[0].scrollTop
+      //   });
+      // })
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
@@ -183,7 +183,7 @@ Component({
     },
     // 滑动
     onTouchEnd(e) {
-      tim = setTimeout(() => {
+      setTimeout(() => {
         let retArr = [...app.globalData.ret];
         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
           retArr.push(ret[0].scrollTop);
@@ -193,7 +193,6 @@ Component({
             this.setData({
               goodsType: sum
             })
-            clearTimeout(tim);
           }
         })
       }, 100)
