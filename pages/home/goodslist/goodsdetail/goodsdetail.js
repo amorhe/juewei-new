@@ -80,6 +80,7 @@ Page({
     const shop_id = my.getStorageSync({key:'shop_id'}).data;
     // console.log(priceFree)
     // 购物车活动提示
+    // console.log(app.globalData)
     this.shopcartPrompt(app.globalData.fullActivity,priceAll,priceFree)
     // 评论
     this.getCommentList(goodsInfo.goods_code,this.data.pagenum,this.data.pagesize);

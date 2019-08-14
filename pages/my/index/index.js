@@ -1,5 +1,6 @@
 import { imageUrl } from '../../common/js/baseUrl'
 import { getuserInfo } from '../../common/js/login'
+import { upformId } from '../../common/js/time'
 
 let log = console.log
 
@@ -100,4 +101,8 @@ Page({
   makePhoneCall() {
     my.makePhoneCall({ number: '4009995917' });
   },
+  // 模版消息
+  onSubmit(e){
+    upformId(e.detail.formId);
+  }
 });

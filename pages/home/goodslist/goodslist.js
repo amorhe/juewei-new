@@ -261,9 +261,9 @@ Page({
     })
   },
   // 门店营销活动(折扣和套餐)
-  getActivityList(city_id, district_id, company_id, buy_type, user_id) {
-    activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
-      // console.log(res);
+  async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
+    await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
+      console.log(res);
       let shopGoods = this.data.shopGoods;
       // console.log(shopGoods)
       // 获取加价购商品
@@ -277,6 +277,7 @@ Page({
         })
       } else {
         app.globalData.gifts = [];
+        app.globalData.fullActivity = [];
       }
 
       // 获取参与加价购商品的列表（可换购）
@@ -332,20 +333,21 @@ Page({
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length > 0);
       goodsNew = [...new Set(goodsNew)];
       app.globalData.goodsArr = goodsArr;
-      // console.log(goodsNew)
+      console.log(goodsNew)
       this.setData({
         shopGoodsAll: goodsNew
       })
       my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret) => {
+        // console.log(ret)
         app.globalData.pagesinfoTop = ret[0].top
       })
-      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
-        let top = ret[0][0].top;
-        let arr = ret[0].map((item, index) => {
-          return item.top = item.top - top - 37;
-        })
-        app.globalData.ret = arr;
-      })
+      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
+      //   let top = ret[0][0].top;
+      //   let arr = ret[0].map((item, index) => {
+      //     return item.top = item.top - top - 37;
+      //   })
+      //   app.globalData.ret = arr;
+      // })
       my.setStorageSync({
         key: 'shopGoods',
         data: goodsArr
