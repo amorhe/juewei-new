@@ -92,7 +92,7 @@
 
 <!-- 限时优惠 -->
 <modal show="{{open1}}" showClose="{{ false }}">
-  <view class="modalInfo">
+  <view class="modalInfo" onTap="closeModel">
      限时优惠，立即使用
   </view>
   <view slot="footer" class="footerButton">
