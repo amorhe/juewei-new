@@ -43,7 +43,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
         res.data.task = task
         my.hideLoading()
         const code = res.data.CODE || res.data.code
-        if ([100, 'A100', 0].includes(code)) {
+        if ([100, 'A100', 0, 3212, 3218].includes(code)) {
           resolve(res.data)
         } else if ([30106, 'A103', 101].includes(code)) {
           // return my.navigateTo({
@@ -54,10 +54,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
             data: '', // 要缓存的数据
           });
           resolve({ code: -1, data: '' })
-        } else if (code == 3212) {
-          resolve(res.data)
-        }
-        else {
+        } else {
           reject({ errormsg: rest.msg, code: -1 });
         }
 
