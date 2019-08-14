@@ -275,6 +275,13 @@ Page({
       return
     }
     if (/^1\d{10}$/.test(this.data.phone)) {
+    }else if(this.data.phone===''){
+      my.showToast({
+        type: 'none',
+        content: '请填写电话',
+        duration: 1000
+      });
+      return
     } else {
       my.showToast({
         type: 'none',
@@ -286,7 +293,7 @@ Page({
     if (this.data.addressdetail.replace(/\s+/g, "") == '') {
       my.showToast({
         type: 'none',
-        content: '门牌号不可为空',
+        content: '请输入门牌号',
         duration: 1000
       });
       return
