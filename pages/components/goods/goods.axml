@@ -100,7 +100,7 @@
             </view>
             <view class="goodsDiscount" a:if="{{item.key!='爆款'}}">
               <image src="{{imageUrl}}discount.png" />
-              <text>{{v.goods_format[0].goods_discount/100}}折  限{{v.goods_format[0].goods_discount_user_limit}}份</text>
+              <text>{{v.goods_format[0].goods_discount/100}}折  限{{v.goods_format[0].goods_order_limit}}{{v.goods_unit}}</text>
             </view>
           </view>
         </view>
