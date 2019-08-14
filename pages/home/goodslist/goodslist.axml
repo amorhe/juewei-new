@@ -64,24 +64,24 @@
   <view a:for="{{showListObj}}">
     <!-- 类型1 -->
     <view class="activityBox1 marginBEight" a:if="{{item.type==1}}">
-      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
     </view>
     <!-- 类型2 -->
     <view class="activityBox marginBEight" a:if="{{item.type==2}}">
-      <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+      <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
       <view>
-        <image src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.pic_src[1]}}" onTap="imageLink"/>
-        <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{imageUrl2 + item.pic_src[2]}}" onTap="imageLink"/>
+        <image src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.link_url[1]}}" onTap="imageLink"/>
+        <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{imageUrl2 + item.link_url[2]}}" onTap="imageLink"/>
       </view>
     </view>
     <!-- 类型3 -->
     <view class="activityBox3 marginBEight" a:if="{{item.type==3}}">
-      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
-      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.pic_src[1]}}" onTap="imageLink"/>
+      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
+      <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.link_url[1]}}" onTap="imageLink"/>
     </view>
     <!-- 类型4 -->
     <view class="activityWrap marginBEight" a:if="{{item.type==4}}">
-      <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
+      <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
     </view>
   </view>
 </view>
