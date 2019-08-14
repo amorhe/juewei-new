@@ -117,7 +117,7 @@
         </view>
       </view>
       <view class="no-good" a:if="{{!goodsList.length}}">
-        <image mode="scaleToFill" src="{{imageUrl}}nopoint.png"/>
+        <image mode="scaleToFill" src="{{imageUrl}}nogoods.png"/>
         <view>更多精彩，敬请期待</view>
       </view>
     </view>
