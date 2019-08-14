@@ -208,6 +208,7 @@ Page({
    * @function 获取当前的商店列表，排序并展示
    */
   async doSelectShop() {
+    my.hideBackHome()
     let { address } = this.data;
     if (!address) {
       return my.showToast({
