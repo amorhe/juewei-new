@@ -2,6 +2,7 @@ import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
 import { datedifference, sortNum } from '../../common/js/time'
 var app = getApp();
+let tim = [];
 Component({
   mixins: [],
   data: {
@@ -27,19 +28,13 @@ Component({
     priceFree: 0,
     freeText: '', // 购物车包邮提示内容
     pagesinfoTop: 0,
-    isScorll: true
+    isScorll: true,
   },
   onInit() {
     this.busPos = {};
     this.busPos['x'] = 10;
     this.busPos['y'] = app.globalData.hh - 16;
     // console.log('购物车坐标',this.busPos);
-    my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret) => {
-      // console.log(ret)
-      this.setData({
-        pagesinfoTop: ret[0].top
-      })
-    })
   },
   deriveDataFromProps(nextProps) {
     // console.log(nextProps)
@@ -145,7 +140,7 @@ Component({
     // 选择系列
     chooseGoodsType(e) {
       my.pageScrollTo({
-        scrollTop: this.data.pagesinfoTop + 130
+        scrollTop: app.globalData.pagesinfoTop
       });
       this.setData({
         goodsType: e.currentTarget.dataset.type
@@ -170,15 +165,19 @@ Component({
     },
     scrollEvent(e) {
       my.pageScrollTo({
-        scrollTop: this.data.pagesinfoTop + 130
+        scrollTop: app.globalData.pagesinfoTop
       });
-      // let ret = [...app.globalData.ret];
       // ret.push(e.detail.scrollTop);
-      // ret.sort((a,b)=> a - b) ;
-      // let sum = ret.findIndex(item => item == e.detail.scrollTop)-1;
-      // this.setData({
-      //   goodsType:sum
-      // })
+      // ret.sort((a, b) => a - b);
+      // let sum = ret.findIndex(item => item == e.detail.scrollTop) - 1;
+      // tim.forEach(item=>clearInterval(item))
+      // let time = setTimeout(()=>{
+      //   console.log(sum)
+      //   this.setData({
+      //     goodsType:sum
+      //   })
+      // },100)
+      // tim.push(time)
     },
     // sku商品
     onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree) {
@@ -259,7 +258,6 @@ Component({
         shopcartNum,
         priceFree
       })
-      // console.log(goodlist,shopcartAll)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -337,7 +335,6 @@ Component({
         shopcartNum,
         priceFree
       })
-      // console.log(goodlist)
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
@@ -368,7 +365,6 @@ Component({
           freeText = `已满${this.data.freeMoney / 100}元 免配送费`
         }
       }
-      // console.log(freeText)
       this.setData({
         activityText,
         freeText

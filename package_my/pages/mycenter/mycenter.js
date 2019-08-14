@@ -35,7 +35,7 @@ Page({
   onLoad(e) {
     console.log(e)
     if (e.img && e.name) {
-      this.getInfo(e.img,e.name)
+      this.getInfo(e.img, e.name)
     }
   },
   async onShow() {
@@ -57,12 +57,16 @@ Page({
       var province = region.filter(item => {
         return item.addrid == res.data.province_id
       })[0]
-      var city = province.sub.filter(item => {
-        return item.addrid == res.data.city_id
-      })[0]
-      var regions = city.sub.filter(item => {
-        return item.addrid == res.data.region_id
-      })[0]
+      if (province) {
+        var city = province.sub.filter(item => {
+          return item.addrid == res.data.city_id
+        })[0]
+      }
+      if (city) {
+        var regions = city.sub.filter(item => {
+          return item.addrid == res.data.region_id
+        })[0]
+      }
       res.data.provinceName = province.name || ''
       res.data.cityName = city.name || ''
       res.data.regionName = regions.name || ''

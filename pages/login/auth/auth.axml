@@ -1,40 +1,34 @@
-<!-- <view>
-  支付宝授权登录
-</view> -->
-
+<!--<view>
+  支付宝授权登录</view> -->
 <view class="bindPhone">
   <view class="TitleName">欢迎登录绝味鸭脖</view>
   <view class="inputView">
     <input class="inputClass" type="number" maxlength="11" placeholder="请输入手机号" onInput="inputValue"/>
-  </view> 
+  </view>
   <view class="loginTitel">未注册的手机号验证后自动创建绝味鸭脖账号</view>
   <view>
   </view>
   <view class="bindButton {{ getCode?'':'bgColor' }}" onTap="getcodeFn">获取短信验证码</view>
-  <button class="bindButton" open-type="getAuthorize" onGetAuthorize="onGetAuthorize"  
-scope='phoneNumber'>
-    <image class="alipayIcon" src="{{imageUrl}}alipay.png"/>
-    <text>支付宝快捷登录</text>
-  </button>
+  <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+    <button form-type="submit" class="bindButton" open-type="getAuthorize" onGetAuthorize="onGetAuthorize" scope='phoneNumber'>
+      <image class="alipayIcon" src="{{imageUrl}}alipay.png"/>
+      <text>支付宝快捷登录</text>
+    </button>
+  </form>
 </view>
-
-<view class="bottomTitle">登录代表你已同意 <text class="xyClass" onTap="toUrl" data-url='/pages/login/protocol/protocol'>《绝味注册协议及用户服务条款》</text></view>
-
-
-<modal
-    show="{{modalOpened}}"
-    showClose="{{ false }}"
-  >
-    <view slot="header">请输入图形验证码</view>
-    <view class="modelBody">
-      <view class="modelInput">
-        <input placeholder="请按右图输入" value="{{img_code}}"  onInput="getcodeImg"/>
-      </view>
-      <view class="imgCode">
-        <image class="imgCodeIcon" src="{{ imgUrl }}" onTap="newImg"/>
-      </view>
+<view class="bottomTitle">登录代表你已同意
+  <text class="xyClass" onTap="toUrl" data-url='/pages/login/protocol/protocol'>《绝味注册协议及用户服务条款》</text></view>
+<modal show="{{modalOpened}}" showClose="{{ false }}">
+  <view slot="header">请输入图形验证码</view>
+  <view class="modelBody">
+    <view class="modelInput">
+      <input placeholder="请按右图输入" value="{{img_code}}" onInput="getcodeImg"/>
     </view>
-    <view>
-      <view class="addButton addButtonTrue" onTap="getImgcodeFn">提交</view>
+    <view class="imgCode">
+      <image class="imgCodeIcon" src="{{ imgUrl }}" onTap="newImg"/>
     </view>
+  </view>
+  <view>
+    <view class="addButton addButtonTrue" onTap="getImgcodeFn">提交</view>
+  </view>
 </modal>

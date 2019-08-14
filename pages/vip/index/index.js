@@ -1,6 +1,7 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
 import { getSid, log, getNavHeight, getAddressId } from '../../common/js/li-ajax'
 import { reqCategory, reqBanner, reqGoodsList, reqPositionList, reqUserPoint, reqCouponsList } from '../../common/js/vip'
+import { upformId } from '../../common/js/time'
 
 const app = getApp()
 
@@ -51,7 +52,7 @@ Page({
     let _sid = await getSid()
 
     log(app.globalData)
-    const {company_sale_id:company_id,city_id,shop_id,district_id} = app.globalData.shopTakeOut
+    const { company_sale_id: company_id, city_id, shop_id, district_id } = app.globalData.shopTakeOut
 
     let navHeight = getNavHeight()
 
@@ -286,6 +287,8 @@ Page({
     my.switchTab({
       url: '/pages/home/goodslist/goodslist',
     });
+  },
+  onSubmit(e) {
+    upformId(e.detail.formId);
   }
-
 });

@@ -1,5 +1,5 @@
 import { imageUrl } from '../../common/js/baseUrl'
-import { compare } from '../../common/js/time'
+import { compare, upformId } from '../../common/js/time'
 let log = console.log
 var app = getApp();
 Component({
@@ -290,6 +290,10 @@ Component({
           })
         },
       });
+    },
+    // 上传模版消息
+    onSubmit(e){
+      upformId(e.detail.formId);
     }
   }
 });

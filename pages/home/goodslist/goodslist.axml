@@ -1,7 +1,7 @@
 <view a:if="{{!isSelf}}">
   <!-- 定位 -->
   <view class="goodsPosition">
-    <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" >
+    <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft">
       <image src="{{imageUrl}}position.png"/>
       <text>{{firstAddress}}</text>
       <image src="{{imageUrl}}arrow_right1.png"/>
@@ -11,15 +11,12 @@
       <view class="{{type==2?'activeType':''}}" catchTap="chooseTypes" data-type='ziti'>自提</view>
     </view>
   </view>
-
   <view class="null"></view>
-
   <view class="closeIng" a:if="{{!isClose && isOpen!= 1}}" style="top:88rpx">
     <view a:if="{{isOpen == 2}}">您的定位地址门店未在营业时间 营业时间：{{shopTakeOut.start_time}}-{{shopTakeOut.end_time}}</view>
     <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
     <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
   </view>
-
   <view class="homeSwiper">
     <swiper indicator-dots="{{imgUrls.length>1?true:false}}" autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
       <block a:for="{{imgUrls}}">
@@ -29,37 +26,40 @@
       </block>
     </swiper>
   </view>
-
   <image src="{{imageUrl}}advantage.png" class="goodsMessage" />
-
   <!-- 四个分类 -->
-  <view class="fourType">
-    <view onTap="navigate" data-url="/package_my/pages/membercard/membercard">
-      <view>
-        <image src="{{imageUrl}}home_membercard.png" />
-        <view>会员卡</view>
+  <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+    <view class="fourType">
+      <view onTap="navigate" data-url="/package_my/pages/membercard/membercard">
+        <view>
+          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
+          <image src="{{imageUrl}}home_membercard.png" />
+          <view>会员卡</view>
+        </view>
       </view>
+      <navigator url="/pages/vip/index/index" open-type="switchTab">
+        <view>
+          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
+          <image src="{{imageUrl}}home_vip.png" />
+          <view>VIP专享</view>
+        </view>
+      </navigator>
+      <view onTap="navigate" data-url="/package_my/pages/coupon/coupon">
+        <view>
+          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
+          <image src="{{imageUrl}}home_coupon.png" />
+          <view>卡券</view>
+        </view>
+      </view>
+      <navigator url="/package_my/pages/nearshop/nearshop">
+        <view>
+          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
+          <image src="{{imageUrl}}home_nearshop.png" />
+          <view>附近门店</view>
+        </view>
+      </navigator>
     </view>
-    <navigator url="/pages/vip/index/index" open-type="switchTab">
-      <view>
-        <image src="{{imageUrl}}home_vip.png" />
-        <view>VIP专享</view>
-      </view>
-    </navigator>
-    <view  onTap="navigate" data-url="/package_my/pages/coupon/coupon">
-      <view>
-        <image src="{{imageUrl}}home_coupon.png" />
-        <view>卡券</view>
-      </view>
-    </view>
-    <navigator url="/package_my/pages/nearshop/nearshop">
-      <view>
-        <image src="{{imageUrl}}home_nearshop.png" />
-        <view>附近门店</view>
-      </view>
-    </navigator>
-  </view>
-
+  </form>
   <!-- 活动展位 -->
   <view a:for="{{showListObj}}">
     <!-- 类型1 -->
@@ -74,7 +74,6 @@
         <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{imageUrl2 + item.pic_src[2]}}" onTap="imageLink"/>
       </view>
     </view>
-
     <!-- 类型3 -->
     <view class="activityBox3 marginBEight" a:if="{{item.type==3}}">
       <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
@@ -84,38 +83,36 @@
     <view class="activityWrap marginBEight" a:if="{{item.type==4}}">
       <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.pic_src[0]}}" onTap="imageLink"/>
     </view>
-  </view>  
+  </view>
 </view>
-<!-- <view style="height:152rpx" a:if="{{}}"></view> -->
+<!--<view style="height:152rpx" a:if="{{}}"></view> -->
 <navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll" a:if="{{!isSelf}}">
-    <!-- 推荐门店 -->
-    <view class="shopDefault">
-      <view>
-        <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
-        <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
-        <view class="shopMessage">
-          <view>{{shopTakeOut.title}}</view>
-          <view>在售商品数{{shopTakeOut.goods_num}}</view>
-        </view>
-      </view>
-
-      <view>
-        <view class="shopDefaultRight">
-          <view>
-            <image src="{{imageUrl}}position.png"/>
-            <view>距离{{shopTakeOut.distance}}米</view>
-          </view>
-          <view>
-            <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
-            <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
-            <view class="typeBtn2">自提</view>
-          </view>
-        </view>
-        <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+  <!-- 推荐门店 -->
+  <view class="shopDefault">
+    <view>
+      <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
+      <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
+      <view class="shopMessage">
+        <view>{{shopTakeOut.title}}</view>
+        <view>在售商品数{{shopTakeOut.goods_num}}</view>
       </view>
     </view>
-  </navigator>
-
+    <view>
+      <view class="shopDefaultRight">
+        <view>
+          <image src="{{imageUrl}}position.png"/>
+          <view>距离{{shopTakeOut.distance}}米</view>
+        </view>
+        <view>
+          <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
+          <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
+          <view class="typeBtn2">自提</view>
+        </view>
+      </view>
+      <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+    </view>
+  </view>
+</navigator>
 <view class="shopUp" a:if="{{isSelf}}">
   <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
   <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" pen-type="navigate">
@@ -133,11 +130,9 @@
     </view>
   </navigator>
 </view>
-
-
 <view style="padding-right:36rpx">
   <!-- 商品列表 -->
-  <goods-list  shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
+  <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
 </view>
 <!-- 提示框 -->
-<!-- <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->
+<!--<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}" onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

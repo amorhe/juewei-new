@@ -206,10 +206,11 @@
   <view class="orderPrimary">
     <view>
       <text>合计</text>
-      <!--<text class="numberColor">¥</text> -->
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
-    <button size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
+    <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+      <button form-type="submit" size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
+    </form>
   </view>
 </view>
 <!-- 换购提示 -->
