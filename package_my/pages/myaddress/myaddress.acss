@@ -1,56 +1,59 @@
-.addressList{
+.addressList {
   padding: 32rpx;
   padding-bottom: 50rpx;
 }
 
-.listItme{
+.listItme {
   padding: 16rpx 0;
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-  
-.spanClass{
+
+.spanClass {
   min-width: 64rpx;
   height: 32rpx;
   font-size: 22rpx;
   text-align: center;
   line-height: 32rpx;
-  border-radius: 5rpx; 
+  border-radius: 5rpx;
   margin-right: 10rpx;
 }
-.spanColor{
-  color:rgba(143,215,95,1);
-  background: rgba(143,215,95,0.3)
-}
-.spangsColor{
-  color:rgba(16,142,233,1);
-  background: rgba(16,142,233,0.3)
-}
-.spajiaColor{
-  color:rgba(230,0,18,1);
-  background: rgba(230,0,18,0.3)
+
+.spanColor {
+  color: rgba(143, 215, 95, 1);
+  background: rgba(143, 215, 95, 0.3)
 }
 
-.lefttop{
+.spangsColor {
+  color: rgba(16, 142, 233, 1);
+  background: rgba(16, 142, 233, 0.3)
+}
+
+.spajiaColor {
+  color: rgba(230, 0, 18, 1);
+  background: rgba(230, 0, 18, 0.3)
+}
+
+.lefttop {
   display: flex;
   align-items: center;
   margin-bottom: 10rpx;
 }
 
-.itemInfo{
+.itemInfo {
   font-size: 26rpx;
   color: #999;
 }
 
-.editicon{
+.editicon {
   display: block;
   width: 40rpx;
   height: 40rpx;
 }
 
-.bottomView{
+.bottomView {
   background: #fff;
   width: 100%;
   padding: 20rpx 0;
@@ -59,19 +62,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top:1px solid #eee; 
+  border-top: 1px solid #eee;
 }
 
-.addIcon{
+.addIcon {
   display: block;
   width: 40rpx;
   height: 40rpx;
 }
 
-
-.nullImg{
+.nullImg {
   display: block;
   margin: 295rpx auto;
   width: 320rpx;
   height: 320rpx;
+}
+
+.addClass {
+  display: block;
+  width: 500rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
