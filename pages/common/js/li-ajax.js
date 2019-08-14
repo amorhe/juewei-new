@@ -1,4 +1,4 @@
-import { baseUrl } from './baseUrl'
+import { baseUrl,ak,geotable_id} from './baseUrl'
 import parse from 'mini-html-parser2';
 
 
@@ -144,7 +144,7 @@ export const getDistance = async (_lng, _lat) => {
   let lng = my.getStorageSync({ key: 'lng' }).data;
   return new Promise((resolve, reject) => {
     my.request({
-      url: `https://api.map.baidu.com/directionlite/v1/driving?origin=${lng},${lat}&destination=${_lng},${_lat}&ak=pRtqXqnajTytAzWDL3HOnPRK`,
+      url: `https://api.map.baidu.com/directionlite/v1/driving?origin=${lng},${lat}&destination=${_lng},${_lat}&ak=${ak}`,
       success: (res) => {
         resolve(res)
       },

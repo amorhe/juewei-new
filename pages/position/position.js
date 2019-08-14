@@ -1,4 +1,4 @@
-import { imageUrl, ak } from '../common/js/baseUrl'
+import { imageUrl, ak, geotable_id} from '../common/js/baseUrl'
 import { bd_encrypt } from '../common/js/map'
 import { GetLbsShop, NearbyShop } from '../common/js/home'
 import { cur_dateTime, compare, sortNum } from '../common/js/time'
@@ -111,7 +111,7 @@ Page({
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
-      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=${str}`,
+      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=${geotable_id}&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=${str}`,
       success: (res) => {
         // 3公里有门店
         if (res.data.contents && res.data.contents.length > 0) {
@@ -119,7 +119,7 @@ Page({
         } else {
           // 没有扩大搜索范围到1000000公里
           my.request({
-            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
+            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=${geotable_id}&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
             success: (conf) => {
               if (conf.data.contents.length > 0) {
                 this.getSelf(conf.data.contents)

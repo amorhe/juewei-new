@@ -1,4 +1,4 @@
-import {imageUrl,ak} from '../../../pages/common/js/baseUrl'
+import {imageUrl,ak,geotable_id} from '../../../pages/common/js/baseUrl'
 import {MyNearbyShop} from '../../../pages/common/js/home'
 import {guide} from '../../../pages/common/js/li-ajax'
 import {cur_dateTime} from '../../../pages/common/js/time'
@@ -79,7 +79,7 @@ Page({
   // 获取附近门店
   nearShop(lng,lat){
     my.request({
-      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=134917&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&_=1504837396593&page_index=0&page_size=50&_=1563263791821`,
+      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=${geotable_id}&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&page_index=0&page_size=50&_=`,
       success: (res) => {
         const obj = res.data.contents;
         MyNearbyShop(JSON.stringify(obj)).then((conf) => {
