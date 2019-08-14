@@ -39,8 +39,8 @@
   <scroll-view scroll-y="true" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;">
     <view class="goodsUl">
       <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}">
-        <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{index+1}}_1.png"/>
-        <image a:if="{{goodsType == index + 1 && goodsType!=13}}" src="{{imageUrl}}m_{{index + 1}}_2.png"/>
+        <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{type[item.key]}}_1.png"/>
+        <image a:if="{{goodsType == index + 1 && goodsType!=13}}" src="{{imageUrl}}m_{{type[item.key]}}_2.png"/>
          <image a:if="{{goodsType == 13}}" src="{{imageUrl}}m_13_2.png"/>
         <view class="{{goodsType== index + 1?'activeView':''}}">{{item.key}}</view>
       </view>
