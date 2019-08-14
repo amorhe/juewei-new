@@ -132,7 +132,7 @@
       <view class="icon-wrap">
         <image class="icon-success" mode="scaleToFill" src="{{imageUrl}}fail.png"/>
         <view class="text-success">兑换失败</view>
-        <view class="fail-reason">商品库存不足</view>
+        <view class="fail-reason">{{d.status_name}}</view>
       </view>
     </view>
     <view class="p-detail">
