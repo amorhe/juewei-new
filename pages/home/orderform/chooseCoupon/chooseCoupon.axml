@@ -1,5 +1,5 @@
 <view class="couponUl" a:if="{{couponList.length> 0}}">
-  <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" key="{{unique}}" a:if="{{couponList.length>0}}" catchTap="chooseCouponed" data-coupon_code="{{item.code}}" data-index="{{index}}">
+  <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" key="{{unique}}" a:if="{{couponList.length>0}}" onTap="chooseCouponed" data-coupon_code="{{item.code}}" data-index="{{index}}">
     <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
     <view>
       <view class="couponNumber">

@@ -27,7 +27,7 @@ Page({
   getCouponsList(_sid, money) {
     this.data.couponChoosed = {};
     couponsList(_sid, 'use', money, my.getStorageSync({ key: 'shop_id' }).data).then((res) => {
-      console.log(res)
+      // console.log(res)
       res.DATA.use.forEach(item => {
         item.start_time = formatTime(item.start_time, 'Y-M-D');
         item.end_time = formatTime(item.end_time, 'Y-M-D');

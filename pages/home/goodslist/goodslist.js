@@ -53,7 +53,8 @@ Page({
     shopGoods: [],   // 门店商品
     fullActivity: '',
     freeMoney: '',
-    jingxuan: true
+    jingxuan: true,
+    btnClick:true
   },
   onLoad() {
 
@@ -73,7 +74,6 @@ Page({
     // 初始化默认外卖
     let shopArray = [];
     if (app.globalData.shopIng) {
-      // console.log('shopArray',app.globalData.shopIng);
       if (my.getStorageSync({ key: 'shop_id' }).data != app.globalData.shop_id) {
         this.getCompanyGoodsList(app.globalData.shopIng.company_sale_id); //获取公司所有商品
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, app.globalData.shopIng.company_sale_id);//banner
@@ -127,6 +127,18 @@ Page({
   },
   // 切换外卖自提
   chooseTypes(e) {
+    // js节流防短时间重复点击
+      if (this.data.btnClick == false) {
+        return
+      }
+      this.setData({
+        btnClick: false
+      })
+      setTimeout(() => {
+        this.setData({
+          btnClick: true
+        })
+      }, 1000)
     if (!my.getStorageSync({ key: 'takeout' }).data) {
       return
     }
@@ -192,7 +204,6 @@ Page({
     my.request({
       url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=${str}`,
       success: (res) => {
-        // console.log(res.data.data[`${company_id}`])
         // 该公司所有的商品
         this.setData({
           companyGoodsList: res.data.data[`${company_id}`]
@@ -214,7 +225,6 @@ Page({
       my.request({
         url: `https://images.juewei.com/prod/shop/goods_sort.json?v=${str}`,
         success: (conf) => {
-          // console.log(conf.data.data.country);
           let _T = conf.data.data.country
           const { typeList } = this.data
 
@@ -243,7 +253,6 @@ Page({
               last: [...last]
             }
           })
-          // let goodsli = sortList.filter(_item => _item.last.length>0);
           this.setData({
             shopGoodsList: sortList,
             shopGoods: arr
@@ -265,7 +274,6 @@ Page({
     await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
       // console.log(res);
       let shopGoods = this.data.shopGoods;
-      // console.log(shopGoods)
       // 获取加价购商品
       if (res.data.MARKUP != null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -334,7 +342,7 @@ Page({
       goodsNew = new Set(goodsNew)
       goodsNew = [...goodsNew];
       app.globalData.goodsArr = goodsArr;
-      console.log(goodsNew)
+      // console.log(goodsNew)
       // 最终商品总数据
       this.setData({
         shopGoodsAll: goodsNew

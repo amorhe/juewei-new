@@ -208,10 +208,13 @@
       <text>合计</text>
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
-    <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-      <!-- <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit"></button> -->
-      <button formType="submit" size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
-    </form>
+    <view onTap="confirmPay">
+      <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+        <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit">
+        </button>
+        <button size="default" class="primaryBtn" hover-class="none">确认支付</button>
+      </form>
+    </view>
   </view>
 </view>
 <!-- 换购提示 -->
