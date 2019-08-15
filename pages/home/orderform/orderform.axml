@@ -182,7 +182,7 @@
         <text>{{gifts[item.id].num}}</text>
         <image mode="scaleToFill" src="{{imageUrl}}goods_add2.png"/>
       </view>
-      <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" a:if="{{!gifts[item.id].num}}">换购</button>
+      <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" data-activity_id="{{item.activity_id}}" data-gift_id="{{item.gift_id}}" data-id="{{item.id}}" data-cash="{{item.cash}}" data-point="{{item.point}}" data-gift_price="{{item.gift_price}}" a:if="{{!gifts[item.id].num}}">换购</button>
     </view>
     <view class="repursePrice" a:if="{{gifts[gift_id].num}}">
       <text class="fontTwentySix">小计</text>
@@ -209,7 +209,8 @@
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
     <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-      <button form-type="submit" size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
+      <!-- <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit"></button> -->
+      <button formType="submit" size="default" class="primaryBtn" hover-class="none" onTap="confirmPay">确认支付</button>
     </form>
   </view>
 </view>

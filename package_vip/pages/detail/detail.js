@@ -111,11 +111,9 @@ Page({
     if (code === 100) {
       return data
     }
-
     if (code !== 100) {
-      return my.alert({
-        title: msg
-      });
+      my.alert({title: msg});
+      return {}
     }
   },
 
@@ -133,6 +131,7 @@ Page({
    * @function 支付订单
    */
   async pay(order_sn) {
+    log(order_sn)
     let { code, data } = await reqPay(order_sn)
     return { code, data }
   },
@@ -147,27 +146,46 @@ Page({
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
     const { goods_detail_type, receive_type, goods_type, amount } = this.data.detail
     let fail = false
-
     // 虚拟商品，点击兑换按钮，调用创建订单接口，
     // 有钱的订单或者有运费的订单才调起支付
     // 调用确认订单接口，然后调起支付
     // id = -1 兑换失败
-
     // 虚拟物品
     if (goods_type == 1) {
       let { order_id = '', order_sn } = await this.createOrder()
       if (!order_id) { return }
       let res = await this.confirmOrder(order_sn)
-
       if (amount != 0) {
         let res = await this.pay(order_sn)
-        if (res.code !== 0) return my.showToast({
-          content: res.msg
-        });
+        if (res.code == 0) {
+          my.tradePay({
+            tradeNO: res.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
+            success: res => {
+              log('s', res)
+              if (res.resultCode == 9000) {
+                return my.redirectTo({
+                  url: '../finish/finish?id=' + order_id + '&fail=' + false
+                });
+              }
+              return my.redirectTo({
+                url: '../finish/finish?id=' + order_id + '&fail=' + true
+              });
+
+            },
+            fail: res => {
+              log('fail')
+              return my.redirectTo({
+                url: '../finish/finish?id=' + order_id + '&fail=' + true
+              });
+            }
+          });
+        } else {
+          return my.showToast({ content: res.msg });
+        }
+        return
       }
 
       if (!res) { fail = true }
-
       // 虚拟订单 + 兑换码 => 无需发货
       //
       if (goods_detail_type == 2 && receive_type == 0) {
@@ -276,7 +294,7 @@ Page({
       return res.DATA.points
     }
   },
-  onSubmit(e){
+  onSubmit(e) {
     upformId(e.detail.formId);
   },
 

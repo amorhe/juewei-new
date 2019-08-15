@@ -1,6 +1,6 @@
 <view class="couponUl" a:if="{{couponList.length> 0}}">
-  <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" a:if="{{couponList.length>0}}" catchTap="chooseCouponed" data-coupon_code="{{item.code}}">
-    <image class="quan"  src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
+  <view class="couponLi" style="max-height:{{item.toggleRule?'620':'236'}}rpx" a:for="{{couponList}}" key="{{unique}}" a:if="{{couponList.length>0}}" catchTap="chooseCouponed" data-coupon_code="{{item.code}}" data-index="{{index}}">
+    <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
     <view>
       <view class="couponNumber">
         <text>{{item.money/100}}</text>
@@ -11,8 +11,8 @@
         <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
         <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
       </view>
-      <image catchTap="selectTapTrue" data-index="{{index}}" data-code="{{item.code}}" a:if="{{!couponChoosed[`e${index}`]}}" class="select" mode="scaleToFill" src="{{imageUrl}}select3.png"/>
-      <image catchTap="selectTapFalse" a:if="{{couponChoosed[`e${index}`]}}" class="select" mode="scaleToFill" src="{{imageUrl}}select4.png"/>
+      <image data-index="{{index}}" data-code="{{item.code}}" a:if="{{!couponChoosed[`e${index}`]}}" class="select" mode="scaleToFill" src="{{imageUrl}}select3.png"/>
+      <image a:if="{{couponChoosed[`e${index}`]}}" class="select" mode="scaleToFill" src="{{imageUrl}}select4.png"/>
     </view>
     <view>
       <view class="whiteCircleLeft"></view>
@@ -34,13 +34,11 @@
       <view>5、每个订单仅限使用一张优惠券。</view >
       <view>6、满足同一微信号、同一手机号码、同一身份证号码和同一手机设备中的任意一个条件者，即视为同一用户。</view >
       <view>7、若您对本活动规则有任何疑问，绝味鸭脖将会在法律允许的范围内对本活动规则给与必要的说明和解释，联系绝味鸭脖全国在线闪电客服400-999-5917view</view>
-      </view>
     </view>
-    
   </view>
 </view>
-
+</view>
 <view class="nullBox" style="height:100vh;padding-top:207rpx;box-sizing:border-box" a:if="{{couponList.length== 0}}">
-    <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
-    <text>暂无优惠券</text>
+  <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
+  <text>暂无优惠券</text>
 </view>

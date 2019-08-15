@@ -142,6 +142,7 @@ Page({
   },
   // 换购显示
   addRepurseTap(e) {
+    console.log(e)
     let gifts = {}, gifts_price = '', order_price = '';
     gifts[e.currentTarget.dataset.id] = {
       "activity_id": e.currentTarget.dataset.activity_id,

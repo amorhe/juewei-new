@@ -86,3 +86,7 @@
   bottom: 56rpx;
   z-index: 100;
 }
+.customerService>image {
+  width: 100%;
+  height: 100%;
+}

@@ -1,58 +1,58 @@
-import {imageUrl,ak,geotable_id} from '../../common/js/baseUrl'
-import {addressList,GetLbsShop,NearbyShop} from '../../common/js/home'
-import {bd_encrypt} from '../../common/js/map'
-import {cur_dateTime,compare,sortNum} from '../../common/js/time'
+import { imageUrl, ak, geotable_id } from '../../common/js/baseUrl'
+import { addressList, GetLbsShop, NearbyShop } from '../../common/js/home'
+import { bd_encrypt } from '../../common/js/map'
+import { cur_dateTime, compare, sortNum } from '../../common/js/time'
 var app = getApp();
 Page({
   data: {
     imageUrl,
-    city:'',      //城市
-    addressIng:'',    // 定位地址
-    canUseAddress:[],   // 我的地址
-    nearAddress:[],   // 附近地址
-    isSuccess:false,
-    info:'',   // 一条地址信息
-    inputAddress:'',  //手动输入的地址
-    loginOpened:false
+    city: '',      //城市
+    addressIng: '',    // 定位地址
+    canUseAddress: [],   // 我的地址
+    nearAddress: [],   // 附近地址
+    isSuccess: false,
+    info: '',   // 一条地址信息
+    inputAddress: '',  //手动输入的地址
+    loginOpened: false
   },
   onLoad(e) {
-    if(e.type){
+    if (e.type) {
       this.setData({
-        isSuccess:true,
+        isSuccess: true,
         city: app.globalData.city,
         addressIng: app.globalData.address
       })
     }
   },
-  onShow(){
-    if(app.globalData.address){
-      const _sid = my.getStorageSync({key: '_sid'}).data;
-      const lng = my.getStorageSync({key: 'lng'}).data;
-      const lat = my.getStorageSync({key: 'lat'}).data;
+  onShow() {
+    if (app.globalData.address) {
+      const _sid = my.getStorageSync({ key: '_sid' }).data;
+      const lng = my.getStorageSync({ key: 'lng' }).data;
+      const lat = my.getStorageSync({ key: 'lat' }).data;
       const location = `${lng},${lat}`;
-      this.getAddressList(_sid,location,lat,lng);
+      this.getAddressList(_sid, location, lat, lng);
     }
   },
   // 切换城市
-  choosecityTap(){
+  choosecityTap() {
     my.chooseCity({
-      showLocatedCity:true,
-      showHotCities:true,
+      showLocatedCity: true,
+      showHotCities: true,
       success: (res) => {
         // console.log(res)
         this.setData({
-          city:res.city
+          city: res.city
         })
       },
     });
   },
-  handleSearch(e){
+  handleSearch(e) {
     this.setData({
-      inputAddress:e.detail.value
+      inputAddress: e.detail.value
     })
   },
   // 输入地址搜索门店
-  searchShop(){
+  searchShop() {
     let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
     url = encodeURI(url);
     my.request({
@@ -60,21 +60,21 @@ Page({
       success: (res) => {
         // console.log(res)
         my.hideKeyboard();
-        const _sid = my.getStorageSync({key: '_sid'}).data;
+        const _sid = my.getStorageSync({ key: '_sid' }).data;
         const lng = res.data.result.location.lng;
         const lat = res.data.result.location.lat;
         const location = `${lng},${lat}`;
-        this.getAddressList(_sid,location,lat,lng);
+        this.getAddressList(_sid, location, lat, lng);
       },
     });
   },
   // 地址列表
-  getAddressList(_sid,location,lat,lng){
-    addressList(_sid,'normal',location).then((res) => {
+  getAddressList(_sid, location, lat, lng) {
+    addressList(_sid, 'normal', location).then((res) => {
       // console.log(res)
       let arr1 = [];
-      if(res.data.length>0){
-         arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
+      if (res.data.length > 0) {
+        arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
       }
       this.setData({
         canUseAddress: arr1
@@ -86,21 +86,21 @@ Page({
         url: str,
         success: (res) => {
           this.setData({
-            nearAddress:res.data.results
+            nearAddress: res.data.results
           })
         },
       });
     })
   },
   // 重新定位
-  rePosition(){
+  rePosition() {
     var that = this;
     my.getLocation({
-      type:3,
+      type: 3,
       success(res) {
-        console.log(res)
+        // console.log(res)
         my.hideLoading();
-        const mapPosition = bd_encrypt(res.longitude,res.latitude);
+        const mapPosition = bd_encrypt(res.longitude, res.latitude);
         my.setStorageSync({
           key: 'lat', // 缓存数据的key
           data: mapPosition.bd_lat, // 要缓存的数据
@@ -111,77 +111,77 @@ Page({
         });
         app.globalData.address = res.pois[0].name;
         my.showToast({
-          content:'定位成功！'
+          content: '定位成功！'
         })
         that.setData({
-          city:res.city,
+          city: res.city,
           addressIng: res.pois[0].name,
-          info:res,
-          isSuccess:true
+          info: res,
+          isSuccess: true
         })
       },
-      fail(){
+      fail() {
         this.setData({
-          isSuccess:false
+          isSuccess: false
         })
       }
     })
   },
-  switchAddress(e){
-    if(!this.data.isSuccess && e.currentTarget.dataset.address==''){
+  switchAddress(e) {
+    if (!this.data.isSuccess && e.currentTarget.dataset.address == '') {
       my.showToast({
-        content:'定位失败，请选择其他收货地址！'
+        content: '定位失败，请选择其他收货地址！'
       });
       return
     }
-    if(e.currentTarget.dataset.address!=''){
+    if (e.currentTarget.dataset.address != '') {
       my.switchTab({
-        url:'/pages/home/goodslist/goodslist'
+        url: '/pages/home/goodslist/goodslist'
       });
       return
     }
     let mapPosition = '';
-    switch(parseInt(e.currentTarget.dataset.type)){
+    switch (parseInt(e.currentTarget.dataset.type)) {
       case 1:
-        mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude,e.currentTarget.dataset.info.latitude);
+        mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude, e.currentTarget.dataset.info.latitude);
         break;
-      case 3: 
+      case 3:
         mapPosition = bd_encrypt(e.currentTarget.dataset.info.location.lng, e.currentTarget.dataset.info.location.lat);
     }
     my.setStorageSync({
-        key: 'lat', // 缓存数据的key
-        data: mapPosition.bd_lat, // 要缓存的数据
-      });
+      key: 'lat', // 缓存数据的key
+      data: mapPosition.bd_lat, // 要缓存的数据
+    });
     my.setStorageSync({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-    this.getLbsShop(mapPosition.bd_lng,mapPosition.bd_lat,e.currentTarget.dataset.info.name);
-    this.getNearbyShop(mapPosition.bd_lng,mapPosition.bd_lat,e.currentTarget.dataset.info.name)
+    this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name);
+    this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name)
   },
   // 
-  switchPositionAddress(e){
+  switchPositionAddress(e) {
     // console.log(e)
     let position = e.currentTarget.dataset.info.user_address_lbs_baidu.split(',');
     my.setStorageSync({
-        key: 'lat', // 缓存数据的key
-        data: position[1], // 要缓存的数据
-      });
+      key: 'lat', // 缓存数据的key
+      data: position[1], // 要缓存的数据
+    });
     my.setStorageSync({
       key: 'lng', // 缓存数据的key
       data: position[0] // 要缓存的数据
     });
-    this.getLbsShop(position[0],position[1],e.currentTarget.dataset.info.user_address_map_addr);
-    this.getNearbyShop(position[0],position[1],e.currentTarget.dataset.info.user_address_map_addr)
+    this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr);
+    this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr)
   },
   // 外卖附近门店
-  getLbsShop(lng,lat,address) {
+  getLbsShop(lng, lat, address) {
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
     app.globalData.address = address;
     GetLbsShop(location).then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.code == 0 && res.data.length > 0) {
         for (let i = 0; i < res.data.length; i++) {
           const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
@@ -195,11 +195,11 @@ Page({
         }
         // 按照goods_num做降序排列
         let shopArray = shopArr1.concat(shopArr2);
-        shopArray.sort((a,b) => {
+        shopArray.sort((a, b) => {
           var value1 = a.goods_num,
-              value2 = b.goods_num;
-          if(value1 <= value2){
-              return a.distance - b.distance;
+            value2 = b.goods_num;
+          if (value1 <= value2) {
+            return a.distance - b.distance;
           }
           return value2 - value1;
         });
@@ -210,20 +210,16 @@ Page({
           url: '/pages/home/goodslist/goodslist'
         })
       } else {
+        // 无外卖去自提
         this.setData({
-          loginOpened:true
+          loginOpened: true
         })
-        // 提示切换地址
-        // my.showToast({
-        //   content: "当前选择地址无可浏览的门店，请切换地址！", 
-        // });
-
       }
 
     })
   },
   // 自提附近门店
-  getNearbyShop(lng,lat,address) {
+  getNearbyShop(lng, lat, address) {
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
@@ -231,22 +227,17 @@ Page({
       success: (res) => {
         // 3公里有门店
         if (res.data.contents && res.data.contents.length > 0) {
-          this.getSelf(res.data.contents,address)
+          this.getSelf(res.data.contents, address)
         } else {
           // 没有扩大搜索范围到1000000公里
           my.request({
             url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=${geotable_id}&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&page_index=0&page_size=50&_=${str}`,
             success: (conf) => {
               if (conf.data.contents && conf.data.contents.length > 0) {
-                this.getSelf(conf.data.contents,address)
+                this.getSelf(conf.data.contents, address)
               } else {
-                // 提示切换地址
-                // my.showToast({
-                //   content: "当前选择地址无可浏览的门店，请切换地址！" 
-                // });
-                this.setData({
-                  loginOpened:true
-                })
+                // 无自提门店
+                
               }
             },
           });
@@ -256,7 +247,7 @@ Page({
     });
   },
   // 自提
-  getSelf(obj,address) {
+  getSelf(obj, address) {
     let shopArr1 = [];
     let shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
@@ -280,25 +271,28 @@ Page({
     })
   },
   // 新增地址
-  addAddressTap(){
+  addAddressTap() {
     // 判断 是否登录
-    if(my.getStorageSync({key: 'user_id'}).data==null){
+    if (my.getStorageSync({ key: 'user_id' }).data == null) {
       my.navigateTo({
         url: '/pages/login/auth/auth'
       });
-    }else{
+    } else {
       my.navigateTo({
-        url:"/package_my/pages/myaddress/addaddress/addaddress"
+        url: "/package_my/pages/myaddress/addaddress/addaddress"
       });
     }
   },
-  onModalRepurse(){
+  onModalRepurse() {
     app.globalData.type = 2;
+    my.removeStorageSync({
+      key: 'takeout', // 缓存数据的key
+    });
     this.setData({
-      loginOpened:false
+      loginOpened: false
     })
     my.switchTab({
-      url:'/pages/home/goodslist/goodslist'
+      url: '/pages/home/goodslist/goodslist'
     })
   }
 });

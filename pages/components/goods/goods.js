@@ -2,7 +2,7 @@ import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
 import { datedifference, sortNum } from '../../common/js/time'
 var app = getApp();
-let tim = [];
+let tim = null;
 Component({
   mixins: [],
   data: {
@@ -29,6 +29,22 @@ Component({
     freeText: '', // 购物车包邮提示内容
     pagesinfoTop: 0,
     isScorll: true,
+    type: {
+      "折扣": 1,
+      "套餐": 2,
+      "爆款": 3,
+      "超辣": 4,
+      "甜辣": 5,
+      "微辣": 6,
+      "不辣": 7,
+      "招牌系列": 8,
+      "藤椒系列": 9,
+      "素菜系列": 10,
+      "黑鸭系列": 11,
+      "五香系列": 12,
+      "解辣神器": 13,
+    },
+
   },
   onInit() {
     this.busPos = {};
@@ -139,16 +155,18 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
-      my.pageScrollTo({
-        scrollTop: app.globalData.pagesinfoTop
-      });
+      // my.createSelectorQuery().selectViewport().scrollOffset().exec((ret) => {
+      //   console.log(ret)
+      //   my.pageScrollTo({
+      //     scrollTop: ret[0].scrollTop
+      //   });
+      // })
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
     },
     // 选规格
     chooseSizeTap(e) {
-      // console.log(e)
       this.setData({
         maskView: true,
         goodsModal: true,
@@ -163,21 +181,21 @@ Component({
         goodsModal: data.goodsModal
       })
     },
-    scrollEvent(e) {
-      my.pageScrollTo({
-        scrollTop: app.globalData.pagesinfoTop
-      });
-      // ret.push(e.detail.scrollTop);
-      // ret.sort((a, b) => a - b);
-      // let sum = ret.findIndex(item => item == e.detail.scrollTop) - 1;
-      // tim.forEach(item=>clearInterval(item))
-      // let time = setTimeout(()=>{
-      //   console.log(sum)
-      //   this.setData({
-      //     goodsType:sum
-      //   })
-      // },100)
-      // tim.push(time)
+    // 滑动
+    onTouchEnd(e) {
+      setTimeout(() => {
+        let retArr = [...app.globalData.ret];
+        my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
+          retArr.push(ret[0].scrollTop);
+          retArr.sort((a, b) => a - b);
+          let sum = retArr.findIndex(item => item >= ret[0].scrollTop);
+          if (this.data.goodsType != sum) {
+            this.setData({
+              goodsType: sum
+            })
+          }
+        })
+      }, 100)
     },
     // sku商品
     onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree) {
