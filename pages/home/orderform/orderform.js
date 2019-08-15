@@ -189,7 +189,7 @@ Page({
     let goodlist = my.getStorageSync({
       key: 'goodsList'
     }).data;
-    let newShopcart = {}, newGoodsArr = [];
+    let newShopcart = {},newGoodsArr=[],newGoodsArr1 = [],newGoodsArr2=[];
     if (this.data.newArr.length > 0) {
       for (let _item of this.data.newArr) {
         for (let item of this.data.goodsList) {
@@ -199,19 +199,31 @@ Page({
               item.goods_price = _item.goodsPrice;
             }
             newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
-            newGoodsArr.push(item);
+            newGoodsArr1.push(item);
+            newGoodsArr1 = [...newGoodsArr1];
           } else {
             // 商品下架
             if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
               newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
-              newGoodsArr.push(item);
+              newGoodsArr2.push(item);
+              newGoodsArr2 = [...newGoodsArr2];
             }
           }
         }
       }
     } else {
-      newShopcart = goodlist
+      newShopcart = goodlist;
     }
+    let goods = [...newGoodsArr1,...newGoodsArr2];
+    for(let ott of goods){
+      for(let item of this.data.goodsList){
+        if(ott.goods_code = item.goods_code){
+          newGoodsArr.push(ott);
+          newGoodsArr = [...newGoodsArr];
+        }
+      }
+    }
+    console.log(goods,  newGoodsArr)
     my.setStorageSync({
       key: 'goodsList', // 缓存数据的key
       data: newShopcart, // 要缓存的数据
@@ -445,7 +457,7 @@ Page({
           modalShow: true,
           showShopcar: false,
           isType: 'orderConfirm',
-          content: res.msg + '，系统已经更新,是否确认结算',
+          content: res.msg + '系统已经更新,是否确认结算',
           newArr: []
         })
       }

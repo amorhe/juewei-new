@@ -280,7 +280,7 @@ Component({
           mask: true,
           modalShow: true,
           isType: 'checkshopcart',
-          content: `购物车有${num - shopcartNum}件商品不在当前门店售卖商品之内`,
+          content: `有${num - shopcartNum}个商品已失效，是否继续下单`,
           confirmButtonText: '重新选择',
           cancelButtonText: '继续结算',
           btnClick: true

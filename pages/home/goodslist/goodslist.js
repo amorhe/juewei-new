@@ -54,7 +54,7 @@ Page({
     fullActivity: '',
     freeMoney: '',
     jingxuan: true,
-    btnClick:true
+    btnClick: true
   },
   onLoad() {
 
@@ -128,17 +128,17 @@ Page({
   // 切换外卖自提
   chooseTypes(e) {
     // js节流防短时间重复点击
-      if (this.data.btnClick == false) {
-        return
-      }
+    if (this.data.btnClick == false) {
+      return
+    }
+    this.setData({
+      btnClick: false
+    })
+    setTimeout(() => {
       this.setData({
-        btnClick: false
+        btnClick: true
       })
-      setTimeout(() => {
-        this.setData({
-          btnClick: true
-        })
-      }, 1000)
+    }, 1000)
     if (!my.getStorageSync({ key: 'takeout' }).data) {
       return
     }
@@ -176,8 +176,8 @@ Page({
     app.globalData.shopTakeOut = this.data.shopTakeOut;
   },
   // 首页banner列表
-  getBannerList(city_id, district_id, company_id) {
-    bannerList(city_id, district_id, company_id, 1).then((data) => {
+  async getBannerList(city_id, district_id, company_id) {
+    await bannerList(city_id, district_id, company_id, 1).then((data) => {
       // console.log(data)
       if (data.data.length > 1) {
         this.setData({
@@ -191,8 +191,8 @@ Page({
     });
   },
   // 首页商品展位
-  getShowpositionList(city_id, district_id, company_id) {
-    showPositionList(city_id, district_id, company_id, 1).then((res) => {
+  async getShowpositionList(city_id, district_id, company_id) {
+    await showPositionList(city_id, district_id, company_id, 1).then((res) => {
       this.setData({
         showListObj: res.data
       })
@@ -213,8 +213,8 @@ Page({
     });
   },
   // 门店商品列表
-  getShopGoodsList(shop_id) {
-    GetShopGoods(shop_id).then((res) => {
+  async getShopGoodsList(shop_id) {
+    await GetShopGoods(shop_id).then((res) => {
       const shopGoodsList = res.data[`${shop_id}`];
       const companyGoodsList = this.data.companyGoodsList;
       //  获取某公司下的某一个门店的所有商品
@@ -355,11 +355,9 @@ Page({
         })
         app.globalData.ret = arr;
       })
-      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
+      // my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret) => {
       //   console.log(ret)
-      //   my.pageScrollTo({
-      //     scrollTop: ret[0].scrollTop
-      //   });
+      //   app.globalData.ret_top = ret[0].scrollTop
       // })
       my.setStorageSync({
         key: 'shopGoods',

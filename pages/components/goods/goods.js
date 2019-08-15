@@ -19,7 +19,7 @@ Component({
     windowHeight: '',
     animation: null,
     goodsItem: {},   //选择规格一条商品
-    shopcartList: {}, 
+    shopcartList: {},
     priceAll: 0,   // 商品总价
     hide_good_box: true,
     shopcartAll: [],  //购物车数组
@@ -44,7 +44,7 @@ Component({
       "五香系列": 12,
       "解辣神器": 13,
     },
-    repurse_price:0,    // 购物车换购商品价格
+    repurse_price: 0,    // 购物车换购商品价格
   },
   onInit() {
     this.busPos = {};
@@ -57,7 +57,7 @@ Component({
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
-    let priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0,repurse_price=0;
+    let priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let keys in goodlist) {
       if (goodlist[keys].goods_discount_user_limit != null && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
         // my.showToast({
@@ -72,9 +72,9 @@ Component({
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       // 计算可换购商品价格
-        if(goodlist[keys].huangou){
-          repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
-        }
+      if (goodlist[keys].huangou) {
+        repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
+      }
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num
     }
@@ -88,9 +88,9 @@ Component({
       repurse_price
     })
     // 购物车活动提示
-    this.shopcartPrompt(nextProps.fullActivity, priceFree,repurse_price);
+    this.shopcartPrompt(nextProps.fullActivity, priceFree, repurse_price);
     if (!my.getStorageSync({ key: 'goodsList' }).data) {
-      this.onchangeShopcart({}, [], 0, 0,0);
+      this.onchangeShopcart({}, [], 0, 0, 0);
     }
   },
   didMount() {
@@ -161,12 +161,6 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
-      // my.createSelectorQuery().selectViewport().scrollOffset().exec((ret) => {
-      //   console.log(ret)
-      //   my.pageScrollTo({
-      //     scrollTop: ret[0].scrollTop
-      //   });
-      // })
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
@@ -204,7 +198,7 @@ Component({
       }, 100)
     },
     // sku商品
-    onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price) {
+    onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
       this.setData({
         shopcartList,
         shopcartAll,
@@ -215,8 +209,8 @@ Component({
       })
     },
     // 购物车
-    onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price) {
-      this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price)
+    onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
+      this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
     },
     addshopcart(e) {
       let goods_car = {};
@@ -260,7 +254,7 @@ Component({
         }
         goodlist[`${goods_code}_${goods_format}`] = oneGood;
       }
-      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
+      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       for (let keys in goodlist) {
         if (e.currentTarget.dataset.goods_discount && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
           my.showToast({
@@ -275,7 +269,7 @@ Component({
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         // 计算可换购商品价格
-        if(goodlist[keys].huangou){
+        if (goodlist[keys].huangou) {
           repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
@@ -337,7 +331,7 @@ Component({
       let code = e.currentTarget.dataset.goods_code;
       let format = e.currentTarget.dataset.goods_format
       let goodlist = my.getStorageSync({ key: 'goodsList' }).data;
-      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
+      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       goodlist[`${code}_${format}`].num -= 1;
       goodlist[`${code}_${format}`].sumnum -= 1;
       for (let keys in goodlist) {
@@ -351,7 +345,7 @@ Component({
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
         // 计算可换购商品价格
-        if(goodlist[keys].huangou){
+        if (goodlist[keys].huangou) {
           repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
@@ -377,7 +371,7 @@ Component({
       });
     },
     // 购物车活动提示
-    shopcartPrompt(oldArr, priceFree,repurse_price) {
+    shopcartPrompt(oldArr, priceFree, repurse_price) {
       let activityText = '', freeText = '';
       for (let v of oldArr) {
         if (oldArr.findIndex(v => v > repurse_price) != -1) {
