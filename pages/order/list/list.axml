@@ -44,6 +44,9 @@
         <view class="cancel-order" a:if="{{[1,2,3].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
+         <view class="cancel-order" a:if="{{[3].includes(item.order_status) && item.dis_tag == 'ZPS'}}" data-dis_tel="{{item.shop_tel}}"  catchTap="makePhoneCall">
+          联系门店
+        </view>
         <view class="cancel-order" catchTap="toComment" data-order_no="{{item.order_no}}" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}">
           评价订单
         </view>
@@ -88,13 +91,13 @@
         <view class="topay" a:if="{{item.order_status == 0 && item.remaining_pay_minute > 0}}" style="color:{{item.channel != 1 ?'#ccc':''}};border-color:{{item.channel != 1 ?'#ccc':''}}">
          去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
         </view>
-        <view class="cancel-order" a:if="{{[1].includes(item.order_status)}}">
+        <view class="cancel-order" a:if="{{[0].includes(item.order_status)}}">
           取消订单
         </view>
-        <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[2].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
-        <view class="cancel-order" a:if="{{[3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
+        <view class="cancel-order" a:if="{{[2].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
           导航
         </view>
         <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">

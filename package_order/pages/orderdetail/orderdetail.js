@@ -101,7 +101,7 @@ Page({
     let res = await ajax('/juewei-api/order/detail', { order_no })
 
     let timeArr
-    let { order_ctime, pay_time, get_time, dis_get_time, dis_take_time,push_time, dis_finish_time, cancel_time, dis_type, dis_tag ,order_status_info} = res.data
+    let { order_ctime, pay_time, get_time, dis_get_time, dis_take_time, push_time, dis_finish_time, cancel_time, dis_type, dis_tag, order_status_info } = res.data
     if (res.code === 0) {
       // 订单类型  1"官方外卖", 2"门店自取" // 配送方式 1配送  2 自提
       if (dis_type == 1) {
@@ -153,8 +153,10 @@ Page({
 
         let curState = res.data.order_status_info.order_status
         let curTimeArr = orderStatus[curState].timeArr;
+        // 自配送 没有骑手已接单
+        dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 3), 1));
 
-        (curState== 2 && order_status_info.dis_status == 2 && dis_tag != 'ZPS' && dis_get_time) ? curTimeArr.push(4) : curTimeArr
+        (curState == 2 && order_status_info.dis_status == 2 && dis_tag != 'ZPS' && dis_get_time) ? curTimeArr.push(4) : curTimeArr
         curState === 3 && dis_take_time != '0000-00-00 00:00:00' ? curTimeArr.push(5) : curTimeArr
         curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
