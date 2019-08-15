@@ -85,13 +85,13 @@
   <view class="code-phone">
    {{phone.slice(0,3)}} **** {{phone.slice(7)}}
   </view>
-  <view class="code-pay" onTap="wait">
+  <!-- <view class="code-pay" onTap="wait">
     确认支付
-  </view>
+  </view> -->
 </modal>
 
 <!-- 限时优惠 -->
-<modal show="{{open1}}" showClose="{{ false }}">
+<modal show="{{open1}}" showClose="{{ true }}" onModalClose="closeModel">
   <view class="modalInfo" onTap="closeModel">
      限时优惠，立即使用
   </view>
