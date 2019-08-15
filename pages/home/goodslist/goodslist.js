@@ -272,8 +272,9 @@ Page({
   // 门店营销活动(折扣和套餐)
   async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
     await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
-      // console.log(res);
+      console.log(res);
       let shopGoods = this.data.shopGoods;
+      console.log(shopGoods)
       // 获取加价购商品
       if (res.data.MARKUP != null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -311,7 +312,7 @@ Page({
       }
       // 筛选在当前门店里面的套餐商品  
       if (res.data.PKG) {
-        PKG = res.data.PKG.filter(item => shopGoods.findIndex(value => value.sap_code == item.goods_sap_code) != -1);
+        PKG = res.data.PKG.filter(item => item.pkg_goods.map(ott => shopGoods.findIndex(value => value.sap_code == ott.sap_code) != -1));
       }
       let obj1 = {}, obj2 = {};
       for (let item of PKG) {

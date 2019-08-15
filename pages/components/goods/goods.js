@@ -135,7 +135,7 @@ Component({
     // 优惠券过期提醒
     getcouponsExpire(_sid) {
       couponsExpire(_sid).then((res) => {
-        console.log(res)
+        // console.log(res)
         if (Object.keys(res.data).length > 0) {
           res.data.days = datedifference(getNowDate(), res.data.end_time)
           this.setData({
@@ -386,7 +386,7 @@ Component({
         if (priceFree == 0) {
           freeText = `满${this.data.freeMoney / 100}元 免配送费`
         } else if (priceFree < this.data.freeMoney) {
-          freeText = `还差${this.data.freeMoney / 100 - priceFree / 100}元 免配送费`
+          freeText = `还差${(this.data.freeMoney / 100 - priceFree / 100).toFixed(2)}元 免配送费`
         } else {
           freeText = `已满${this.data.freeMoney / 100}元 免配送费`
         }

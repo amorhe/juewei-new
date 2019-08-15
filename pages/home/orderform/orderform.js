@@ -399,10 +399,9 @@ Page({
             goodsReal.push(item)
           }
         }
-
         for (let val of goodsReal) {
           if (val.goods_type == 'PKG') {
-            val['goods_img'] = imageUrl2 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0]
+            val['goods_img'] = imageUrl2 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
           } else {
             val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
           }

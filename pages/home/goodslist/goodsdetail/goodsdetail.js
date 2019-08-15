@@ -297,7 +297,7 @@ Page({
     if (priceFree == 0) {
       freeText = `满${this.data.freeMoney / 100}元 免配送费`
     } else if (priceFree < this.data.freeMoney) {
-      freeText = `还差${this.data.freeMoney / 100 - priceFree / 100}元 免配送费`
+      freeText = `还差${(this.data.freeMoney / 100 - priceFree / 100).toFixed(2)}元 免配送费`
     } else {
       freeText = `已满${this.data.freeMoney / 100}元 免配送费`
     }
