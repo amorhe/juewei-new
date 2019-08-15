@@ -50,7 +50,7 @@ Page({
         // 定位失败
         my.hideLoading();
         my.navigateTo({
-          url: '/pages/position/position'
+          url: '/pages/noposition/noposition'
         })
       },
     })

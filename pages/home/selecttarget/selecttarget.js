@@ -53,25 +53,24 @@ Page({
   },
   // 输入地址搜索门店
   searchShop() {
+    let that= this;
     let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
     url = encodeURI(url);
     my.request({
       url,
       success: (res) => {
-        // console.log(res)
-        my.hideKeyboard();
-        const _sid = my.getStorageSync({ key: '_sid' }).data;
-        const lng = res.data.result.location.lng;
-        const lat = res.data.result.location.lat;
-        const location = `${lng},${lat}`;
-        this.getAddressList(_sid, location, lat, lng);
+          my.hideKeyboard();
+          const _sid = my.getStorageSync({ key: '_sid' }).data;
+          const lng = res.data.result.location.lng;
+          const lat = res.data.result.location.lat;
+          const location = `${lng},${lat}`;
+          that.getAddressList(_sid, location, lat, lng);
       },
     });
   },
   // 地址列表
   getAddressList(_sid, location, lat, lng) {
     addressList(_sid, 'normal', location).then((res) => {
-      // console.log(res)
       let arr1 = [];
       if (res.data.length > 0) {
         arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
@@ -86,6 +85,7 @@ Page({
         url: str,
         success: (res) => {
           if (res.data.status == 0) {
+            console.log(res.data.results);
             this.setData({
               nearAddress: res.data.results
             })
@@ -109,7 +109,7 @@ Page({
     my.getLocation({
       type: 3,
       success(res) {
-        // console.log(res)
+        console.log(res)
         my.hideLoading();
         const mapPosition = bd_encrypt(res.longitude, res.latitude);
         my.setStorageSync({
@@ -121,6 +121,7 @@ Page({
           data: mapPosition.bd_lng, // 要缓存的数据
         });
         app.globalData.address = res.pois[0].name;
+        app.globalData.position = res;
         my.showToast({
           content: '定位成功！'
         })
@@ -132,7 +133,7 @@ Page({
         })
       },
       fail() {
-        this.setData({
+        that.setData({
           isSuccess: false
         })
       }
@@ -140,18 +141,24 @@ Page({
   },
   //选择附近地址
   switchAddress(e) {
-    if (!this.data.isSuccess && e.currentTarget.dataset.address == '') {
+    //手动定位没有地址
+    if (e.currentTarget.dataset.type=='1' && !this.data.isSuccess && e.currentTarget.dataset.address == '') {
       my.showToast({
         content: '定位失败，请选择其他收货地址！'
       });
       return
     }
-    if (e.currentTarget.dataset.address != '') {
-      my.switchTab({
-        url: '/pages/home/goodslist/goodslist'
-      });
-      return
-    }
+    //手动定位获得了地址
+    //这里分两种情况1原先不变地址，2重新定位后地址
+    // if (e.currentTarget.dataset.type=='1' && this.data.isSuccess && e.currentTarget.dataset.address != '') {
+    //   //需要重新获得外卖，和自提门店
+    //   //这里没有做
+    //   my.switchTab({
+    //     url: '/pages/home/goodslist/goodslist'
+    //   });
+    //   return
+    // }
+    //定位失败
     let mapPosition = '';
     switch (parseInt(e.currentTarget.dataset.type)) {
       case 1:
@@ -168,6 +175,8 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
+ 
+    app.globalData.position = e.currentTarget.dataset.info;
     this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name);
     this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name)
   },
@@ -183,11 +192,14 @@ Page({
       key: 'lng', // 缓存数据的key
       data: position[0] // 要缓存的数据
     });
+    app.globalData.position = e.currentTarget.dataset.info;
+    console.log('e.currentTarget.dataset.info',e.currentTarget.dataset.info);
     this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr);
     this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr)
   },
   // 外卖附近门店
   getLbsShop(lng, lat, address) {
+    let that=this;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -217,7 +229,7 @@ Page({
         });
         shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        this.getNearbyShop();
+        that.getNearbyShop(lng, lat, address);
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
         })
