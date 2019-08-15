@@ -55,8 +55,8 @@ Page({
       '等待接单',
       '商家已接单',
       '等待取餐',
-      '等待取餐',
       '订单已完成',
+      '订单已取消',
       '订单已取消',
       '订单已取消',
       '订单已取消',
@@ -295,7 +295,7 @@ Page({
             menuList,
             timers,
             loading: false,
-            refresFinsish:false
+            refresFinsish: false
           }, () => my.hideLoading())
         }, 1000)
 

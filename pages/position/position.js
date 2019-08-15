@@ -175,7 +175,7 @@ Page({
       })
       app.globalData.type = 2;
       // this.getNearbyShop();
-      my.switchTab({
+      my.reLaunch({
         url: '/pages/home/goodslist/goodslist'
       })
     } else {
