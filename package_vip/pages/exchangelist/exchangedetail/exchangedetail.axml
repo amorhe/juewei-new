@@ -197,7 +197,7 @@
 </view>
 
 <!-- 限时优惠 -->
-<modal show="{{open1}}" showClose="{{ false }}">
+<modal show="{{open1}}" showClose="{{ true }}" onModalClose="closeModel">
   <view class="modalInfo">
      限时优惠，立即使用
   </view>
@@ -217,9 +217,9 @@
     {{detail.user_phone.slice(0,3)}} **** {{detail.user_phone.slice(7)}}
   </view>
 
-  <view class="code-pay" onTap="wait">
+  <!-- <view class="code-pay" onTap="wait">
     确认支付
-  </view>
+  </view> -->
 </modal>
 
 <popup show="{{cancleShow}}" position="bottom">

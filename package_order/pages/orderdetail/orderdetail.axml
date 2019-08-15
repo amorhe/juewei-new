@@ -3,7 +3,7 @@
   <view style="height:1rpx"></view>
   <view class="board">
     <view class="board-state" onTap="show">  
-      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 2 && d.order_status_info.dis_status == 2 && d.dis_tag != 'ZPS' && d.dis_get_time ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0) ? '订单已取消': pickUpState[d.order_status_info.order_status] )}}
+      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 2 && d.order_status_info.dis_status == 2 && d.dis_tag != 'ZPS' && d.dis_get_time ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute < 0) ? '订单已取消': pickUpState[d.order_status_info.order_status] )}}
       <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -21,27 +21,28 @@
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
     <view class="out-footer" a:if="{{!d.order_cancel_reason}}">
-      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status) && !([2,3,4].includes(d.order_status_info.order_status) && (d.dis_tag == 'ZPS'||d.dis_type==2) ) }}" catchTap="showCancel">
+      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status) && !([2].includes(d.order_status_info.order_status) && (d.dis_tag == 'ZPS'||d.dis_type==2) ) }}" catchTap="showCancel">
           取消订单
       </view>
-      <view class="cancel-order" a:if="{{([2,3].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' && [2,4].includes(d.order_status_info.dis_status) && !['','0000-00-00 00:00:00'].includes(d.dis_get_time))}}"  data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
+      <view class="cancel-order" a:if="{{([2,3].includes(d.order_status_info.order_status) && d.dis_tag != 'ZPS' && !['','0000-00-00 00:00:00'].includes(d.dis_get_time))}}" data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
           联系骑手
+      </view>
+      <view class="cancel-order" a:if="{{([3].includes(d.order_status_info.order_status) && d.dis_tag == 'ZPS')}}" data-number="{{d.shop_tel}}" catchTap="makePhoneCall">
+          联系门店
       </view>
       <view class="red cancel-order" a:if="{{[1,2,3,4,5,6,7,8,9,10].includes(d.order_status_info.order_status) && !([4].includes(d.order_status_info.order_status) && d.dis_tag == 'ZPS' )}}" catchTap="contact">
           联系客服
       </view>
-      <view class="cancel-order" a:if="{{[5,6,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="buyAgain">
+      <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="buyAgain">
           再来一单
       </view>
       <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
           评价订单
       </view>
-      <view class="cancel-order" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 1}}" catchTap="contact">
-          已评价
-      </view>
-      <view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="contact">
-          投诉
-      </view>
+      <!--<view class="cancel-order" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 1}}" catchTap="contact">
+          已评价</view> -->
+      <!--<view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="contact">
+          投诉</view> -->
       <view class="cancel-order red" a:if="{{[3].includes(d.order_status_info.order_status) && dis_type==2}}" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.shop_address}}" catchTap="guide">
           导航
       </view>
@@ -78,8 +79,7 @@
     <view class="good-list">
       <view class="good-item" a:for="{{d.goods_list}}">
         <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG'}}" src="{{item.goods_img ? item.goods_img : imageUrl + 'activity_default.png' }}"/>
-        <image amode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ imageUrl2 + item.goods_img }}"/>
-
+        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ imageUrl2 + item.goods_img }}"/>
         <view class="body">
           <view class="name">
             <view class="top">

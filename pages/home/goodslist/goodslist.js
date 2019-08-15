@@ -60,7 +60,7 @@ Page({
 
   },
   onShow() {
-    // console.log(1)
+    console.log(1)
     // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
@@ -99,8 +99,8 @@ Page({
         }).data;
       }
       this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
-      this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id);//banner
-      this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopArray[0].company_sale_id);
+      this.getBannerList(shopArray[0].city_id, shopArray[0].district_id, shopArray[0].company_sale_id);//banner
+      this.getShowpositionList(shopArray[0].city_id, shopArray[0].district_id, shopArray[0].company_sale_id);
       const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
       this.setData({
         isOpen: status,

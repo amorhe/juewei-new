@@ -330,7 +330,7 @@ Page({
       dis_tag: currentShopSelect.join(','),
       dis_level,
       dis_content,
-      goods_comment: '(' + JSON.stringify(goods_comment) + ')',
+      goods_comment:  JSON.stringify(goods_comment),
       plate: 1
     }
     let res = await ajax('/juewei-api/comment/Create', data, 'POST')

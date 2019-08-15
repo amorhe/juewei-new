@@ -245,9 +245,11 @@ Page({
   },
   // 确认支付
   confirmPay() {
+
     if (app.globalData.type == 2 && !this.data.isCheck) {
-      my.showToast({
-        content: '请同意到店自提协议'
+      my.alert({
+        content: '请同意到店自提协议',
+        buttonText: '我知道了'
       });
       return
     }
@@ -466,5 +468,6 @@ Page({
   // 模版消息
   onSubmit(e) {
     upformId(e.detail.formId);
+
   }
 });

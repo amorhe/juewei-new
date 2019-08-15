@@ -68,7 +68,6 @@ Page({
     this.setData({
       order_no
     }, async () => await this.getOrderDetail())
-
   },
 
   onUnload() {
@@ -102,14 +101,14 @@ Page({
     let res = await ajax('/juewei-api/order/detail', { order_no })
 
     let timeArr
-    let { order_ctime, pay_time, get_time, dis_get_time, dis_take_time, dis_finish_time, cancel_time, dis_type, dis_tag ,order_status_info} = res.data
+    let { order_ctime, pay_time, get_time, dis_get_time, dis_take_time,push_time, dis_finish_time, cancel_time, dis_type, dis_tag ,order_status_info} = res.data
     if (res.code === 0) {
       // 订单类型  1"官方外卖", 2"门店自取" // 配送方式 1配送  2 自提
       if (dis_type == 1) {
         // //显示状态和时间的语句
         // 1） 待支付，时间：data.order_ctime      //创建时间
         // 2） 待取餐，时间：data.pay_time         //支付时间
-        // 3） 门店已接单，时间：data.get_time         //门店接单时间
+        // 3） 门店已接单，时间：data.push_time         //门店接单时间
         // 4） 配送已接单，时间：data.dis_get_time     //物流接单时间
         // 5） 骑手配送中，时间：data.dis_take_time    //配送员取货时间
         // 6） 订单已完成，时间：data.dis_finish_time  //送达时间
@@ -117,7 +116,7 @@ Page({
         timeArr = [
           { state: '等待支付', time: order_ctime },
           { state: '订单已提交', time: pay_time },
-          { state: '商家已接单', time: get_time },
+          { state: '商家已接单', time: push_time },
           { state: '骑手已接单', time: dis_get_time },
           { state: '骑手正在送货', time: dis_take_time },
           { state: '订单已完成', time: dis_finish_time },
@@ -171,7 +170,7 @@ Page({
         timeArr = [
           { state: '等待支付', time: order_ctime },
           { state: '待取餐', time: pay_time },
-          { state: '商家已接单', time: get_time },
+          { state: '商家已接单', time: push_time },
           { state: '配送已接单', time: dis_get_time },
           { state: '骑手配送中', time: dis_take_time },
           { state: '订单已完成', time: dis_finish_time },

@@ -41,7 +41,7 @@
   <!-- 附近地址 -->
   <view class="nearAddressBox">
     <view class="fontGray">附近地址</view>
-    <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}" data-type="3" data-address="">{{item.name}}</view>
+    <view class="nearList" a:for="{{nearAddress}}" onTap="switchAddress" data-info="{{item}}" data-type="3" data-address="{{item.name}}">{{item.name}}</view>
   </view>
   <!-- 提示框 -->
   <!--<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}" onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->

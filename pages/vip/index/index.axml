@@ -30,7 +30,7 @@
       </form>
     </view>
     <!-- 未登录 -->
-    <view class="header flex-space-b" onTap="isloginFn" style="align-iten:flex-end" a:if="{{!_sid}}">
+    <view class="header flex-space-b" onTap="isloginFn" style="align-iten:flex-end" a:if="{{!_sid && loginFinish}}">
       <view class="flex-center">
         立即登录
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
