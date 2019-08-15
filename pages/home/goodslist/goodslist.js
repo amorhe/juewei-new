@@ -331,12 +331,15 @@ Page({
       this.data.shopGoodsList.unshift(obj1, obj2);
       let goodsArr = [...DIS, ...PKG, ...this.data.shopGoods];    // 门店所有列表（一维数组）
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length > 0);
-      goodsNew = [...new Set(goodsNew)];
+      goodsNew = new Set(goodsNew)
+      goodsNew = [...goodsNew];
       app.globalData.goodsArr = goodsArr;
-      // console.log(goodsNew)
+      console.log(goodsNew)
+      // 最终商品总数据
       this.setData({
         shopGoodsAll: goodsNew
       })
+      // 获取商品模块的节点
       my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
         let top = ret[0][0].top;
         let arr = ret[0].map((item, index) => {

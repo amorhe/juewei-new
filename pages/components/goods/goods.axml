@@ -83,12 +83,14 @@
                 <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
+                <!-- 减 -->
                 <image a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}"/>
-                <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum}}</text>
+                <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].num}}</text>
+                <!-- 加 -->
                 <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}"
                  data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}"
                  data-taste_name="{{v.taste_name?v.taste_name:''}}" data-goods_activity_code="{{v.goods_format[0].goods_activity_code}}" data-goods_discount="{{v.goods_format[0].goods_discount}}"
-                 data-goods_original_price="{{v.goods_format[0].goods_original_price}}" data-goods_discount_user_limit="{{v.goods_format[0].goods_discount_user_limit}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}"/>
+                 data-goods_original_price="{{v.goods_format[0].goods_original_price}}" data-goods_discount_user_limit="{{v.goods_format[0].goods_discount_user_limit}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}  " data-huangou="{{v.huangou}}"/>
                 <!-- 小红点 -->
                 <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
               </view>
@@ -132,10 +134,12 @@
                 </view>
               </view>
               <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
+                <!-- 减 -->
                 <image a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}"  data-goods_format="{{v.goods_format[0].type}}"/>
-                <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum}}</text>
+                <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].num}}</text>
+                <!-- 加 -->
                 <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" 
-                data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}"/>
+                data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}" data-huangou="{{v.huangou}}"/>
                 <!-- 小红点 -->
                 <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
               </view>

@@ -85,10 +85,21 @@ Page({
       my.request({
         url: str,
         success: (res) => {
-          this.setData({
-            nearAddress: res.data.results
-          })
+          if (res.data.status == 0) {
+            this.setData({
+              nearAddress: res.data.results
+            })
+          } else {
+            this.setData({
+              nearAddress: []
+            })
+          }
         },
+        fail: (rej) => {
+          this.setData({
+            nearAddress: []
+          })
+        }
       });
     })
   },
@@ -127,6 +138,7 @@ Page({
       }
     })
   },
+  //选择附近地址
   switchAddress(e) {
     if (!this.data.isSuccess && e.currentTarget.dataset.address == '') {
       my.showToast({
@@ -159,7 +171,7 @@ Page({
     this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name);
     this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name)
   },
-  // 
+  // 选择我的收货地址
   switchPositionAddress(e) {
     // console.log(e)
     let position = e.currentTarget.dataset.info.user_address_lbs_baidu.split(',');
@@ -237,7 +249,7 @@ Page({
                 this.getSelf(conf.data.contents, address)
               } else {
                 // 无自提门店
-                
+
               }
             },
           });
@@ -283,6 +295,7 @@ Page({
       });
     }
   },
+  // 去自提
   onModalRepurse() {
     app.globalData.type = 2;
     my.removeStorageSync({

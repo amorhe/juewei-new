@@ -1,6 +1,6 @@
 import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
-import { datedifference, sortNum } from '../../common/js/time'
+import { datedifference, sortNum, getNowDate } from '../../common/js/time'
 var app = getApp();
 let tim = null;
 Component({
@@ -19,13 +19,13 @@ Component({
     windowHeight: '',
     animation: null,
     goodsItem: {},   //选择规格一条商品
-    shopcartList: {},
-    priceAll: 0,
+    shopcartList: {}, 
+    priceAll: 0,   // 商品总价
     hide_good_box: true,
-    shopcartAll: [],
-    shopcartNum: 0,
+    shopcartAll: [],  //购物车数组
+    shopcartNum: 0,   // 购物车显示总数
     activityText: '',   // 购物车活动提示内容
-    priceFree: 0,
+    priceFree: 0,    // 购物车包邮商品价格
     freeText: '', // 购物车包邮提示内容
     pagesinfoTop: 0,
     isScorll: true,
@@ -44,7 +44,7 @@ Component({
       "五香系列": 12,
       "解辣神器": 13,
     },
-
+    repurse_price:0,    // 购物车换购商品价格
   },
   onInit() {
     this.busPos = {};
@@ -57,7 +57,7 @@ Component({
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
-    let priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0;
+    let priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0,repurse_price=0;
     for (let keys in goodlist) {
       if (goodlist[keys].goods_discount_user_limit != null && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
         // my.showToast({
@@ -67,9 +67,14 @@ Component({
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
+      // 计算包邮商品价格
       if (!goodlist[keys].goods_discount) {
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
+      // 计算可换购商品价格
+        if(goodlist[keys].huangou){
+          repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
+        }
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num
     }
@@ -79,12 +84,13 @@ Component({
       shopcartAll,
       shopcartNum,
       priceFree,
-      freeMoney: nextProps.freeMoney
+      freeMoney: nextProps.freeMoney,
+      repurse_price
     })
     // 购物车活动提示
-    this.shopcartPrompt(nextProps.fullActivity, this.data.priceAll, priceFree);
+    this.shopcartPrompt(nextProps.fullActivity, priceFree,repurse_price);
     if (!my.getStorageSync({ key: 'goodsList' }).data) {
-      this.onchangeShopcart({}, [], 0, 0);
+      this.onchangeShopcart({}, [], 0, 0,0);
     }
   },
   didMount() {
@@ -135,7 +141,7 @@ Component({
       couponsExpire(_sid).then((res) => {
         // console.log(res)
         if (Object.keys(res.data).length > 0) {
-          res.data.days = datedifference(res.data.start_time, res.data.end_time)
+          res.data.days = datedifference(getNowDate(), res.data.end_time)
           this.setData({
             couponsExpire: res.data,
             isShow: true
@@ -198,18 +204,19 @@ Component({
       }, 100)
     },
     // sku商品
-    onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree) {
+    onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price) {
       this.setData({
         shopcartList,
         shopcartAll,
         priceAll,
         shopcartNum,
-        priceFree
+        priceFree,
+        repurse_price
       })
     },
     // 购物车
-    onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree) {
-      this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree)
+    onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price) {
+      this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price)
     },
     addshopcart(e) {
       let goods_car = {};
@@ -247,12 +254,13 @@ Component({
             "goods_code": e.currentTarget.dataset.goods_code,
             "goods_format": goods_format,
             "goods_img": e.currentTarget.dataset.goods_img,
-            "sap_code": e.currentTarget.dataset.sap_code
+            "sap_code": e.currentTarget.dataset.sap_code,
+            "huangou": e.currentTarget.dataset.huangou
           }
         }
         goodlist[`${goods_code}_${goods_format}`] = oneGood;
       }
-      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0;
+      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
       for (let keys in goodlist) {
         if (e.currentTarget.dataset.goods_discount && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
           my.showToast({
@@ -262,19 +270,24 @@ Component({
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }
+        // 计算包邮商品价格
         if (!goodlist[keys].goods_discount) {
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        // 计算可换购商品价格
+        if(goodlist[keys].huangou){
+          repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
       }
-
       this.setData({
         shopcartList: goodlist,
         shopcartAll,
         priceAll,
         shopcartNum,
-        priceFree
+        priceFree,
+        repurse_price
       })
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -324,7 +337,7 @@ Component({
       let code = e.currentTarget.dataset.goods_code;
       let format = e.currentTarget.dataset.goods_format
       let goodlist = my.getStorageSync({ key: 'goodsList' }).data;
-      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0;
+      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
       goodlist[`${code}_${format}`].num -= 1;
       goodlist[`${code}_${format}`].sumnum -= 1;
       for (let keys in goodlist) {
@@ -332,10 +345,14 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-          // priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
+        // 包邮商品价格
         if (!goodlist[keys].goods_discount) {
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
+        }
+        // 计算可换购商品价格
+        if(goodlist[keys].huangou){
+          repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -351,7 +368,8 @@ Component({
         shopcartAll,
         priceAll,
         shopcartNum,
-        priceFree
+        priceFree,
+        repurse_price
       })
       my.setStorageSync({
         key: 'goodsList', // 缓存数据的key
@@ -359,14 +377,14 @@ Component({
       });
     },
     // 购物车活动提示
-    shopcartPrompt(oldArr, priceAll, priceFree) {
+    shopcartPrompt(oldArr, priceFree,repurse_price) {
       let activityText = '', freeText = '';
       for (let v of oldArr) {
-        if (oldArr.findIndex(v => v > priceAll) != -1) {
-          if (oldArr.findIndex(v => v > priceAll) == 0) {
-            activityText = `只差${(oldArr[0] - priceAll) / 100}元,超值福利等着你!`;
-          } else if (oldArr.findIndex(v => v > priceAll) > 0 && oldArr.findIndex(v => v > priceAll) < oldArr.length) {
-            activityText = `已购满${oldArr[oldArr.findIndex(v => v > priceAll) - 1] / 100}元,去结算享受换购优惠;满${oldArr[oldArr.findIndex(v => v > priceAll)] / 100}元更高福利等着你!`
+        if (oldArr.findIndex(v => v > repurse_price) != -1) {
+          if (oldArr.findIndex(v => v > repurse_price) == 0) {
+            activityText = `只差${(oldArr[0] - repurse_price) / 100}元,超值福利等着你!`;
+          } else if (oldArr.findIndex(v => v > repurse_price) > 0 && oldArr.findIndex(v => v > repurse_price) < oldArr.length) {
+            activityText = `已购满${oldArr[oldArr.findIndex(v => v > repurse_price) - 1] / 100}元,去结算享受换购优惠;满${oldArr[oldArr.findIndex(v => v > repurse_price)] / 100}元更高福利等着你!`
           } else {
             activityText = `已购满${oldArr[oldArr.length - 1] / 100}元,去结算获取优惠!`;
           }
