@@ -355,12 +355,12 @@ Page({
         })
         app.globalData.ret = arr;
       })
-      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
-        console.log(ret)
-        my.pageScrollTo({
-          scrollTop: ret[0].scrollTop
-        });
-      })
+      // my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
+      //   console.log(ret)
+      //   my.pageScrollTo({
+      //     scrollTop: ret[0].scrollTop
+      //   });
+      // })
       my.setStorageSync({
         key: 'shopGoods',
         data: goodsArr
