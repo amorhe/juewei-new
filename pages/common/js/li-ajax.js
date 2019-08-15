@@ -55,7 +55,8 @@ export const ajax = async (url, data = {}, method = 'POST') => {
           });
           resolve({ code: -1, data: '' })
         } else {
-          reject({ errormsg: rest.msg, code: -1 });
+          resolve(res.data)
+          // reject({ errormsg: rest.msg, code: -1 });
         }
 
       },

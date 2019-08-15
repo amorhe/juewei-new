@@ -68,7 +68,6 @@ Page({
     this.setData({
       order_no
     }, async () => await this.getOrderDetail())
-
   },
 
   onUnload() {
