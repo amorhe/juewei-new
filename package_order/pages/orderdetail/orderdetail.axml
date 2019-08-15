@@ -127,7 +127,7 @@
           优惠券
           </view>
           <view class="value">
-            <text>-￥{{(d.coupon_money / 100)}}</text>
+            <text>-￥{{(d.minus_money > 0 ? (d.minus_money / 100) : (d.coupon_money / 100))}}</text>
           </view>
         </view>
       </view>
