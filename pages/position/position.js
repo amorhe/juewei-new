@@ -88,7 +88,7 @@ Page({
         });
         shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        my.switchTab({
+        my.reLaunch({
           url: '/pages/home/goodslist/goodslist'
         })
       } else if (res.code == 5 || res.data.length == 0) {
