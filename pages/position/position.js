@@ -49,7 +49,7 @@ Page({
       fail() {
         // 定位失败
         my.hideLoading();
-        my.navigateTo({
+        my.reLaunch({
           url: '/pages/noposition/noposition'
         })
       },
@@ -128,7 +128,7 @@ Page({
                 my.showToast({
                   content: "当前定位地址无可浏览的门店，请切换地址！",
                   success: (res) => {
-                    my.navigateTo({
+                    my.redirectTo({
                       url: '/pages/home/selecttarget/selecttarget?type=true'
                     });
                   },
@@ -175,11 +175,11 @@ Page({
       })
       app.globalData.type = 2;
       // this.getNearbyShop();
-      my.reLaunch({
+      my.redirectTo({
         url: '/pages/home/goodslist/goodslist'
       })
     } else {
-      my.navigateTo({
+      my.redirectTo({
         url: '/pages/home/selecttarget/selecttarget?type=true'
       });
     }
