@@ -9,12 +9,13 @@
     "pages/login/verifycode/verifycode",
     "pages/login/auth/auth",
     "package_my/pages/nearshop/nearshop",
-    "package_my/pages/onlineservice/onlineservice"
+    "package_my/pages/onlineservice/onlineservice",
+    "pages/noposition/noposition"
   ],
   "subPackages": [
     {
-      "root":"pages",
-      "pages":[
+      "root": "pages",
+      "pages": [
         "home/orderform/orderform",
         "home/orderError/orderError",
         "home/orderfinish/orderfinish",

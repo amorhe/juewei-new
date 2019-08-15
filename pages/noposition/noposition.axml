@@ -1,0 +1,8 @@
+<view class="boxView">
+  <image class="position_icon" mode="scaleToFill" src="{{imageUrl}}bg_position.png"/>
+  <text class="text">定位失败</text>
+  <view class="no_Btn">
+    <button class="left_btn">去手动定位</button>
+    <button class="right_btn">重新加载</button>
+  </view>
+</view>

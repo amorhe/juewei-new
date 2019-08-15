@@ -234,7 +234,7 @@ Component({
         priceAll = 0, // 总价
         shopcartNum = 0, // 购物车总数量
         priceFree = 0, // 满多少包邮
-        shopcartObj = {}; //商品列表 
+        shopcartObj = {}, //商品列表 
         repurse_price = 0 // 换购活动提示价
       if (goodsList == null) return;
         // 判断购物车商品是否在当前门店里
