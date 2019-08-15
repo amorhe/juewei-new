@@ -154,9 +154,8 @@ Page({
         let curState = res.data.order_status_info.order_status
         let curTimeArr = orderStatus[curState].timeArr;
         // 自配送 没有骑手已接单
-        dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 3), 1));
-
-        (curState == 2 && order_status_info.dis_status == 2 && dis_tag != 'ZPS' && dis_get_time) ? curTimeArr.push(4) : curTimeArr
+        dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 4), 1));
+        ; (curState == 2 && order_status_info.dis_status == 2 && dis_tag != 'ZPS' && dis_get_time) ? curTimeArr.push(4) : curTimeArr
         curState === 3 && dis_take_time != '0000-00-00 00:00:00' ? curTimeArr.push(5) : curTimeArr
         curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
@@ -195,9 +194,9 @@ Page({
         let orderStatus = [
           { state: '等待支付', timeArr: [1] },
           { state: '支付成功', timeArr: [1, 2] },
-          { state: '商家接单/商家已确认', timeArr: [1, 2] },
-          { state: '正在配送/配送中', timeArr: [1, 2] },
-          { state: '确认收货/已送到/完成', timeArr: [1, 2, 6] },
+          { state: '商家接单/商家已确认', timeArr: [1, 2, 3] },
+          { state: '正在配送/配送中', timeArr: [1, 2, 3] },
+          { state: '确认收货/已送到/完成', timeArr: [1, 3, 2, 6] },
           { state: '用户取消', timeArr: [1, 7] },
           { state: '自动取消', timeArr: [1, 7] },
           { state: '后台客服退单', timeArr: [1, 2, 7] },

@@ -75,7 +75,7 @@
           </view>
         </view>
         <view class="out-item-state" style="color:{{(item.order_status == 0 && item.remaining_pay_minute > 0)? '#E60012' : ''}}">
-          {{(item.order_status == 0 && item.remaining_pay_minute < 0)? '订单已取消' : takeOutState[item.order_status]}}
+          {{(item.order_status == 0 && item.remaining_pay_minute < 0)? '订单已取消' : pickUpState[item.order_status]}}
         </view>
       </view>
       <view class="out-body">
@@ -94,12 +94,7 @@
         <view class="cancel-order" a:if="{{[0].includes(item.order_status)}}">
           取消订单
         </view>
-        <view class="cancel-order" a:if="{{[2].includes(item.order_status)}}" catchTap="contact">
-          联系客服
-        </view>
-        <view class="cancel-order" a:if="{{[2].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
-          导航
-        </view>
+        
         <view class="cancel-order" a:if="{{[4].includes(item.order_status) && item.is_comment == 0}}" catchTap="toComment" data-order_no="{{item.order_no}}">
           评价订单
         </view>
@@ -109,8 +104,11 @@
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
-        <view class="cancel-order" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[2,3,4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
           联系客服
+        </view>
+        <view class="cancel-order" a:if="{{[2,3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
+          导航
         </view>
       </view>
     </view>
