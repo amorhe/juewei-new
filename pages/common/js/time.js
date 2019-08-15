@@ -1,13 +1,12 @@
 import { upAliMiniFormId } from './home'
 // 比较两个日期时间相差多少天
 export const datedifference = (sDate1, sDate2) => {
-  var dateSpan,
-    tempDate,
-    iDays;
-  sDate1 = Date.parse(sDate1);
-  sDate2 = Date.parse(sDate2);
-  dateSpan = sDate2 - sDate1;
-  dateSpan = Math.abs(dateSpan);
+  var dateSpan,iDays;
+  var sDate1 = sDate1.replace(/-/g, '/')
+  var date1 = Date.parse(new Date(sDate1))
+  var sDate2 = sDate2.replace(/-/g, '/')
+  var date2 = Date.parse(new Date(sDate2))
+  dateSpan = date2 - date1;
   iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
   return iDays
 };

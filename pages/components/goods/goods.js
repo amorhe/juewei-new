@@ -60,9 +60,6 @@ Component({
     let priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let keys in goodlist) {
       if (goodlist[keys].goods_discount_user_limit != null && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-        // my.showToast({
-        //   content:`折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
-        // });
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
@@ -115,7 +112,6 @@ Component({
         that = this,
         bezier_points = that.linePos['bezier_points'],
         len = bezier_points.length - 1;
-      // console.log(bezier_points)
       this.setData({
         hide_good_box: false,
         bus_x: that.finger['x'],
@@ -134,12 +130,12 @@ Component({
             hide_good_box: true,
           })
         }
-      }, 15);
+      }, 30);
     },
     // 优惠券过期提醒
     getcouponsExpire(_sid) {
       couponsExpire(_sid).then((res) => {
-        // console.log(res)
+        console.log(res)
         if (Object.keys(res.data).length > 0) {
           res.data.days = datedifference(getNowDate(), res.data.end_time)
           this.setData({
@@ -291,40 +287,40 @@ Component({
       // 购物车小球动画
       // 如果good_box正在运动
 
-      // if (!this.data.hide_good_box) return;
+      if (!this.data.hide_good_box) return;
 
-      // this.finger = {};
+      this.finger = {};
 
-      // var topPoint = {};
+      var topPoint = {};
 
-      // this.finger['x'] = e.detail.clientX;
+      this.finger['x'] = e.detail.clientX;
 
-      // this.finger['y'] = e.detail.clientY;
+      this.finger['y'] = e.detail.clientY;
 
-      // if (this.finger['y'] < this.busPos['y']) {
+      if (this.finger['y'] < this.busPos['y']) {
 
-      // topPoint['y'] = this.finger['y'] - 150;
+        topPoint['y'] = this.finger['y'] - 150;
 
-      // } else {
+      } else {
 
-      // topPoint['y'] = this.busPos['y'] - 150;
+        topPoint['y'] = this.busPos['y'] - 150;
 
-      // }
+      }
 
-      // topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
+      topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
 
-      // if (this.finger['x'] > this.busPos['x']) {
+      if (this.finger['x'] > this.busPos['x']) {
 
-      // topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
+        topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
 
-      // } else {
+      } else {
 
-      // topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
+        topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
 
-      // }
+      }
 
-      // this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
-      // this.startAnimation();
+      this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
+      this.startAnimation();
 
     },
     reduceshopcart(e) {
