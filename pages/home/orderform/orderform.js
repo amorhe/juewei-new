@@ -189,7 +189,10 @@ Page({
     let goodlist = my.getStorageSync({
       key: 'goodsList'
     }).data;
-    let newShopcart = {},newGoodsArr=[],newGoodsArr1 = [],newGoodsArr2=[];
+    let newShopcart = {},
+      newGoodsArr = [],
+      obj1 = {},
+      obj2 = {};
     if (this.data.newArr.length > 0) {
       for (let _item of this.data.newArr) {
         for (let item of this.data.goodsList) {
@@ -198,36 +201,37 @@ Page({
             if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
               item.goods_price = _item.goodsPrice;
             }
-            newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
-            newGoodsArr1.push(item);
-            newGoodsArr1 = [...newGoodsArr1];
+            obj1[`${item.goods_code}_${item.goods_format}`] = item;  //多
           } else {
             // 商品下架
             if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
-              newShopcart[`${item.goods_code}_${item.goods_format}`] = item;
-              newGoodsArr2.push(item);
-              newGoodsArr2 = [...newGoodsArr2];
+              obj2[`${item.goods_code}_${item.goods_format}`] = item;  //少
             }
           }
         }
       }
-    } else {
-      newShopcart = goodlist;
     }
-    let goods = [...newGoodsArr1,...newGoodsArr2];
-    for(let ott of goods){
-      for(let item of this.data.goodsList){
-        if(ott.goods_code = item.goods_code){
-          newGoodsArr.push(ott);
-          newGoodsArr = [...newGoodsArr];
+    if (Object.keys(obj2).length>0 && Object.keys(obj1).length==0) {
+      newShopcart = obj2;
+    } else if (Object.keys(obj1).length>0 && Object.keys(obj2).length==0) {
+      newShopcart = obj1;
+    }else{
+      for(let key in obj1){
+        if(obj2[key]){
+          newShopcart[key] = obj1[key];
         }
       }
     }
-    console.log(goods,  newGoodsArr)
+    for (let ott in newShopcart) {
+      newGoodsArr.push(newShopcart[ott])
+    }
     my.setStorageSync({
       key: 'goodsList', // 缓存数据的key
       data: newShopcart, // 要缓存的数据
     });
+    this.setData({
+      goodsList:newGoodsArr
+    })
     // 重新选择商品
     if (data.isType == 'orderConfirm' && data.type == 1) {
       my.navigateBack({
