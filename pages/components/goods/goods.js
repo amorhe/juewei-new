@@ -287,40 +287,40 @@ Component({
       // 购物车小球动画
       // 如果good_box正在运动
 
-      if (!this.data.hide_good_box) return;
+      // if (!this.data.hide_good_box) return;
 
-      this.finger = {};
+      // this.finger = {};
 
-      var topPoint = {};
+      // var topPoint = {};
 
-      this.finger['x'] = e.detail.clientX;
+      // this.finger['x'] = e.detail.clientX;
 
-      this.finger['y'] = e.detail.clientY;
+      // this.finger['y'] = e.detail.clientY;
 
-      if (this.finger['y'] < this.busPos['y']) {
+      // if (this.finger['y'] < this.busPos['y']) {
 
-        topPoint['y'] = this.finger['y'] - 150;
+      //   topPoint['y'] = this.finger['y'] - 150;
 
-      } else {
+      // } else {
 
-        topPoint['y'] = this.busPos['y'] - 150;
+      //   topPoint['y'] = this.busPos['y'] - 150;
 
-      }
+      // }
 
-      topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
+      // topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
 
-      if (this.finger['x'] > this.busPos['x']) {
+      // if (this.finger['x'] > this.busPos['x']) {
 
-        topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
+      //   topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
 
-      } else {
+      // } else {
 
-        topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
+      //   topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
 
-      }
+      // }
 
-      this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
-      this.startAnimation();
+      // this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
+      // this.startAnimation();
 
     },
     reduceshopcart(e) {

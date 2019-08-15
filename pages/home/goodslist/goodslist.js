@@ -356,7 +356,6 @@ Page({
         app.globalData.ret = arr;
       })
       // my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret) => {
-      //   console.log(ret)
       //   app.globalData.ret_top = ret[0].scrollTop
       // })
       my.setStorageSync({
