@@ -88,6 +88,8 @@ Page({
         });
         shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
+        //存储app.golbalData
+        my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
         my.reLaunch({
           url: '/pages/home/goodslist/goodslist'
         })
@@ -174,6 +176,8 @@ Page({
       })
       app.globalData.type = 2;
       // this.getNearbyShop();
+      //存储app.golbalData
+      my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
       my.reLaunch({
         url: '/pages/home/goodslist/goodslist'
       })

@@ -57,10 +57,16 @@ Page({
     btnClick: true
   },
   onLoad() {
-
+    //重写app.globalData
+    //原因首页app页面会刷新两次
+    if(app.globalData && !app.globalData.address && my.getStorageSync({ key: 'appglobalData' }).data){
+        app.globalData = my.getStorageSync({ key: 'appglobalData' }).data;
+    }
+    if(my.getStorageSync({ key: 'appglobalData' }).data){
+         my.removeStorageSync({key: 'appglobalData'});
+    }
   },
   onShow() {
-    // console.log(1)
     // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
