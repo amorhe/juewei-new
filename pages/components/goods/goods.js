@@ -26,8 +26,8 @@ Component({
     priceAll: 0,   // 商品总价
     showBall: false,
     hide_good_box: true,
-    ballX: '50%',
-    ballY: '50%',
+    ballX: 0,
+    ballY: 0,
     shopcartAll: [],  //购物车数组
     shopcartNum: 0,   // 购物车显示总数
     activityText: '',   // 购物车活动提示内容
@@ -139,8 +139,8 @@ Component({
           showBall: true,
           animationX: that.flyX(0, 0, 0).export(),
           animationY: that.flyY(0, 0, 0).export(),
-          ballX: '50%',
-          ballY: '50%'
+          ballX: 0,
+          ballY: 0
         })
       })
     },
