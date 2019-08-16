@@ -17,11 +17,16 @@ Component({
     companyGoodsList: [],   //公司所有商品
     activityAllObj: [],
     windowHeight: '',
+    windowWidth: '',
     animation: null,
+    animationX: null,
+    animationY: null,
     goodsItem: {},   //选择规格一条商品
     shopcartList: {},
     priceAll: 0,   // 商品总价
-    hide_good_box: true,
+    showBall: false,
+    ballX: 0,
+    ballY: 0,
     shopcartAll: [],  //购物车数组
     shopcartNum: 0,   // 购物车显示总数
     activityText: '',   // 购物车活动提示内容
@@ -47,10 +52,7 @@ Component({
     repurse_price: 0,    // 购物车换购商品价格
   },
   onInit() {
-    this.busPos = {};
-    this.busPos['x'] = 10;
-    this.busPos['y'] = app.globalData.hh - 16;
-    // console.log('购物车坐标',this.busPos);
+
   },
   deriveDataFromProps(nextProps) {
     // console.log(nextProps)
@@ -96,6 +98,7 @@ Component({
     my.getSystemInfo({
       success: (res) => {
         this.setData({
+          windowWidth: res.windowWidth,
           windowHeight: res.windowHeight
         })
       }
@@ -106,31 +109,56 @@ Component({
   },
   didUnmount() { },
   methods: {
-    // 小红点动画
-    startAnimation() {
-      var index = 0,
-        that = this,
-        bezier_points = that.linePos['bezier_points'],
-        len = bezier_points.length - 1;
-      this.setData({
-        hide_good_box: false,
-        bus_x: that.finger['x'],
-        bus_y: that.finger['y']
+    setDelayTime(sec) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => { resolve() }, sec)
+      });
+    },
+    // 创建动画
+    createAnimation(ballX, ballY) {
+      let that = this,
+        bottomX = 10,
+        bottomY = 10,
+        animationX = that.flyX(bottomX, ballX),      // 创建小球水平动画
+        animationY = that.flyY(bottomY, ballY);			 // 创建小球垂直动画
+      that.setData({
+        showBall: true,
+        ballX,
+        ballY
       })
-      this.timer = setInterval(function() {
-        // console.log('q',index,bezier_points[index]['x'],bezier_points[index]['y'])
-        index++;
+      that.setDelayTime(100).then(() => {
+        // 100ms延时,  确保小球已经显示
         that.setData({
-          bus_x: bezier_points[index]['x'],
-          bus_y: bezier_points[index]['y']
+          animationX: animationX.export(),
+          animationY: animationY.export()
         })
-        if (index >= len) {
-          clearInterval(that.timer);
-          that.setData({
-            hide_good_box: true,
-          })
-        }
-      }, 30);
+        // 400ms延时, 即小球的抛物线时长
+        return that.setDelayTime(400);
+      }).then(() => {
+        that.setData({
+          showBall: false,
+          animationX: that.flyX(0, 0, 0).export(),
+          animationY: that.flyY(0, 0, 0).export()
+        })
+      })
+    },
+    // 水平动画
+    flyX(bottomX, ballX, duration) {
+      let animation = my.createAnimation({
+        duration: duration || 400,
+        timingFunction: 'linear',
+      })
+      animation.translateX(ballX - bottomX).step();
+      return animation;
+    },
+    // 垂直动画
+    flyY(bottomY, ballY, duration) {
+      let animation = my.createAnimation({
+        duration: duration || 400,
+        timeFunction: 'ease-in',
+      })
+      animation.translateY(ballY - bottomY).step();
+      return animation;
     },
     // 优惠券过期提醒
     getcouponsExpire(_sid) {
@@ -283,45 +311,11 @@ Component({
         key: 'goodsList', // 缓存数据的key
         data: goodlist, // 要缓存的数据
       });
-
+      // console.log(e)
       // 购物车小球动画
-      // 如果good_box正在运动
-
-      // if (!this.data.hide_good_box) return;
-
-      // this.finger = {};
-
-      // var topPoint = {};
-
-      // this.finger['x'] = e.detail.clientX;
-
-      // this.finger['y'] = e.detail.clientY;
-
-      // if (this.finger['y'] < this.busPos['y']) {
-
-      //   topPoint['y'] = this.finger['y'] - 150;
-
-      // } else {
-
-      //   topPoint['y'] = this.busPos['y'] - 150;
-
-      // }
-
-      // topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
-
-      // if (this.finger['x'] > this.busPos['x']) {
-
-      //   topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
-
-      // } else {
-
-      //   topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
-
-      // }
-
-      // this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
-      // this.startAnimation();
-
+      let ballX = e.detail.clientX,
+        ballY = e.detail.clientY;
+      this.createAnimation(ballX, ballY);
     },
     reduceshopcart(e) {
       let code = e.currentTarget.dataset.goods_code;

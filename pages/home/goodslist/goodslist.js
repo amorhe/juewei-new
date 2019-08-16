@@ -60,7 +60,7 @@ Page({
 
   },
   onShow() {
-    console.log(1)
+    // console.log(1)
     // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
@@ -261,7 +261,7 @@ Page({
             if (my.getStorageSync({ key: 'user_id' }).data) {
               user_id = my.getStorageSync({ key: 'user_id' }).data
             }
-            this.getActivityList(app.globalData.cityAdcode, app.globalData.districtAdcode, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id)     //营销活动
+            this.getActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id)     //营销活动
           })
 
         },
@@ -272,9 +272,9 @@ Page({
   // 门店营销活动(折扣和套餐)
   async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
     await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
-      console.log(res);
+      // console.log(res);
       let shopGoods = this.data.shopGoods;
-      console.log(shopGoods)
+      // console.log(shopGoods)
       // 获取加价购商品
       if (res.data.MARKUP != null) {
         app.globalData.gifts = res.data.MARKUP.gifts;

@@ -211,16 +211,23 @@ Page({
         }
       }
     }
-    if (Object.keys(obj2).length>0 && Object.keys(obj1).length==0) {
+    if (Object.keys(obj2).length > 0 && Object.keys(obj1).length == 0) {
       newShopcart = obj2;
-    } else if (Object.keys(obj1).length>0 && Object.keys(obj2).length==0) {
+    } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length == 0) {
       newShopcart = obj1;
-    }else{
-      for(let key in obj1){
-        if(obj2[key]){
+    } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length > 0) {
+      for (let key in obj1) {
+        if (obj2[key]) {
           newShopcart[key] = obj1[key];
         }
       }
+    } else {
+      my.removeStorageSync({
+        key: 'goodsList'
+      })
+      my.navigateBack({
+        delta: 1
+      });
     }
     for (let ott in newShopcart) {
       newGoodsArr.push(newShopcart[ott])
@@ -230,7 +237,7 @@ Page({
       data: newShopcart, // 要缓存的数据
     });
     this.setData({
-      goodsList:newGoodsArr
+      goodsList: newGoodsArr
     })
     // 重新选择商品
     if (data.isType == 'orderConfirm' && data.type == 1) {

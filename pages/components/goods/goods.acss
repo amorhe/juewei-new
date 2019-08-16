@@ -506,5 +506,5 @@
   height: 20rpx;
   background: #E60012;
   border-radius: 50%;
-  display: none
+  z-index: 999
 }
