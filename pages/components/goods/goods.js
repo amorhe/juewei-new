@@ -138,7 +138,9 @@ Component({
         that.setData({
           showBall: false,
           animationX: that.flyX(0, 0, 0).export(),
-          animationY: that.flyY(0, 0, 0).export()
+          animationY: that.flyY(0, 0, 0).export(),
+          ballX:0,
+          ballY:0
         })
       })
     },

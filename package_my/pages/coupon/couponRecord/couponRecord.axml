@@ -20,7 +20,7 @@
     </view>
 
     <view>
-      <view data-index="{{index}}" onTap="toggleRule" style="position:relative;z-index:1;display:flex;align-item:center">
+      <view data-index="{{index}}" onTap="toggleRule" style="position:relative;z-index:1;display:flex;align-item:center;padding-bottom:20rpx">
         <text class="fontTwentyTwo">更多使用规则</text>
         <image class="arrow_down_icon" src="{{imageUrl}}arrow_down1.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s"/>
       </view>
@@ -42,5 +42,4 @@
     <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
     <text class="colorNine">暂无历史优惠券</text>
   </view>
-  <!-- <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/> -->
 </view>

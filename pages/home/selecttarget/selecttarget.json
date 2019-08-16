@@ -1,5 +1,5 @@
 {
-    "defaultTitle": "绝味鸭脖",
+    "defaultTitle": "选择地址",
     "usingComponents":{
       "modal": "mini-antui/es/modal/index"
     }

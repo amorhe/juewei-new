@@ -1,5 +1,5 @@
-<image class="goodsImage" mode="scaleToFill" a:if="{{key!='套餐'}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
-<image class="goodsImage" mode="scaleToFill" a:if="{{key=='套餐'}}" src="{{imageUrl2 + goodsInfo.goods_img[0]}}"/>
+<image class="goodsImage" mode="scaleToFill" a:if="{{goodsInfo.goods_type!='PKG'}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
+<image class="goodsImage" mode="scaleToFill" a:if="{{goodsInfo.goods_type=='PKG'}}" src="{{imageUrl2 + goodsInfo.goods_img[0]}}"/>
 <view class="goodsWrap borderBottom">
   <view class="goodsTitle marginB">
     <view>

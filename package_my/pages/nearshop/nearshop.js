@@ -111,7 +111,7 @@ Page({
               }
             })
           // console.log(arr);
-          console.log(conf)
+          // console.log(conf)
           this.setData({
             markersArray: arr,
             shopList: conf

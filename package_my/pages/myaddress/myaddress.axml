@@ -19,10 +19,8 @@
     </view>
   </view>
 </view>
-
-<view class="bottomView" onTap="addressFn">
+<view class="bottomView" onTap="addressFn" a:if="{{list.length<=10}}">
   <image class='addIcon' src="{{imageUrl}}add.png"/>
   <text>新增收货地址</text>
 </view>
 <view style="height:60rpx"></view>
-
