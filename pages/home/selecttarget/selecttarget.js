@@ -25,12 +25,25 @@ Page({
     }
   },
   onShow() {
+    const _sid = my.getStorageSync({ key: '_sid' }).data;
+    //获取用户收货地址,一次性获取下来
+    if(_sid){
+        addressList(_sid, 'normal', location).then((res) => {
+          let arr1 = [];
+          if (res.data.length > 0) {
+            arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
+          }
+          this.setData({
+            canUseAddress: arr1
+          })
+        });
+    }
+
     if (app.globalData.address) {
-      const _sid = my.getStorageSync({ key: '_sid' }).data;
       const lng = my.getStorageSync({ key: 'lng' }).data;
       const lat = my.getStorageSync({ key: 'lat' }).data;
       const location = `${lng},${lat}`;
-      this.getAddressList(_sid, location, lat, lng);
+      this.getAddressList(location, lat, lng);
     }
   },
   // 切换城市
@@ -54,54 +67,47 @@ Page({
   // 输入地址搜索门店
   searchShop() {
     let that= this;
-    let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
-    url = encodeURI(url);
-    my.request({
-      url,
-      success: (res) => {
-          my.hideKeyboard();
-          const _sid = my.getStorageSync({ key: '_sid' }).data;
-          const lng = res.data.result.location.lng;
-          const lat = res.data.result.location.lat;
-          const location = `${lng},${lat}`;
-          that.getAddressList(_sid, location, lat, lng);
-      },
-    });
-  },
-  // 地址列表
-  getAddressList(_sid, location, lat, lng) {
-    addressList(_sid, 'normal', location).then((res) => {
-      let arr1 = [];
-      if (res.data.length > 0) {
-        arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
-      }
-      this.setData({
-        canUseAddress: arr1
-      })
-      // 百度附近POI
-      let str = `https://api.map.baidu.com/place/v2/search?query=房地产$金融$公司企业$政府机构$医疗$酒店$美食$生活服务$教育培训$交通设施&location=${lat},${lng}&radius=1000&output=json&page_size=50&page_num=0&ak=${ak}`;
-      str = encodeURI(str);
+    //附近地址列表
+    if(this.data.city+this.data.inputAddress!='' ){
+      let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
+      url = encodeURI(url);
       my.request({
-        url: str,
+        url,
         success: (res) => {
-          if (res.data.status == 0) {
-            console.log(res.data.results);
-            this.setData({
-              nearAddress: res.data.results
-            })
-          } else {
-            this.setData({
-              nearAddress: []
-            })
-          }
+            my.hideKeyboard();
+            const lng = res.data.result.location.lng;
+            const lat = res.data.result.location.lat;
+            const location = `${lng},${lat}`;
+            that.getAddressList(location, lat, lng);
         },
-        fail: (rej) => {
+      });
+    }
+  },
+  //附近地址列表
+  getAddressList(location, lat, lng) {
+    // 百度附近POI
+    let str = `https://api.map.baidu.com/place/v2/search?query=房地产$金融$公司企业$政府机构$医疗$酒店$美食$生活服务$教育培训$交通设施&location=${lat},${lng}&radius=1000&output=json&page_size=50&page_num=0&ak=${ak}`;
+    str = encodeURI(str);
+    my.request({
+      url: str,
+      success: (res) => {
+        if (res.data.status == 0) {
+          this.setData({
+            nearAddress: res.data.results
+          })
+        } else {
           this.setData({
             nearAddress: []
           })
         }
-      });
-    })
+      },
+      fail: (rej) => {
+        this.setData({
+          nearAddress: []
+        })
+      }
+    });
+
   },
   // 重新定位
   rePosition() {

@@ -174,7 +174,7 @@ Page({
       })
       app.globalData.type = 2;
       // this.getNearbyShop();
-      my.redirectTo({
+      my.reLaunch({
         url: '/pages/home/goodslist/goodslist'
       })
     } else {

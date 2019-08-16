@@ -11,7 +11,7 @@
         <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
         <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
       </view>
-      <image class="guoqi" src="{{imageUrl}}overdue.png"  />
+      <image class="guoqi" src="{{imageUrl + (item.use_order_id != 0 ? 'used' : 'overdue')}}.png"  />
     </view>
     <view>
       <view class="whiteCircleLeft"></view>

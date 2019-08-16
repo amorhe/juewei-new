@@ -67,17 +67,20 @@ Page({
     let { order_no } = e
     this.setData({
       order_no
-    }, async () => await this.getOrderDetail())
+    })
   },
 
+  async onShow() {
+    await this.getOrderDetail()
+  },
   onUnload() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
     this.setData = () => { }
   },
   onHide() {
-    // clearInterval(this.data.time)
-    // this.setData({ time: -1 })
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
   },
 
   contact,
@@ -151,15 +154,22 @@ Page({
           { state: '店pos取消', timeArr: [1, 2, 7] },
         ]
 
+
+
         let curState = res.data.order_status_info.order_status
         let curTimeArr = orderStatus[curState].timeArr;
+        log(curState, curTimeArr)
         // 自配送 没有骑手已接单
-        dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 4), 1));
+        if (curState < 5 && curState > 2) {
+          dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 4), 1));
+
+        }
+
         ; (curState == 2 && order_status_info.dis_status == 2 && dis_tag != 'ZPS' && dis_get_time) ? curTimeArr.push(4) : curTimeArr
         curState === 3 && dis_take_time != '0000-00-00 00:00:00' ? curTimeArr.push(5) : curTimeArr
         curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
-        // log(curOrderState)
+        log(curState, curTimeArr, curOrderState)
       }
 
       if (dis_type == 2) {

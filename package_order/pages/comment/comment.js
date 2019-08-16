@@ -217,7 +217,6 @@ Page({
       sourceType: ['camera', 'album'],
       count: 1,
       success: (res) => {
-        log(res)
         my.showLoading({
           content: '图片上传中...',
         });
@@ -226,14 +225,12 @@ Page({
           fileType: 'image',
           fileName: 'imgFile',
           filePath: res.apFilePaths[0],
-          // dataType: 'json',
-
           success: (result) => {
             my.hideLoading()
             let { d } = this.data
             let { goods_list } = d
             let { pics } = goods_list[i].goods_comment
-            log(result.data)
+            
             let r = JSON.parse(result.data)
             if (r.code != 0) {
               return my.showToast({ content: r.msg })
@@ -248,7 +245,6 @@ Page({
             })
           },
           fail: (error) => {
-            log(error)
             my.hideLoading()
             my.showToast({
               content: '图片上传失败',

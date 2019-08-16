@@ -47,7 +47,7 @@
           导航
       </view>
     </view>
-    <view class="buttons" a:if="{{d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0}}">
+    <view class="buttons" a:if="{{d.order_status_info.order_status == 0 && d.remaining_pay_minute > -1}}">
       <view class="cancel" catchTap="showCancel">取消订单</view>
       <view class="pay" catchTap="payNow" data-order_no="{{d.order_no}}" style="color:{{d.channel != 1 ?'#ccc':''}};border-color:{{d.channel != 1 ?'#ccc':''}}">立即支付</view>
     </view>
