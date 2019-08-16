@@ -33,7 +33,7 @@
       <view class="fontGray">{{item.user_address_name}}（{{item.user_address_sex==0?'先生':'女士'}}） {{item.user_address_phone}}</view>
     </view>
   </view>
-  <view onTap="addAddressTap" class="addAddressTxt">
+  <view onTap="addAddressTap" class="addAddressTxt" a:if="{{canUseAddress.length<=10}}">
     <text>新增地址</text>
     <image class="normalImage" src="{{imageUrl}}arrow_right1.png"/>
   </view>

@@ -45,19 +45,20 @@ Page({
     repurse_price: 0
   },
   onLoad(e) {
-    let goods = my.getStorageSync({
-      key: 'shopGoods'
-    }).data;
-    let goodlist = my.getStorageSync({ key: 'goodsList' }).data;
+    // console.log(app.globalData.goodsArr)
+    let goods = app.globalData.goodsArr
+    let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
     let goodsInfo = {}, priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let value of goods) {
       if (value.goods_code == e.goods_code) {
-        goodsInfo = value
+        goodsInfo = value;
+        goodsInfo['key'] = e.goodsKey
       }
     }
+    console.log(goodsInfo)
     for (let keys in goodlist) {
-      if (goodlist[keys].goods_discount_user_limit != null && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+      if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -84,7 +85,7 @@ Page({
     })
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     // 购物车活动提示
-    this.shopcartPrompt(app.globalData.fullActivity, priceFree,repurse_price)
+    this.shopcartPrompt(app.globalData.fullActivity, priceFree, repurse_price)
     // 评论
     this.getCommentList(goodsInfo.goods_code, this.data.pagenum, this.data.pagesize);
     this.getDispatchCommentList(shop_id, this.data.pagenum, this.data.pagesize)
@@ -116,11 +117,11 @@ Page({
       priceFree,
       repurse_price
     })
-    this.shopcartPrompt(app.globalData.fullActivity, priceAll, priceFree,repurse_price);
+    this.shopcartPrompt(app.globalData.fullActivity, priceAll, priceFree, repurse_price);
   },
   // 购物车
-  onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price) {
-    this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price)
+  onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
+    this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
   },
   addshopcart(e) {
     let goods_car = {};
@@ -132,7 +133,7 @@ Page({
       goodlist[`${goods_code}_${goods_format}`].sumnum += 1;
     } else {
       let oneGood = {};
-      if (e.currentTarget.dataset.key == "折扣") {
+      if (e.currentTarget.dataset.goods_discount) {
         oneGood = {
           "goods_name": e.currentTarget.dataset.goods_name,
           "taste_name": e.currentTarget.dataset.taste_name,
@@ -144,6 +145,7 @@ Page({
           "goods_discount": e.currentTarget.dataset.goods_discount,
           "goods_original_price": e.currentTarget.dataset.goods_original_price,
           "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
+          "goods_order_limit": e.currentTarget.dataset.goods_order_limit,
           "goods_format": goods_format,
           "goods_img": e.currentTarget.dataset.goods_img,
           "sap_code": e.currentTarget.dataset.sap_code
@@ -164,10 +166,13 @@ Page({
       }
       goodlist[`${goods_code}_${goods_format}`] = oneGood;
     }
-    let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
+    let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let keys in goodlist) {
-      if (e.currentTarget.dataset.goods_discount && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+      if (e.currentTarget.dataset.goods_discount && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
+        my.showToast({
+          content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
+        });
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -183,8 +188,8 @@ Page({
       shopcartNum += goodlist[keys].num;
     }
     // 购物车活动提示
-    this.shopcartPrompt(app.globalData.fullActivity, priceAll, priceFree,repurse_price);
-    this.onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price)
+    this.shopcartPrompt(app.globalData.fullActivity, priceAll, priceFree, repurse_price);
+    this.onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
     this.setData({
       shopcartList: goodlist,
       shopcartAll,
@@ -239,16 +244,16 @@ Page({
     let code = e.currentTarget.dataset.goods_code;
     let format = e.currentTarget.dataset.goods_format;
     let goodlist = my.getStorageSync({ key: 'goodsList' }).data;
-    let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
+    let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
     goodlist[`${code}_${format}`].num -= 1;
     goodlist[`${code}_${format}`].sumnum -= 1;
     for (let keys in goodlist) {
-      if (goodlist[keys].goods_discount_user_limit && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+      if (goodlist[keys].goods_order_limit && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
-       // 计算包邮商品价格
+      // 计算包邮商品价格
       if (!goodlist[keys].goods_discount) {
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -265,8 +270,8 @@ Page({
       delete (goodlist[`${code}_${format}`]);
     }
     // 购物车活动提示
-    this.shopcartPrompt(app.globalData.fullActivity, priceFree,repurse_price);
-    this.onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price)
+    this.shopcartPrompt(app.globalData.fullActivity, priceFree, repurse_price);
+    this.onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
     this.setData({
       shopcartList: goodlist,
       shopcartAll,
@@ -279,7 +284,7 @@ Page({
     });
   },
   // 购物车活动提示
-  shopcartPrompt(oldArr, priceFree,repurse_price) {
+  shopcartPrompt(oldArr, priceFree, repurse_price) {
     let activityText = '', freeText = '';
     for (let v of oldArr) {
       if (oldArr.findIndex(v => v > repurse_price) != -1) {

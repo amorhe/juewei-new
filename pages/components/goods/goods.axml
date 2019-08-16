@@ -85,12 +85,7 @@
                 <image a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="reduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}"/>
                 <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].num}}</text>
                 <!-- 加 -->
-                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}" data-goods_activity_code="{{v.goods_format[0].goods_activity_code}}" data-goods_discount="{{v.goods_format[0].goods_discount}}" data-goods_original_price="{{v.goods_format[0].goods_original_price}}" data-goods_discount_user_limit="{{v.goods_format[0].goods_discount_user_limit}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}  " data-huangou="{{v.huangou}}"/>
-                <!-- 小红点 -->
-                <view animation="{{animationY}}" style="position:fixed;top:{{ballY}}px;z-index:100" hidden="{{!showBall}}">
-                  <view class="ball" animation="{{animationX}}" style="position:fixed;left:{{ballX}}px;"></view>
-                </view>
-                <!-- <view class="ball" style="position:fixed;left:{{ballX}}px;top:{{ballY}}px;" animation="{{animation}}"></view> -->
+                <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}" data-goods_activity_code="{{v.goods_format[0].goods_activity_code}}" data-goods_discount="{{v.goods_format[0].goods_discount}}" data-goods_original_price="{{v.goods_format[0].goods_original_price}}" data-goods_discount_user_limit="{{v.goods_format[0].goods_discount_user_limit}}" data-goods_order_limit="{{v.goods_format[0].goods_order_limit}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}  " data-huangou="{{v.huangou}}" data-goods_unit="{{v.goods_unit}}"/>
               </view>
               <view class="goodsSize" data-item="{{item}}" data-key="{{item.key}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
@@ -136,11 +131,6 @@
                 <text a:if="{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${v.goods_channel}${v.goods_type}${v.company_goods_id}_${v.goods_format[0].type}`].num}}</text>
                 <!-- 加 -->
                 <image src="{{imageUrl}}goods_add.png" catchTap="addshopcart" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}" data-huangou="{{v.huangou}}"/>
-                <!-- 小红点 -->
-                <view animation="{{animationY}}" style="position:fixed;top:{{ballY}}px;" hidden="{{!showBall}}">
-                  <view class="ball" animation="{{animationX}}" style="position:fixed;left:{{ballX}}px;"></view>
-                </view>
-                 <!-- <view class="ball" style="position:fixed;left:{{ballX}}px;top:{{ballY}}px;" animation="{{animation}}"></view> -->
               </view>
               <view class="goodsSize" data-item="{{item}}" data-key="{{item.key}}" data-type="{{index}}" data-index="{{i}}" catchTap="chooseSizeTap" a:if="{{v.goods_format.length>1}}">
                 <view>选规格</view>
@@ -152,6 +142,10 @@
       </view>
     </view>
   </scroll-view>
+</view>
+<!-- 小红点 -->
+<view animation="{{animationY}}" style="position:fixed;top:{{ballY}}px;" hidden="{{!showBall}}">
+  <view class="ball" animation="{{animationX}}" style="position:fixed;left:{{ballX}}px;"></view>
 </view>
 <!-- 购物车 -->
 <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" activityText="{{activityText}}" freeText="{{freeText}}" onChangeShopcart="onchangeShopcart"/>

@@ -25,6 +25,7 @@ Component({
     shopcartList: {},
     priceAll: 0,   // 商品总价
     showBall: false,
+    hide_good_box: true,
     ballX: 0,
     ballY: 0,
     shopcartAll: [],  //购物车数组
@@ -55,14 +56,13 @@ Component({
 
   },
   deriveDataFromProps(nextProps) {
-    // console.log(nextProps)
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
     let priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let keys in goodlist) {
-      if (goodlist[keys].goods_discount_user_limit != null && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+      if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -139,8 +139,8 @@ Component({
           showBall: false,
           animationX: that.flyX(0, 0, 0).export(),
           animationY: that.flyY(0, 0, 0).export(),
-          ballX:0,
-          ballY:0
+          ballX: 0,
+          ballY: 0
         })
       })
     },
@@ -148,9 +148,9 @@ Component({
     flyX(bottomX, ballX, duration) {
       let animation = my.createAnimation({
         duration: duration || 400,
-        timingFunction: 'linear',
+        timeFunction: 'linear',
       })
-      animation.translateX(ballX - bottomX).step();
+      animation.translateX(bottomX - ballX).step();
       return animation;
     },
     // 垂直动画
@@ -248,7 +248,7 @@ Component({
         goodlist[`${goods_code}_${goods_format}`].sumnum += 1;
       } else {
         let oneGood = {};
-        if (e.currentTarget.dataset.key == "折扣") {
+        if (e.currentTarget.dataset.goods_discount) {
           oneGood = {
             "goods_name": e.currentTarget.dataset.goods_name,
             "taste_name": e.currentTarget.dataset.taste_name,
@@ -260,6 +260,7 @@ Component({
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
             "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
+            "goods_order_limit":e.currentTarget.dataset.goods_order_limit,
             "goods_format": goods_format,
             "goods_img": e.currentTarget.dataset.goods_img,
             "sap_code": e.currentTarget.dataset.sap_code
@@ -281,12 +282,13 @@ Component({
         goodlist[`${goods_code}_${goods_format}`] = oneGood;
       }
       let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
+      // console.log(e)
       for (let keys in goodlist) {
-        if (e.currentTarget.dataset.goods_discount && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
+        if (e.currentTarget.dataset.goods_discount && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
           my.showToast({
-            content: `折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
+            content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
           });
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }
@@ -327,8 +329,8 @@ Component({
       goodlist[`${code}_${format}`].num -= 1;
       goodlist[`${code}_${format}`].sumnum -= 1;
       for (let keys in goodlist) {
-        if (goodlist[keys].goods_discount_user_limit && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+        if (goodlist[keys].goods_order_limit && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }

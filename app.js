@@ -45,7 +45,7 @@ App({
   },
   onShow(options) {//多次执行
     //判断外部链接是否有参数值
-    if(options.page && options.query){
+    if (options.page && options.query) {
       //通过这个参数可以跳转到响应的连接中，注意这些链接需要
     }
 
@@ -62,6 +62,7 @@ App({
     // 小程序执行出错时
     console.log(error);
   },
+  
   globalData: {
     location: { //获取地区
       longitude: null,

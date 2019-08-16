@@ -47,8 +47,8 @@ Component({
         goods_activity_code: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_activity_code,
         goods_discount: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_discount,
         goods_original_price: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_original_price,
-        goods_discount_user_limit: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_original_price,
-        // goods_format_all:this.props.goodsItem.goods_format
+        goods_discount_user_limit: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_discount_user_limit,
+        goods_order_limit: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_order_limit
       })
     },
     closeModal(data) {
@@ -62,8 +62,8 @@ Component({
         size: 999
       })
     },
-    onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price) {
-      this.props.onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price);
+    onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
+      this.props.onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price);
     },
     addshopcart(e) {
       // console.log(e)
@@ -92,7 +92,7 @@ Component({
         goodlist[`${goods_code}_${goods_format}`].num++;
       } else {
         let oneGood = {};
-        if (e.currentTarget.dataset.key == "折扣") {
+        if (e.currentTarget.dataset.goods_discount) {
           oneGood = {
             "goods_name": e.currentTarget.dataset.goods_name,
             "taste_name": e.currentTarget.dataset.taste_name,
@@ -104,6 +104,7 @@ Component({
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
             "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
+            "goods_order_limit": e.currentTarget.dataset.goods_order_limit,
             "goods_format": goods_format,
             "goods_img": e.currentTarget.dataset.goods_img,
             "sap_code": e.currentTarget.dataset.sap_code
@@ -126,11 +127,11 @@ Component({
       }
       let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       for (let keys in goodlist) {
-        if (e.currentTarget.dataset.goods_discount && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
+        if (e.currentTarget.dataset.goods_discount && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
           my.showToast({
-            content: `折扣商品限购${goodlist[keys].goods_discount_user_limit}份，超过${goodlist[keys].goods_discount_user_limit}份恢复原价`
+            content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
           });
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }
@@ -171,14 +172,14 @@ Component({
         }
       }
       goodlist[`${code}_${format}`].num -= 1;
-      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0,repurse_price=0;
+      let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       for (let keys in goodlist) {
-        if (goodlist[keys].goods_discount_user_limit != null && goodlist[keys].num > goodlist[keys].goods_discount_user_limit) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_discount_user_limit + (goodlist[keys].num - goodlist[keys].goods_discount_user_limit) * goodlist[keys].goods_original_price;
+        if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }
-         // 计算包邮商品价格
+        // 计算包邮商品价格
         if (!goodlist[keys].goods_discount) {
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
@@ -198,7 +199,7 @@ Component({
           shopcartAll.push(goodlist[keys])
         }
       }
-      this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price)
+      this.onCart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
       this.setData({
         goodsList: goodlist,
         shopcartAll
