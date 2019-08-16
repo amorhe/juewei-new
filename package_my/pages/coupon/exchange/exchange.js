@@ -13,14 +13,20 @@ Page({
   },
   exchangeBtn(){
     const _sid = my.getStorageSync({key: '_sid'}).data;
-    exchangeCoupon(_sid, this.data.code).then((res) => {
-      if(res.CODE == A100) {
+    const {code} = this.data
+    if(!code){
+      return my.showToast({
+        content:'请输入兑换码'
+      });
+    }
+    exchangeCoupon(_sid, code).then((res) => {
+      if(res.CODE == 'A100') {
         my.showToast({
           content:'兑换成功'
         });
       }else{
         my.showToast({
-          content:'兑换码输入错误'
+          content:res.MESSAGE
         });
       }
     })
