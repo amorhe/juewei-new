@@ -348,7 +348,7 @@ Page({
       let goodsNew = this.data.shopGoodsList.filter(item => item.last.length > 0);
       goodsNew = new Set(goodsNew)
       goodsNew = [...goodsNew];
-      app.globalData.goodsArr = goodsArr;
+      app.globalData.goodsArr = goodsArr;  // 详情页，确认订单页使用
       // console.log(goodsNew)
       // 最终商品总数据
       this.setData({

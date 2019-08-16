@@ -17,7 +17,7 @@
     <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
     <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
   </view>
-  <view class="homeSwiper">
+  <view class="homeSwiper" a:if="{{imgUrls.length>0}}">
     <swiper indicator-dots="{{imgUrls.length>1?true:false}}" autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
       <block a:for="{{imgUrls}}">
         <swiper-item>

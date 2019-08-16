@@ -45,7 +45,6 @@ Page({
     repurse_price: 0
   },
   onLoad(e) {
-    // console.log(app.globalData.goodsArr)
     let goods = app.globalData.goodsArr
     let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
     let goodsInfo = {}, priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
@@ -55,7 +54,6 @@ Page({
         goodsInfo['key'] = e.goodsKey
       }
     }
-    console.log(goodsInfo)
     for (let keys in goodlist) {
       if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;

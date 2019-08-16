@@ -144,8 +144,8 @@
   </scroll-view>
 </view>
 <!-- 小红点 -->
-<view animation="{{animationY}}" style="position:fixed;top:{{ballY}}px;" hidden="{{!showBall}}">
-  <view class="ball" animation="{{animationX}}" style="position:fixed;left:{{ballX}}px;"></view>
+<view animation="{{animationY}}" style="position:fixed;top:{{ballY}};" hidden="{{!showBall}}">
+  <view class="ball" animation="{{animationX}}" style="position:fixed;left:{{ballX}};"></view>
 </view>
 <!-- 购物车 -->
 <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" activityText="{{activityText}}" freeText="{{freeText}}" onChangeShopcart="onchangeShopcart"/>

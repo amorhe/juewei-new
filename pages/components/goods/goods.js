@@ -26,8 +26,8 @@ Component({
     priceAll: 0,   // 商品总价
     showBall: false,
     hide_good_box: true,
-    ballX: 0,
-    ballY: 0,
+    ballX: '50%',
+    ballY: '50%',
     shopcartAll: [],  //购物车数组
     shopcartNum: 0,   // 购物车显示总数
     activityText: '',   // 购物车活动提示内容
@@ -117,8 +117,8 @@ Component({
     // 创建动画
     createAnimation(ballX, ballY) {
       let that = this,
-        bottomX = 10,
-        bottomY = 10,
+        bottomX = 30,
+        bottomY = 30,
         animationX = that.flyX(bottomX, ballX),      // 创建小球水平动画
         animationY = that.flyY(bottomY, ballY);			 // 创建小球垂直动画
       that.setData({
@@ -133,14 +133,14 @@ Component({
           animationY: animationY.export()
         })
         // 400ms延时, 即小球的抛物线时长
-        return that.setDelayTime(400);
+        return that.setDelayTime(800);
       }).then(() => {
         that.setData({
-          showBall: false,
+          showBall: true,
           animationX: that.flyX(0, 0, 0).export(),
           animationY: that.flyY(0, 0, 0).export(),
-          ballX: 0,
-          ballY: 0
+          ballX: '50%',
+          ballY: '50%'
         })
       })
     },
@@ -159,7 +159,7 @@ Component({
         duration: duration || 400,
         timeFunction: 'ease-in',
       })
-      animation.translateY(ballY - bottomY).step();
+      animation.translateY(ballY - bottomX).step();
       return animation;
     },
     // 优惠券过期提醒
@@ -260,7 +260,7 @@ Component({
             "goods_discount": e.currentTarget.dataset.goods_discount,
             "goods_original_price": e.currentTarget.dataset.goods_original_price,
             "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
-            "goods_order_limit":e.currentTarget.dataset.goods_order_limit,
+            "goods_order_limit": e.currentTarget.dataset.goods_order_limit,
             "goods_format": goods_format,
             "goods_img": e.currentTarget.dataset.goods_img,
             "sap_code": e.currentTarget.dataset.sap_code
