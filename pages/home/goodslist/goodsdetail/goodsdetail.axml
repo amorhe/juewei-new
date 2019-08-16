@@ -59,14 +59,14 @@
     </view>
   </view>
   <view a:if="{{tabActive==0}}">
-    <view class="goodsintro" a:if="{{commentArr.statistics}}">
+    <view class="goodsintro">
       <!-- 好评率 -->
       <view class="percentView">
         <view a:if="{{commentArr.statistics}}" style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{((commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100).toFixed(2)}}%</view>
-        <!-- <view a:if="{{!commentArr.statistics}}">好评率0%</view> -->
+        <view style="background:transparent;width:100%;color:#fff" a:if="{{!commentArr.statistics}}">好评率0%</view>
       </view>
     </view>
-    <view class="tagView">
+    <view class="tagView" a:if="{{commentArr.show_tags.length>0}}">
       <!-- 选中class为 tagActive -->
       <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
@@ -106,16 +106,16 @@
     </view>
   </view>
   <view a:if="{{tabActive==1}}">
-    <view class="goodsintro"  a:if="{{dispatchArr.statistics}}">
+    <view class="goodsintro" >
       <!-- 好评率 -->
       <view class="percentView">
         <view a:if="{{dispatchArr.statistics}}" style="width:{{686 * (dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0)}}rpx">好评率{{((dispatchArr.statistics.good-0) / (dispatchArr.statistics.all-0) * 100).toFixed(2)}}%</view>
-        <!-- <view a:if="{{!dispatchArr.statistics}}">好评率0%</view> -->
+        <view style="background:transparent;width:100%;color:#fff" a:if="{{!dispatchArr.statistics}}">好评率0%</view>
       </view>
     </view>
     <view class="tagView">
       <!-- 选中class为 tagActive -->
-      <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
+      <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}" a:if="{{dispatchArr.show_tags.length>0}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
     <!-- 评论列表 -->
     <view a:if="{{dispatchArr.data.length> 0}}" class="commontList">

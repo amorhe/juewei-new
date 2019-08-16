@@ -19,7 +19,7 @@
     </view>
   </view>
 </view>
-<view class="bottomView" onTap="addressFn" a:if="{{list.length<=10}}">
+<view class="bottomView" onTap="addressFn">
   <image class='addIcon' src="{{imageUrl}}add.png"/>
   <text>新增收货地址</text>
 </view>
