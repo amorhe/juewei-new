@@ -160,7 +160,7 @@ Page({
         let curTimeArr = orderStatus[curState].timeArr;
         log(curState, curTimeArr)
         // 自配送 没有骑手已接单
-        if (curState < 5) {
+        if (curState < 5 && curState > 2) {
           dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 4), 1));
 
         }
