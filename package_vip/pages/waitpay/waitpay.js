@@ -1,6 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
 import { log, ajax, getRegion, getAddressId } from '../../../pages/common/js/li-ajax'
-import { reqOrderInfo, reqConfirmOrder,reqPay } from '../../../pages/common/js/vip'
+import { reqOrderInfo, reqConfirmOrder, reqPay } from '../../../pages/common/js/vip'
 import getDistance from '../../../pages/common/js/getdistance'
 
 let region = []
@@ -70,7 +70,10 @@ Page({
     })
     region = await getRegion()
     this.getAddressList()
-    await this.getOrderInfo({ order_sn })
+  },
+
+  async onShow(){
+     await this.getOrderInfo({ order_sn })
   },
 
   onUnload() {
@@ -102,11 +105,14 @@ Page({
     let { showSelectAddress, a } = this.data;
     let { code, data: { order_sn: _order_sn, limit_pay_minute, limit_pay_second, ...rest } } = await reqOrderInfo(order_sn)
     if (code === 100) {
+      this.setData({
+        d: { _order_sn, limit_pay_minute, limit_pay_second, ...rest }
+      })
       a = setInterval(() => {
         --limit_pay_second
         if (limit_pay_minute === 0 && limit_pay_second == 0) {
           return my.navigateBack({
-             delta: 1
+            delta: 1
           });
         }
         if (limit_pay_second <= 0) {
@@ -116,7 +122,8 @@ Page({
 
         this.setData({
           a,
-          d: { _order_sn, limit_pay_minute, limit_pay_second, ...rest }
+          'd.limit_pay_minute': limit_pay_minute,
+          'd.limit_pay_second': limit_pay_second
         })
       }, 1000)
     }
@@ -382,7 +389,7 @@ Page({
               url: '../finish/finish?id=' + d.id + '&fail=' + false
             });
           }
-           return my.redirectTo({
+          return my.redirectTo({
             url: '../finish/finish?id=' + d.id + '&fail=' + true
           });
 

@@ -67,17 +67,20 @@ Page({
     let { order_no } = e
     this.setData({
       order_no
-    }, async () => await this.getOrderDetail())
+    })
   },
 
+  async onShow() {
+    await this.getOrderDetail()
+  },
   onUnload() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
     this.setData = () => { }
   },
   onHide() {
-    // clearInterval(this.data.time)
-    // this.setData({ time: -1 })
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
   },
 
   contact,
