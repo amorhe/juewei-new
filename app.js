@@ -3,7 +3,6 @@ import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
     // 第一次打开
- 
     var that = this;
     //贝塞尔曲线
     this.screenSize();
@@ -49,6 +48,12 @@ App({
     });
   },
   onShow(options) {//多次执行
+    //判断外部链接是否有参数值
+    if(options.page && options.query){
+      //通过这个参数可以跳转到响应的连接中，注意这些链接需要
+    }
+
+
     // my.clearStorageSync();
     // 从后台被 scheme 重新打开
     // console.log(options.query);
