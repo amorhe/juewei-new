@@ -73,6 +73,7 @@ Page({
   },
 
   async onShow(){
+    const{order_sn} = this.data
      await this.getOrderInfo({ order_sn })
   },
 
@@ -84,8 +85,8 @@ Page({
   },
 
   onHide() {
-    // clearInterval(this.data.a)
-    // this.setData({ a: -1 })
+    clearInterval(this.data.a)
+    this.setData({ a: -1 })
   },
 
   /**
