@@ -349,17 +349,20 @@ Page({
               url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
             });
           }
+           return my.redirectTo({
+            url: '/pages/home/orderError/orderError?order_no=' + order_no
+          });
         },
         fail: res => {
           return my.redirectTo({
-            url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
+            url: '/pages/home/orderError/orderError?order_no=' + order_no
           });
         }
       });
 
     } else {
       return my.redirectTo({
-        url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
+        url: '/pages/home/orderError/orderError?order_no=' + order_no
       });
     }
   },
