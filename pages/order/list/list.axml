@@ -41,9 +41,7 @@
          <view class="cancel-order" a:if="{{[2,3].includes(item.order_status) && [2,4].includes(item.dis_status)  && item.dis_tag != 'ZPS' && item.dis_get_time}}"  data-dis_tel="{{item.dis_tel}}" catchTap="makePhoneCall">
           联系骑手
         </view>
-        <view class="cancel-order" a:if="{{[1,2,3].includes(item.order_status)}}" catchTap="contact">
-          联系客服
-        </view>
+       
          <view class="cancel-order" a:if="{{[3].includes(item.order_status) && item.dis_tag == 'ZPS'}}" data-dis_tel="{{item.shop_tel}}"  catchTap="makePhoneCall">
           联系门店
         </view>
@@ -56,7 +54,7 @@
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
-        <view class="cancel-order" a:if="{{[4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[1,2,3,4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
       </view>
@@ -104,7 +102,7 @@
         <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="buyAgain">
           再来一单
         </view>
-        <view class="cancel-order" a:if="{{[2,3,4,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
+        <view class="cancel-order" a:if="{{[2,3,4,5,6,7,8,9,10].includes(item.order_status)}}" catchTap="contact">
           联系客服
         </view>
         <view class="cancel-order" a:if="{{[2,3].includes(item.order_status)}}" data-shop_longitude="{{item.shop_gd_longitude }}" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_name="{{item.shop_name}}" data-address="{{item.address}}" catchTap="guide">
