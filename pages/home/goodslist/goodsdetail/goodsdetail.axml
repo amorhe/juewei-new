@@ -102,7 +102,7 @@
     </view>
     <view class="nullBox" style="margin-top:100rpx;height:635rpx" a:if="{{commentArr.data.length== 0}}">
       <image class='nullImg' src="{{ imageUrl }}bg_nocomment.png"/>
-      <text>暂无评论</text>
+      <text>暂无商品口味评价</text>
     </view>
   </view>
   <view a:if="{{tabActive==1}}">
@@ -149,7 +149,7 @@
     </view>
     <view class="nullBox" style="margin-top:100rpx;height:635rpx" a:if="{{dispatchArr.data.length== 0}}">
       <image class='nullImg' src="{{ imageUrl }}bg_nocomment.png"/>
-      <text>暂无评论</text>
+      <text>暂无配送服务评价</text>
     </view>
   </view>
 </view>
