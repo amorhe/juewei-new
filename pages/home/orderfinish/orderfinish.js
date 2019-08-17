@@ -44,7 +44,7 @@ Page({
     if (new_user == 1) { return }
     let res = await ajax('/juewei-api/order/detail', { order_no })
     if (res.code == 0) {
-      console.log(res)
+      // console.log(res)
       // 说明是新用户
       if (res.data.new_user == 1) {
         my.setStorage({

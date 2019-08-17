@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
-import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay } from '../../common/js/home'
+import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay,useraddress } from '../../common/js/home'
 import { upformId } from '../../common/js/time'
 var app = getApp();
 Page({
@@ -42,6 +42,10 @@ Page({
     newArr: [],    // 变更商品列表
   },
   onLoad(e) {
+    // 外卖默认地址
+    if(app.globalData.type==1){
+      this.getDefault();
+    }
     let goodsList = app.globalData.goodsBuy;
     for (let item of goodsList) {
       item['goods_quantity'] = item['num'];
@@ -58,8 +62,8 @@ Page({
     const latitude = my.getStorageSync({ key: 'lat', }).data;
     let arr = [
       {
-        longitude: self.location[0],
-        latitude: self.location[1],
+        longitude,
+        latitude,
         iconPath: `${imageUrl}position_map1.png`,
         width: 20,
         height: 20,
@@ -83,8 +87,8 @@ Page({
     ]
     this.setData({
       shopObj: self,
-      longitude,
-      latitude,
+      longitude:self.location[0],
+      latitude:self.location[1],
       markersArray: arr,
       goodsList,
       orderType: app.globalData.type,
@@ -138,6 +142,7 @@ Page({
         gift
       })
     }
+    
     this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(this.data.goodsList));
   },
   // 换购显示
@@ -377,10 +382,24 @@ Page({
   // 选择地址
   getAddress(address_id) {
     useraddressInfo(address_id).then((res) => {
-      // console.log(res)
       this.setData({
         address: true,
         addressInfo: res.data
+      })
+    })
+  },
+  // 获取默认地址
+  getDefault() {
+    useraddress(my.getStorageSync({ key: 'shop_id' }).data).then((res) => {
+      let addressList = [];
+      for (let value of res.data) {
+        if (value.is_dis == 1) {
+          addressList.push(value)
+        }
+      }
+      this.setData({
+        address: true,
+        addressInfo:addressList[0]
       })
     })
   },

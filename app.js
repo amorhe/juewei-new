@@ -45,8 +45,6 @@ App({
   },
   onShow(options) {//多次执行
     //判断外部链接是否有参数值
-    // options.page = '/package_my/pages/nearshop/nearshop';
-    // options.query = ``;
     if (options.page) {
       //通过这个参数可以跳转到响应的连接中，注意这些链接需要
       switch (options.page) {

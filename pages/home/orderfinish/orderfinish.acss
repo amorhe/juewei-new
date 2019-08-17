@@ -161,7 +161,9 @@
 .confirmBtn {
   width: 100%;
   color: #E60012;
-  background: #FFE100
+  background: #FFE100;
+  outline: none;
+  border: none
 }
 .colorY {
   color: #FFE100
