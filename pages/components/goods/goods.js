@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2,imageUrl3, ak } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
 import { datedifference, sortNum, getNowDate } from '../../common/js/time'
 var app = getApp();
@@ -8,6 +8,7 @@ Component({
   data: {
     imageUrl,
     imageUrl2,
+    imageUrl3,
     goodsType: 0, //系列
     maskView: false,
     goodsModal: false,

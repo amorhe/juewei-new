@@ -54,7 +54,7 @@
           <view class="discountImg">
             <image a:if="{{item.key=='折扣'}}" class="discountPng" src="{{imageUrl}}discount_img.png" />
             <image a:if="{{item.huangou==1}}" class="discountPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png"/>
-            <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{imageUrl2 + v.goods_img[0]}}"/>
+            <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{imageUrl3 + v.goods_img[0]}}"/>
             <image a:if="{{item.key!='套餐'}}" class="goodsImage1" src="{{v.goods_img[0]}}"/>
           </view>
           <view class="goodsWrap">

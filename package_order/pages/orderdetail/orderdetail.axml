@@ -79,7 +79,7 @@
     <view class="good-list">
       <view class="good-item" a:for="{{d.goods_list}}">
         <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG'}}" src="{{item.goods_img ? item.goods_img : imageUrl + 'activity_default.png' }}"/>
-        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ imageUrl2 + item.goods_img }}"/>
+        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ imageUrl3 + item.goods_img }}"/>
         <view class="body">
           <view class="name">
             <view class="top">

@@ -8,6 +8,7 @@ export const baseUrl = 'https://test-wap.juewei.com/api';
 // 图片测试cdn
 export const imageUrl = 'https://test-wap.juewei.com/m/ali-mini/image/';
 export const imageUrl2 = 'https://imgcdnjwd.juewei.com';
+export const imageUrl3 = 'https://images.juewei.com';
 
 // 百度生产ak
 export const ak = 'pRtqXqnajTytAzWDL3HOnPRK';

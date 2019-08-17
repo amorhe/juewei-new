@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
+import { imageUrl, imageUrl2,imageUrl3 } from '../../../pages/common/js/baseUrl'
 import { log, ajax, contact, handleCopy, guide } from '../../../pages/common/js/li-ajax'
 
 const app = getApp()
@@ -6,6 +6,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
+    imageUrl3,
     showTop: false,
     cancleShow: false,
     orderState: [],

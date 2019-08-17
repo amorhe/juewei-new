@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3} from '../../common/js/baseUrl'
 import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay,useraddress } from '../../common/js/home'
 import { upformId } from '../../common/js/time'
 var app = getApp();
@@ -6,6 +6,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
+    imageUrl3,
     isCheck: true,  //协议
     // 换购商品列表
     repurseList: [],
@@ -431,7 +432,7 @@ Page({
         }
         for (let val of goodsReal) {
           if (val.goods_type == 'PKG') {
-            val['goods_img'] = imageUrl2 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
+            val['goods_img'] = imageUrl3 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
           } else {
             val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
           }

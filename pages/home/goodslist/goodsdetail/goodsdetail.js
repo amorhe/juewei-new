@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2 } from '../../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3 } from '../../../common/js/baseUrl'
 import { commentList, DispatchCommentList } from '../../../common/js/home'
 var app = getApp();
 Page({
@@ -23,6 +23,7 @@ Page({
     ],
     imageUrl,
     imageUrl2,
+    imageUrl3,
     // 评论
     commentArr: [],
     key: '',
