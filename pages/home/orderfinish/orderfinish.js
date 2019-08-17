@@ -7,6 +7,8 @@ Page({
     show: false,
     new_user: [],
     newUserShow: false,
+    gifts:false,
+    gift_type:0
   },
   async onLoad(e) {
     const { order_no } = e
@@ -42,6 +44,7 @@ Page({
     if (new_user == 1) { return }
     let res = await ajax('/juewei-api/order/detail', { order_no })
     if (res.code == 0) {
+      console.log(res)
       // 说明是新用户
       if (res.data.new_user == 1) {
         my.setStorage({
@@ -54,13 +57,37 @@ Page({
             })
           },
         });
-
       }
+      // 虚拟商品弹框
+      res.data.goods_list.forEach(item => {
+        if(item.is_gifts ==1){
+          // 优惠券
+          if(item.gift_type == 1){
+            this.setData({
+              gift_type:1
+            })
+          }
+          // 兑换码
+          if(item.gift_type == 2){
+            this.setData({
+              gift_type:2
+            })
+          }
+          this.setData({
+            gifts:true
+          })
+        }
+      })
+
     }
 
   },
 
-
+  confirmTap(){
+    this.setData({
+      gifts:false
+    })
+  },
   close() {
     this.setData({
       newUserShow:false

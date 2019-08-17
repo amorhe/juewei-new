@@ -305,7 +305,7 @@ Component({
           cancelButtonText: '继续结算',
           btnClick: true
         })
-      }else{
+      }else if(num - shopcartNum == 0 && snum > 0){
         return this.setData({
           showShopcar: false,
           mask1: false,

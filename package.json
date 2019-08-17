@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "mini-antui": "^0.4.29",
     "mini-html-parser2": "^0.1.4"
   }
 }

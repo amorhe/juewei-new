@@ -126,3 +126,43 @@
   color: rgba(204, 204, 204, 1);
   margin-top: 15rpx;
 }
+
+.giftsBox {
+  width: 600rpx;
+  height: 396rpx;
+  border-radius: 30rpx;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+}
+.giftsBox>image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0
+}
+.giftsContent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  padding: 40rpx 30rpx 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+.modal_titles {
+  font-size: 30rpx;
+}
+.confirmBtn {
+  width: 100%;
+  color: #E60012;
+  background: #FFE100
+}
+.colorY {
+  color: #FFE100
+}
