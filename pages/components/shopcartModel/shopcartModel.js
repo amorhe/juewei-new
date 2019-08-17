@@ -235,8 +235,10 @@ Component({
         shopcartNum = 0, // 购物车总数量
         priceFree = 0, // 满多少包邮
         shopcartObj = {}, //商品列表 
-        repurse_price = 0 // 换购活动提示价
+        repurse_price = 0, // 换购活动提示价
+        snum = 0
       if (goodsList == null) return;
+      
         // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
         num += goodsList[val].num;
@@ -245,6 +247,11 @@ Component({
             // 在门店
             if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
               shopcartObj[val] = goodsList[val];
+              // 判断购物车商品更新
+              if(goodsList[val].goods_price != fn.goods_price){
+                snum +=  shopcartObj[val].num;
+                shopcartObj[val].goods_price = fn.goods_price
+              }
               if (shopcartObj[val].goods_discount_user_limit != undefined && shopcartObj[val].num > shopcartObj[val].goods_discount_user_limit) {
                 priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_discount_user_limit + (shopcartObj[val].num - goodsList[val].goods_discount_user_limit) * shopcartObj[val].goods_original_price;
               } else {
@@ -259,6 +266,7 @@ Component({
               shopcartAll.push(shopcartObj[val]);
               shopcartNum += shopcartObj[val].num;
             }
+
           }
         }
       }
@@ -273,7 +281,19 @@ Component({
         data: shopcartObj
       })
       app.globalData.goodsBuy = this.props.shopcartAll;
-      if (num - shopcartNum > 0) {
+      if (num - shopcartNum > 0 && snum > 0) {
+        return this.setData({
+          showShopcar: false,
+          mask1: false,
+          mask: true,
+          modalShow: true,
+          isType: 'checkshopcart',
+          content: `有${num - shopcartNum}个商品已失效，${snum}个商品价格已更新，是否继续下单`,
+          confirmButtonText: '重新选择',
+          cancelButtonText: '继续结算',
+          btnClick: true
+        })
+      }else if(num - shopcartNum > 0 && snum == 0){
         return this.setData({
           showShopcar: false,
           mask1: false,
@@ -285,7 +305,18 @@ Component({
           cancelButtonText: '继续结算',
           btnClick: true
         })
-
+      }else{
+        return this.setData({
+          showShopcar: false,
+          mask1: false,
+          mask: true,
+          modalShow: true,
+          isType: 'checkshopcart',
+          content: `有${snum}个商品价格已更新，是否继续下单`,
+          confirmButtonText: '重新选择',
+          cancelButtonText: '继续结算',
+          btnClick: true
+        })
       }
       my.navigateTo({
         url: '/pages/home/orderform/orderform'

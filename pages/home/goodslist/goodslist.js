@@ -59,11 +59,11 @@ Page({
   onLoad() {
     //重写app.globalData
     //原因首页app页面会刷新两次
-    if(app.globalData && !app.globalData.address && my.getStorageSync({ key: 'appglobalData' }).data){
-        app.globalData = my.getStorageSync({ key: 'appglobalData' }).data;
+    if (app.globalData && !app.globalData.address && my.getStorageSync({ key: 'appglobalData' }).data) {
+      app.globalData = my.getStorageSync({ key: 'appglobalData' }).data;
     }
-    if(my.getStorageSync({ key: 'appglobalData' }).data){
-         my.removeStorageSync({key: 'appglobalData'});
+    if (my.getStorageSync({ key: 'appglobalData' }).data) {
+      my.removeStorageSync({ key: 'appglobalData' });
     }
   },
   onShow() {
@@ -104,6 +104,7 @@ Page({
           key: 'self', // 缓存数据的key
         }).data;
       }
+      // console.log(app.globalData.type)
       this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
       this.getBannerList(shopArray[0].city_id, shopArray[0].district_id, shopArray[0].company_sale_id);//banner
       this.getShowpositionList(shopArray[0].city_id, shopArray[0].district_id, shopArray[0].company_sale_id);
@@ -116,6 +117,11 @@ Page({
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
 
+    let user_id = 1;
+    if (my.getStorageSync({ key: 'user_id' }).data) {
+      user_id = my.getStorageSync({ key: 'user_id' }).data
+    }
+    this.getActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id)     //营销活动
     my.setStorageSync({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
@@ -227,6 +233,52 @@ Page({
       let arr = companyGoodsList.filter(item => {
         return shopGoodsList.includes(item.sap_code)
       })
+      // 获取参与加价购商品的列表（可换购）
+      if (app.globalData.activityList.MARKUP != null) {
+        if (app.globalData.activityList.MARKUP.goods.length == 0) {
+          app.globalData.repurseGoods = [];
+        } else {
+          app.globalData.repurseGoods = app.globalData.activityList.MARKUP.goods;
+        }
+        for (let item of app.globalData.activityList.MARKUP.goods) {
+          for (let value of arr) {
+            if (item.goods_code == value.sap_code) {
+              value['huangou'] = 1;
+            }
+          }
+        }
+      }
+      // 筛选在当前门店里面的折扣商品
+      let DIS = [], PKG = [], obj1 = {}, obj2 = {}
+      if (app.globalData.activityList.DIS) {
+        DIS = app.globalData.activityList.DIS.filter(item => arr.findIndex(value => value.sap_code == item.goods_sap_code) != -1)
+      }
+      // 筛选在当前门店里面的套餐商品  
+      if (app.globalData.activityList.PKG) {
+        PKG = app.globalData.activityList.PKG.filter(item => item.pkg_goods.map(ott => arr.findIndex(value => value.sap_code == ott.sap_code) != -1));
+      }
+      // 套餐商品图片格式
+      for (let item of PKG) {
+        item.goods_img = [item.goods_img];
+        item.goods_img_detail_origin = [item.goods_img_detail_origin]
+        item.goods_img_intr_origin = [item.goods_img_intr_origin]
+      }
+
+      // 包邮活动
+      if (app.globalData.activityList.FREE) {
+        app.globalData.freeId = app.globalData.activityList.FREE.id;
+        this.setData({
+          freeMoney: app.globalData.activityList.FREE.money
+        })
+      }
+      obj1 = {
+        "key": "折扣",
+        "last": DIS
+      }
+      obj2 = {
+        "key": "套餐",
+        "last": PKG
+      }
       const str = new Date().getTime();
       my.request({
         url: `https://images.juewei.com/prod/shop/goods_sort.json?v=${str}`,
@@ -259,15 +311,29 @@ Page({
               last: [...last]
             }
           })
+
+          sortList.unshift(obj1, obj2);
+          let goodsArr = [...DIS, ...PKG, ...arr];    // 门店所有列表（一维数组）
+          let goodsNew = sortList.filter(item => item.last.length > 0);
+          goodsNew = new Set(goodsNew)
+          goodsNew = [...goodsNew];
+          app.globalData.goodsArr = goodsArr;  // 详情页，确认订单页使用
+          // 最终商品总数据
           this.setData({
-            shopGoodsList: sortList,
+            shopGoodsAll: goodsNew,
             shopGoods: arr
-          }, () => {
-            let user_id = 1;
-            if (my.getStorageSync({ key: 'user_id' }).data) {
-              user_id = my.getStorageSync({ key: 'user_id' }).data
-            }
-            this.getActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id)     //营销活动
+          })
+          my.setStorageSync({
+            key: 'shopGoods',
+            data: goodsArr
+          })
+          // 获取商品模块的节点
+          my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
+            let top = ret[0][0].top;
+            let arr = ret[0].map((item, index) => {
+              return item.top = item.top - top - 37;
+            })
+            app.globalData.ret = arr;
           })
 
         },
@@ -278,9 +344,7 @@ Page({
   // 门店营销活动(折扣和套餐)
   async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
     await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
-      // console.log(res);
-      let shopGoods = this.data.shopGoods;
-      // console.log(shopGoods)
+      app.globalData.activityList = res.data;
       // 获取加价购商品
       if (res.data.MARKUP != null) {
         app.globalData.gifts = res.data.MARKUP.gifts;
@@ -294,81 +358,6 @@ Page({
         app.globalData.gifts = [];
         app.globalData.fullActivity = [];
       }
-
-      // 获取参与加价购商品的列表（可换购）
-      if (res.data.MARKUP != null) {
-        if (res.data.MARKUP.goods.length == 0) {
-          app.globalData.repurseGoods = [];
-        } else {
-          app.globalData.repurseGoods = res.data.MARKUP.goods;
-        }
-        for (let item of res.data.MARKUP.goods) {
-          for (let value of shopGoods) {
-            if (item.goods_code == value.sap_code) {
-              value['huangou'] = 1;
-            }
-          }
-        }
-      }
-
-      // 筛选在当前门店里面的折扣商品
-      let DIS = [], PKG = []
-      if (res.data.DIS) {
-        DIS = res.data.DIS.filter(item => shopGoods.findIndex(value => value.sap_code == item.goods_sap_code) != -1)
-      }
-      // 筛选在当前门店里面的套餐商品  
-      if (res.data.PKG) {
-        PKG = res.data.PKG.filter(item => item.pkg_goods.map(ott => shopGoods.findIndex(value => value.sap_code == ott.sap_code) != -1));
-      }
-      let obj1 = {}, obj2 = {};
-      for (let item of PKG) {
-        item.goods_img = [item.goods_img];
-        item.goods_img_detail_origin = [item.goods_img_detail_origin]
-        item.goods_img_intr_origin = [item.goods_img_intr_origin]
-      }
-
-      // 包邮活动
-      if (res.data.FREE) {
-        app.globalData.freeId = res.data.FREE.id;
-        this.setData({
-          freeMoney: res.data.FREE.money
-        })
-      }
-      obj1 = {
-        "key": "折扣",
-        "last": DIS
-      }
-      obj2 = {
-        "key": "套餐",
-        "last": PKG
-      }
-
-      this.data.shopGoodsList.unshift(obj1, obj2);
-      let goodsArr = [...DIS, ...PKG, ...this.data.shopGoods];    // 门店所有列表（一维数组）
-      let goodsNew = this.data.shopGoodsList.filter(item => item.last.length > 0);
-      goodsNew = new Set(goodsNew)
-      goodsNew = [...goodsNew];
-      app.globalData.goodsArr = goodsArr;  // 详情页，确认订单页使用
-      // console.log(goodsNew)
-      // 最终商品总数据
-      this.setData({
-        shopGoodsAll: goodsNew
-      })
-      // 获取商品模块的节点
-      my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
-        let top = ret[0][0].top;
-        let arr = ret[0].map((item, index) => {
-          return item.top = item.top - top - 37;
-        })
-        app.globalData.ret = arr;
-      })
-      // my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((ret) => {
-      //   app.globalData.ret_top = ret[0].scrollTop
-      // })
-      my.setStorageSync({
-        key: 'shopGoods',
-        data: goodsArr
-      })
     })
   },
   onHide() {

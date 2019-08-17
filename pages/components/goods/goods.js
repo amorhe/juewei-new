@@ -159,7 +159,7 @@ Component({
         duration: duration || 400,
         timeFunction: 'ease-in',
       })
-      animation.translateY(ballY - bottomX).step();
+      animation.translateY(ballY - bottomY).step();
       return animation;
     },
     // 优惠券过期提醒
