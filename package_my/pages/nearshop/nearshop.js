@@ -25,10 +25,10 @@ Page({
     })
   },
   onShow() {
-    this.setData({
-      longitude: my.getStorageSync({ key: 'lng' }).data,
-      latitude: my.getStorageSync({ key: 'lat' }).data
-    })
+    // this.setData({
+    //   longitude: my.getStorageSync({ key: 'lng' }).data,
+    //   latitude: my.getStorageSync({ key: 'lat' }).data
+    // })
   },
 
   // 输入

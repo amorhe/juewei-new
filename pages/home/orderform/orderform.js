@@ -396,7 +396,7 @@ Page({
     if (app.globalData.notUse) {
       notUse = app.globalData.notUse
     }
-    confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, this.data.couponslist, notUse, app.globalData.freeId).then((res) => {
+    confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, this.data.repurseList, notUse, app.globalData.freeId).then((res) => {
       // console.log(res)
       let goodsList = my.getStorageSync({ key: 'goodsList' }).data;
       if (res.code == 0) {
