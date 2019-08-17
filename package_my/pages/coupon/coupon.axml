@@ -4,8 +4,8 @@
       <block>
         <tab-content key="0">
           <view class="tab-content tabBox">
-            <view class="couponUl">
-              <view class="couponLi" style="max-height:{{item.toggleRule?'620':'254'}}rpx" a:for="{{couponList}}" a:if="{{couponList.length>0}}">
+            <view class="couponUl" a:if="{{couponList.length>0}}">
+              <view class="couponLi" style="max-height:{{item.toggleRule?'620':'254'}}rpx" a:for="{{couponList}}">
                 <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
                 <view>
                   <view class="couponNumber">
@@ -30,7 +30,7 @@
                     <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s"/>
                   </view>
                   <image class="qr" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" catchTap="showCode" a:if="{{item.way == 3}}" />
-                  <image class="qr"  data-code="{{item.code}}" a:if="{{item.way != 3}}" />
+                  <image class="qr" data-code="{{item.code}}" a:if="{{item.way != 3}}" />
                 </view>
                 <view class="rule">
                   <view a:if="{{item.gift_usage_rule}}">1、{{item.gift_usage_rule}}</view>
@@ -43,7 +43,11 @@
                   <view>7、若您对本活动规则有任何疑问，绝味鸭脖将会在法律允许的范围内对本活动规则给与必要的说明和解释，联系绝味鸭脖全国在线闪电客服400-999-5917</view>
                 </view>
               </view>
-              <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
+            </view>
+            <!-- 空状态 -->
+            <view class="nullBox" style="height:85vh;padding-top:207rpx;box-sizing:border-box" a:if="{{couponList.length ==0}}">
+              <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
+              <text>暂无优惠券</text>
             </view>
             <view class="cardMiddle" hidden="{{activeTab==1}}">
               <navigator url="/package_my/pages/coupon/couponRecord/couponRecord">查看历史优惠券</navigator>
@@ -54,7 +58,7 @@
         </tab-content>
         <tab-content key="1">
           <view class="tab-content tabBox">
-            <view class="redeemCode">
+            <view class="redeemCode" a:if="{{exchangeList.length>0}}">
               <view a:for="{{exchangeList}}" data-gift_code_id="{{item.gift_code_id}}" data-gift_id="{{item.gift_id}}" data-order_id="{{item.order_id}}" onTap="changedetail">
                 <image class="codeSize" src="{{imageUrl2 + item.gift_img_url}}" />
                 <view class="redeemContent">
@@ -64,7 +68,11 @@
                 </view>
               </view>
             </view>
-            <image mode="scaleToFill" a:if="{{couponList.length==0}}" class="noShow" src="{{imageUrl}}bg_coupon.png"/>
+            <!-- 空状态 -->
+            <view class="nullBox" style="height:85vh;padding-top:207rpx;box-sizing:border-box" a:if="{{exchangeList.length== 0}}">
+              <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
+              <text>暂无兑换码</text>
+            </view>
             <navigator url="/package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord" class="fontSmallGray codeMiddle">查看历史兑换码</navigator>
           </view>
         </tab-content>
@@ -85,11 +93,9 @@
   <view class="code-phone">
    {{phone.slice(0,3)}} **** {{phone.slice(7)}}
   </view>
-  <!-- <view class="code-pay" onTap="wait">
-    确认支付
-  </view> -->
+  <!--<view class="code-pay" onTap="wait">
+    确认支付</view> -->
 </modal>
-
 <!-- 限时优惠 -->
 <modal show="{{open1}}" showClose="{{ true }}" onModalClose="closeModel">
   <view class="modalInfo" onTap="closeModel">

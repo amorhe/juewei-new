@@ -317,9 +317,9 @@ Component({
       });
       // console.log(e)
       // 购物车小球动画
-      let ballX = e.detail.clientX,
-        ballY = e.detail.clientY;
-      this.createAnimation(ballX, ballY);
+      // let ballX = e.detail.clientX,
+      //   ballY = e.detail.clientY;
+      // this.createAnimation(ballX, ballY);
     },
     reduceshopcart(e) {
       let code = e.currentTarget.dataset.goods_code;
