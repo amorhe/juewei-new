@@ -45,8 +45,27 @@ App({
   },
   onShow(options) {//多次执行
     //判断外部链接是否有参数值
-    if (options.page && options.query) {
+      options.page = '/package_my/pages/coupon/coupon';
+      options.query = ``;
+    if (options.page ) {
       //通过这个参数可以跳转到响应的连接中，注意这些链接需要
+      switch (options.page) {
+        case '/pages/vip/index/index':
+          my.switchTab({
+            url: '/pages/vip/index/index', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
+          });
+          break;
+        case '/package_my/pages/coupon/coupon':
+          my.redirectTo({
+            url: '/package_my/pages/coupon/coupon', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+          });
+          break;
+        case '/package_my/pages/membercard/membercard':
+          my.redirectTo({
+            url: '/package_my/pages/membercard/membercard?_sid=${7mqilc08sh4ghgcka5c2ce2mg2}&aliUid=${2088312833799940}&formId=${MjA4ODMxMjgzMzc5OTk0MF8xNTY2MDI0NzY1NjM3XzcxMQ%3D%3D}'
+          })
+          break;
+      }
     }
 
 
@@ -62,7 +81,7 @@ App({
     // 小程序执行出错时
     console.log(error);
   },
-  
+
   globalData: {
     location: { //获取地区
       longitude: null,
