@@ -7,7 +7,7 @@
       <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
-    <view class="board-time" a:if="{{d.order_status_info.order_status == 0 && d.remaining_pay_minute > 0}}">
+    <view class="board-time" a:if="{{d.order_status_info.order_status == 0 && d.remaining_pay_minute > -1}}">
       <text class="board-last">剩余时间：</text>
       <text class="board-last-time">{{d.remaining_pay_minute}}分{{d.remaining_pay_second}}秒</text>
     </view>
