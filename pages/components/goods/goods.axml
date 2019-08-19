@@ -54,7 +54,7 @@
           <view class="discountImg">
             <image a:if="{{item.key=='折扣'}}" class="discountPng" src="{{imageUrl}}discount_img.png" />
             <image a:if="{{item.huangou==1}}" class="discountPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png"/>
-            <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{imageUrl3 + v.goods_img[0]}}"/>
+            <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{img_url + v.goods_img[0]}}"/>
             <image a:if="{{item.key!='套餐'}}" class="goodsImage1" src="{{v.goods_img[0]}}"/>
           </view>
           <view class="goodsWrap">
@@ -63,11 +63,13 @@
               <text a:if="{{v.taste_name}}">({{v.taste_name}})</text>
             </view>
             <view class="goodsKind marginB">
-              <text a:for="{{v.pkg_goods}}" a:for-index="_index" a:for-item="_item">
+              <!-- <text a:for="{{v.pkg_goods}}" a:for-index="_index" a:for-item="_item">
                 <text>
                   <text a:if="{{_index!=0}}">+</text>{{_item.pkg_goods_name}}</text>
                 <text class="fontSmall">({{_item.pkg_goods_taste}})/{{_item.pkg_goods_format}}*{{_item.goods_num}}</text>
-              </text>
+              </text> -->
+              <text>{{v.pkg_subtitle}} </text>
+              
             </view>
             <view class="goodsRules">
               <view>
