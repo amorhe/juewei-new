@@ -54,7 +54,7 @@ export const NearbyShop = (data) => ajax(ajaxUrl.NearbyShop,{data});
 
 export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
 
-export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse})
+export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse,fsp_id) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse,fsp_id})
 // dispatch_type	是	int	1（外卖）2（自提）
 // shop_id	是	int	门店id
 // goods	是	json	购物车商品

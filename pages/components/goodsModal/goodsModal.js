@@ -140,6 +140,7 @@ Component({
             priceAll += goodlist[keys].goods_price * goodlist[keys].num;
           }
         } else {
+          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
 

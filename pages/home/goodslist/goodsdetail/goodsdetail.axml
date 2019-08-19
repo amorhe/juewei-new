@@ -23,7 +23,7 @@
         <text a:if="{{goodsInfo.goods_format.length==1}}">/ {{goodsInfo.goods_unit}}</text>
         <text a:if="{{goodsInfo.goods_format.length>1}}"> 起</text>
       </view>
-      <view class="oldPrice" a:if="{{goodsInfo.key!='爆款'}}">¥{{goodsInfo.goods_format[0].goods_original_price / 100}}/{{goodsInfo.goods_unit}}</view>
+      <view class="oldPrice" a:if="{{goodsInfo.key!='爆款' && goodsInfo.goods_format[0].goods_original_price}}">¥{{goodsInfo.goods_format[0].goods_original_price / 100}}/{{goodsInfo.goods_unit}}</view>
     </view>
     <view>
       <!-- 无sku -->

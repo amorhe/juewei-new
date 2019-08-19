@@ -84,7 +84,7 @@ Page({
           obj3['goods_quantity'] = goodsList[key].goods_order_limit;
           obj3['goods_code'] = goodsList[key].goods_code;
           obj3['goods_format'] = goodsList[key].goods_format;
-          goodlist.push(obj3,obj5)
+          goodlist.push(obj3, obj5)
         }
       } else {
         //  普通商品
@@ -92,7 +92,7 @@ Page({
         goodlist.push(goodsList[key])
       }
     }
-    console.log(goodsList)
+    // console.log(goodsList)
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const self = app.globalData.shopTakeOut;
     const phone = my.getStorageSync({
@@ -160,11 +160,11 @@ Page({
       this.getAddress(app.globalData.address_id)
     }
 
-    let gift = [];
+    let gifts = [];
     if (this.data.gifts[this.data.gift_id]) {
-      gift.push(this.data.gifts[this.data.gift_id]);
+      gifts.push(this.data.gifts[this.data.gift_id]);
       this.setData({
-        gift
+        gifts
       })
     }
 
@@ -298,7 +298,7 @@ Page({
     const lat = my.getStorageSync({ key: 'lat' }).data;
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const goods = JSON.stringify(this.data.goodsReal);
-    let type = '', typeClass = ''
+    let type = '', typeClass = '', gift_arr = [], giftObj = {}, notUse = 0,remark = '',str_gift = '';
     if (app.globalData.type == 1) {
       type = 1;
       typeClass = 2;
@@ -325,16 +325,22 @@ Page({
       isClick: false
     })
 
-    let notUse = 0;
     if (app.globalData.notUse) {
       notUse = app.globalData.notUse;
     }
-    let remark = '';
+    // 备注
     if (app.globalData.remarks) {
       remark = app.globalData.remarks
     }
+    if (Object.keys(this.data.gifts).length > 0) {
+      giftObj['activity_id'] = this.data.gifts[this.data.gift_id].activity_id;
+      giftObj['gift_id'] = this.data.gifts[this.data.gift_id].gift_id;
+      giftObj['id'] = this.data.gifts[this.data.gift_id].id;
+      gift_arr.push(giftObj);
+      str_gift = JSON.stringify(gift_arr);
+    }
     // 创建订单
-    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, this.data.gift, this.data.orderInfo.use_coupons[0], notUse).then((res) => {
+    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, this.data.orderInfo.use_coupons[0], notUse, app.globalData.freeId).then((res) => {
       // console.log(res);
       if (res.code == 0) {
         if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
@@ -422,6 +428,7 @@ Page({
           addressList.push(value)
         }
       }
+      app.globalData.address_id = addressList[0].user_address_id;
       this.setData({
         address: true,
         addressInfo: addressList[0]
@@ -481,15 +488,10 @@ Page({
             arr_money.push(res.data.activity_list[''].real_price);
             arr_money.sort();
             let k = arr_money.findIndex(item => item == res.data.activity_list[''].real_price);
-            if (res.data.activity_list[''].real_price > arr_money[k - 1]) {
+            if (res.data.activity_list[''].real_price >= arr_money[k - 1]) {
               this.setData({
                 showRepurse: true,
                 repurseList: gifts[arr_money[k - 1]]
-              })
-            } else if (res.data.activity_list[''].real_price == arr_money[k - 1]) {
-              this.setData({
-                showRepurse: true,
-                repurseList: gifts[res.data.activity_list[''].real_price]
               })
             }
             if (res.data.activity_list[''].real_price >= arr_money[k]) {
@@ -498,7 +500,7 @@ Page({
                 repurseList: gifts[arr_money[k]]
               })
             }
-          } else {   // // 换购商品为指定
+          } else {   // 换购商品为指定
             for (let item of app.globalData.repurseGoods) {
               for (let value of goodsReal) {
                 if (item.goods_code == value.sap_code && value.goods_type != "DIS") {
@@ -509,15 +511,10 @@ Page({
             arr_money.push(repurseTotalPrice);
             arr_money.sort();
             let i = arr_money.findIndex(item => item == repurseTotalPrice);
-            if (repurseTotalPrice > arr_money[i - 1]) {
+            if (repurseTotalPrice >= arr_money[i - 1]) {
               this.setData({
                 showRepurse: true,
                 repurseList: gifts[arr_money[i - 1]]
-              })
-            } else if (repurseTotalPrice == arr_money[i - 1]) {
-              this.setData({
-                showRepurse: true,
-                repurseList: gifts[repurseTotalPrice]
               })
             }
           }
