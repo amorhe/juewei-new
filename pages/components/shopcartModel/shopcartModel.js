@@ -238,44 +238,59 @@ Component({
         repurse_price = 0, // 换购活动提示价
         snum = 0
       if (goodsList == null) return;
-      
-        // 判断购物车商品是否在当前门店里
+
+      // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
         num += goodsList[val].num;
-        for (let value of app.globalData.goodsArr) {
-          for (let fn of value.goods_format) {
-            // 在门店
-            if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
-              shopcartObj[val] = goodsList[val];
-              // 判断购物车商品更新
-              if(goodsList[val].goods_price != fn.goods_price){
-                snum +=  shopcartObj[val].num;
-                shopcartObj[val].goods_price = fn.goods_price
+        if (goodsList[val].goods_discount) {
+          for (let ott of app.globalData.activityList.DIS) {
+            for (let fn of ott.goods_format) {
+              if (val == `${ott.goods_code}_${fn.type}`) {
+                shopcartObj[val] = goodsList[val];
+                // 判断购物车商品价格更新
+                if (goodsList[val].goods_price != fn.goods_price) {
+                  snum += shopcartObj[val].num;
+                  shopcartObj[val].goods_price = fn.goods_price
+                }
               }
-              if (shopcartObj[val].goods_discount_user_limit != undefined && shopcartObj[val].num > shopcartObj[val].goods_discount_user_limit) {
-                priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_discount_user_limit + (shopcartObj[val].num - goodsList[val].goods_discount_user_limit) * shopcartObj[val].goods_original_price;
-              } else {
-                priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
-              }
-              if (!shopcartObj[val].goods_discount) {
-                priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
-              }
-              if (shopcartObj[val].huangou) {
-                repurse_price += shopcartObj[val].goods_price * shopcartObj[val].num;
-              }
-              shopcartAll.push(shopcartObj[val]);
-              shopcartNum += shopcartObj[val].num;
             }
-
+          }
+        } else {
+          for (let value of app.globalData.goodsArr) {
+            for (let fn of value.goods_format) {
+              // 在门店
+              if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
+                shopcartObj[val] = goodsList[val];
+                // 判断购物车商品价格更新
+                if (goodsList[val].goods_price != fn.goods_price) {
+                  snum += shopcartObj[val].num;
+                  shopcartObj[val].goods_price = fn.goods_price
+                }
+              }
+            }
           }
         }
+        if (shopcartObj[val].goods_discount_user_limit != undefined && shopcartObj[val].num > shopcartObj[val].goods_discount_user_limit) {
+          priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_discount_user_limit + (shopcartObj[val].num - goodsList[val].goods_discount_user_limit) * shopcartObj[val].goods_original_price;
+        } else {
+          priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
+        }
+        if (!shopcartObj[val].goods_discount) {
+          priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
+        }
+        if (shopcartObj[val].huangou) {
+          repurse_price += shopcartObj[val].goods_price * shopcartObj[val].num;
+        }
+        shopcartAll.push(shopcartObj[val]);
+        shopcartNum += shopcartObj[val].num;
+
       }
       // 购物车筛选后剩余数量
       shopcartNum = Object.entries(shopcartObj).reduce((pre, cur) => {
         const { num } = cur[1]
         return pre + num
       }, 0)
-      this.changeshopcart(shopcartObj, shopcartAll, priceAll, shopcartNum, priceFree,repurse_price);
+      this.changeshopcart(shopcartObj, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price);
       my.setStorageSync({
         key: 'goodsList',
         data: shopcartObj
@@ -293,7 +308,7 @@ Component({
           cancelButtonText: '继续结算',
           btnClick: true
         })
-      }else if(num - shopcartNum > 0 && snum == 0){
+      } else if (num - shopcartNum > 0 && snum == 0) {
         return this.setData({
           showShopcar: false,
           mask1: false,
@@ -305,7 +320,7 @@ Component({
           cancelButtonText: '继续结算',
           btnClick: true
         })
-      }else if(num - shopcartNum == 0 && snum > 0){
+      } else if (num - shopcartNum == 0 && snum > 0) {
         return this.setData({
           showShopcar: false,
           mask1: false,

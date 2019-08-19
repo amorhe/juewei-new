@@ -1,5 +1,5 @@
-import { imageUrl, imageUrl2, imageUrl3} from '../../common/js/baseUrl'
-import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay,useraddress } from '../../common/js/home'
+import { imageUrl, imageUrl2, imageUrl3 } from '../../common/js/baseUrl'
+import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay, useraddress } from '../../common/js/home'
 import { upformId } from '../../common/js/time'
 var app = getApp();
 Page({
@@ -44,16 +44,30 @@ Page({
   },
   onLoad(e) {
     // 外卖默认地址
-    if(app.globalData.type==1){
+    if (app.globalData.type == 1) {
       this.getDefault();
     }
-    let goodsList = app.globalData.goodsBuy;
-    for (let item of goodsList) {
-      item['goods_quantity'] = item['num'];
-      if (item.goods_discount) {
-        item.goods_code = item.goods_activity_code
+    let goodsList = my.getStorageSync({
+      key: 'goodsList', // 缓存数据的key
+    }).data;
+    let obj1 = {}, obj2 = {},goodlist = [];
+    for (let key in goodsList) {
+      if (goodsList[key].goods_discount) {
+        if (goodsList[key].num > goodsList[key].goods_order_limit) {
+          // 非折扣
+          obj1['goods_price'] = goodsList[key].goods_original_price;
+          obj1['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
+          obj1['goods_code'] = goodsList[key].goods_code;
+          obj1['goods_format'] = goodsList[key].goods_format;
+          // 折扣
+          obj2['goods_price'] = goodsList[key].goods_price;
+          obj2['goods_quantity'] = goodsList[key].goods_order_limit;
+          obj2['goods_code'] = goodsList[key].goods_activity_code;
+          obj2['goods_format'] = goodsList[key].goods_format
+        }
       }
     }
+    goodlist.push(obj1,obj2);
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const self = app.globalData.shopTakeOut;
     const phone = my.getStorageSync({
@@ -88,10 +102,10 @@ Page({
     ]
     this.setData({
       shopObj: self,
-      longitude:self.location[0],
-      latitude:self.location[1],
+      longitude: self.location[0],
+      latitude: self.location[1],
       markersArray: arr,
-      goodsList,
+      goodsList:goodlist,
       orderType: app.globalData.type,
       phone
     })
@@ -143,12 +157,12 @@ Page({
         gift
       })
     }
-    
+
     this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(this.data.goodsList));
   },
   // 换购显示
   addRepurseTap(e) {
-    console.log(e)
+    // console.log(e)
     let gifts = {}, gifts_price = '', order_price = '';
     gifts[e.currentTarget.dataset.id] = {
       "activity_id": e.currentTarget.dataset.activity_id,
@@ -400,7 +414,7 @@ Page({
       }
       this.setData({
         address: true,
-        addressInfo:addressList[0]
+        addressInfo: addressList[0]
       })
     })
   },
