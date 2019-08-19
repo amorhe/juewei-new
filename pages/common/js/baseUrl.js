@@ -19,7 +19,7 @@ export const geotable_id='134917';
 // export const ak = 'kLRuRCHmGvOYIqxmwEzI9PpC80lfuSCU';
 // export const geotable_id='170580';
  
-// 图片生产cdn
+// 套餐图片路径
 export const img_url = isTestUrl?imageUrl2:imageUrl3;
 // const imageUrl = 'https://wap.juewei.com/m/ali-mini/image/';
 
