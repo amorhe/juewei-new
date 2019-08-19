@@ -2,6 +2,10 @@ import { loginByAliUid } from './pages/common/js/login'
 import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
+    if(options.query){
+      this.globalData.query = (Object.keys(options.query)[0] || options.query);
+      console.log('app',this.globalData.query);
+    }
     // 第一次打开
     my.getNetworkType({
       success: (res) => {
@@ -30,6 +34,7 @@ App({
         });
         loginByAliUid(res.authCode).then((data) => {
           if (data.code == 0 && data.data.user_id) {
+            console.log('loginByAliUid',data);
             my.setStorageSync({
               key: 'ali_uid', // 缓存数据的key
               data: data.data.ali_uid, // 要缓存的数据
@@ -62,41 +67,41 @@ App({
   },
   onShow(options) {//多次执行
     //判断外部链接是否有参数值
-    if (options.page) {
-      //通过这个参数可以跳转到响应的连接中，注意这些链接需要
-      switch (options.page) {
-        // vip
-        case '/pages/vip/index/index':
-          my.switchTab({
-            url: '/pages/vip/index/index'
-          });
-          break;
-        // 优惠券
-        case '/package_my/pages/coupon/coupon':
-          my.navigateTo({
-            url: '/package_my/pages/coupon/coupon'
-          });
-          break;
-        // 会员卡
-        case '/package_my/pages/membercard/membercard':
-          my.navigateTo({
-            url: '/package_my/pages/membercard/membercard'
-          })
-          break;
-        // 个人中心
-        case '/pages/my/index/index':
-          my.switchTab({
-            url: '/pages/my/index/index'
-          })
-          break;
-        //  附近门店
-        case '/package_my/pages/nearshop/nearshop':
-          my.navigateTo({
-            url: '/package_my/pages/nearshop/nearshop'
-          })
-          break;
-      }
-    }
+    // if (options.page) {
+    //   //通过这个参数可以跳转到响应的连接中，注意这些链接需要
+    //   switch (options.page) {
+    //     // vip
+    //     case '/pages/vip/index/index':
+    //       my.switchTab({
+    //         url: '/pages/vip/index/index'
+    //       });
+    //       break;
+    //     // 优惠券
+    //     case '/package_my/pages/coupon/coupon':
+    //       my.navigateTo({
+    //         url: '/package_my/pages/coupon/coupon'
+    //       });
+    //       break;
+    //     // 会员卡
+    //     case '/package_my/pages/membercard/membercard':
+    //       my.navigateTo({
+    //         url: '/package_my/pages/membercard/membercard'
+    //       })
+    //       break;
+    //     // 个人中心
+    //     case '/pages/my/index/index':
+    //       my.switchTab({
+    //         url: '/pages/my/index/index'
+    //       })
+    //       break;
+    //     //  附近门店
+    //     case '/package_my/pages/nearshop/nearshop':
+    //       my.navigateTo({
+    //         url: '/package_my/pages/nearshop/nearshop'
+    //       })
+    //       break;
+    //   }
+    // }
 
 
     // my.clearStorageSync();
@@ -113,6 +118,7 @@ App({
   },
 
   globalData: {
+    query:null,
     location: { //获取地区
       longitude: null,
       latitude: null

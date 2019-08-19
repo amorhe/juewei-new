@@ -56,6 +56,9 @@ Page({
     })
 
   },
+  onShow(){
+
+  },
   // 外卖附近门店
   getLbsShop() {
     const lng = my.getStorageSync({ key: 'lng' }).data;
@@ -90,9 +93,10 @@ Page({
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         //存储app.golbalData
         my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
+ 
         my.reLaunch({
-          url: '/pages/home/goodslist/goodslist'
-        })
+              url: '/pages/home/goodslist/goodslist'
+        });
       } else if (res.code == 5 || res.data.length == 0) {
         this.setData({
           content: '您的定位地址无可配送门店',
