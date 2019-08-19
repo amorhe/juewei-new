@@ -50,34 +50,49 @@ Page({
     let goodsList = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
-    let obj1 = {}, obj2 = {}, goodlist = [];
+    let obj1 = {}, obj2 = {}, obj3 = {}, obj4 = {}, obj5 = {}, goodlist = [];
     for (let key in goodsList) {
       if (goodsList[key].goods_discount) {
-        if (goodsList[key].num > goodsList[key].goods_order_limit) {
-          // 非折扣
-          obj1['goods_price'] = goodsList[key].goods_original_price;
-          obj1['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
-          obj1['goods_code'] = goodsList[key].goods_code;
-          obj1['goods_format'] = goodsList[key].goods_format;
-          //  you折扣
-          obj2['goods_price'] = goodsList[key].goods_price;
-          obj2['goods_quantity'] = goodsList[key].goods_order_limit;
-          obj2['goods_code'] = goodsList[key].goods_activity_code;
-          obj2['goods_format'] = goodsList[key].goods_format;
-          goodlist.push(obj1, obj2);
+        if (key.indexOf('PKG') == -1) {
+          if (goodsList[key].num > goodsList[key].goods_order_limit) {
+            // 非折扣部分
+            obj1['goods_price'] = goodsList[key].goods_original_price;
+            obj1['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
+            obj1['goods_code'] = goodsList[key].goods_code;
+            obj1['goods_format'] = goodsList[key].goods_format;
+            //  折扣部分
+            obj2['goods_price'] = goodsList[key].goods_price;
+            obj2['goods_quantity'] = goodsList[key].goods_order_limit;
+            obj2['goods_code'] = goodsList[key].goods_activity_code;
+            obj2['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj1, obj2);
+          } else {
+            obj4['goods_price'] = goodsList[key].goods_price;
+            obj4['goods_quantity'] = goodsList[key].num;
+            obj4['goods_code'] = goodsList[key].goods_activity_code;
+            obj4['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj4);
+          }
         } else {
-          obj2['goods_price'] = goodsList[key].goods_price;
-          obj2['goods_quantity'] = goodsList[key].num;
-          obj2['goods_code'] = goodsList[key].goods_activity_code;
-          obj2['goods_format'] = goodsList[key].goods_format;
-          goodlist.push(obj2);
-        }
+          // 套餐
+          obj5['goods_price'] = goodsList[key].goods_original_price;
+          obj5['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
+          obj5['goods_code'] = goodsList[key].goods_code;
+          obj5['goods_format'] = goodsList[key].goods_format;
 
+          obj3['goods_price'] = goodsList[key].goods_price;
+          obj3['goods_quantity'] = goodsList[key].goods_order_limit;
+          obj3['goods_code'] = goodsList[key].goods_code;
+          obj3['goods_format'] = goodsList[key].goods_format;
+          goodlist.push(obj3,obj5)
+        }
       } else {
+        //  普通商品
         goodsList[key]['goods_quantity'] = goodsList[key].num
         goodlist.push(goodsList[key])
       }
     }
+    console.log(goodsList)
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const self = app.globalData.shopTakeOut;
     const phone = my.getStorageSync({
@@ -523,7 +538,7 @@ Page({
           orderInfo: res.data.activity_list[''],
           order_price: `¥${res.data.activity_list[''].real_price / 100}`,
           coupon_money,
-          orderDetail:res.data
+          orderDetail: res.data
         })
       } else if (res.code == 277) {
         this.setData({

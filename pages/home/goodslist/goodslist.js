@@ -7,7 +7,7 @@ var app = getApp(); //放在顶部
 Page({
   data: {
     scroll_y: false,
-    isSelf: false,
+    isSelf: false,  // 是不是去自提页
     imageUrl,
     imageUrl2,
     firstAddress: '紫檀大厦',

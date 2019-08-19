@@ -45,7 +45,7 @@
           <image class="ordergoodsImage" mode="scaleToFill" src="{{item.goods_img}}"/>
           <view>
             <view>
-              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_type=='DIS'}}"/>
+              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}discount2.png" a:if="{{item.goods_original_price > item.goods_price}}"/>
               <text class="marginLEight">{{item.goods_name}}</text>
               <text class="fontSmallGray" a:if="{{item.taste_name}}">（{{item.goods_taste}}）</text>
             </view>
@@ -59,7 +59,7 @@
             <!--<view class="ordergoodsOld" a:if="{{item.goods_original_price / 100}}"><text class="fontTwentyTwo">￥</text><text>{{item.goods_original_price / 100}}</text></view> -->
             <view>
               <text class="fontTwentyTwo">￥</text>
-              <text>{{item.goods_price / 100}}</text>
+              <text>{{item.goods_price / 100 * item.goods_quantity}}</text>
             </view>
           </view>
         </view>
