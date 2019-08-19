@@ -234,7 +234,7 @@ Page({
         return shopGoodsList.includes(item.sap_code)
       })
       // 获取参与加价购商品的列表（可换购）
-      if (app.globalData.activityList.MARKUP && app.globalData.activityList.MARKUP != null) {
+      if (app.globalData.activityList && app.globalData.activityList.MARKUP != null) {
         if (app.globalData.activityList.MARKUP.goods.length == 0) {
           app.globalData.repurseGoods = [];
         } else {
@@ -319,6 +319,7 @@ Page({
           goodsNew = [...goodsNew];
           app.globalData.goodsArr = goodsArr;  // 详情页，确认订单页使用
           // 最终商品总数据
+          console.log(goodsNew)
           this.setData({
             shopGoodsAll: goodsNew,
             shopGoods: arr
@@ -346,7 +347,7 @@ Page({
     await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
       app.globalData.activityList = res.data;
       // 获取加价购商品
-      if (res.data.MARKUP != null) {
+      if (res.data.MARKUP) {
         app.globalData.gifts = res.data.MARKUP.gifts;
         // 获取活动金额
         let newArr = Object.keys(res.data.MARKUP.gifts);
@@ -357,6 +358,9 @@ Page({
       } else {
         app.globalData.gifts = [];
         app.globalData.fullActivity = [];
+        this.setData({
+          fullActivity:[]
+        })
       }
     })
   },

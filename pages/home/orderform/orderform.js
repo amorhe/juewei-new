@@ -50,7 +50,7 @@ Page({
     let goodsList = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
-    let obj1 = {}, obj2 = {},goodlist = [];
+    let obj1 = {}, obj2 = {}, goodlist = [];
     for (let key in goodsList) {
       if (goodsList[key].goods_discount) {
         if (goodsList[key].num > goodsList[key].goods_order_limit) {
@@ -59,15 +59,26 @@ Page({
           obj1['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
           obj1['goods_code'] = goodsList[key].goods_code;
           obj1['goods_format'] = goodsList[key].goods_format;
-          // 折扣
+          //  you折扣
           obj2['goods_price'] = goodsList[key].goods_price;
           obj2['goods_quantity'] = goodsList[key].goods_order_limit;
           obj2['goods_code'] = goodsList[key].goods_activity_code;
-          obj2['goods_format'] = goodsList[key].goods_format
+          obj2['goods_format'] = goodsList[key].goods_format;
+          goodlist.push(obj1, obj2);
+        } else {
+          obj2['goods_price'] = goodsList[key].goods_price;
+          obj2['goods_quantity'] = goodsList[key].num;
+          obj2['goods_code'] = goodsList[key].goods_activity_code;
+          obj2['goods_format'] = goodsList[key].goods_format;
+          goodlist.push(obj2);
         }
+
+      } else {
+        goodsList[key]['goods_quantity'] = goodsList[key].num
+        goodlist.push(goodsList[key])
       }
     }
-    goodlist.push(obj1,obj2);
+    console.log(goodlist)
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const self = app.globalData.shopTakeOut;
     const phone = my.getStorageSync({
@@ -105,25 +116,10 @@ Page({
       longitude: self.location[0],
       latitude: self.location[1],
       markersArray: arr,
-      goodsList:goodlist,
+      goodsList: goodlist,
       orderType: app.globalData.type,
       phone
     })
-    // 加购商品列表
-    const gifts = app.globalData.gifts;
-    // console.log(gifts)
-    if (Object.keys(gifts).length > 0) {
-      for (let key in gifts) {
-        gifts[key].forEach(val => {
-          val.goods_count = 0;
-          val.goods_choose = true
-        })
-        this.setData({
-          full_money: key,
-          repurseList: gifts[key]
-        })
-      }
-    }
   },
   onShow() {
     // 备注
@@ -452,26 +448,63 @@ Page({
           }
         }
         // 参与加价购的商品
-        let repurseTotalPrice = 0;
+        // 加购商品列表
+        const gifts = app.globalData.gifts;
+        let repurseTotalPrice = 0, arr_money = [];
+        // console.log(gifts)
         if (app.globalData.repurseGoods) {
+          if (Object.keys(gifts).length > 0) {
+            for (let key in gifts) {
+              gifts[key].forEach(val => {
+                val.goods_count = 0;
+                val.goods_choose = true
+              })
+              arr_money.push(key);
+            }
+          }
+          // 换购商品不指定
           if (app.globalData.repurseGoods.length == 0) {
-            if (res.data.activity_list[''].real_price >= this.data.full_money) {
+            arr_money.push(res.data.activity_list[''].real_price);
+            arr_money.sort();
+            let k = arr_money.findIndex(item => item == res.data.activity_list[''].real_price);
+            if (res.data.activity_list[''].real_price > arr_money[k - 1]) {
               this.setData({
-                showRepurse: true
+                showRepurse: true,
+                repurseList: gifts[arr_money[k - 1]]
+              })
+            } else if (res.data.activity_list[''].real_price == arr_money[k - 1]) {
+              this.setData({
+                showRepurse: true,
+                repurseList: gifts[res.data.activity_list[''].real_price]
               })
             }
-          } else {
+            if (res.data.activity_list[''].real_price >= arr_money[k]) {
+              this.setData({
+                showRepurse: true,
+                repurseList: gifts[arr_money[k]]
+              })
+            }
+          } else {   // // 换购商品为指定
             for (let item of app.globalData.repurseGoods) {
               for (let value of goodsReal) {
                 if (item.goods_code == value.sap_code && value.goods_type != "DIS") {
                   repurseTotalPrice += value.goods_price * value.goods_quantity;
-                  if (repurseTotalPrice >= this.data.full_money) {
-                    this.setData({
-                      showRepurse: true
-                    })
-                  }
                 }
               }
+            }
+            arr_money.push(repurseTotalPrice);
+            arr_money.sort();
+            let i = arr_money.findIndex(item => item == repurseTotalPrice);
+            if (repurseTotalPrice > arr_money[i - 1]) {
+              this.setData({
+                showRepurse: true,
+                repurseList: gifts[arr_money[i - 1]]
+              })
+            } else if (repurseTotalPrice == arr_money[i - 1]) {
+              this.setData({
+                showRepurse: true,
+                repurseList: gifts[repurseTotalPrice]
+              })
             }
           }
         }

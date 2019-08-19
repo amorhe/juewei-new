@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2,imageUrl3, ak } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, ak } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
 import { datedifference, sortNum, getNowDate } from '../../common/js/time'
 var app = getApp();
@@ -57,6 +57,7 @@ Component({
 
   },
   deriveDataFromProps(nextProps) {
+    // console.log(nextProps)
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
@@ -368,6 +369,9 @@ Component({
     // 购物车活动提示
     shopcartPrompt(oldArr, priceFree, repurse_price) {
       let activityText = '', freeText = '';
+      if (oldArr == []) {
+        return
+      }
       for (let v of oldArr) {
         if (oldArr.findIndex(v => v > repurse_price) != -1) {
           if (oldArr.findIndex(v => v > repurse_price) == 0) {

@@ -8,10 +8,10 @@
     "pages/login/protocol/protocol",
     "pages/login/verifycode/verifycode",
     "pages/login/auth/auth",
-    "package_my/pages/nearshop/nearshop",
-    "package_my/pages/onlineservice/onlineservice",
     "pages/noposition/noposition",
-    "pages/noNet/noNet"
+    "pages/noNet/noNet",
+    "package_my/pages/nearshop/nearshop",
+    "package_my/pages/onlineservice/onlineservice"
   ],
   "subPackages": [
     {

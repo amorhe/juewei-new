@@ -136,7 +136,7 @@
     <scroll-view class="repurseView" scroll-x a:if="{{repurseList.length>1}}">
       <view style="width:{{581*repurseList.length}}rpx">
         <view class="repurseGoodsInfo" a:for="{{repurseList}}">
-          <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{imageUrl2 + item.gift_img_url}}"/>
+          <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{item.gift_img_url}}"/>
           <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url==''}}" src="{{imageUrl}}coupon_default.png"/>
           <view>
             <view>
@@ -162,7 +162,7 @@
     </scroll-view>
     <!-- 换购商品只有一个 -->
     <view class="repurseGoodsInfo" a:for="{{repurseList}}" style="width:654rpx" a:if="{{repurseList.length==1}}">
-      <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{imageUrl2 + item.gift_img_url}}"/>
+      <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{item.gift_img_url}}"/>
       <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url==''}}" src="{{imageUrl}}coupon_default.png"/>
       <view>
         <view>
