@@ -50,7 +50,7 @@ Page({
     let goodsList = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
-    let obj1 = {}, obj2 = {}, obj3 = {}, obj4 = {}, obj5 = {}, goodlist = [];
+    let obj1 = {}, obj2 = {}, obj3 = {}, obj4 = {}, obj5 = {},obj6={}, goodlist = [];
     for (let key in goodsList) {
       if (goodsList[key].goods_discount) {
         if (key.indexOf('PKG') == -1) {
@@ -75,16 +75,25 @@ Page({
           }
         } else {
           // 套餐
-          obj5['goods_price'] = goodsList[key].goods_original_price;
-          obj5['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
-          obj5['goods_code'] = goodsList[key].goods_code;
-          obj5['goods_format'] = goodsList[key].goods_format;
-
-          obj3['goods_price'] = goodsList[key].goods_price;
-          obj3['goods_quantity'] = goodsList[key].goods_order_limit;
-          obj3['goods_code'] = goodsList[key].goods_code;
-          obj3['goods_format'] = goodsList[key].goods_format;
-          goodlist.push(obj3, obj5)
+          if (goodsList[key].num > goodsList[key].goods_order_limit) {
+            // 非折扣部分
+            obj5['goods_price'] = goodsList[key].goods_original_price;
+            obj5['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
+            obj5['goods_code'] = goodsList[key].goods_code;
+            obj5['goods_format'] = goodsList[key].goods_format;
+            // 折扣部分
+            obj3['goods_price'] = goodsList[key].goods_price;
+            obj3['goods_quantity'] = goodsList[key].goods_order_limit;
+            obj3['goods_code'] = goodsList[key].goods_code;
+            obj3['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj3, obj5)
+          }else{
+            obj6['goods_price'] = goodsList[key].goods_price;
+            obj6['goods_quantity'] = goodsList[key].num;
+            obj6['goods_code'] = goodsList[key].goods_activity_code;
+            obj6['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj6);
+          }
         }
       } else {
         //  普通商品
@@ -298,7 +307,7 @@ Page({
     const lat = my.getStorageSync({ key: 'lat' }).data;
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const goods = JSON.stringify(this.data.goodsReal);
-    let type = '', typeClass = '', gift_arr = [], giftObj = {}, notUse = 0,remark = '',str_gift = '';
+    let type = '', typeClass = '', gift_arr = [], giftObj = {}, notUse = 0, remark = '', str_gift = '';
     if (app.globalData.type == 1) {
       type = 1;
       typeClass = 2;
