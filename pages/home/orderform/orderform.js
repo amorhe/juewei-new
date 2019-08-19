@@ -78,7 +78,6 @@ Page({
         goodlist.push(goodsList[key])
       }
     }
-    console.log(goodlist)
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const self = app.globalData.shopTakeOut;
     const phone = my.getStorageSync({
@@ -523,7 +522,8 @@ Page({
           goodsInvented,
           orderInfo: res.data.activity_list[''],
           order_price: `¥${res.data.activity_list[''].real_price / 100}`,
-          coupon_money
+          coupon_money,
+          orderDetail:res.data
         })
       } else if (res.code == 277) {
         this.setData({

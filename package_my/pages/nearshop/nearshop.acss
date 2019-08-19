@@ -89,6 +89,7 @@
 .menuBtn {
   display: flex;
   justify-content: flex-end!important;
+  margin-top: 16rpx;
 }
 .menuBtn>cover-view {
   width:140rpx;

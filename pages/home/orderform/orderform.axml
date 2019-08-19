@@ -68,6 +68,10 @@
     <view class="track">
       <text>配送费</text>
       <view>
+        <view class="ordergoodsOld" a:if="{{orderDetail.dispatch_price != orderInfo.dispatch_price}}">
+          <text class="fontTwentyTwo">￥</text>
+          <text>{{orderDetail.dispatch_price / 100}}</text>
+        </view>
         <view class="numberColor">
           <text class="fontTwentyTwo">￥</text>
           <text>{{orderInfo.dispatch_price/100 || 0}}</text>

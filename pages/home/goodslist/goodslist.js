@@ -318,8 +318,9 @@ Page({
           goodsNew = new Set(goodsNew)
           goodsNew = [...goodsNew];
           app.globalData.goodsArr = goodsArr;  // 详情页，确认订单页使用
+          app.globalData.goodsCommon = arr;   // 不包含折扣，套餐
           // 最终商品总数据
-          console.log(goodsNew)
+          // console.log(goodsNew)
           this.setData({
             shopGoodsAll: goodsNew,
             shopGoods: arr

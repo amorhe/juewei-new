@@ -238,7 +238,6 @@ Component({
         repurse_price = 0, // 换购活动提示价
         snum = 0
       if (goodsList == null) return;
-
       // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
         if (goodsList[val].goods_discount) {
@@ -272,7 +271,8 @@ Component({
             }
           }
         } else {
-          for (let value of app.globalData.goodsArr) {
+          // 普通不带折扣的
+          for (let value of app.globalData.goodsCommon) {
             for (let fn of value.goods_format) {
               // 在门店
               if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
@@ -287,6 +287,7 @@ Component({
           }
         }
         num += goodsList[val].num;
+        // 计算购物车是否在门店内后筛选剩余商品价格
         if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
           priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
         } else {
