@@ -1,3 +1,4 @@
+<view class="{{maskView?'contanier':''}}">
 <view a:if="{{!isSelf}}">
   <!-- 定位 -->
   <view class="goodsPosition">
@@ -85,7 +86,6 @@
     </view>
   </view>
 </view>
-<!--<view style="height:152rpx" a:if="{{}}"></view> -->
 <navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll" a:if="{{!isSelf}}">
   <!-- 推荐门店 -->
   <view class="shopDefault">
@@ -113,6 +113,7 @@
     </view>
   </view>
 </navigator>
+</view>
 <view class="shopUp" a:if="{{isSelf}}">
   <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
   <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" pen-type="navigate">
