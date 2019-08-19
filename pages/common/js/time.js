@@ -106,6 +106,6 @@ export const getNowDate = () =>{
 // 上传formid，模版消息
 export const upformId = (formId) => {
   upAliMiniFormId(my.getStorageSync({ key: '_sid' }).data, my.getStorageSync({ key: 'ali_uid' }).data, formId).then((res) => {
-    console.log(res)
+    // console.log(res)
   })
 }
