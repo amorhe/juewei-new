@@ -47,17 +47,15 @@ Page({
 
 
   },
-  async onShow() {
+  onLoad(){
 
+  },
+  async onShow() {
     await this.getUserPoint()
     let _sid = await getSid()
-  
-
-    log(app.globalData)
-    const { company_sale_id: company_id, city_id, shop_id, district_id } = app.globalData.shopTakeOut
-
+    //获取当前所需要的分子公司id,城市id，门店id,区域id
+    const { company_sale_id: company_id, city_id, shop_id, district_id } = (app.globalData.shopTakeOut || my.getStorageSync({ key: 'takeout' }).data[0]);
     let navHeight = getNavHeight()
-
     this.setData({
       _sid,
       navHeight,
@@ -75,8 +73,6 @@ Page({
       await this.getCouponsList()
     })
     // this.initClientRect()
-
-
   },
 
   /**
@@ -219,24 +215,6 @@ Page({
   },
 
 
-  // initClientRect() {
-  //    my
-  //    .createSelectorQuery()
-  //     .select('#affix')
-  //     .boundingClientRect()
-  //     .exec(res=> {
-  //       log(res)
-  //       this.setData({
-  //         menuTop: res[0].top
-  //       })
-  //     })
-  //   },
-  // onPageScroll: function(scroll) {
-  //   if (this.data.menuFixed === (scroll.scrollTop > this.data.menuTop)) return;
-  //   this.setData({
-  //     menuFixed: (scroll.scrollTop > this.data.menuTop)
-  //   })
-  // }
 
   isloginFn() {
 
@@ -296,4 +274,26 @@ Page({
   onSubmit(e) {
     upformId(e.detail.formId);
   }
+
+
+  // initClientRect() {
+  //    my
+  //    .createSelectorQuery()
+  //     .select('#affix')
+  //     .boundingClientRect()
+  //     .exec(res=> {
+  //       log(res)
+  //       this.setData({
+  //         menuTop: res[0].top
+  //       })
+  //     })
+  //   },
+  // onPageScroll: function(scroll) {
+  //   if (this.data.menuFixed === (scroll.scrollTop > this.data.menuTop)) return;
+  //   this.setData({
+  //     menuFixed: (scroll.scrollTop > this.data.menuTop)
+  //   })
+  // }
+
+
 });

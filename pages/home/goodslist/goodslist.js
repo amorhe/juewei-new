@@ -126,6 +126,36 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
+    
+    // 自定义跳转页面
+    if(app.globalData.query && app.globalData.query!=''){ 
+        let page=app.globalData.query;
+        app.globalData.query=null;
+        switch (page) {
+          // vip
+          case '/pages/vip/index/index':
+          // 订单
+          case '/pages/order/list/list':
+          // 个人中心
+          case '/pages/my/index/index':
+            my.switchTab({
+              url: page
+            });
+            break;
+          // 优惠券
+          case '/package_my/pages/coupon/coupon':
+          // 会员卡
+          case '/package_my/pages/membercard/membercard':
+           //  附近门店
+          case '/package_my/pages/nearshop/nearshop':
+            my.navigateTo({
+              url: page
+            });
+            break;
+          default:
+            break;
+        }
+    } 
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
