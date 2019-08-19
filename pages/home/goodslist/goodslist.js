@@ -234,7 +234,7 @@ Page({
         return shopGoodsList.includes(item.sap_code)
       })
       // 获取参与加价购商品的列表（可换购）
-      if (app.globalData.activityList.MARKUP != null) {
+      if (app.globalData.activityList.MARKUP && app.globalData.activityList.MARKUP != null) {
         if (app.globalData.activityList.MARKUP.goods.length == 0) {
           app.globalData.repurseGoods = [];
         } else {

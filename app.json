@@ -10,7 +10,8 @@
     "pages/login/auth/auth",
     "package_my/pages/nearshop/nearshop",
     "package_my/pages/onlineservice/onlineservice",
-    "pages/noposition/noposition"
+    "pages/noposition/noposition",
+    "pages/noNet/noNet"
   ],
   "subPackages": [
     {

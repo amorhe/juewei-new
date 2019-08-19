@@ -3,6 +3,23 @@ import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
     // 第一次打开
+    my.getNetworkType({
+      success: (res) => {
+        if (res.networkType == "NOTREACHABLE") {
+          my.reLaunch({
+            url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+          });
+          return
+        }
+      }
+    })
+    my.onNetworkStatusChange((res) => {
+      if (res.networkAvailable == true) {
+        my.reLaunch({
+          url: '/pages/position/position'
+        })
+      }
+    })
     // 获取授权
     my.getAuthCode({
       scopes: ['auth_base'],

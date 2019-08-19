@@ -45,7 +45,7 @@
         <br>下单账户请在我的
         <text class="colorY">“我的卡券-兑换码”</text>里查看
       </view>
-      <button class="confirmBtn" onTap="confirmTap">确定</button>
+      <button class="confirmBtn" onTap="confirmTap" hover-class="none">确定</button>
   </view>
   </view>
   </modal>
