@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2, imageUrl3 } from '../../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../../common/js/baseUrl'
 import { commentList, DispatchCommentList } from '../../../common/js/home'
 var app = getApp();
 Page({
@@ -24,6 +24,7 @@ Page({
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     // 评论
     commentArr: [],
     key: '',
@@ -194,7 +195,7 @@ Page({
       shopcartNum += goodlist[keys].num
     }
     // 购物车活动提示
-    this.shopcartPrompt(app.globalData.fullActivity,priceFree, repurse_price);
+    this.shopcartPrompt(app.globalData.fullActivity, priceFree, repurse_price);
     this.onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
     this.setData({
       shopcartList: goodlist,

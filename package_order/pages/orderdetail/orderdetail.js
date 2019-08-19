@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2,imageUrl3 } from '../../../pages/common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../../pages/common/js/baseUrl'
 import { log, ajax, contact, handleCopy, guide } from '../../../pages/common/js/li-ajax'
 
 const app = getApp()
@@ -7,6 +7,7 @@ Page({
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     showTop: false,
     cancleShow: false,
     orderState: [],
@@ -350,7 +351,7 @@ Page({
               url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
             });
           }
-           return my.redirectTo({
+          return my.redirectTo({
             url: '/pages/home/orderError/orderError?order_no=' + order_no
           });
         },

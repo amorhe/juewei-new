@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2, imageUrl3 } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../common/js/baseUrl'
 import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay, useraddress } from '../../common/js/home'
 import { upformId } from '../../common/js/time'
 var app = getApp();
@@ -7,6 +7,7 @@ Page({
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     isCheck: true,  //协议
     // 换购商品列表
     repurseList: [],
@@ -50,7 +51,7 @@ Page({
     let goodsList = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
-    let obj1 = {}, obj2 = {}, obj3 = {}, obj4 = {}, obj5 = {},obj6={}, goodlist = [];
+    let obj1 = {}, obj2 = {}, obj3 = {}, obj4 = {}, obj5 = {}, obj6 = {}, goodlist = [];
     for (let key in goodsList) {
       if (goodsList[key].goods_discount) {
         if (key.indexOf('PKG') == -1) {
@@ -87,7 +88,7 @@ Page({
             obj3['goods_code'] = goodsList[key].goods_code;
             obj3['goods_format'] = goodsList[key].goods_format;
             goodlist.push(obj3, obj5)
-          }else{
+          } else {
             obj6['goods_price'] = goodsList[key].goods_price;
             obj6['goods_quantity'] = goodsList[key].num;
             obj6['goods_code'] = goodsList[key].goods_activity_code;
@@ -472,7 +473,7 @@ Page({
         }
         for (let val of goodsReal) {
           if (val.goods_type == 'PKG') {
-            val['goods_img'] = imageUrl3 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
+            val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
           } else {
             val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
           }
