@@ -41,7 +41,7 @@ Page({
     var that = this
     let _sid = await this.getSid()
     let res = await getuserInfo(_sid.data || '')
-    console.log(res, '我的页面')
+    // console.log(res, '我的页面')
     if (res.code == 30106) {
       this.setData({
         loginId: res.code,

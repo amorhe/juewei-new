@@ -34,7 +34,7 @@ App({
         });
         loginByAliUid(res.authCode).then((data) => {
           if (data.code == 0 && data.data.user_id) {
-            console.log('loginByAliUid',data);
+            // console.log('loginByAliUid',data);
             my.setStorageSync({
               key: 'ali_uid', // 缓存数据的key
               data: data.data.ali_uid, // 要缓存的数据
