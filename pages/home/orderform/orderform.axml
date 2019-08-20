@@ -56,7 +56,9 @@
         <view class="listRight">
           <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
           <view class="flexNormal">
-            <view class="ordergoodsOld" a:if="{{item.goods_original_price > item.goods_price}}"><text class="fontTwentyTwo">￥</text><text>{{item.goods_original_price * item.goods_quantity / 100}}</text></view>
+            <view class="ordergoodsOld" a:if="{{item.goods_original_price > item.goods_price}}">
+              <text class="fontTwentyTwo">￥</text>
+              <text>{{item.goods_original_price * item.goods_quantity / 100}}</text></view>
             <view>
               <text class="fontTwentyTwo">￥</text>
               <text>{{item.goods_price / 100 * item.goods_quantity}}</text>
@@ -212,13 +214,13 @@
       <text>合计</text>
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
-    <view onTap="confirmPay">
-      <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+    <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+      <view onTap="confirmPay" class="primaryBtn">
+        确认支付
         <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit">
         </button>
-        <button size="default" class="primaryBtn" hover-class="none">确认支付</button>
-      </form>
-    </view>
+      </view>
+    </form>
   </view>
 </view>
 <!-- 换购提示 -->

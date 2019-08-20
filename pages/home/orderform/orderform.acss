@@ -183,7 +183,8 @@
   margin-left: 32rpx;
   color: #fff;
   font-size: 36rpx;
-  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx
 }
 
 .repurseToast {
