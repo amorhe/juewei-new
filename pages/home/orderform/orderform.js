@@ -355,8 +355,10 @@ Page({
       if (res.code == 0) {
         if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
           this.setData({
-            isClick: true
+            isClick: true,
+            coupon_code:''
           })
+          app.globalData.coupon_code  = '';
           add_lng_lat(res.data.order_no, typeClass, lng, lat).then((conf) => {
             my.removeStorageSync({
               key: 'goodsList', // 缓存数据的key
@@ -371,8 +373,10 @@ Page({
           if (val.code == 0) {
             // 支付宝调起支付
             this.setData({
-              isClick: true
+              isClick: true,
+              coupon_code:''
             })
+            app.globalData.coupon_code = '';
             my.tradePay({
               tradeNO: val.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
               success: (value) => {
@@ -408,7 +412,7 @@ Page({
           content: res.msg,
         })
         this.setData({
-          isClick: true
+          isClick: true,
         })
       }
     })

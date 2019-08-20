@@ -1,3 +1,4 @@
+<view>
 <view class="closeIng" a:if="{{isShow}}" style="top: 208rpx;">
   <!-- 满减 -->
   <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days!=0}}">
@@ -151,5 +152,7 @@
 </view>
 <!-- 购物车 -->
 <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" activityText="{{activityText}}" freeText="{{freeText}}" onChangeShopcart="onchangeShopcart"/>
+
+</view>
 <!-- 加入购物车选择商品规格 -->
 <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsKey="{{goodsKey}}" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="onCart" priceAll="{{priceAll}}" shopcartNum="{{shopcartNum}}"/>

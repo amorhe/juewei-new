@@ -59,6 +59,6 @@ Component({
         mask:false
       }
       this.props.onCounterPlusOne(modalObj)
-    },
+    }
   },
 });

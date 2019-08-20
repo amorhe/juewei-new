@@ -6,7 +6,6 @@ import { bd_encrypt } from '../../common/js/map'
 var app = getApp(); //放在顶部
 Page({
   data: {
-    scroll_y: false,
     isSelf: false,  // 是不是去自提页
     imageUrl,
     imageUrl2,
@@ -126,39 +125,39 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-    
+
     // 自定义跳转页面
-    if(app.globalData.query && app.globalData.query!=''){ 
-        let page=app.globalData.query;
-        app.globalData.query=null;
-        switch (page) {
-          // vip
-          case '/pages/vip/index/index':
-          // 订单
-          case '/pages/order/list/list':
-          // 个人中心
-          case '/pages/my/index/index':
-            my.switchTab({
-              url: page
-            });
-            break;
-          // // 优惠券
-          // case '/package_my/pages/coupon/coupon':
-          // // 会员卡
-          // case '/package_my/pages/membercard/membercard':
-          //  //  附近门店
-          // case '/package_my/pages/nearshop/nearshop':
-          //   my.navigateTo({
-          //     url: page
-          //   });
-          //   break;
-          default:
-            my.navigateTo({
-              url: page
-            });
-            break;
-        }
-    } 
+    if (app.globalData.query && app.globalData.query != '') {
+      let page = app.globalData.query;
+      app.globalData.query = null;
+      switch (page) {
+        // vip
+        case '/pages/vip/index/index':
+        // 订单
+        case '/pages/order/list/list':
+        // 个人中心
+        case '/pages/my/index/index':
+          my.switchTab({
+            url: page
+          });
+          break;
+        // // 优惠券
+        // case '/package_my/pages/coupon/coupon':
+        // // 会员卡
+        // case '/package_my/pages/membercard/membercard':
+        //  //  附近门店
+        // case '/package_my/pages/nearshop/nearshop':
+        //   my.navigateTo({
+        //     url: page
+        //   });
+        //   break;
+        default:
+          my.navigateTo({
+            url: page
+          });
+          break;
+      }
+    }
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
@@ -256,6 +255,28 @@ Page({
         this.getShopGoodsList(this.data.shopTakeOut.shop_id);
       }
     });
+  },
+  // 门店营销活动(折扣和套餐)
+  async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
+    await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
+      app.globalData.activityList = res.data;
+      // 获取加价购商品
+      if (res.data.MARKUP) {
+        app.globalData.gifts = res.data.MARKUP.gifts;
+        // 获取活动金额
+        let newArr = Object.keys(res.data.MARKUP.gifts);
+        app.globalData.fullActivity = newArr;
+        this.setData({
+          fullActivity: newArr
+        })
+      } else {
+        app.globalData.gifts = [];
+        app.globalData.fullActivity = [];
+        this.setData({
+          fullActivity: []
+        })
+      }
+    })
   },
   // 门店商品列表
   async getShopGoodsList(shop_id) {
@@ -374,28 +395,6 @@ Page({
         },
       });
 
-    })
-  },
-  // 门店营销活动(折扣和套餐)
-  async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
-    await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
-      app.globalData.activityList = res.data;
-      // 获取加价购商品
-      if (res.data.MARKUP) {
-        app.globalData.gifts = res.data.MARKUP.gifts;
-        // 获取活动金额
-        let newArr = Object.keys(res.data.MARKUP.gifts);
-        app.globalData.fullActivity = newArr;
-        this.setData({
-          fullActivity: newArr
-        })
-      } else {
-        app.globalData.gifts = [];
-        app.globalData.fullActivity = [];
-        this.setData({
-          fullActivity:[]
-        })
-      }
     })
   },
   onHide() {

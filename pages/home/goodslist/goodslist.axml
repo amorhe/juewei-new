@@ -1,4 +1,4 @@
-<view class="{{maskView?'contanier':''}}">
+<view>
   <view a:if="{{!isSelf}}">
     <!-- 定位 -->
     <view class="goodsPosition">
@@ -86,55 +86,54 @@
       </view>
     </view>
   </view>
-</view>
-<navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll" a:if="{{!isSelf}}">
-  <!-- 推荐门店 -->
-  <view class="shopDefault">
-    <view>
-      <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
-      <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
-      <view class="shopMessage">
-        <view>{{shopTakeOut.title}}</view>
-        <view>在售商品数{{shopTakeOut.goods_num}}</view>
-      </view>
-    </view>
-    <view>
-      <view class="shopDefaultRight">
-        <view>
-          <image src="{{imageUrl}}position.png"/>
-          <view>距离{{shopTakeOut.distance}}米</view>
-        </view>
-        <view>
-          <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
-          <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
-          <view class="typeBtn2">自提</view>
+  <navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll" a:if="{{!isSelf}}">
+    <!-- 推荐门店 -->
+    <view class="shopDefault">
+      <view>
+        <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
+        <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
+        <view class="shopMessage">
+          <view>{{shopTakeOut.title}}</view>
+          <view>在售商品数{{shopTakeOut.goods_num}}</view>
         </view>
       </view>
-      <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
-    </view>
-  </view>
-</navigator>
-
-<view class="shopUp" a:if="{{isSelf}}">
-  <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
-  <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" pen-type="navigate">
-    <view>
-      <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
-      <view class="shop_info">
-        <view class="fontThirtySix">{{shopTakeOut.title}}</view>
-        <view>在售商品：{{shopTakeOut.goods_num}}</view>
-        <view>{{shopTakeOut.address}}</view>
+      <view>
+        <view class="shopDefaultRight">
+          <view>
+            <image src="{{imageUrl}}position.png"/>
+            <view>距离{{shopTakeOut.distance}}米</view>
+          </view>
+          <view>
+            <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
+            <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
+            <view class="typeBtn2">自提</view>
+          </view>
+        </view>
+        <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
       </view>
-    </view>
-    <view class="distanceView">
-      <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-      <view>距离{{shopTakeOut.distance}}米</view>
     </view>
   </navigator>
-</view>
-<view style="padding-right:36rpx">
-  <!-- 商品列表 -->
-  <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
+  <view class="shopUp" a:if="{{isSelf}}">
+    <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
+    <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" pen-type="navigate">
+      <view>
+        <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
+        <view class="shop_info">
+          <view class="fontThirtySix">{{shopTakeOut.title}}</view>
+          <view>在售商品：{{shopTakeOut.goods_num}}</view>
+          <view>{{shopTakeOut.address}}</view>
+        </view>
+      </view>
+      <view class="distanceView">
+        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+        <view>距离{{shopTakeOut.distance}}米</view>
+      </view>
+    </navigator>
+  </view>
+  <view style="padding-right:36rpx">
+    <!-- 商品列表 -->
+    <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
+  </view>
 </view>
 <!-- 提示框 -->
 <!--<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}" onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->
