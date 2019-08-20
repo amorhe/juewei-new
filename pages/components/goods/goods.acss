@@ -473,7 +473,8 @@
 } 
 .goodsNameI>view {
   color: #999;
-  font-size: 22rpx
+  font-size: 22rpx;
+  margin-bottom: 10rpx;
 } 
 .goodsPriceBox {
   margin-right: 88rpx;

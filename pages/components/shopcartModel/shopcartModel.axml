@@ -40,7 +40,10 @@ bottom:0;height:100rpx" formType="submit"></button>
           <text>{{item.goods_name}}</text>
           <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
         </view>
-        <view>{{item.goods_format}}</view>
+        <view>
+          <text class="format_view">{{item.goods_format}}</text>
+          <text a:if="{{item.huangou}}" class="numberColor orcle">指定商品</text>
+        </view>
       </view>
       <view class="flexNormal">
         <view class="goodsPriceBox">

@@ -146,7 +146,7 @@ Page({
           "goods_code": e.currentTarget.dataset.goods_code,
           "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
           "goods_discount": e.currentTarget.dataset.goods_discount,
-          "goods_original_price": e.currentTarget.dataset.goods_original_price,
+          "goods_original_price": e.currentTarget.dataset.goods_original_price * 100,
           "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
           "goods_order_limit": e.currentTarget.dataset.goods_order_limit,
           "goods_format": goods_format,
@@ -186,7 +186,6 @@ Page({
       } else {
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
-
       // 计算可换购商品价格
       if (goodlist[keys].huangou) {
         repurse_price += goodlist[keys].goods_price * goodlist[keys].num;

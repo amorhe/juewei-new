@@ -66,7 +66,7 @@ Component({
       this.props.onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price);
     },
     addshopcart(e) {
-      // console.log(e)
+      console.log(e)
       let goods_car = {};
       let goods_code = e.currentTarget.dataset.goods_code;
       let goods_format = e.currentTarget.dataset.goods_format;
@@ -133,6 +133,7 @@ Component({
               content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
             });
             priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+            console.log(priceAll)
             if (e.currentTarget.dataset.key == '折扣') {
               priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
             }
@@ -140,6 +141,7 @@ Component({
             priceAll += goodlist[keys].goods_price * goodlist[keys].num;
           }
         } else {
+          console.log(goodlist[keys].goods_price)
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }

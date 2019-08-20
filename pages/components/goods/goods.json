@@ -3,5 +3,6 @@
   "usingComponents": {
     "shopcart-model": "../../components/shopcartModel/shopcartModel",
     "goods-modal": "../goodsModal/goodsModal"
-  }
+  },
+  "disableScroll": true
 }

@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2, imageUrl3, ak,img_url } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, ak, img_url } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
 import { datedifference, sortNum, getNowDate } from '../../common/js/time'
 var app = getApp();
@@ -248,7 +248,12 @@ Component({
     },
     addshopcart(e) {
       let goods_car = {};
-      let goods_code = e.currentTarget.dataset.goods_code;
+      let goods_code = e.currentTarget.dataset.goods_code;;
+      // if (e.currentTarget.dataset.goods_discount) {
+      //   goods_code = e.currentTarget.dataset.goods_activity_code;
+      // } else {
+        
+      // }
       let goods_format = e.currentTarget.dataset.goods_format;
       let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
       if (goodlist[`${goods_code}_${goods_format}`]) {

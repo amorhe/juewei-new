@@ -59,18 +59,18 @@ Page({
             // 非折扣部分
             obj1['goods_price'] = goodsList[key].goods_original_price;
             obj1['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
-            obj1['goods_code'] = goodsList[key].goods_code;
+            obj1['goods_code'] = goodsList[key].goods_activity_code;
             obj1['goods_format'] = goodsList[key].goods_format;
             //  折扣部分
             obj2['goods_price'] = goodsList[key].goods_price;
             obj2['goods_quantity'] = goodsList[key].goods_order_limit;
-            obj2['goods_code'] = goodsList[key].goods_activity_code;
+            obj2['goods_code'] = goodsList[key].goods_code;
             obj2['goods_format'] = goodsList[key].goods_format;
             goodlist.push(obj1, obj2);
           } else {
             obj4['goods_price'] = goodsList[key].goods_price;
             obj4['goods_quantity'] = goodsList[key].num;
-            obj4['goods_code'] = goodsList[key].goods_activity_code;
+            obj4['goods_code'] = goodsList[key].goods_code;
             obj4['goods_format'] = goodsList[key].goods_format;
             goodlist.push(obj4);
           }
@@ -80,7 +80,7 @@ Page({
             // 非折扣部分
             obj5['goods_price'] = goodsList[key].goods_original_price;
             obj5['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
-            obj5['goods_code'] = goodsList[key].goods_code;
+            obj5['goods_code'] = goodsList[key].goods_activity_code;
             obj5['goods_format'] = goodsList[key].goods_format;
             // 折扣部分
             obj3['goods_price'] = goodsList[key].goods_price;
@@ -91,7 +91,7 @@ Page({
           } else {
             obj6['goods_price'] = goodsList[key].goods_price;
             obj6['goods_quantity'] = goodsList[key].num;
-            obj6['goods_code'] = goodsList[key].goods_activity_code;
+            obj6['goods_code'] = goodsList[key].goods_code;
             obj6['goods_format'] = goodsList[key].goods_format;
             goodlist.push(obj6);
           }
@@ -356,9 +356,9 @@ Page({
         if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
           this.setData({
             isClick: true,
-            coupon_code:''
+            coupon_code: ''
           })
-          app.globalData.coupon_code  = '';
+          app.globalData.coupon_code = '';
           add_lng_lat(res.data.order_no, typeClass, lng, lat).then((conf) => {
             my.removeStorageSync({
               key: 'goodsList', // 缓存数据的key
@@ -374,7 +374,7 @@ Page({
             // 支付宝调起支付
             this.setData({
               isClick: true,
-              coupon_code:''
+              coupon_code: ''
             })
             app.globalData.coupon_code = '';
             my.tradePay({
@@ -500,7 +500,9 @@ Page({
           // 换购商品不指定
           if (app.globalData.repurseGoods.length == 0) {
             arr_money.push(res.data.activity_list[''].real_price);
-            arr_money.sort();
+            arr_money.sort((a, b) => {
+              return a - b;
+            });
             let k = arr_money.findIndex(item => item == res.data.activity_list[''].real_price);
             if (res.data.activity_list[''].real_price >= arr_money[k - 1]) {
               this.setData({
@@ -523,7 +525,9 @@ Page({
               }
             }
             arr_money.push(repurseTotalPrice);
-            arr_money.sort();
+            arr_money.sort((a, b) => {
+              return a - b;
+            });
             let i = arr_money.findIndex(item => item == repurseTotalPrice);
             if (repurseTotalPrice >= arr_money[i - 1]) {
               this.setData({

@@ -238,6 +238,7 @@ Component({
         repurse_price = 0, // 换购活动提示价
         snum = 0
       if (goodsList == null) return;
+      console.log(app.globalData.activityList)
       // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
         if (goodsList[val].goods_discount) {
@@ -245,21 +246,22 @@ Component({
           if (goodsList[val].goods_code.indexOf('PKG') == -1) {
             for (let ott of app.globalData.activityList.DIS) {
               for (let fn of ott.goods_format) {
-                if (val == `${ott.goods_code}_${fn.type}`) {
+                if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];
                   // 判断购物车商品价格更新
                   if (goodsList[val].goods_price != fn.goods_price) {
                     snum += shopcartObj[val].num;
                     shopcartObj[val].goods_price = fn.goods_price
-                  }
+                  } 
                 }
               }
             }
+            
           } else {
             // 套餐
             for (let ott of app.globalData.activityList.PKG) {
               for (let fn of ott.goods_format) {
-                if (val == `${ott.goods_code}_${fn.type}`) {
+                if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];
                   // 判断购物车商品价格更新
                   if (goodsList[val].goods_price != fn.goods_price) {
@@ -269,6 +271,7 @@ Component({
                 }
               }
             }
+            console.log(shopcartObj)
           }
         } else {
           // 普通不带折扣的
@@ -285,8 +288,10 @@ Component({
               }
             }
           }
+          console.log(shopcartObj)
         }
         num += goodsList[val].num;
+        console.log(shopcartObj,  goodsList)
         // 计算购物车是否在门店内后筛选剩余商品价格
         if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
           priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
