@@ -119,7 +119,7 @@ Component({
       goodlist[`${goods_code}_${goods_format}`].num += 1;
       let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       for (let keys in goodlist) {
-        if (e.currentTarget.dataset.goods_discount && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+        if (e.currentTarget.dataset.goods_discount && goodlist[keys].goods_order_limit!=null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
           my.showToast({
             content: `折扣商品限购${goodlist[keys].goods_order_limit}份，超过${goodlist[keys].goods_order_limit}份恢复原价`
           });
@@ -238,7 +238,7 @@ Component({
         repurse_price = 0, // 换购活动提示价
         snum = 0
       if (goodsList == null) return;
-      console.log(app.globalData.activityList)
+      // console.log(app.globalData.activityList)
       // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
         if (goodsList[val].goods_discount) {
@@ -288,10 +288,9 @@ Component({
               }
             }
           }
-          console.log(shopcartObj)
         }
         num += goodsList[val].num;
-        console.log(shopcartObj,  goodsList)
+        // console.log(shopcartObj,  goodsList)
         // 计算购物车是否在门店内后筛选剩余商品价格
         if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
           priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
