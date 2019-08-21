@@ -184,6 +184,7 @@ Page({
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }
       } else {
+        priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       // 计算可换购商品价格
@@ -206,8 +207,6 @@ Page({
       key: 'goodsList', // 缓存数据的key
       data: goodlist, // 要缓存的数据
     });
-
-
   },
   reduceshopcart(e) {
     let code = e.currentTarget.dataset.goods_code;
