@@ -1,4 +1,4 @@
-import { imageUrl } from '../../common/js/baseUrl'
+import { imageUrl, jsonUrl } from '../../common/js/baseUrl'
 import { compare, upformId } from '../../common/js/time'
 let log = console.log
 var app = getApp();
@@ -361,7 +361,7 @@ Component({
     getSendPrice() {
       const timestamp = new Date().getTime();
       my.request({
-        url: `https://imgcdnjwd.juewei.com/static/check/api/shop/open-city.json?v=${timestamp}`,
+        url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
         success: (res) => {
           this.setData({
             send_price: res.data.data[app.globalData.position.cityAdcode].shop_send_price,

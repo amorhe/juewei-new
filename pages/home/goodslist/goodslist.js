@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2, ak } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2, ak, jsonUrl } from '../../common/js/baseUrl'
 import { bannerList, showPositionList, activityList, GetLbsShop, NearbyShop, GetShopGoods } from '../../common/js/home'
 import { getuserInfo, loginByAuth } from '../../common/js/login'
 import { cur_dateTime, compare, upformId } from '../../common/js/time'
@@ -244,9 +244,9 @@ Page({
   },
   // 公司商品列表
   getCompanyGoodsList(company_id) {
-    const str = new Date().getTime();
+    const timestamp = new Date().getTime();
     my.request({
-      url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=${str}`,
+      url: `${jsonUrl}/api/product/company_sap_goods${company_id}.json?v=${timestamp}`,
       success: (res) => {
         // 该公司所有的商品
         this.setData({
@@ -304,11 +304,11 @@ Page({
       }
       // 筛选在当前门店里面的折扣商品
       let DIS = [], PKG = [], obj1 = {}, obj2 = {}
-      if (app.globalData.activityList.DIS) {
+      if (app.globalData.activityList && app.globalData.activityList.DIS) {
         DIS = app.globalData.activityList.DIS.filter(item => arr.findIndex(value => value.sap_code == item.goods_sap_code) != -1)
       }
       // 筛选在当前门店里面的套餐商品  
-      if (app.globalData.activityList.PKG) {
+      if (app.globalData.activityList && app.globalData.activityList.PKG) {
         PKG = app.globalData.activityList.PKG.filter(item => item.pkg_goods.map(ott => arr.findIndex(value => value.sap_code == ott.sap_code) != -1));
       }
       // 套餐商品图片格式
@@ -319,7 +319,7 @@ Page({
       }
 
       // 包邮活动
-      if (app.globalData.activityList.FREE) {
+      if (app.globalData.activityList && app.globalData.activityList.FREE) {
         app.globalData.freeId = app.globalData.activityList.FREE.id;
         this.setData({
           freeMoney: app.globalData.activityList.FREE.money
