@@ -16,7 +16,7 @@ Page({
     loginOpened: false
   },
   onLoad(e) {
-    console.log(app.globalData)
+    // console.log(app.globalData)
     if (e.type) {
       this.setData({
         isSuccess: true,
@@ -182,7 +182,7 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-    console.log(e)
+    // console.log(e)
     app.globalData.position = e.currentTarget.dataset.info;
     let address = '';
     if(e.currentTarget.dataset.type==1){
