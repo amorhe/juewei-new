@@ -84,7 +84,6 @@ Component({
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num
     }
-
     this.setData({
       shopcartList: goodlist,
       priceAll,

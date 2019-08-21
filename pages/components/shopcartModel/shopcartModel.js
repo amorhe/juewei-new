@@ -32,7 +32,6 @@ Component({
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps) {
-    // console.log(nextProps)
     // 判断是不是起送
     if (app.globalData.type == 1) {
       this.setData({

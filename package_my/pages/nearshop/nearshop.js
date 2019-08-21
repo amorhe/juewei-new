@@ -21,7 +21,8 @@ Page({
     const lat = my.getStorageSync({ key: 'lat' }).data;
     this.nearShop(lng, lat);
     this.setData({
-      selfshop: false
+      selfshop: false,
+      city:app.globalData.city
     })
   },
   onShow() {
@@ -145,7 +146,7 @@ Page({
       showHotCities: true,
       success: (res) => {
         this.setData({
-          city
+          city:res.city
         })
       },
     });

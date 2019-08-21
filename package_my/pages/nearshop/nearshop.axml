@@ -1,7 +1,7 @@
 <view class="searchView">
   <view>
     <view class="positionAddress"  onTap="choosecityTap">
-      <text>北京市</text>
+      <text>{{city}}</text>
       <image src="{{imageUrl}}arrow_down1.png" />
     </view>
     <view class="searchBox">

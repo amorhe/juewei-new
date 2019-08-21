@@ -59,7 +59,7 @@
             </view>
           </view>
         </view>
-        <view onTap="toUrl" data-url='/package_my/pages/nearshop/nearshop'>
+        <navigator url='/package_my/pages/nearshop/nearshop'>
           <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:160rpx;height:126rpx" form-type="submit"></button>
           <view>
             <view>
@@ -67,7 +67,7 @@
               <view>附近门店</view>
             </view>
           </view>
-        </view>
+        </navigator>
         <navigator url="/package_my/pages/entitlement/entitlement">
           <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:160rpx;height:126rpx" form-type="submit"></button>
           <view>
