@@ -146,7 +146,7 @@ Page({
       showHotCities: true,
       success: (res) => {
         this.setData({
-          city:res.city
+          city:res.city + '市'
         })
       },
     });

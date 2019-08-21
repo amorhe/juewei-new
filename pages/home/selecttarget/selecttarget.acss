@@ -98,3 +98,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.address_view {
+  max-width: 500rpx;  
+  overflow:hidden;
+  text-overflow:ellipsis; 
+  white-space:nowrap; 
+}

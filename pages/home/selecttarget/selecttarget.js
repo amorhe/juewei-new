@@ -16,6 +16,7 @@ Page({
     loginOpened: false
   },
   onLoad(e) {
+    console.log(app.globalData)
     if (e.type) {
       this.setData({
         isSuccess: true,
@@ -54,7 +55,7 @@ Page({
       success: (res) => {
         // console.log(res)
         this.setData({
-          city: res.city
+          city: res.city + '市'
         })
       },
     });
@@ -115,7 +116,7 @@ Page({
     my.getLocation({
       type: 3,
       success(res) {
-        console.log(res)
+        // console.log(res)
         my.hideLoading();
         const mapPosition = bd_encrypt(res.longitude, res.latitude);
         my.setStorageSync({
@@ -181,10 +182,16 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
- 
+    console.log(e)
     app.globalData.position = e.currentTarget.dataset.info;
-    this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name);
-    this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, e.currentTarget.dataset.info.name)
+    let address = '';
+    if(e.currentTarget.dataset.type==1){
+      address = e.currentTarget.dataset.address;
+    }else{
+      address = e.currentTarget.dataset.info.name;
+    }
+    this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, address);
+    this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, address)
   },
   // 选择我的收货地址
   switchPositionAddress(e) {

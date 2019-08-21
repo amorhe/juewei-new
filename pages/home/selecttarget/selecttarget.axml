@@ -13,7 +13,7 @@
 <view class="positionIng">
   <view class="fontGray">当前定位</view>
   <view class="positionTxt">
-    <view class="flexSpecial" onTap="switchAddress" data-info="{{info}}" data-type="1" data-address="{{addressIng}}">
+    <view class="flexSpecial address_view" onTap="switchAddress" data-info="{{info}}" data-type="1" data-address="{{addressIng}}">
       <image src="{{imageUrl}}position.png"/>
       <text a:if="{{isSuccess}}">{{addressIng}}</text>
       <text a:if="{{!isSuccess}}">定位失败</text>
