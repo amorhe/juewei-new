@@ -1,4 +1,4 @@
-import {imageUrl} from '../../common/js/baseUrl';
+import {imageUrl, jsonUrl} from '../../common/js/baseUrl';
 import {GetShopGoods,activityList} from '../../common/js/home'
 
 Page({
@@ -37,8 +37,9 @@ Page({
     })
   },
   getShopList(shop_id,company_id){
+    const timestamp = new Date().getTime();
      my.request({
-      url: `https://imgcdnjwd.juewei.com/static/check/api/product/company_sap_goods${company_id}.json?v=156335816013`,
+      url: `${jsonUrl}/api/product/company_sap_goods${company_id}.json?v=${timestamp}`,
       success: (conf) => {
         // 该公司所有的商品
          GetShopGoods(shop_id).then((res) => {
@@ -50,7 +51,7 @@ Page({
           })
           
           my.request({
-            url: 'https://images.juewei.com/prod/shop/goods_sort.json?v=1563417069075',
+            url: 'https://images.juewei.com/prod/shop/goods_sort.json?v=' + timestamp,
             success: (data) => {
               let _T = data.data.data.country
               const { typeList } = this.data

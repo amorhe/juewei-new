@@ -123,7 +123,6 @@
   width: 130rpx;
   height: 104rpx;
   margin-right: 16rpx;
-  /* background: url('https://test-wap.juewei.com/m/ali-mini/image/gift.jpg') 0 0 / 100% 100% no-repeat; */
 }
 .repurseGoodsInfo>view {
   display: flex;
