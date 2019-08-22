@@ -290,19 +290,21 @@ Component({
         }
         num += goodsList[val].num;
         // 计算购物车是否在门店内后筛选剩余商品价格
-        if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
-          priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
-        } else {
-          priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
+        if(shopcartObj[val]){//判断商品是否存在
+          if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
+            priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
+          } else {
+            priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
+          }
+          if (!shopcartObj[val].goods_discount) {
+            priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
+          }
+          if (shopcartObj[val].huangou) {
+            repurse_price += shopcartObj[val].goods_price * shopcartObj[val].num;
+          }
+          shopcartAll.push(shopcartObj[val]);
+          shopcartNum += shopcartObj[val].num;
         }
-        if (!shopcartObj[val].goods_discount) {
-          priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
-        }
-        if (shopcartObj[val].huangou) {
-          repurse_price += shopcartObj[val].goods_price * shopcartObj[val].num;
-        }
-        shopcartAll.push(shopcartObj[val]);
-        shopcartNum += shopcartObj[val].num;
       }
       // 购物车筛选后剩余数量
       shopcartNum = Object.entries(shopcartObj).reduce((pre, cur) => {
