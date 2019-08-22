@@ -100,7 +100,7 @@
           <text>￥{{(item.goods_price  * item.goods_quantity /100)}}</text>
         </view>
       </view>
-      <view class="post">
+      <view class="post" a:if="{{dis_type==1}}">
         <view class="label">
           配送费
         </view>

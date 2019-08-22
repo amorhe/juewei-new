@@ -3,6 +3,7 @@
   font-size: 36rpx;
   color: #333;
   padding: 46rpx 0 0;
+  font-weight: bold
 }
 
 .rules{

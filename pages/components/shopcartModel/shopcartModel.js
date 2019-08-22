@@ -237,7 +237,6 @@ Component({
         repurse_price = 0, // 换购活动提示价
         snum = 0
       if (goodsList == null) return;
-      console.log(app.globalData.goodsCommon)
       // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
         if (goodsList[val].goods_discount) {
@@ -270,7 +269,7 @@ Component({
                 }
               }
             }
-            console.log(shopcartObj)
+            // console.log(shopcartObj)
           }
         } else {
           // 普通不带折扣的
