@@ -131,6 +131,7 @@ App({
     addressInfo: null,   //切换定位地址
     gifts: null,    //加购商品
     type: 1,     // 默认外卖
-    coupon_code: null   //优惠券
+    coupon_code: null,   //优惠券
+    scrollTop:null
   }
 });

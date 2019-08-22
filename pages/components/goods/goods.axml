@@ -1,4 +1,4 @@
-<view>
+
   <view class="closeIng" a:if="{{isShow}}" style="top: 208rpx;">
     <!-- 满减 -->
     <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days!=0}}">
@@ -35,8 +35,8 @@
     <!--<view class="numberColor">您的满30减5的优惠券还有3天过期</view> -->
     <image src="{{imageUrl}}close2.png" onTap="closeCouponView" />
   </view>
-  <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
-    <scroll-view scroll-y="true" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;" scroll-top="{{leftscrolltop}}">
+  <view id="pagesinfo" style="top:{{isShow?'254rpx':'208rpx'}}" class="pages_scroll">
+    <scroll-view scroll-y="true" style="width:168rpx;max-height:100vh;background: #F8F8F8;padding-bottom:200rpx;box-sizing:border-box" scroll-top="{{leftscrolltop}}">
       <view class="goodsUl">
         <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}">
           <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{type[item.key]}}_1.png"/>
@@ -46,7 +46,7 @@
         </view>
       </view>
     </scroll-view>
-    <scroll-view scroll-y="true" style="box-sizing:border-box;;width:530rpx;float:right;height:100%;padding-bottom:500rpx;" scroll-into-view="{{goodsType}}" scroll-with-animation="true" scroll-animation-duration="50" onTouchEnd="onTouchEnd" class="scrolllist">
+    <scroll-view scroll-y="true" style="width:530rpx;max-height:100vh;padding-bottom:500rpx;box-sizing:border-box" scroll-into-view="{{goodsType}}" scroll-with-animation="true" scroll-animation-duration="50" onTouchEnd="onTouchEnd" class="scrolllist">
       <view>
         <view id="{{index + 1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
           <view class="goodsTypeEv">{{item.key}}</view>
@@ -156,6 +156,5 @@
   </view>
   <!-- 购物车 -->
   <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClear="onClear" activityText="{{activityText}}" freeText="{{freeText}}" onChangeShopcart="onchangeShopcart"/>
-</view>
 <!-- 加入购物车选择商品规格 -->
 <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsKey="{{goodsKey}}" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="onCart" priceAll="{{priceAll}}" shopcartNum="{{shopcartNum}}"/>

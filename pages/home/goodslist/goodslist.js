@@ -93,8 +93,8 @@ Page({
       this.setData({
         jingxuan: app.globalData.shopIng.jingxuan || false
       })
-      app.globalData.shopIng=null;
-      
+      app.globalData.shopIng = null;
+
     } else {
       if (app.globalData.type == 1) {
         shopArray = my.getStorageSync({
@@ -380,18 +380,27 @@ Page({
           this.setData({
             shopGoodsAll: goodsNew,
             shopGoods: arr
+          }, () => {
+            // 获取商品模块的节点
+            my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
+              // console.log(ret)
+              let top = ret[0][0].top;
+              let arr = ret[0].map((item, index) => {
+                return item.top = item.top - top - 37;
+              })
+              app.globalData.ret = arr;
+            })
+            // setTimeout(() => {
+            //   my.createSelectorQuery().selectAll('.pagesScorll').boundingClientRect().exec((e) => {
+            //     if (!this.data.isSelf) {
+            //       app.globalData.scrollTop = e[0][0].top
+            //     }
+            //   })
+            // }, 2000)
           })
           my.setStorageSync({
             key: 'shopGoods',
             data: goodsArr
-          })
-          // 获取商品模块的节点
-          my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
-            let top = ret[0][0].top;
-            let arr = ret[0].map((item, index) => {
-              return item.top = item.top - top - 37;
-            })
-            app.globalData.ret = arr;
           })
 
         },
