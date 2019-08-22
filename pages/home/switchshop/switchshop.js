@@ -57,7 +57,7 @@ Page({
     app.globalData.type = this.data.type;    //外卖自提
     app.globalData.hI = e.currentTarget.dataset.index;
     app.globalData.shopIng = e.currentTarget.dataset.shopIng;
-    my.switchTab({ 
+    my.navigateBack({ //由于商城首页选用的是navigate  所以这里需要用返回
       url: '/pages/home/goodslist/goodslist'
     })
   },
