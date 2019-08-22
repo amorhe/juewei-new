@@ -1,4 +1,5 @@
-import { baseUrl,ak,geotable_id} from './baseUrl'
+import { baseUrl, ak, geotable_id } from './baseUrl'
+import { gd_decrypt } from './map'
 import parse from 'mini-html-parser2';
 
 
@@ -158,10 +159,11 @@ export const getDistance = async (_lng, _lat) => {
  */
 
 export const guide = e => {
-  const { shop_longitude, shop_latitude, shop_name, address } = e.currentTarget.dataset
+  const { shop_longitude, shop_latitude, shop_name, address } = e.currentTarget.dataset;
+  let ott = gd_decrypt(shop_longitude,shop_latitude);
   my.openLocation({
-    longitude: shop_longitude,
-    latitude: shop_latitude,
+    longitude: ott.lng,
+    latitude: ott.lat,
     name: shop_name,
     address,
   });

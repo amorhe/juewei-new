@@ -14,7 +14,6 @@ Page({
     isLogin: false,
   },
   onLoad() {
-    this.getAuthCode();
   },
   onShow() {
     this.setData({

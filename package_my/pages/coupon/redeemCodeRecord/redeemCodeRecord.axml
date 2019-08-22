@@ -1,5 +1,5 @@
-<view class="redeemCode" a:for="{{exchageArr}}">
-  <view>
+<view class="redeemCode" >
+  <view a:for="{{exchageArr}}">
     <image class="codeSize" src="{{imageUrl2 + item.gift_img_url}}" /> 
     <view class="redeemContent">
       <view class="fontBold">{{item.gift_name}}</view> 

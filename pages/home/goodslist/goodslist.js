@@ -126,7 +126,6 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-
     // 自定义跳转页面
     if (app.globalData.query && app.globalData.query != '') {
       let page = app.globalData.query;
@@ -146,7 +145,7 @@ Page({
         case '/package_my/pages/coupon/coupon':
         // 会员卡
         case '/package_my/pages/membercard/membercard':
-         //  附近门店
+        //  附近门店
         case '/package_my/pages/nearshop/nearshop':
           my.navigateTo({
             url: page
@@ -221,6 +220,7 @@ Page({
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
+
   },
   // 首页banner列表
   async getBannerList(city_id, district_id, company_id) {
@@ -390,13 +390,12 @@ Page({
               })
               app.globalData.ret = arr;
             })
-            // setTimeout(() => {
-            //   my.createSelectorQuery().selectAll('.pagesScorll').boundingClientRect().exec((e) => {
-            //     if (!this.data.isSelf) {
-            //       app.globalData.scrollTop = e[0][0].top
-            //     }
-            //   })
-            // }, 2000)
+            my.createSelectorQuery().selectAll('#pagesinfo').boundingClientRect().exec((e) => {
+              console.log(e)
+              if (!this.data.isSelf) {
+                app.globalData.scrollTop = e[0][0].top
+              }
+            })
           })
           my.setStorageSync({
             key: 'shopGoods',
