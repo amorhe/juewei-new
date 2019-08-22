@@ -277,7 +277,7 @@ Page({
   showCancel() {
     if(this.data.order_channel != 1){
         my.showToast({
-          content:'当前订单不能取消'
+          content:'订单不支持跨平台操作，请去相应平台取消订单！'
         });
         return
     }

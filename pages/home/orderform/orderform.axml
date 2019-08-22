@@ -67,7 +67,7 @@
         </view>
       </view>
     </view>
-    <view class="track">
+    <view class="track" a:if="{{orderType==1}}">
       <text>配送费</text>
       <view>
         <view class="ordergoodsOld" a:if="{{orderDetail.dispatch_price != orderInfo.dispatch_price}}">
