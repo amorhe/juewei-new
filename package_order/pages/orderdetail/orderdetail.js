@@ -64,6 +64,7 @@ Page({
     payStatusList: [],
     d: {},
     dis_type: -1,
+    order_channel:1
   },
   async onLoad(e) {
     let { order_no } = e
@@ -242,7 +243,8 @@ Page({
           time,
           timeArr,
           curOrderState,
-          dis_type
+          dis_type,
+          order_channel:res.channel
         })
       }, 1000)
 
@@ -273,6 +275,12 @@ Page({
    */
 
   showCancel() {
+    if(this.data.order_channel != 1){
+        my.showToast({
+          content:'当前订单不能取消'
+        });
+        return
+    }
     this.setData({
       cancleShow: true
     })

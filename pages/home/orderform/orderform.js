@@ -442,11 +442,14 @@ Page({
           addressList.push(value)
         }
       }
-      app.globalData.address_id = addressList[0].user_address_id;
-      this.setData({
-        address: true,
-        addressInfo: addressList[0]
-      })
+      if (addressList[0].user_address_id) {
+        app.globalData.address_id = addressList[0].user_address_id;
+        this.setData({
+          address: true,
+          addressInfo: addressList[0]
+        })
+      }
+
     })
   },
   // 选择优惠券

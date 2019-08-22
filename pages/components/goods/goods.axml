@@ -36,7 +36,7 @@
     <image src="{{imageUrl}}close2.png" onTap="closeCouponView" />
   </view>
   <view id="pagesinfo" style="position:relative;box-sizing:border-box;height:100vh;overflow-y:scroll">
-    <scroll-view scroll-y="true" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;">
+    <scroll-view scroll-y="true" style="box-sizing:border-box;;width:168rpx;float:left;height:100vh;background: #F8F8F8;padding-bottom:100rpx;" scroll-top="{{leftscrolltop}}">
       <view class="goodsUl">
         <view onTap="chooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsList}}">
           <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{type[item.key]}}_1.png"/>

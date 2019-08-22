@@ -14,13 +14,29 @@ Page({
     isLogin: false,
   },
   onLoad() {
-
+    this.getAuthCode();
   },
   onShow() {
     this.setData({
       _sid: app.globalData._sid
     })
     this.getUserInfo()
+  },
+  getAuthCode() {
+    my.getAuthCode({
+      scopes: ['auth_user', 'auth_life_msg'],
+      success: (res) => {
+        my.getAuthUserInfo({
+          success: (user) => {
+            userInfo.head_img = user.avatar
+            userInfo.nick_name = user.nickName
+            that.setData({
+              userInfo: userInfo
+            })
+          }
+        });
+      },
+    });
   },
   // 取本地缓存_sid
   getSid() {
@@ -53,29 +69,17 @@ Page({
       that.setData({
         userInfo: userInfo
       })
-      my.getAuthCode({
-        scopes: ['auth_user', 'auth_life_msg'],
-        success: (res) => {
-          my.getAuthUserInfo({
-            success: (user) => {
-              userInfo.head_img = user.avatar
-              userInfo.nick_name = user.nickName
-              that.setData({
-                userInfo: userInfo
-              })
-            }
-          });
-        },
-      });
     }
   },
   // 判断是否去登录
   isloginFn() {
     if (this.data.userInfo.user_id) {
-
-      my.navigateTo({
-        url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
-      });
+      this.getAuthCode();
+      if (this.data.userInfo != '') {
+        my.navigateTo({
+          url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
+        });
+      }
     } else {
       my.navigateTo({
         url: '/pages/login/auth/auth'
@@ -102,7 +106,7 @@ Page({
     my.makePhoneCall({ number: '4009995917' });
   },
   // 模版消息
-  onSubmit(e){
+  onSubmit(e) {
     upformId(e.detail.formId);
   }
 });

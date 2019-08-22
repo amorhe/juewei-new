@@ -53,6 +53,7 @@ Component({
       "解辣神器": 13,
     },
     repurse_price: 0,    // 购物车换购商品价格
+    leftscrolltop:0
   },
   onInit() {
 
@@ -224,7 +225,8 @@ Component({
           let sum = retArr.findIndex(item => item >= ret[0].scrollTop);
           if (this.data.goodsType != sum) {
             this.setData({
-              goodsType: sum
+              goodsType: sum,
+              // leftscrolltop: 110 * sum
             })
           }
         })

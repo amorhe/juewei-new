@@ -39,7 +39,6 @@ page {
 .vip {
   /* background: linear-gradient(180deg, #FB5332 0,#FB5332 200rpx, rgba(255, 255, 255, 0) 300rpx); */
   min-height: 100vh;
-  overflow: hidden
 }
 
 .content {
