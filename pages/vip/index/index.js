@@ -16,7 +16,7 @@ Page({
 
     _sid: '',
     navHeight: '',
-    loginFinsih:false,
+    loginFinsih: false,
 
     menuTop: 0,
     menuFixed: false,
@@ -47,7 +47,7 @@ Page({
 
 
   },
-  onLoad(){
+  onLoad() {
 
   },
   async onShow() {
@@ -63,7 +63,8 @@ Page({
       district_id,
       company_id,
       shop_id,
-      loginFinsih:true
+      loginFinsih: true,
+      cur: 0
     }, async () => {
       this.getBanner()
       this.getPositionList()
@@ -148,8 +149,8 @@ Page({
     if (res.code === 100) {
       if (!res.data.length) {
         return this.setData({
-        positionList:[]
-      })
+          positionList: []
+        })
       }
       let { pic_src, link_url } = res.data[0];
       let positionList = pic_src.map((pic, index) => {
