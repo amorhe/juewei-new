@@ -190,8 +190,14 @@ Page({
       let shopTakeOut = '';
       if (app.globalData.shopIng) {
         shopTakeOut = app.globalData.shopIng
+        this.setData({
+           jingxuan:app.globalData.shopIng.jingxuan
+        });
       } else {
-        shopTakeOut = my.getStorageSync({ key: 'self' }).data[0]
+        shopTakeOut = my.getStorageSync({ key: 'self' }).data[0];
+        this.setData({
+           jingxuan:true
+        });
       }
       this.setData({
         shopTakeOut,
