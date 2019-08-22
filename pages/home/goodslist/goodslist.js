@@ -154,7 +154,6 @@ Page({
           });
           break;
         default:
-          console.log('default=',page);
           my.navigateTo({
             url: page
           });
