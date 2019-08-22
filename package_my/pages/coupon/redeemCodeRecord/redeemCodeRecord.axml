@@ -1,5 +1,5 @@
-<view class="redeemCode">
-  <view a:for="{{exchageArr}}">
+<view class="redeemCode" a:for="{{exchageArr}}">
+  <view>
     <image class="codeSize" src="{{imageUrl2 + item.gift_img_url}}" /> 
     <view class="redeemContent">
       <view class="fontBold">{{item.gift_name}}</view> 
@@ -8,4 +8,9 @@
     </view> 
     <image class="guoqi" src="{{imageUrl}}overdue.png" />            
   </view>
+</view>
+ <!-- 空状态 -->
+<view class="nullBox" style="height:85vh;padding-top:207rpx;box-sizing:border-box" a:if="{{exchageArr.length==0}}">
+  <image class='nullImg' src="{{ imageUrl}}bg_coupon.png"/>
+  <text>暂无历史兑换码</text>
 </view>
