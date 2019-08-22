@@ -12,5 +12,6 @@
 }
 .moduleTitle {
   font-size: 32rpx;
-  line-height:40rpx!important
+  font-weight: bold;
+  margin: 20rpx 0 10rpx;
 }

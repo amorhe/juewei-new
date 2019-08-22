@@ -10,7 +10,7 @@ Page({
     imageUrl,
     avatarImg: '',
     _sid: '',
-    userInfo: '',
+    userInfo: {},
     isLogin: false,
   },
   onLoad() {
@@ -23,14 +23,15 @@ Page({
     this.getUserInfo()
   },
   getAuthCode() {
+    let { userInfo } = this.data
     my.getAuthCode({
       scopes: ['auth_user', 'auth_life_msg'],
       success: (res) => {
         my.getAuthUserInfo({
           success: (user) => {
-            userInfo.head_img = user.avatar
-            userInfo.nick_name = user.nickName
-            that.setData({
+            userInfo['head_img'] = user.avatar
+            userInfo['nick_name'] = user.nickName
+            this.setData({
               userInfo: userInfo
             })
           }
@@ -61,7 +62,7 @@ Page({
     if (res.code == 30106) {
       this.setData({
         loginId: res.code,
-        userInfo: '',
+        userInfo: {},
       })
     }
     if (res.code == 0) {
@@ -75,7 +76,7 @@ Page({
   isloginFn() {
     if (this.data.userInfo.user_id) {
       this.getAuthCode();
-      if (this.data.userInfo != '') {
+      if (Object.keys(this.data.userInfo).length>0) {
         my.navigateTo({
           url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
         });

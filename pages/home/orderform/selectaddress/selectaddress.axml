@@ -15,7 +15,7 @@
     </view>
     <view class="noUseView" a:if="{{ addressListNoUse.length>0 }}" >
       <view class="viewTitle">以下地址超出配送范围</view>
-      <view class="borderBottomSolid addressUl colorNine" a:for="{{addressListNoUse}}" onTap="chooseNewAddress">
+      <view class="borderBottomSolid addressUl colorNine" a:for="{{addressListNoUse}}" onTap="chooseNewAddress" data-lng="{{item.lng}}" data-lat="{{item.lat}}" data-address="{{item.user_address_map_addr + item.user_address_address}}">
           <view class="flexSpecial">
             <view class="receives">
               <view>{{item.user_address_map_addr + item.user_address_address}}</view>

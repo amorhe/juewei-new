@@ -230,6 +230,7 @@ page {
   background: white;
   position: sticky;
   z-index: 999999;
+  left: 0
 }
 
 .no-good {

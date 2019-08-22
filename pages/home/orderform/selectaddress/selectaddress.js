@@ -1,14 +1,18 @@
-import {imageUrl} from '../../../common/js/baseUrl'
-import {useraddress} from '../../../common/js/home'
+import { imageUrl, geotable_id, ak } from '../../../common/js/baseUrl'
+import { useraddress, GetLbsShop, NearbyShop } from '../../../common/js/home'
+import { cur_dateTime, sortNum } from '../../../common/js/time'
 var app = getApp();
 Page({
   data: {
     imageUrl,
-    addressList:[],
-    mask:false,
-    modalShow:false,
-    addressListNoUse:[],
-    address_id:'',
+    addressList: [],
+    mask: false,
+    modalShow: false,
+    addressListNoUse: [],
+    address_id: '',
+    lng: '',
+    lat: '',
+    address: ''
   },
   onLoad(e) {
     // if(e.type) {
@@ -17,29 +21,46 @@ Page({
     //   })
     // }
   },
-  onShow(){
+  onShow() {
     this.getAddress();
   },
   // 选择不在配送范围内的地址
-  chooseNewAddress(){
+  chooseNewAddress(e) {
     this.setData({
       mask: true,
-      modalShow: true
+      modalShow: true,
+      lng: e.currentTarget.dataset.lng,
+      lat: e.currentTarget.dataset.lat,
+      address: e.currentTarget.dataset.address
     })
   },
   onCounterPlusOne(data) {
+    if (data.type == 1) {
+      my.setStorageSync({
+        key: 'lng', // 缓存数据的key
+        data: this.data.lng, // 要缓存的数据
+      });
+      my.setStorageSync({
+        key: 'lat', // 缓存数据的key
+        data: this.data.lat, // 要缓存的数据
+      });
+      this.getLbsShop(this.data.lng, this.data.lat, this.data.address);
+      this.getNearbyShop(this.data.lng, this.data.lat, this.data.address)
+    }
     this.setData({
       mask: data.mask,
       modalShow: data.modalShow
     })
   },
-  getAddress(){
-    useraddress(my.getStorageSync({key: 'shop_id'}).data).then((res) => {
-      let addressList = [],addressListNoUse=[];
-      for(let value of res.data){
-        if(value.is_dis == 1){
+  getAddress() {
+    useraddress(my.getStorageSync({ key: 'shop_id' }).data).then((res) => {
+      let addressList = [], addressListNoUse = [];
+      for (let value of res.data) {
+        value.lng = value.user_address_lbs_baidu.split(',')[0];
+        value.lat = value.user_address_lbs_baidu.split(',')[1];
+        if (value.is_dis == 1) {
           addressList.push(value)
-        }else{
+        } else {
           addressListNoUse.push(value)
         }
       }
@@ -49,19 +70,116 @@ Page({
       })
     })
   },
-  chooseAddress(e){
+  chooseAddress(e) {
     app.globalData.address_id = e.currentTarget.dataset.id;
     my.navigateBack({
       url: '/pages/home/orderform/orderform', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
       success: (res) => {
-        
+
       },
     });
   },
   // 编辑收货地址　
-  editAddress(e){
+  editAddress(e) {
     my.navigateTo({
       url: "/package_my/pages/myaddress/addaddress/addaddress?Id=" + e.currentTarget.dataset.id
     });
-  }
+  },
+  // 外卖附近门店
+  getLbsShop(lng, lat, address) {
+    let that = this;
+    const location = `${lng},${lat}`
+    const shopArr1 = [];
+    const shopArr2 = [];
+    app.globalData.address = address;
+    GetLbsShop(location).then((res) => {
+      // console.log(res)
+      if (res.code == 0 && res.data.length > 0) {
+        for (let i = 0; i < res.data.length; i++) {
+          const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
+          app.globalData.isOpen = status
+          // 判断是否营业
+          if (status == 1 || status == 3) {
+            shopArr1.push(res.data[i]);
+          } else {
+            shopArr2.push(res.data[i]);
+          }
+        }
+        // 按照goods_num做降序排列
+        let shopArray = shopArr1.concat(shopArr2);
+        shopArray.sort((a, b) => {
+          var value1 = a.goods_num,
+            value2 = b.goods_num;
+          if (value1 <= value2) {
+            return a.distance - b.distance;
+          }
+          return value2 - value1;
+        });
+        shopArray[0]['jingxuan'] = true;
+        my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
+        that.getNearbyShop(lng, lat, address);
+        my.switchTab({
+          url: '/pages/home/goodslist/goodslist'
+        })
+      } else {
+        // 无外卖去自提
+        this.setData({
+          loginOpened: true
+        })
+      }
+
+    })
+  },
+  // 自提附近门店
+  getNearbyShop(lng, lat, address) {
+    const location = `${lng},${lat}`
+    const str = new Date().getTime();
+    my.request({
+      url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=${geotable_id}&location=${lng}%2C${lat}&ak=${ak}&radius=3000&sortby=distance%3A1&page_index=0&page_size=50&_=${str}`,
+      success: (res) => {
+        // 3公里有门店
+        if (res.data.contents && res.data.contents.length > 0) {
+          this.getSelf(res.data.contents, address)
+        } else {
+          // 没有扩大搜索范围到1000000公里
+          my.request({
+            url: `https://api.map.baidu.com/geosearch/v3/nearby?geotable_id=${geotable_id}&location=${lng}%2C${lat}&ak=${ak}&radius=1000000000&sortby=distance%3A1&page_index=0&page_size=50&_=${str}`,
+            success: (conf) => {
+              if (conf.data.contents && conf.data.contents.length > 0) {
+                this.getSelf(conf.data.contents, address)
+              } else {
+                // 无自提门店
+
+              }
+            },
+          });
+        }
+
+      },
+    });
+  },
+  // 自提
+  getSelf(obj, address) {
+    let shopArr1 = [];
+    let shopArr2 = [];
+    NearbyShop(JSON.stringify(obj)).then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        let status = cur_dateTime(res[i].start_time, res[i].end_time);
+        app.globalData.isOpen = status
+        // 判断是否营业
+        if (status == 1 || status == 3) {
+          shopArr1.push(res[i]);
+        } else {
+          shopArr2.push(res[i]);
+        }
+      }
+      // 根据距离最近排序
+      shopArr1.sort(sortNum('distance'));
+      shopArr2.sort(sortNum('distance'));
+      const shopArray = shopArr1.concat(shopArr2);
+      shopArray[0]['jingxuan'] = true;
+      app.globalData.address = address;
+      my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
+    })
+  },
 });

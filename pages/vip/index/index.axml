@@ -23,7 +23,7 @@
       </view>
       <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
         <view class="flex-center" style="font-size:26rpx;height:32rpx" onTap="toExchangeList">
-          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:40%;height:1em" formType="submit"></button>
+          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:20%;height:1em" formType="submit"></button>
            兑换记录
           <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
         </view>
