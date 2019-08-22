@@ -209,12 +209,18 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
-
+    
       let shopTakeOut = '';
       if (app.globalData.shopIng) {
-        shopTakeOut = app.globalData.shopIng
+        shopTakeOut = app.globalData.shopIng;
+         this.setData({
+           jingxuan:(app.globalData.shopIng.jingxuan || false)
+        });
       } else {
         shopTakeOut = my.getStorageSync({ key: 'takeout' }).data[0]
+         this.setData({
+           jingxuan:true
+        });
       }
       this.setData({
         shopTakeOut,
