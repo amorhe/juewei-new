@@ -65,6 +65,10 @@
   width: 25%;
   margin-top: 32rpx;
 }
+.menuList>navigator {
+  width: 25%;
+  margin-top: 32rpx;
+}
 .menuList>view>view {
   display: flex;
   flex-direction: column;
