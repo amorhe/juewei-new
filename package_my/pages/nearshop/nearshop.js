@@ -45,11 +45,15 @@ Page({
     my.request({
       url,
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         my.hideKeyboard();
         const lng = res.data.result.location.lng;
         const lat = res.data.result.location.lat;
         this.nearShop(lng, lat);
+        this.setData({
+          longitude:lng,
+          latitude:lat
+        })
       },
     });
   },

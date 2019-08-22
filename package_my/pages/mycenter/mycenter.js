@@ -67,13 +67,12 @@ Page({
           return item.addrid == res.data.region_id
         })[0]
       }
-      res.data.provinceName = province.name || ''
-      res.data.cityName = city.name || ''
-      res.data.regionName = regions.name || ''
-      // console.log(res.data,'数据啊')
       that.setData({
         userinfo: res.data
       })
+      res.data.provinceName = province.name || ''
+      res.data.cityName = city.name || ''
+      res.data.regionName = regions.name || ''
     })
   },
   // 选择性别
