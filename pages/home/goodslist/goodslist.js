@@ -79,6 +79,7 @@ Page({
     // 初始化默认外卖
     let shopArray = [];
     if (app.globalData.shopIng) {
+      console.log('app');
       if (my.getStorageSync({ key: 'shop_id' }).data != app.globalData.shop_id) {
         this.getCompanyGoodsList(app.globalData.shopIng.company_sale_id); //获取公司所有商品
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, app.globalData.shopIng.company_sale_id);//banner
@@ -93,6 +94,8 @@ Page({
       this.setData({
         jingxuan: app.globalData.shopIng.jingxuan || false
       })
+      app.globalData.shopIng=null;
+      
     } else {
       if (app.globalData.type == 1) {
         shopArray = my.getStorageSync({
@@ -103,7 +106,6 @@ Page({
           key: 'self', // 缓存数据的key
         }).data;
       }
-      // console.log(app.globalData.type)
       this.getCompanyGoodsList(shopArray[0].company_sale_id); //获取公司所有商品
       this.getBannerList(shopArray[0].city_id, shopArray[0].district_id, shopArray[0].company_sale_id);//banner
       this.getShowpositionList(shopArray[0].city_id, shopArray[0].district_id, shopArray[0].company_sale_id);
@@ -198,11 +200,13 @@ Page({
         shopTakeOut,
         type: 2
       });
+
       app.globalData.type = 2;
       this.getCompanyGoodsList(shopTakeOut.company_sale_id); //获取公司所有商品(第一个为当前门店)
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
+
       let shopTakeOut = '';
       if (app.globalData.shopIng) {
         shopTakeOut = app.globalData.shopIng
@@ -223,7 +227,6 @@ Page({
   // 首页banner列表
   async getBannerList(city_id, district_id, company_id) {
     await bannerList(city_id, district_id, company_id, 1).then((data) => {
-      // console.log(data)
       if (data.data.length > 1) {
         this.setData({
           indicatorDots: true,
