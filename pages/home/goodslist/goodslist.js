@@ -191,7 +191,7 @@ Page({
       if (app.globalData.shopIng) {
         shopTakeOut = app.globalData.shopIng
         this.setData({
-           jingxuan:app.globalData.shopIng.jingxuan
+           jingxuan:(app.globalData.shopIng.jingxuan || false)
         });
       } else {
         shopTakeOut = my.getStorageSync({ key: 'self' }).data[0];
