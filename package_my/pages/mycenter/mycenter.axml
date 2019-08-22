@@ -23,7 +23,7 @@
      <view class="listItem" onTap="showSelectAddress">
       <view class="Itemlabel">城市</view>
       <view class="ItimInfo" a:if="{{ userinfo.province_id==0 }}">请选择城市</view>
-      <view class="ItimInfo" a:else>{{ userinfo.provinceName}}{{userinfo.cityName}}{{userinfo.regionName }}</view>
+      <view class="ItimInfo" a:else>{{userinfo.provinceName}}-{{userinfo.cityName}}-{{userinfo.regionName}}</view>
       <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
     </view>
      <view class="listItem" onTap="toUrl" data-url="/package_my/pages/mycenter/bindphone/bindphone?phone={{userinfo.phone}}&type=1">
