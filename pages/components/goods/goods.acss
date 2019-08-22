@@ -353,7 +353,7 @@
 }
 .goodsCount {
   justify-content: space-between;
-  width: 346rpx;
+  width: 340rpx;
 }
 .marginUD {
   margin: 8rpx 0;
