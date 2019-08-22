@@ -21,6 +21,8 @@ Page({
     const lat = my.getStorageSync({ key: 'lat' }).data;
     this.nearShop(lng, lat);
     this.setData({
+      longitude: lng,
+      latitude: lat,
       selfshop: false,
       city:app.globalData.city
     })
