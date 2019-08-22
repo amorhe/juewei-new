@@ -143,16 +143,16 @@ Page({
             url: page
           });
           break;
-        // // 优惠券
-        // case '/package_my/pages/coupon/coupon':
-        // // 会员卡
-        // case '/package_my/pages/membercard/membercard':
-        //  //  附近门店
-        // case '/package_my/pages/nearshop/nearshop':
-        //   my.navigateTo({
-        //     url: page
-        //   });
-        //   break;
+        // 优惠券
+        case '/package_my/pages/coupon/coupon':
+        // 会员卡
+        case '/package_my/pages/membercard/membercard':
+         //  附近门店
+        case '/package_my/pages/nearshop/nearshop':
+          my.navigateTo({
+            url: page
+          });
+          break;
         default:
           console.log('default=',page);
           my.navigateTo({
