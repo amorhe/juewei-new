@@ -79,7 +79,6 @@ Page({
     // 初始化默认外卖
     let shopArray = [];
     if (app.globalData.shopIng) {
-      console.log('app');
       if (my.getStorageSync({ key: 'shop_id' }).data != app.globalData.shop_id) {
         this.getCompanyGoodsList(app.globalData.shopIng.company_sale_id); //获取公司所有商品
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, app.globalData.shopIng.company_sale_id);//banner

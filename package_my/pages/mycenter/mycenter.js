@@ -15,17 +15,11 @@ Page({
     sex: 0,
     // 地址
     name: '',
-
     phone: '',
-
     address: '',
-
     labelList: ['学校', '家', '公司'],
-
     curLabel: 0,
-
     selectAddress: false,
-
     addressList: region,
     provinceList: [],
     cityList: [],
@@ -52,7 +46,7 @@ Page({
     var _sid = my.getStorageSync({
       key: '_sid'
     }).data
-    console.log(_sid, '_ssssss')
+ 
     getuserInfo(_sid).then((res) => {
       var province = region.filter(item => {
         return item.addrid == res.data.province_id
@@ -67,12 +61,12 @@ Page({
           return item.addrid == res.data.region_id
         })[0]
       }
-      that.setData({
-        userinfo: res.data
-      })
       res.data.provinceName = province.name || ''
       res.data.cityName = city.name || ''
       res.data.regionName = regions.name || ''
+      that.setData({
+        userinfo: res.data
+      })
     })
   },
   // 选择性别
