@@ -94,7 +94,7 @@
 .menuBtn>cover-view {
   width:140rpx;
   height:64rpx;
-  border-radius:32rpx!important;
+  border-radius:32rpx;
   text-align: center;
   line-height: 64rpx;
   font-size: 26rpx;
@@ -103,13 +103,12 @@
   color: #999;
   border:1px solid rgba(153,153,153,1);
   margin-right: 16rpx;
-  border-radius:32rpx
 }
 .menuBtn>cover-view:nth-child(2){
   color: #fff;
   /* background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%); */
   background: #E60012;
-  border-radius:32rpx
+  border: 1px solid #E60012;
 }
 .paddingLeft {
   padding-left: 48rpx;

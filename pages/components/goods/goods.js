@@ -54,10 +54,20 @@ Component({
     },
     repurse_price: 0,    // 购物车换购商品价格
     leftscrolltop:0,
-    top:''
+    pagescrollTop:0
   },
   onInit() {
-
+    setTimeout(() =>{
+      var query = my.createSelectorQuery();
+      query.select('.pagesScorll').boundingClientRect();
+      query.exec((rect) => {
+        // console.log(rect)
+        if (rect[0] === null) return;
+        this.setData({
+          pagescrollTop: rect[0].top
+        })
+      });
+    }, 2000)
   },
   deriveDataFromProps(nextProps) {
     // console.log(nextProps)
@@ -196,6 +206,9 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
+      my.pageScrollTo({
+        scrollTop:this.data.pagescrollTop
+      });
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
@@ -218,6 +231,9 @@ Component({
     },
     // 滑动
     onTouchEnd(e) {
+      my.pageScrollTo({
+        scrollTop:this.data.pagescrollTop
+      });
       setTimeout(() => {
         let retArr = [...app.globalData.ret];
         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
