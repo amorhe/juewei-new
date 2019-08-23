@@ -15,7 +15,8 @@ Page({
     img_code: '',
     modalOpened: false,
     getCode: true,
-    cursor: 0
+    cursor: 0,
+    timestamp: 0,        //当前时间戳
   },
   onLoad(e) {
     var ali_uid = my.getStorageSync({
@@ -28,6 +29,22 @@ Page({
       _sid: _sid
     })
     this.timeDate()
+  },
+  onShow() {
+    if (this.data.timestamp != 0) {
+      let timestampNew = new Date().getTime();
+      let counts = parseInt((timestampNew - this.data.timestamp) / 1000);
+      if (counts > 0) {
+        this.setData({
+          countTime: this.data.countTime - counts
+        })
+      } else {
+        this.setData({
+          isnew: true,
+          countTime: 60,
+        })
+      }
+    }
   },
   bindFocus() {
     var that = this
@@ -52,7 +69,6 @@ Page({
       code: this.data.value
     }
     loginByPhone(data).then(res => {
-      console.log(res)
       if (res.code == 0) {
         // 成功
         app.globalData._sid = res.data._sid
@@ -93,7 +109,6 @@ Page({
     var time = 60
     timeCount = setInterval(function() {
       time--
-      console.log(time)
       that.setData({
         countTime: time
       })
@@ -165,7 +180,7 @@ Page({
         return
       }
       var data = {
-        _sid:this.data._sid,
+        _sid: this.data._sid,
         phone: this.data.phone,
         img_code: this.data.img_code
       }
@@ -193,11 +208,15 @@ Page({
     }
   },
   onHide() {
+    let timestamp = new Date().getTime();
     this.setData({
-      isnew: false,
-      countTime: 60,
+      timestamp
     })
-    clearInterval(timeCount)
+    // this.setData({
+    //   isnew: false,
+    //   countTime: 60,
+    // })
+    // clearInterval(timeCount)
   },
   onUnload() {
     // 页面被关闭

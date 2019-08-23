@@ -2,3 +2,4 @@
 *.log
 .tea
 .idea
+/pages/common/js/baseUrl.js

@@ -1,6 +1,7 @@
 import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../common/js/baseUrl'
 import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay, useraddress } from '../../common/js/home'
 import { upformId } from '../../common/js/time'
+import { gd_decrypt } from '../../common/js/map'
 var app = getApp();
 Page({
   data: {
@@ -42,7 +43,7 @@ Page({
     isClick: true,
     phone: '',   // 手机号
     newArr: [],    // 变更商品列表
-    addressList:[]
+    addressList: []
   },
   onLoad(e) {
     // 外卖默认地址
@@ -103,48 +104,53 @@ Page({
         goodlist.push(goodsList[key])
       }
     }
-    // console.log(goodsList)
-    const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const self = app.globalData.shopTakeOut;
-    const phone = my.getStorageSync({
-      key: 'phone', // 缓存数据的key
-    }).data;
-    const longitude = my.getStorageSync({ key: 'lng' }).data;
-    const latitude = my.getStorageSync({ key: 'lat', }).data;
-    let arr = [
-      {
-        longitude,
-        latitude,
-        iconPath: `${imageUrl}position_map1.png`,
-        width: 20,
-        height: 20,
-        rotate: 0
-      },
-      {
-        longitude: self.location[0],
-        latitude: self.location[1],
-        iconPath: `${imageUrl}position_map2.png`,
-        width: 36,
-        height: 36,
-        label: {
-          content: `距你${self.distance}米`,
-          color: "#333",
-          fontSize: 11,
-          borderRadius: 30,
-          bgColor: "#ffffff",
-          padding: 8,
-        }
-      }
-    ]
     this.setData({
-      shopObj: self,
-      longitude: self.location[0],
-      latitude: self.location[1],
-      markersArray: arr,
       goodsList: goodlist,
-      orderType: app.globalData.type,
-      phone
+      shopObj: self
     })
+    if (app.globalData.type == 2) {
+      const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
+      const phone = my.getStorageSync({
+        key: 'phone', // 缓存数据的key
+      }).data;
+      let ott = gd_decrypt(my.getStorageSync({ key: 'lng' }).data, my.getStorageSync({ key: 'lat', }).data);
+      let location_s = gd_decrypt(self.location[0], self.location[1]);
+      console.log(ott, location_s)
+      let arr = [
+        {
+          longitude: ott.lng,
+          latitude: ott.lat,
+          iconPath: `${imageUrl}position_map1.png`,
+          width: 20,
+          height: 20,
+          rotate: 0
+        },
+        {
+          longitude: location_s.lng,
+          latitude: location_s.lat,
+          iconPath: `${imageUrl}position_map2.png`,
+          width: 36,
+          height: 36,
+          label: {
+            content: `距你${self.distance}米`,
+            color: "#333",
+            fontSize: 11,
+            borderRadius: 30,
+            bgColor: "#ffffff",
+            padding: 8,
+          }
+        }
+      ]
+      this.setData({
+        longitude: location_s.lng,
+        latitude: location_s.lat,
+        markersArray: arr,
+        orderType: app.globalData.type,
+        phone
+      })
+    }
+
   },
   onShow() {
     // 备注
