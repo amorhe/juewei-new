@@ -4,7 +4,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box
+  box-sizing: border-box;
+  position: relative;
+  left: 0;
+  top: 0
 }
 .remarksTextarea {
   width:686rpx;

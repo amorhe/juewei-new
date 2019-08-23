@@ -3,9 +3,9 @@
   <view class="addressView" a:if="{{orderType==1}}">
     <navigator url="/pages/home/orderform/selectaddress/selectaddress" class="noAddress">
       <!-- 选择地址前 -->
-      <text a:if="{{!address}}">选择收货地址</text>
+      <text a:if="{{!address || addressList.length==0}}">选择收货地址</text>
       <!-- 选择地址后 -->
-      <view a:if="{{address}}">
+      <view a:if="{{address && addressList.length>0}}">
         <view class="fontFourty fontBold marginBEight">{{addressInfo.user_address_map_addr + addressInfo.user_address_address}}</view>
         <view class="fontGray fontTwentySix">{{addressInfo.user_address_name}}（{{addressInfo.user_address_sex == 0?'先生':'女士'}}） {{addressInfo.user_address_phone}}</view>
       </view>

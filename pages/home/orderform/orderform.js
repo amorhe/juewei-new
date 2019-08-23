@@ -42,6 +42,7 @@ Page({
     isClick: true,
     phone: '',   // 手机号
     newArr: [],    // 变更商品列表
+    addressList:[]
   },
   onLoad(e) {
     // 外卖默认地址
@@ -117,7 +118,7 @@ Page({
         iconPath: `${imageUrl}position_map1.png`,
         width: 20,
         height: 20,
-        rotate: 270
+        rotate: 0
       },
       {
         longitude: self.location[0],
@@ -446,7 +447,8 @@ Page({
         app.globalData.address_id = addressList[0].user_address_id;
         this.setData({
           address: true,
-          addressInfo: addressList[0]
+          addressInfo: addressList[0],
+          addressList
         })
       }
 
