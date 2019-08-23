@@ -37,7 +37,7 @@
         已抢{{(((detail.exchange_day_num-detail.exchange_day_vaild_num)*100/detail.exchange_day_num)).toFixed(0)}}%
       </view>
       <view class="bottom" a:if="{{detail.exchange_day_num==0}}" style="width:{{((detail.total_num - detail.valid_num)/detail.total_num) *100}}%;background:#FDE0E1"></view>
-      <view class="bottom" a:if="{{detail.exchange_day_num==0}}">
+      <view class="bottom bottom-back" a:if="{{detail.exchange_day_num==0}}">
         已抢{{(((detail.total_num-detail.valid_num)*100/detail.total_num)).toFixed(0)}}%
       </view>
     </view>

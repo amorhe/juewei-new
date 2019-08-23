@@ -8,7 +8,7 @@
   font-size: 22rpx;
   box-sizing: border-box;
   position: sticky;
-  z-index: 100
+  z-index: 1001
 }
 
 .closeIng>image {
