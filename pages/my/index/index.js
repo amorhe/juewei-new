@@ -12,19 +12,23 @@ Page({
     _sid: '',
     userInfo: {},
     isLogin: false,
+    showno:1,//显示次数
   },
   onLoad() {
+     
   },
   onShow() {
     this.setData({
       _sid: app.globalData._sid
     })
-    this.getUserInfo()
+    this.getUserInfos();//在显示的时候调起
   },
   getAuthCode(userInfo) {
+    if(this.data.showno!==1){return;}
     my.getAuthCode({
       scopes: ['auth_user', 'auth_life_msg'],
       success: (res) => {
+        console.log('ddddd',res);
         my.getAuthUserInfo({
           success: (user) => {
             userInfo['head_img'] = user.avatar
@@ -35,6 +39,13 @@ Page({
           }
         });
       },
+      fail:(e) => {
+        if(e.error==11){ //用户取消了选择
+          this.setData({
+            showno: 2
+          })
+        }
+      }
     });
   },
   // 取本地缓存_sid
@@ -52,7 +63,7 @@ Page({
     })
   },
   // 获取用户信息
-  async getUserInfo() {
+  async getUserInfos() {
     var that = this
     let _sid = await this.getSid()
     let res = await getuserInfo(_sid.data || '')
@@ -96,6 +107,9 @@ Page({
 
   },
   onHide() {
+     this.setData({
+         showno: 1
+     })
   },
   // 打客服电话
   makePhoneCall() {
