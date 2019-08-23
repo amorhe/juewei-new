@@ -31,9 +31,9 @@ export const ajax = (url, data = {}, method = "POST") => {
             url: '/pages/login/auth/auth'
           });
         } else {
-          //tiaocuowuye
+          //提示接口的信息，并且跳错误页
           reject(my.alert({
-            title: '网络请求错误',
+            title: rest.msg,
             success() {
               my.redirectTo({
                 url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
