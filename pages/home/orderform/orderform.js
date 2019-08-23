@@ -118,16 +118,16 @@ Page({
       let location_s = gd_decrypt(self.location[0], self.location[1]);
       let arr = [
         {
-          longitude: my.getStorageSync({ key: 'lng' }).data,
-          latitude: my.getStorageSync({ key: 'lat' }).data,
+          longitude: ott.lng,
+          latitude: ott.lat,
           iconPath: `${imageUrl}position_map1.png`,
           width: 20,
           height: 20,
           rotate: 0
         },
         {
-          longitude: self.location[0],
-          latitude: self.location[1],
+          longitude: location_s.lng,
+          latitude: location_s.lat,
           iconPath: `${imageUrl}position_map2.png`,
           width: 36,
           height: 36,
@@ -142,8 +142,8 @@ Page({
         }
       ]
       this.setData({
-        longitude: self.location[0],
-        latitude: self.location[1],
+        longitude: location_s.lng,
+        latitude: location_s.lat,
         markersArray: arr,
         orderType: app.globalData.type,
         phone
