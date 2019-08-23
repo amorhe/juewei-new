@@ -424,7 +424,7 @@ Page({
           }, () => {
             // 获取商品模块的节点
             my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
-              // console.log(ret)
+              if(ret[0]==null){return;}
               let top = ret[0][0].top;
               let arr = ret[0].map((item, index) => {
                 return item.top = item.top - top - 37;
@@ -432,6 +432,7 @@ Page({
               app.globalData.ret = arr;
             })
             my.createSelectorQuery().selectAll('#pagesinfo').boundingClientRect().exec((e) => {
+              if(e[0]==null){return;}
               if (!this.data.isSelf) {
                 app.globalData.scrollTop = e[0][0].top
               }
