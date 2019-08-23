@@ -276,7 +276,6 @@ Component({
           for (let value of app.globalData.goodsCommon) {
             for (let fn of value.goods_format) {
               // 在门店
-              console.log(val,    `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`)
               if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
                 shopcartObj[val] = goodsList[val];
                 // 判断购物车商品价格更新

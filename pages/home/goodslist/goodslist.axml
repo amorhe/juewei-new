@@ -132,7 +132,7 @@
   </view>
   <view style="padding-right:36rpx">
     <!-- 商品列表 -->
-    <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}"/>
+    <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}" shopGoods="{{shopGoods}}"/>
   </view>
 </view>
 <!-- 提示框 -->
