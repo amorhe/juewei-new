@@ -19,8 +19,8 @@ Page({
     type: 0,
     content: "",
     orderType: 1,  //1为外卖，2为自提
-    longitude: null,
-    latitude: null,
+    longitude: '',
+    latitude: '',
     markersArray: [],
     shopObj: {},   // 自提商店的详细信息
     couponslist: [],   //优惠券列表
@@ -43,7 +43,7 @@ Page({
     isClick: true,
     phone: '',   // 手机号
     newArr: [],    // 变更商品列表
-    addressList: []
+    addressList: [],
   },
   onLoad(e) {
     // 外卖默认地址
@@ -116,19 +116,18 @@ Page({
       }).data;
       let ott = gd_decrypt(my.getStorageSync({ key: 'lng' }).data, my.getStorageSync({ key: 'lat', }).data);
       let location_s = gd_decrypt(self.location[0], self.location[1]);
-      console.log(ott, location_s)
       let arr = [
         {
-          longitude: ott.lng,
-          latitude: ott.lat,
+          longitude: my.getStorageSync({ key: 'lng' }).data,
+          latitude: my.getStorageSync({ key: 'lat' }).data,
           iconPath: `${imageUrl}position_map1.png`,
           width: 20,
           height: 20,
           rotate: 0
         },
         {
-          longitude: location_s.lng,
-          latitude: location_s.lat,
+          longitude: self.location[0],
+          latitude: self.location[1],
           iconPath: `${imageUrl}position_map2.png`,
           width: 36,
           height: 36,
@@ -143,8 +142,8 @@ Page({
         }
       ]
       this.setData({
-        longitude: location_s.lng,
-        latitude: location_s.lat,
+        longitude: self.location[0],
+        latitude: self.location[1],
         markersArray: arr,
         orderType: app.globalData.type,
         phone
