@@ -2,9 +2,17 @@ import { loginByAliUid } from './pages/common/js/login'
 import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
+    // page是拿不到的信息，只有query可以拿到
     if(options.query){
-      this.globalData.query = (Object.keys(options.query)[0] || options.query);
-      console.log('app',this.globalData.query);
+      for(let keys in options.query){
+        this.globalData.query=(keys || '');
+        break;
+      }
+      // this.globalData.query = (Object.keys(options.query)[0] || options.query);
+       my.setStorageSync({
+          key: 'query', // 缓存数据的key
+          data: this.globalData.query, // 要缓存的数据
+       });
     }
     // 第一次打开
     my.getNetworkType({
