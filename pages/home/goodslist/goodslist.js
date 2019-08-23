@@ -136,34 +136,53 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-    // 自定义跳转页面
-    if (app.globalData.query && app.globalData.query != '') {
-      let page = app.globalData.query;
-      app.globalData.query = null;
-      switch (page) {
+
+     // 自定义跳转页面
+    let topage=(app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
+    app.globalData.page = null; //删除
+    my.removeStorageSync({key: 'query'}); //删除
+    console.log('topage',topage);
+    if (topage != '') {
+      switch (topage) {
         // vip
         case '/pages/vip/index/index':
+          my.navigateTo({
+            url: topage
+          });
+          break;
         // 订单
         case '/pages/order/list/list':
+          my.navigateTo({
+            url: topage
+          });
+          break;
         // 个人中心
         case '/pages/my/index/index':
           my.switchTab({
-            url: page
+            url: topage
           });
           break;
         // 优惠券
         case '/package_my/pages/coupon/coupon':
+          my.navigateTo({
+            url: topage
+          });
+          break;
         // 会员卡
         case '/package_my/pages/membercard/membercard':
+          my.navigateTo({
+            url: topage
+          });
+          break;
         //  附近门店
         case '/package_my/pages/nearshop/nearshop':
           my.navigateTo({
-            url: page
+            url: topage
           });
           break;
         default:
           my.navigateTo({
-            url: page
+            url: topage
           });
           break;
       }
