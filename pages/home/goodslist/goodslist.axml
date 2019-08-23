@@ -114,7 +114,7 @@
     </view>
   </navigator>
   <view class="shopUp" a:if="{{isSelf}}">
-    <image class="shopLogo" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4184062858,1792399090&fm=26&gp=0.jpg"/>
+    <image class="shopLogo" src="{{imageUrl}}shopbg.png"/>
     <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" open-type="navigateBack">
       <view>
         <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
