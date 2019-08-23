@@ -64,6 +64,16 @@ Page({
     if (my.getStorageSync({ key: 'appglobalData' }).data) {
       my.removeStorageSync({ key: 'appglobalData' });
     }
+    // setTimeout(() =>{
+    //   var query = my.createSelectorQuery();
+    //   query.select('.pagesScorll').boundingClientRect();
+    //   query.exec((rect) => {
+    //     if (rect[0] === null) return;
+    //     this.setData({
+    //       marginBM: rect[0].height + 10
+    //     })
+    //   });
+    // }, 2000)
   },
   onShow() {
     // 定位地址
@@ -191,12 +201,12 @@ Page({
       if (app.globalData.shopIng) {
         shopTakeOut = app.globalData.shopIng
         this.setData({
-           jingxuan:(app.globalData.shopIng.jingxuan || false)
+          jingxuan: (app.globalData.shopIng.jingxuan || false)
         });
       } else {
         shopTakeOut = my.getStorageSync({ key: 'self' }).data[0];
         this.setData({
-           jingxuan:true
+          jingxuan: true
         });
       }
       this.setData({
@@ -209,17 +219,17 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
-    
+
       let shopTakeOut = '';
       if (app.globalData.shopIng) {
         shopTakeOut = app.globalData.shopIng;
-         this.setData({
-           jingxuan:(app.globalData.shopIng.jingxuan || false)
+        this.setData({
+          jingxuan: (app.globalData.shopIng.jingxuan || false)
         });
       } else {
         shopTakeOut = my.getStorageSync({ key: 'takeout' }).data[0]
-         this.setData({
-           jingxuan:true
+        this.setData({
+          jingxuan: true
         });
       }
       this.setData({
