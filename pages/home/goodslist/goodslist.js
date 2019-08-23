@@ -391,7 +391,6 @@ Page({
               app.globalData.ret = arr;
             })
             my.createSelectorQuery().selectAll('#pagesinfo').boundingClientRect().exec((e) => {
-              console.log(e)
               if (!this.data.isSelf) {
                 app.globalData.scrollTop = e[0][0].top
               }

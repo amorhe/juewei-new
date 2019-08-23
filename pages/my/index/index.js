@@ -21,8 +21,7 @@ Page({
     })
     this.getUserInfo()
   },
-  getAuthCode() {
-    let { userInfo } = this.data
+  getAuthCode(userInfo) {
     my.getAuthCode({
       scopes: ['auth_user', 'auth_life_msg'],
       success: (res) => {
@@ -65,10 +64,7 @@ Page({
       })
     }
     if (res.code == 0) {
-      var userInfo = res.data
-      that.setData({
-        userInfo: userInfo
-      })
+      this.getAuthCode(res.data);
     }
   },
   // 判断是否去登录

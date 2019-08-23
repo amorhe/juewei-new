@@ -27,13 +27,11 @@ Page({
     defaultAddress: [0, 0, 0]
   },
   onLoad(e) {
-    console.log(e)
     if (e.img && e.name) {
       this.getInfo(e.img, e.name)
     }
   },
   async onShow() {
-    console.log('执行')
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
     region = await getRegion()
@@ -260,7 +258,6 @@ Page({
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
-    console.log('onready');
   },
   onHide() {
     // 页面隐藏

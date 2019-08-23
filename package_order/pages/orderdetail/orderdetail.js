@@ -161,7 +161,6 @@ Page({
 
         let curState = res.data.order_status_info.order_status
         let curTimeArr = orderStatus[curState].timeArr;
-        log(curState, curTimeArr)
         // 自配送 没有骑手已接单
         if (curState < 5 && curState > 2) {
           dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 4), 1));
@@ -172,7 +171,6 @@ Page({
         curState === 3 && dis_take_time != '0000-00-00 00:00:00' ? curTimeArr.push(5) : curTimeArr
         curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
-        log(curState, curTimeArr, curOrderState)
       }
 
       if (dis_type == 2) {
@@ -244,7 +242,7 @@ Page({
           timeArr,
           curOrderState,
           dis_type,
-          order_channel:res.channel
+          order_channel:res.data.channel
         })
       }, 1000)
 
