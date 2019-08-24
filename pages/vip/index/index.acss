@@ -229,7 +229,7 @@ page {
 .sroll-view-wrap {
   background: white;
   position: sticky;
-  z-index: 999999;
+  z-index: 99;
   left: 0
 }
 

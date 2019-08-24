@@ -189,13 +189,19 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-
+    console.log(e.currentTarget.dataset);
     app.globalData.position.city=e.currentTarget.dataset.info.city;
     app.globalData.position.district=e.currentTarget.dataset.info.area;
     app.globalData.position.cityAdcode='';
     app.globalData.position.districtAdcode='';
-    app.globalData.position.latitude=e.currentTarget.dataset.info.location.lat;
-    app.globalData.position.longitude=e.currentTarget.dataset.info.location.lng;
+    if(e.currentTarget.dataset.info.location){
+      app.globalData.position.latitude=e.currentTarget.dataset.info.location.lat;
+      app.globalData.position.longitude=e.currentTarget.dataset.info.location.lng;
+    }else{
+      app.globalData.position.latitude=e.currentTarget.dataset.info.latitude;
+      app.globalData.position.longitude=e.currentTarget.dataset.info.longitude;
+    }
+    
     app.globalData.position.province=e.currentTarget.dataset.info.province;
     //额外添加两个
     app.globalData.city=e.currentTarget.dataset.info.city;
