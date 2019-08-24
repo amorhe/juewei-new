@@ -377,8 +377,13 @@ Component({
           //存储一个起送起购价格
           my.setStorageSync({
             key:'send_price',
-            data: send_price
-          })
+            data: res.data.data[app.globalData.position.cityAdcode].shop_send_price
+          });
+          //存储一个起送起购价格
+          my.setStorageSync({
+            key:'send_price',
+            data: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
+          });
         },
       });
     },
