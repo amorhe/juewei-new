@@ -3,7 +3,7 @@
     <image class="membercard" src="{{imageUrl}}jwdcard.png" />
   </view>
   <view class="entInfo">
-    <view class="vipTitle">VIP专享权益</view>
+    <view class="vipTitle">会员专享权益</view>
     <block a:for="{{list}}">
       <view class="entListItem">
         <view class="iconView">

@@ -144,7 +144,7 @@ Page({
     console.log('topage',topage);
     if (topage != '') {
       switch (topage) {
-        // vip
+        //会员
         case '/pages/vip/index/index':
           my.navigateTo({
             url: topage
