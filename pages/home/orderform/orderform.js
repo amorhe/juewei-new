@@ -44,8 +44,11 @@ Page({
     phone: '',   // 手机号
     newArr: [],    // 变更商品列表
     addressList: [],
+    trueprice:0, //真实的总价价格
+    send_price: (my.getStorageSync({key:'send_price' }).data || 30)
   },
   onLoad(e) {
+    console.log(this.data.send_price,this.data.trueprice);
     // 外卖默认地址
     if (app.globalData.type == 1) {
       this.getDefault();
@@ -189,7 +192,7 @@ Page({
   // 换购显示
   addRepurseTap(e) {
     // console.log(e)
-    let gifts = {}, gifts_price = '', order_price = '';
+    let gifts = {}, gifts_price = '', order_price = '', trueprice=0;
     gifts[e.currentTarget.dataset.id] = {
       "activity_id": e.currentTarget.dataset.activity_id,
       "gift_id": e.currentTarget.dataset.gift_id,
@@ -202,24 +205,29 @@ Page({
     if (e.currentTarget.dataset.cash == 0 && e.currentTarget.dataset.point == 0) {
       gifts_price = `¥0`;
       order_price = `¥${this.data.orderInfo.real_price / 100}`;
+      trueprice = this.data.orderInfo.real_price / 100;
     }
     if (e.currentTarget.dataset.cash == 0 && e.currentTarget.dataset.point != 0) {
       gifts_price = `${e.currentTarget.dataset.point}积分`;
       order_price = `¥${this.data.orderInfo.real_price / 100}+${e.currentTarget.dataset.point}积分`
+      trueprice = this.data.orderInfo.real_price / 100;
     }
     if (e.currentTarget.dataset.cash != 0 && e.currentTarget.dataset.point == 0) {
       gifts_price = ` ¥${e.currentTarget.dataset.cash / 100}`;
-      order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}`
+      order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}`;
+      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100;
     }
     if (e.currentTarget.dataset.cash != 0 && e.currentTarget.dataset.point != 0) {
       gifts_price = `¥${e.currentTarget.dataset.cash / 100}+${e.currentTarget.dataset.point}积分`;
       order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}+${e.currentTarget.dataset.point}积分`
+      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100;
     }
     this.setData({
       gifts,
       gift_id: e.currentTarget.dataset.id,
       gifts_price,
-      order_price
+      order_price,
+      trueprice
     })
   },
   // 减
@@ -227,7 +235,8 @@ Page({
     this.setData({
       gifts: {},
       gift_id: '',
-      order_price: `¥${this.data.orderInfo.real_price / 100}`
+      order_price: `¥${this.data.orderInfo.real_price / 100}`,
+      trueprice:this.data.orderInfo.real_price / 100
     })
   },
   // 弹框事件回调
@@ -271,9 +280,10 @@ Page({
       my.removeStorageSync({
         key: 'goodsList'
       })
-      my.navigateBack({
+       my.navigateBack({
         delta: 1
       });
+      return;
     }
     for (let ott in newShopcart) {
       newGoodsArr.push(newShopcart[ott])
@@ -290,6 +300,7 @@ Page({
       my.navigateBack({
         delta: 1
       });
+      return;
     }
     // 继续结算
     if (data.isType == 'orderConfirm' && data.type == 0) {
@@ -562,6 +573,7 @@ Page({
           goodsInvented,
           orderInfo: res.data.activity_list[''],
           order_price: `¥${res.data.activity_list[''].real_price / 100}`,
+          trueprice: res.data.activity_list[''].real_price / 100,
           coupon_money,
           orderDetail: res.data
         })

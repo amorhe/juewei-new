@@ -364,7 +364,7 @@ Component({
     // 获取起送价格
     getSendPrice() {
       const timestamp = new Date().getTime();
-      console.log('dddddd,open-city');
+ 
       my.request({
         url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
         success: (res) => {
@@ -373,6 +373,11 @@ Component({
           this.setData({
             send_price: res.data.data[app.globalData.position.cityAdcode].shop_send_price,
             dispatch_price: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
+          })
+          //存储一个起送起购价格
+          my.setStorageSync({
+            key:'send_price',
+            data: send_price
           })
         },
       });
