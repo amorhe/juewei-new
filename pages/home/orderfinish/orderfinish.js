@@ -59,8 +59,10 @@ Page({
         });
       }
       // 虚拟商品弹框
+      let static_no=0;
       res.data.goods_list.forEach(item => {
-        if(item.is_gifts ==1){
+        if(item.is_gifts == 1 && static_no==0){
+          static_no = 1;
           // 优惠券
           if(item.gift_type == 1){
             this.setData({
