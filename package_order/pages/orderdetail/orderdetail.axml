@@ -238,6 +238,14 @@
           <view>{{d.order_ctime}}</view>
         </view>
       </view>
+      <view class="item">
+        <view class="label">
+          订单备注
+        </view>
+        <view class="value">
+          <view>{{d.message}}</view>
+        </view>
+      </view>
     </view>
   </view>
 </view>

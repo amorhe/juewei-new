@@ -363,6 +363,11 @@ Component({
       my.request({
         url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
         success: (res) => {
+          //app.globalData.position.cityAdcode这个参数在手动修改地址的时候缺失。
+          //这里采用通过门店的具体地址来确定起送价地址
+          console.log('wwww',app.globalData.position.cityAdcode);
+
+
           this.setData({
             send_price: res.data.data[app.globalData.position.cityAdcode].shop_send_price,
             dispatch_price: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
