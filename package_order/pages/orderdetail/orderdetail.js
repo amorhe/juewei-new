@@ -64,7 +64,7 @@ Page({
     payStatusList: [],
     d: {},
     dis_type: -1,
-    order_channel:1
+    order_channel: 1
   },
   async onLoad(e) {
     let { order_no } = e
@@ -242,7 +242,7 @@ Page({
           timeArr,
           curOrderState,
           dis_type,
-          order_channel:res.data.channel
+          order_channel: res.data.channel
         })
       }, 1000)
 
@@ -273,11 +273,11 @@ Page({
    */
 
   showCancel() {
-    if(this.data.order_channel != 1){
-        my.showToast({
-          content:'订单不支持跨平台操作，请去相应平台取消订单！'
-        });
-        return
+    if (this.data.order_channel != 1) {
+      my.showToast({
+        content: '订单不支持跨平台操作，请去相应平台取消订单！'
+      });
+      return
     }
     this.setData({
       cancleShow: true
@@ -310,6 +310,7 @@ Page({
     if (res.code == 0) {
       log('取消成功')
       app.globalData.refresh = true
+      app.globalData.refresh_state = d.dis_type - 1
       my.switchTab({
         url: '/pages/order/list/list',
       });
