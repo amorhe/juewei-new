@@ -62,7 +62,7 @@
       <view class="pay" catchTap="buyAgain">再来一单</view>
     </view>
   </view>
-  <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00')}}">
+  <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00') && [1,2,3,4].includes(d.order_status_info.order_status)}}">
     <view class="get-code-title" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
       取餐码
     </view>
