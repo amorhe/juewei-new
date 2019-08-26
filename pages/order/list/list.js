@@ -148,7 +148,7 @@ Page({
 
 
     return this.setData({
-      cur: app.globalData.refresh_state
+      cur: app.globalData.refresh_state || 0
     }, () => this.refresh())
   },
   onUnload() {
