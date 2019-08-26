@@ -69,7 +69,8 @@ Page({
     // 定位地址
     this.setData({
       firstAddress: app.globalData.address,
-      type: app.globalData.type
+      type: app.globalData.type,
+      shopTakeOut:{}
     })
     if (app.globalData.isSelf) {
       this.setData({

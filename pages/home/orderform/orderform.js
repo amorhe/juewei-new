@@ -381,6 +381,7 @@ Page({
             coupon_code: ''
           })
           app.globalData.coupon_code = '';
+          app.globalData.remarks = '';
           add_lng_lat(res.data.order_no, typeClass, lng, lat).then((conf) => {
             my.removeStorageSync({
               key: 'goodsList', // 缓存数据的key
@@ -399,6 +400,7 @@ Page({
               coupon_code: ''
             })
             app.globalData.coupon_code = '';
+            app.globalData.remarks = '';
             my.tradePay({
               tradeNO: val.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
               success: (value) => {
