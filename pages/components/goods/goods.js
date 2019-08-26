@@ -35,8 +35,8 @@ Component({
     activityText: '',   // 购物车活动提示内容
     priceFree: 0,    // 购物车包邮商品价格
     freeText: '', // 购物车包邮提示内容
-    pagesinfoTop: 0,
     isScorll: true,
+    isTab: false,
     type: {
       "折扣": 1,
       "套餐": 2,
@@ -53,8 +53,8 @@ Component({
       "解辣神器": 13,
     },
     repurse_price: 0,    // 购物车换购商品价格
-    leftscrolltop: 0,
-    pagescrollTop: 0
+    pagescrollTop: 0,
+    leftTop: 0
   },
   onInit() {
     setTimeout(() => {
@@ -210,7 +210,8 @@ Component({
         scrollTop: this.data.pagescrollTop
       });
       this.setData({
-        goodsType: e.currentTarget.dataset.type
+        goodsType: e.currentTarget.dataset.type,
+        isTab: true
       })
     },
     // 选规格
@@ -242,7 +243,12 @@ Component({
           scrollTop: this.data.pagescrollTop
         });
       }
-      setTimeout(() => {
+      this.setData({
+        isTab: false
+      })
+    },
+    onScroll(e) {
+      if (!this.data.isTab) {
         let retArr = [...app.globalData.ret];
         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
           retArr.push(ret[0].scrollTop);
@@ -254,7 +260,7 @@ Component({
             })
           }
         })
-      }, 100)
+      }
     },
     // sku商品
     onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {

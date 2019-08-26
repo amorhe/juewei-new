@@ -45,9 +45,9 @@
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="width:530rpx;max-height:100vh;padding-bottom:500rpx;box-sizing:border-box" scroll-into-view="{{goodsType}}" scroll-with-animation="true" scroll-animation-duration="50" onTouchEnd="onTouchEnd" class="scrolllist" onTouchStart="onTouchStart">
+  <scroll-view scroll-y="true" style="width:530rpx;max-height:100vh;padding-bottom:500rpx;box-sizing:border-box" scroll-into-view="{{goodsType}}" scroll-with-animation="true" scroll-animation-duration="50" onTouchEnd="onTouchEnd" class="scrolllist" onTouchStart="onTouchStart" onScroll="onScroll">
     <view>
-      <view id="{{index + 1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}">
+      <view id="{{index + 1}}" a:for="{{shopGoodsList}}" a:if="{{item.last.length>0}}" class="sc_right_item">
         <view class="goodsTypeEv">{{item.key}}</view>
         <!-- 折扣套餐爆款 -->
         <view class="goodsBox" a:for="{{item.last}}" a:for-index="i" a:for-item="v" catchTap="goodsdetailContent" data-freeMoney="{{freeMoney}}" data-goods_code="{{v.goods_code}}" data-goods_id="{{v.goods_id}}" data-shop_id="{{v}}" data-key="{{item.key}}" a:if="{{item.key=='套餐'||item.key=='爆款'||item.key=='折扣'}}">

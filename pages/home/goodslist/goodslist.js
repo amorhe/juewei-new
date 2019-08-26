@@ -128,11 +128,11 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-    
-     // 自定义跳转页面
-    let topage=(app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
+
+    // 自定义跳转页面
+    let topage = (app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
     app.globalData.page = null; //删除
-    my.removeStorageSync({key: 'query'}); //删除
+    my.removeStorageSync({ key: 'query' }); //删除
     // console.log('topage',topage);
     if (topage != '') {
       switch (topage) {
@@ -415,7 +415,7 @@ Page({
           }, () => {
             // 获取商品模块的节点
             my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
-              if(ret[0]==null){return;}
+              if (ret[0] == null) { return; }
               let top = ret[0][0].top;
               let arr = ret[0].map((item, index) => {
                 return item.top = item.top - top - 37;
@@ -423,11 +423,19 @@ Page({
               app.globalData.ret = arr;
             })
             my.createSelectorQuery().selectAll('#pagesinfo').boundingClientRect().exec((e) => {
-              if(e[0]==null){return;}
+              if (e[0] == null) { return; }
               if (!this.data.isSelf) {
                 app.globalData.scrollTop = e[0][0].top
               }
             })
+            let h = 0, heightArr = [];
+            my.createSelectorQuery().selectAll('.sc_right_item').boundingClientRect().exec((rect) => {
+              rect[0].forEach((item) => {
+                h += item.height;
+                heightArr.push(h);
+              })
+              app.globalData.heightArr = heightArr;
+            });
           })
           my.setStorageSync({
             key: 'shopGoods',
