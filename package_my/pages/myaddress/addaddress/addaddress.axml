@@ -7,8 +7,8 @@
       </view>
       <view class="post-sex">
         <text class="item"></text>
-        <view onTap="changeSex" class="{{sex==0?'post-sex-active':''}}">先生</view>
         <view onTap="changeSex" class="{{sex==1?'post-sex-active':''}}">女士</view>
+        <view onTap="changeSex" class="{{sex==0?'post-sex-active':''}}">先生</view>
       </view>
       <view class="list">
         <view class="item">电话</view>

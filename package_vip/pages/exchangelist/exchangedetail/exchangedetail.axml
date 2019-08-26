@@ -53,7 +53,7 @@
           <view class="cost" a:if="{{ detail.order_point ==0 && detail.order_amount != 0 }}">
           {{ detail.order_amount}} 元
           </view>
-          <view class="to-use" onTap="toUse" a:if="{{['1'].includes(detail.goods_detail_type)}}">去使用</view>
+          <view class="to-use" onTap="toUse" a:if="{{['1'].includes(detail.goods_detail_type) && detail.status != 0 && detail.remaining_pay_minute < -1}}">去使用</view>
           <view class="b-button" a:if="{{['3','4'].includes(detail.goods_detail_type)}}" onTap="contact">联系客服</view>
         </view>
       </view>

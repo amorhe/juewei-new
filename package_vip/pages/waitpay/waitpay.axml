@@ -2,7 +2,7 @@
   <view a:if="{{!selectShop && d}}">
     <!-- 带支付页面 实物邮寄，实物门店，虚拟商品直接跳过到兑换成功页 -->
     <!-- 等待支付 -->
-    <view class="wait-pay" a:if="{{d.limit_pay_second}}">
+    <view class="wait-pay" a:if="{{d.limit_pay_second && d.limit_pay_minute>-1}}">
       <text class="wait-pay-title">支付剩余时间：</text>
       <text class="wait-pay-time">{{d.limit_pay_minute}}分{{d.limit_pay_second}}秒</text>
     </view>
