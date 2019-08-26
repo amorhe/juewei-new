@@ -34,6 +34,7 @@ Page({
     if (this.data.timestamp != 0) {
       let timestampNew = new Date().getTime();
       let counts = parseInt((timestampNew - this.data.timestamp) / 1000);
+      console.log(counts)
       if (counts > 0) {
         this.setData({
           countTime: this.data.countTime - counts
@@ -45,6 +46,7 @@ Page({
         })
       }
     }
+    
   },
   bindFocus() {
     var that = this
@@ -97,16 +99,14 @@ Page({
   },
   // 倒计时60
   timeDate(e) {
-    var that = this
-    clearInterval(timeCount)
+    var that = this;
     that.setData({
       isnew: true,
-      countTime: 60,
     })
     if (e && e.currentTarget.dataset.is == 1) {
-      this.getcodeFn()
+      that.getcodeFn()
     }
-    var time = 60
+    var time = that.data.countTime;
     timeCount = setInterval(function() {
       time--
       that.setData({
@@ -114,7 +114,8 @@ Page({
       })
       if (time == 0) {
         that.setData({
-          isnew: false
+          isnew: false,
+          countTime:60
         })
         clearInterval(timeCount)
       }
@@ -210,7 +211,8 @@ Page({
   onHide() {
     let timestamp = new Date().getTime();
     this.setData({
-      timestamp
+      timestamp,
+      countTime: this.data.countTime
     })
     // this.setData({
     //   isnew: false,
