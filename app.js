@@ -71,42 +71,15 @@ App({
     });
   },
   onShow(options) {//多次执行
-    //判断外部链接是否有参数值
-    // if (options.page) {
-    //   //通过这个参数可以跳转到响应的连接中，注意这些链接需要
-    //   switch (options.page) {
-    //     // vip
-    //     case '/pages/vip/index/index':
-    //       my.switchTab({
-    //         url: '/pages/vip/index/index'
-    //       });
-    //       break;
-    //     // 优惠券
-    //     case '/package_my/pages/coupon/coupon':
-    //       my.navigateTo({
-    //         url: '/package_my/pages/coupon/coupon'
-    //       });
-    //       break;
-    //     // 会员卡
-    //     case '/package_my/pages/membercard/membercard':
-    //       my.navigateTo({
-    //         url: '/package_my/pages/membercard/membercard'
-    //       })
-    //       break;
-    //     // 个人中心
-    //     case '/pages/my/index/index':
-    //       my.switchTab({
-    //         url: '/pages/my/index/index'
-    //       })
-    //       break;
-    //     //  附近门店
-    //     case '/package_my/pages/nearshop/nearshop':
-    //       my.navigateTo({
-    //         url: '/package_my/pages/nearshop/nearshop'
-    //       })
-    //       break;
-    //   }
-    // }
+    console.log('onShow_options=',options);
+    // page是拿不到的信息，只有query可以拿到
+    if(options.query && options.query.go){
+       this.globalData.query = options.query.go;
+       my.setStorageSync({
+          key: 'query', // 缓存数据的key
+          data: options.query.go, // 要缓存的数据
+       });
+    }
 
 
     // my.clearStorageSync();
