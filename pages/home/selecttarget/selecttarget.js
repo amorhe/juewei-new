@@ -28,16 +28,16 @@ Page({
   onShow() {
     const _sid = my.getStorageSync({ key: '_sid' }).data;
     //获取用户收货地址,一次性获取下来
-    if(_sid){
-        addressList(_sid, 'normal', location).then((res) => {
-          let arr1 = [];
-          if (res.data.length > 0) {
-            arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
-          }
-          this.setData({
-            canUseAddress: arr1
-          })
-        });
+    if (_sid) {
+      addressList(_sid, 'normal', location).then((res) => {
+        let arr1 = [];
+        if (res.data.length > 0) {
+          arr1 = res.data.filter(item => item.user_address_is_dispatch == 1)
+        }
+        this.setData({
+          canUseAddress: arr1
+        })
+      });
     }
 
     if (app.globalData.address) {
@@ -53,16 +53,16 @@ Page({
       showLocatedCity: true,
       showHotCities: true,
       success: (res) => {
-        if(res.city.indexOf('市')==res.city.length-1){
-            this.setData({
-              city: res.city
-            })
-        }else{
-            this.setData({
-              city: res.city + '市'
-            })
+        if (res.city.indexOf('市') == res.city.length - 1) {
+          this.setData({
+            city: res.city
+          })
+        } else {
+          this.setData({
+            city: res.city + '市'
+          })
         }
-        
+
       },
     });
   },
@@ -73,19 +73,19 @@ Page({
   },
   // 输入地址搜索门店
   searchShop() {
-    let that= this;
+    let that = this;
     //附近地址列表
-    if(this.data.city+this.data.inputAddress!='' ){
+    if (this.data.city + this.data.inputAddress != '') {
       let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
       url = encodeURI(url);
       my.request({
         url,
         success: (res) => {
-            my.hideKeyboard();
-            const lng = res.data.result.location.lng;
-            const lat = res.data.result.location.lat;
-            const location = `${lng},${lat}`;
-            that.getAddressList(location, lat, lng);
+          my.hideKeyboard();
+          const lng = res.data.result.location.lng;
+          const lat = res.data.result.location.lat;
+          const location = `${lng},${lat}`;
+          that.getAddressList(location, lat, lng);
         },
       });
     }
@@ -156,7 +156,7 @@ Page({
   //选择附近地址
   switchAddress(e) {
     //手动定位没有地址
-    if (e.currentTarget.dataset.type=='1' && !this.data.isSuccess && e.currentTarget.dataset.address == '') {
+    if (e.currentTarget.dataset.type == '1' && !this.data.isSuccess && e.currentTarget.dataset.address == '') {
       my.showToast({
         content: '定位失败，请选择其他收货地址！'
       });
@@ -189,27 +189,29 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-    console.log(e.currentTarget.dataset);
-    app.globalData.position.city=e.currentTarget.dataset.info.city;
-    app.globalData.position.district=e.currentTarget.dataset.info.area;
-    app.globalData.position.cityAdcode='';
-    app.globalData.position.districtAdcode='';
-    if(e.currentTarget.dataset.info.location){
-      app.globalData.position.latitude=e.currentTarget.dataset.info.location.lat;
-      app.globalData.position.longitude=e.currentTarget.dataset.info.location.lng;
-    }else{
-      app.globalData.position.latitude=e.currentTarget.dataset.info.latitude;
-      app.globalData.position.longitude=e.currentTarget.dataset.info.longitude;
+    app.globalData.position.city = e.currentTarget.dataset.info.city;
+    app.globalData.position.district = e.currentTarget.dataset.info.area;
+    app.globalData.position.cityAdcode = '';
+    app.globalData.position.districtAdcode = '';
+    app.globalData.activityList.DIS = [];
+    app.globalData.activityList.PKG = [];
+    app.globalData.goodsCommon = null;
+    if (e.currentTarget.dataset.info.location) {
+      app.globalData.position.latitude = e.currentTarget.dataset.info.location.lat;
+      app.globalData.position.longitude = e.currentTarget.dataset.info.location.lng;
+    } else {
+      app.globalData.position.latitude = e.currentTarget.dataset.info.latitude;
+      app.globalData.position.longitude = e.currentTarget.dataset.info.longitude;
     }
-    
-    app.globalData.position.province=e.currentTarget.dataset.info.province;
+
+    app.globalData.position.province = e.currentTarget.dataset.info.province;
     //额外添加两个
-    app.globalData.city=e.currentTarget.dataset.info.city;
-    app.globalData.province=e.currentTarget.dataset.info.province;
+    app.globalData.city = e.currentTarget.dataset.info.city;
+    app.globalData.province = e.currentTarget.dataset.info.province;
     let address = '';
-    if(e.currentTarget.dataset.type==1){
+    if (e.currentTarget.dataset.type == 1) {
       address = e.currentTarget.dataset.address;
-    }else{
+    } else {
       address = e.currentTarget.dataset.info.name;
     }
     this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, address);
@@ -229,12 +231,17 @@ Page({
       data: position[0] // 要缓存的数据
     });
     app.globalData.position = e.currentTarget.dataset.info;
+    app.globalData.position.cityAdcode = '';
+    app.globalData.position.districtAdcode = '';
+    app.globalData.activityList.DIS = [];
+    app.globalData.activityList.PKG = [];
+    app.globalData.goodsCommon = null;
     this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr);
     this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr)
   },
   // 外卖附近门店
   getLbsShop(lng, lat, address) {
-    let that=this;
+    let that = this;
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
@@ -263,8 +270,8 @@ Page({
           return value2 - value1;
         });
         shopArray[0]['jingxuan'] = true;
-        app.globalData.position.cityAdcode=shopArray[0].city_id
-        app.globalData.position.districtAdcode=shopArray[0].district_id
+        app.globalData.position.cityAdcode = shopArray[0].city_id
+        app.globalData.position.districtAdcode = shopArray[0].district_id
 
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         //that.getNearbyShop(lng, lat, address); 
@@ -349,9 +356,9 @@ Page({
     my.removeStorageSync({
       key: 'takeout', // 缓存数据的key
     });
-    let shopArray=my.getStorageSync({ key: 'self'}).data;
-    app.globalData.position.cityAdcode=shopArray[0].city_id;
-    app.globalData.position.districtAdcode=shopArray[0].district_id;
+    let shopArray = my.getStorageSync({ key: 'self' }).data;
+    app.globalData.position.cityAdcode = shopArray[0].city_id;
+    app.globalData.position.districtAdcode = shopArray[0].district_id;
 
     this.setData({
       loginOpened: false

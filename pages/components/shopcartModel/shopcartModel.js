@@ -272,7 +272,6 @@ Component({
                 }
               }
             }
-            // console.log(shopcartObj)
           }
         } else {
           // 普通不带折扣的
