@@ -1,4 +1,4 @@
-//测试环境
+// 测试环境
 export const baseUrl = 'https://test-wap.juewei.com/api';
 // 图片测试cdn
 export const imageUrl = 'https://test-wap.juewei.com/m/ali-mini/image/';

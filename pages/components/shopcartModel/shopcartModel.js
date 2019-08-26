@@ -19,7 +19,8 @@ Component({
     type: '',
     btnClick: true,
     freeId: false,   // 是否有包邮活动
-    isTake: false
+    isTake: false,
+    isOpen:''
   },
   props: {
     onClear: (data) => console.log(data),
@@ -28,11 +29,9 @@ Component({
   onInit() {
   },
   didMount() {
-    // 获取起送费
     this.getSendPrice();
   },
-  didUpdate(){
-    //组件更新完毕触发
+  didUpdate() {
     this.getSendPrice();
   },
   deriveDataFromProps(nextProps) {
@@ -57,9 +56,9 @@ Component({
         freeId: false
       })
     }
-  },
-  didUpdate() {
-
+    this.setData({
+      isOpen: app.globalData.isOpen
+    })
   },
   didUnmount() { },
   methods: {
@@ -122,7 +121,7 @@ Component({
       goodlist[`${goods_code}_${goods_format}`].num += 1;
       let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       for (let keys in goodlist) {
-        if (e.currentTarget.dataset.goods_discount && goodlist[keys].goods_order_limit!=null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+        if (e.currentTarget.dataset.goods_discount && goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
           my.showToast({
             content: `折扣商品限购${goodlist[keys].goods_order_limit}份，超过${goodlist[keys].goods_order_limit}份恢复原价`
           });
@@ -254,11 +253,11 @@ Component({
                   if (goodsList[val].goods_price != fn.goods_price) {
                     snum += shopcartObj[val].num;
                     shopcartObj[val].goods_price = fn.goods_price
-                  } 
+                  }
                 }
               }
             }
-            
+
           } else {
             // 套餐
             for (let ott of app.globalData.activityList.PKG) {
@@ -293,7 +292,7 @@ Component({
         }
         num += goodsList[val].num;
         // 计算购物车是否在门店内后筛选剩余商品价格
-        if(shopcartObj[val]){//判断商品是否存在
+        if (shopcartObj[val]) {//判断商品是否存在
           if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
             priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
           } else {
@@ -364,7 +363,7 @@ Component({
     // 获取起送价格
     getSendPrice() {
       const timestamp = new Date().getTime();
- 
+
       my.request({
         url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
         success: (res) => {
@@ -376,12 +375,12 @@ Component({
           })
           //存储一个起送起购价格
           my.setStorageSync({
-            key:'send_price',
+            key: 'send_price',
             data: res.data.data[app.globalData.position.cityAdcode].shop_send_price
           });
           //存储一个起送起购价格
           my.setStorageSync({
-            key:'send_price',
+            key: 'send_price',
             data: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
           });
         },

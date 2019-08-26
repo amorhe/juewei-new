@@ -89,6 +89,7 @@ Page({
           shopTakeOut: app.globalData.shopIng
         })
         my.setStorageSync({ key: 'shop_id', data: app.globalData.shopIng.shop_id });
+        app.globalData.isOpen = status;
       }
       this.setData({
         jingxuan: app.globalData.shopIng.jingxuan || false
@@ -114,6 +115,7 @@ Page({
         shopTakeOut: shopArray[0]
       })
       my.setStorageSync({ key: 'shop_id', data: shopArray[0].shop_id });
+      app.globalData.isOpen = status;
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
 
@@ -126,7 +128,7 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-
+    
      // 自定义跳转页面
     let topage=(app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
     app.globalData.page = null; //删除
@@ -350,7 +352,6 @@ Page({
         item.goods_img_detail_origin = [item.goods_img_detail_origin]
         item.goods_img_intr_origin = [item.goods_img_intr_origin]
       }
-
       // 包邮活动
       if (app.globalData.activityList && app.globalData.activityList.FREE) {
         app.globalData.freeId = app.globalData.activityList.FREE.id;
