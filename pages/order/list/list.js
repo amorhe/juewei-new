@@ -147,7 +147,9 @@ Page({
     }
 
 
-    return this.refresh();
+    return this.setData({
+      cur: app.globalData.refresh_state
+    }, () => this.refresh())
   },
   onUnload() {
     let { menuList, cur, timers } = this.data
