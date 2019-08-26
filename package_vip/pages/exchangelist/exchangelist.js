@@ -150,7 +150,7 @@ Page({
   },
 
   /**
-   * @function 跳转到VIP首页
+   * @function 跳转到会员首页
    */
 
   switchTo() {

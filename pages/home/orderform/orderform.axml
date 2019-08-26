@@ -215,10 +215,13 @@
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
     <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-      <view onTap="confirmPay" class="primaryBtn">
+      <view onTap="confirmPay" class="primaryBtn" a:if="{{trueprice>=send_price}}" >
         确认支付
         <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit">
         </button>
+      </view>
+      <view class="noprimaryBtn" a:else>
+        ￥30元起购
       </view>
     </form>
   </view>

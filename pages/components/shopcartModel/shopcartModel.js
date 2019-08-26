@@ -31,6 +31,10 @@ Component({
     // 获取起送费
     this.getSendPrice();
   },
+  didUpdate(){
+    //组件更新完毕触发
+    this.getSendPrice();
+  },
   deriveDataFromProps(nextProps) {
     // 判断是不是起送
     if (app.globalData.type == 1) {
@@ -360,13 +364,26 @@ Component({
     // 获取起送价格
     getSendPrice() {
       const timestamp = new Date().getTime();
+ 
       my.request({
         url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
         success: (res) => {
+          //app.globalData.position.cityAdcode这个参数在手动修改地址的时候缺失。
+          //这里采用通过门店的具体地址来确定起送价地址
           this.setData({
             send_price: res.data.data[app.globalData.position.cityAdcode].shop_send_price,
             dispatch_price: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
           })
+          //存储一个起送起购价格
+          my.setStorageSync({
+            key:'send_price',
+            data: res.data.data[app.globalData.position.cityAdcode].shop_send_price
+          });
+          //存储一个起送起购价格
+          my.setStorageSync({
+            key:'send_price',
+            data: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
+          });
         },
       });
     },

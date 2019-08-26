@@ -53,10 +53,16 @@ Page({
       showLocatedCity: true,
       showHotCities: true,
       success: (res) => {
-        // console.log(res)
-        this.setData({
-          city: res.city + '市'
-        })
+        if(res.city.indexOf('市')==res.city.length-1){
+            this.setData({
+              city: res.city
+            })
+        }else{
+            this.setData({
+              city: res.city + '市'
+            })
+        }
+        
       },
     });
   },
@@ -86,6 +92,7 @@ Page({
   },
   //附近地址列表
   getAddressList(location, lat, lng) {
+    //附近列表中没有传出当前的 地区id,城市id等参数
     // 百度附近POI
     let str = `https://api.map.baidu.com/place/v2/search?query=房地产$金融$公司企业$政府机构$医疗$酒店$美食$生活服务$教育培训$交通设施&location=${lat},${lng}&radius=1000&output=json&page_size=50&page_num=0&ak=${ak}`;
     str = encodeURI(str);
@@ -182,8 +189,23 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
-    // console.log(e)
-    app.globalData.position = e.currentTarget.dataset.info;
+    console.log(e.currentTarget.dataset);
+    app.globalData.position.city=e.currentTarget.dataset.info.city;
+    app.globalData.position.district=e.currentTarget.dataset.info.area;
+    app.globalData.position.cityAdcode='';
+    app.globalData.position.districtAdcode='';
+    if(e.currentTarget.dataset.info.location){
+      app.globalData.position.latitude=e.currentTarget.dataset.info.location.lat;
+      app.globalData.position.longitude=e.currentTarget.dataset.info.location.lng;
+    }else{
+      app.globalData.position.latitude=e.currentTarget.dataset.info.latitude;
+      app.globalData.position.longitude=e.currentTarget.dataset.info.longitude;
+    }
+    
+    app.globalData.position.province=e.currentTarget.dataset.info.province;
+    //额外添加两个
+    app.globalData.city=e.currentTarget.dataset.info.city;
+    app.globalData.province=e.currentTarget.dataset.info.province;
     let address = '';
     if(e.currentTarget.dataset.type==1){
       address = e.currentTarget.dataset.address;
@@ -195,6 +217,7 @@ Page({
   },
   // 选择我的收货地址
   switchPositionAddress(e) {
+    //我的收获地址未能传递地区id，城市id等参数。
     // console.log(e)
     let position = e.currentTarget.dataset.info.user_address_lbs_baidu.split(',');
     my.setStorageSync({
@@ -206,7 +229,6 @@ Page({
       data: position[0] // 要缓存的数据
     });
     app.globalData.position = e.currentTarget.dataset.info;
-    console.log('e.currentTarget.dataset.info',e.currentTarget.dataset.info);
     this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr);
     this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr)
   },
@@ -241,8 +263,11 @@ Page({
           return value2 - value1;
         });
         shopArray[0]['jingxuan'] = true;
+        app.globalData.position.cityAdcode=shopArray[0].city_id
+        app.globalData.position.districtAdcode=shopArray[0].district_id
+
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        that.getNearbyShop(lng, lat, address);
+        //that.getNearbyShop(lng, lat, address); 
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
         })
@@ -252,7 +277,6 @@ Page({
           loginOpened: true
         })
       }
-
     })
   },
   // 自提附近门店
@@ -279,11 +303,10 @@ Page({
             },
           });
         }
-
       },
     });
   },
-  // 自提
+  // 获取自提门店信息
   getSelf(obj, address) {
     let shopArr1 = [];
     let shopArr2 = [];
@@ -326,6 +349,10 @@ Page({
     my.removeStorageSync({
       key: 'takeout', // 缓存数据的key
     });
+    let shopArray=my.getStorageSync({ key: 'self'}).data;
+    app.globalData.position.cityAdcode=shopArray[0].city_id;
+    app.globalData.position.districtAdcode=shopArray[0].district_id;
+
     this.setData({
       loginOpened: false
     })

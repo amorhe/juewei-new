@@ -42,7 +42,7 @@
           <view>
             <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
             <image src="{{imageUrl}}home_vip.png" />
-            <view>VIP专享</view>
+            <view>会员专享</view>
           </view>
         </navigator>
         <view onTap="navigate" data-url="/package_my/pages/coupon/coupon">
