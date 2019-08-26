@@ -86,8 +86,13 @@ Page({
     const { id } = e;
     let navHeight = getNavHeight()
     this.setData({
-      navHeight
+      navHeight,
+      id
     })
+  },
+
+  async onShow() {
+    const {id} = this.data;
     await this.getOrderDetail(id)
   },
 
@@ -100,8 +105,6 @@ Page({
 
   onHide() {
     this.closeModel()
-    // clearInterval(this.data.time)
-    // this.setData({ time: -1 })
   },
 
   guide,
@@ -116,7 +119,8 @@ Page({
     let res = await reqOrderDetail(id)
     let _exchange_intro = await parseData(res.data.exchange_intro)
     let _intro = await parseData(res.data.intro)
-
+    clearInterval(this.data.time)
+    this.setData({ time: -1 })
     if (res.code === 100) {
       // if (res.data.receive_type == 2 || res.data.receive_type == 1) {
       //   if (!res.data.user_address_phone && res.data.status == 0) {
