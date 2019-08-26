@@ -131,7 +131,6 @@ Page({
    * @function 支付订单
    */
   async pay(order_sn) {
-    log(order_sn)
     let { code, data } = await reqPay(order_sn)
     return { code, data }
   },
@@ -151,8 +150,11 @@ Page({
     // 调用确认订单接口，然后调起支付
     // id = -1 兑换失败
     // 虚拟物品
+
     if (goods_type == 1) {
+
       let { order_id = '', order_sn } = await this.createOrder()
+
       if (!order_id) { return }
       let res = await this.confirmOrder(order_sn)
       if (amount != 0) {
@@ -217,10 +219,10 @@ Page({
     // 然后点击支付按钮，
     // 调用确认订单接口，
     // 然后调起支付
-
     if (goods_type == 2) {
       let res = await this.createOrder()
-      if (!res) { return }
+      log(res == {})
+      if (!res.code) { return }
 
       // 实物订单  公司邮寄
       if (receive_type == 2) {
