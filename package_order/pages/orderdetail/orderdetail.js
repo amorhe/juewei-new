@@ -386,9 +386,20 @@ Page({
     app.globalData.type = dis_type;
     log(app.globalData.type)
 
-    my.switchTab({
-      url: '/pages/home/goodslist/goodslist'
-    });
+    if (app.globalData.province &&
+      app.globalData.city &&
+      app.globalData.address &&
+      app.globalData.position) {
+      my.switchTab({
+        url: '/pages/home/goodslist/goodslist'
+      });
+    } else {
+      my.navigateTo({
+        url: '/pages/position/position'
+      });
+    }
+
+
   },
 });
 
