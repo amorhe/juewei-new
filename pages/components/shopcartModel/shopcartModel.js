@@ -20,7 +20,7 @@ Component({
     btnClick: true,
     freeId: false,   // 是否有包邮活动
     isTake: false,
-    isOpen:''
+    isOpen: ''
   },
   props: {
     onClear: (data) => console.log(data),
@@ -29,7 +29,7 @@ Component({
   onInit() {
   },
   didMount() {
-    this.getSendPrice();
+    // this.getSendPrice();
   },
   didUpdate() {
     this.getSendPrice();

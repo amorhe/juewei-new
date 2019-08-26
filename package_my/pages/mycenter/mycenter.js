@@ -44,7 +44,7 @@ Page({
     var _sid = my.getStorageSync({
       key: '_sid'
     }).data
- 
+
     getuserInfo(_sid).then((res) => {
       var province = region.filter(item => {
         return item.addrid == res.data.province_id
@@ -115,17 +115,16 @@ Page({
     let provinceList = region.map(({ addrid, name }) => ({ addrid, name }))
     let cityList = region[curProvince].sub
     let countryList = cityList[curCity].sub
-
     this.setData({
       provinceList,
       cityList,
       countryList
     })
   },
-
   changeAddress(e) {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
-    let cur = e.detail.value
+    let cur;
+    if (e) { cur = e.detail.value } else { cur = this.data.defaultAddress }
     if (cur[0] != curProvince) {
       cur = [cur[0], 0, 0]
     }
@@ -134,8 +133,16 @@ Page({
       cur = [cur[0], cur[1], 0]
     }
 
+    let province = region[cur[0]].name;
+    let city = region[cur[0]].sub[cur[1]].name;
+    let district = (region[cur[0]].sub[cur[1]].sub[cur[2]] && region[cur[0]].sub[cur[1]].sub[cur[2]].name) || ''
+
     this.setData({
-      defaultAddress: cur
+      defaultAddress: cur,
+      address: province + ' ' + city + ' ' + district,
+      province,
+      city,
+      district
     },
       () => this.getAddressList()
     )
@@ -144,9 +151,9 @@ Page({
   showSelectAddress() {
     this.setData({ selectAddress: true })
   },
-
   hideSelectAddress() {
-    var that = this
+    var that = this;
+    
     var province = that.data.provinceList[that.data.defaultAddress[0]]
     var curCity = that.data.cityList[that.data.defaultAddress[1]]
     var region = that.data.countryList[that.data.defaultAddress[2]]
@@ -155,6 +162,7 @@ Page({
       city_id: curCity.addrid,
       region_id: region.addrid
     }
+   
     UpdateUserInfo(data).then(res => {
       that.setData({
         'userinfo.province_id': province.addrid,
@@ -163,8 +171,8 @@ Page({
         'userinfo.provinceName': province.name,
         'userinfo.cityName': curCity.name,
         'userinfo.regionName': region.name,
-        selectAddress: false
-      })
+        selectAddress: false,
+      },()=> that.changeAddress())
     })
   },
 

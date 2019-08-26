@@ -362,6 +362,8 @@ Page({
         this.setData({
           freeMoney: app.globalData.activityList.FREE.money
         })
+      }else{
+        app.globalData.freeId = null;
       }
       obj1 = {
         "key": "折扣",

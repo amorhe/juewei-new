@@ -44,11 +44,11 @@ Page({
     phone: '',   // 手机号
     newArr: [],    // 变更商品列表
     addressList: [],
-    trueprice:0, //真实的总价价格
-    send_price: (my.getStorageSync({key:'send_price' }).data || 30)
+    trueprice: 0, //真实的总价价格
+    send_price: (my.getStorageSync({ key: 'send_price' }).data || 30)
   },
   onLoad(e) {
-    console.log(this.data.send_price,this.data.trueprice);
+    console.log(this.data.send_price, this.data.trueprice);
     // 外卖默认地址
     if (app.globalData.type == 1) {
       this.getDefault();
@@ -177,6 +177,11 @@ Page({
     }
     if (app.globalData.address_id) {
       this.getAddress(app.globalData.address_id)
+    } else {
+      this.setData({
+        address: false,
+        addressList: []
+      })
     }
 
     let gifts = [];
@@ -192,7 +197,7 @@ Page({
   // 换购显示
   addRepurseTap(e) {
     // console.log(e)
-    let gifts = {}, gifts_price = '', order_price = '', trueprice=0;
+    let gifts = {}, gifts_price = '', order_price = '', trueprice = 0;
     gifts[e.currentTarget.dataset.id] = {
       "activity_id": e.currentTarget.dataset.activity_id,
       "gift_id": e.currentTarget.dataset.gift_id,
@@ -236,7 +241,7 @@ Page({
       gifts: {},
       gift_id: '',
       order_price: `¥${this.data.orderInfo.real_price / 100}`,
-      trueprice:this.data.orderInfo.real_price / 100
+      trueprice: this.data.orderInfo.real_price / 100
     })
   },
   // 弹框事件回调
@@ -280,7 +285,7 @@ Page({
       my.removeStorageSync({
         key: 'goodsList'
       })
-       my.navigateBack({
+      my.navigateBack({
         delta: 1
       });
       return;
@@ -444,10 +449,17 @@ Page({
   // 选择地址
   getAddress(address_id) {
     useraddressInfo(address_id).then((res) => {
-      this.setData({
-        address: true,
-        addressInfo: res.data
-      })
+      if (res.code == 0) {
+        this.setData({
+          address: true,
+          addressInfo: res.data
+        })
+      }else{
+        this.setData({
+          address:false,
+          addressInfo:{}
+        })
+      }
     })
   },
   // 获取默认地址
@@ -459,15 +471,19 @@ Page({
           addressList.push(value)
         }
       }
-      if (addressList[0].user_address_id) {
+      if (addressList.length > 0 && addressList[0].user_address_id) {
         app.globalData.address_id = addressList[0].user_address_id;
         this.setData({
           address: true,
           addressInfo: addressList[0],
           addressList
         })
+      } else {
+        this.setData({
+          address: false,
+          addressList: []
+        })
       }
-
     })
   },
   // 选择优惠券
