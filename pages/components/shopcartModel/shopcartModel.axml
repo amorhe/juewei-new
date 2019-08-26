@@ -16,8 +16,7 @@
       </view>
     </view>
     <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-      <view class="buyBtn" a:if="{{(priceAll/100
-        <send_price || shopcartNum==0) && isOpen !=2}}">￥{{send_price}}起
+      <view class="buyBtn" a:if="{{(priceAll/100<send_price || shopcartNum==0) && isOpen !=2}}">￥{{send_price}}起
           <text a:if="{{type==1}}">送</text>
           <text a:if="{{type==2}}">购</text></view>
           <view class="buyBtn" a:if="{{isOpen == 2}}">未营业</view>
