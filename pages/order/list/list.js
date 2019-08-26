@@ -148,7 +148,7 @@ Page({
 
 
     return this.setData({
-      cur: app.globalData.refresh_state
+      cur: app.globalData.refresh_state || 0
     }, () => this.refresh())
   },
   onUnload() {
@@ -360,9 +360,18 @@ Page({
     app.globalData.type = menuList[cur].dis_type;
     log(app.globalData.type)
 
-    my.switchTab({
-      url: '/pages/home/goodslist/goodslist'
-    });
+  if (app.globalData.province &&
+      app.globalData.city &&
+      app.globalData.address &&
+      app.globalData.position) {
+      my.switchTab({
+        url: '/pages/home/goodslist/goodslist'
+      });
+    } else {
+      my.navigateTo({
+        url: '/pages/position/position'
+      });
+    }
   }
 
 });

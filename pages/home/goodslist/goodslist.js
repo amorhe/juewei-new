@@ -160,26 +160,34 @@ Page({
           break;
         // 优惠券
         case '/package_my/pages/coupon/coupon':
-          my.navigateTo({
-            url: topage
-          });
+          setTimeout(function(){
+            my.navigateTo({
+              url: topage
+            });
+          },200)
           break;
         // 会员卡
         case '/package_my/pages/membercard/membercard':
-          my.navigateTo({
-            url: topage
-          });
+          setTimeout(function(){
+            my.navigateTo({
+              url: topage
+            });
+          },200)
           break;
         //  附近门店
         case '/package_my/pages/nearshop/nearshop':
-          my.navigateTo({
-            url: topage
-          });
+          setTimeout(function(){
+            my.navigateTo({
+              url: topage
+            });
+          },500)
           break;
         default:
-          my.navigateTo({
-            url: topage
-          });
+          setTimeout(function(){
+            my.navigateTo({
+              url: topage
+            });
+          },200)
           break;
       }
     }
