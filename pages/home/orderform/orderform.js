@@ -136,7 +136,7 @@ Page({
           height: 36,
           label: {
             content: `距你${self.distance}米`,
-            color: "#333",
+            color: "#333333",
             fontSize: 11,
             borderRadius: 30,
             bgColor: "#ffffff",

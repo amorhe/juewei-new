@@ -133,18 +133,22 @@ Page({
     let topage=(app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
     app.globalData.page = null; //删除
     my.removeStorageSync({key: 'query'}); //删除
-    // console.log('topage',topage);
+    console.log('topage=',topage);
     if (topage != '') {
       switch (topage) {
         //会员
+        case '/pages/home/goodslist/goodslist':
+          //就是当前页不用跳转任何
+          break;
+        //会员
         case '/pages/vip/index/index':
-          my.navigateTo({
+          my.switchTab({
             url: topage
           });
           break;
         // 订单
         case '/pages/order/list/list':
-          my.navigateTo({
+          my.switchTab({
             url: topage
           });
           break;
