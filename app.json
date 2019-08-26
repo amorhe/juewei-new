@@ -11,7 +11,12 @@
     "pages/noposition/noposition",
     "pages/noNet/noNet",
     "package_my/pages/nearshop/nearshop",
-    "package_my/pages/onlineservice/onlineservice"
+    "package_my/pages/onlineservice/onlineservice",
+    "pages/skip/togoodslist/togoodslist",
+    "pages/skip/tomy/tomy",
+    "pages/skip/tovip/tovip",
+    "pages/skip/tocoupon/tocoupon",
+    "pages/skip/tonearbyshop/tonearbyshop"
   ],
   "subPackages": [
     {
@@ -117,7 +122,7 @@
         "pagePath": "pages/vip/index/index",
         "icon": "https://wap.juewei.com/m/ali-mini/image/menu_vip1.png",
         "activeIcon": "https://wap.juewei.com/m/ali-mini/image/menu_vip2.png",
-        "name": "vip专享"
+        "name": "会员专享"
       },
       {
         "pagePath": "pages/order/list/list",

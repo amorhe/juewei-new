@@ -2,16 +2,13 @@ import { loginByAliUid } from './pages/common/js/login'
 import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
+    console.log('options=',options);
     // page是拿不到的信息，只有query可以拿到
-    if(options.query){
-      for(let keys in options.query){
-        this.globalData.query=(keys || '');
-        break;
-      }
-      // this.globalData.query = (Object.keys(options.query)[0] || options.query);
+    if(options.query && options.query.go){
+       this.globalData.query = options.query.go;
        my.setStorageSync({
           key: 'query', // 缓存数据的key
-          data: this.globalData.query, // 要缓存的数据
+          data: options.query.go, // 要缓存的数据
        });
     }
     // 第一次打开
