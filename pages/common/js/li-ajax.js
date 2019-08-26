@@ -160,10 +160,9 @@ export const getDistance = async (_lng, _lat) => {
 
 export const guide = e => {
   const { shop_longitude, shop_latitude, shop_name, address } = e.currentTarget.dataset;
-  let ott = gd_decrypt(shop_longitude,shop_latitude);
   my.openLocation({
-    longitude: ott.lng,
-    latitude: ott.lat,
+    longitude: shop_longitude,
+    latitude:shop_latitude,
     name: shop_name,
     address,
   });

@@ -53,11 +53,11 @@ Component({
       "解辣神器": 13,
     },
     repurse_price: 0,    // 购物车换购商品价格
-    leftscrolltop:0,
-    pagescrollTop:0
+    leftscrolltop: 0,
+    pagescrollTop: 0
   },
   onInit() {
-    setTimeout(() =>{
+    setTimeout(() => {
       var query = my.createSelectorQuery();
       query.select('.pagesScorll').boundingClientRect();
       query.exec((rect) => {
@@ -207,7 +207,7 @@ Component({
     // 选择系列
     chooseGoodsType(e) {
       my.pageScrollTo({
-        scrollTop:this.data.pagescrollTop
+        scrollTop: this.data.pagescrollTop
       });
       this.setData({
         goodsType: e.currentTarget.dataset.type
@@ -229,11 +229,19 @@ Component({
         goodsModal: data.goodsModal
       })
     },
+    onTouchStart(e) {
+      this.setData({
+        y1: e.changedTouches[0].pageY
+      })
+    },
     // 滑动
     onTouchEnd(e) {
-      my.pageScrollTo({
-        scrollTop:this.data.pagescrollTop
-      });
+      let y2 = e.changedTouches[0].pageY;
+      if (y2 < this.data.y1) {
+        my.pageScrollTo({
+          scrollTop: this.data.pagescrollTop
+        });
+      }
       setTimeout(() => {
         let retArr = [...app.globalData.ret];
         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
@@ -266,11 +274,6 @@ Component({
     addshopcart(e) {
       let goods_car = {};
       let goods_code = e.currentTarget.dataset.goods_code;;
-      // if (e.currentTarget.dataset.goods_discount) {
-      //   goods_code = e.currentTarget.dataset.goods_activity_code;
-      // } else {
-        
-      // }
       let goods_format = e.currentTarget.dataset.goods_format;
       let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
       if (goodlist[`${goods_code}_${goods_format}`]) {
@@ -314,7 +317,7 @@ Component({
       let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
       for (let keys in goodlist) {
         if (e.currentTarget.dataset.goods_discount) {
-          if (goodlist[keys].goods_order_limit!=null && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
+          if (goodlist[keys].goods_order_limit != null && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
             my.showToast({
               content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
             });
@@ -386,7 +389,6 @@ Component({
         shopcartAll = this.data.shopcartAll.filter(item => `${item.goods_code}_${format}` != `${code}_${format}`)
         delete (goodlist[`${code}_${format}`]);
       }
-
       this.setData({
         shopcartList: goodlist,
         shopcartAll,
