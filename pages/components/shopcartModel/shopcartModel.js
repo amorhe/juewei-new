@@ -29,7 +29,7 @@ Component({
   onInit() {
   },
   didMount() {
-    // this.getSendPrice();
+    this.getSendPrice();
   },
   didUpdate() {
     this.getSendPrice();

@@ -47,6 +47,7 @@ Page({
     repurse_price: 0
   },
   onLoad(e) {
+    console.log(e)
     let goods = app.globalData.goodsArr
     let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
     let goodsInfo = {}, priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
