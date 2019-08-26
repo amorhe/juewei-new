@@ -7,6 +7,9 @@
   background: #F9E1E0;
   font-size: 22rpx;
   box-sizing: border-box;
+  
+}
+.sticky{
   position: sticky;
   z-index: 1001
 }

@@ -51,7 +51,8 @@ Page({
       //     "id": "454",
       //     "goods_pic": "\/static\/check\/image\/goods_point\/noTHmy1mTM09NrRh.png"
       //   }]
-    }
+    },
+    isClick: true
   },
 
   parseData,
@@ -112,7 +113,7 @@ Page({
       return data
     }
     if (code !== 100) {
-      my.alert({title: msg});
+      my.alert({ title: msg });
       return {}
     }
   },
@@ -150,7 +151,17 @@ Page({
     // 调用确认订单接口，然后调起支付
     // id = -1 兑换失败
     // 虚拟物品
-
+    if (!this.data.isClick) {
+      return
+    }
+    this.setData({
+      isClick: false
+    })
+    setTimeOut(() => {
+      this.setData({
+        isClick: true
+      })
+    }, 1000)
     if (goods_type == 1) {
 
       let { order_id = '', order_sn } = await this.createOrder()
@@ -171,7 +182,7 @@ Page({
                 });
               }
               // 用户取消支付
-               if (res.resultCode == 6001) {
+              if (res.resultCode == 6001) {
                 return my.redirectTo({
                   url: '../exchangelist/exchangedetail/exchangedetail?id=' + order_id
                 });

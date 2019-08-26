@@ -171,12 +171,6 @@ Component({
       freeMoney: nextProps.freeMoney,
       repurse_price
     })
-    if(Object.keys(shopcartObj).length==0){
-      my.setStorageSync({
-        key:'goodsList',
-        data:{}
-      })
-    }
     // 购物车活动提示
     this.shopcartPrompt(nextProps.fullActivity, priceFree, repurse_price);
     if (!my.getStorageSync({ key: 'goodsList' }).data) {
@@ -194,6 +188,7 @@ Component({
         })
       }
     })
+    console.log(1)
   },
   didUpdate() {
     

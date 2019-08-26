@@ -118,7 +118,7 @@ Page({
       app.globalData.isOpen = status;
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
-    
+    app.globalData.ret = []
     let user_id = 1;
     if (my.getStorageSync({ key: 'user_id' }).data) {
       user_id = my.getStorageSync({ key: 'user_id' }).data
