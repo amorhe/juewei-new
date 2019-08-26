@@ -162,9 +162,16 @@ Page({
             tradeNO: res.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
             success: res => {
               log('s', res)
+              // 用户支付成功
               if (res.resultCode == 9000) {
                 return my.redirectTo({
                   url: '../finish/finish?id=' + order_id + '&fail=' + false
+                });
+              }
+              // 用户取消支付
+               if (res.resultCode == 6001) {
+                return my.redirectTo({
+                  url: '../exchangelist/exchangedetail/exchangedetail?id=' + order_id
                 });
               }
               return my.redirectTo({
