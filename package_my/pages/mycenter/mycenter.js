@@ -15,17 +15,11 @@ Page({
     sex: 0,
     // 地址
     name: '',
-
     phone: '',
-
     address: '',
-
     labelList: ['学校', '家', '公司'],
-
     curLabel: 0,
-
     selectAddress: false,
-
     addressList: region,
     provinceList: [],
     cityList: [],
@@ -33,13 +27,11 @@ Page({
     defaultAddress: [0, 0, 0]
   },
   onLoad(e) {
-    console.log(e)
     if (e.img && e.name) {
       this.getInfo(e.img, e.name)
     }
   },
   async onShow() {
-    console.log('执行')
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
     region = await getRegion()
@@ -52,7 +44,7 @@ Page({
     var _sid = my.getStorageSync({
       key: '_sid'
     }).data
-    console.log(_sid, '_ssssss')
+ 
     getuserInfo(_sid).then((res) => {
       var province = region.filter(item => {
         return item.addrid == res.data.province_id
@@ -70,7 +62,6 @@ Page({
       res.data.provinceName = province.name || ''
       res.data.cityName = city.name || ''
       res.data.regionName = regions.name || ''
-      // console.log(res.data,'数据啊')
       that.setData({
         userinfo: res.data
       })
@@ -267,7 +258,6 @@ Page({
   },
   onReady() {
     // 页面加载完成 只加载一次 页面初始化用
-    console.log('onready');
   },
   onHide() {
     // 页面隐藏

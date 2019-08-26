@@ -233,6 +233,7 @@ view.pay {
   display: flex;
   justify-content: space-between;
   margin-top: 24rpx;
+  
 }
 
 .item .value{
@@ -243,6 +244,7 @@ view.pay {
   font-size: 28rpx;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
+  width:200rpx;
 }
 
 

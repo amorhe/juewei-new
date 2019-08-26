@@ -33,7 +33,7 @@ Page({
   // 中会返回一个 new_user 参数   
   // new_user如果为空或者不存在或者为0   都说明不是新用户首单  
   // 如果new_user==1则是新用户首单 新用户下单当天只弹一次  
-  // 不同用户同一设备都要弹  弹框内容是百元大礼包券（请求coupon/list接口  和vip新人礼包券一样）
+  // 不同用户同一设备都要弹  弹框内容是百元大礼包券（请求coupon/list接口  和会员新人礼包券一样）
 
   async isNewUser() {
     const { order_no } = this.data
@@ -59,8 +59,10 @@ Page({
         });
       }
       // 虚拟商品弹框
+      let static_no=0;
       res.data.goods_list.forEach(item => {
-        if(item.is_gifts ==1){
+        if(item.is_gifts == 1 && static_no==0){
+          static_no = 1;
           // 优惠券
           if(item.gift_type == 1){
             this.setData({

@@ -3,7 +3,7 @@
   <view style="height:1rpx"></view>
   <view class="board">
     <view class="board-state" onTap="show">  
-      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 2 && d.order_status_info.dis_status == 2 && d.dis_tag != 'ZPS' && d.dis_get_time ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute < 0) ? '订单已取消': pickUpState[d.order_status_info.order_status] )}}
+      {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 2 && d.order_status_info.dis_status == 2 && d.dis_tag != 'ZPS' && d.dis_get_time ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消': pickUpState[d.order_status_info.order_status] )}}
       <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
     </view>
@@ -78,8 +78,8 @@
     </view>
     <view class="good-list">
       <view class="good-item" a:for="{{d.goods_list}}">
-        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG'}}" src="{{item.goods_img ? item.goods_img : imageUrl + 'activity_default.png' }}"/>
-        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ imageUrl3 + item.goods_img }}"/>
+        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG'}}" src="{{item.goods_img ? item.goods_img : imageUrl + 'present_bg.png' }}"/>
+        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ img_url + item.goods_img }}"/>
         <view class="body">
           <view class="name">
             <view class="top">
@@ -96,11 +96,11 @@
          ×{{item.goods_quantity}}
         </view>
         <view class="price">
-          <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price / 100)}}</text>
-          <text>￥{{(item.goods_price /100)}}</text>
+          <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price * item.goods_quantity / 100)}}</text>
+          <text>￥{{(item.goods_price  * item.goods_quantity /100)}}</text>
         </view>
       </view>
-      <view class="post">
+      <view class="post" a:if="{{dis_type==1}}">
         <view class="label">
           配送费
         </view>
@@ -236,6 +236,14 @@
         </view>
         <view class="value">
           <view>{{d.order_ctime}}</view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="label">
+          订单备注
+        </view>
+        <view class="value">
+          <view>{{d.message}}</view>
         </view>
       </view>
     </view>

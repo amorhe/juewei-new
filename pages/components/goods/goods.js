@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2,imageUrl3, ak } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, ak, img_url } from '../../common/js/baseUrl'
 import { couponsExpire, MyNearbyShop, GetShopGoods } from '../../common/js/home'
 import { datedifference, sortNum, getNowDate } from '../../common/js/time'
 var app = getApp();
@@ -9,6 +9,7 @@ Component({
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     goodsType: 0, //系列
     maskView: false,
     goodsModal: false,
@@ -52,11 +53,24 @@ Component({
       "解辣神器": 13,
     },
     repurse_price: 0,    // 购物车换购商品价格
+    leftscrolltop:0,
+    pagescrollTop:0
   },
   onInit() {
-
+    setTimeout(() =>{
+      var query = my.createSelectorQuery();
+      query.select('.pagesScorll').boundingClientRect();
+      query.exec((rect) => {
+        // console.log(rect)
+        if (rect[0] === null) return;
+        this.setData({
+          pagescrollTop: rect[0].top
+        })
+      });
+    }, 2000)
   },
   deriveDataFromProps(nextProps) {
+    // console.log(nextProps)
     let goodlist = my.getStorageSync({
       key: 'goodsList', // 缓存数据的key
     }).data;
@@ -64,10 +78,14 @@ Component({
     for (let keys in goodlist) {
       if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        // 计算折扣超过限购后邮费
+        if (keys.indexOf('PKG') == -1) {
+          priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        }
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
-      // 计算包邮商品价格
+      // 计算普通包邮商品价格
       if (!goodlist[keys].goods_discount) {
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -188,6 +206,9 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
+      my.pageScrollTo({
+        scrollTop:this.data.pagescrollTop
+      });
       this.setData({
         goodsType: e.currentTarget.dataset.type
       })
@@ -210,6 +231,9 @@ Component({
     },
     // 滑动
     onTouchEnd(e) {
+      my.pageScrollTo({
+        scrollTop:this.data.pagescrollTop
+      });
       setTimeout(() => {
         let retArr = [...app.globalData.ret];
         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
@@ -241,7 +265,12 @@ Component({
     },
     addshopcart(e) {
       let goods_car = {};
-      let goods_code = e.currentTarget.dataset.goods_code;
+      let goods_code = e.currentTarget.dataset.goods_code;;
+      // if (e.currentTarget.dataset.goods_discount) {
+      //   goods_code = e.currentTarget.dataset.goods_activity_code;
+      // } else {
+        
+      // }
       let goods_format = e.currentTarget.dataset.goods_format;
       let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
       if (goodlist[`${goods_code}_${goods_format}`]) {
@@ -283,20 +312,23 @@ Component({
         goodlist[`${goods_code}_${goods_format}`] = oneGood;
       }
       let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
-      // console.log(e)
       for (let keys in goodlist) {
-        if (e.currentTarget.dataset.goods_discount && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
-          my.showToast({
-            content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
-          });
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        if (e.currentTarget.dataset.goods_discount) {
+          if (goodlist[keys].goods_order_limit!=null && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
+            my.showToast({
+              content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
+            });
+            priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+            if (e.currentTarget.dataset.key == '折扣') {
+              priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+            }
+          } else {
+            priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          }
         } else {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-        }
-        // 计算包邮商品价格
-        if (!goodlist[keys].goods_discount) {
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
+
         // 计算可换购商品价格
         if (goodlist[keys].huangou) {
           repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
@@ -330,12 +362,15 @@ Component({
       goodlist[`${code}_${format}`].num -= 1;
       goodlist[`${code}_${format}`].sumnum -= 1;
       for (let keys in goodlist) {
-        if (goodlist[keys].goods_order_limit && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+        if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          if (keys.indexOf('PKG') == -1) {
+            priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          }
         } else {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         }
-        // 包邮商品价格
+        // 计算包邮商品价格
         if (!goodlist[keys].goods_discount) {
           priceFree += goodlist[keys].goods_price * goodlist[keys].num;
         }
@@ -368,6 +403,9 @@ Component({
     // 购物车活动提示
     shopcartPrompt(oldArr, priceFree, repurse_price) {
       let activityText = '', freeText = '';
+      if (oldArr == []) {
+        return
+      }
       for (let v of oldArr) {
         if (oldArr.findIndex(v => v > repurse_price) != -1) {
           if (oldArr.findIndex(v => v > repurse_price) == 0) {

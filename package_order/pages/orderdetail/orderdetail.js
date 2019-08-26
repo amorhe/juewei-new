@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2,imageUrl3 } from '../../../pages/common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../../pages/common/js/baseUrl'
 import { log, ajax, contact, handleCopy, guide } from '../../../pages/common/js/li-ajax'
 
 const app = getApp()
@@ -7,6 +7,7 @@ Page({
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     showTop: false,
     cancleShow: false,
     orderState: [],
@@ -63,6 +64,7 @@ Page({
     payStatusList: [],
     d: {},
     dis_type: -1,
+    order_channel:1
   },
   async onLoad(e) {
     let { order_no } = e
@@ -159,7 +161,6 @@ Page({
 
         let curState = res.data.order_status_info.order_status
         let curTimeArr = orderStatus[curState].timeArr;
-        log(curState, curTimeArr)
         // 自配送 没有骑手已接单
         if (curState < 5 && curState > 2) {
           dis_tag != 'ZPS' ? curTimeArr : (curTimeArr.splice(curTimeArr.findIndex(item => item == 4), 1));
@@ -170,7 +171,6 @@ Page({
         curState === 3 && dis_take_time != '0000-00-00 00:00:00' ? curTimeArr.push(5) : curTimeArr
         curOrderState = curTimeArr.map(item => timeArr[item - 1])
 
-        log(curState, curTimeArr, curOrderState)
       }
 
       if (dis_type == 2) {
@@ -241,7 +241,8 @@ Page({
           time,
           timeArr,
           curOrderState,
-          dis_type
+          dis_type,
+          order_channel:res.data.channel
         })
       }, 1000)
 
@@ -272,6 +273,12 @@ Page({
    */
 
   showCancel() {
+    if(this.data.order_channel != 1){
+        my.showToast({
+          content:'订单不支持跨平台操作，请去相应平台取消订单！'
+        });
+        return
+    }
     this.setData({
       cancleShow: true
     })
@@ -350,9 +357,9 @@ Page({
               url: '/pages/home/orderfinish/orderfinish?order_no=' + order_no
             });
           }
-           return my.redirectTo({
-            url: '/pages/home/orderError/orderError?order_no=' + order_no
-          });
+          // return my.redirectTo({
+          //   url: '/pages/home/orderError/orderError?order_no=' + order_no
+          // });
         },
         fail: res => {
           return my.redirectTo({

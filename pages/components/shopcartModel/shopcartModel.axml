@@ -40,12 +40,15 @@ bottom:0;height:100rpx" formType="submit"></button>
           <text>{{item.goods_name}}</text>
           <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
         </view>
-        <view>{{item.goods_format}}</view>
+        <view>
+          <text class="format_view">{{item.goods_format}}</text>
+          <text a:if="{{item.huangou}}" class="numberColor orcle">指定商品</text>
+        </view>
       </view>
       <view class="flexNormal">
         <view class="goodsPriceBox">
           <!-- <text class="goodsOldPrice" a:if="{{item.goods_original_price}}">￥{{item.goods_original_price/100}}</text> -->
-          <text class="numberColor">￥{{item.num>item.goods_discount_user_limit?item.goods_discount_user_limit*item.goods_price/100 + (item.num-item.goods_discount_user_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
+          <text class="numberColor">￥{{item.num>item.goods_order_limit?item.goods_order_limit*item.goods_price/100 + (item.num-item.goods_order_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
         </view>
         <view class="goodsNumber">
           <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}"/>

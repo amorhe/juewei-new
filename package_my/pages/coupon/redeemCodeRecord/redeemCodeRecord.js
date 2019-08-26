@@ -12,7 +12,6 @@ Page({
   },
   getExchangeCode(_sid){
     exchangeCode(_sid,'history').then((res) => {
-      console.log(res)
       this.setData({
         exchageArr:res.DATA
       })

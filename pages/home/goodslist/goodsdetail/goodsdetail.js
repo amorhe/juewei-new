@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2, imageUrl3 } from '../../../common/js/baseUrl'
+import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../../common/js/baseUrl'
 import { commentList, DispatchCommentList } from '../../../common/js/home'
 var app = getApp();
 Page({
@@ -24,6 +24,7 @@ Page({
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     // 评论
     commentArr: [],
     key: '',
@@ -58,6 +59,9 @@ Page({
     for (let keys in goodlist) {
       if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        if (keys.indexOf('PKG') == -1) {
+          priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        }
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -70,7 +74,7 @@ Page({
         repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
-      shopcartNum += goodlist[keys].num;
+      shopcartNum += goodlist[keys].num
     }
     this.setData({
       goodsInfo,
@@ -116,7 +120,7 @@ Page({
       priceFree,
       repurse_price
     })
-    this.shopcartPrompt(app.globalData.fullActivity, priceAll, priceFree, repurse_price);
+    this.shopcartPrompt(app.globalData.fullActivity, priceFree, repurse_price);
   },
   // 购物车
   onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
@@ -142,7 +146,7 @@ Page({
           "goods_code": e.currentTarget.dataset.goods_code,
           "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
           "goods_discount": e.currentTarget.dataset.goods_discount,
-          "goods_original_price": e.currentTarget.dataset.goods_original_price,
+          "goods_original_price": e.currentTarget.dataset.goods_original_price * 100,
           "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
           "goods_order_limit": e.currentTarget.dataset.goods_order_limit,
           "goods_format": goods_format,
@@ -167,16 +171,20 @@ Page({
     }
     let shopcartAll = [], priceAll = 0, shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let keys in goodlist) {
-      if (e.currentTarget.dataset.goods_discount && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
-        my.showToast({
-          content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
-        });
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+      if (e.currentTarget.dataset.goods_discount) {
+        if (goodlist[keys].goods_order_limit!=null && goodlist[`${e.currentTarget.dataset.goods_code}_${e.currentTarget.dataset.goods_format}`].num > e.currentTarget.dataset.goods_order_limit) {
+          my.showToast({
+            content: `折扣商品限购${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}，超过${e.currentTarget.dataset.goods_order_limit}${e.currentTarget.dataset.goods_unit}恢复原价`
+          });
+          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          if (e.currentTarget.dataset.key == '折扣') {
+            priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          }
+        } else {
+          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        }
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-      }
-      // 计算包邮商品价格
-      if (!goodlist[keys].goods_discount) {
         priceFree += goodlist[keys].goods_price * goodlist[keys].num;
       }
       // 计算可换购商品价格
@@ -184,10 +192,10 @@ Page({
         repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
-      shopcartNum += goodlist[keys].num;
+      shopcartNum += goodlist[keys].num
     }
     // 购物车活动提示
-    this.shopcartPrompt(app.globalData.fullActivity, priceAll, priceFree, repurse_price);
+    this.shopcartPrompt(app.globalData.fullActivity, priceFree, repurse_price);
     this.onchangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price)
     this.setData({
       shopcartList: goodlist,
@@ -199,45 +207,6 @@ Page({
       key: 'goodsList', // 缓存数据的key
       data: goodlist, // 要缓存的数据
     });
-
-    // 购物车小球动画
-    // 如果good_box正在运动
-
-    // if (!this.data.hide_good_box) return;
-
-    // this.finger = {};
-
-    // var topPoint = {};
-
-    // this.finger['x'] = e.detail.clientX;
-
-    // this.finger['y'] = e.detail.clientY;
-
-    // if (this.finger['y'] < this.busPos['y']) {
-
-    // topPoint['y'] = this.finger['y'] - 150;
-
-    // } else {
-
-    // topPoint['y'] = this.busPos['y'] - 150;
-
-    // }
-
-    // topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2;
-
-    // if (this.finger['x'] > this.busPos['x']) {
-
-    // topPoint['x'] = (this.finger['x'] - this.busPos['x']) / 2 + this.busPos['x'];
-
-    // } else {
-
-    // topPoint['x'] = (this.busPos['x'] - this.finger['x']) / 2 + this.finger['x'];
-
-    // }
-
-    // this.linePos = app.bezier([this.finger, topPoint, this.busPos], 20);
-    // this.startAnimation();
-
   },
   reduceshopcart(e) {
     let code = e.currentTarget.dataset.goods_code;
@@ -247,8 +216,11 @@ Page({
     goodlist[`${code}_${format}`].num -= 1;
     goodlist[`${code}_${format}`].sumnum -= 1;
     for (let keys in goodlist) {
-      if (goodlist[keys].goods_order_limit && goodlist[keys].num > goodlist[keys].goods_order_limit) {
+      if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
         priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        if (keys.indexOf('PKG') == -1) {
+          priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        }
       } else {
         priceAll += goodlist[keys].goods_price * goodlist[keys].num;
       }
@@ -261,7 +233,7 @@ Page({
         repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
       }
       shopcartAll.push(goodlist[keys]);
-      shopcartNum += goodlist[keys].num;
+      shopcartNum += goodlist[keys].num
     }
     // 删除
     if (goodlist[`${code}_${format}`].num == 0) {

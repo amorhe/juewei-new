@@ -1,12 +1,14 @@
-import { imageUrl, imageUrl2, imageUrl3} from '../../common/js/baseUrl'
-import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay,useraddress } from '../../common/js/home'
+import { imageUrl, imageUrl2, imageUrl3, img_url } from '../../common/js/baseUrl'
+import { couponsList, confirmOrder, createOrder, useraddressInfo, add_lng_lat, AliMiniPay, useraddress } from '../../common/js/home'
 import { upformId } from '../../common/js/time'
+import { gd_decrypt } from '../../common/js/map'
 var app = getApp();
 Page({
   data: {
     imageUrl,
     imageUrl2,
     imageUrl3,
+    img_url,
     isCheck: true,  //协议
     // 换购商品列表
     repurseList: [],
@@ -17,8 +19,8 @@ Page({
     type: 0,
     content: "",
     orderType: 1,  //1为外卖，2为自提
-    longitude: null,
-    latitude: null,
+    longitude: '',
+    latitude: '',
     markersArray: [],
     shopObj: {},   // 自提商店的详细信息
     couponslist: [],   //优惠券列表
@@ -41,75 +43,116 @@ Page({
     isClick: true,
     phone: '',   // 手机号
     newArr: [],    // 变更商品列表
+    addressList: [],
+    trueprice:0, //真实的总价价格
+    send_price: (my.getStorageSync({key:'send_price' }).data || 30)
   },
   onLoad(e) {
+    console.log(this.data.send_price,this.data.trueprice);
     // 外卖默认地址
-    if(app.globalData.type==1){
+    if (app.globalData.type == 1) {
       this.getDefault();
     }
-    let goodsList = app.globalData.goodsBuy;
-    for (let item of goodsList) {
-      item['goods_quantity'] = item['num'];
-      if (item.goods_discount) {
-        item.goods_code = item.goods_activity_code
-      }
-    }
-    const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
-    const self = app.globalData.shopTakeOut;
-    const phone = my.getStorageSync({
-      key: 'phone', // 缓存数据的key
+    let goodsList = my.getStorageSync({
+      key: 'goodsList', // 缓存数据的key
     }).data;
-    const longitude = my.getStorageSync({ key: 'lng' }).data;
-    const latitude = my.getStorageSync({ key: 'lat', }).data;
-    let arr = [
-      {
-        longitude,
-        latitude,
-        iconPath: `${imageUrl}position_map1.png`,
-        width: 20,
-        height: 20,
-        rotate: 270
-      },
-      {
-        longitude: self.location[0],
-        latitude: self.location[1],
-        iconPath: `${imageUrl}position_map2.png`,
-        width: 36,
-        height: 36,
-        label: {
-          content: `距你${self.distance}米`,
-          color: "#333",
-          fontSize: 11,
-          borderRadius: 30,
-          bgColor: "#ffffff",
-          padding: 8,
+    let obj1 = {}, obj2 = {}, obj3 = {}, obj4 = {}, obj5 = {}, obj6 = {}, goodlist = [];
+    for (let key in goodsList) {
+      if (goodsList[key].goods_discount) {
+        if (key.indexOf('PKG') == -1) {
+          if (goodsList[key].num > goodsList[key].goods_order_limit) {
+            // 非折扣部分
+            obj1['goods_price'] = goodsList[key].goods_original_price;
+            obj1['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
+            obj1['goods_code'] = goodsList[key].goods_activity_code;
+            obj1['goods_format'] = goodsList[key].goods_format;
+            //  折扣部分
+            obj2['goods_price'] = goodsList[key].goods_price;
+            obj2['goods_quantity'] = goodsList[key].goods_order_limit;
+            obj2['goods_code'] = goodsList[key].goods_code;
+            obj2['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj1, obj2);
+          } else {
+            obj4['goods_price'] = goodsList[key].goods_price;
+            obj4['goods_quantity'] = goodsList[key].num;
+            obj4['goods_code'] = goodsList[key].goods_code;
+            obj4['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj4);
+          }
+        } else {
+          // 套餐
+          if (goodsList[key].num > goodsList[key].goods_order_limit) {
+            // 非折扣部分
+            obj5['goods_price'] = goodsList[key].goods_original_price;
+            obj5['goods_quantity'] = goodsList[key].num - goodsList[key].goods_order_limit;
+            obj5['goods_code'] = goodsList[key].goods_activity_code;
+            obj5['goods_format'] = goodsList[key].goods_format;
+            // 折扣部分
+            obj3['goods_price'] = goodsList[key].goods_price;
+            obj3['goods_quantity'] = goodsList[key].goods_order_limit;
+            obj3['goods_code'] = goodsList[key].goods_code;
+            obj3['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj3, obj5)
+          } else {
+            obj6['goods_price'] = goodsList[key].goods_price;
+            obj6['goods_quantity'] = goodsList[key].num;
+            obj6['goods_code'] = goodsList[key].goods_code;
+            obj6['goods_format'] = goodsList[key].goods_format;
+            goodlist.push(obj6);
+          }
         }
-      }
-    ]
-    this.setData({
-      shopObj: self,
-      longitude:self.location[0],
-      latitude:self.location[1],
-      markersArray: arr,
-      goodsList,
-      orderType: app.globalData.type,
-      phone
-    })
-    // 加购商品列表
-    const gifts = app.globalData.gifts;
-    // console.log(gifts)
-    if (Object.keys(gifts).length > 0) {
-      for (let key in gifts) {
-        gifts[key].forEach(val => {
-          val.goods_count = 0;
-          val.goods_choose = true
-        })
-        this.setData({
-          full_money: key,
-          repurseList: gifts[key]
-        })
+      } else {
+        //  普通商品
+        goodsList[key]['goods_quantity'] = goodsList[key].num
+        goodlist.push(goodsList[key])
       }
     }
+    const self = app.globalData.shopTakeOut;
+    this.setData({
+      goodsList: goodlist,
+      shopObj: self
+    })
+    if (app.globalData.type == 2) {
+      const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
+      const phone = my.getStorageSync({
+        key: 'phone', // 缓存数据的key
+      }).data;
+      let ott = gd_decrypt(my.getStorageSync({ key: 'lng' }).data, my.getStorageSync({ key: 'lat', }).data);
+      let location_s = gd_decrypt(self.location[0], self.location[1]);
+      let arr = [
+        {
+          longitude: ott.lng,
+          latitude: ott.lat,
+          iconPath: `${imageUrl}position_map1.png`,
+          width: 20,
+          height: 20,
+          rotate: 0
+        },
+        {
+          longitude: location_s.lng,
+          latitude: location_s.lat,
+          iconPath: `${imageUrl}position_map2.png`,
+          width: 36,
+          height: 36,
+          label: {
+            content: `距你${self.distance}米`,
+            color: "#333",
+            fontSize: 11,
+            borderRadius: 30,
+            bgColor: "#ffffff",
+            padding: 8,
+          }
+        }
+      ]
+      this.setData({
+        longitude: location_s.lng,
+        latitude: location_s.lat,
+        markersArray: arr,
+        orderType: app.globalData.type,
+        phone
+      })
+    }
+
   },
   onShow() {
     // 备注
@@ -136,20 +179,20 @@ Page({
       this.getAddress(app.globalData.address_id)
     }
 
-    let gift = [];
+    let gifts = [];
     if (this.data.gifts[this.data.gift_id]) {
-      gift.push(this.data.gifts[this.data.gift_id]);
+      gifts.push(this.data.gifts[this.data.gift_id]);
       this.setData({
-        gift
+        gifts
       })
     }
-    
+
     this.confirmOrder(my.getStorageSync({ key: 'shop_id' }).data, JSON.stringify(this.data.goodsList));
   },
   // 换购显示
   addRepurseTap(e) {
-    console.log(e)
-    let gifts = {}, gifts_price = '', order_price = '';
+    // console.log(e)
+    let gifts = {}, gifts_price = '', order_price = '', trueprice=0;
     gifts[e.currentTarget.dataset.id] = {
       "activity_id": e.currentTarget.dataset.activity_id,
       "gift_id": e.currentTarget.dataset.gift_id,
@@ -162,24 +205,29 @@ Page({
     if (e.currentTarget.dataset.cash == 0 && e.currentTarget.dataset.point == 0) {
       gifts_price = `¥0`;
       order_price = `¥${this.data.orderInfo.real_price / 100}`;
+      trueprice = this.data.orderInfo.real_price / 100;
     }
     if (e.currentTarget.dataset.cash == 0 && e.currentTarget.dataset.point != 0) {
       gifts_price = `${e.currentTarget.dataset.point}积分`;
       order_price = `¥${this.data.orderInfo.real_price / 100}+${e.currentTarget.dataset.point}积分`
+      trueprice = this.data.orderInfo.real_price / 100;
     }
     if (e.currentTarget.dataset.cash != 0 && e.currentTarget.dataset.point == 0) {
       gifts_price = ` ¥${e.currentTarget.dataset.cash / 100}`;
-      order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}`
+      order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}`;
+      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100;
     }
     if (e.currentTarget.dataset.cash != 0 && e.currentTarget.dataset.point != 0) {
       gifts_price = `¥${e.currentTarget.dataset.cash / 100}+${e.currentTarget.dataset.point}积分`;
       order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}+${e.currentTarget.dataset.point}积分`
+      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100;
     }
     this.setData({
       gifts,
       gift_id: e.currentTarget.dataset.id,
       gifts_price,
-      order_price
+      order_price,
+      trueprice
     })
   },
   // 减
@@ -187,7 +235,8 @@ Page({
     this.setData({
       gifts: {},
       gift_id: '',
-      order_price: `¥${this.data.orderInfo.real_price / 100}`
+      order_price: `¥${this.data.orderInfo.real_price / 100}`,
+      trueprice:this.data.orderInfo.real_price / 100
     })
   },
   // 弹框事件回调
@@ -231,9 +280,10 @@ Page({
       my.removeStorageSync({
         key: 'goodsList'
       })
-      my.navigateBack({
+       my.navigateBack({
         delta: 1
       });
+      return;
     }
     for (let ott in newShopcart) {
       newGoodsArr.push(newShopcart[ott])
@@ -250,6 +300,7 @@ Page({
       my.navigateBack({
         delta: 1
       });
+      return;
     }
     // 继续结算
     if (data.isType == 'orderConfirm' && data.type == 0) {
@@ -274,7 +325,7 @@ Page({
     const lat = my.getStorageSync({ key: 'lat' }).data;
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
     const goods = JSON.stringify(this.data.goodsReal);
-    let type = '', typeClass = ''
+    let type = '', typeClass = '', gift_arr = [], giftObj = {}, notUse = 0, remark = '', str_gift = '';
     if (app.globalData.type == 1) {
       type = 1;
       typeClass = 2;
@@ -301,22 +352,30 @@ Page({
       isClick: false
     })
 
-    let notUse = 0;
     if (app.globalData.notUse) {
       notUse = app.globalData.notUse;
     }
-    let remark = '';
+    // 备注
     if (app.globalData.remarks) {
       remark = app.globalData.remarks
     }
+    if (Object.keys(this.data.gifts).length > 0) {
+      giftObj['activity_id'] = this.data.gifts[this.data.gift_id].activity_id;
+      giftObj['gift_id'] = this.data.gifts[this.data.gift_id].gift_id;
+      giftObj['id'] = this.data.gifts[this.data.gift_id].id;
+      gift_arr.push(giftObj);
+      str_gift = JSON.stringify(gift_arr);
+    }
     // 创建订单
-    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, this.data.gift, this.data.orderInfo.use_coupons[0], notUse).then((res) => {
+    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, this.data.orderInfo.use_coupons[0], notUse, app.globalData.freeId).then((res) => {
       // console.log(res);
       if (res.code == 0) {
         if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
           this.setData({
-            isClick: true
+            isClick: true,
+            coupon_code: ''
           })
+          app.globalData.coupon_code = '';
           add_lng_lat(res.data.order_no, typeClass, lng, lat).then((conf) => {
             my.removeStorageSync({
               key: 'goodsList', // 缓存数据的key
@@ -331,8 +390,10 @@ Page({
           if (val.code == 0) {
             // 支付宝调起支付
             this.setData({
-              isClick: true
+              isClick: true,
+              coupon_code: ''
             })
+            app.globalData.coupon_code = '';
             my.tradePay({
               tradeNO: val.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
               success: (value) => {
@@ -368,7 +429,7 @@ Page({
           content: res.msg,
         })
         this.setData({
-          isClick: true
+          isClick: true,
         })
       }
     })
@@ -398,10 +459,15 @@ Page({
           addressList.push(value)
         }
       }
-      this.setData({
-        address: true,
-        addressInfo:addressList[0]
-      })
+      if (addressList[0].user_address_id) {
+        app.globalData.address_id = addressList[0].user_address_id;
+        this.setData({
+          address: true,
+          addressInfo: addressList[0],
+          addressList
+        })
+      }
+
     })
   },
   // 选择优惠券
@@ -432,32 +498,63 @@ Page({
         }
         for (let val of goodsReal) {
           if (val.goods_type == 'PKG') {
-            val['goods_img'] = imageUrl3 + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
+            val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
           } else {
             val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
           }
         }
         // 参与加价购的商品
-        let repurseTotalPrice = 0;
+        // 加购商品列表
+        const gifts = app.globalData.gifts;
+        let repurseTotalPrice = 0, arr_money = [];
+        // console.log(gifts)
         if (app.globalData.repurseGoods) {
+          if (Object.keys(gifts).length > 0) {
+            for (let key in gifts) {
+              gifts[key].forEach(val => {
+                val.goods_count = 0;
+                val.goods_choose = true
+              })
+              arr_money.push(key);
+            }
+          }
+          // 换购商品不指定
           if (app.globalData.repurseGoods.length == 0) {
-            if (res.data.activity_list[''].real_price >= this.data.full_money) {
+            arr_money.push(res.data.activity_list[''].real_price);
+            arr_money.sort((a, b) => {
+              return a - b;
+            });
+            let k = arr_money.findIndex(item => item == res.data.activity_list[''].real_price);
+            if (res.data.activity_list[''].real_price >= arr_money[k - 1]) {
               this.setData({
-                showRepurse: true
+                showRepurse: true,
+                repurseList: gifts[arr_money[k - 1]]
               })
             }
-          } else {
+            if (res.data.activity_list[''].real_price >= arr_money[k]) {
+              this.setData({
+                showRepurse: true,
+                repurseList: gifts[arr_money[k]]
+              })
+            }
+          } else {   // 换购商品为指定
             for (let item of app.globalData.repurseGoods) {
               for (let value of goodsReal) {
                 if (item.goods_code == value.sap_code && value.goods_type != "DIS") {
                   repurseTotalPrice += value.goods_price * value.goods_quantity;
-                  if (repurseTotalPrice >= this.data.full_money) {
-                    this.setData({
-                      showRepurse: true
-                    })
-                  }
                 }
               }
+            }
+            arr_money.push(repurseTotalPrice);
+            arr_money.sort((a, b) => {
+              return a - b;
+            });
+            let i = arr_money.findIndex(item => item == repurseTotalPrice);
+            if (repurseTotalPrice >= arr_money[i - 1]) {
+              this.setData({
+                showRepurse: true,
+                repurseList: gifts[arr_money[i - 1]]
+              })
             }
           }
         }
@@ -476,7 +573,9 @@ Page({
           goodsInvented,
           orderInfo: res.data.activity_list[''],
           order_price: `¥${res.data.activity_list[''].real_price / 100}`,
-          coupon_money
+          trueprice: res.data.activity_list[''].real_price / 100,
+          coupon_money,
+          orderDetail: res.data
         })
       } else if (res.code == 277) {
         this.setData({

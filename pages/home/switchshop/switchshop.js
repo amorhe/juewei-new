@@ -1,13 +1,14 @@
 import { imageUrl } from '../../../pages/common/js/baseUrl'
+import { gd_decrypt } from '../../../pages/common/js/map'
 var app = getApp();
 Page({
   data: {
     imageUrl,
-    longitude:0,// 地图中心点
-    latitude:0,
+    longitude: 0,// 地图中心点
+    latitude: 0,
     markersArray: [],
     shopList: [],   //门店列表
-    type:''
+    type: ''
   },
   onLoad(e) {
     //  外卖
@@ -19,52 +20,56 @@ Page({
     if (e.type == 2) {
       data = my.getStorageSync({ key: 'self' }).data;
     }
-    let hI =0;
-    if(app.globalData.hI){
+    let hI = 0;
+    if (app.globalData.hI) {
       hI = app.globalData.hI
     }
     let arr = data
-    .map(({ location }) => ({
-      longitude: location[0],
-      latitude: location[1]
-    }))
-    .map((item,index)=>{
-      if (index === hI) {
-        return {
-          ...item,
-          iconPath: `${imageUrl}position_map1.png`,
-          width: 32,
-          height: 32
+      .map(({ location }) => ({
+        longitude: location[0],
+        latitude: location[1]
+      }))
+      .map((item, index) => {
+        if (index === hI) {
+          return {
+            ...item,
+            iconPath: `${imageUrl}position_map1.png`,
+            width: 32,
+            height: 32
+          }
+        } else {
+          return {
+            ...item,
+            iconPath: `${imageUrl}position_map1.png`,
+            width: 15,
+            height: 15
+          }
         }
-      }else{
-        return {
-          ...item,
-          iconPath: `${imageUrl}position_map1.png`,
-          width: 15,
-          height: 15
-        }
-      }
-    })
+      })
     this.setData({
       shopList: data,
       markersArray: arr,
-      type:e.type
+      type: e.type
     })
   },
   // 选择门店
   chooseshop(e) {
+    // console.log(e)
     app.globalData.shop_id = e.currentTarget.dataset.id;   //商店id
     app.globalData.type = this.data.type;    //外卖自提
     app.globalData.hI = e.currentTarget.dataset.index;
     app.globalData.shopIng = e.currentTarget.dataset.shopIng;
-    my.switchTab({ 
+    app.globalData.position.cityAdcode = e.currentTarget.dataset.shopIng.city_id;
+    app.globalData.position.districtAdcode = e.currentTarget.dataset.shopIng.district_id
+    my.navigateBack({ //由于商城首页选用的是navigate  所以这里需要用返回
       url: '/pages/home/goodslist/goodslist'
     })
   },
-  onShow(){
-     this.setData({
-       longitude: my.getStorageSync({key:'lng'}).data,
-       latitude: my.getStorageSync({key:'lat'}).data,
+  onShow() {
+    let ott = gd_decrypt(my.getStorageSync({ key: 'lng' }).data, my.getStorageSync({ key: 'lat' }).data)
+    this.setData({
+      longitude: ott.lng,
+      latitude: ott.lat,
     })
   }
 });

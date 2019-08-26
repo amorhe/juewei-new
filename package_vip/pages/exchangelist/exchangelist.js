@@ -105,35 +105,36 @@ Page({
     if (res.code === 100) {
       lastLage = res.data.pagination.lastLage
       if (lastLage < page_num) {
+        this.setData({
+              orderList,
+              finish: true
+        });
         return
       }
       orderList = [...orderList, ...res.data.data]
-
       time = setInterval(() => {
-        orderList = orderList.map(({ remaining_pay_minute = -1, remaining_pay_second = -1, ...item }) => {
-          remaining_pay_second--
-          if (remaining_pay_second === 0 && remaining_pay_minute === -1) {
-            clearInterval(time)
-          }
-          if (remaining_pay_second <= 0) {
-            --remaining_pay_minute
-            remaining_pay_second = 59
-          }
-          return {
-            remaining_pay_minute,
-            remaining_pay_second,
-            ...item,
-          }
-        })
-        this.setData({
-          orderList,
-          finish: true,
-          time,
-          lastLage
-        }, () => my.hideLoading())
-
+          orderList = orderList.map(({ remaining_pay_minute = -1, remaining_pay_second = -1, ...item }) => {
+            remaining_pay_second--
+            if (remaining_pay_second === 0 && remaining_pay_minute === -1) {
+              clearInterval(time)
+            }
+            if (remaining_pay_second <= 0) {
+              --remaining_pay_minute
+              remaining_pay_second = 59
+            }
+            return {
+              remaining_pay_minute,
+              remaining_pay_second,
+              ...item,
+            }
+          })
+          this.setData({
+            orderList,
+            finish: true,
+            time,
+            lastLage
+          }, () => my.hideLoading())
       }, 1000)
-
     }
   },
 
@@ -149,7 +150,7 @@ Page({
   },
 
   /**
-   * @function 跳转到VIP首页
+   * @function 跳转到会员首页
    */
 
   switchTo() {

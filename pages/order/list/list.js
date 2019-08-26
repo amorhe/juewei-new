@@ -129,7 +129,6 @@ Page({
   async onShow() {
     const { timers } = this.data;
 
-    log(timers)
     timers.forEach(item => clearInterval(item))
 
     // 校验用户是否登录

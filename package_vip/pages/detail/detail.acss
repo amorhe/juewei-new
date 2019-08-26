@@ -8,7 +8,7 @@ page{
 }
 
 .header{
-  height: 940rpx;
+  /* height: 940rpx; */
   border-radius: 0 0 20rpx 20rpx;
   background: white;
   overflow: hidden;
@@ -29,6 +29,7 @@ color:rgba(51,51,51,1);
 .coast{
   margin: 0 32rpx;
   margin-top: 10rpx;
+  margin-bottom: 21rpx;
   font-size: 56rpx;
   color:#e60012;
   font-weight: 700
@@ -40,15 +41,17 @@ color:rgba(51,51,51,1);
 }
 
 .bottom{
-position: absolute;
-bottom: -50rpx;
+/* position: absolute;
+bottom: -50rpx; */
 height: 32rpx;
 width: 750rpx;
 text-align: center;
 color:#e60012;
 border-radius: 0 0 20rpx 0;
 }
-
+.bottom.bottom-back{
+  margin-top: -32rpx;
+}
 .footer{
   margin-top: 16rpx;
   padding: 32rpx;

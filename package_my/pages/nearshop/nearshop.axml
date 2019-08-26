@@ -1,39 +1,36 @@
 <view class="searchView">
   <view>
-    <view class="positionAddress"  onTap="choosecityTap">
-      <text>北京市</text>
+    <view class="positionAddress" onTap="choosecityTap">
+      <text>{{city}}</text>
       <image src="{{imageUrl}}arrow_down1.png" />
     </view>
     <view class="searchBox">
       <image class="searchIcon" src="{{imageUrl}}search.png" />
-      <input type="text" value="{{inputAddress}}" onInput="handleSearch" onConfirm="addressSearch" placeholder="地址名称" placeholder-class="colorGray"  />
+      <input type="text" value="{{inputAddress}}" onInput="handleSearch" onConfirm="addressSearch" placeholder="地址名称" placeholder-class="colorGray" />
     </view>
   </view>
 </view>
-
 <view class="mapView">
-  <map id="map" style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"></map>
-
-  <cover-view class="shopBox">
-     <cover-view class="shopLi" a:for="{{shopList}}">
-       <cover-view>
+    <map id="map" style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"/>
+    <cover-view class="shopBox">
+      <cover-view class="shopLi" a:for="{{shopList}}">
+        <cover-view>
           <cover-view class="shopTxt">
             <cover-image a:if="{{activeIndex==index}}" class="shopIcon" src="{{imageUrl}}position_map1.png" />
             <cover-image a:if="{{activeIndex!=index}}" class="shopIcon" src="{{imageUrl}}order2.png" />
             <cover-view>{{item.title}}</cover-view>
           </cover-view>
           <cover-view class="fontTwentyTwo">距离{{item.distance}}米</cover-view>
-          <cover-view class="fontTwentyTwo paddingLeft">营业时间：{{item.start_time}}-{{item.end_time}}</cover-view> 
+          <cover-view class="fontTwentyTwo paddingLeft">营业时间：{{item.start_time}}-{{item.end_time}}</cover-view>
           <cover-view class="fontSmallGray paddingLeft">{{item.address}}</cover-view>
-       </cover-view>
-       <cover-view onTap="switchShop" data-index="{{index}}" class="modalTap"></cover-view>
-       <cover-view class="menuBtn">
-         <cover-view onTap="guide" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_longitude="{{item.shop_gd_longitude}}" data-shop_name="{{item.title}}" data-address="{{item.address}}">导航</cover-view>
-         <cover-view onTap="goSelf" data-info="{{item}}" data-shop_id="{{item.shop_id}}" data-company_id="{{item.company_sale_id}}" data-title="{{item.title}}" data-address="{{item.address}}" data-goods_num="{{item.goods_num}}" data-distance="{{item.distance}}" a:if="{{item.isOpen}}">去自提</cover-view>  
-       </cover-view> 
-
-     </cover-view>
-  </cover-view>
-
+        </cover-view>
+        <cover-view onTap="switchShop" data-index="{{index}}" class="modalTap"></cover-view>
+        <cover-view class="menuBtn">
+          <cover-view onTap="guide" data-shop_latitude="{{item.shop_gd_latitude}}" data-shop_longitude="{{item.shop_gd_longitude}}" data-shop_name="{{item.title}}" data-address="{{item.address}}">导航</cover-view>
+          <cover-view onTap="goSelf" data-info="{{item}}" data-shop_id="{{item.shop_id}}" data-company_id="{{item.company_sale_id}}" data-title="{{item.title}}" data-address="{{item.address}}" data-goods_num="{{item.goods_num}}" data-distance="{{item.distance}}" a:if="{{item.isOpen && item.shop_takeout_self_lifting_status==1}}">去自提</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
 </view>
+
 

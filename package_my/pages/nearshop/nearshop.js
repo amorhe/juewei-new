@@ -2,13 +2,14 @@ import { imageUrl, ak, geotable_id } from '../../../pages/common/js/baseUrl'
 import { MyNearbyShop } from '../../../pages/common/js/home'
 import { guide } from '../../../pages/common/js/li-ajax'
 import { cur_dateTime } from '../../../pages/common/js/time'
+import { gd_decrypt} from '../../../pages/common/js/map'
 var app = getApp();
 Page({
   data: {
     imageUrl,
     // 地图中心点
-    longitude: my.getStorageSync({ key: 'lng' }).data,
-    latitude: my.getStorageSync({ key: 'lat' }).data,
+    longitude: '',
+    latitude: '',
     markersArray: [],
     shopList: [],    // 附近门店列表
     inputAddress: '',
@@ -19,9 +20,13 @@ Page({
   onLoad() {
     const lng = my.getStorageSync({ key: 'lng' }).data;
     const lat = my.getStorageSync({ key: 'lat' }).data;
+    let ott = gd_decrypt(lng,lat);
     this.nearShop(lng, lat);
     this.setData({
-      selfshop: false
+      longitude: ott.lng,
+      latitude: ott.lat,
+      selfshop: false,
+      city:app.globalData.city
     })
   },
   onShow() {
@@ -44,11 +49,15 @@ Page({
     my.request({
       url,
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         my.hideKeyboard();
         const lng = res.data.result.location.lng;
         const lat = res.data.result.location.lat;
         this.nearShop(lng, lat);
+        this.setData({
+          longitude:lng,
+          latitude:lat
+        })
       },
     });
   },
@@ -145,7 +154,7 @@ Page({
       showHotCities: true,
       success: (res) => {
         this.setData({
-          city
+          city:res.city + '市'
         })
       },
     });

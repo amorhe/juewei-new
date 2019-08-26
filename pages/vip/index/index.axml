@@ -1,7 +1,7 @@
 <view class="vip" onTap="hideToast">
   <!-- 头部 -->
   <view class="header-title-s" style="height:{{navHeight.titleBarHeight + navHeight.statusBarHeight}}px">
-    <!--<text a:if="{{navHeight.statusBarHeight}}" style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">VIP专享</text> -->
+    <!--<text a:if="{{navHeight.statusBarHeight}}" style="top:{{navHeight.statusBarHeight + navHeight.titleBarHeight/2 - 8}}px">会员专享</text> -->
   </view>
   <view style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px"></view>
   <!--<image style="height:{{navHeight.titleBarHeight+ navHeight.statusBarHeight}}px" mode="scaleToFill" class="title_bg" src="{{imageUrl}}title_bg.png"/> -->
@@ -23,14 +23,14 @@
       </view>
       <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
         <view class="flex-center" style="font-size:26rpx;height:32rpx" onTap="toExchangeList">
-          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:40%;height:1em" formType="submit"></button>
+          <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:20%;height:1em" formType="submit"></button>
            兑换记录
           <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>
         </view>
       </form>
     </view>
     <!-- 未登录 -->
-    <view class="header flex-space-b" onTap="isloginFn" style="align-iten:flex-end" a:if="{{!_sid && loginFinish}}">
+    <view class="header flex-space-b" onTap="isloginFn" style="align-iten:flex-end" a:if="{{!_sid && loginFinsih}}">
       <view class="flex-center">
         立即登录
         <image class="icon" mode="scaleToFill" src="{{imageUrl}}arrow_right2.png"/>

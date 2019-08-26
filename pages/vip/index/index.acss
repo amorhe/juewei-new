@@ -7,7 +7,7 @@ page {
   z-index: 9999;
   position: fixed;
   top: 0rpx;
-  width: 100vw;
+  /* width: 100vw; */
   text-align: center;
   font-size: 36rpx;
   font-weight: 500;
@@ -229,7 +229,8 @@ page {
 .sroll-view-wrap {
   background: white;
   position: sticky;
-  z-index: 999999;
+  z-index: 99;
+  left: 0
 }
 
 .no-good {
