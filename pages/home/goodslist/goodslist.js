@@ -64,16 +64,6 @@ Page({
     if (my.getStorageSync({ key: 'appglobalData' }).data) {
       my.removeStorageSync({ key: 'appglobalData' });
     }
-    // setTimeout(() =>{
-    //   var query = my.createSelectorQuery();
-    //   query.select('.pagesScorll').boundingClientRect();
-    //   query.exec((rect) => {
-    //     if (rect[0] === null) return;
-    //     this.setData({
-    //       marginBM: rect[0].height + 10
-    //     })
-    //   });
-    // }, 2000)
   },
   onShow() {
     // 定位地址
@@ -141,7 +131,7 @@ Page({
     let topage=(app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
     app.globalData.page = null; //删除
     my.removeStorageSync({key: 'query'}); //删除
-    console.log('topage',topage);
+    // console.log('topage',topage);
     if (topage != '') {
       switch (topage) {
         // vip
