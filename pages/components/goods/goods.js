@@ -188,7 +188,6 @@ Component({
         })
       }
     })
-    console.log(1)
   },
   didUpdate() {
     
