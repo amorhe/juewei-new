@@ -380,7 +380,7 @@ Component({
           });
           //存储一个起送起购价格
           my.setStorageSync({
-            key: 'send_price',
+            key: 'dispatch_price',
             data: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
           });
         },
