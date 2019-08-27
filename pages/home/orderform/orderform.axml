@@ -28,10 +28,10 @@
         <text>{{phone}}</text>
       </view>
     </view>
-    <view class="flexSpecial" style="line-height:1em">
+    <view class="flexSpecial" style="line-height:22rpx">
       <image a:if="{{!isCheck}}" onTap="checkedTrueTap" class="normalImage" mode="scaleToFill" src="{{imageUrl}}disagree.png"/>
       <image a:if="{{isCheck}}" onTap="checkedTrueTap" class="normalImage" mode="scaleToFill" src="{{imageUrl}}agree.png"/>
-      <view class="flexNormal marginLEight fontTweentyTwo">
+      <view class="flexNormal marginLEight fontTwentyTwo">
         <text>同意</text>
         <navigator url="/pages/home/orderform/agreement/agreement" style="color:#108EE9" hover-class="none">《到店自提服务协议》</navigator>
       </view>
