@@ -157,24 +157,27 @@ Page({
     this.setData({
       isClick: false
     })
-    setTimeOut(() => {
-      this.setData({
-        isClick: true
-      })
-    }, 1000)
+
     if (goods_type == 1) {
 
       let { order_id = '', order_sn } = await this.createOrder()
 
-      if (!order_id) { return }
+      if (!order_id) {
+         this.setData({
+            isClick: true
+         })
+         return 
+      }
       let res = await this.confirmOrder(order_sn)
       if (amount != 0) {
         let res = await this.pay(order_sn)
+        this.setData({
+          isClick: true
+        })
         if (res.code == 0) {
           my.tradePay({
             tradeNO: res.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
             success: res => {
-              log('s', res)
               // 用户支付成功
               if (res.resultCode == 9000) {
                 return my.redirectTo({
@@ -200,12 +203,16 @@ Page({
             }
           });
         } else {
+        
           return my.showToast({ content: res.msg });
         }
         return
       }
 
       if (!res) { fail = true }
+      this.setData({
+        isClick: true
+      })
       // 虚拟订单 + 兑换码 => 无需发货
       //
       if (goods_detail_type == 2 && receive_type == 0) {
@@ -232,7 +239,9 @@ Page({
     // 然后调起支付
     if (goods_type == 2) {
       let res = await this.createOrder()
-      log(res == {})
+      this.setData({
+        isClick: true
+      })
       if (!res.code) { return }
 
       // 实物订单  公司邮寄

@@ -25,9 +25,9 @@ Page({
       hI = app.globalData.hI
     }
     let arr = data
-      .map(({ location }) => ({
-        longitude: location[0],
-        latitude: location[1]
+      .map(({ shop_gd_latitude,shop_gd_longitude }) => ({
+        longitude: shop_gd_longitude,
+        latitude: shop_gd_latitude
       }))
       .map((item, index) => {
         if (index === hI) {

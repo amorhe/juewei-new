@@ -1,6 +1,6 @@
 import { imageUrl, imageUrl2 } from '../../../pages/common/js/baseUrl'
 import { log } from '../../../pages/common/js/li-ajax'
-import { reqOrderList, reqOrderDetail,reqPay } from '../../../pages/common/js/vip'
+import { reqOrderList, reqOrderDetail, reqPay } from '../../../pages/common/js/vip'
 
 const app = getApp()
 Page({
@@ -16,12 +16,13 @@ Page({
     page_size: 10,
     lastLage: 10,
 
-    time: ''
+    time: []
   },
 
   reset() {
     const { time } = this.data
-    clearInterval(time)
+    log(time)
+    time.forEach(item => clearInterval(item))
     this.setData({
       finish: false,
 
@@ -31,7 +32,6 @@ Page({
       page_size: 10,
       lastLage: 10,
 
-      time: ''
     }, async () => {
       await this.getOrderList(1)
       my.stopPullDownRefresh()
@@ -50,27 +50,28 @@ Page({
 
 
   async onShow() {
-    log(app.globalData.refresh)
-    if (app.globalData.refresh) {
-      app.globalData.refresh = false;
+    // log(app.globalData.refresh)
+    // if (app.globalData.refresh) {
+    //   app.globalData.refresh = false;
 
-      return this.reset()
+    this.onPullDownRefresh()
 
 
-    }
+    // }
 
   },
   async onLoad() {
     await this.getOrderList(1)
   },
   onUnload() {
-    clearInterval(this.data.time)
-    this.setData({ time: -1 })
+   const { time } = this.data
+    time.forEach(item => clearInterval(item))
     this.setData = () => { }
   },
   onHide() {
-    // clearInterval(this.data.time)
-    // this.setData({ time: -1 })
+   const { time } = this.data
+    time.forEach(item => clearInterval(item))
+    app.globalData.refresh = true
   },
 
   /**
@@ -78,9 +79,10 @@ Page({
   */
   // 页面被拉到底部
   async onReachBottom() {
-    clearInterval(this.data.time)
+   const { time } = this.data
+    time.forEach(item => clearInterval(item))
     my.showLoading({ content: '加载中...' });
-    this.setData({ time: -1 }, async () => {
+    this.setData({  }, async () => {
       setTimeout(async () => {
         let { page_num } = this.data
         ++page_num
@@ -91,7 +93,7 @@ Page({
       }, 300)
     })
   },
-  
+
 
 
   /**
@@ -113,11 +115,11 @@ Page({
         return
       }
       orderList = [...orderList, ...res.data.data]
-      time = setInterval(() => {
+      let timer = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute = -1, remaining_pay_second = -1, ...item }) => {
           remaining_pay_second--
           if (remaining_pay_second === 0 && remaining_pay_minute === -1) {
-            clearInterval(time)
+            // clearInterval(time)
           }
           if (remaining_pay_second <= 0) {
             --remaining_pay_minute
@@ -129,10 +131,11 @@ Page({
             ...item,
           }
         })
+        if(time.length>100){time = []}
         this.setData({
           orderList,
           finish: true,
-          time,
+          time: [...time, timer],
           lastLage
         }, () => my.hideLoading())
       }, 1000)
@@ -160,9 +163,9 @@ Page({
     });
   },
 
-   /**
-   * @function 支付订单
-   */
+  /**
+  * @function 支付订单
+  */
   async pay(order_sn) {
     log(order_sn)
     let { code, data } = await reqPay(order_sn)

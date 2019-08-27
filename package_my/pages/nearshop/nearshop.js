@@ -36,6 +36,7 @@ Page({
     // })
   },
 
+
   // 输入
   handleSearch(e) {
     this.setData({
@@ -98,9 +99,9 @@ Page({
             }
           })
           let arr = conf
-            .map(({ location }) => ({
-              longitude: location[0],
-              latitude: location[1]
+            .map(({ shop_gd_latitude,shop_gd_longitude}) => ({
+              longitude: shop_gd_longitude,
+              latitude: shop_gd_latitude
             }))
             .map((item, index) => {
               if (index == 0) {
@@ -119,8 +120,8 @@ Page({
                 }
               }
             })
-          // console.log(arr);
-          // console.log(conf)
+          console.log(arr);
+          console.log(conf)
           this.setData({
             markersArray: arr,
             shopList: conf
