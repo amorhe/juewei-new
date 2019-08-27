@@ -237,12 +237,13 @@ Page({
     // 然后调起支付
     if (goods_type == 2) {
       let res = await this.createOrder()
+      log(2,res)
       this.setData({
         isClick: true
       })
-      if (!res.code) { return }
-
+      if (!res.order_sn) { return }
       // 实物订单  公司邮寄
+      
       if (receive_type == 2) {
         my.navigateTo({
           url: '../waitpay/waitpay?order_sn=' + res.order_sn
