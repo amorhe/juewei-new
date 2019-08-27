@@ -32,7 +32,6 @@ Page({
       page_size: 10,
       lastLage: 10,
 
-      time: []
     }, async () => {
       await this.getOrderList(1)
       my.stopPullDownRefresh()
@@ -67,13 +66,11 @@ Page({
   onUnload() {
    const { time } = this.data
     time.forEach(item => clearInterval(item))
-    this.setData({ time: [] })
     this.setData = () => { }
   },
   onHide() {
    const { time } = this.data
     time.forEach(item => clearInterval(item))
-    this.setData({ time: -1 })
     app.globalData.refresh = true
   },
 
@@ -85,7 +82,7 @@ Page({
    const { time } = this.data
     time.forEach(item => clearInterval(item))
     my.showLoading({ content: '加载中...' });
-    this.setData({ time: [] }, async () => {
+    this.setData({  }, async () => {
       setTimeout(async () => {
         let { page_num } = this.data
         ++page_num
@@ -134,6 +131,7 @@ Page({
             ...item,
           }
         })
+        if(time.length>100){time = []}
         this.setData({
           orderList,
           finish: true,
