@@ -143,7 +143,7 @@
       配送信息
       </view>
       <view class="list">
-        <view class="item" a:if="{{postWay[d.dis_tag]}}">
+        <view class="item" a:if="{{d.order_status_info.order_status != 0 && postWay[d.dis_tag]}}">
           <view class="label">
                配送方式
           </view>
@@ -151,7 +151,7 @@
             <view>{{postWay[d.dis_tag]}}</view>
           </view>
         </view>
-        <view class="item" a:if="{{d.dis_tel}}">
+        <view class="item" a:if="{{d.order_status_info.order_status != 0 && d.dis_tel}}">
           <view class="label" a:if="{{d.dis_name}}">
               配送骑手
           </view>
