@@ -119,7 +119,7 @@ Page({
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
     app.globalData.isOpen = this.data.isOpen;
-    app.globalData.ret = []
+    // app.globalData.ret = []
     let user_id = 1;
     if (my.getStorageSync({ key: 'user_id' }).data) {
       user_id = my.getStorageSync({ key: 'user_id' }).data
@@ -501,11 +501,15 @@ Page({
             })
             let h = 0, heightArr = [];
             my.createSelectorQuery().selectAll('.sc_right_item').boundingClientRect().exec((rect) => {
-              rect[0].forEach((item) => {
-                h += item.height;
-                heightArr.push(h);
-              })
-              app.globalData.heightArr = heightArr;
+              if (rect[0].length > 0) {
+                rect[0].forEach((item) => {
+                  h += item.height;
+                  heightArr.push(h);
+                })
+                app.globalData.heightArr = heightArr;
+              } else {
+                app.globalData.heightArr = []
+              }
             });
           })
           my.setStorageSync({
