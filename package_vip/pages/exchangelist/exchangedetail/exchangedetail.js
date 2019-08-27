@@ -223,21 +223,23 @@ Page({
     let { order_sn, id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address } = this.data.detail;
     // 校验订单 地址信息
     // receive_type 发货方式 0 无需发货 1 到店领取 2公司邮寄
+    console.log(receive_type,user_address_phone,this.data.detail);
     if (receive_type == 2 || receive_type == 1) {
-      if (!user_address_phone) {
+      if (user_address_phone) {
         return my.navigateTo({
-          url: '/package_vip/pages/waitpay/waitpay?'
-            + 'order_sn=' + order_sn
-            + '&user_address_name=' + user_address_name
-            + '&user_address_phone=' + user_address_phone
-            + '&province=' + province
-            + '&city=' + city
-            + '&district=' + district
-            + '&user_address_id=' + user_address_id
-            + '&user_address_detail_address=' + user_address_detail_address
+                  url: '/package_vip/pages/waitpay/waitpay?'
+                    + 'order_sn=' + order_sn
+                    + '&user_address_name=' + user_address_name
+                    + '&user_address_phone=' + user_address_phone
+                    + '&province=' + province
+                    + '&city=' + city
+                    + '&district=' + district
+                    + '&user_address_id=' + user_address_id
+                    + '&user_address_detail_address=' + user_address_detail_address
         });
       }
     }
+    // 虚拟商品无需发货
     if (receive_type == 0) {
       // let { order_id = '', order_sn } = await this.createOrder()
       // if (!order_id) { return }
