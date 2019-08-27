@@ -70,7 +70,7 @@ Page({
     this.setData({
       firstAddress: app.globalData.address,
       type: app.globalData.type,
-      shopTakeOut:{}
+      shopTakeOut: {}
     })
     if (app.globalData.isSelf) {
       this.setData({
@@ -129,59 +129,6 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-    //   let
-    //   shopcartObj = {}, //商品列表 
-    //   goodsList = my.getStorageSync({
-    //     key: 'goodsList', // 缓存数据的key
-    //   }).data;
-    // if (goodsList == null) return;
-    // // 判断购物车商品是否在当前门店里
-    // for (let val in goodsList) {
-    //   if (goodsList[val].goods_discount) {
-    //     if (app.globalData.activityList) {
-    //       // 折扣
-    //       if (goodsList[val].goods_code.indexOf('PKG') == -1 && app.globalData.activityList.DIS != null) {
-    //         for (let ott of app.globalData.activityList.DIS) {
-    //           for (let fn of ott.goods_format) {
-    //             if (val == `${fn.goods_activity_code}_${fn.type}`) {
-    //               shopcartObj[val] = goodsList[val];
-    //             }
-    //           }
-    //         }
-    //       } else {
-    //         // 套餐
-    //         if (app.globalData.activityList.PKG != null) {
-    //           for (let ott of app.globalData.activityList.PKG) {
-    //             for (let fn of ott.goods_format) {
-    //               if (val == `${fn.goods_activity_code}_${fn.type}`) {
-    //                 shopcartObj[val] = goodsList[val];
-    //               }
-    //             }
-    //           }
-    //         }
-
-    //       }
-    //     }
-    //   } else {
-    //     // 普通不带折扣的
-    //     console.log(this.data.shopGoods)
-    //     if (this.data.shopGoods) {
-    //       for (let value of this.data.shopGoods) {
-    //         for (let fn of value.goods_format) {
-    //           // 在门店
-    //           if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
-    //             shopcartObj[val] = goodsList[val];
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-    // console.log(shopcartObj)
-    // my.setStorageSync({
-    //   key: 'goodsList', // 缓存数据的key
-    //   data: shopcartObj, // 要缓存的数据
-    // });
 
     // 自定义跳转页面
     let topage = (app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
@@ -214,34 +161,34 @@ Page({
           break;
         // 优惠券
         case '/package_my/pages/coupon/coupon':
-          setTimeout(function(){
+          setTimeout(function() {
             my.navigateTo({
               url: topage
             });
-          },200)
+          }, 200)
           break;
         // 会员卡
         case '/package_my/pages/membercard/membercard':
-          setTimeout(function(){
+          setTimeout(function() {
             my.navigateTo({
               url: topage
             });
-          },200)
+          }, 200)
           break;
         //  附近门店
         case '/package_my/pages/nearshop/nearshop':
-          setTimeout(function(){
+          setTimeout(function() {
             my.navigateTo({
               url: topage
             });
-          },500)
+          }, 500)
           break;
         default:
-          setTimeout(function(){
+          setTimeout(function() {
             my.navigateTo({
               url: topage
             });
-          },200)
+          }, 200)
           break;
       }
     }
@@ -320,9 +267,8 @@ Page({
     app.globalData.shopTakeOut = this.data.shopTakeOut;
     const status = cur_dateTime(this.data.shopTakeOut.start_time, this.data.shopTakeOut.end_time);
     this.setData({
-      isOpen:status
+      isOpen: status
     })
-    console.log(this.data.shopTakeOut)
     my.setStorageSync({
       key: 'shop_id', // 缓存数据的key
       data: this.data.shopTakeOut.shop_id, // 要缓存的数据
@@ -432,7 +378,7 @@ Page({
         this.setData({
           freeMoney: app.globalData.activityList.FREE.money
         })
-      }else{
+      } else {
         app.globalData.freeId = null;
       }
       obj1 = {
@@ -489,6 +435,55 @@ Page({
             shopGoodsAll: goodsNew,
             shopGoods: arr
           }, () => {
+            let
+              shopcartObj = {}, //商品列表 
+              goodsList = my.getStorageSync({
+                key: 'goodsList', // 缓存数据的key
+              }).data;
+            if (goodsList == null) return;
+            // 判断购物车商品是否在当前门店里
+            for (let val in goodsList) {
+              if (goodsList[val].goods_discount) {
+                if (app.globalData.activityList) {
+                  // 折扣
+                  if (goodsList[val].goods_code.indexOf('PKG') == -1 && app.globalData.activityList.DIS != null) {
+                    for (let ott of app.globalData.activityList.DIS) {
+                      for (let fn of ott.goods_format) {
+                        if (val == `${fn.goods_activity_code}_${fn.type}`) {
+                          shopcartObj[val] = goodsList[val];
+                        }
+                      }
+                    }
+                  } else {
+                    // 套餐
+                    if (app.globalData.activityList.PKG != null) {
+                      for (let ott of app.globalData.activityList.PKG) {
+                        for (let fn of ott.goods_format) {
+                          if (val == `${fn.goods_activity_code}_${fn.type}`) {
+                            shopcartObj[val] = goodsList[val];
+                          }
+                        }
+                      }
+                    }
+
+                  }
+                }
+              } else {
+                // 普通不带折扣的
+                for (let value of arr) {
+                  for (let fn of value.goods_format) {
+                    // 在门店
+                    if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
+                      shopcartObj[val] = goodsList[val];
+                    }
+                  }
+                }
+              }
+            }
+            my.setStorageSync({
+              key: 'goodsList', // 缓存数据的key
+              data: shopcartObj, // 要缓存的数据
+            });
             // 获取商品模块的节点
             my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {
               if (ret[0] == null) { return; }

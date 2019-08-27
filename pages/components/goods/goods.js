@@ -149,6 +149,7 @@ Component({
       if (shopcartObj[val]) {//判断商品是否存在
         if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
           priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
+          priceFree += (shopcartObj[val].num - shopcartObj[val].goods_order_limit) * shopcartObj[val].goods_original_price;
         } else {
           priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
         }
