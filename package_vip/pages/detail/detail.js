@@ -141,6 +141,7 @@ Page({
    */
 
   async onModalClick() {
+    let that=this;
     // goods_type	是	int	订单类型 1 虚拟订单 2 实物订单
     // receive_type	是	int	发货方式 0 无需发货 1 到店领取 2公司邮寄
     // goods_detail_type	是	int	物品详细类型 1 优惠券 2兑换码 3官方商品 4非官方商品
@@ -159,9 +160,7 @@ Page({
     })
 
     if (goods_type == 1) {
-
       let { order_id = '', order_sn } = await this.createOrder()
-
       if (!order_id) {
          this.setData({
             isClick: true
@@ -171,9 +170,7 @@ Page({
       let res = await this.confirmOrder(order_sn)
       if (amount != 0) {
         let res = await this.pay(order_sn)
-        this.setData({
-          isClick: true
-        })
+
         if (res.code == 0) {
           my.tradePay({
             tradeNO: res.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
@@ -203,7 +200,9 @@ Page({
             }
           });
         } else {
-        
+          that.setData({
+            isClick: true
+          })
           return my.showToast({ content: res.msg });
         }
         return
@@ -220,7 +219,6 @@ Page({
           url: '../finish/finish?id=' + order_id + '&fail=' + fail
         });
       }
-
       // 虚拟订单 + 优惠卷 => 无需发货
       // 跑通
       if (goods_detail_type == 1 && receive_type == 0) {
@@ -250,7 +248,6 @@ Page({
           url: '../waitpay/waitpay?order_sn=' + res.order_sn
         });
       }
-
       // 实物订单  到店领取
       if (receive_type == 1) {
         my.navigateTo({
