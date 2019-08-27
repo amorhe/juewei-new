@@ -116,9 +116,9 @@ Page({
         shopTakeOut: shopArray[0]
       })
       my.setStorageSync({ key: 'shop_id', data: shopArray[0].shop_id });
-      app.globalData.isOpen = status;
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
+    app.globalData.isOpen = this.data.isOpen;
     app.globalData.ret = []
     let user_id = 1;
     if (my.getStorageSync({ key: 'user_id' }).data) {
@@ -129,57 +129,59 @@ Page({
       key: 'vip_address',
       data: app.globalData.shopTakeOut
     })
-      let
-      shopcartObj = {}, //商品列表 
-      goodsList = my.getStorageSync({
-        key: 'goodsList', // 缓存数据的key
-      }).data;
-    if (goodsList == null) return;
-    // 判断购物车商品是否在当前门店里
-    for (let val in goodsList) {
-      if (goodsList[val].goods_discount) {
-        if (app.globalData.activityList) {
-          // 折扣
-          if (goodsList[val].goods_code.indexOf('PKG') == -1 && app.globalData.activityList.DIS != null) {
-            for (let ott of app.globalData.activityList.DIS) {
-              for (let fn of ott.goods_format) {
-                if (val == `${fn.goods_activity_code}_${fn.type}`) {
-                  shopcartObj[val] = goodsList[val];
-                }
-              }
-            }
-          } else {
-            // 套餐
-            if (app.globalData.activityList.PKG != null) {
-              for (let ott of app.globalData.activityList.PKG) {
-                for (let fn of ott.goods_format) {
-                  if (val == `${fn.goods_activity_code}_${fn.type}`) {
-                    shopcartObj[val] = goodsList[val];
-                  }
-                }
-              }
-            }
+    //   let
+    //   shopcartObj = {}, //商品列表 
+    //   goodsList = my.getStorageSync({
+    //     key: 'goodsList', // 缓存数据的key
+    //   }).data;
+    // if (goodsList == null) return;
+    // // 判断购物车商品是否在当前门店里
+    // for (let val in goodsList) {
+    //   if (goodsList[val].goods_discount) {
+    //     if (app.globalData.activityList) {
+    //       // 折扣
+    //       if (goodsList[val].goods_code.indexOf('PKG') == -1 && app.globalData.activityList.DIS != null) {
+    //         for (let ott of app.globalData.activityList.DIS) {
+    //           for (let fn of ott.goods_format) {
+    //             if (val == `${fn.goods_activity_code}_${fn.type}`) {
+    //               shopcartObj[val] = goodsList[val];
+    //             }
+    //           }
+    //         }
+    //       } else {
+    //         // 套餐
+    //         if (app.globalData.activityList.PKG != null) {
+    //           for (let ott of app.globalData.activityList.PKG) {
+    //             for (let fn of ott.goods_format) {
+    //               if (val == `${fn.goods_activity_code}_${fn.type}`) {
+    //                 shopcartObj[val] = goodsList[val];
+    //               }
+    //             }
+    //           }
+    //         }
 
-          }
-        }
-      } else {
-        // 普通不带折扣的
-        if (app.globalData.goodsCommon) {
-          for (let value of app.globalData.goodsCommon) {
-            for (let fn of value.goods_format) {
-              // 在门店
-              if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
-                shopcartObj[val] = goodsList[val];
-              }
-            }
-          }
-        }
-      }
-    }
-    my.setStorageSync({
-      key: 'goodsList', // 缓存数据的key
-      data: shopcartObj, // 要缓存的数据
-    });
+    //       }
+    //     }
+    //   } else {
+    //     // 普通不带折扣的
+    //     console.log(this.data.shopGoods)
+    //     if (this.data.shopGoods) {
+    //       for (let value of this.data.shopGoods) {
+    //         for (let fn of value.goods_format) {
+    //           // 在门店
+    //           if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
+    //             shopcartObj[val] = goodsList[val];
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    // console.log(shopcartObj)
+    // my.setStorageSync({
+    //   key: 'goodsList', // 缓存数据的key
+    //   data: shopcartObj, // 要缓存的数据
+    // });
 
     // 自定义跳转页面
     let topage = (app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');

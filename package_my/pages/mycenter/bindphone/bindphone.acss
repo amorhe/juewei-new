@@ -97,7 +97,7 @@ page{
   top: 0;
   left: -100rpx;
   width: 100vw;
-  height: 50vh;
+  height: 30vh;
   border: none;
   color: transparent
 }

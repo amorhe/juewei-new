@@ -82,7 +82,13 @@ Component({
       goodsList = my.getStorageSync({
         key: 'goodsList', // 缓存数据的key
       }).data;
-    if (goodsList == null) return;
+    if (goodsList == null) {
+      shopcartAll = [];
+      shopcartNum = 0;
+      priceFree = 0;
+      priceAll = 0;
+      repurse_price = 0
+    };
     // 判断购物车商品是否在当前门店里
     for (let val in goodsList) {
       if (goodsList[val].goods_discount) {
@@ -154,13 +160,12 @@ Component({
         }
         shopcartAll.push(shopcartObj[val]);
         shopcartNum += shopcartObj[val].num;
-      } else {
-        shopcartAll = [];
-        shopcartNum = 0;
-        priceFree = 0;
-        priceAll = 0;
-        repurse_price = 0
       }
+    }
+    // 购物车活动提示
+    this.shopcartPrompt(nextProps.fullActivity, priceFree, repurse_price);
+    if (!my.getStorageSync({ key: 'goodsList' }).data) {
+      this.onchangeShopcart({}, [], 0, 0, 0);
     }
     this.setData({
       shopcartList: shopcartObj,
@@ -171,11 +176,7 @@ Component({
       freeMoney: nextProps.freeMoney,
       repurse_price
     })
-    // 购物车活动提示
-    this.shopcartPrompt(nextProps.fullActivity, priceFree, repurse_price);
-    if (!my.getStorageSync({ key: 'goodsList' }).data) {
-      this.onchangeShopcart({}, [], 0, 0, 0);
-    }
+
   },
   didMount() {
     const _sid = my.getStorageSync({ key: '_sid' });
@@ -190,7 +191,7 @@ Component({
     })
   },
   didUpdate() {
-    
+
   },
   didUnmount() { },
   methods: {
@@ -304,7 +305,7 @@ Component({
     // 滑动
     onTouchEnd(e) {
       let y2 = e.changedTouches[0].pageY;
-      if (y2 < this.data.y1) {
+      if (this.data.y1 - y2 > 50) {
         my.pageScrollTo({
           scrollTop: this.data.pagescrollTop
         });
