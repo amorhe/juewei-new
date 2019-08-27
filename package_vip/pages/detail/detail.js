@@ -167,8 +167,8 @@ Page({
       if (amount != 0) {
         let res = await this.pay(order_sn)
         this.setData({
-        isClick: true
-      })
+          isClick: true
+        })
         if (res.code == 0) {
           my.tradePay({
             tradeNO: res.data.tradeNo, // 调用统一收单交易创建接口（alipay.trade.create），获得返回字段支付宝交易号trade_no
