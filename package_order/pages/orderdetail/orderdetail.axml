@@ -137,7 +137,7 @@
       </view>
     </view>
   </view>
-  <view a:if="{{d.order_status_info.order_status != 0}}">
+  <view>
     <view class="poster" a:if="{{d.dis_type==1}}">
       <view class="title">
       配送信息
