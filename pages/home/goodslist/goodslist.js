@@ -296,7 +296,6 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
-
       let shopTakeOut = '';
       if (app.globalData.shopIng) {
         shopTakeOut = app.globalData.shopIng;
@@ -319,7 +318,16 @@ Page({
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
-
+    const status = cur_dateTime(this.data.shopTakeOut.start_time, this.data.shopTakeOut.end_time);
+    this.setData({
+      isOpen:status
+    })
+    console.log(this.data.shopTakeOut)
+    my.setStorageSync({
+      key: 'shop_id', // 缓存数据的key
+      data: this.data.shopTakeOut.shop_id, // 要缓存的数据
+    });
+    app.globalData.isOpen = status
   },
   // 首页banner列表
   async getBannerList(city_id, district_id, company_id) {
