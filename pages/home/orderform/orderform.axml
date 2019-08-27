@@ -28,7 +28,7 @@
         <text>{{phone}}</text>
       </view>
     </view>
-    <view class="flexSpecial">
+    <view class="flexSpecial" style="line-height:1em">
       <image a:if="{{!isCheck}}" onTap="checkedTrueTap" class="normalImage" mode="scaleToFill" src="{{imageUrl}}disagree.png"/>
       <image a:if="{{isCheck}}" onTap="checkedTrueTap" class="normalImage" mode="scaleToFill" src="{{imageUrl}}agree.png"/>
       <view class="flexNormal marginLEight fontTweentyTwo">

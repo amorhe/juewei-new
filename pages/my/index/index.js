@@ -28,7 +28,7 @@ Page({
     my.getAuthCode({
       scopes: ['auth_user', 'auth_life_msg'],
       success: (res) => {
-        console.log('ddddd',res);
+        // console.log('ddddd',res);
         my.getAuthUserInfo({
           success: (user) => {
             userInfo['head_img'] = user.avatar
@@ -81,7 +81,7 @@ Page({
   // 判断是否去登录
   isloginFn() {
     if (this.data.userInfo.user_id) {
-      this.getAuthCode();
+      // this.getAuthCode(this.data.userInfo);
       if (Object.keys(this.data.userInfo).length>0) {
         my.navigateTo({
           url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
