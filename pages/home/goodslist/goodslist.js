@@ -278,15 +278,26 @@ Page({
   // 首页banner列表
   async getBannerList(city_id, district_id, company_id) {
     await bannerList(city_id, district_id, company_id, 1).then((data) => {
-      if (data.data.length > 1) {
+      if(data.data.length==1){
+        this.setData({
+          indicatorDots: false,
+          autoplay: false,
+          imgUrls:data.data
+        })
+      }else if (data.data.length > 1) {
         this.setData({
           indicatorDots: true,
-          autoplay: true
+          autoplay: true,
+          imgUrls:data.data
+        })
+      }else{
+        this.setData({
+          indicatorDots: false,
+          autoplay: false,
+          imgUrls: []
         })
       }
-      this.setData({
-        imgUrls: data.data
-      })
+      
     });
   },
   // 首页商品展位
