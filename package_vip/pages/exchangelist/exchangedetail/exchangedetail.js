@@ -225,7 +225,6 @@ Page({
     // receive_type 发货方式 0 无需发货 1 到店领取 2公司邮寄
     console.log(receive_type,user_address_phone,this.data.detail);
     if (receive_type == 2 || receive_type == 1) {
-      if (user_address_phone) {
         return my.navigateTo({
                   url: '/package_vip/pages/waitpay/waitpay?'
                     + 'order_sn=' + order_sn
@@ -237,7 +236,6 @@ Page({
                     + '&user_address_id=' + user_address_id
                     + '&user_address_detail_address=' + user_address_detail_address
         });
-      }
     }
     // 虚拟商品无需发货
     if (receive_type == 0) {
