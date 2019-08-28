@@ -20,7 +20,7 @@ Page({
     if (e.type) {
       this.setData({
         isSuccess: true,
-        city: app.globalData.city,
+        city: app.globalData.position.city || app.globalData.city,
         addressIng: app.globalData.address
       })
     }
