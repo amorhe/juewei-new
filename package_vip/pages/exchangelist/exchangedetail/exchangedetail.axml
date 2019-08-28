@@ -22,7 +22,7 @@
     <view class="sub-state" a:if="{{detail.status == 0 && detail.remaining_pay_minute>-1}}">
     剩余时间：{{detail.remaining_pay_minute}}分{{detail.remaining_pay_second}}秒
     </view>
-    <view class="sub-state" a:if="{{detail.get_start_time}}">
+    <view class="sub-state" a:if="{{detail.get_start_time && detail.status == 1 }}">
     领取有效期：{{detail.get_start_time.split(' ')[0]}} 至 {{detail.get_end_time.split(' ')[0]}}
     </view>
     <view class="sub-state" a:if="{{detail.get_time != '0000-00-00 00:00:00'}}">
@@ -94,7 +94,7 @@
       <!--<view class="user-list" a:if="{{detail.shop_name}}"><view class="user-left"></view><view class="user-right"><view class="user-address">
            {{detail.province}} {{detail.city}} {{detail.district}} {{detail.address}}</view></view></view> -->
     </view>
-    <view class="get-shop" a:if="{{detail.code_img && detail.status != 0 && detail.get_code}}">
+    <view class="get-shop" a:if="{{detail.code_img && detail.status == 1 && detail.get_code}}">
       <view class="get-shop-title">
         取商品
       </view>
