@@ -242,7 +242,8 @@ Page({
     setTimeout(() => {
       this.setData({ cur }, () => {
         setTimeout(() => {
-          this.refresh()
+          this.refresh();
+          app.globalData.refresh_state = cur
         })
       }, 0)
     }, 0)

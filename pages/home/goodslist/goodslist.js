@@ -9,7 +9,7 @@ Page({
     isSelf: false,  // 是不是去自提页
     imageUrl,
     imageUrl2,
-    firstAddress: '紫檀大厦',
+    firstAddress: '定位失败',
     isClose: false,
     indicatorDots: false,
     autoplay: false,
@@ -78,6 +78,9 @@ Page({
         isSelf: true
       })
     }
+    my.showLoading({
+      content: '加载中...'
+    });
     // 初始化默认外卖
     let shopArray = [];
     if (app.globalData.shopIng && !app.globalData.switchClick) {
@@ -364,6 +367,7 @@ Page({
   // 门店商品列表
   async getShopGoodsList(shop_id) {
     await GetShopGoods(shop_id).then((res) => {
+      my.hideLoading();
       const shopGoodsList = res.data[`${shop_id}`];
       const companyGoodsList = this.data.companyGoodsList;
       //  获取某公司下的某一个门店的所有商品

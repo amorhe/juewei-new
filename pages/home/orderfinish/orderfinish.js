@@ -21,6 +21,7 @@ Page({
 
 
   checkOrder() {
+    app.globalData.refresh_state = app.globalData.type - 1;
     my.switchTab({
       url: '/pages/order/list/list',
     })

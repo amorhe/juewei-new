@@ -1,8 +1,7 @@
 import { baseUrl } from './baseUrl';
 export const ajax = (url, data = {}, method = "POST") => {
   my.showLoading({
-    content: '加载中...',
-    delay: 1000,
+    content: '加载中...'
   });
   let headers;
   if (method == "POST") {
