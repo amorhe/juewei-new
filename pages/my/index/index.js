@@ -12,10 +12,10 @@ Page({
     _sid: '',
     userInfo: {},
     isLogin: false,
-    showno:1,//显示次数
+    showno: 1,//显示次数
   },
   onLoad() {
-     
+
   },
   onShow() {
     this.setData({
@@ -24,7 +24,7 @@ Page({
     this.getUserInfos();//在显示的时候调起
   },
   getAuthCode(userInfo) {
-    if(this.data.showno!==1){return;}
+    if (this.data.showno !== 1) { return; }
     my.getAuthCode({
       scopes: ['auth_user', 'auth_life_msg'],
       success: (res) => {
@@ -34,17 +34,19 @@ Page({
             userInfo['head_img'] = user.avatar
             userInfo['nick_name'] = user.nickName
             this.setData({
-              userInfo: userInfo
+              userInfo
             })
           }
         });
       },
-      fail:(e) => {
-        if(e.error==11){ //用户取消了选择
-          this.setData({
-            showno: 2
-          })
-        }
+      fail: (e) => {
+        // if(e.error==11){ //用户取消了选择
+
+        // }
+        this.setData({
+          showno: 2,
+          userInfo
+        })
       }
     });
   },
@@ -82,7 +84,7 @@ Page({
   isloginFn() {
     if (this.data.userInfo.user_id) {
       // this.getAuthCode(this.data.userInfo);
-      if (Object.keys(this.data.userInfo).length>0) {
+      if (Object.keys(this.data.userInfo).length > 0) {
         my.navigateTo({
           url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
         });
@@ -107,9 +109,9 @@ Page({
 
   },
   onHide() {
-     this.setData({
-         showno: 1
-     })
+    this.setData({
+      showno: 1
+    })
   },
   // 打客服电话
   makePhoneCall() {

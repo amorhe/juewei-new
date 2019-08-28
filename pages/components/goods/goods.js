@@ -18,8 +18,6 @@ Component({
     isShow: false,  // 优惠券过期提醒是否显示
     companyGoodsList: [],   //公司所有商品
     activityAllObj: [],
-    windowHeight: '',
-    windowWidth: '',
     animation: null,
     animationX: null,
     animationY: null,
@@ -182,14 +180,6 @@ Component({
   didMount() {
     const _sid = my.getStorageSync({ key: '_sid' });
     this.getcouponsExpire(_sid.data);
-    my.getSystemInfo({
-      success: (res) => {
-        this.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight
-        })
-      }
-    })
   },
   didUpdate() {
 
