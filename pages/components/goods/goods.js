@@ -121,7 +121,6 @@ Component({
                 }
               }
             }
-
           }
         }
       } else {
@@ -265,7 +264,7 @@ Component({
     // 选择系列
     chooseGoodsType(e) {
       my.pageScrollTo({
-        scrollTop: this.data.pagescrollTop
+        scrollTop: this.data.pagescrollTop,
       });
       this.setData({
         goodsType: e.currentTarget.dataset.type,
@@ -298,7 +297,7 @@ Component({
       let y2 = e.changedTouches[0].pageY;
       if (this.data.y1 - y2 > 50) {
         my.pageScrollTo({
-          scrollTop: this.data.pagescrollTop
+          scrollTop: this.data.pagescrollTop,
         });
       }
       this.setData({

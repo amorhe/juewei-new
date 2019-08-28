@@ -456,7 +456,9 @@ Page({
               goodsList = my.getStorageSync({
                 key: 'goodsList', // 缓存数据的key
               }).data;
-            if (goodsList == null) return;
+            if (goodsList == null) {
+              shopcartObj = {}
+            };
             // 判断购物车商品是否在当前门店里
             for (let val in goodsList) {
               if (goodsList[val].goods_discount) {
