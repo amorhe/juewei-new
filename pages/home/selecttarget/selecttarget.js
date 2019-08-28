@@ -39,7 +39,7 @@ Page({
         })
       });
     }
-
+    app.globalData.shopIng = null;
     if (app.globalData.address) {
       const lng = my.getStorageSync({ key: 'lng' }).data;
       const lat = my.getStorageSync({ key: 'lat' }).data;

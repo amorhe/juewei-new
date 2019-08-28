@@ -101,8 +101,7 @@ Page({
         jingxuan: app.globalData.shopIng.jingxuan || false,
         shopTakeOut: app.globalData.shopIng
       })
-      // app.globalData.shopIng = null;
-    } else if (!app.globalData.switchClick) {
+    } else if (!app.globalData.shopIng && !app.globalData.switchClick) {
       if (app.globalData.type == 1) {
         shopArray = my.getStorageSync({
           key: 'takeout', // 缓存数据的key
@@ -118,7 +117,8 @@ Page({
       const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
       this.setData({
         isOpen: status,
-        shopTakeOut: shopArray[0]
+        shopTakeOut: shopArray[0],
+        jingxuan:true
       })
       my.setStorageSync({ key: 'shop_id', data: shopArray[0].shop_id });
       app.globalData.shopTakeOut = shopArray[0];
@@ -129,7 +129,6 @@ Page({
       })
     }
 
-    // app.globalData.ret = []
     if (app.globalData.activityList) {
       app.globalData.activityList.DIS = [];
       app.globalData.activityList.PKG = [];
@@ -463,7 +462,7 @@ Page({
           app.globalData.goodsArr = goodsArr;  // 详情页，确认订单页使用
           app.globalData.goodsCommon = arr;   // 不包含折扣，套餐
           // 最终商品总数据
-          console.log(goodsNew)
+          // console.log(goodsNew)
           this.setData({
             shopGoodsAll: goodsNew,
             shopGoods: arr
