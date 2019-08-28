@@ -25,6 +25,7 @@ Page({
     shopObj: {},   // 自提商店的详细信息
     couponslist: [],   //优惠券列表
     couponsDefault: null,
+    coupon_code:'',   // 优惠券码
     full_money: 0,
     goodsInfo: '',
     addressInfo: {},

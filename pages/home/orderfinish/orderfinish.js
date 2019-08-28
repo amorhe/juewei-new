@@ -7,8 +7,8 @@ Page({
     show: false,
     new_user: [],
     newUserShow: false,
-    gifts:false,
-    gift_type:0
+    gifts: false,
+    gift_type: 0
   },
   async onLoad(e) {
     const { order_no } = e
@@ -59,24 +59,27 @@ Page({
         });
       }
       // 虚拟商品弹框
-      let static_no=0;
+      let static_no = 0;
       res.data.goods_list.forEach(item => {
-        if(item.is_gifts == 1 && static_no==0){
+        if (item.is_gifts == 1 && static_no == 0) {
           static_no = 1;
           // 优惠券
-          if(item.gift_type == 1){
+          if (item.gift_type == 1) {
             this.setData({
-              gift_type:1
+              gift_type: 1,
+              gifts: true
             })
           }
           // 兑换码
-          if(item.gift_type == 2){
+          if (item.gift_type == 2) {
             this.setData({
-              gift_type:2
+              gift_type: 2,
+              gifts: true
             })
           }
+        } else {
           this.setData({
-            gifts:true
+            gifts: false
           })
         }
       })
@@ -85,14 +88,14 @@ Page({
 
   },
 
-  confirmTap(){
+  confirmTap() {
     this.setData({
-      gifts:false
+      gifts: false
     })
   },
   close() {
     this.setData({
-      newUserShow:false
+      newUserShow: false
     })
   },
 
