@@ -287,7 +287,7 @@ Component({
               if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
                 shopcartObj[val] = goodsList[val];
                 // 判断购物车商品价格更新
-                if (goodsList[val].goods_price != fn.goods_price) {
+                if (parseInt(goodsList[val].goods_price) != parseInt(fn.goods_price)) {
                   snum += shopcartObj[val].num;
                   shopcartObj[val].goods_price = fn.goods_price;
                   isfresh3 = true;
