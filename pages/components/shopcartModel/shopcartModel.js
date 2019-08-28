@@ -238,9 +238,13 @@ Component({
         priceFree = 0, // 满多少包邮
         shopcartObj = {}, //商品列表 
         repurse_price = 0, // 换购活动提示价
-        snum = 0
+        snum = 0,
+        isfresh1 = false,
+        isfresh2 = false,
+        isfresh3 = false;
       if (goodsList == null) return;
       // 判断购物车商品是否在当前门店里
+      // console.log(app.globalData.activityList.DIS)
       for (let val in goodsList) {
         if (goodsList[val].goods_discount) {
           // 折扣
@@ -250,9 +254,10 @@ Component({
                 if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];
                   // 判断购物车商品价格更新
-                  if (goodsList[val].goods_price != fn.goods_price) {
+                  if (parseInt(goodsList[val].goods_price) != parseInt(fn.goods_price)) {
                     snum += shopcartObj[val].num;
-                    shopcartObj[val].goods_price = fn.goods_price
+                    shopcartObj[val].goods_price = fn.goods_price;
+                    isfresh1 = true;
                   }
                 }
               }
@@ -265,9 +270,10 @@ Component({
                 if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];
                   // 判断购物车商品价格更新
-                  if (goodsList[val].goods_price != fn.goods_price) {
+                  if (parseInt(goodsList[val].goods_price) != parseInt(fn.goods_price)) {
                     snum += shopcartObj[val].num;
-                    shopcartObj[val].goods_price = fn.goods_price
+                    shopcartObj[val].goods_price = fn.goods_price;
+                    isfresh2 = true;
                   }
                 }
               }
@@ -283,7 +289,8 @@ Component({
                 // 判断购物车商品价格更新
                 if (goodsList[val].goods_price != fn.goods_price) {
                   snum += shopcartObj[val].num;
-                  shopcartObj[val].goods_price = fn.goods_price
+                  shopcartObj[val].goods_price = fn.goods_price;
+                  isfresh3 = true;
                 }
               }
             }
@@ -318,6 +325,7 @@ Component({
         data: shopcartObj
       })
       app.globalData.goodsBuy = this.props.shopcartAll;
+      // console.log(app.globalData.goodsBuy)
       if (num - shopcartNum > 0 && snum > 0) {
         return this.setData({
           showShopcar: false,
@@ -342,7 +350,7 @@ Component({
           cancelButtonText: '继续结算',
           btnClick: true
         })
-      } else if (num - shopcartNum == 0 && snum > 0) {
+      } else if (num - shopcartNum == 0 && snum > 0 && (isfresh1 || isfresh2 || isfresh3)) {
         return this.setData({
           showShopcar: false,
           mask1: false,
