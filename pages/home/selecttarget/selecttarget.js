@@ -145,6 +145,8 @@ Page({
           info: res,
           isSuccess: true
         })
+        that.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, res.pois[0].name);
+        that.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, res.pois[0].name)
       },
       fail() {
         that.setData({
@@ -213,8 +215,8 @@ Page({
     } else {
       address = e.currentTarget.dataset.info.name;
     }
-    this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, address);
-    this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, address)
+    this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, address, 'click');
+    this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, address, 'click')
   },
   // 选择我的收货地址
   switchPositionAddress(e) {
@@ -232,11 +234,11 @@ Page({
     app.globalData.position = e.currentTarget.dataset.info;
     app.globalData.position.cityAdcode = '';
     app.globalData.position.districtAdcode = '';
-    this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr);
-    this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr)
+    this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr, 'click');
+    this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr, 'click')
   },
   // 外卖附近门店
-  getLbsShop(lng, lat, address) {
+  getLbsShop(lng, lat, address, str) {
     let that = this;
     const location = `${lng},${lat}`
     const shopArr1 = [];
@@ -245,6 +247,7 @@ Page({
     GetLbsShop(location).then((res) => {
       // console.log(res)
       if (res.code == 0 && res.data.length > 0) {
+        my.hideLoading();
         for (let i = 0; i < res.data.length; i++) {
           const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
           app.globalData.isOpen = status
@@ -271,9 +274,11 @@ Page({
 
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         //that.getNearbyShop(lng, lat, address); 
-        my.switchTab({
-          url: '/pages/home/goodslist/goodslist'
-        })
+        if (str) {
+          my.switchTab({
+            url: '/pages/home/goodslist/goodslist'
+          })
+        }
       } else {
         // 无外卖去自提
         this.setData({
@@ -314,6 +319,7 @@ Page({
     let shopArr1 = [];
     let shopArr2 = [];
     NearbyShop(JSON.stringify(obj)).then((res) => {
+      my.hideLoading();
       for (let i = 0; i < res.length; i++) {
         let status = cur_dateTime(res[i].start_time, res[i].end_time);
         app.globalData.isOpen = status

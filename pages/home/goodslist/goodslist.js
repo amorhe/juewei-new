@@ -91,13 +91,13 @@ Page({
         })
         my.setStorageSync({ key: 'shop_id', data: app.globalData.shopIng.shop_id });
         app.globalData.isOpen = status;
+        app.globalData.shopTakeOut = this.data.shopTakeOut;
       }
       this.setData({
         jingxuan: app.globalData.shopIng.jingxuan || false
       })
       app.globalData.shopIng = null;
-
-    } else {
+    } else if (!app.globalData.switchClick) {
       if (app.globalData.type == 1) {
         shopArray = my.getStorageSync({
           key: 'takeout', // 缓存数据的key
@@ -116,9 +116,14 @@ Page({
         shopTakeOut: shopArray[0]
       })
       my.setStorageSync({ key: 'shop_id', data: shopArray[0].shop_id });
+      app.globalData.shopTakeOut = shopArray[0];
+      app.globalData.isOpen = status;
+    } else {
+      this.setData({
+        shopTakeOut: app.globalData.shopTakeOut
+      })
     }
-    app.globalData.shopTakeOut = this.data.shopTakeOut;
-    app.globalData.isOpen = this.data.isOpen;
+
     // app.globalData.ret = []
     let user_id = 1;
     if (my.getStorageSync({ key: 'user_id' }).data) {
@@ -278,26 +283,26 @@ Page({
   // 首页banner列表
   async getBannerList(city_id, district_id, company_id) {
     await bannerList(city_id, district_id, company_id, 1).then((data) => {
-      if(data.data.length==1){
+      if (data.data.length == 1) {
         this.setData({
           indicatorDots: false,
           autoplay: false,
-          imgUrls:data.data
+          imgUrls: data.data
         })
-      }else if (data.data.length > 1) {
+      } else if (data.data.length > 1) {
         this.setData({
           indicatorDots: true,
           autoplay: true,
-          imgUrls:data.data
+          imgUrls: data.data
         })
-      }else{
+      } else {
         this.setData({
           indicatorDots: false,
           autoplay: false,
           imgUrls: []
         })
       }
-      
+
     });
   },
   // 首页商品展位
