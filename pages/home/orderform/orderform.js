@@ -456,10 +456,10 @@ Page({
           address: true,
           addressInfo: res.data
         })
-      }else{
+      } else {
         this.setData({
-          address:false,
-          addressInfo:{}
+          address: false,
+          addressInfo: {}
         })
       }
     })
@@ -514,11 +514,13 @@ Page({
             goodsReal.push(item)
           }
         }
-        for (let val of goodsReal) {
-          if (val.goods_type == 'PKG') {
-            val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
-          } else {
-            val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
+        if (goodsReal.length > 0) {
+          for (let val of goodsReal) {
+            if (val.goods_type == 'PKG') {
+              val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
+            } else {
+              val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
+            }
           }
         }
         // 参与加价购的商品

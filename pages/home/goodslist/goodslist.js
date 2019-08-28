@@ -79,7 +79,7 @@ Page({
     }
     // 初始化默认外卖
     let shopArray = [];
-    if (app.globalData.shopIng) {
+    if (app.globalData.shopIng && !app.globalData.switchClick) {
       if (my.getStorageSync({ key: 'shop_id' }).data != app.globalData.shop_id) {
         this.getCompanyGoodsList(app.globalData.shopIng.company_sale_id); //获取公司所有商品
         this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, app.globalData.shopIng.company_sale_id);//banner
@@ -94,7 +94,8 @@ Page({
         app.globalData.shopTakeOut = this.data.shopTakeOut;
       }
       this.setData({
-        jingxuan: app.globalData.shopIng.jingxuan || false
+        jingxuan: app.globalData.shopIng.jingxuan || false,
+        shopTakeOut: app.globalData.shopIng
       })
       app.globalData.shopIng = null;
     } else if (!app.globalData.switchClick) {
@@ -125,6 +126,7 @@ Page({
     }
 
     // app.globalData.ret = []
+    app.globalData.activityList = [];
     let user_id = 1;
     if (my.getStorageSync({ key: 'user_id' }).data) {
       user_id = my.getStorageSync({ key: 'user_id' }).data
