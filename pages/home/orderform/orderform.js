@@ -210,22 +210,22 @@ Page({
     if (e.currentTarget.dataset.cash == 0 && e.currentTarget.dataset.point == 0) {
       gifts_price = `¥0`;
       order_price = `¥${this.data.orderInfo.real_price / 100}`;
-      trueprice = this.data.orderInfo.real_price / 100;
+      trueprice = this.data.orderInfo.sum_price / 100 - this.data.orderInfo.dispatch_price / 100;
     }
     if (e.currentTarget.dataset.cash == 0 && e.currentTarget.dataset.point != 0) {
       gifts_price = `${e.currentTarget.dataset.point}积分`;
       order_price = `¥${this.data.orderInfo.real_price / 100}+${e.currentTarget.dataset.point}积分`
-      trueprice = this.data.orderInfo.real_price / 100;
+      trueprice = this.data.orderInfo.sum_price / 100 - this.data.orderInfo.dispatch_price / 100;
     }
     if (e.currentTarget.dataset.cash != 0 && e.currentTarget.dataset.point == 0) {
       gifts_price = ` ¥${e.currentTarget.dataset.cash / 100}`;
       order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}`;
-      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100;
+      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.sum_price / 100 - this.data.orderInfo.dispatch_price / 100;
     }
     if (e.currentTarget.dataset.cash != 0 && e.currentTarget.dataset.point != 0) {
       gifts_price = `¥${e.currentTarget.dataset.cash / 100}+${e.currentTarget.dataset.point}积分`;
       order_price = `¥${e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100}+${e.currentTarget.dataset.point}积分`
-      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.real_price / 100;
+      trueprice = e.currentTarget.dataset.cash / 100 + this.data.orderInfo.sum_price / 100 - this.data.orderInfo.dispatch_price / 100;
     }
     this.setData({
       gifts,
@@ -241,7 +241,7 @@ Page({
       gifts: {},
       gift_id: '',
       order_price: `¥${this.data.orderInfo.real_price / 100}`,
-      trueprice: this.data.orderInfo.real_price / 100
+      trueprice: this.data.orderInfo.sum_price / 100 - this.data.orderInfo.dispatch_price / 100
     })
   },
   // 弹框事件回调
@@ -519,7 +519,7 @@ Page({
             if (val.goods_type == 'PKG') {
               val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
             } else {
-              val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code)].goods_img[0];
+              val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code || item.goods_sap_code == val.sap_code)].goods_img[0];
             }
           }
         }
@@ -593,7 +593,7 @@ Page({
           goodsInvented,
           orderInfo: res.data.activity_list[''],
           order_price: `¥${res.data.activity_list[''].real_price / 100}`,
-          trueprice: res.data.activity_list[''].real_price / 100,
+          trueprice: res.data.activity_list[''].sum_price / 100 - res.data.activity_list[''].dispatch_price / 100,
           coupon_money,
           orderDetail: res.data
         })

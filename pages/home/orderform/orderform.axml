@@ -221,7 +221,9 @@
         </button>
       </view>
       <view class="noprimaryBtn" a:else>
-        ￥30元起购
+        ￥{{send_price}}元起
+        <text a:if="{{orderType==1}}">送</text>
+        <text a:if="{{orderType==2}}">购</text></view>
       </view>
     </form>
   </view>
