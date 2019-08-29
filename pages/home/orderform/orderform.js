@@ -49,7 +49,7 @@ Page({
     send_price: (my.getStorageSync({ key: 'send_price' }).data || 30)
   },
   onLoad(e) {
-    console.log(this.data.send_price, this.data.trueprice);
+    // console.log(this.data.send_price, this.data.trueprice);
     // 外卖默认地址
     if (app.globalData.type == 1) {
       this.getDefault();
@@ -623,5 +623,10 @@ Page({
   onSubmit(e) {
     upformId(e.detail.formId);
 
-  }
+  },
+  onUnload() {
+    // 页面被关闭
+    app.globalData.coupon_code = null;
+    app.globalData.notUse = null
+  },
 });
