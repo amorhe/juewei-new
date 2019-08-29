@@ -53,6 +53,9 @@ Page({
       type: e.type
     })
   },
+  onHide(){
+    app.globalData.switchClick = null;
+  },
   // 选择门店
   chooseshop(e) {
     // console.log(e)

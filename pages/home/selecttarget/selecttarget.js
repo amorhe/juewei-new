@@ -119,6 +119,7 @@ Page({
   },
   // 重新定位
   rePosition() {
+    my.showLoading();
     var that = this;
     my.getLocation({
       type: 3,

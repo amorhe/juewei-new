@@ -83,6 +83,7 @@ Page({
     });
     // 初始化默认外卖
     let shopArray = [];
+    
     if (app.globalData.shopIng && !app.globalData.switchClick) {
       if (my.getStorageSync({ key: 'shop_id' }).data != app.globalData.shop_id) {
         const status = cur_dateTime(app.globalData.shopIng.start_time, app.globalData.shopIng.end_time);
@@ -124,7 +125,7 @@ Page({
         shopTakeOut: app.globalData.shopTakeOut
       })
     }
-
+    app.globalData.switchClick=null;
     if (app.globalData.activityList) {
       app.globalData.activityList.DIS = [];
       app.globalData.activityList.PKG = [];
