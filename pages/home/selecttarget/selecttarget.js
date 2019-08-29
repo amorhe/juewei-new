@@ -16,12 +16,13 @@ Page({
     loginOpened: false
   },
   onLoad(e) {
-    // console.log(app.globalData)
+    // console.log(app.globalData.position)
     if (e.type) {
       this.setData({
         isSuccess: true,
         city: app.globalData.position.city || app.globalData.city,
-        addressIng: app.globalData.address
+        addressIng: app.globalData.address,
+        info: app.globalData.position
       })
     }
   },
@@ -157,6 +158,7 @@ Page({
   },
   //选择附近地址
   switchAddress(e) {
+    // console.log(e)
     //手动定位没有地址
     if (e.currentTarget.dataset.type == '1' && !this.data.isSuccess && e.currentTarget.dataset.address == '') {
       my.showToast({
@@ -176,9 +178,11 @@ Page({
     // }
     //定位失败
     let mapPosition = '';
+    let lng = e.currentTarget.dataset.info.longitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[0];
+    let lat = e.currentTarget.dataset.info.latitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[1]
     switch (parseInt(e.currentTarget.dataset.type)) {
       case 1:
-        mapPosition = bd_encrypt(e.currentTarget.dataset.info.longitude, e.currentTarget.dataset.info.latitude);
+        mapPosition = bd_encrypt(lng, lat);
         break;
       case 3:
         mapPosition = bd_encrypt(e.currentTarget.dataset.info.location.lng, e.currentTarget.dataset.info.location.lat);
@@ -191,18 +195,17 @@ Page({
       key: 'lng', // 缓存数据的key
       data: mapPosition.bd_lng, // 要缓存的数据
     });
+    app.globalData.position = e.currentTarget.dataset.info;
     app.globalData.position.city = e.currentTarget.dataset.info.city;
     app.globalData.position.district = e.currentTarget.dataset.info.area;
     app.globalData.position.cityAdcode = '';
     app.globalData.position.districtAdcode = '';
-    // app.globalData.activityList.DIS = [];
-    // app.globalData.activityList.PKG = [];
     if (e.currentTarget.dataset.info.location) {
       app.globalData.position.latitude = e.currentTarget.dataset.info.location.lat;
       app.globalData.position.longitude = e.currentTarget.dataset.info.location.lng;
     } else {
-      app.globalData.position.latitude = e.currentTarget.dataset.info.latitude;
-      app.globalData.position.longitude = e.currentTarget.dataset.info.longitude;
+      app.globalData.position.latitude = lat;
+      app.globalData.position.longitude = lng;
     }
 
     app.globalData.position.province = e.currentTarget.dataset.info.province;
@@ -215,8 +218,9 @@ Page({
     } else {
       address = e.currentTarget.dataset.info.name;
     }
-    this.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, address, 'click');
-    this.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, address, 'click')
+    this.getLbsShop(app.globalData.position.longitude, app.globalData.position.latitude, address, 'click');
+    this.getNearbyShop(app.globalData.position.longitude, app.globalData.position.latitude, address, 'click')
+
   },
   // 选择我的收货地址
   switchPositionAddress(e) {

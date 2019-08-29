@@ -1,4 +1,4 @@
-import { imageUrl, ak, geotable_id} from '../common/js/baseUrl'
+import { imageUrl, ak, geotable_id } from '../common/js/baseUrl'
 import { bd_encrypt } from '../common/js/map'
 import { GetLbsShop, NearbyShop } from '../common/js/home'
 import { cur_dateTime, compare, sortNum } from '../common/js/time'
@@ -40,6 +40,8 @@ Page({
         app.globalData.city = res.city;
         app.globalData.address = res.pois[0].name;
         app.globalData.position = res;
+        app.globalData.position.longitude = mapPosition.bd_lng;
+        app.globalData.position.latitude = mapPosition.bd_lat;
         that.getLbsShop();
         that.getNearbyShop();
         that.setData({
@@ -56,7 +58,7 @@ Page({
     })
 
   },
-  onShow(){
+  onShow() {
 
   },
   // 外卖附近门店
@@ -93,9 +95,9 @@ Page({
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         //存储app.golbalData
         my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
- 
+
         my.reLaunch({
-              url: '/pages/home/goodslist/goodslist'
+          url: '/pages/home/goodslist/goodslist'
         });
       } else if (res.code == 5 || res.data.length == 0) {
         this.setData({
