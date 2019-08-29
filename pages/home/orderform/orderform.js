@@ -330,7 +330,7 @@ Page({
     const lng = my.getStorageSync({ key: 'lng' }).data;
     const lat = my.getStorageSync({ key: 'lat' }).data;
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
-    const goods = JSON.stringify(this.data.goodsReal);
+    const goods = JSON.stringify(this.data.goodsList);
     let type = '', typeClass = '', gift_arr = [], giftObj = {}, notUse = 0, remark = '', str_gift = '';
     if (app.globalData.type == 1) {
       type = 1;
@@ -373,7 +373,11 @@ Page({
       str_gift = JSON.stringify(gift_arr);
     }
     // 创建订单
-    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, this.data.orderInfo.use_coupons[0], notUse, app.globalData.freeId).then((res) => {
+    let use_coupons = ''
+    if(this.data.orderInfo.use_coupons[0] != undefined){
+      use_coupons = this.data.orderInfo.use_coupons[0]
+    }
+    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, use_coupons, notUse, app.globalData.freeId).then((res) => {
       // console.log(res);
       if (res.code == 0) {
         if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
@@ -515,7 +519,7 @@ Page({
             goodsReal.push(item)
           }
         }
-        console.log(goodsReal)
+        // console.log(goodsReal)
         if (goodsReal.length > 0) {
           for (let val of goodsReal) {
             if (!val.is_gifts) {

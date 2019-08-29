@@ -146,7 +146,8 @@ Page({
           isSuccess: true
         })
         that.getLbsShop(mapPosition.bd_lng, mapPosition.bd_lat, res.pois[0].name);
-        that.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, res.pois[0].name)
+        that.getNearbyShop(mapPosition.bd_lng, mapPosition.bd_lat, res.pois[0].name);
+        that.getAddressList((mapPosition.bd_lng,mapPosition.bd_lat), mapPosition.bd_lat, mapPosition.bd_lng);
       },
       fail() {
         that.setData({
@@ -177,10 +178,11 @@ Page({
     // }
     //定位失败
     let mapPosition = '';
-    let lng = e.currentTarget.dataset.info.longitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[0];
-    let lat = e.currentTarget.dataset.info.latitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[1]
+
     switch (parseInt(e.currentTarget.dataset.type)) {
       case 1:
+        let lng = e.currentTarget.dataset.info.longitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[0];
+        let lat = e.currentTarget.dataset.info.latitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[1]
         mapPosition = bd_encrypt(lng, lat);
         break;
       case 3:
