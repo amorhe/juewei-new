@@ -12,7 +12,7 @@ export const geotable_id='134917';
 
 
 
-
+ 
 // // 生产环境
 // export const baseUrl = 'https://wap.juewei.com/api';
 // // 图片测试cdn

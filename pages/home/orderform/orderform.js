@@ -25,7 +25,7 @@ Page({
     shopObj: {},   // 自提商店的详细信息
     couponslist: [],   //优惠券列表
     couponsDefault: null,
-    coupon_code:'',   // 优惠券码
+    coupon_code: '',   // 优惠券码
     full_money: 0,
     goodsInfo: '',
     addressInfo: {},
@@ -507,20 +507,23 @@ Page({
       if (res.code == 0) {
         let goodsReal = [], goodsInvented = [];
         for (let item of res.data.activity_list[''].goods_list) {
-          if (item.is_gifts == 1) {
-            // 赠品
+          if (item.is_gifts == 1 && (item.gift_type == 1 || item.gift_type == 2)) {
+            // 赠品虚拟
             goodsInvented.push(item)
           } else {
-            // 非赠品
+            // 非赠品和赠品实物
             goodsReal.push(item)
           }
         }
+        console.log(goodsReal)
         if (goodsReal.length > 0) {
           for (let val of goodsReal) {
-            if (val.goods_type == 'PKG') {
-              val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
-            } else {
-              val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code || item.goods_sap_code == val.sap_code)].goods_img[0];
+            if (!val.is_gifts) {
+              if (val.goods_type == 'PKG') {
+                val['goods_img'] = img_url + app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.goods_code == val.goods_code)].goods_img[0];
+              } else {
+                val['goods_img'] = app.globalData.goodsArr[app.globalData.goodsArr.findIndex(item => item.sap_code == val.sap_code || item.goods_sap_code == val.sap_code)].goods_img[0];
+              }
             }
           }
         }

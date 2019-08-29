@@ -52,7 +52,16 @@
             <view class="fontSmallGray">{{item.goods_format}}</view>
           </view>
         </view>
-        <view class="listLeft" a:if="{{item.is_gifts}}">{{item.goods_name}}</view>
+        <view class="listLeft" a:if="{{item.is_gifts}}">
+          <image class="ordergoodsImage" mode="scaleToFill" a:if="{{item.gift_img && item.gift_img != ''}}" src="{{item.gift_img}}"/>
+          <image class="ordergoodsImage" mode="scaleToFill" a:if="{{!item.gift_img || item.gift_img == ''}}" src="{{imageUrl}}present_bg.png"/>
+          <view>
+            <view>
+              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}present.png"/>
+              <text class="marginLEight">{{item.goods_name}}</text>
+            </view>
+          </view>
+        </view>
         <view class="listRight">
           <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
           <view class="flexNormal">
@@ -215,7 +224,7 @@
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
     <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-      <view onTap="confirmPay" class="primaryBtn" a:if="{{trueprice>=send_price}}" >
+      <view onTap="confirmPay" class="primaryBtn" a:if="{{trueprice>=send_price}}">
         确认支付
         <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit">
         </button>
