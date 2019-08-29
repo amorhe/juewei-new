@@ -40,7 +40,6 @@ Page({
         })
       });
     }
-    app.globalData.shopIng = null;
     if (app.globalData.address) {
       const lng = my.getStorageSync({ key: 'lng' }).data;
       const lat = my.getStorageSync({ key: 'lat' }).data;
@@ -200,6 +199,7 @@ Page({
     app.globalData.position.district = e.currentTarget.dataset.info.area;
     app.globalData.position.cityAdcode = '';
     app.globalData.position.districtAdcode = '';
+    app.globalData.shopIng = null;
     if (e.currentTarget.dataset.info.location) {
       app.globalData.position.latitude = e.currentTarget.dataset.info.location.lat;
       app.globalData.position.longitude = e.currentTarget.dataset.info.location.lng;
@@ -238,6 +238,7 @@ Page({
     app.globalData.position = e.currentTarget.dataset.info;
     app.globalData.position.cityAdcode = '';
     app.globalData.position.districtAdcode = '';
+    app.globalData.shopIng = null;
     this.getLbsShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr, 'click');
     this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr, 'click')
   },
