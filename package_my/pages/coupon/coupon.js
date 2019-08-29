@@ -68,9 +68,9 @@ Page({
   },
   // 兑换详情
   changedetail(e) {
-    const { gift_code_id, gift_id, order_id } = e.currentTarget.dataset
+    const { gift_code_id, gift_id, order_id, source } = e.currentTarget.dataset
     my.navigateTo({
-      url: '/package_my/pages/coupon/changedetails/changedetails?gift_code_id=' + gift_code_id + '&gift_id=' + gift_id + '&order_id=' + order_id
+      url: '/package_my/pages/coupon/changedetails/changedetails?gift_code_id=' + gift_code_id + '&gift_id=' + gift_id + '&order_id=' + order_id + '&source=' + source
     })
   },
 
@@ -111,7 +111,7 @@ Page({
         })
         break;
       case 2:
-      this.showCode(e)
+        this.showCode(e)
         // let { code } = this.data.d
         // let _sid = await getSid()
         // let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code

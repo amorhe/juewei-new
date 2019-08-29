@@ -239,17 +239,18 @@ Component({
         shopcartObj = {}, //商品列表 
         repurse_price = 0, // 换购活动提示价
         snum = 0,
+        DIS = app.globalData.DIS || [],
+        PKG = app.globalData.PKG || [],
         isfresh1 = false,
         isfresh2 = false,
         isfresh3 = false;
       if (goodsList == null) return;
       // 判断购物车商品是否在当前门店里
-      // console.log(app.globalData.activityList.DIS)
       for (let val in goodsList) {
         if (goodsList[val].goods_discount) {
           // 折扣
           if (goodsList[val].goods_code.indexOf('PKG') == -1) {
-            for (let ott of app.globalData.activityList.DIS) {
+            for (let ott of DIS) {
               for (let fn of ott.goods_format) {
                 if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];
@@ -265,7 +266,7 @@ Component({
 
           } else {
             // 套餐
-            for (let ott of app.globalData.activityList.PKG) {
+            for (let ott of PKG) {
               for (let fn of ott.goods_format) {
                 if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];

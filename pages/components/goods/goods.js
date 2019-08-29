@@ -90,10 +90,10 @@ Component({
     // 判断购物车商品是否在当前门店里
     for (let val in goodsList) {
       if (goodsList[val].goods_discount) {
-        if (app.globalData.activityList) {
+        if (app.globalData.DIS != null || app.globalData.PKG != null) {
           // 折扣
-          if (goodsList[val].goods_code.indexOf('PKG') == -1 && app.globalData.activityList.DIS != null) {
-            for (let ott of app.globalData.activityList.DIS) {
+          if (goodsList[val].goods_code.indexOf('PKG') == -1 && app.globalData.DIS != null) {
+            for (let ott of app.globalData.DIS) {
               for (let fn of ott.goods_format) {
                 if (val == `${fn.goods_activity_code}_${fn.type}`) {
                   shopcartObj[val] = goodsList[val];

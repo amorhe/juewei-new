@@ -84,7 +84,7 @@ Page({
   isloginFn() {
     if (this.data.userInfo.user_id) {
       // this.getAuthCode(this.data.userInfo);
-      if (Object.keys(this.data.userInfo).length > 0) {
+      if (this.data.userInfo.hasOwnProperty('head_img')) {
         my.navigateTo({
           url: '/package_my/pages/mycenter/mycenter?img=' + this.data.userInfo.head_img + '&name=' + this.data.userInfo.nick_name
         });

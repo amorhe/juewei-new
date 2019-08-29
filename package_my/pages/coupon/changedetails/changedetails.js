@@ -4,12 +4,16 @@ import { parseData, contact } from '../../../../pages/common/js/li-ajax'
 Page({
   data: {
     exchangeObj: {},
-    imageUrl2
+    imageUrl2,
+    source:''
   },
   onLoad(e) {
-    const { gift_code_id, gift_id, order_id } = e
+    const { gift_code_id, gift_id, order_id,source } = e
     const _sid = my.getStorageSync({ key: '_sid' }).data;
     this.getDetail({ _sid, gift_code_id, gift_id, order_id });
+    this.setData({
+      source
+    })
   },
   contact,
 

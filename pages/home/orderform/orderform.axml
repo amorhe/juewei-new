@@ -208,7 +208,7 @@
 <view class="null"></view>
 <!-- 底部支付 -->
 <view class="orderConfirm">
-  <view class="colorNine">已优惠¥{{coupon_money/100}}</view>
+  <view class="colorNine">已优惠¥{{orderInfo.reduce_price/100 || 0}}</view>
   <view class="orderPrimary">
     <view>
       <text>合计</text>

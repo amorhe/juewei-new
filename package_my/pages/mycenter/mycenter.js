@@ -24,7 +24,10 @@ Page({
     provinceList: [],
     cityList: [],
     countryList: [],
-    defaultAddress: [0, 0, 0]
+    province_i:0,
+    city_i:0,
+    region_i:0,
+    defaultAddress: [0,0,0]
   },
   onLoad(e) {
     if (e.img && e.name) {
@@ -35,7 +38,6 @@ Page({
     // 页面显示 每次显示都执行
     // my.alert({ title: 'onShow=='+app.globalData.authCode });
     region = await getRegion()
-    this.getAddressList()
     this.getUserInfo()
   },
   // 用户信息
@@ -46,16 +48,26 @@ Page({
     }).data
 
     getuserInfo(_sid).then((res) => {
-      var province = region.filter(item => {
+      var province_i = 0, city_i = 0, region_i = 0;
+      var province = region.filter((item, index) => {
+        if (item.addrid == res.data.province_id) {
+          province_i = index
+        }
         return item.addrid == res.data.province_id
       })[0]
       if (province) {
-        var city = province.sub.filter(item => {
+        var city = province.sub.filter((item, index) => {
+          if (item.addrid == res.data.city_id) {
+            city_i = index
+          }
           return item.addrid == res.data.city_id
         })[0]
       }
       if (city) {
-        var regions = city.sub.filter(item => {
+        var regions = city.sub.filter((item, index) => {
+          if (item.addrid == res.data.region_id) {
+            region_i = index
+          }
           return item.addrid == res.data.region_id
         })[0]
       }
@@ -63,7 +75,13 @@ Page({
       res.data.cityName = city.name || ''
       res.data.regionName = regions.name || ''
       that.setData({
-        userinfo: res.data
+        userinfo: res.data,
+        province_i,
+        city_i,
+        region_i,
+        defaultAddress:[province_i,city_i,region_i]
+      }, () => {
+        that.getAddressList()
       })
     })
   },
@@ -153,7 +171,7 @@ Page({
   },
   hideSelectAddress() {
     var that = this;
-    
+
     var province = that.data.provinceList[that.data.defaultAddress[0]]
     var curCity = that.data.cityList[that.data.defaultAddress[1]]
     var region = that.data.countryList[that.data.defaultAddress[2]]
@@ -162,7 +180,7 @@ Page({
       city_id: curCity.addrid,
       region_id: region.addrid
     }
-   
+
     UpdateUserInfo(data).then(res => {
       that.setData({
         'userinfo.province_id': province.addrid,
@@ -172,7 +190,7 @@ Page({
         'userinfo.cityName': curCity.name,
         'userinfo.regionName': region.name,
         selectAddress: false,
-      },()=> that.changeAddress())
+      }, () => that.changeAddress())
     })
   },
 
