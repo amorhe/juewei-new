@@ -236,7 +236,6 @@ Page({
         type: 2,
         jingxuan: true
       });
-
       app.globalData.type = 2;
       this.getCompanyGoodsList(shopTakeOut.company_sale_id); //获取公司所有商品(第一个为当前门店)
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
@@ -267,7 +266,7 @@ Page({
       data: this.data.shopTakeOut.shop_id, // 要缓存的数据
     });
     app.globalData.isOpen = status;
-
+    app.globalData.shopIng = null;
   },
   // 首页banner列表
   async getBannerList(city_id, district_id, company_id) {
