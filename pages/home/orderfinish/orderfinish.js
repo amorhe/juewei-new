@@ -1,5 +1,6 @@
 import { imageUrl } from '../../common/js/baseUrl'
 import { ajax, log } from '../../common/js/li-ajax'
+var app = getApp();
 Page({
   data: {
     imageUrl,
