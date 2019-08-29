@@ -77,33 +77,33 @@
       <image mode="scaleToFill" src="{{imageUrl}}telephone.png" data-number="{{d.shop_tel}}" onTap="makePhoneCall"/>
     </view>
     <view class="good-list">
-      <view class="good-item" a:for="{{d.goods_list}}">
-        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG'}}" src="{{item.goods_img ? item.goods_img : imageUrl + 'present_bg.png' }}"/>
-        <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG'}}" src="{{ img_url + item.goods_img }}"/>
-        <view class="body">
-          <view class="name">
-            <view class="top">
-              <view class="image" a:if="{{item.goods_code.substr(2,3)==='DIS' || item.goods_code.substr(2,3)==='PKG'}}">折</view>
-              <view>
-                 {{item.goods_name}}
-                <text a:if="{{item.remark}}">（{{item.remark}}）</text>
+      <view a:for="{{d.goods_list}}">
+          <view class="good-item" a:if="{{(item.goods_code!=='' && item.goods_code.substr(2,3)!=='JJG') || (item.is_gifts===1 && (item.gift_type===3 || item.gift_type===4))}}">
+              <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts!==1}}" src="{{item.goods_img}}"/>
+              <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG' && item.is_gifts!==1}}" src="{{ img_url + item.goods_img }}"/>
+              <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts===1 && item.goods_code.indexOf('JJG')>-1 && (item.gift_type===3 || item.gift_type===4) }}" src="{{item.goods_img ? item.goods_img : imageUrl + 'gift.jpg'}}"/>
+              <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts===1 && item.goods_code.indexOf('JJG')===-1 && (item.gift_type===3 || item.gift_type===4) }}" src="{{item.goods_img ? item.goods_img : imageUrl + 'present_bg.png'}}"/>
+              <view class="body">
+                <view class="name">
+                  <view class="top">
+                    <view class="image" a:if="{{item.goods_code.substr(2,3)==='DIS' || item.goods_code.substr(2,3)==='PKG'}}">折</view>
+                    <view class="image" a:if="{{item.is_gifts===1 && item.goods_code.substr(2,3)==='JJG'}}">换</view>
+                    <view class="image" a:if="{{item.is_gifts===1 && item.goods_code.substr(2,3)!=='JJG'}}">赠</view>
+                    <view>{{item.goods_name}}<text a:if="{{item.remark}}">（{{item.remark}}）</text></view>
+                  </view>
+                </view>
+                <view class="size">{{item.goods_format}}</view>
               </view>
-            </view>
+              <view class="num">×{{item.goods_quantity}}</view>
+              <view class="price">
+                <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price * item.goods_quantity / 100)}}</text>
+                <text>￥{{(item.goods_price  * item.goods_quantity /100)}}</text>
+              </view>
           </view>
-          <view class="size">{{item.goods_format}}</view>
-        </view>
-        <view class="num">
-         ×{{item.goods_quantity}}
-        </view>
-        <view class="price">
-          <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price * item.goods_quantity / 100)}}</text>
-          <text>￥{{(item.goods_price  * item.goods_quantity /100)}}</text>
-        </view>
       </view>
+
       <view class="post" a:if="{{dis_type==1}}">
-        <view class="label">
-          配送费
-        </view>
+        <view class="label">配送费</view>
         <view class="price">
           <view class="value">
             <text class="del" a:if="{{d.dis_original_price != d.dis_price}}"> ￥{{(d.dis_original_price / 100)}}</text>
@@ -114,8 +114,7 @@
       <view class="reduce">
         <view class="reduce-item">
           <view class="left">
-            <image mode="scaleToFill" src="{{imageUrl}}reduce.png"/>
-          活动满减
+            <image mode="scaleToFill" src="{{imageUrl}}reduce.png"/>活动满减
           </view>
           <view class="value">
             <text>-￥{{(d.activity_money / 100)}}</text>
@@ -123,12 +122,25 @@
         </view>
         <view class="reduce-item">
           <view class="left">
-            <image mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
-          优惠券
+            <image mode="scaleToFill" src="{{imageUrl}}coupon.png"/>优惠券
           </view>
           <view class="value">
             <text>-￥{{(d.minus_money > 0 ? (d.minus_money / 100) : (d.coupon_money / 100))}}</text>
           </view>
+        </view>
+        <!-- 需要加一个循环 -->
+        <view a:for="{{d.goods_list}}">
+            <view class="reduce-item" a:if="{{item.is_gifts===1 && (item.gift_type==1 || item.gift_type==2)}}">
+              <view class="left">
+                <image a:if="{{item.goods_code.substr(2,3)==='JJG'}}" mode="scaleToFill" src="{{imageUrl}}repurchase.png"/>
+                <image a:else mode="scaleToFill" src="{{imageUrl}}present.png"/>
+                {{item.goods_name}}
+              </view>
+              <view class="value">
+                <text class="del" a:if="{{item.goods_price!=item.goods_original_price}}"> ￥{{(item.goods_original_price * item.goods_quantity / 100)}}</text>
+                <text>￥{{(item.goods_price  * item.goods_quantity /100)}}</text>
+              </view>
+            </view>
         </view>
       </view>
       <view class="total">
