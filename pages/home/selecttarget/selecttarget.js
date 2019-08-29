@@ -158,7 +158,6 @@ Page({
   },
   //选择附近地址
   switchAddress(e) {
-    // console.log(e)
     //手动定位没有地址
     if (e.currentTarget.dataset.type == '1' && !this.data.isSuccess && e.currentTarget.dataset.address == '') {
       my.showToast({
@@ -178,16 +177,20 @@ Page({
     // }
     //定位失败
     let mapPosition = '';
-
+    let lng,lat;
     switch (parseInt(e.currentTarget.dataset.type)) {
       case 1:
-        let lng = e.currentTarget.dataset.info.longitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[0];
-        let lat = e.currentTarget.dataset.info.latitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[1]
+        lng = e.currentTarget.dataset.info.longitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[0];
+        lat = e.currentTarget.dataset.info.latitude || e.currentTarget.dataset.info.user_address_lbs_baidu.split(',')[1]
         mapPosition = bd_encrypt(lng, lat);
         break;
       case 3:
+        lng =e.currentTarget.dataset.info.location.lng;
+        lat = e.currentTarget.dataset.info.location.lat;
         mapPosition = bd_encrypt(e.currentTarget.dataset.info.location.lng, e.currentTarget.dataset.info.location.lat);
+        break;
     }
+  
     my.setStorageSync({
       key: 'lat', // 缓存数据的key
       data: mapPosition.bd_lat, // 要缓存的数据
@@ -245,7 +248,7 @@ Page({
     this.getNearbyShop(position[0], position[1], e.currentTarget.dataset.info.user_address_map_addr, 'click')
   },
   // 外卖附近门店
-  getLbsShop(lng, lat, address, str) {
+  async getLbsShop(lng, lat, address, str) {
     let that = this;
     const location = `${lng},${lat}`
     const shopArr1 = [];
@@ -280,7 +283,7 @@ Page({
         app.globalData.position.districtAdcode = shopArray[0].district_id
 
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
-        //that.getNearbyShop(lng, lat, address); 
+        that.getNearbyShop(lng, lat, address); 
         if (str) {
           my.switchTab({
             url: '/pages/home/goodslist/goodslist'
@@ -295,7 +298,7 @@ Page({
     })
   },
   // 自提附近门店
-  getNearbyShop(lng, lat, address) {
+  async getNearbyShop(lng, lat, address) {
     const location = `${lng},${lat}`
     const str = new Date().getTime();
     my.request({
