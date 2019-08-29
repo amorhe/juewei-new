@@ -229,23 +229,8 @@ Page({
     this.setData({
       btnClick: false
     })
-    if (!my.getStorageSync({ key: 'takeout' }).data) {
-      return
-    }
     if (e.currentTarget.dataset.type == 'ziti') {
-      let shopTakeOut = '';
-      // if (app.globalData.shopIng) {
-      //   shopTakeOut = app.globalData.shopIng
-      //   this.setData({
-      //     jingxuan: (app.globalData.shopIng.jingxuan || false)
-      //   });
-      // } else {
-      //   shopTakeOut = my.getStorageSync({ key: 'self' }).data[0];
-      //   this.setData({
-      //     jingxuan: true
-      //   });
-      // }
-      shopTakeOut = my.getStorageSync({ key: 'self' }).data[0];
+      let shopTakeOut = my.getStorageSync({ key: 'self' }).data[0] || '';
       this.setData({
         shopTakeOut,
         type: 2,
@@ -257,8 +242,10 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
-      let shopTakeOut = '';
-      shopTakeOut = my.getStorageSync({ key: 'takeout' }).data[0]
+      if (!my.getStorageSync({ key: 'takeout' }).data) {
+        return
+      }
+      let shopTakeOut = my.getStorageSync({ key: 'takeout' }).data[0] || '';
       this.setData({
         shopTakeOut,
         type: 1,
