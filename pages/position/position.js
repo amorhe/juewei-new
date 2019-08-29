@@ -16,6 +16,10 @@ Page({
     my.removeStorageSync({
       key: 'self', // 缓存数据的key
     });
+    my.removeStorageSync({
+      key: 'opencity', // 缓存数据的key
+    });
+ 
     var that = this;
     my.getLocation({
       type: 3,
