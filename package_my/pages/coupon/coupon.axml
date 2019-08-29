@@ -5,7 +5,7 @@
         <tab-content key="0">
           <view class="tab-content tabBox">
             <view class="couponUl" a:if="{{couponList.length>0}}">
-              <view class="couponLi" style="max-height:{{item.toggleRule?'620':'254'}}rpx" a:for="{{couponList}}">
+              <view class="couponLi" style="{{item.toggleRule?'max-height:800rpx':'max-height:254rpx'}}" a:for="{{couponList}}">
                 <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
                 <view>
                   <view class="couponNumber">
