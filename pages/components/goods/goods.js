@@ -107,8 +107,8 @@ Component({
             }
           } else {
             // 套餐
-            if (app.globalData.activityList.PKG != null) {
-              for (let ott of app.globalData.activityList.PKG) {
+            if (app.globalData.PKG != null) {
+              for (let ott of app.globalData.PKG) {
                 for (let fn of ott.goods_format) {
                   if (val == `${fn.goods_activity_code}_${fn.type}`) {
                     shopcartObj[val] = goodsList[val];

@@ -229,11 +229,6 @@ Page({
     this.setData({
       btnClick: false
     })
-    setTimeout(() => {
-      this.setData({
-        btnClick: true
-      })
-    }, 1000)
     if (!my.getStorageSync({ key: 'takeout' }).data) {
       return
     }
@@ -277,7 +272,8 @@ Page({
     app.globalData.shopTakeOut = this.data.shopTakeOut;
     const status = cur_dateTime(this.data.shopTakeOut.start_time, this.data.shopTakeOut.end_time);
     this.setData({
-      isOpen: status
+      isOpen: status,
+      btnClick: true
     })
     my.setStorageSync({
       key: 'shop_id', // 缓存数据的key
