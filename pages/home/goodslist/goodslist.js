@@ -242,6 +242,7 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
+      //切换外卖
       if (!my.getStorageSync({ key: 'takeout' }).data) {
         return
       }
@@ -306,8 +307,6 @@ Page({
   // 门店营销活动(折扣和套餐)
   async getActivityList(city_id, district_id, company_id, buy_type, user_id) {
     await activityList(city_id, district_id, company_id, buy_type, user_id).then((res) => {
-      // console.log(res)
-      // app.globalData.activityList = res.data;
       // 获取加价购商品
       if (res.data.MARKUP) {
         app.globalData.gifts = res.data.MARKUP.gifts;
