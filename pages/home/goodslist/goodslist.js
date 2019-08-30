@@ -218,10 +218,6 @@ Page({
   },
   // 切换外卖自提
   chooseTypes(e) {
-    let user_id = 1;
-    if (my.getStorageSync({ key: 'user_id' }).data) {
-      user_id = my.getStorageSync({ key: 'user_id' }).data
-    }
     // js节流防短时间重复点击
     if (this.data.btnClick == false) {
       return
@@ -229,7 +225,14 @@ Page({
     this.setData({
       btnClick: false
     })
+    console.log('切换');
+    let user_id = 1;
+    if (my.getStorageSync({ key: 'user_id' }).data) {
+      user_id = my.getStorageSync({ key: 'user_id' }).data
+    }
+
     if (e.currentTarget.dataset.type == 'ziti') {
+      console.log('ziti');
       let shopTakeOut = my.getStorageSync({ key: 'self' }).data[0] || '';
       this.setData({
         shopTakeOut,
@@ -242,8 +245,12 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
+      console.log('外卖');
       //切换外卖
       if (!my.getStorageSync({ key: 'takeout' }).data) {
+        this.setData({
+          btnClick: true
+        })
         return
       }
       let shopTakeOut = my.getStorageSync({ key: 'takeout' }).data[0] || '';
