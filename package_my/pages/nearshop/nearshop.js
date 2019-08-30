@@ -26,7 +26,7 @@ Page({
       longitude: ott.lng,
       latitude: ott.lat,
       selfshop: false,
-      city:app.globalData.city
+      city:app.globalData.position.city
     })
   },
   onShow() {
