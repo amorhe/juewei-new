@@ -51,7 +51,7 @@ Page({
           })
           
           my.request({
-            url: 'https://images.juewei.com/prod/shop/goods_sort.json?v=' + timestamp,
+            url: jsonUrl+'/goods/goods_sort.json?v=' + timestamp,
             success: (data) => {
               let _T = data.data.data.country
               const { typeList } = this.data

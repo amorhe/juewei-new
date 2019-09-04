@@ -410,7 +410,7 @@ Page({
       }
       const str = new Date().getTime();
       my.request({
-        url: `https://images.juewei.com/prod/shop/goods_sort.json?v=${str}`,
+        url: `${jsonUrl}/goods/goods_sort.json?v=${str}`,
         success: (conf) => {
           let _T = conf.data.data.country
           const { typeList } = this.data
