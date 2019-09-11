@@ -91,7 +91,7 @@ Page({
   async getCategory() {
     const { cur } = this.data;
     let res = await reqCategory(1)
-    if (res.code === 100) {
+    if (res.code === 100 && res.data && res.data.length>0) {
       this.setData({ list: res.data, cate_id: res.data[cur].id })
     }
   },
