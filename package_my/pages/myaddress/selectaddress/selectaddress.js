@@ -58,20 +58,5 @@ Page({
         console.log(that.data.mapInfo, 'arr')
       },
     });
-  },
-  // tapMap(e) {
-  //   console.log(e)
-  //   var mapInfo = {
-  //     iconPath: imageUrl + 'position.png',
-  //     latitude: e.latitude,
-  //     longitude: e.longitude,
-  //     width: 32,
-  //     height: 32
-  //   }
-  //   this.setData({
-  //     latitude: e.latitude,
-  //     longitude: e.longitude,
-  //     mapInfo: mapInfo,
-  //   })
-  // }
+  }
 });

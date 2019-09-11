@@ -1,4 +1,3 @@
 <view>
-  在线客服服务
-  <web-view src="https://qiyukf.com/client?k=7b00c4cccd1d718d0b290cb7c15cd33e&u=295171&d=295171&uuid=mjtuzxrslrgkilue6iog&gid=0&sid=0&qtype=0&dvctimer=0&robotShuntSwitch=0&hc=0&robotId=0&pageId=15623926413606GMMql9tDt&n=FuYu-iOS&m=18701323296&t=%25E6%25B5%258B%25E8%25AF%2595" onMessage="onmessage"></web-view>
+   <web-view src="{{serviceurl}}" onMessage="onmessage"></web-view>
 </view>

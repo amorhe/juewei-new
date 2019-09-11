@@ -6,13 +6,14 @@ export const imageUrl2 = 'https://imgcdnjwd.juewei.com';
 export const imageUrl3 = 'https://images.juewei.com';
 //jsonUrl
 export const jsonUrl='https://imgcdnjwd.juewei.com/static/check';
+export const serviceUrl='https://test-wap.juewei.com';
 //百度测试ak
 export const ak = 'pRtqXqnajTytAzWDL3HOnPRK';
 export const geotable_id='134917';
 
 
-
  
+
 // // 生产环境
 // export const baseUrl = 'https://wap.juewei.com/api';
 // // 图片测试cdn
@@ -21,6 +22,7 @@ export const geotable_id='134917';
 // export const imageUrl3 = 'https://images.juewei.com';
 // //jsonUrl
 // export const jsonUrl='https://imgcdnjwd.juewei.com/static/product';
+// export const serviceUrl='https://wap.juewei.com';
 // // 百度生产ak
 // export const ak = 'pRtqXqnajTytAzWDL3HOnPRK';
 // export const geotable_id='134917';

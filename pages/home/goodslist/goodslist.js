@@ -147,7 +147,6 @@ Page({
     let topage = (app.globalData.page || my.getStorageSync({ key: 'query' }).data || '');
     app.globalData.page = null; //删除
     my.removeStorageSync({ key: 'query' }); //删除
-    // console.log('topage',topage);
     if (topage != '') {
       switch (topage) {
         //会员
@@ -225,14 +224,12 @@ Page({
     this.setData({
       btnClick: false
     })
-    console.log('切换');
     let user_id = 1;
     if (my.getStorageSync({ key: 'user_id' }).data) {
       user_id = my.getStorageSync({ key: 'user_id' }).data
     }
 
     if (e.currentTarget.dataset.type == 'ziti') {
-      console.log('ziti');
       let shopTakeOut = my.getStorageSync({ key: 'self' }).data[0] || '';
       this.setData({
         shopTakeOut,
@@ -245,7 +242,6 @@ Page({
       this.getBannerList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);//banner
       this.getShowpositionList(app.globalData.position.cityAdcode, app.globalData.position.districtAdcode, shopTakeOut.company_sale_id);
     } else {
-      console.log('外卖');
       //切换外卖
       if (!my.getStorageSync({ key: 'takeout' }).data) {
         this.setData({
@@ -512,7 +508,8 @@ Page({
               if (ret[0] == null) { return; }
               let top = ret[0][0].top;
               let arr = ret[0].map((item, index) => {
-                return item.top = item.top - top - 37;
+                //return item.top = item.top - top - 37;
+                return item.top = item.top - top;
               })
               app.globalData.ret = arr;
             })

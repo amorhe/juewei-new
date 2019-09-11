@@ -25,10 +25,10 @@ Component({
 
   },
   deriveDataFromProps(nextProps) {
-    // console.log(nextProps)
+    // console.log('deriveDataFromProps')
     let goodsList = my.getStorageSync({ key: 'goodsList' }).data;
     this.setData({
-      goodsList
+        goodsList
     })
   },
   didUpdate(prevProps, prevData) {
@@ -65,6 +65,8 @@ Component({
     onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
       this.props.onCart(goodsList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price);
     },
+
+    // 加购物车
     addshopcart(e) {
       // console.log(e)
       if(this.data.size == 999){
@@ -168,6 +170,7 @@ Component({
       });
 
     },
+    // 减购物车
     reduceshopcart(e) {
       let code = e.currentTarget.dataset.goods_code;
       let format = e.currentTarget.dataset.goods_format

@@ -10,7 +10,8 @@ Component({
     imageUrl2,
     imageUrl3,
     img_url,
-    goodsType: 0, //系列
+    goodsType: 1, //系列
+    togoodsType:1, //点击跳转
     maskView: false,
     goodsModal: false,
     scrollT: 0,
@@ -55,11 +56,11 @@ Component({
     leftTop: 0
   },
   onInit() {
+
     setTimeout(() => {
       var query = my.createSelectorQuery();
       query.select('.pagesScorll').boundingClientRect();
       query.exec((rect) => {
-        // console.log(rect)
         if (rect[0] === null) return;
         this.setData({
           pagescrollTop: rect[0].top
@@ -263,13 +264,18 @@ Component({
     },
     // 选择系列
     chooseGoodsType(e) {
+      //获取scrolltop这个不太准确，无法获取准确的
+      // console.log('this.data.pagescrollTop',this.data.pagescrollTop);
+ 
+      //加锁
+      this.setData({
+        goodsType: e.currentTarget.dataset.type, //当前的节点
+        togoodsType:e.currentTarget.dataset.type, //用于左侧选择右侧
+        isTab: true
+      })
       my.pageScrollTo({
         scrollTop: this.data.pagescrollTop,
       });
-      this.setData({
-        goodsType: e.currentTarget.dataset.type,
-        isTab: true
-      })
     },
     // 选规格
     chooseSizeTap(e) {
@@ -289,11 +295,13 @@ Component({
     },
     onTouchStart(e) {
       this.setData({
-        y1: e.changedTouches[0].pageY
+        y1: e.changedTouches[0].pageY,
+        isTab: false
       })
     },
     // 滑动
     onTouchEnd(e) {
+      let that=this;
       let y2 = e.changedTouches[0].pageY;
       if (this.data.y1 - y2 > 50) {
         my.pageScrollTo({
@@ -303,21 +311,55 @@ Component({
       this.setData({
         isTab: false
       })
+      //鼠标滑动松开后延时一秒钟执行显示一次
+      // setTimeout(function(){
+      //         let retArr = [...app.globalData.ret]; //已经排序好了
+      //         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
+      //           let sum =0;
+      //           if(retArr.indexOf(ret[0].scrollTop)>-1){
+      //               retArr.push(ret[0].scrollTop+1);
+      //               retArr.sort((a, b) => a - b);
+      //               sum = retArr.findIndex(item => (item == (ret[0].scrollTop+1)));
+      //           }else{
+      //               retArr.push(ret[0].scrollTop);
+      //               retArr.sort((a, b) => a - b);
+      //               sum = retArr.findIndex(item => (item == ret[0].scrollTop));
+      //           }
+      //           //sum 1开始  goodsType默认1开始
+      //           if (that.data.goodsType != sum) {
+      //                 that.setData({
+      //                   goodsType: sum
+      //                 })
+      //           }
+      //         })
+      // },1000)
     },
     onScroll(e) {
-      if (!this.data.isTab) {
-        let retArr = [...app.globalData.ret];
+      //只执行最后一次，其他中间次数不执行。
+      //页面滚动一直触发。
+      var that=this;
+      if (!that.data.isTab) {
+        let retArr = [...app.globalData.ret]; //已经排序好了
         my.createSelectorQuery().select('.scrolllist').scrollOffset().exec((ret) => {
-          retArr.push(ret[0].scrollTop);
-          retArr.sort((a, b) => a - b);
-          let sum = retArr.findIndex(item => item >= ret[0].scrollTop);
-          if (this.data.goodsType != sum) {
-            this.setData({
-              goodsType: sum
-            })
+          let sum =0;
+          if(retArr.indexOf(ret[0].scrollTop)>-1){
+              retArr.push(ret[0].scrollTop+1);
+              retArr.sort((a, b) => a - b);
+              sum = retArr.findIndex(item => (item == (ret[0].scrollTop+1)));
+          }else{
+              retArr.push(ret[0].scrollTop);
+              retArr.sort((a, b) => a - b);
+              sum = retArr.findIndex(item => (item == ret[0].scrollTop));
+          }
+          //sum 1开始  goodsType默认1开始
+          if (that.data.goodsType != sum) {
+                that.setData({
+                  goodsType: sum
+                })
           }
         })
       }
+ 
     },
     // sku商品
     onCart(shopcartList, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {

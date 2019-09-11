@@ -10,13 +10,9 @@ Page({
     modalShow: false, // 弹窗
     // 地址
     name: '',
-
     sex: 1,
-
     phone: '',
-
     address: '',
-
     labelList: [
       {
         name: '家',
@@ -135,12 +131,15 @@ Page({
   // 选择地址
   chooseLocation() {
     var that = this
+    //打开选地址页面
+    // my.navigateTo({
+    //   url: "/package_my/pages/myaddress/selectaddress/selectaddress"
+    // });
     my.chooseLocation({
       success: (res) => {
         var resadd = res.address
         var map_address = res.name ? res.name : res.address
         let map_position = bd_encrypt(res.longitude, res.latitude);
-        console.log(res, '选择')
         my.request({
           url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
           success: (res) => {

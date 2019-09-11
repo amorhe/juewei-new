@@ -326,7 +326,6 @@ Component({
         data: shopcartObj
       })
       app.globalData.goodsBuy = this.props.shopcartAll;
-      // console.log(app.globalData.goodsBuy)
       if (num - shopcartNum > 0 && snum > 0) {
         return this.setData({
           showShopcar: false,

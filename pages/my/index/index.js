@@ -33,6 +33,10 @@ Page({
           success: (user) => {
             userInfo['head_img'] = user.avatar
             userInfo['nick_name'] = user.nickName
+            my.setStorageSync({ 
+              key: 'nick_name',
+              data: user.nickName
+            });
             this.setData({
               userInfo
             })
@@ -114,8 +118,13 @@ Page({
     })
   },
   // 打客服电话
-  makePhoneCall() {
-    my.makePhoneCall({ number: '4009995917' });
+  // makePhoneCall() {
+  //   // my.makePhoneCall({ number: '4009995917' });
+  // },
+  onlineservice(){
+    my.navigateTo({
+        url: '/package_my/pages/onlineservice/onlineservice',
+    });
   },
   // 模版消息
   onSubmit(e) {
