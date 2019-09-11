@@ -13,7 +13,7 @@
   margin-top: 24rpx;
 }
 
-.positionTxt>navigatorß {
+.positionTxt>navigator {
   display: flex;
   align-items: center
 }

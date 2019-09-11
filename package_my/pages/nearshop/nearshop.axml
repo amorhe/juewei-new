@@ -11,7 +11,7 @@
   </view>
 </view>
 <view class="mapView">
-    <map id="map" style="width:100%;height:100%" longitude="{{longitude}}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"/>
+    <map id="map" style="width:100%;height:100%" longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markersArray}}" scale="12"/>
     <cover-view class="shopBox">
       <cover-view class="shopLi" a:for="{{shopList}}">
         <cover-view>
