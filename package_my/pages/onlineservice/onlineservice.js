@@ -7,7 +7,7 @@ Page({
     userid:'',
     phone:'',
     nickname:'',
-    serviceurl:''
+    url:'',
   },
   onLoad() {
       let userid='',nickname='',phone='';
@@ -20,8 +20,9 @@ Page({
         userid: userid,
         nickname: nickname,
         phone: phone,
-        serviceurl: serviceUrl + '/m/shop/onlineservice.html?uid='+userid+'&name='+ nickname +'&mobile='+phone+'&channel=支付宝小程序'
+        url: serviceUrl +'/m/shop/onlineservice.html?uid='+encodeURIComponent(userid)+'&name='+ encodeURIComponent(nickname) +'&mobile='+encodeURIComponent(phone)+'&channel='+encodeURIComponent('支付宝小程序')
       });
+      console.log(serviceUrl + '/m/shop/onlineservice.html?uid='+encodeURIComponent(userid)+'&name='+ encodeURIComponent(nickname) +'&mobile='+encodeURIComponent(phone)+'&channel='+encodeURIComponent('支付宝小程序'))
   },
   onShow(){
   },

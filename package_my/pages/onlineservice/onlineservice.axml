@@ -1,3 +1,3 @@
 <view>
-   <web-view src="{{serviceurl}}" onMessage="onmessage"></web-view>
+   <web-view src="{{url}}" onMessage="onmessage"></web-view>
 </view>

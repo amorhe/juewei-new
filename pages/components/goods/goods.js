@@ -56,7 +56,6 @@ Component({
     leftTop: 0
   },
   onInit() {
-
     setTimeout(() => {
       var query = my.createSelectorQuery();
       query.select('.pagesScorll').boundingClientRect();
