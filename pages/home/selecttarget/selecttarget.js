@@ -10,10 +10,14 @@ Page({
     addressIng: '',    // 定位地址
     canUseAddress: [],   // 我的地址
     nearAddress: [],   // 附近地址
+		searchedAddress: [], //搜索地址
+		showClear: false,
     isSuccess: false,
     info: '',   // 一条地址信息
     inputAddress: '',  //手动输入的地址
-    loginOpened: false
+    loginOpened: false,
+		showSearched: false,
+		showSearchedMask: false
   },
   onLoad(e) {
     // console.log(app.globalData.position)
@@ -49,10 +53,18 @@ Page({
   },
   // 切换城市
   choosecityTap() {
+		this.setData({
+			inputAddress: '',
+			searchedAddress: [],
+			showClear: false,
+			showSearched: false,
+			showSearchedMask: false
+		})
     my.chooseCity({
       showLocatedCity: true,
       showHotCities: true,
       success: (res) => {
+				console.log(res)
         if (res.city.indexOf('市') == res.city.length - 1) {
           this.setData({
             city: res.city
@@ -62,14 +74,58 @@ Page({
             city: res.city + '市'
           })
         }
-
       },
     });
   },
+	getFocus() {
+		if(this.data.searchedAddress.length == 0) {
+			this.setData({
+				showSearchedMask: true,
+				showSearched: false
+			});
+		}
+		if(this.data.searchedAddress.length > 0) {
+			this.setData({
+				showSearchedMask: false,
+				showSearched: true
+			});
+		}
+	},
+	clearSearch() {
+		this.setData({
+			searchedAddress: [],
+			showSearchedMask: true,
+			showSearched: false,
+			inputAddress: '',
+			showClear: false,
+		})
+	},
+	cancelSearch() {
+		this.setData({
+			searchedAddress: [],
+			showSearchedMask: false,
+			showSearched: false,
+			inputAddress: '',
+			showClear: false,
+		})
+	},
   handleSearch(e) {
     this.setData({
       inputAddress: e.detail.value
-    })
+    });
+		if(e.detail.value.length > 0) {
+			this.searchShop();
+			this.setData({
+				showClear: true
+			})
+		}else {
+			this.setData({
+				showSearchedMask: true,
+				showSearched: false,
+				searchedAddress: [],
+				showClear: false
+			});
+		}
   },
   // 输入地址搜索门店
   searchShop() {
@@ -81,15 +137,49 @@ Page({
       my.request({
         url,
         success: (res) => {
-          my.hideKeyboard();
           const lng = res.data.result.location.lng;
           const lat = res.data.result.location.lat;
           const location = `${lng},${lat}`;
-          that.getAddressList(location, lat, lng);
+          that.getSearchedAddress(location, lat, lng);
         },
       });
     }
   },
+	getSearchedAddress(location, lat, lng) {
+		let that = this;
+    //附近地址列表
+    if (this.data.city + this.data.inputAddress != '') {
+			// let str = `http://api.map.baidu.com/place/v2/search?query=${this.data.inputAddress}&region=${this.data.city}&scope=2&filter=sort_name:distance&output=json&ak=${ak}`;
+			let str = `https://api.map.baidu.com/place/v2/search?query=${this.data.inputAddress}&location=${lat},${lng}&radius=100000&scope=2&output=json&ak=${ak}`;
+			str = encodeURI(str);
+			my.request({
+				url: str,
+				success: (res) => {
+					if (res.data.status == 0) {
+						this.setData({
+							searchedAddress: res.data.results,
+							showSearched: true,
+							showSearchedMask: false
+						})
+						console.log(this.data.searchedAddress)
+					} else {
+						this.setData({
+							searchedAddress: [],
+							showSearched: true,
+							showSearchedMask: false
+						})
+					}
+				},
+				fail: (rej) => {
+					this.setData({
+						searchedAddress: [],
+						showSearched: true,
+						showSearchedMask: false
+					})
+				}
+			});
+    }
+	},
   //附近地址列表
   getAddressList(location, lat, lng) {
     //附近列表中没有传出当前的 地区id,城市id等参数
@@ -255,18 +345,19 @@ Page({
     const shopArr1 = [];
     const shopArr2 = [];
     app.globalData.address = address;
-    GetLbsShop(location).then((res) => {
+    GetLbsShop(lng, lat).then((res) => {
       // console.log(res)
-      if (res.code == 0 && res.data.length > 0) {
+      if (res.code == 100 && res.data.shop_list.length > 0) {
+				let shop_list = res.data.shop_list;
         my.hideLoading();
-        for (let i = 0; i < res.data.length; i++) {
-          const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
+        for (let i = 0; i < shop_list.length; i++) {
+          const status = cur_dateTime(shop_list[i].start_time, shop_list[i].end_time);
           app.globalData.isOpen = status
           // 判断是否营业
           if (status == 1 || status == 3) {
-            shopArr1.push(res.data[i]);
+            shopArr1.push(shop_list[i]);
           } else {
-            shopArr2.push(res.data[i]);
+            shopArr2.push(shop_list[i]);
           }
         }
         // 按照goods_num做降序排列
@@ -290,13 +381,23 @@ Page({
             url: '/pages/home/goodslist/goodslist'
           })
         }
-      } else {
+      } else if(res.code == 100 && res.data.shop_list.length == 0) {
         // 无外卖去自提
         this.setData({
           loginOpened: true
         })
-      }
-    })
+				app.globalData.type = 2;
+				//存储app.golbalData
+				my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
+				// my.reLaunch({
+				// 	url: '/pages/home/goodslist/goodslist'
+				// })
+      }else {
+				my.alert({content: '网络错误，请重试！'})
+			}
+    }).catch(() => {
+			my.alert({content: '网络错误，请重试！'})
+		})
   },
   // 自提附近门店
   async getNearbyShop(lng, lat, address) {

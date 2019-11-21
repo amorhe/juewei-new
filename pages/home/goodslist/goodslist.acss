@@ -1,4 +1,4 @@
-@import '../../components/goods/goods.acss';
+@import '../../components/goodsitem/goodsitem.acss';
 page {
   background: #ffffff;
 }
@@ -14,7 +14,7 @@ page {
   padding: 0 32rpx;
   align-items: center;
   box-sizing: border-box;
-  z-index: 1000;
+  z-index: 999;
   background: #fff
 }
 .positionLeft {
@@ -64,7 +64,7 @@ page {
   position: sticky;
   top: 88rpx;
   width: 750rpx;
-  z-index: 1000;
+  z-index: 990;
   background: #fff
 }
 .pagesNormal {
@@ -142,4 +142,12 @@ page {
 }
 .distanceView {
   align-items: flex-end
+}
+.marginBEight{
+  margin-bottom: 16rpx;
+}
+.marginBEight image {
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow:0px 2rpx 10rpx 0rpx rgba(153,153,153,0.2);
 }

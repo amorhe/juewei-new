@@ -37,7 +37,7 @@
           <view>
             <view>
               <image mode="scaleToFill" src="{{imageUrl}}my_coupon.png"/>
-              <view>卡券</view>
+              <view class="fontsz">卡券</view>
             </view>
           </view>
         </view>
@@ -46,7 +46,7 @@
           <view>
             <view>
               <image mode="scaleToFill" src="{{imageUrl}}my_points.png"/>
-              <view>积分</view>
+              <view class="fontsz">积分</view>
             </view>
           </view>
         </view>
@@ -55,7 +55,7 @@
           <view>
             <view>
               <image mode="scaleToFill" src="{{imageUrl}}my_address.png"/>
-              <view>地址</view>
+              <view class="fontsz">地址</view>
             </view>
           </view>
         </view>
@@ -64,7 +64,7 @@
           <view>
             <view>
               <image mode="scaleToFill" src="{{imageUrl}}my_nearshop.png"/>
-              <view>附近门店</view>
+              <view class="fontsz">附近门店</view>
             </view>
           </view>
         </navigator>
@@ -74,7 +74,7 @@
             <view>
               <view>
                 <image mode="scaleToFill" src="{{imageUrl}}my_quity.png"/>
-                <view>专享权益</view>
+                <view class="fontsz">专享权益</view>
               </view>
             </view>
           </view>

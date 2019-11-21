@@ -7,7 +7,7 @@ Page({
     imageUrl,
     _sid: '',
     loginOpened: false,
-    refresFinsish: false,
+    refreshFinish: false,
     menuList: [
       {
         key: '官方外卖订单',
@@ -78,8 +78,8 @@ Page({
 
   // 刷新
   async refresh() {
-    const { menuList, timers, refresFinsish } = this.data
-    if (refresFinsish) { return }
+    const { menuList, timers, refreshFinish } = this.data
+    if (refreshFinish) { return }
 
     // 重置数据
     let _menuList = [
@@ -116,7 +116,7 @@ Page({
     setTimeout(() => {
       this.setData({
         menuList: _menuList,
-        refresFinsish: true,
+        refreshFinish: true,
       }, async () => {
         await this.getMore()
         my.stopPullDownRefresh()
@@ -297,7 +297,7 @@ Page({
             menuList,
             timers,
             loading: false,
-            refresFinsish: false
+            refreshFinish: false
           }, () => my.hideLoading())
         }, 1000)
 

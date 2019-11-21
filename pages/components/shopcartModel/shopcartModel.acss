@@ -1,4 +1,4 @@
-@import '../goods/goods.acss';
+@import '../goodsitem/goodsitem.acss';
 .orcle {
   border: 1rpx #E60012 solid;
   margin-left: 8rpx;

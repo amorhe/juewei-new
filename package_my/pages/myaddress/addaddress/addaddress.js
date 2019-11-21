@@ -28,9 +28,7 @@ Page({
       }
     ],
     curLabel: 0,
-
     selectAddress: false,
-
     addressList: region,
     provinceList: [],
     cityList: [],
@@ -43,15 +41,50 @@ Page({
     addressdetail: '',
     modalidShow: false, // 无门店,
     detailAdd: '',
-    clickadd: false
+    clickadd: false,
+    city:''
+  },
+  onShow(){
+    if(app.globalData.addAddressInfo){
+      let addAddressInfo = app.globalData.addAddressInfo;
+      this.setData({
+        province: addAddressInfo.province,
+        city: addAddressInfo.city,
+        district: addAddressInfo.area || addAddressInfo.district,
+        longitude: addAddressInfo.location.lng,// 百度的坐标
+        latitude: addAddressInfo.location.lat,// 百度的坐标
+        map_address: addAddressInfo.name || addAddressInfo.address || addAddressInfo.addr,
+        detailAdd: addAddressInfo.address || addAddressInfo.addr
+      })
+      my.request({
+        url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + addAddressInfo.location.lng + ',' + addAddressInfo.location.lat + '&radius=3000',
+        success: (res) => {
+          var arr = []
+          res.data.contents.forEach(item => {
+            arr.push(item.shop_id)
+          })
+          this.data.shop_id = arr.join(',')
+          if (this.data.shop_id === '') {
+            this.setData({
+              modalidShow: true
+            })
+          }
+        },
+      });
+    }
+  },
+  onhide(){
+    // 退出清空addAddressInfo
+    app.globalData.addAddressInfo = null;
   },
   async onLoad(e) {
     var _sid = my.getStorageSync({ key: '_sid' }).data;
     this.data._sid = _sid
+    
     if (e.Id) {
       this.data.addressId = e.Id
       this.getInfo(e.Id)
-    } else {
+    } else {// 新建地址
       this.data.addressId = ''
       this.getLocation()
     }
@@ -68,15 +101,17 @@ Page({
       success(res) {
         console.log(res)
         var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
+        // 获取到的是高德的经纬度，要转换为百度经纬度
         let map_position = bd_encrypt(res.longitude, res.latitude);
         my.request({
           url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
           success: (res) => {
-            var arr = []
+            var arr = [];// 门店id数组
             res.data.contents.forEach(item => {
               arr.push(item.shop_id)
             })
-            that.data.shop_id = arr.join(',')
+            that.data.shop_id = arr.join(',');
+            // 周边无可用门店时弹窗提示
             if (that.data.shop_id === '') {
               this.setData({
                 modalidShow: true
@@ -84,6 +119,7 @@ Page({
             }
           },
         });
+        // 写入地址信息并渲染，map_address显示地址名称
         that.setData({
           province: res.province,
           city: res.city,
@@ -131,51 +167,53 @@ Page({
   // 选择地址
   chooseLocation() {
     var that = this
-    //打开选地址页面
-    // my.navigateTo({
-    //   url: "/package_my/pages/myaddress/selectaddress/selectaddress"
+    // my.chooseLocation({
+    //   success: (res) => {
+    //     var resadd = res.address
+    //     var map_address = res.name ? res.name : res.address
+    //     let map_position = bd_encrypt(res.longitude, res.latitude);
+    //     console.log(res, '选择')
+    //     my.request({
+    //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
+    //       success: (res) => {
+    //         that.setData({
+    //           province: res.data.result.addressComponent.province,
+    //           city: res.data.result.addressComponent.city,
+    //           district: res.data.result.addressComponent.district,
+    //           detailAdd: res.data.result.addressComponent.province + res.data.result.addressComponent.city + res.data.result.addressComponent.district + resadd
+    //         })
+    //       },
+    //     });
+    //     my.request({
+    //       url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
+    //       success: (res) => {
+    //         var arr = []
+    //         res.data.contents.forEach(item => {
+    //           arr.push(item.shop_id)
+    //         })
+    //         that.data.shop_id = arr.join(',')
+    //         if (that.data.shop_id === '') {
+    //           this.setData({
+    //             modalidShow: true
+    //           })
+    //         }
+    //       },
+    //     });
+    //     that.setData({
+    //       longitude: map_position.bd_lng,
+    //       latitude: map_position.bd_lat,
+    //       map_address: map_address
+    //     })
+    //   },
+    //   fail(err) {
+    //     console.log(err, '错误')
+    //   }
     // });
-    my.chooseLocation({
-      success: (res) => {
-        var resadd = res.address
-        var map_address = res.name ? res.name : res.address
-        let map_position = bd_encrypt(res.longitude, res.latitude);
-        my.request({
-          url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
-          success: (res) => {
-            that.setData({
-              province: res.data.result.addressComponent.province,
-              city: res.data.result.addressComponent.city,
-              district: res.data.result.addressComponent.district,
-              detailAdd: res.data.result.addressComponent.province + res.data.result.addressComponent.city + res.data.result.addressComponent.district + resadd
-            })
-          },
-        });
-        my.request({
-          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
-          success: (res) => {
-            var arr = []
-            res.data.contents.forEach(item => {
-              arr.push(item.shop_id)
-            })
-            that.data.shop_id = arr.join(',')
-            if (that.data.shop_id === '') {
-              this.setData({
-                modalidShow: true
-              })
-            }
-          },
-        });
-        that.setData({
-          longitude: map_position.bd_lng,
-          latitude: map_position.bd_lat,
-          map_address: map_address
-        })
-      },
-      fail(err) {
-        console.log(err, '错误')
-      }
+
+    my.navigateTo({
+      url: '/package_my/pages/myaddress/selectaddress/selectaddress'
     });
+
   },
   getAddressList() {
     let [curProvince, curCity, curCountry] = this.data.defaultAddress;
@@ -326,6 +364,8 @@ Page({
           clickadd: false
         })
         if (res.code == 0) {
+          // 清空app.globalData.addAddressInfo防止错误使用
+          app.globalData.addAddressInfo = null;
           my.navigateBack({
             url: '/package_my/pages/myaddress/myaddress'
           });
@@ -361,6 +401,8 @@ Page({
         })
         if (res.code == 0) {
           if (this.data.order == 1) {
+            // 清空app.globalData.addAddressInfo防止错误使用
+            app.globalData.addAddressInfo = null;
             my.navigateBack({
               url: '/pages/home/orderform/selectaddress/selectaddress'
             })

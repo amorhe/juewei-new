@@ -38,7 +38,7 @@
   font-weight:400;
   color:rgba(255,255,255,1);
   font-size:36rpx;
-  margin: 175rpx auto 0;
+  margin: 120rpx auto 0;
 }
 
 
@@ -131,6 +131,10 @@ page{
 .inputFocus::after{
   content: '|';
   color:#E60012;
+}
+
+.resendCode {
+  margin-top: 100rpx;
 }
 
 /* model弹框 */

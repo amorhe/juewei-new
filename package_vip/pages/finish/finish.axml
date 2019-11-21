@@ -92,7 +92,7 @@
       </view>
       <view class="hint" a:if="{{d.get_code}}">
       温馨提示：可到
-        <text style="color:#108EE9">我的>卡劵</text> 中查看
+        <text style="color:#108EE9">我的>卡券</text> 中查看
       </view>
       <view class="li-button" onTap="redirect">
       返回会员专享

@@ -28,15 +28,10 @@ Page({
     my.getAuthCode({
       scopes: ['auth_user', 'auth_life_msg'],
       success: (res) => {
-        // console.log('ddddd',res);
         my.getAuthUserInfo({
           success: (user) => {
             userInfo['head_img'] = user.avatar
             userInfo['nick_name'] = user.nickName
-            my.setStorageSync({ 
-              key: 'nick_name',
-              data: user.nickName
-            });
             this.setData({
               userInfo
             })
@@ -122,9 +117,15 @@ Page({
   //   // my.makePhoneCall({ number: '4009995917' });
   // },
   onlineservice(){
-    my.navigateTo({
+    if (this.data.userInfo.user_id) {
+      my.navigateTo({
         url: '/package_my/pages/onlineservice/onlineservice',
-    });
+      });
+    } else {
+      my.navigateTo({
+        url: '/pages/login/auth/auth',
+      });
+    }
   },
   // 模版消息
   onSubmit(e) {

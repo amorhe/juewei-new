@@ -1,0 +1,5 @@
+<view class="footer-wrap" >
+  <view class="footer" a:if="{{timeCounter.remaining_pay_minute>-1}}" data-id="{{timeCounter.id}}" data-order_sn="{{timeCounter.order_sn}}" data-order_amount="{{timeCounter.order_amount}}" catchTap="onPayNow">
+  去支付（还剩{{timeCounter.remaining_pay_minute}}分{{timeCounter.remaining_pay_second}}秒）
+  </view>
+</view>

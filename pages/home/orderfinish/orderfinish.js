@@ -107,16 +107,22 @@ Page({
 
   async getCouponsList() {
     let res = await ajax('/mini/coupons/list', { get_type: 'new_user' })
-    if (res.CODE === 'A100') {
+    if (res.CODE === 'A100' && res.DATA.new_user && res.DATA.new_user.length > 0) {
       let new_user = res.DATA.new_user
         .map(({ end_time, ...item }) => ({
           end_time: new Date(end_time * 1000).toLocaleDateString(),
           ...item
         }))
       this.setData({
-        new_user
+        new_user,
+				newUserShow: true
       })
-    }
+    }else {
+			this.setData({
+        newUserShow: false,
+        new_user: []
+      })
+		}
   },
 
   toTakeIn() {

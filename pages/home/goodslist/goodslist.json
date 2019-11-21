@@ -1,7 +1,9 @@
 {
   "defaultTitle": "绝味鸭脖",
   "usingComponents": {
-    "goods-list": "../../components/goods/goods",
-    "confirm": "../../components/confirm/confirm"
-  }
+    "goodsitem": "../../components/goodsitem/goodsitem",
+		"confirm": "../../components/confirm/confirm"
+  },
+  "allowsBounceVertical": "YES",
+  "pullRefresh": true
 }

@@ -1,6 +1,5 @@
 import { imageUrl, jsonUrl } from '../../common/js/baseUrl'
 import { compare, upformId } from '../../common/js/time'
-let log = console.log
 var app = getApp();
 Component({
   data: {
@@ -23,17 +22,15 @@ Component({
     isOpen: ''
   },
   props: {
-    onClear: (data) => console.log(data),
-    onChangeShopcart: (data) => console.log(data)
+    shopcartAll:[],
+    shopcartNum:0,
+    priceAll:0,
+    activityText:'',
+    freeText:''
   },
-  onInit() {
-  },
-  didMount() {
-    this.getSendPrice();
-  },
-  didUpdate() {
-    this.getSendPrice();
-  },
+  //组件创建时触发
+  onInit() {},
+  //组件创建时和更新前触发
   deriveDataFromProps(nextProps) {
     // 判断是不是起送
     if (app.globalData.type == 1) {
@@ -59,8 +56,17 @@ Component({
     this.setData({
       isOpen: app.globalData.isOpen
     })
+    //更新起送价
+    this.getSendPrice();
   },
-  didUnmount() { },
+  //组件创建完毕后触发
+  didMount() {
+    this.getSendPrice();
+  },
+  //组件更新完毕触发
+  didUpdate() {},
+  //组件删除时触发
+  didUnmount() {},
   methods: {
     // 打开购物车
     openShopcart() {
@@ -110,6 +116,7 @@ Component({
       }
     },
     changeshopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price) {
+      //运行父级函数，向上传递更新的参数
       this.props.onChangeShopcart(goodlist, shopcartAll, priceAll, shopcartNum, priceFree, repurse_price);
     },
     addshopcart(e) {
@@ -213,7 +220,7 @@ Component({
         return
       }
       // 未登录
-      if (my.getStorageSync({ key: 'user_id' }).data == null) {
+      if (!my.getStorageSync({ key: 'user_id' }).data) {
         my.navigateTo({
           url: '/pages/login/auth/auth'
         })
@@ -268,7 +275,7 @@ Component({
             // 套餐
             for (let ott of PKG) {
               for (let fn of ott.goods_format) {
-                if (val == `${fn.goods_activity_code}_${fn.type}`) {
+                if (val == `${fn.goods_activity_code}_${(fn.type?fn.type:'')}`) {
                   shopcartObj[val] = goodsList[val];
                   // 判断购物车商品价格更新
                   if (parseInt(goodsList[val].goods_price) != parseInt(fn.goods_price)) {
@@ -326,6 +333,7 @@ Component({
         data: shopcartObj
       })
       app.globalData.goodsBuy = this.props.shopcartAll;
+      // console.log(app.globalData.goodsBuy)
       if (num - shopcartNum > 0 && snum > 0) {
         return this.setData({
           showShopcar: false,
@@ -363,6 +371,7 @@ Component({
           btnClick: true
         })
       }
+      my.hideLoading();
       my.navigateTo({
         url: '/pages/home/orderform/orderform'
       })
@@ -371,6 +380,7 @@ Component({
     getSendPrice() {
       const timestamp = new Date().getTime();
       let opencity=(my.getStorageSync({ key:'opencity'}).data || null);
+      if(!app.globalData.position.cityAdcode || app.globalData.position.cityAdcode==''){ return;}
       if (opencity){
               this.setData({
                 send_price: opencity[app.globalData.position.cityAdcode].shop_send_price,
@@ -414,9 +424,6 @@ Component({
             },
           });
       }
-
-
-
     },
     // 上传模版消息
     onSubmit(e) {

@@ -1,4 +1,4 @@
-import {sendCode} from '../../../../pages/common/js/login'
+// import {sendCode} from '../../../../pages/common/js/login'
 Page({
   data: {
     phone:'',
@@ -15,23 +15,33 @@ Page({
     })
   },
   getCode(){
-    var data = {
-      _sid:this.data._sid,
-      phone:this.data.phone
-    }
-    sendCode(data).then(res=>{
-      if(res.code==0){
-        my.navigateTo({
-          url:'/package_my/pages/mycenter/bindphone/bindphone?phone='+this.data.phone+'&type=2'
-        });
-      }else{
-        my.showToast({
-          type: 'none',
-          content: res.msg,
-          duration: 2000
-        });
-      }
-    })
+    //直接跳转
+    my.navigateTo({
+      url:'/package_my/pages/mycenter/bindphone/bindphone?phone='+this.data.phone+'&type=2'
+    });
+    // var data = {
+    //   _sid:this.data._sid,
+    //   phone:this.data.phone
+    // }
+    // sendCode(data).then(res=>{
+    //   if(res.code==0){
+    //     my.navigateTo({
+    //       url:'/package_my/pages/mycenter/bindphone/bindphone?phone='+this.data.phone+'&type=2'
+    //     });
+    //   }else{
+    //     my.showToast({
+    //       type: 'none',
+    //       content: res.msg,
+    //       duration: 2000
+    //     });
+    //   } }else{
+    //     my.showToast({
+    //       type: 'none',
+    //       content: res.msg,
+    //       duration: 2000
+    //     });
+    //   }
+    // })
   },
 });
  

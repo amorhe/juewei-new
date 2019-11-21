@@ -4,6 +4,13 @@ Page({
     remarks:''
   },
   onLoad() {},
+	onShow() {
+		if (app.globalData.remarks) {
+      this.setData({
+        remarks: app.globalData.remarks
+      })
+    }
+	},
   inputRemarks(e){
     this.setData({
       remarks: e.detail.value

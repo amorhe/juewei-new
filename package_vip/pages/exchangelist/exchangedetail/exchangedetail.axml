@@ -10,7 +10,9 @@
   <!-- 状态 -->
   <view class="state">
     <view class="state-title">
-     {{(detail.status_name == '未支付'  && detail.remaining_pay_minute < 0) ? '已关闭' :detail.status_name}}
+      <!-- 已支付的虚拟订单显示已兑换 -->
+      <view a:if="{{ detail.status_name == '已支付' && detail.order_type == 1 }}">已兑换</view>
+      <view a:else>{{(detail.status_name == '未支付'  && detail.remaining_pay_minute < 0) ? '已关闭' : detail.status_name}}</view>
     </view>
     <view class="sub-state" a:if="{{detail.dis_time}}">
     发货时间：{{detail.dis_time}}
@@ -89,6 +91,15 @@
           data-shop_name="{{detail.shop_name}}"
           data-address="{{detail.address}}"
           onTap="guide">导航</view>
+        </view>
+      </view>
+      <view class="user-list" a:if="{{detail.address}}">
+        <view class="user-left"></view>
+        <view class="user-right">
+          <view class="shop-address">
+            {{ ( detail.province == detail.city ? detail.city : (detail.province + detail.city) ) 
+             + detail.district + detail.address }}
+          </view>
         </view>
       </view>
       <!--<view class="user-list" a:if="{{detail.shop_name}}"><view class="user-left"></view><view class="user-right"><view class="user-address">
@@ -171,7 +182,7 @@
         {{detail.user_address_name}} {{detail.user_address_phone}}
       </view>
       <view class="address-footer">
-        {{ detail.user_address_address + detail.user_address_detail_address }}
+        {{ detail.user_address_detail_address + detail.user_address_address }}
       </view>
     </view>
     <view class="order detail-item">

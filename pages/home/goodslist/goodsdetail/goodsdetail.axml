@@ -29,30 +29,36 @@
       <!-- 无sku -->
       <view a:if="{{goodsInfo.goods_format.length==1}}" class="goodsNumber">
         <!-- 折扣套餐 -->
-        <view a:if="{{(!shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${goodsInfo.goods_format[0].type}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum==0) && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_format[0].goods_discount}}" data-goods_unit="{{goodsInfo.goods_unit}}" data-goods_discount_user_limit="{{goodsInfo.goods_format[0].goods_discount_user_limit}}" data-goods_order_limit="{{goodsInfo.goods_format[0].goods_order_limit}}" data-goods_original_price="{{goodsInfo.goods_format[0].goods_original_price / 100}}" data-goods_activity_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}">加入购物车</view>
+        <view a:if="{{(!shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`].sumnum==0) && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_format[0].goods_discount}}" data-goods_unit="{{goodsInfo.goods_unit}}" data-goods_discount_user_limit="{{goodsInfo.goods_format[0].goods_discount_user_limit}}" data-goods_order_limit="{{goodsInfo.goods_format[0].goods_order_limit}}" data-goods_original_price="{{goodsInfo.goods_format[0].goods_original_price / 100}}" data-goods_activity_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}">加入购物车</view>
         <!-- 非折扣套餐 -->
-        <view a:if="{{(!shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum==0) && (goodsInfo.key!='折扣' && goodsInfo.key!='套餐')}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_unit="{{goodsInfo.goods_unit}}">加入购物车</view>
-        <!-- 减 -->
-        <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0 && (goodsInfo.key!='折扣' && goodsInfo.key!='套餐')}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
-          <!-- 折扣套餐 -->
-          <image a:if="{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${goodsInfo.goods_format[0].type}`].sumnum>0 && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
+        <view a:elif="{{(!shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum==0) && (goodsInfo.key!='折扣' && goodsInfo.key!='套餐')}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_unit="{{goodsInfo.goods_unit}}">加入购物车</view>
+            <!-- 减 -->
+            <!-- 折扣套餐 -->
+            <image class="zhkou" a:if="{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`].sumnum>0 && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
             <!-- 非折扣套餐 -->
-        <text a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].num}}</text>
-        <!-- 折扣套餐 -->
-        <text a:if="{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${goodsInfo.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${goodsInfo.goods_format[0].type}`].num}}</text>
-        <!-- 加 -->
-        <!-- 非折扣套餐 -->
-        <image a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0 && (goodsInfo.key!='折扣' && goodsInfo.key!='套餐')}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_unit="{{goodsInfo.goods_unit}}"/>
-          <!-- 折扣套餐 -->
-          <image a:if="{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${goodsInfo.goods_format[0].type}`].sumnum>0 && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_format[0].goods_discount}}" data-goods_unit="{{goodsInfo.goods_unit}}" data-goods_discount_user_limit="{{goodsInfo.goods_format[0].goods_discount_user_limit}}" data-goods_original_price="{{goodsInfo.goods_format[0].goods_original_price /100}}" data-goods_activity_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_order_limit="{{goodsInfo.goods_format[0].goods_order_limit}}" />
-      </view>
+            <image class="no_zhkou" a:elif="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0 && (goodsInfo.key!='折扣' && goodsInfo.key!='套餐')}}" src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_discount="{{goodsInfo.goods_discount}}"/>
+
+            <!-- 折扣套餐 -->
+            <text class="zhkou" a:if="{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`].num}}</text>
+            <!-- 非折扣套餐 -->
+            <text class="no_zhkou" a:elif="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].num}}</text>
+
+            <!-- 加 -->
+            <!-- 折扣套餐 -->
+            <image class="zhkou" a:if="{{shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`].sumnum>0 && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_format[0].goods_discount}}" data-goods_unit="{{goodsInfo.goods_unit}}" data-goods_discount_user_limit="{{goodsInfo.goods_format[0].goods_discount_user_limit}}" data-goods_original_price="{{goodsInfo.goods_format[0].goods_original_price /100}}" data-goods_activity_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_order_limit="{{goodsInfo.goods_format[0].goods_order_limit}}" />
+            <!-- 非折扣套餐 -->
+            <image class="no_zhkou" a:elif="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0 && (goodsInfo.key!='折扣' && goodsInfo.key!='套餐')}}" src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}" data-goods_format="{{goodsInfo.goods_format[0].type}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_unit="{{goodsInfo.goods_unit}}"/>
+        </view>
       <!-- sku商品 -->
-      <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">加入购物车</view>
+      <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">
+        加入购物车
+        <view class="addcount1" a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0 || shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[1].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]?shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum:shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[1].type}`].sumnum}}</view>
+      </view>
     </view>
   </view>
 </view>
 <!-- 简介、详情 -->
-<view>
+<view class="menuWrap">
   <view class="menus">
     <view data-cur="{{index}}" onTap="changeMenu" class="menu {{activeTab === index ? 'active':''}}" a:for="{{tabs}}">
         {{item.title}}
@@ -66,7 +72,7 @@
   </view>
 </view>
 <!-- 口味、配送 -->
-<view>
+<view class="menuWrap">
   <view class="menus">
     <view data-cur="{{index}}" onTap="changeTab" class="menu {{tabActive === index ? 'active':''}}" a:for="{{tabsT}}">
           {{item.title}}
@@ -77,7 +83,7 @@
       <!-- 好评率 -->
       <view class="percentView">
         <view a:if="{{commentArr.statistics}}" style="width:{{686 * (commentArr.statistics.good-0) / (commentArr.statistics.all-0)}}rpx">好评率{{((commentArr.statistics.good-0) / (commentArr.statistics.all-0) * 100).toFixed(2)}}%</view>
-        <view style="background:transparent;width:100%;color:#fff" a:if="{{!commentArr.statistics}}">好评率0%</view>
+        <view style="background:transparent;width:100%;color:#FFE100" a:if="{{!commentArr.statistics}}">好评率0%</view>
       </view>
     </view>
     <view class="tagView" a:if="{{commentArr.show_tags.length>0}}">
@@ -85,23 +91,26 @@
       <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
     <!-- 评论列表 -->
-    <view class="commontList" a:if="{{commentArr.data.length> 0}}">
+    <view class="commontList commont" a:if="{{commentArr.data.length> 0}}">
       <view a:for="{{commentArr.data}}">
-        <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+        <image class="commontAvatar" mode="scaleToFill" src="{{(item.head_img!=''?item.head_img:imageUrl+'jwdlogo.png')}}"/>
         <view>
           <view class="commontUser">
             <view>
               <view>
                 <view>{{item.nick_name}}</view>
-                <view class="commontImageView">
+                <view a:if="item.takeout_goods_comment_product_level" class="commontImageView">
                   <image class="normalImage" a:for="{{item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_2.png"/>
                   <image class="normalImage" a:for="{{5-item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_1.png"/>
+                </view>
+                <view a:elif="item.takeout_order_comment_product_level" class="commontImageView">
+                     <image class="normalImage" a:for="5" src="{{imageUrl}}stars_2.png"/>
                 </view>
               </view>
             </view>
             <view class="fontSmallGray">{{item.takeout_goods_comment_ctime}}</view>
           </view>
-          <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content}}</view>
+          <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content || '&npsp;'}}</view>
           <view a:if="{{item.imgUrls.length>0}}">
             <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"/>
           </view>
@@ -110,7 +119,7 @@
             <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
             <!--<view>食材新鲜</view><view>包装精美</view> -->
           </view>
-          <view class="fontSmallGray">购买时间：{{item.order_ctime}}</view>
+          <view class="fontSmallGray">购买时间：{{item.takeout_goods_comment_utime}}</view>
         </view>
       </view>
     </view>
@@ -131,10 +140,11 @@
       <!-- 选中class为 tagActive -->
       <text class="tagNoActive" a:for="{{dispatchArr.show_tags}}" a:if="{{dispatchArr.show_tags.length>0}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
+
     <!-- 评论列表 -->
-    <view a:if="{{dispatchArr.data.length> 0}}" class="commontList">
+    <view a:if="{{dispatchArr.data.length> 0}}" class="commontList dispatch">
       <view a:for="{{dispatchArr.data}}">
-        <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img}}"/>
+        <image class="commontAvatar" mode="scaleToFill" src="{{(item.head_img!=''?item.head_img:imageUrl+'jwdlogo.png')}}"/>
         <view>
           <view class="commontUser">
             <view>
@@ -169,6 +179,6 @@
 </view>
 <view style="height:100rpx;background:transparent"></view>
 <!-- 购物车 -->
-<shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" activityText="{{activityText}}" freeText="{{freeText}}" onClear="onClear" onChangeShopcart="onchangeShopcart"/>
+<shopcartmodel shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" activityText="{{activityText}}" freeText="{{freeText}}" onClear="onClear" onChangeShopcart="onchangeShopcart"/>
 <!-- 加入购物车选择商品规格 -->
-<goods-modal maskView="{{maskView}}" goodsKey="{{goodsKey}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>
+<goodsmodal maskView="{{maskView}}" goodsKey="{{goodsKey}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>

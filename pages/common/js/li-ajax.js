@@ -177,8 +177,6 @@ export const contact = () => {
   my.navigateTo({
       url: '/package_my/pages/onlineservice/onlineservice',
   });
-
-
 }
 
 /**

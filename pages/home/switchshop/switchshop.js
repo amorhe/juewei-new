@@ -35,6 +35,7 @@ Page({
           return {
             ...item,
             iconPath: `${imageUrl}position_map1.png`,
+            markerLevel:10,
             width: 32,
             height: 32
           }
@@ -42,6 +43,7 @@ Page({
           return {
             ...item,
             iconPath: `${imageUrl}position_map1.png`,
+            markerLevel:9,
             width: 15,
             height: 15
           }
@@ -74,7 +76,7 @@ Page({
     let ott = gd_decrypt(my.getStorageSync({ key: 'lng' }).data, my.getStorageSync({ key: 'lat' }).data)
     this.setData({
       longitude: ott.lng,
-      latitude: ott.lat,
+      latitude: ott.lat-0.04,
     })
   }
 });

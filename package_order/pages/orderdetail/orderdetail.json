@@ -3,6 +3,7 @@
   "backgroundColor": "#f5f5f5",
    "allowsBounceVertical": "NO",
   "usingComponents": {
-    "popup": "mini-antui/es/popup/index"
+    "popup": "mini-antui/es/popup/index",
+    "modal": "mini-antui/es/modal/index"
   }
 }

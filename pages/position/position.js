@@ -72,17 +72,18 @@ Page({
     const location = `${lng},${lat}`
     const shopArr1 = [];
     const shopArr2 = [];
-    GetLbsShop(location).then((res) => {
-      // console.log(res)
-      if (res.code == 0 && res.data.length > 0) {
-        for (let i = 0; i < res.data.length; i++) {
-          const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
+    GetLbsShop(lng, lat).then((res) => {
+      console.log(res)
+      if (res.code == 100 && res.data.shop_list.length > 0) {
+				let shop_list = res.data.shop_list;
+        for (let i = 0; i < shop_list.length; i++) {
+          const status = cur_dateTime(shop_list[i].start_time, shop_list[i].end_time);
           // app.globalData.isOpen = status
           // 判断是否营业
           if (status == 1 || status == 3) {
-            shopArr1.push(res.data[i]);
+            shopArr1.push(shop_list[i]);
           } else {
-            shopArr2.push(res.data[i]);
+            shopArr2.push(shop_list[i]);
           }
         }
         // 按照goods_num做降序排列
@@ -103,18 +104,34 @@ Page({
         my.reLaunch({
           url: '/pages/home/goodslist/goodslist'
         });
-      } else if (res.code == 5 || res.data.length == 0) {
-        this.setData({
+      } else if (res.code == 100 && res.data.shop_list.length == 0) {
+				this.setData({
           content: '您的定位地址无可配送门店',
           confirmButtonText: '去自提',
           cancelButtonText: '修改地址',
           modalShow: true,
           mask: true
         })
-
+			} else {
+        my.alert({
+					content: '网络错误，请重试！', 
+					success: function() {
+						my.reLaunch({
+							url: '/pages/position/position'
+						})
+					}
+				})
       }
-
-    })
+    }).catch(() => {
+			my.alert({
+				title: '网络请求错误',
+				success() {
+					my.redirectTo({
+						url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+					});
+				}
+			})
+		})
   },
   // 自提附近门店
   getNearbyShop() {

@@ -92,17 +92,18 @@ Page({
     const shopArr1 = [];
     const shopArr2 = [];
     app.globalData.address = address;
-    GetLbsShop(location).then((res) => {
+    GetLbsShop(lng, lat).then((res) => {
       // console.log(res)
-      if (res.code == 0 && res.data.length > 0) {
-        for (let i = 0; i < res.data.length; i++) {
-          const status = cur_dateTime(res.data[i].start_time, res.data[i].end_time);
+      if (res.code == 100 && res.data.shop_list.length > 0) {
+				let shop_list = res.data.shop_list;
+        for (let i = 0; i < shop_list.length; i++) {
+          const status = cur_dateTime(shop_list[i].start_time, shop_list[i].end_time);
           app.globalData.isOpen = status
           // 判断是否营业
           if (status == 1 || status == 3) {
-            shopArr1.push(res.data[i]);
+            shopArr1.push(shop_list[i]);
           } else {
-            shopArr2.push(res.data[i]);
+            shopArr2.push(shop_list[i]);
           }
         }
         // 按照goods_num做降序排列
@@ -121,13 +122,40 @@ Page({
         my.switchTab({
           url: '/pages/home/goodslist/goodslist'
         })
-      } else {
+      } else if(res.code == 100 && res.data.shop_list.length == 0){
         // 无外卖去自提
         this.setData({
           loginOpened: true
         })
-      }
 
+				app.globalData.type = 2;
+				//存储app.golbalData
+				my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
+				// my.reLaunch({
+				// 	url: '/pages/home/goodslist/goodslist'
+				// })
+      }else {
+				my.alert({content: '网络错误，请重试！'})
+			}
+
+    }).catch(()=> {
+			my.alert({content: '网络错误，请重试！'})
+		})
+  },
+	onModalRepurse() {
+    app.globalData.type = 2;
+    my.removeStorageSync({
+      key: 'takeout', // 缓存数据的key
+    });
+    let shopArray = my.getStorageSync({ key: 'self' }).data;
+    app.globalData.position.cityAdcode = shopArray[0].city_id;
+    app.globalData.position.districtAdcode = shopArray[0].district_id;
+
+    this.setData({
+      loginOpened: false
+    })
+    my.switchTab({
+      url: '/pages/home/goodslist/goodslist'
     })
   },
   // 自提附近门店

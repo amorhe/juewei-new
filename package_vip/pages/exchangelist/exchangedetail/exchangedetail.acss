@@ -283,6 +283,15 @@ page {
   margin-right: 10rpx;
 }
 
+.shop-address {
+  display: block;
+  color:rgba(153,153,153,1);
+  line-height:32rpx;
+  font-size: 24rpx;
+  width: 459rpx;
+  margin-top: 8rpx;
+}
+
 .user-address {
   max-width: 459rpx;
   font-size: 24rpx;

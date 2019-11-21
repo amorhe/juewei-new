@@ -220,7 +220,7 @@ Page({
    */
 
   async payNow() {
-    let { order_sn, id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address } = this.data.detail;
+    let { order_sn, id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address,shop_id,shop_name } = this.data.detail;
     // 校验订单 地址信息
     // receive_type 发货方式 0 无需发货 1 到店领取 2公司邮寄
     console.log(receive_type,user_address_phone,this.data.detail);
@@ -230,9 +230,11 @@ Page({
                     + 'order_sn=' + order_sn
                     + '&user_address_name=' + user_address_name
                     + '&user_address_phone=' + user_address_phone
-                    + '&province=' + province
-                    + '&city=' + city
-                    + '&district=' + district
+                    + '&province=' + (province!==null?province:'')
+                    + '&city=' + (city!==null?city:'')
+                    + '&district=' + (district!==null?district:'')
+                    + '&shop_id=' + shop_id
+                    + '&shop_name=' + (shop_name!==null?shop_name:'')
                     + '&user_address_id=' + user_address_id
                     + '&user_address_detail_address=' + user_address_detail_address
         });

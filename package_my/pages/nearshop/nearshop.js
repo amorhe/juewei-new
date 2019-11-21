@@ -24,19 +24,14 @@ Page({
     this.nearShop(lng, lat);
     this.setData({
       longitude: ott.lng,
-      latitude: ott.lat,
+      latitude: ott.lat-0.04,
       selfshop: false,
       city:app.globalData.position.city
     })
   },
   onShow() {
-    // this.setData({
-    //   longitude: my.getStorageSync({ key: 'lng' }).data,
-    //   latitude: my.getStorageSync({ key: 'lat' }).data
-    // })
+
   },
-
-
   // 输入
   handleSearch(e) {
     this.setData({
@@ -50,14 +45,14 @@ Page({
     my.request({
       url,
       success: (res) => {
-        // console.log(res)
         my.hideKeyboard();
         const lng = res.data.result.location.lng;
         const lat = res.data.result.location.lat;
         this.nearShop(lng, lat);
+        let ott = gd_decrypt(lng,lat);
         this.setData({
-          longitude:lng,
-          latitude:lat
+          longitude:ott.lng,
+          latitude:ott.lat-0.04
         })
       },
     });
@@ -69,6 +64,7 @@ Page({
         return {
           ...item,
           iconPath: `${imageUrl}position_map1.png`,
+          markerLevel:10,
           width: 32,
           height: 32
         }
@@ -76,6 +72,7 @@ Page({
         return {
           ...item,
           iconPath: `${imageUrl}position_map1.png`,
+          markerLevel:9,
           width: 15,
           height: 15
         }
@@ -93,12 +90,12 @@ Page({
       success: (res) => {
         const obj = res.data.contents;
         MyNearbyShop(JSON.stringify(obj)).then((conf) => {
-          conf.forEach(item => {
-            if (cur_dateTime(item.start_time, item.end_time) != 2) {
-              item['isOpen'] = true
-            }
-          })
-          let arr = conf
+            conf.forEach(item => {
+              if (cur_dateTime(item.start_time, item.end_time) != 2) {
+                item['isOpen'] = true
+              }
+            })
+            let arr = conf
             .map(({ shop_gd_latitude,shop_gd_longitude}) => ({
               longitude: shop_gd_longitude,
               latitude: shop_gd_latitude
@@ -108,6 +105,7 @@ Page({
                 return {
                   ...item,
                   iconPath: `${imageUrl}position_map1.png`,
+                  markerLevel:10,
                   width: 32,
                   height: 32
                 }
@@ -115,17 +113,16 @@ Page({
                 return {
                   ...item,
                   iconPath: `${imageUrl}position_map1.png`,
+                  markerLevel:9,
                   width: 15,
                   height: 15
                 }
               }
             })
-          this.setData({
-            markersArray: arr,
-            shopList: conf
-          })
-
-
+            this.setData({
+              markersArray: arr,
+              shopList: conf
+            })
         })
       },
     });

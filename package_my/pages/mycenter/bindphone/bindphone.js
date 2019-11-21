@@ -20,7 +20,6 @@ Page({
       _sid:_sid
     })
     this.timeDate()
-    console.log(e)
   },
   // 倒计时60
   timeDate(e){
@@ -51,7 +50,15 @@ Page({
       phone:this.data.phone
     }
     sendCode(data).then(res=>{
-
+      if(res.code==0){
+          //发送验证码成功
+      }else{
+          my.showToast({
+            type: 'none',
+            content: res.msg,
+            duration: 2000
+          });
+      }
     })
   },
   bindFocus() {
@@ -81,7 +88,7 @@ Page({
   bindphone(e){
     //console.log(getCurrentPages())
     var that = this
-    if(that.data.type==1){
+    if(that.data.type==1){//旧手机号
       checkPhoneCode(this.data._sid,this.data.phone,this.data.value).then(res=>{
         if(res.code==0){
             my.navigateTo({
@@ -95,7 +102,7 @@ Page({
           });
         }
       })
-    }else{
+    }else{//新手机号
       resetPhone(this.data._sid,this.data.phone,this.data.value).then(res=>{
         if(res.code==0){
           my.navigateBack({
@@ -112,7 +119,7 @@ Page({
     }
   },
   onHide(){
-    clearInterval(timeCount)
+    // clearInterval(timeCount)
   },
   onUnload() {
     // 页面被关闭

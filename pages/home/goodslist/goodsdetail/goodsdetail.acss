@@ -1,4 +1,4 @@
-@import '../../../components/goods/goods.acss';
+@import '../../../components/goodsitem/goodsitem.acss';
 /* @import '../../../order/list/list.acss'; */
 .goodsImage {
   width: 750rpx;
@@ -6,6 +6,7 @@
 }
 
 .addShopcart {
+  position: relative;
   width:180rpx;
   height: 52rpx;
   background:linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%);
@@ -65,7 +66,8 @@
 .commontList {
   /* display: flex;
   flex-direction: column; */
-  padding-left: 32rpx;
+  padding: 32rpx;
+  padding-top:0;
   overflow-y: scroll;
   height: 40vh
 }
@@ -170,4 +172,22 @@
   right: 0;
   bottom: -26rpx;
   margin: auto;
+}
+.menuWrap {
+  border-radius: 20rpx;
+  overflow: hidden
+}
+.addcount1{
+  position:absolute;
+  right:-0.1rem;
+  top:-0.14rem;
+  z-index:20;
+  width:0.29rem;
+  height:0.29rem;
+  background:linear-gradient(135deg, rgb(253, 235, 113) 0%, rgb(248, 216, 0) 100%);
+  color:rgb(255, 255, 255);
+  border-radius:50%;
+  text-align:center;
+  line-height:0.29rem;
+  font-size:0.2rem;
 }

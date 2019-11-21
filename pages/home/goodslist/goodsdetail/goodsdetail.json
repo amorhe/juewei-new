@@ -3,7 +3,10 @@
   "usingComponents": {
     "tabs": "mini-antui/es/tabs/index",
     "tab-content": "mini-antui/es/tabs/tab-content/index",
-    "shopcart-model": "../../../components/shopcartModel/shopcartModel",
-    "goods-modal": "../../../components/goodsModal/goodsModal"
+    "shopcartmodel": "/pages/components/shopcartModel/shopcartModel",
+    "goodsmodal": "/pages/components/goodsModal/goodsModal"
+  },
+  "window": {
+    "backgroundColor": "#f5f5f5"
   }
 }

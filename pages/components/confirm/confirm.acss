@@ -1,13 +1,13 @@
 .modalView {
   width:560rpx;
   background:rgba(255,255,255,1);
-  border-radius:10rpx;
+  border-radius: 10rpx;
   position: fixed;
   top: 403rpx;
   left: 95rpx;
   z-index: 1005;
-  padding-top: 40rpx;
-  box-sizing: border-box
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .modalTitle {
   display: flex;
@@ -20,7 +20,7 @@
   padding: 0 35rpx;
   display: flex;
   justify-content: center;
-  margin: 28rpx 0 37rpx;
+  margin: 60rpx 0 60rpx;
   flex-wrap: wrap;
   text-align: center
 }

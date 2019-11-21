@@ -5,13 +5,15 @@ Component({
   },
   props: {
     mask:'',   // 遮罩
-    modalShow:'',   // 提示框
+    modalShow:'',   //提示框
     content:'',
     title:'',
-    onCounterPlusOne: (data) => console.log(data),
     confirmButtonText:'确认',
-    cancelButtonText: '取消'
+    cancelButtonText: '取消',
+    onCounterPlusOne: (data) => console.log(data),
   },
+  onInit(){},
+  deriveDataFromProps(){},
   didMount() {},
   didUpdate() {},
   didUnmount() {},

@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "shopcartmodel": "../../components/shopcartModel/shopcartModel",
+    "goodsmodal": "../../components/goodsModal/goodsModal",
+    "modal": "mini-antui/es/modal/index"
+  },
+  "disableScroll": true
+}

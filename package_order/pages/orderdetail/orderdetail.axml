@@ -21,29 +21,29 @@
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
     <view class="out-footer" a:if="{{!d.order_cancel_reason}}">
-      <view class="cancel-order" a:if="{{[1,2].includes(d.order_status_info.order_status) && !([2].includes(d.order_status_info.order_status) && (d.dis_tag == 'ZPS'||d.dis_type==2) ) }}" catchTap="showCancel">
+      <view class="cancel-order" a:if="{{(d.order_status_info.order_status == 1 || d.order_status_info.order_status == 2) && !((d.order_status_info.order_status)==2 && (d.dis_tag == 'ZPS'||d.dis_type==2) ) }}" catchTap="showCancel">
           取消订单
       </view>
-      <view class="cancel-order" a:if="{{([2,3].includes(d.order_status_info.order_status) && d.dis_type == 1 && d.dis_tag != 'ZPS' && !['','0000-00-00 00:00:00'].includes(d.dis_get_time))}}" data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
+      <view class="cancel-order" a:if="{{(d.order_status_info.order_status ==2 ||d.order_status_info.order_status==3)  && d.dis_type == 1 && d.dis_tag != 'ZPS' && ((d.dis_get_time != '0000-00-00 00:00:00') || (d.dis_get_time != ''))}}" data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
           联系骑手
       </view>
-      <view class="cancel-order" a:if="{{([3].includes(d.order_status_info.order_status) && d.dis_tag == 'ZPS')}}" data-number="{{d.shop_tel}}" catchTap="makePhoneCall">
+      <view class="cancel-order" a:if="{{d.order_status_info.order_status == 3 && d.dis_tag == 'ZPS'}}" data-number="{{d.shop_tel}}" catchTap="makePhoneCall">
           联系门店
       </view>
-      <view class="red cancel-order" a:if="{{[1,2,3,4,5,6,7,8,9,10].includes(d.order_status_info.order_status) }}" catchTap="contact">
+      <view class="red cancel-order" a:if="{{d.order_status_info.order_status != 0}}" catchTap="contact">
           联系客服
       </view>
-      <view class="cancel-order" a:if="{{[4,5,6,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="buyAgain">
-          再来一单
+      <view class="cancel-order" a:if="{{d.order_status_info.order_status != 0 && d.order_status_info.order_status != 1 && d.order_status_info.order_status != 2 && d.order_status_info.order_status != 3}}" catchTap="buyAgain">
+          再来一单{{d.order_status_info.order_status}}
       </view>
-      <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 0}}">
+      <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{d.order_status_info.order_status == 4 && d.is_comment == 0}}">
           评价订单
       </view>
       <!--<view class="cancel-order" data-order_no="{{d.order_no}}" a:if="{{[4].includes(d.order_status_info.order_status) && d.is_comment == 1}}" catchTap="contact">
           已评价</view> -->
       <!--<view class="cancel-order red" a:if="{{[4,7,8,9,10].includes(d.order_status_info.order_status)}}" catchTap="contact">
           投诉</view> -->
-      <view class="cancel-order red" a:if="{{[2,3].includes(d.order_status_info.order_status) && dis_type==2}}" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.shop_address}}" catchTap="guide">
+      <view class="cancel-order red" a:if="{{(d.order_status_info.order_status == 2 || d.order_status_info.order_status == 3) && dis_type==2}}" data-shop_longitude="{{d.shop_gd_longitude}}" data-shop_latitude="{{d.shop_gd_latitude}}" data-shop_name="{{d.shop_name}}" data-address="{{d.shop_address}}" catchTap="guide">
           导航
       </view>
     </view>
@@ -65,6 +65,7 @@
   <view class="get-code-p" style="background:{{d.order_status_info.order_status==4?'#fff':''}}" a:if="{{(d.dis_type==2 && d.cancel_time == '0000-00-00 00:00:00') && [1,2,3,4].includes(d.order_status_info.order_status)}}">
     <view class="get-code-title" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
       取餐码
+			<image class="qr" src="{{imageUrl}}qrcode.png" catchTap="showCode"/>
     </view>
     <view class="get-code-code" style="color:{{d.order_status_info.order_status==4?'#CCCCCC':''}}">
      {{d.user_phone.slice(0,3)}}  {{d.user_phone.slice(3,7)}}  {{d.user_phone.slice(7)}} / {{ d.order_index}}
@@ -112,7 +113,7 @@
         </view>
       </view>
       <view class="reduce">
-        <view class="reduce-item">
+        <view class="reduce-item" a:if="{{d.activity_money > 0}}">
           <view class="left">
             <image mode="scaleToFill" src="{{imageUrl}}reduce.png"/>活动满减
           </view>
@@ -219,7 +220,7 @@
       </view>
     </view>
   </view>
-  <view class="poster">
+  <view class="poster orderInfo">
     <view class="title">
       订单信息
     </view>
@@ -234,7 +235,7 @@
           <view class="code-button" data-text="{{d.order_no}}" onTap="handleCopy">复制</view>
         </view>
       </view>
-      <view class="item" a:if="{{payTypes[d.pay_type]}}">
+      <view class="item" a:if="{{payTypes[d.pay_type]}}"> 
         <view class="label">
           支付方式
         </view>
@@ -261,6 +262,16 @@
     </view>
   </view>
 </view>
+<modal class="code-wrap" show="{{open2}}" showClose="{{ false }}">
+  <view class="code-head">
+    <image class="close" mode="scaleToFill" src="{{imageUrl}}close1.png" catchTap="closeCode"/>
+  </view>
+  <image class="code-img" mode="scaleToFill" src="{{'data:image/png;base64,' + d.QR_code}}"/>
+  <view class="code-phone">
+   {{d.user_phone.replace(/^(.{3})(.*)(.{4})$/, '$1 $2 $3') + '/' + d.order_index}}
+  </view>
+	<view class="code-tip">到店自提请出示二维码</view>
+</modal>
 <popup show="{{showTop}}" position="bottom">
   <view style="background: #fff">
     <view class="order-trace">订单跟踪

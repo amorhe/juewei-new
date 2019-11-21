@@ -7,9 +7,9 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
-
+    runShowFlag: true,
     finish: false,
-
+    componentArr: [],
     orderList: [],
 
     page_num: 1,
@@ -53,23 +53,35 @@ Page({
     // log(app.globalData.refresh)
     // if (app.globalData.refresh) {
     //   app.globalData.refresh = false;
-
-    this.onPullDownRefresh()
-
-
+    if (this.data.runShowFlag) {
+      this.onPullDownRefresh()
+    }
     // }
 
   },
   async onLoad() {
+    this.setData({
+      runShowFlag: false
+    })
     await this.getOrderList(1)
   },
   onUnload() {
-   const { time } = this.data
+    const { time } = this.data
     time.forEach(item => clearInterval(item))
     this.setData = () => { }
   },
   onHide() {
-   const { time } = this.data
+    this.setData({
+      runShowFlag: true
+    })
+    // 清除子组件定时器
+    this.data.componentArr.map((item, index) => {
+      if (item) {
+        this["componentArr[" + index + "]"].fun();
+      }
+    })
+
+    const { time } = this.data
     time.forEach(item => clearInterval(item))
     app.globalData.refresh = true
   },
@@ -79,18 +91,23 @@ Page({
   */
   // 页面被拉到底部
   async onReachBottom() {
-   const { time } = this.data
-    time.forEach(item => clearInterval(item))
-    my.showLoading({ content: '加载中...' });
-    this.setData({  }, async () => {
-      setTimeout(async () => {
-        let { page_num } = this.data
-        ++page_num
-        await this.getOrderList(page_num)
-        this.setData({
-          page_num
-        })
-      }, 300)
+    const { time } = this.data
+    let { page_num } = this.data
+    if (page_num >= this.data.lastLage) {
+      my.showToast({
+        type: 'none',
+        content: '已经是最底部了',
+        duration: 1500,
+        success: () => {
+          --page_num
+        },
+      });
+    } else {
+      ++page_num
+      await this.getOrderList(page_num)
+    }
+    this.setData({
+      page_num
     })
   },
 
@@ -100,21 +117,16 @@ Page({
    * @function 获取订单列表
    */
   async getOrderList(page_num) {
-    let { page_size, time, orderList, lastLage } = this.data;
-    if (lastLage < page_num) {
-      return my.hideLoading()
-    }
+    let { page_size, time, lastLage } = this.data;
+    let orderList = [];
+
     let res = await reqOrderList({ page_num, page_size })
+
     if (res.code === 100) {
+      // 最后一页的页码
       lastLage = res.data.pagination.lastLage
-      if (lastLage < page_num) {
-        this.setData({
-          orderList,
-          finish: true
-        });
-        return
-      }
-      orderList = [...orderList, ...res.data.data]
+
+      orderList = res.data.data
       let timer = setInterval(() => {
         orderList = orderList.map(({ remaining_pay_minute = -1, remaining_pay_second = -1, ...item }) => {
           remaining_pay_second--
@@ -131,17 +143,25 @@ Page({
             ...item,
           }
         })
-        if(time.length>100){time = []}
-        this.setData({
-          orderList,
-          finish: true,
-          time: [...time, timer],
-          lastLage
-        }, () => my.hideLoading())
       }, 1000)
+      if (time.length > 100) { time = [] }
+
+      this.$spliceData({
+        'orderList': [this.data.orderList.length, 0, ...orderList]
+      });
+      this.setData({
+        finish: true,
+        time: [...time, timer],
+        lastLage
+      }, () => my.hideLoading())
     }
   },
 
+  onZero(id) {
+    this.setData({
+      ["orderList[" + id + "].remaining_pay_minute"]: -1
+    })
+  },
   /**
    * @function 跳转商品页
    */
@@ -171,7 +191,16 @@ Page({
     let { code, data } = await reqPay(order_sn)
     return { code, data }
   },
-
+  getComponent(ref) {
+    if (!this.data.componentArr[ref.$id]) {
+      // 把组件绑定在this上，不能使用setData设置到data里
+      this["componentArr[" + ref.$id + "]"] = ref;
+      // 记录组件的$id,记录到data中
+      this.setData({
+        ["componentArr[" + ref.$id + "]"]: ref.$id
+      })
+    }
+  },
 
   /**
    * @function 立即支付
@@ -262,19 +291,3 @@ Page({
 
 
 });
-
-let detail = {
-  "id": "26",
-  "order_point": "1",
-  "order_amount": 0.01,
-  "exchange_type": "2",
-  "order_ctime": "2019-03-02 11:02:47",
-  "uid": "295060",
-  "order_type": "2",
-  "status": "2",
-  "dis_status": "2",
-  "order_sn": "jwd03190302s265060",
-  "goods_name": "4",
-  "goods_pic": "/static/check/image/goods_point/wmyaUccmI47oFRkV.jpg",
-  "status_name": "支付超时"
-}

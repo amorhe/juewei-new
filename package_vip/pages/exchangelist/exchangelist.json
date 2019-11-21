@@ -2,5 +2,11 @@
    "defaultTitle": "兑换记录",
    "backgroundColor": "#f5f5f5",
    "allowsBounceVertical":"YES",
-   "pullRefresh": true
+   "pullRefresh": true,
+   "onReachBottomDistance": 100,
+   "usingComponents":{
+    "modal": "mini-antui/es/modal/index",
+    "popup": "mini-antui/es/popup/index",
+    "countdown":"./countdown/countdown"
+  }
 }

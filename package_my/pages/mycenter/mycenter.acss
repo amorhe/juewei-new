@@ -17,6 +17,11 @@
   flex: 1;
   overflow: hidden;
   text-align: right;
+  font-weight: 600;
+}
+.ItimInfo.noInfo {
+  font-weight: normal;
+  color: #999;
 }
 .arrow_right{
   width: 32rpx;
@@ -45,6 +50,8 @@
 
 .onPopupInfo{
   background:#CDCDD1;
+  border-radius: 20rpx 20rpx 0 0;
+  overflow: hidden
 }
 
 .InfoItem{
@@ -53,6 +60,10 @@
   background: #fff;
   height: 100rpx;
   line-height:100rpx;
+}
+
+.genderPopup .InfoItem {
+  font-size: 36rpx;
 }
 
 .ItemBorder{
@@ -133,6 +144,7 @@ color:rgba(230,0,18,1);
   height: 500rpx;
   background: #fff;
   padding: 20rpx 40rpx;
+  border-radius: 20rpx 20rpx 0 0;
 }
 
 .pick {

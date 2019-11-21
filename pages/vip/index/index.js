@@ -201,8 +201,9 @@ Page({
     if ((valid_num) == 0 || ((exchange_day_num - 0) > 0 && (exchange_day_vaild_num) == 0)) {
       return
     }
+    console.log('vipdetail=','/package_vip/pages/detail/detail?id=' + id)
     my.navigateTo({
-      url: '../../../package_vip/pages/detail/detail?id=' + id
+      url: '/package_vip/pages/detail/detail?id=' + id
     });
   },
 

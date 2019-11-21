@@ -3,6 +3,7 @@
     "titleBarColor": "#E60012",
     "backgroundColor": "#fff",
     "usingComponents": {
-      "confirm": "../../../components/confirm/confirm"
+      "confirm": "../../../components/confirm/confirm",
+			"modal": "mini-antui/es/modal/index"
     }
   }

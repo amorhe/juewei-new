@@ -1,4 +1,4 @@
-<view>
+<view class="page">
   <view a:if="{{!isSelf}}">
     <!-- 定位 -->
     <view class="goodsPosition">
@@ -132,8 +132,8 @@
   </view>
   <view style="padding-right:36rpx">
     <!-- 商品列表 -->
-    <goods-list shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}" shopGoods="{{shopGoods}}"/>
+    <goodsitem shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}" pagescrollTop="{{pagescrollTop}}"/>
   </view>
+	<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" />
 </view>
-<!-- 提示框 -->
-<!--<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}" onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->
+

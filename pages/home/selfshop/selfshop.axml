@@ -17,5 +17,5 @@
 </view>
 
 <view style="padding-right:36rpx">
-  <my-component shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" scrollY="true" />
+  <goodsitem shopGoodsList="{{shopGoodsList}}" activityAllObj="{{activityAllObj}}" scrollY="true" />
 </view>

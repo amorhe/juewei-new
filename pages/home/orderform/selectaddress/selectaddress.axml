@@ -38,7 +38,15 @@
      <view class="fontThirtySix marginLSixteen">新增收货地址</view>
    </navigator>
 </view>
-
+<!--未登录提示 -->
+    <modal show="{{loginOpened}}" showClose="{{ false }}">
+      <view class="modalInfo">
+        当前选择地址无可浏览的门店!
+      </view>
+      <view slot="footer" class="footerButton">
+        <view class="modalButton" onTap="onModalRepurse">去自提</view>
+      </view>
+    </modal>
 
 <!-- 弹框 -->
 <confirm title="超出配送范围" content="该地址与商家距离较远，是否使用该地址为定位地址" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" />

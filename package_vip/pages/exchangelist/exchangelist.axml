@@ -1,10 +1,11 @@
 <view a:if="{{finish}}">
   <!-- 兑换记录列表 -->
   <view class="list">
-    <view class="item" a:for="{{orderList}}" data-id="{{item.id}}" onTap="toOrderDetail">
+    <view class="item" a:for="{{orderList}}" data-id="{{item.id}}" key="{{item.id}}" onTap="toOrderDetail">
       <view class="header">
-        <view class="time">{{item.order_ctime.split(' ')[0]}}</view>
-        <view class="state">{{(item.status_name == '未支付'  && item.remaining_pay_minute < 0) ? '已关闭': item.status_name}}</view>
+        <view class="time">{{item.order_ctime}}</view>
+        <view class="state" a:if="{{ item.status_name == '已支付' && item.order_type == 1 }}">已兑换</view>
+        <view a:else class="state">{{(item.status_name == '未支付'  && item.remaining_pay_minute < 0) ? '已关闭': item.status_name}}</view>
       </view>
       <view class="body">
         <image mode="scaleToFill" src="{{imageUrl2 + item.goods_pic}}" class="good-img"/>
@@ -27,8 +28,7 @@
         </view>
       </view>
       <view class="footer-wrap" a:if="{{item.status == 0}}">
-        <view class="footer" a:if="{{item.remaining_pay_minute>-1}}" data-id="{{item.id}}" data-order_sn="{{item.order_sn}}" data-order_amount="{{item.order_amount}}" catchTap="payNow">
-        去支付（还剩{{item.remaining_pay_minute}}分{{item.remaining_pay_second}}秒）
+        <countdown onZero="onZero" ref="getComponent" onPayNow="payNow" index="{{ index }}" item="{{ item }}"></countdown>
         </view>
       </view>
     </view>

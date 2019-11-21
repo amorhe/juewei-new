@@ -2,7 +2,6 @@ import { loginByAliUid } from './pages/common/js/login'
 import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
-    console.log('options=',options);
     // page是拿不到的信息，只有query可以拿到
     if(options.query && options.query.go){
        this.globalData.query = options.query.go;
@@ -71,7 +70,6 @@ App({
     });
   },
   onShow(options) {//多次执行
-    console.log('onShow_options=',options);
     // page是拿不到的信息，只有query可以拿到
     if(options.query && options.query.go){
        this.globalData.query = options.query.go;
@@ -94,7 +92,15 @@ App({
     // 小程序执行出错时
     console.log(error);
   },
-
+  onShareAppMessage() {
+    return {
+      title: '绝味鸭脖',
+      desc: '会员专享服务，便捷 实惠 放心',
+      imageUrl:'https://cdn-wap.juewei.com/m/ali-mini/image/jwdlogo.png',
+      bgImgUrl:'https://cdn-wap.juewei.com/m/ali-mini/image/share_default.png',
+      path: 'pages/position/position',
+    };
+  },
   globalData: {
     query:null,
     location: { //获取地区
@@ -110,6 +116,7 @@ App({
     gifts: null,    //加购商品
     type: 1,     // 默认外卖
     coupon_code: null,   //优惠券
-    scrollTop:null
+    scrollTop:null,
+    isOpen:''
   }
 });

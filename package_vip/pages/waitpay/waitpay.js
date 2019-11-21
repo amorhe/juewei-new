@@ -64,9 +64,21 @@ Page({
 
   },
   async onLoad(e) {
-    let { order_sn, user_address_map_addr, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address } = e
+    let { order_sn, user_address_map_addr, user_address_id, user_address_name, user_address_phone, province, city, district, shop_id,shop_name, user_address_detail_address } = e
+    
+    console.log(shop_name,province,city,district);
     this.setData({
-      order_sn, user_address_map_addr, user_address_id, user_address_name, user_address_phone, province, city, district, user_address_detail_address
+      order_sn, 
+      user_address_map_addr, 
+      user_address_id, 
+      user_address_name, 
+      user_address_phone, 
+      province, city, 
+      district, 
+      shop_id,
+      shop_name:shop_name?shop_name:'请选择领取门店',
+      user_address_detail_address,
+      address: district?(province + '-' + city + '-' + district):'请选择领取城市'
     })
     region = await getRegion()
     this.getAddressList()
@@ -167,7 +179,7 @@ Page({
 
     this.setData({
       defaultAddress: cur,
-      address: province + ' ' + city + ' ' + district,
+      address: province + '-' + city + '-' + district,
       province,
       city,
       district
@@ -218,7 +230,7 @@ Page({
   async doSelectShop() {
     my.hideBackHome()
     let { address } = this.data;
-    if (!address) {
+    if (!address || address=="请选择领取城市") {
       return my.showToast({
         content: '请先选择领取城市'
       });

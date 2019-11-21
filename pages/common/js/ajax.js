@@ -1,5 +1,5 @@
 import { baseUrl } from './baseUrl';
-export const ajax = (url, data = {}, method = "POST") => {
+export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
   my.showLoading({
     content: '加载中...'
   });
@@ -11,7 +11,7 @@ export const ajax = (url, data = {}, method = "POST") => {
   }
   let promise = new Promise(function(resolve, reject) {
     my.request({
-      url: baseUrl + url,
+      url: newBaseUrl ? (newBaseUrl + url) : (baseUrl + url),
       headers,
       data,
       method,

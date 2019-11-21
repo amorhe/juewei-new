@@ -154,7 +154,7 @@ Page({
           open1: true
         })
         break;
-      case 2:
+      case 2: //2:门店专享
         let { code } = this.data.d
         let _sid = await getSid()
         let codeImg = baseUrl + '/juewei-api/coupon/getQRcode?' + '_sid=' + _sid + '&code=' + code
@@ -163,7 +163,11 @@ Page({
           open2: true,
           codeImg
         })
-        break
+        break;
+      default:
+        //不是三种券的时候
+        my.alert({content: '不能使用该券，券的类型是：'+way,buttonText: '我知道了'});
+        break;
     }
   },
 

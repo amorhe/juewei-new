@@ -1,5 +1,5 @@
 <view class="couponUl">
-  <view class="couponLi" a:for="{{couponList}}" a:if="{{couponList.length>0}}" style="{{item.toggleRule?'max-height:900rpx':'max-height:254rpx'}}">
+  <view class="couponLi" a:for="{{couponList}}" a:if="{{couponList.length>0}}" style="{{item.toggleRule?'max-height:900rpx':'max-height:264rpx'}}">
     <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
     <view>
       <view class="couponNumber">

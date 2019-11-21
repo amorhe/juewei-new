@@ -1,4 +1,8 @@
 .searchView {
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 2;
   padding: 18rpx 32rpx;
 }
 .searchView>view {
@@ -48,6 +52,8 @@
 .mapView {
   width: 100vw;
   height: 100vh;
+  overflow:hidden;
+  box-sizing: border-box;
   background: transparent;
 }
 .shopBox {
@@ -113,7 +119,9 @@
 }
 .paddingLeft {
   padding-left: 48rpx;
-  width: 100%
+  width: 100%;
+  margin-top: 8rpx;
+  line-height: 30rpx;
 }
 .modalTap {
   position: absolute;

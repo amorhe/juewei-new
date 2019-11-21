@@ -26,10 +26,10 @@ Page({
     imageUrl3,
     img_url,
     // 评论
-    commentArr: [],
+    commentArr:{},//商品评价
     key: '',
     index: '',
-    dispatchArr: [],
+    dispatchArr:{},//配送评论
     maskView: false,
     goodsItem: {},
     shopcartList: {},
@@ -47,14 +47,18 @@ Page({
     repurse_price: 0
   },
   onLoad(e) {
-    console.log(e)
     let goods = app.globalData.goodsArr
     let goodlist = my.getStorageSync({ key: 'goodsList' }).data || {};
     let goodsInfo = {}, priceAll = 0, shopcartAll = [], shopcartNum = 0, priceFree = 0, repurse_price = 0;
     for (let value of goods) {
-      if (value.goods_code == e.goods_code) {
+      if (value.goods_channel+value.goods_type+value.company_goods_id == e.goods_code) {
         goodsInfo = value;
-        goodsInfo['key'] = e.goodsKey
+        goodsInfo['key'] = (value.key?value.key:value.taste_name);
+      }
+      //折扣的判断方法
+      if (value.goods_format[0].goods_activity_code  == e.goods_code) {
+        goodsInfo = value;
+        goodsInfo['key'] = (value.key?value.key:value.taste_name);
       }
     }
     for (let keys in goodlist) {
@@ -83,8 +87,8 @@ Page({
       priceAll,
       shopcartAll,
       shopcartNum,
-      goodsKey: e.goodsKey,
-      freeMoney: e.freeMoney,
+      goodsKey:goodsInfo['key'],
+      freeMoney: app.globalData.freeMoney,
       repurse_price
     })
     const shop_id = my.getStorageSync({ key: 'shop_id' }).data;
@@ -292,8 +296,12 @@ Page({
   },
   // 商品评价
   getCommentList(goods_code, pagenum, pagesize) {
+    let that=this;
     commentList(goods_code, pagenum, pagesize, 1).then((res) => {
-      // console.log(res)
+      // 这里判断一下
+      if(that.data.commentArr.data && that.data.commentArr.data.length>0){
+        res.data=[...that.data.commentArr.data,...res.data];
+      }
       this.setData({
         commentArr: res
       })
@@ -301,14 +309,19 @@ Page({
   },
   // 配送评价
   getDispatchCommentList(shop_id, pagenum, pagesize) {
+    let that=this;
     DispatchCommentList(shop_id, pagenum, pagesize, 1).then((res) => {
-      // console.log(res);
+      // 这里判断一下
+      if(that.data.dispatchArr.data && that.data.dispatchArr.data.length>0){
+        res.data=[...that.data.dispatchArr.data,...res.data];
+      }
       this.setData({
         dispatchArr: res
       })
     })
   },
   closeModal(data) {
+   
     this.setData({
       maskView: data.maskView,
       goodsModal: data.goodsModal

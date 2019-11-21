@@ -104,6 +104,7 @@
   "window": {
     "defaultTitle": "绝味鸭脖",
     "backgroundColor": "#ffffff",
+    "titleBarColor": "#ffffff",
     "allowsBounceVertical": "NO",
     "gestureBack": "YES"
   },
@@ -114,26 +115,26 @@
     "items": [
       {
         "pagePath": "pages/home/goodslist/goodslist",
-        "icon": "https://wap.juewei.com/m/ali-mini/image/menu_home1.png",
-        "activeIcon": "https://wap.juewei.com/m/ali-mini/image/menu_home2.png",
+        "icon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_home1.png",
+        "activeIcon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_home2.png",
         "name": "首页"
       },
       {
         "pagePath": "pages/vip/index/index",
-        "icon": "https://wap.juewei.com/m/ali-mini/image/menu_vip1.png",
-        "activeIcon": "https://wap.juewei.com/m/ali-mini/image/menu_vip2.png",
+        "icon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_vip1.png",
+        "activeIcon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_vip2.png",
         "name": "会员专享"
       },
       {
         "pagePath": "pages/order/list/list",
-        "icon": "https://wap.juewei.com/m/ali-mini/image/menu_order1.png",
-        "activeIcon": "https://wap.juewei.com/m/ali-mini/image/menu_order2.png",
+        "icon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_order1.png",
+        "activeIcon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_order2.png",
         "name": "订单"
       },
       {
         "pagePath": "pages/my/index/index",
-        "icon": "https://wap.juewei.com/m/ali-mini/image/menu_my1.png",
-        "activeIcon": "https://wap.juewei.com/m/ali-mini/image/menu_my2.png",
+        "icon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_my1.png",
+        "activeIcon": "https://cdn-wap.juewei.com/m/ali-mini/image/tabs/menu_my2.png",
         "name": "我"
       }
     ]

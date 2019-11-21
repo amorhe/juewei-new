@@ -46,7 +46,8 @@ Page({
     newArr: [],    // 变更商品列表
     addressList: [],
     trueprice: 0, //真实的总价价格
-    send_price: (my.getStorageSync({ key: 'send_price' }).data || 30)
+    send_price: (my.getStorageSync({ key: 'send_price' }).data || 30),
+		activity_channel: 1
   },
   onLoad(e) {
     // console.log(this.data.send_price, this.data.trueprice);
@@ -377,7 +378,7 @@ Page({
     if(this.data.orderInfo.use_coupons[0] != undefined){
       use_coupons = this.data.orderInfo.use_coupons[0]
     }
-    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, use_coupons, notUse, app.globalData.freeId).then((res) => {
+    createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, use_coupons, notUse, app.globalData.freeId, this.data.activity_channel).then((res) => {
       // console.log(res);
       if (res.code == 0) {
         if (app.globalData.type == 2 && this.data.orderInfo.real_price == 0) {
@@ -505,7 +506,7 @@ Page({
     if (app.globalData.notUse) {
       notUse = app.globalData.notUse
     }
-    confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, this.data.repurseList, notUse, app.globalData.freeId).then((res) => {
+    confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, this.data.repurseList, notUse, app.globalData.freeId, this.data.activity_channel).then((res) => {
       // console.log(res)
       let goodsList = my.getStorageSync({ key: 'goodsList' }).data;
       if (res.code == 0) {
@@ -543,28 +544,35 @@ Page({
                 val.goods_count = 0;
                 val.goods_choose = true
               })
-              arr_money.push(key);
+              arr_money.push(parseInt(key));
             }
           }
           // 换购商品不指定
           if (app.globalData.repurseGoods.length == 0) {
-            arr_money.push(res.data.activity_list[''].real_price);
+            let activity_real_price=res.data.activity_list[''].real_price;
+            //防止重复
+            if(arr_money.indexOf(activity_real_price)>-1){
+              activity_real_price=activity_real_price+1
+            }
+            arr_money.push(activity_real_price);
             arr_money.sort((a, b) => {
               return a - b;
             });
-            let k = arr_money.findIndex(item => item == res.data.activity_list[''].real_price);
+            let k = arr_money.findIndex(item => item == activity_real_price);
+            //一个方法就够了
             if (res.data.activity_list[''].real_price >= arr_money[k - 1]) {
               this.setData({
                 showRepurse: true,
                 repurseList: gifts[arr_money[k - 1]]
               })
             }
-            if (res.data.activity_list[''].real_price >= arr_money[k]) {
-              this.setData({
-                showRepurse: true,
-                repurseList: gifts[arr_money[k]]
-              })
-            }
+            //这段代码无用没有任何用途
+            // if (res.data.activity_list[''].real_price >= arr_money[k]) {
+            //   this.setData({
+            //     showRepurse: true,
+            //     repurseList: gifts[arr_money[k]]
+            //   })
+            // }
           } else {   // 换购商品为指定
             for (let item of app.globalData.repurseGoods) {
               for (let value of goodsReal) {
@@ -573,6 +581,10 @@ Page({
                 }
               }
             }
+            //防止重复
+            if(arr_money.indexOf(repurseTotalPrice)>-1){
+              repurseTotalPrice=repurseTotalPrice+1;
+            } 
             arr_money.push(repurseTotalPrice);
             arr_money.sort((a, b) => {
               return a - b;

@@ -28,7 +28,8 @@ Page({
       ali_uid: ali_uid,
       _sid: _sid
     })
-    this.timeDate()
+    this.timeDate();
+    this.bindFocus();
   },
   onShow() {
     if (this.data.timestamp != 0) {
@@ -46,7 +47,7 @@ Page({
         })
       }
     }
-    
+    this.bindFocus();
   },
   bindFocus() {
     var that = this

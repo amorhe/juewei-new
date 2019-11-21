@@ -71,9 +71,13 @@ Page({
           return item.addrid == res.data.region_id
         })[0]
       }
-      res.data.provinceName = province.name || ''
-      res.data.cityName = city.name || ''
-      res.data.regionName = regions.name || ''
+
+      var phone = res.data.phone && res.data.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+      res.data.provinceName = province && province.name || ''
+      res.data.cityName = city && city.name || ''
+      res.data.regionName = regions && regions.name || ''
+      res.data.fake_phone = phone || ''
+
       that.setData({
         userinfo: res.data,
         province_i,
@@ -238,7 +242,7 @@ Page({
         });
         app.globalData._sid = ""
         my.switchTab({
-          url: '/pages/home/goodslist/goodslist'
+          url: '/pages/my/index/index'
         })
       } else {
         my.showToast({

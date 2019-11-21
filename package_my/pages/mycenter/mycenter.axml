@@ -16,19 +16,19 @@
     </view>
     <view class="listItem">
       <view class="Itemlabel">生日</view>
-      <view class="ItimInfo" a:if="{{ userinfo.birthday=='0000-00-00' }}" onTap="Taptime">请输入生日信息，保存后不可修改</view>
+      <view class="ItimInfo noInfo" a:if="{{ userinfo.birthday=='0000-00-00' }}" onTap="Taptime">请输入生日信息，保存后不可修改</view>
       <view class="ItimInfo" a:else>{{ userinfo.birthday }}</view>
       <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
     </view>
      <view class="listItem" onTap="showSelectAddress">
       <view class="Itemlabel">城市</view>
-      <view class="ItimInfo" a:if="{{ userinfo.province_id==0 }}">请选择城市</view>
+      <view class="ItimInfo noInfo" a:if="{{ userinfo.province_id==0 }}">请选择城市</view>
       <view class="ItimInfo" a:else>{{userinfo.provinceName}}-{{userinfo.cityName}}-{{userinfo.regionName}}</view>
       <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
     </view>
      <view class="listItem" onTap="toUrl" data-url="/package_my/pages/mycenter/bindphone/bindphone?phone={{userinfo.phone}}&type=1">
       <view class="Itemlabel">手机号</view>
-      <view class="ItimInfo">{{userinfo.phone}}</view>
+      <view class="ItimInfo">{{userinfo.fake_phone}}</view>
       <image mode="scaleToFill" class="arrow_right" src="{{imageUrl}}arrow_right1.png"/>
     </view>
   </view>
@@ -37,7 +37,7 @@
 
 <!-- 选择性别弹框 -->
 <popup show="{{showTop}}" position="bottom" onClose="onPopupClose">
-    <view class="onPopupInfo">
+    <view class="onPopupInfo genderPopup">
       <view class="InfoItem ItemBorder" onTap="genderFN" data-sex='1'>男</view>
       <view class="InfoItem" onTap="genderFN" data-sex='2'>女</view>
       <view class="InfoItem ItemMargin" onTap="onPopupClose">取消</view>
@@ -59,7 +59,7 @@
 </modal>
 
 <!-- 选择地址 -->
-  <view class="pop-wrap" a:if="{{selectAddress}}">
+  <view class="pop-wrap" a:if="{{selectAddress}}" catchTap="hideSelectAddress">
     <view class="my-pop">
         <view class="pop-top">
             <text></text>

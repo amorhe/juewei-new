@@ -1,3 +1,4 @@
+import {newBaseUrl} from './baseUrl'
 import {ajax} from './ajax'
 const ajaxUrl = {
   bannerList: '/mini/index/wap/banner/list',  // 首页改版公众号 banner列表
@@ -10,7 +11,7 @@ const ajaxUrl = {
   MyNearbyShop: '/juewei-api/shop/MyNearbyShop',   // 我的/周边门店
   activityList: '/mini/Mini_activity/list',   // 商城页面营销活动
   showPositionList: '/mini/index/wap/show_position/list',   // 公众号展位列表
-  GetLbsShop: '/juewei-api/shop/GetLbsShop',    // 根据经纬度获取外卖附近门店
+  GetLbsShop: '/ali/mini/shop/get-lbs-shop',    // 根据经纬度获取外卖附近门店
   NearbyShop: '/juewei-api/shop/NearbyShop',      // 根据经纬度获取自提附近门店
   GetShopGoods: '/juewei-api/shop/GetShopGoods',      // 门店商品列表
   createOrder: '/juewei-api/order/create',       // 创建订单
@@ -44,17 +45,17 @@ export const checkDis = (shop_id,location) => ajax(ajaxUrl.checkDis,{shop_id,loc
 
 export const MyNearbyShop = (data) => ajax(ajaxUrl.MyNearbyShop,{data});
 
-export const activityList = (city_id,district_id,company_id,join_way,user_id) => ajax(ajaxUrl.activityList,{city_id,district_id,company_id,join_way,user_id});
+export const activityList = (city_id,district_id,company_id,join_way,user_id,activity_channel) => ajax(ajaxUrl.activityList,{city_id,district_id,company_id,join_way,user_id,activity_channel});
 
 export const showPositionList = (city_id,district_id,company_id,release_channel) => ajax(ajaxUrl.showPositionList,{city_id,district_id,company_id,release_channel});
 
-export const GetLbsShop = (location) => ajax(ajaxUrl.GetLbsShop,{location});
+export const GetLbsShop = (longitude, latitude) => ajax(ajaxUrl.GetLbsShop,{longitude, latitude}, 'POST', newBaseUrl);
 
 export const NearbyShop = (data) => ajax(ajaxUrl.NearbyShop,{data});
 
 export const GetShopGoods = (shop_id) => ajax(ajaxUrl.GetShopGoods,{shop_id});
 
-export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse,fsp_id) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse,fsp_id})
+export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse,fsp_id,activity_channel) => ajax(ajaxUrl.createOrder,{dispatch_type,shop_id,goods,shops,plate,remark,source,user_address_id,longitude,latitude,type,gift,coupon_code,notUse,fsp_id,activity_channel})
 // dispatch_type	是	int	1（外卖）2（自提）
 // shop_id	是	int	门店id
 // goods	是	json	购物车商品
@@ -70,7 +71,7 @@ export const createOrder = (dispatch_type,shop_id,goods,shops,plate,remark,sourc
 // latitude	是	str	风控参数：下单纬度
 // type	是	int	风控参数：下单类型，1:外卖去下单；2:外卖确定支付；3:自提去下单；4:自提确认支付
 
-export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse,fsp_id) => ajax(ajaxUrl.confirmOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse,fsp_id})
+export const confirmOrder = (dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse,fsp_id,activity_channel) => ajax(ajaxUrl.confirmOrder,{dispatch_type,shop_id,goods,shops,coupon_code,gift,notUse,fsp_id,activity_channel})
 
 export const useraddress = (shop_id) => ajax(ajaxUrl.useraddress,{shop_id});
 
