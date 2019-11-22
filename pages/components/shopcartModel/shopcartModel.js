@@ -22,14 +22,14 @@ Component({
     isOpen: ''
   },
   props: {
-    shopcartAll:[],
-    shopcartNum:0,
-    priceAll:0,
-    activityText:'',
-    freeText:''
+    shopcartAll: [],
+    shopcartNum: 0,
+    priceAll: 0,
+    activityText: '',
+    freeText: ''
   },
   //组件创建时触发
-  onInit() {},
+  onInit() { },
   //组件创建时和更新前触发
   deriveDataFromProps(nextProps) {
     // 判断是不是起送
@@ -64,9 +64,9 @@ Component({
     this.getSendPrice();
   },
   //组件更新完毕触发
-  didUpdate() {},
+  didUpdate() { },
   //组件删除时触发
-  didUnmount() {},
+  didUnmount() { },
   methods: {
     // 打开购物车
     openShopcart() {
@@ -220,9 +220,9 @@ Component({
         return
       }
       // 未登录
-      if (!my.getStorageSync({ key: 'user_id' }).data) {
+      if (!my.getStorageSync({ key: 'user_id' }) || !my.getStorageSync({ key: 'user_id' }).data) {
         my.navigateTo({
-          url: '/pages/login/auth/auth'
+          url: '/pages/login/auth/auth?next=true'
         })
         return
       }
@@ -275,7 +275,7 @@ Component({
             // 套餐
             for (let ott of PKG) {
               for (let fn of ott.goods_format) {
-                if (val == `${fn.goods_activity_code}_${(fn.type?fn.type:'')}`) {
+                if (val == `${fn.goods_activity_code}_${(fn.type ? fn.type : '')}`) {
                   shopcartObj[val] = goodsList[val];
                   // 判断购物车商品价格更新
                   if (parseInt(goodsList[val].goods_price) != parseInt(fn.goods_price)) {
@@ -379,50 +379,50 @@ Component({
     // 获取起送价格
     getSendPrice() {
       const timestamp = new Date().getTime();
-      let opencity=(my.getStorageSync({ key:'opencity'}).data || null);
-      if(!app.globalData.position.cityAdcode || app.globalData.position.cityAdcode==''){ return;}
-      if (opencity){
-              this.setData({
-                send_price: opencity[app.globalData.position.cityAdcode].shop_send_price,
-                dispatch_price: opencity[app.globalData.position.cityAdcode].shop_dispatch_price
-              });
-              //存储一个起送起购价格
-              my.setStorageSync({
-                key: 'send_price',
-                data: opencity[app.globalData.position.cityAdcode].shop_send_price
-              });
-              //存储一个起送起购价格
-              my.setStorageSync({
-                key: 'dispatch_price',
-                data: opencity[app.globalData.position.cityAdcode].shop_dispatch_price
-              });
-      }else{
-          my.request({
-            url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
-            success: (res) => {
-              //app.globalData.position.cityAdcode这个参数在手动修改地址的时候缺失。
-              //这里采用通过门店的具体地址来确定起送价地址
-              this.setData({
-                send_price: res.data.data[app.globalData.position.cityAdcode].shop_send_price,
-                dispatch_price: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
-              })
-              //存储一个起送起购价格
-              my.setStorageSync({
-                key: 'send_price',
-                data: res.data.data[app.globalData.position.cityAdcode].shop_send_price
-              });
-              //存储一个起送起购价格
-              my.setStorageSync({
-                key: 'dispatch_price',
-                data: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
-              });
+      let opencity = (my.getStorageSync({ key: 'opencity' }).data || null);
+      if (!app.globalData.position.cityAdcode || app.globalData.position.cityAdcode == '') { return; }
+      if (opencity) {
+        this.setData({
+          send_price: opencity[app.globalData.position.cityAdcode].shop_send_price,
+          dispatch_price: opencity[app.globalData.position.cityAdcode].shop_dispatch_price
+        });
+        //存储一个起送起购价格
+        my.setStorageSync({
+          key: 'send_price',
+          data: opencity[app.globalData.position.cityAdcode].shop_send_price
+        });
+        //存储一个起送起购价格
+        my.setStorageSync({
+          key: 'dispatch_price',
+          data: opencity[app.globalData.position.cityAdcode].shop_dispatch_price
+        });
+      } else {
+        my.request({
+          url: `${jsonUrl}/api/shop/open-city.json?v=${timestamp}`,
+          success: (res) => {
+            //app.globalData.position.cityAdcode这个参数在手动修改地址的时候缺失。
+            //这里采用通过门店的具体地址来确定起送价地址
+            this.setData({
+              send_price: res.data.data[app.globalData.position.cityAdcode].shop_send_price,
+              dispatch_price: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
+            })
+            //存储一个起送起购价格
+            my.setStorageSync({
+              key: 'send_price',
+              data: res.data.data[app.globalData.position.cityAdcode].shop_send_price
+            });
+            //存储一个起送起购价格
+            my.setStorageSync({
+              key: 'dispatch_price',
+              data: res.data.data[app.globalData.position.cityAdcode].shop_dispatch_price
+            });
 
-              my.setStorageSync({
-                key: 'opencity',
-                data: res.data.data
-              });
-            },
-          });
+            my.setStorageSync({
+              key: 'opencity',
+              data: res.data.data
+            });
+          },
+        });
       }
     },
     // 上传模版消息

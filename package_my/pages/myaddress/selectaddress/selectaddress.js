@@ -137,7 +137,7 @@ Page({
     
     let  pos = this.data.inputAddress || this.data.currentPos;
     
-    let url = `https://api.map.baidu.com/place/v2/search?query=${pos}&region=${this.data.city}&output=json&ak=${ak}`;
+    let url = `https://api.map.baidu.com/place/v2/search?query=${pos}&region=${this.data.city}&city_limit=true&output=json&ak=${ak}`;
     url = encodeURI(url);
     my.request({
       url,
@@ -147,8 +147,10 @@ Page({
           // 无数据显示无数据页面
           if(result.length === 0){
             this.setData({
+              addressList:[],
               noSearchResult: true
             })
+            return
           }
           this.setData({
             addressList: result,

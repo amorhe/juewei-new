@@ -83,6 +83,13 @@ Page({
           key: 'user_id', // 缓存数据的key
           data: res.data.user_id, // 要缓存的数据
         });
+        // 11-22 未登录结算跳转到登录页（hs）
+        if (this.data.next) {
+          my.redirectTo({
+            url: '/pages/home/orderform/orderform'
+          });
+          return
+        }
         my.navigateBack({
           delta: 2
         })
@@ -116,7 +123,7 @@ Page({
       if (time == 0) {
         that.setData({
           isnew: false,
-          countTime:60
+          countTime: 60
         })
         clearInterval(timeCount)
       }

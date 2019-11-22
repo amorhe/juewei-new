@@ -454,7 +454,7 @@ Page({
   // 新增地址
   addAddressTap() {
     // 判断 是否登录
-    if (my.getStorageSync({ key: 'user_id' }).data == null) {
+    if (!my.getStorageSync({ key: 'user_id' }) || !my.getStorageSync({ key: 'user_id' }).data) {
       my.navigateTo({
         url: '/pages/login/auth/auth'
       });
