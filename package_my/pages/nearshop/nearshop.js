@@ -25,7 +25,8 @@ Page({
     this.setData({
       longitude: ott.lng,
       latitude: ott.lat-0.04,
-      selfshop: false
+      selfshop: false,
+      city:app.globalData.position.city
     })
   },
   onShow() {
@@ -120,8 +121,7 @@ Page({
             })
             this.setData({
               markersArray: arr,
-              shopList: conf,
-              city:conf[0].city
+              shopList: conf
             })
         })
       },

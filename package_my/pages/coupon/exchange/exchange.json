@@ -1,3 +1,6 @@
 {
-  "defaultTitle": "兑换优惠券"
+  "defaultTitle": "兑换优惠券",
+	"usingComponents": {
+		"confirm": "/pages/components/confirm/confirm"
+	}
 }

@@ -3,7 +3,9 @@ import {imageUrl} from '../../../../pages/common/js/baseUrl'
 Page({
   data: {
     code:'',
-    imageUrl
+    imageUrl,
+		mask: false,
+		modalShow: false
   },
   onLoad() {},
   writeCode(e){
@@ -21,14 +23,30 @@ Page({
     }
     exchangeCoupon(_sid, code).then((res) => {
       if(res.CODE == 'A100') {
-        my.showToast({
-          content:'兑换成功'
-        });
+				this.setData({
+					mask: true,
+					modalShow: true
+				})
       }else{
         my.showToast({
           content:res.MESSAGE
         });
       }
     })
-  }
+  },
+	getCoupons(e) {
+		this.setData({
+			mask: false,
+			modalShow: false
+		})
+		if(e.type == 1) {
+			my.navigateTo({
+				url: '/package_my/pages/coupon/coupon'
+			});
+		}else {
+			my.navigateTo({
+				url: '/pages/home/goodslist/goodslist'
+			});
+		}
+	}
 });

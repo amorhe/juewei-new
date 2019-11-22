@@ -1,3 +1,4 @@
+<!-- <view style="width:750rpx;height:100rpx;"></view> -->
 <view class="goodsBottom">
     <view class="fullReduce" a:if="{{activityText!='' && !showShopcar}}">{{activityText}}</view>
     <view class="shopcart">
@@ -70,4 +71,4 @@
 <confirm confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" content="{{content}}"
     mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
 <!-- 遮罩层 -->
-<view a:if="{{mask1 && shopcartAll.length>0}}" class="mask" onTap="hiddenShopcart" catchTouchMove="touchstart"></view>
+<view a:if="{{mask1 && shopcartAll.length>0}}" class="mask" onTap="hiddenShopcart"></view>
