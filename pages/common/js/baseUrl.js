@@ -53,3 +53,16 @@ const isTestUrl = baseUrl.includes('test');
 // 套餐图片路径
 export const img_url = isTestUrl?imageUrl2:imageUrl3;
 
+// 获取缓存
+export const myGet = (key) => {
+  let value = my.getStorageSync({ key }).data;
+  return value
+}
+
+// 存储数据
+export const mySet = (key, data) => {
+  my.setStorageSync({
+    key,
+    data
+  })
+}

@@ -91,38 +91,36 @@
       <text class="tagNoActive" a:for="{{commentArr.show_tags}}">{{item.tag_name}}（{{item.num}}）</text>
     </view>
     <!-- 评论列表 -->
-    <view class="commontList commont" a:if="{{commentArr.data.length> 0}}">
-      <view a:for="{{commentArr.data}}">
-        <image class="commontAvatar" mode="scaleToFill" src="{{(item.head_img!=''?item.head_img:imageUrl+'jwdlogo.png')}}"/>
-        <view>
-          <view class="commontUser">
-            <view>
+    <!-- 11-22评论、配送列表修改（hs） -->
+    <scroll-view class="commontList" scroll-y a:if="{{commentArr.data.length> 0}}" lower-threshold="50" onScrollToLower="funGetMoreComment">
+        <view a:for="{{commentArr.data}}" style="display:flex">
+          <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img?item.head_img:imageUrl+'default_head1.png'}}" />
+          <view>
+            <view class="commontUser">
               <view>
-                <view>{{item.nick_name}}</view>
-                <view a:if="item.takeout_goods_comment_product_level" class="commontImageView">
-                  <image class="normalImage" a:for="{{item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_2.png"/>
-                  <image class="normalImage" a:for="{{5-item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_1.png"/>
-                </view>
-                <view a:elif="item.takeout_order_comment_product_level" class="commontImageView">
-                     <image class="normalImage" a:for="5" src="{{imageUrl}}stars_2.png"/>
+                <view>
+                  <view>{{item.nick_name}}</view>
+                  <view class="commontImageView">
+                    <image class="normalImage" a:for="{{item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_2.png" />
+                    <image class="normalImage" a:for="{{5-item.takeout_goods_comment_product_level}}" src="{{imageUrl}}stars_1.png" />
+                  </view>
                 </view>
               </view>
+              <view class="fontSmallGray">{{item.takeout_goods_comment_ctime}}</view>
             </view>
-            <view class="fontSmallGray">{{item.takeout_goods_comment_ctime}}</view>
+            <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content}}</view>
+            <view a:if="{{item.imgUrls.length>0}}">
+              <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"  />
+            </view>
+            <view class="commontTag" a:if="{{item.tags.length>0}}">
+              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png" />
+              <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
+              <!--<view>食材新鲜</view><view>包装精美</view> -->
+            </view>
+            <view class="fontSmallGray">购买时间：{{item.order_ctime}}</view>
           </view>
-          <view class="commontText fontTwentySix">{{item.takeout_goods_comment_content || '&npsp;'}}</view>
-          <view a:if="{{item.imgUrls.length>0}}">
-            <image a:for="{{item.imgs}}" a:for-index="i" a:for-item="v" class="{{item.imgs.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{imageUrl2 + v}}"/>
-          </view>
-          <view class="commontTag" a:if="{{item.tags.length>0}}">
-            <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
-            <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
-            <!--<view>食材新鲜</view><view>包装精美</view> -->
-          </view>
-          <view class="fontSmallGray">购买时间：{{item.takeout_goods_comment_utime}}</view>
         </view>
-      </view>
-    </view>
+      </scroll-view>
     <view class="nullBox" style="margin-top:100rpx;height:635rpx" a:if="{{commentArr.data.length== 0}}">
       <image class='nullImg' src="{{ imageUrl }}bg_nocomment.png"/>
       <text>暂无商品口味评价</text>
@@ -142,35 +140,35 @@
     </view>
 
     <!-- 评论列表 -->
-    <view a:if="{{dispatchArr.data.length> 0}}" class="commontList dispatch">
-      <view a:for="{{dispatchArr.data}}">
-        <image class="commontAvatar" mode="scaleToFill" src="{{(item.head_img!=''?item.head_img:imageUrl+'jwdlogo.png')}}"/>
-        <view>
-          <view class="commontUser">
-            <view>
+    <scroll-view a:if="{{dispatchArr.data.length> 0}}" class="commontList" lower-threshold="50" onScrollToLower="funGetMoreDispatch" scroll-y>
+        <view a:for="{{dispatchArr.data}}"  style="display:flex">
+          <image class="commontAvatar" mode="scaleToFill" src="{{item.head_img?item.head_img:imageUrl+'default_head1.png'}}" />
+          <view>
+            <view class="commontUser">
               <view>
-                <view>{{item.nick_name}}</view>
-                <view class="commontImageView">
-                  <image class="normalImage" a:for="{{item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_2.png"/>
-                  <image class="normalImage" a:for="{{5-item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_1.png"/>
+                <view>
+                  <view>{{item.nick_name}}</view>
+                  <view class="commontImageView">
+                    <image class="normalImage" a:for="{{item.takeout_order_comment_dispatching_level}}"  src="{{imageUrl}}stars_2.png" />
+                    <image class="normalImage" a:for="{{5-item.takeout_order_comment_dispatching_level}}"  src="{{imageUrl}}stars_1.png" />
+                  </view>
                 </view>
               </view>
+              <view class="fontSmallGray">{{item.takeout_order_comment_ctime}}</view>
             </view>
-            <view class="fontSmallGray">{{item.takeout_order_comment_ctime}}</view>
+            <view class="commontText fontTwentySix">{{item.takeout_order_comment_content}}</view>
+            <view a:if="{{item.imgUrls.length>0}}">
+              <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"  />
+            </view>
+            <view class="commontTag">
+              <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png" />
+              <view a:for="{{item.tags}}" a:for-item="_item" >{{_item}}</view>
+              <!--<view>食材新鲜</view><view>包装精美</view> -->
+            </view>
+            <view class="fontSmallGray">购买时间：{{item.takeout_order_comment_utime}}</view>
           </view>
-          <view class="commontText fontTwentySix">{{item.takeout_order_comment_content}}</view>
-          <view a:if="{{item.imgUrls.length>0}}">
-            <image a:for="{{item.imgUrls}}" a:for-index="i" a:for-item="v" class="{{item.imgUrls.length>1?'commontImages':'commontImage'}}" mode="scaleToFill" src="{{v}}"/>
-          </view>
-          <view class="commontTag">
-            <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}hands.png"/>
-            <view a:for="{{item.tags}}" a:for-item="_item">{{_item}}</view>
-            <!--<view>食材新鲜</view><view>包装精美</view> -->
-          </view>
-          <view class="fontSmallGray">购买时间：{{item.takeout_order_comment_utime}}</view>
         </view>
-      </view>
-    </view>
+      </scroll-view>
     <view class="nullBox" style="margin-top:100rpx;height:635rpx" a:if="{{dispatchArr.data.length== 0}}">
       <image class='nullImg' src="{{ imageUrl }}bg_nocomment.png"/>
       <text>暂无配送服务评价</text>
