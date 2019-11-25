@@ -25,8 +25,7 @@ Page({
     this.setData({
       longitude: ott.lng,
       latitude: ott.lat-0.04,
-      selfshop: false,
-      city:app.globalData.position.city
+      selfshop: false
     })
   },
   onShow() {
@@ -40,7 +39,7 @@ Page({
   },
   // 搜索
   addressSearch() {
-    let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&city=${this.data.city}&output=json&ak=${ak}`
+    let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
     url = encodeURI(url);
     my.request({
       url,
@@ -121,7 +120,8 @@ Page({
             })
             this.setData({
               markersArray: arr,
-              shopList: conf
+              shopList: conf,
+              city:conf[0].city
             })
         })
       },
