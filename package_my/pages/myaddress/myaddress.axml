@@ -1,6 +1,9 @@
 <!--<view>我的收货地址管理</view>-->
 <view class="addressList">
-  <image class='nullImg' a:if="{{ list.length==0 }}" src="{{ imageUrl }}bg_address.png"/>
+  <view a:if="{{ list.length === 0}}" class='nullImg'>
+    <image src="{{ imageUrl }}bg_address.png"/>
+    <text>暂无配送地址</text>
+  </view>
   <view class="listItme" a:for="{{ list }}" onTap="back" data-i="{{index}}">
     <view class="tiemleft">
       <view class="lefttop">
