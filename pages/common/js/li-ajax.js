@@ -28,9 +28,9 @@ export const getSid = () => {
  * @return Promise<any>
  */
 export const ajax = async (url, data = {}, method = 'POST') => {
-  my.showLoading({
-    content: '加载中...',
-  });
+  // my.showLoading({
+  //   content: '加载中...',
+  // });
   let _sid = await getSid()
   data._sid = _sid
   return new Promise((resolve, reject) => {
