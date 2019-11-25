@@ -3,12 +3,12 @@ import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
     // page是拿不到的信息，只有query可以拿到
-    if(options.query && options.query.go){
-       this.globalData.query = options.query.go;
-       my.setStorageSync({
-          key: 'query', // 缓存数据的key
-          data: options.query.go, // 要缓存的数据
-       });
+    if (options.query && options.query.go) {
+      this.globalData.query = options.query.go;
+      my.setStorageSync({
+        key: 'query', // 缓存数据的key
+        data: options.query.go, // 要缓存的数据
+      });
     }
     // 第一次打开
     my.getNetworkType({
@@ -71,19 +71,26 @@ App({
   },
   onShow(options) {//多次执行
     // page是拿不到的信息，只有query可以拿到
-    if(options.query && options.query.go){
-       this.globalData.query = options.query.go;
-       my.setStorageSync({
-          key: 'query', // 缓存数据的key
-          data: options.query.go, // 要缓存的数据
-       });
+    if (options.query && options.query.go) {
+      this.globalData.query = options.query.go;
+      my.setStorageSync({
+        key: 'query', // 缓存数据的key
+        data: options.query.go, // 要缓存的数据
+      });
     }
 
-
-    // my.clearStorageSync();
-    // 从后台被 scheme 重新打开
-    // console.log(options.query);
-    // options.query == {number:1}
+    let that = this;
+    my.getSystemInfo({
+      success: res => {
+        let modelmes = res.model;
+        //判断iphone x以上的手机
+        if (modelmes.search('iPhone') > -1 && res.statusBarHeight > 20) {
+          that.globalData.isIphoneX = true
+        } else {
+          that.globalData.isIphoneX = false
+        }
+      }
+    })
   },
   onHide() {
     // 当小程序从前台进入后台时触发
@@ -96,13 +103,13 @@ App({
     return {
       title: '绝味鸭脖',
       desc: '会员专享服务，便捷 实惠 放心',
-      imageUrl:'https://cdn-wap.juewei.com/m/ali-mini/image/jwdlogo.png',
-      bgImgUrl:'https://cdn-wap.juewei.com/m/ali-mini/image/share_default.png',
+      imageUrl: 'https://cdn-wap.juewei.com/m/ali-mini/image/jwdlogo.png',
+      bgImgUrl: 'https://cdn-wap.juewei.com/m/ali-mini/image/share_default.png',
       path: 'pages/position/position',
     };
   },
   globalData: {
-    query:null,
+    query: null,
     location: { //获取地区
       longitude: null,
       latitude: null
@@ -116,7 +123,14 @@ App({
     gifts: null,    //加购商品
     type: 1,     // 默认外卖
     coupon_code: null,   //优惠券
-    scrollTop:null,
-    isOpen:''
+    scrollTop: null,
+    isOpen: '',
+    province: null,
+    city: null,
+    chooseBool: false,
+    isSelf: false,
+    refresh: false, // 当前页面是否需要刷新
+    gopages: '', //跳转到相应文件
+    isIphoneX: false,
   }
 });
