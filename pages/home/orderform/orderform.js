@@ -320,75 +320,58 @@ Page({
             if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
               item.goods_price = _item.goodsPrice;
             }
-            obj1[`${item.goods_code}_${item.goods_format}`] = item; //多
-          } else if (_item.type == 3) {
-            // 商品库存不足
-            if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
-              if (_item.goods_stock > item.goods_order_limit) {
-                if (item.goods_order_limit) {
-                  item.goods_quantity = item.goods_order_limit;
-                } else {
-                  item.goods_quantity = _item.goods_stock - item.goods_order_limit
-                }
-              } else {
-                item.goods_quantity = _item.goods_stock
-              }
-            }
-            goodlist[`${_item.goodsCode}_${_item.goodsFormat}`].num = _item.goods_stock;
-            goodlist[`${_item.goodsCode}_${_item.goodsFormat}`].sumnum = _item.goods_stock;
-            obj1[`${item.goods_code}_${item.goods_format}`] = item;
+            obj1[`${item.goods_code}_${item.goods_format}`] = item;  //多
           } else {
             // 商品下架
             if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
-              obj2[`${item.goods_code}_${item.goods_format}`] = item; //少
+              obj2[`${item.goods_code}_${item.goods_format}`] = item;  //少
             }
           }
         }
       }
-      if (Object.keys(obj2).length > 0 && Object.keys(obj1).length == 0) {
-        newShopcart = obj2;
-      } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length == 0) {
-        newShopcart = obj1;
-      } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length > 0) {
-        for (let key in obj1) {
-          if (obj2[key]) {
-            newShopcart[key] = obj1[key];
-          }
+    }
+    if (Object.keys(obj2).length > 0 && Object.keys(obj1).length == 0) {
+      newShopcart = obj2;
+    } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length == 0) {
+      newShopcart = obj1;
+    } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length > 0) {
+      for (let key in obj1) {
+        if (obj2[key]) {
+          newShopcart[key] = obj1[key];
+        } else {
+          my.removeStorage({
+            key: 'goodsList'
+          })
+          switchTab({
+            url: '/pages/home/goodslist/goodslist'
+          })
+          return;
         }
-      } else {
-        my.removeStorage({
-          key: 'goodsList'
+
+        for (let ott in newShopcart) {
+          newGoodsArr.push(newShopcart[ott])
+        }
+        mySet('goodsList', goodlist);
+        this.setData({
+          goodsList: newGoodsArr
         })
-        switchTab({
-          url: '/pages/home/goodslist/goodslist'
+        // 重新选择商品
+        if (data.isType == 'orderConfirm' && data.type == 1) {
+          switchTab({
+            url: '/pages/home/goodslist/goodslist'
+          })
+          return;
+        }
+        // 继续结算
+        if (data.isType == 'orderConfirm' && data.type == 0) {
+          this.funConfirmOrder(myGet('shop_id'), JSON.stringify(newGoodsArr));
+        }
+        this.setData({
+          mask: false,
+          modalShow: false
         })
-        return;
       }
-    } else {
-      newShopcart = goodlist;
     }
-    for (let ott in newShopcart) {
-      newGoodsArr.push(newShopcart[ott])
-    }
-    mySet('goodsList', goodlist);
-    this.setData({
-      goodsList: newGoodsArr
-    })
-    // 重新选择商品
-    if (data.isType == 'orderConfirm' && data.type == 1) {
-      switchTab({
-        url: '/pages/home/goodslist/goodslist'
-      })
-      return;
-    }
-    // 继续结算
-    if (data.isType == 'orderConfirm' && data.type == 0) {
-      this.funConfirmOrder(myGet('shop_id'), JSON.stringify(newGoodsArr));
-    }
-    this.setData({
-      mask: false,
-      modalShow: false
-    })
   },
   // 同意协议
   checkedTrueTap() {

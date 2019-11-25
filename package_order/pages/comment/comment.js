@@ -5,7 +5,7 @@ Page({
   data: {
     imageUrl,
     imageUrl2,
-    shopStars: [true, false, false, false, false],
+    shopStars: [true, true, true, true, true],
 
     com: {},
 
@@ -53,7 +53,7 @@ Page({
     if (res.code === 0) {
       this.setData({
         com: res.data,
-        shopTabs: res.data.dis.low
+        shopTabs: res.data.dis.good
       })
     }
   },
@@ -71,10 +71,10 @@ Page({
       goods_comment: {
         goods_code: "A1QLT26",
         level: 1,
-        goodStar: [true, false, false, false, false],
+        goodStar: [true, true, true, true, true],
         tag: "2",
         tags: [],
-        _tags: com.goods.low,
+        _tags: com.goods.good,
         content: "",
         img: "",
         pics: [],

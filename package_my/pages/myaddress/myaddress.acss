@@ -1,3 +1,7 @@
+page {
+  background-color: #fff;
+}
+
 .addressList {
   padding: 32rpx;
   padding-bottom: 50rpx;
@@ -74,8 +78,22 @@
 .nullImg {
   display: block;
   margin: 295rpx auto;
-  width: 320rpx;
+  text-align: center
+}
+
+.nullImg image{
+ width: 320rpx;
   height: 320rpx;
+}
+
+.nullImg text{
+width:168rpx;
+height:36rpx;
+font-size:28rpx;
+font-family:PingFangSC-Regular,PingFang SC;
+font-weight:400;
+color:rgba(51,51,51,1);
+line-height:64rpx;
 }
 
 .addClass {

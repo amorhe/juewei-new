@@ -244,6 +244,59 @@ Component({
 				showSwitchShopModal: false
 			})
 		},
+    setDelayTime(sec) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => { resolve() }, sec)
+      });
+    },
+    // 创建动画
+    createAnimation(ballX, ballY) {
+      let that = this,
+        bottomX = 30,
+        bottomY = 30,
+        animationX = that.flyX(bottomX, ballX),      // 创建小球水平动画
+        animationY = that.flyY(bottomY, ballY);			 // 创建小球垂直动画
+      that.setData({
+        showBall: true,
+        ballX,
+        ballY
+      })
+      that.setDelayTime(100).then(() => {
+        // 100ms延时,  确保小球已经显示
+        that.setData({
+          animationX: animationX.export(),
+          animationY: animationY.export()
+        })
+        // 400ms延时, 即小球的抛物线时长
+        return that.setDelayTime(800);
+      }).then(() => {
+        that.setData({
+          showBall: true,
+          animationX: that.flyX(0, 0, 0).export(),
+          animationY: that.flyY(0, 0, 0).export(),
+          ballX: 0,
+          ballY: 0
+        })
+      })
+    },
+    // 水平动画
+    flyX(bottomX, ballX, duration) {
+      let animation = my.createAnimation({
+        duration: duration || 400,
+        timeFunction: 'linear',
+      })
+      animation.translateX(bottomX - ballX).step();
+      return animation;
+    },
+    // 垂直动画
+    flyY(bottomY, ballY, duration) {
+      let animation = my.createAnimation({
+        duration: duration || 400,
+        timeFunction: 'ease-in',
+      })
+      animation.translateY(ballY - bottomY).step();
+      return animation;
+    },
     // 优惠券过期提醒
     getcouponsExpire(_sid) {
       couponsExpire(_sid).then((res) => {

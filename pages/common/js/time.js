@@ -1,5 +1,4 @@
 import { upAliMiniFormId } from './home'
-import { myGet } from './baseUrl.js'
 // 比较两个日期时间相差多少天
 export const datedifference = (sDate1, sDate2) => {
   var dateSpan, iDays;
@@ -103,25 +102,10 @@ export const getNowDate = () => {
   return currentdate;
 }
 
-export const getNowFormatDate = () => {
-  var date = new Date();
-  var seperator1 = "-";
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var strDate = date.getDate();
-  if (month >= 1 && month <= 9) {
-    month = "0" + month;
-  }
-  if (strDate >= 0 && strDate <= 9) {
-    strDate = "0" + strDate;
-  }
-  var currentdate = year + seperator1 + month + seperator1 + strDate;
-  return currentdate;
-}
 
 // 上传formid，模版消息
 export const upformId = (formId) => {
-  upAliMiniFormId(myGet('_sid'), myGet('ali_uid'), formId).then((res) => {
+  upAliMiniFormId(my.getStorageSync({ key: '_sid' }).data, my.getStorageSync({ key: 'ali_uid' }).data, formId).then((res) => {
     // console.log(res)
   })
 }

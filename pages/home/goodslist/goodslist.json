@@ -2,9 +2,7 @@
   "defaultTitle": "绝味鸭脖",
   "usingComponents": {
     "goodsitem": "../../components/goodsitem/goodsitem",
-		"confirm": "../../components/confirm/confirm",
-    "goods-modal": "../../components/goodsModal/goodsModal",
-    "shopcart-model": "../../components/shopcartModel/shopcartModel"
+		"confirm": "../../components/confirm/confirm"
   },
   "allowsBounceVertical": "YES",
   "pullRefresh": true

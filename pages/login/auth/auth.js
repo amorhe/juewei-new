@@ -10,13 +10,10 @@ Page({
     getCode: false,
     phone: '',
     img_code: '',
-    imgUrl: '',
-    next:false
+    imgUrl: ''
   },
-  onLoad(e) {
-    this.setData({
-      next:e.next
-    })
+  onLoad() {
+
   },
   onShow() {
     this.getAliId()
@@ -135,7 +132,7 @@ Page({
           duration: 2000,
           content: '短信发送成功'
         });
-        my.redirectTo({
+        my.navigateTo({
           url: '/pages/login/verifycode/verifycode?phone=' + data.phone
         });
       } else {
@@ -263,13 +260,6 @@ Page({
     getuserInfo(_sid).then((res) => {
       app.globalData.userInfo = res.data;
       my.hideLoading();
-      // 11-22 未登录结算跳转到登录页（hs）
-      if(this.data.next){
-        my.redirectTo({
-          url: '/pages/home/orderform/orderform'
-        });
-        return
-      }
       my.navigateBack({
         delta: 1
       })

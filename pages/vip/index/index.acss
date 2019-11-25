@@ -170,7 +170,7 @@ page {
 }
 
 .li-all {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #e60012;
   font-weight: 600;
   height: 64rpx;
@@ -178,7 +178,7 @@ page {
 }
 
 .li-all .li-small {
-  font-size: 22rpx;
+  font-size: 20rpx;
 }
 
 .li-button {

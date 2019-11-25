@@ -1,5 +1,5 @@
 <!-- 遮罩层 -->
-<view class="mask" style="z-index:1004" a:if="{{maskView}}" onTap="closeModal" catchTouchMove="touchstart"></view>
+<view class="mask" style="z-index:1004" a:if="{{maskView}}" onTap="closeModal"></view>
 <view class="goodsModalBox" a:if="{{goodsModal}}">
   <view class="goodsTop">
     <view>

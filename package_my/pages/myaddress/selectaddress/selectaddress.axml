@@ -20,7 +20,7 @@
   </view>
   <view>
     <cover-view class="addressshopBox">
-      <cover-view class="addressItem" a:if="{{addressList.length>0}}" a:for="{{addressList}}" onTap="chooseAdress" data-pos='{{item}}'>
+      <cover-view class="addressItem" a:for="{{addressList}}" onTap="chooseAdress" data-pos='{{item}}'>
         <cover-view class="iconImgView">
           <cover-image a:if="{{ index == 0}}" src="{{ imageUrl }}position.png" class="iconImg"/>
           <cover-image a:else src="{{ imageUrl }}order2.png" class="iconImg"/>
@@ -34,9 +34,9 @@
     </cover-view>
   </view>
   <cover-view class="noSearchResult" a:if="{{ noSearchResult }}">
-    <cover-image class="position_icon" mode="scaleToFill" src="{{imageUrl}}bg_position.png"/>
-    <cover-view class="text">找不到地址</cover-view>
-    <cover-view class="noresultText">请尝试只输入小区、写字楼或学校名，详细地址（如门牌号）可稍后输入哦。</cover-view>
+    <image class="position_icon" mode="scaleToFill" src="{{imageUrl}}bg_position.png"/>
+    <text class="text">找不到地址</text>
+    <text class="noresultText">请尝试只输入小区、写字楼或学校名，详细地址（如门牌号）可稍后输入哦。</text>
   </cover-view>
 </view>
 
