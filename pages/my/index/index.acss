@@ -1,5 +1,6 @@
 .myContent {
   background: #fff;
+  height:100vh;
 }
 .myTop {
   padding: 40rpx 32rpx;
