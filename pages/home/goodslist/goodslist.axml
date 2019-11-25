@@ -1,28 +1,27 @@
-<view class="page">
-  <view a:if="{{!isSelf}}">
-    <!-- 定位 -->
-    <view class="goodsPosition">
-      <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft">
-        <image src="{{imageUrl}}position.png"/>
-        <text>{{firstAddress}}</text>
-        <image src="{{imageUrl}}arrow_right1.png"/>
-      </navigator>
-      <view class="positionRight">
-        <view class="{{type==1?'activeType':''}}" catchTap="chooseTypes" data-type='waimai'>外卖</view>
-        <view class="{{type==2?'activeType':''}}" catchTap="chooseTypes" data-type='ziti'>自提</view>
-      </view>
+<view style="position:relative">
+  <!-- 定位 -->
+  <view a:if="{{!isSelf}}" class="goodsPosition" style="{{shopcarShow?'z-index:0':'z-index:1000'}}">
+    <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" hover-class="none">
+      <image src="{{imageUrl}}position.png" />
+      <text>{{firstAddress}}</text>
+      <image src="{{imageUrl}}arrow_right1.png" />
+    </navigator>
+    <view class="positionRight">
+      <view class="{{type==1?'activeType':''}}" catchTap="eveChooseTypes" data-type='waimai'>外卖</view>
+      <view class="{{type==2?'activeType':''}}" catchTap="eveChooseTypes" data-type='ziti'>自提</view>
     </view>
-    <view class="null"></view>
-    <view class="closeIng" a:if="{{!isClose && isOpen!= 1}}">
+  </view>
+  <view a:if="{{!isSelf}}">
+    <view class="closeIng" a:if="{{!isClose && isOpen!= 1 && isOpen!=''}}">
       <view a:if="{{isOpen == 2}}">您的定位地址门店未在营业时间 营业时间：{{shopTakeOut.start_time}}-{{shopTakeOut.end_time}}</view>
       <view a:if="{{isOpen == 3}}">当前门店开放时间不足一小时</view>
-      <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="closeOpen" />
+      <image a:if="{{isOpen != 1}}" src="{{imageUrl}}close2.png" onTap="eveCloseOpen" />
     </view>
     <view class="homeSwiper" a:if="{{imgUrls.length>0}}">
       <swiper indicator-dots="{{imgUrls.length>1?true:false}}" autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" indicator-active-color="#E60012" indicator-color="#E8E8E8">
-        <block a:for="{{imgUrls}}">
+        <block a:for="{{imgUrls}}" >
           <swiper-item>
-            <image src="{{imageUrl2 + item.pic_src}}" class="slide-image" onTap="linkUrl" data-link="{{item.link_url}}" />
+            <image src="{{imageUrl2 + item.pic_src}}" onTap="linkUrl" data-link="{{item.link_url}}" />
           </swiper-item>
         </block>
       </swiper>
@@ -33,14 +32,12 @@
       <view class="fourType">
         <view onTap="navigate" data-url="/package_my/pages/membercard/membercard">
           <view>
-            <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
             <image src="{{imageUrl}}home_membercard.png" />
             <view>会员卡</view>
           </view>
         </view>
-        <navigator url="/pages/vip/index/index" open-type="switchTab">
+        <navigator url="/pages/vip/index/index" open-type="redirectTo" hover-class="none">
           <view>
-            <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
             <image src="{{imageUrl}}home_vip.png" />
             <view>会员专享</view>
           </view>
@@ -52,7 +49,7 @@
             <view>卡券</view>
           </view>
         </view>
-        <navigator url="/package_my/pages/nearshop/nearshop">
+        <navigator url="/package_my/pages/nearshop/nearshop?re=1" hover-class="none">
           <view>
             <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:25%" formType="submit"></button>
             <image src="{{imageUrl}}home_nearshop.png" />
@@ -62,62 +59,99 @@
       </view>
     </form>
     <!-- 活动展位 -->
-    <view a:for="{{showListObj}}">
+    <view a:for="{{showListObj}}" >
       <!-- 类型1 -->
       <view class="activityBox1 marginBEight" a:if="{{item.type==1}}">
-        <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
+        <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{item.link_url[0]}}" onTap="imageLink" />
       </view>
       <!-- 类型2 -->
       <view class="activityBox marginBEight" a:if="{{item.type==2}}">
-        <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
+        <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{item.link_url[0]}}" onTap="imageLink" />
         <view>
-          <image src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.link_url[1]}}" onTap="imageLink"/>
-          <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{imageUrl2 + item.link_url[2]}}" onTap="imageLink"/>
+          <image src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{item.link_url[1]}}" onTap="imageLink" />
+          <image src="{{imageUrl2 + item.pic_src[2]}}" data-link="{{item.link_url[2]}}" onTap="imageLink" />
         </view>
       </view>
       <!-- 类型3 -->
       <view class="activityBox3 marginBEight" a:if="{{item.type==3}}">
-        <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
-        <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{imageUrl2 + item.link_url[1]}}" onTap="imageLink"/>
+        <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{item.link_url[0]}}" onTap="imageLink" />
+        <image mode="scaleToFill" src="{{imageUrl2 + item.pic_src[1]}}" data-link="{{item.link_url[1]}}" onTap="imageLink" />
       </view>
       <!-- 类型4 -->
       <view class="activityWrap marginBEight" a:if="{{item.type==4}}">
-        <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{imageUrl2 + item.link_url[0]}}" onTap="imageLink"/>
+        <image src="{{imageUrl2 + item.pic_src[0]}}" data-link="{{item.link_url[0]}}" onTap="imageLink" />
       </view>
     </view>
   </view>
-  <navigator url="/pages/home/switchshop/switchshop?type={{type}}" class="pagesScorll" a:if="{{!isSelf}}">
-    <!-- 推荐门店 -->
-    <view class="shopDefault">
-      <view>
-        <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
-        <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
-        <view class="shopMessage">
-          <view>{{shopTakeOut.title}}</view>
-          <view>在售商品数{{shopTakeOut.goods_num}}</view>
-        </view>
-      </view>
-      <view>
-        <view class="shopDefaultRight">
-          <view>
-            <image src="{{imageUrl}}position.png"/>
-            <view>距离{{shopTakeOut.distance}}米</view>
-          </view>
-          <view>
-            <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
-            <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
-            <view class="typeBtn2">自提</view>
+  <view class="pagesScorll {{isFixedTop?'fixed':''}}" a:if="{{!isSelf}}">
+    <navigator id="pages_s" url="/pages/home/switchshop/switchshop?type={{type}}" hover-class="none">
+      <!-- 推荐门店 -->
+      <view class="shopDefault">
+        <view>
+          <view style="width:48rpx" a:if="{{!jingxuan}}"></view>
+          <view class="jingxuan" a:if="{{jingxuan}}">精选</view>
+          <view class="shopMessage">
+            <view>{{shopTakeOut.title}}</view>
+            <view>在售商品数{{shopTakeOut.goods_num}}</view>
           </view>
         </view>
-        <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+        <view>
+          <view class="shopDefaultRight">
+            <view style="height:50rpx; line-height:50rpx;">
+              <image src="{{imageUrl}}position.png" />
+              <view>距离{{shopTakeOut.distance}}米</view>
+            </view>
+            <view style="height:88rpx;line-height:88rpx;">
+              <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
+              <view class="typeBtn1" a:if="{{type==1||(shopTakeOut.shop_takeout==1 && type==2)}}">外卖</view>
+              <view class="typeBtn2">自提</view>
+            </view>
+          </view>
+          <image class="arrow_right" src="{{imageUrl}}arrow_right1.png" />
+        </view>
       </view>
+    </navigator>
+    <view class="closeIng" a:if="{{isShow}}">
+      <!-- 满减 -->
+      <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days!=0}}">
+        <text>您的满</text>
+        <text class="numberColor">{{couponsExpire.full_money}}</text>
+        <text>减</text>
+        <text class="numberColor">{{couponsExpire.money}}</text>
+        <text>的优惠券还有</text>
+        <text class="numberColor">{{couponsExpire.days}}天</text>
+        <text>过期</text>
+      </view>
+      <!-- 满减今日到期的 -->
+      <view a:if="{{couponsExpire.full_money!=0 && couponsExpire.days==0}}">
+        <text>您的满</text>
+        <text class="numberColor">{{couponsExpire.full_money}}</text>
+        <text>减</text>
+        <text class="numberColor">{{couponsExpire.money}}</text>
+        <text>的优惠券今日即将过期</text>
+      </view>
+      <!-- 立减券非今日过期 -->
+      <view a:if="{{couponsExpire.full_money==0 && couponsExpire.days!=0}}">
+        <text>您的</text>
+        <text class="numberColor">{{couponsExpire.money}}</text>
+        <text>元立减券还有</text>
+        <text class="numberColor">{{couponsExpire.days}}天</text>
+        <text>过期</text>
+      </view>
+      <!-- 立减券今日过期 -->
+      <view a:if="{{couponsExpire.days==0&&couponsExpire.full_money==0}}">
+        <text>您的</text>
+        <text class="numberColor">{{couponsExpire.money}}</text>
+        <text>元立减券今日即将过期</text>
+      </view>
+      <image src="{{imageUrl}}close2.png" onTap="eveCloseCouponView" />
     </view>
-  </navigator>
+  </view>
   <view class="shopUp" a:if="{{isSelf}}">
-    <image class="shopLogo" src="{{imageUrl}}shopbg.png"/>
-    <navigator url="/package_my/pages/nearshop/nearshop" class="shopBoxs" open-type="navigateBack">
+    <image class="shopLogo" src="{{imageUrl}}shopbg.png" />
+    <navigator url="/package_my/pages/nearshop/nearshop?re=2" class="shopBoxs">
       <view>
-        <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png"/>
+        <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png" />
         <view class="shop_info">
           <view class="fontThirtySix">{{shopTakeOut.title}}</view>
           <view>在售商品：{{shopTakeOut.goods_num}}</view>
@@ -125,15 +159,151 @@
         </view>
       </view>
       <view class="distanceView">
-        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+        <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png" />
         <view>距离{{shopTakeOut.distance}}米</view>
       </view>
     </navigator>
   </view>
-  <view style="padding-right:36rpx">
-    <!-- 商品列表 -->
-    <goodsitem shopGoodsList="{{shopGoodsAll}}" type="{{type}}" fullActivity="{{fullActivity}}" freeMoney="{{freeMoney}}" pagescrollTop="{{pagescrollTop}}"/>
+  <view class="{{maskView?'content_other':'content_main'}}" style="{{isShow?'top:254rpx;':'top:208rpx;'}}">
+    <view class="pages_scroll pagesinfo" style="height:{{totalH}}rpx;{{isiphonex?' padding-bottom:20px;':''}}">
+      <scroll-view scroll-y="true" style="width:168rpx;height: 100%;background: #F8F8F8;" scroll-top="{{goodsType > 7 ? (goodsType - 6) * 55 : 0}}">
+        <view class="goodsUl">
+          <view onTap="eveChooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsAll}}"  style="{{goodsType == index + 1?'background:#fff':'background:#F8F8F8'}}">
+            <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{goodsClass[item.key]}}_1.png" />
+            <image a:if="{{goodsType == index + 1 && item.key!='解辣神器'}}" src="{{imageUrl}}m_{{goodsClass[item.key]}}_2.png" />
+            <image a:if="{{goodsType == index + 1 && item.key=='解辣神器'}}" src="{{imageUrl}}m_13_3.png" />
+            <view class="{{goodsType== index + 1?'activeView':''}}">{{item.key}}</view>
+          </view>
+        </view>
+        <view style="height:60rpx;width:100%"></view>
+      </scroll-view>
+      <scroll-view scroll-y="true" style="width:582rpx;height: 100%;" scroll-into-view="s{{togoodsType}}" scroll-with-animation="true" scroll-animation-duration="30" class="scrolllist" onScroll="onScroll" onTouchend="onTouchend">
+        <view id="s{{index + 1}}" a:for="{{shopGoodsAll}}" a:if="{{item.last.length>0}}" class="sc_right_item" >
+          <view class="goodsTypeEv">{{item.key}}</view>
+          <!-- 折扣套餐爆款 -->
+          <view catchTap="eveGoodsdetailContent" class="goodsBox" a:for="{{item.last}}"  a:for-index="i" a:for-item="v" data-freeMoney="{{freeMoney}}" data-goods_code="{{v.goods_format[0].goods_activity_code || (v.goods_channel + v.goods_type + v.company_goods_id)}}"
+            data-goods_id="{{v.goods_id}}" data-shop_id="{{v}}" data-key="{{item.key}}" a:if="{{item.key=='套餐'||item.key=='爆款'||item.key=='折扣'}}">
+            <view class="discountImg">
+              <image a:if="{{item.key=='折扣' || item.key=='套餐'}}" class="discountPng" src="{{imageUrl}}discount_img.png" />
+              <image a:if="{{item.huangou==1}}" class="discountPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png" />
+              <image a:if="{{item.key=='套餐'}}" class="goodsImage1" src="{{img_url + v.goods_img[0]}}" />
+              <image a:if="{{item.key!='套餐'}}" class="goodsImage1" src="{{v.goods_img[0]}}" />
+            </view>
+            <view class="goodsWrap">
+              <view>
+                <text class="goodsName">{{v.goods_name}}</text>
+                <text a:if="{{v.taste_name}}">({{v.taste_name}})</text>
+              </view>
+              <view class="goodsKind marginB">
+                <text>{{v.pkg_subtitle}}</text>
+              </view>
+              <view class="goodsRules">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100< v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
+                    <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
+                    <text a:if="{{v.goods_format.length>1}}">起</text>
+                    <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
+                  </view>
+                  <view class="oldPrice" a:if="{{item.key!='爆款'}}">¥{{v.goods_format[0].goods_original_price / 100}}/{{v.goods_unit}}</view>
+                </view>
+              </view>
+              <view class="goodsDiscount" a:if="{{item.key!='爆款'}}">
+                <image src="{{imageUrl}}discount.png" />
+                <text>{{v.goods_format[0].goods_discount/100}}折  限{{v.goods_format[0].goods_order_limit}}{{v.goods_unit}}</text>
+              </view>
+            </view>
+            <view class="addshopcart-box" catchTap="nobindtap" style="position: absolute;bottom: 0;right: 0;padding:15rpx 20rpx;padding-top:40rpx;padding-left:40rpx;">
+                <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
+                  <!-- 减 -->
+                  <!-- 折扣套餐 -->
+                  <image a:if="{{shopcartList[v.goods_format[0].goods_activity_code + '_' + (v.goods_format[0].type!=undefined?v.goods_format[0].type:'')].sumnum>0 && (item.key=='折扣' || item.key=='套餐')}}" src="{{imageUrl}}goods_reduce.png" catchTap="eveReduceshopcart"
+                    data-goods_code="{{v.goods_format[0].goods_activity_code}}" data-goods_format="{{v.goods_format[0].type!=undefined?v.goods_format[0].type:''}}" data-goods_activity_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" />
+                  <!-- 爆款 -->
+                  <image a:if="{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + (v.goods_format[0].type!=undefined?v.goods_format[0].type:'')].sumnum>0 && item.key=='爆款'}}" src="{{imageUrl}}goods_reduce.png" catchTap="eveReduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}"
+                    data-goods_format="{{v.goods_format[0].type!=undefined?v.goods_format[0].type:''}}" />
+                  <!-- 爆款 -->
+                  <text a:if="{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + (v.goods_format[0].type!=undefined?v.goods_format[0].type:'')].sumnum>0 && item.key=='爆款'}}">{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + (v.goods_format[0].type!=undefined?v.goods_format[0].type:'')].num}}</text>
+                  <!-- 折扣套餐 -->
+                  <text a:if="{{shopcartList[v.goods_format[0].goods_activity_code + '_' + (v.goods_format[0].type!=undefined?v.goods_format[0].type:'')].sumnum>0 && (item.key=='折扣' || item.key=='套餐')}}">{{shopcartList[v.goods_format[0].goods_activity_code + '_' + (v.goods_format[0].type!=undefined?v.goods_format[0].type:'')].num}}</text>
+                  <!-- 加 -->
+                  <!-- 折扣套餐 -->
+                  <image a:if="{{item.key=='折扣' || item.key=='套餐'}}" src="{{imageUrl}}goods_add.png" catchTap="eveAddshopcart" data-goods_code="{{v.goods_format[0].goods_activity_code}}" data-goods_format="{{v.goods_format[0].type==undefined?'':v.goods_format[0].type}}"
+                    data-goods_price="{{v.goods_format[0].goods_price / 100}}" data-goods_img="{{item.key=='套餐'?imageUrl2 + v.goods_img[0]:v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}" data-goods_activity_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}"
+                    data-goods_discount="{{v.goods_format[0].goods_discount}}" data-goods_original_price="{{v.goods_format[0].goods_original_price}}" data-goods_discount_user_limit="{{v.goods_format[0].goods_discount_user_limit}}" data-goods_order_limit="{{v.goods_format[0].goods_order_limit}}"
+                    data-key="{{item.key}}" data-sap_code="{{v.sap_code}}" data-huangou="{{v.huangou}}" data-goods_unit="{{v.goods_unit}}" />
+                  <!-- 爆款 -->
+                  <image a:if="{{item.key=='爆款'}}" src="{{imageUrl}}goods_add.png" catchTap="eveAddshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type==undefined?'':v.goods_format[0].type}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}"
+                    data-goods_img="{{v.goods_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name?v.taste_name:''}}" data-goods_unit="{{v.goods_unit}}" />
+                </view>
+                <view class="goodsSize" data-item="{{item}}" data-key="{{item.key}}" data-type="{{index}}" data-index="{{i}}" catchTap="eveChooseSizeTap" a:if="{{v.goods_format.length>1}}">
+                  <view>选规格</view>
+                  <!-- 购物车中该商品数量 -->
+                  <view a:if="{{shopcartList[v.goods_channel +v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].sumnum>0 || shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[1].type].sumnum>0}}">{{shopcartList[v.goods_channel +v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type]?shopcartList[v.goods_channel +v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].sumnum:shopcartList[v.goods_channel +v.goods_type
+                    + v.company_goods_id + '_' + v.goods_format[1].type].sumnum}}</view>
+                </view>
+            </view>
+ 
+          </view>
+          <!-- 超辣以后正常分类-->
+          <view catchTap="eveGoodsdetailContent" class="goodsContent" a:for="{{item.last}}" a:for-index="i" a:for-item="v" data-freeMoney="{{freeMoney}}" data-goods_code="{{v.goods_channel +v.goods_type + v.company_goods_id}}" data-key="{{item.key}}" data-goods_id="{{v.goods_id}}"
+            a:if="{{item.key!='套餐' && item.key!='爆款' &&item.key!='折扣'}}"  style="position:relative;">
+            <view class="discountImg" style="height:136rpx">
+              <image a:if="{{v.huangou==1}}" class="huangouPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png" />
+              <image class="goods_ss_img" src="{{v.goods_small_img[0]}}" mode="scaleToFill" />
+            </view>
+            <view class="goodsInfos" style="height:136rpx">
+              <view>
+                <text class="goodsName">{{v.goods_name}}</text>
+                <text class="goodsKind">（{{v.taste_name}}）</text>
+              </view>
+              <view class="goodsSoldNum marginUD">
+                <text>已售：</text>
+                <text class="numberColor" style="font-size:22rpx;">{{v.goods_buy_sum}}</text>
+                <text>{{v.goods_unit}}</text>
+              </view>
+              <view class="goodsRules goodsCount">
+                <view>
+                  <view>
+                    <text>￥</text>
+                    <text a:if="{{v.goods_format.length>1}}">{{v.goods_format[0].goods_price / 100< v.goods_format[1].goods_price / 100 ?v.goods_format[0].goods_price / 100 :v.goods_format[1].goods_price / 100}}</text>
+                    <text a:if="{{v.goods_format.length==1}}">{{v.goods_format[0].goods_price / 100}}</text>
+                    <text a:if="{{v.goods_format.length>1}}">起</text>
+                    <text a:if="{{v.goods_format.length==1}}">/ {{v.goods_unit}}</text>
+                  </view>
+                </view>
+              </view>
+              <view class="addshopcart-box" catchTap="nobindtap" style="position: absolute;bottom: 0;right: 0;padding:10rpx 10rpx;padding-top: 40rpx;padding-left: 40rpx;">
+                  <view class="goodsNumber" a:if="{{v.goods_format.length==1}}">
+                    <!-- 减 -->
+                    <image a:if="{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].sumnum>0}}" src="{{imageUrl}}goods_reduce.png" catchTap="eveReduceshopcart" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}"
+                      data-goods_format="{{v.goods_format[0].type}}" />
+                    <text a:if="{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].sumnum>0}}">{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].num}}</text>
+                    <!-- 加 -->
+                    <image src="{{imageUrl}}goods_add.png" catchTap="eveAddshopcart" data-key="{{item.key}}" data-goods_code="{{v.goods_channel + v.goods_type + v.company_goods_id}}" data-goods_format="{{v.goods_format[0].type}}" data-goods_price="{{v.goods_format[0].goods_price / 100}}"
+                      data-goods_img="{{v.goods_small_img[0]}}" data-goods_name="{{v.goods_name}}" data-taste_name="{{v.taste_name}}" data-key="{{item.key}}" data-sap_code="{{v.sap_code}}" data-huangou="{{v.huangou}}" />
+                  </view>
+                  <view class="goodsSize" data-item="{{item}}" data-key="{{item.key}}" data-type="{{index}}" data-index="{{i}}" catchTap="eveChooseSizeTap" a:if="{{v.goods_format.length>1}}">
+                    <view>选规格</view>
+                    <view a:if="{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].sumnum>0 || shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[1].type].sumnum>0}}">{{shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type]?shopcartList[v.goods_channel + v.goods_type + v.company_goods_id + '_' + v.goods_format[0].type].sumnum:shopcartList[v.goods_channel +
+                      v.goods_type + v.company_goods_id + '_' + v.goods_format[1].type].sumnum}}</view>
+                  </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view style="height:60rpx;width:100%"></view>
+      </scroll-view>
+    </view>
+    <!-- 小红点 -->
+    <canvas style="display:{{display_good_box ? 'block' : 'none'}}; position:fixed; width: 100vw; height: 100vh; left:0rpx; top:0rpx;z-index:5000" canvas-id="myCanvas" />
+    <view style="width:750rpx;height:150rpx;"></view>
+    <!-- 购物车 -->
+    <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" type="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClearshopcart="funClearshopcart" activityText="{{activityText}}" freeText="{{freeText}}" freeId="{{freeId}}"
+      isOpen="{{isOpen}}" onChangeShopcart="funChangeShopcart" class="e1" onOpenShopcar="funOpenShopcar" style="bottom:{{bottomTabbar}}rpx" />
+    <!-- 加入购物车选择商品规格 -->
+    <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="eveCloseModal" goodsKey="{{goodsKey}}" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="funCart" priceAll="{{priceAll}}" shopcartNum="{{shopcartNum}}" goodsList="{{shopcartList}}"
+      />
   </view>
-	<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" />
-</view>
-
+ </view>

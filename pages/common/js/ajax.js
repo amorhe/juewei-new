@@ -15,6 +15,7 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
       headers,
       data,
       method,
+      timeout: 5000,
       success: (res) => {
         my.hideLoading();
         let rest = {
