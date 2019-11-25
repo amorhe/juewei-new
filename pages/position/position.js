@@ -2,14 +2,17 @@ import { imageUrl, ak, geotable_id } from '../common/js/baseUrl'
 import { bd_encrypt } from '../common/js/map'
 import { GetLbsShop, NearbyShop } from '../common/js/home'
 import { cur_dateTime, compare, sortNum } from '../common/js/time'
+let timeCount;
 var app = getApp();
 
 Page({
   data: {
     imageUrl: imageUrl,
     city: '定位中...',
+    selfok: false   //是否完成了自提流程
   },
   onLoad() {
+    clearInterval(timeCount);
     my.removeStorageSync({
       key: 'takeout', // 缓存数据的key
     });
@@ -19,7 +22,7 @@ Page({
     my.removeStorageSync({
       key: 'opencity', // 缓存数据的key
     });
- 
+
     var that = this;
     my.getLocation({
       type: 3,
@@ -63,7 +66,7 @@ Page({
 
   },
   onShow() {
-
+    clearInterval(timeCount);
   },
   // 外卖附近门店
   getLbsShop() {
@@ -75,7 +78,7 @@ Page({
     GetLbsShop(lng, lat).then((res) => {
       console.log(res)
       if (res.code == 100 && res.data.shop_list.length > 0) {
-				let shop_list = res.data.shop_list;
+        let shop_list = res.data.shop_list;
         for (let i = 0; i < shop_list.length; i++) {
           const status = cur_dateTime(shop_list[i].start_time, shop_list[i].end_time);
           // app.globalData.isOpen = status
@@ -100,38 +103,45 @@ Page({
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         //存储app.golbalData
         my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
+        let that = this;
+        timeCount = setInterval(function() {
+          if (that.data.selfok == true) {
+            clearInterval(timeCount);
+            //跳转到商城首页
+            my.reLaunch({
+              url: '/pages/home/goodslist/goodslist'
+            });
+          }
+        }, 1000);
 
-        my.reLaunch({
-          url: '/pages/home/goodslist/goodslist'
-        });
       } else if (res.code == 100 && res.data.shop_list.length == 0) {
-				this.setData({
+        this.setData({
           content: '您的定位地址无可配送门店',
           confirmButtonText: '去自提',
           cancelButtonText: '修改地址',
           modalShow: true,
           mask: true
         })
-			} else {
+      } else {
         my.alert({
-					content: '网络错误，请重试！', 
-					success: function() {
-						my.reLaunch({
-							url: '/pages/position/position'
-						})
-					}
-				})
+          content: '网络错误，请重试！',
+          success: function() {
+            my.reLaunch({
+              url: '/pages/position/position'
+            })
+          }
+        })
       }
     }).catch(() => {
-			my.alert({
-				title: '网络请求错误',
-				success() {
-					my.redirectTo({
-						url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
-					});
-				}
-			})
-		})
+      my.alert({
+        title: '网络请求错误',
+        success() {
+          my.redirectTo({
+            url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+          });
+        }
+      })
+    })
   },
   // 自提附近门店
   getNearbyShop() {
@@ -190,6 +200,10 @@ Page({
       const shopArray = shopArr1.concat(shopArr2);
       shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
+      //外卖ok
+      this.setData({
+        selfok: true
+      })
     })
   },
   onCounterPlusOne(e) {
