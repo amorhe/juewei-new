@@ -44,7 +44,8 @@ Page({
     freeText: '',
     freeMoney: 0,
     goodsInfo: {},
-    repurse_price: 0
+    repurse_price: 0,
+    shopcarShow:false
   },
   onLoad: function(e) {
     my.pageScrollTo({
@@ -215,6 +216,11 @@ Page({
     this.setData({
       maskView: data.detail.maskView,
       goodsModal: data.detail.goodsModal
+    })
+  },
+  funOpenShopcar(data){
+    this.setData({
+      shopcarShow: data.detail
     })
   },
   changeMenu(e) {

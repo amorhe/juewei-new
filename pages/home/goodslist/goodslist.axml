@@ -1,4 +1,4 @@
-<view style="position:relative" disable-scroll="{{maskView || goodsModal || shopcarShow}}">
+<view style="position:relative" disable-scroll="{{maskView || shopcarShow}}">
   <!-- 定位 -->
   <view a:if="{{!isSelf}}" class="goodsPosition" style="{{shopcarShow?'z-index:0':'z-index:1000'}}">
     <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" hover-class="none">
@@ -300,8 +300,7 @@
     <canvas style="display:{{display_good_box ? 'block' : 'none'}}; position:fixed; width: 100vw; height: 100vh; left:0rpx; top:0rpx;z-index:5000" canvas-id="myCanvas" />
     <view style="width:750rpx;height:150rpx;"></view>
     <!-- 购物车 -->
-    <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" type="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClearshopcart="funClearshopcart" activityText="{{activityText}}" freeText="{{freeText}}" freeId="{{freeId}}"
-      isOpen="{{isOpen}}" onChangeShopcart="funChangeShopcart" class="e1" onOpenShopcar="funOpenShopcar" style="bottom:{{bottomTabbar}}rpx" />
+    <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" type="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClearshopcart="funClearshopcart" activityText="{{activityText}}" freeText="{{freeText}}" freeId="{{freeId}}" isOpen="{{isOpen}}" onChangeShopcart="funChangeShopcart" class="e1" onOpenShopcar="funOpenShopcar" style="bottom:{{bottomTabbar}}rpx" />
     <!-- 加入购物车选择商品规格 -->
     <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="eveCloseModal" goodsKey="{{goodsKey}}" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="funCart" priceAll="{{priceAll}}" shopcartNum="{{shopcartNum}}" goodsList="{{shopcartList}}"
       />

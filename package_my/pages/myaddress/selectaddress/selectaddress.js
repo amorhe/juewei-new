@@ -6,8 +6,8 @@ Page({
     imageUrl,
     mapiconInfo: '',
     mapInfo: [],
-    latitude:'30.305654',
-    longitude:'120.093352',
+    latitude:'',
+    longitude:'',
     list: [],
     city:'北京市',
     addressIng: '',    // 定位地址

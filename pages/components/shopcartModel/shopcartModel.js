@@ -104,6 +104,9 @@ Component({
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       })
+      this.props.onOpenShopcar({
+        detail: false
+      });
     },
     onCounterPlusOne(data) {
       this.setData({
