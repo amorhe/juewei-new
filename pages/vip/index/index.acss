@@ -1,6 +1,6 @@
 @import '../../common/style/common.acss';
 page {
-  background: white;
+  background: #f5f5f5;
 }
 
 .header-title-s {

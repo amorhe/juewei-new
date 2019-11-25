@@ -1,6 +1,7 @@
 {
   "defaultTitle": "会员专享",
-  "titleBarColor": "#ff0000",
+  "titleBarColor": "#F5F5F5",
+  "backgroundColor": "#feffff",
   "transparentTitle": "auto",
   "allowsBounceVertical": "NO"
 }

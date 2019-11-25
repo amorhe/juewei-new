@@ -103,7 +103,7 @@
   },
   "window": {
     "defaultTitle": "绝味鸭脖",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "#feffff",
     "titleBarColor": "#ffffff",
     "allowsBounceVertical": "NO",
     "gestureBack": "YES"
@@ -111,7 +111,7 @@
   "tabBar": {
     "textColor": "#7F8389",
     "selectedColor": "#E60012",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "#feffff",
     "items": [
       {
         "pagePath": "pages/home/goodslist/goodslist",

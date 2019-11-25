@@ -168,7 +168,7 @@ Page({
   chooseLocation() {
     var that = this
     my.navigateTo({
-      url: '/package_my/pages/myaddress/selectaddress/selectaddress'
+      url: '/package_my/pages/myaddress/selectaddress/selectaddress?address='
     });
 
   },
