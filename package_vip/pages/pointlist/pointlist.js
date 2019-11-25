@@ -22,8 +22,8 @@ Page({
   },
 
   async onLoad() {
-    await this.getDetail(1)
-    await this.getUserPoint()
+     this.getDetail(1)
+     this.getUserPoint()
   },
 
   onHide() {

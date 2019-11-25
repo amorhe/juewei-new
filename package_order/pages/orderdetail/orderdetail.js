@@ -82,6 +82,7 @@ Page({
   onHide() {
     clearInterval(this.data.time)
     this.setData({ time: -1 })
+    this.closeModel()
   },
 
   contact,
@@ -131,7 +132,7 @@ Page({
         // 外卖显示数组
         // 0，等待支付   1
         // 1，支付成功   1,2
-        // 2，商家接单/商家已确认 1,2,3 
+        // 2，商家接单/商家已确认 1,2,3
         // 3，正在配送/配送中    1,2,3,4,(判断5的时间是否存在，如果有显示5)
         // 4，确认收货/已送到/完成 1,2,3,4,5,6
         // 5，用户取消   1,7
@@ -261,11 +262,6 @@ Page({
       showTop: true
     })
   },
-
-  onHide() {
-    this.closeModel()
-  },
-
   /**
    * @ 显示选择原因
    */
