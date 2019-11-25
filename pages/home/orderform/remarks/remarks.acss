@@ -1,3 +1,7 @@
+page {
+  background-color: #fff;
+}
+
 .remarks {
   padding: 24rpx 32rpx;
   width: 750rpx;
@@ -18,12 +22,14 @@
 }
 .remarksTextarea {
   width:100%;
-  height:320rpx;
+  height:270rpx;
+  border-radius:10rpx;
 }
 .placeStyle {
   font-size: 28rpx;
   color: #ccc;
   width:638rpx;
+  padding-bottom:100rpx
 }
 .confirmRemarks {
   width: 670rpx;
