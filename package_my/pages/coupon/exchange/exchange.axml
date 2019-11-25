@@ -4,3 +4,9 @@
   <button class="{{code.length>0?'hasCode redeemBtn':'noneCode redeemBtn'}}" type="default" hover-class="none" onTap="exchangeBtn">立即兑换</button>
 </view>
 <confirm content="兑换成功" confirmButtonText="查看优惠券" cancelButtonText="立即购买" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="getCoupons"/>
+
+<view class="toast" a:if="{{content}}">
+  <view>
+    {{content}}
+  </view>
+</view>
