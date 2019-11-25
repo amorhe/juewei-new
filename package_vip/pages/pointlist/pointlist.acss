@@ -91,6 +91,7 @@
   z-index: 9;
   padding: 0 32rpx;
   box-sizing: border-box;
+  background: #fff;
 }
 
 .listItem {
