@@ -1,100 +1,87 @@
-<view>
+<view class="contain">
   <!-- 地址 -->
-    <view class="post-address">
-      <view class="post-name">
-        <view class="item post-name-left">联系人</view>
-        <input class="post-name-right" placeholder="姓名" maxlength="12" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange"/>
-      </view>
-      <view class="post-sex">
-        <text class="item"></text>
-        <view onTap="changeSex" class="{{sex==1?'post-sex-active':''}}">女士</view>
-        <view onTap="changeSex" class="{{sex==0?'post-sex-active':''}}">先生</view>
-      </view>
-      <view class="list">
-        <view class="item">电话</view>
-        <input placeholder="手机号码" type="numberpad" value="{{phone}}" maxlength="11"  data-key="phone" onInput="handelChange"/>
-      </view>
-      <view class="select-address list" onTap="chooseLocation">
-        <view class="item">地址</view>
-        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
-        <view class="real-address">{{map_address}}</view>
-        <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
-      </view>
-      <view class="list">
-        <view class="item">门牌号</view>
-        <input placeholder="例：6号楼606室" controlled="{{true}}" value="{{addressdetail}}" data-key="addressdetail" onInput="handelChange"/>
-        <image class="arrow" mode="scaleToFill" onTap="closeFN" src="{{imageUrl}}close3.png"/>
-      </view>
-      <view class="list">
-        <view class="item">标签</view>
-        <view onTap="changeCur" a:for="{{labelList}}" data-type="{{ item.type }}" class="label {{item.type==curLabel?'label-active':''}}"> {{item.name}}</view>
-      </view>
-      <view onTap="Addaddress" class="wait-pay-btn" style="background:{{(name==='' && phone==='' && addressdetail==='') ? 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)':'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)'}}">
+  <view class="post-address">
+    <view class="post-name">
+      <view class="item post-name-left">联系人</view>
+      <input class="post-name-right" placeholder="姓名" maxlength="12" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange"/>
+      <image a:if="{{name.length>0}}" class="arrow" mode="scaleToFill" onTap="closeFN" data-value="name" src="{{imageUrl}}close3.png"/>
+    </view>
+    <view class="post-sex">
+      <text class="item"></text>
+      <view onTap="changeSex" class="{{sex==1?'post-sex-active':''}}">女士</view>
+      <view onTap="changeSex" class="{{sex==0?'post-sex-active':''}}">先生</view>
+    </view>
+    <view class="list">
+      <view class="item">电话</view>
+      <input placeholder="手机号码" type="numberpad" value="{{phone}}" maxlength="11" data-key="phone" onInput="handelChange"/>
+      <image a:if="{{phone.length>0}}" class="arrow" mode="scaleToFill" onTap="closeFN" data-value="phone" src="{{imageUrl}}close3.png"/>
+    </view>
+    <view class="select-address list" onTap="chooseLocation">
+      <view class="item">地址</view>
+      <image class="arrow" mode="scaleToFill" src="{{imageUrl}}position_map1.png"/>
+      <view class="real-address">{{map_address}}</view>
+      <image class="arrow" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
+    </view>
+    <view class="list">
+      <view class="item">门牌号</view>
+      <input placeholder="例：6号楼606室" controlled="{{true}}" value="{{addressdetail}}" data-key="addressdetail" onInput="handelChange"/>
+      <image a:if="{{addressdetail.length>0}}" data-value="addressdetail" class="arrow" mode="scaleToFill" onTap="closeFN" src="{{imageUrl}}close3.png"/>
+    </view>
+    <view class="list">
+      <view class="item">标签</view>
+      <view onTap="changeCur" a:for="{{labelList}}" data-type="{{ item.type }}" class="label {{item.type==curLabel?'label-active':''}}"> {{item.name}}</view>
+    </view>
+    <view onTap="Addaddress" class="wait-pay-btn" style="background:{{(name!=='' && phone!=='' && addressdetail!=='') ?'linear-gradient(135deg,rgba(251,83,50,1) 0%,rgba(230,0,18,1) 100%)': 'linear-gradient(135deg,rgba(251,83,50,.3) 0%,rgba(230,0,18,.3) 100%)'}}">
         保存地址
-      </view>
-
-      <view class="wait-pay-btn rmButton" onTap="modalShowFN" a:if="{{ addressId!='' }}">
+    </view>
+    <view class="wait-pay-btn rmButton" onTap="modalShowFN" a:if="{{ addressId!='' }}">
         删除地址
-      </view>
     </view>
+  </view>
 </view>
-
-
 <!-- 退出提示 -->
-<modal
-    show="{{modalShow}}"
-    showClose="{{ false }}"
-  >
-    <view class="modalInfo">
+<modal show="{{modalShow}}" showClose="{{ false }}">
+  <view class="modalInfo">
       是否删除该配送地址
-    </view>
-    <view slot="footer" class="footerButton">
-      <view class="modalButton confirm" onTap="modalhideFN">取消</view>
-      <view class="modalButton cancel" onTap="rmaddress">确定</view>
-    </view>
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton confirm" onTap="modalhideFN">取消</view>
+    <view class="modalButton cancel" onTap="rmaddress">确定</view>
+  </view>
 </modal>
-
-
 <!-- 退出提示 -->
-<modal
-    show="{{modalidShow}}"
-    showClose="{{ false }}"
-  >
-    <view class="modalInfo">
+<modal show="{{modalidShow}}" showClose="{{ false }}">
+  <view class="modalInfo">
       您所选的地址周边无可配送门店，请换个地址试试吧！
-    </view>
-    <view slot="footer" class="footerButton">
-      <view class="modalButton cancel" onTap="modalidShoFN">确定</view>
-    </view>
+  </view>
+  <view slot="footer" class="footerButton">
+    <view class="modalButton cancel" onTap="modalidShoFN">确定</view>
+  </view>
 </modal>
-
-
-
 <!-- 选择地址 -->
-  <view class="pop-wrap" a:if="{{selectAddress}}">
-    <view class="my-pop">
-        <view class="pop-top">
-            <text></text>
-            <text class="title">城市</text>
-            <text class="sure" onTap="hideSelectAddress">确定</text>
-        </view>
-
-        <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
-            <picker-view-column>
-                <view class="selecter" a:for="{{ provinceList }}">
-                  <view class="value">{{item.name}}</view>
-                </view>
-            </picker-view-column>
-              <picker-view-column>
-                <view class="selecter" a:for="{{cityList}}">
-                  <view class="value">{{item.name}}</view>
-                </view>
-            </picker-view-column>
-              <picker-view-column>
-                <view class="selecter" a:for="{{countryList}}">
-                  <view class="value">{{item.name}}</view>
-                </view>
-            </picker-view-column>
-        </picker-view>
+<view class="pop-wrap" a:if="{{selectAddress}}">
+  <view class="my-pop">
+    <view class="pop-top">
+      <text></text>
+      <text class="title">城市</text>
+      <text class="sure" onTap="hideSelectAddress">确定</text>
     </view>
+    <picker-view class="pick" indicator-style="height: 40px;" onChange="changeAddress">
+      <picker-view-column>
+        <view class="selecter" a:for="{{ provinceList }}">
+          <view class="value">{{item.name}}</view>
+        </view>
+      </picker-view-column>
+      <picker-view-column>
+        <view class="selecter" a:for="{{cityList}}">
+          <view class="value">{{item.name}}</view>
+        </view>
+      </picker-view-column>
+      <picker-view-column>
+        <view class="selecter" a:for="{{countryList}}">
+          <view class="value">{{item.name}}</view>
+        </view>
+      </picker-view-column>
+    </picker-view>
+  </view>
 </view>

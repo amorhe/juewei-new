@@ -42,10 +42,10 @@ Page({
     modalidShow: false, // 无门店,
     detailAdd: '',
     clickadd: false,
-    city:''
+    city: ''
   },
-  onShow(){
-    if(app.globalData.addAddressInfo){
+  onShow() {
+    if (app.globalData.addAddressInfo) {
       let addAddressInfo = app.globalData.addAddressInfo;
       this.setData({
         province: addAddressInfo.province,
@@ -57,7 +57,7 @@ Page({
         detailAdd: addAddressInfo.address || addAddressInfo.addr
       })
       my.request({
-        url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + addAddressInfo.location.lng + ',' + addAddressInfo.location.lat + '&radius=3000',
+        url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=' + geotable_id + '&location=' + addAddressInfo.location.lng + ',' + addAddressInfo.location.lat + '&radius=3000',
         success: (res) => {
           var arr = []
           res.data.contents.forEach(item => {
@@ -73,14 +73,14 @@ Page({
       });
     }
   },
-  onhide(){
+  onhide() {
     // 退出清空addAddressInfo
     app.globalData.addAddressInfo = null;
   },
   async onLoad(e) {
     var _sid = my.getStorageSync({ key: '_sid' }).data;
     this.data._sid = _sid
-    
+
     if (e.Id) {
       this.data.addressId = e.Id
       this.getInfo(e.Id)
@@ -104,7 +104,7 @@ Page({
         // 获取到的是高德的经纬度，要转换为百度经纬度
         let map_position = bd_encrypt(res.longitude, res.latitude);
         my.request({
-          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
+          url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=' + geotable_id + '&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
           success: (res) => {
             var arr = [];// 门店id数组
             res.data.contents.forEach(item => {
@@ -167,49 +167,6 @@ Page({
   // 选择地址
   chooseLocation() {
     var that = this
-    // my.chooseLocation({
-    //   success: (res) => {
-    //     var resadd = res.address
-    //     var map_address = res.name ? res.name : res.address
-    //     let map_position = bd_encrypt(res.longitude, res.latitude);
-    //     console.log(res, '选择')
-    //     my.request({
-    //       url: 'https://api.map.baidu.com/geocoder/v2/?ak=' + ak + '&location=' + res.latitude + ',' + res.longitude + '&output=json&coordtype=wgs84ll',
-    //       success: (res) => {
-    //         that.setData({
-    //           province: res.data.result.addressComponent.province,
-    //           city: res.data.result.addressComponent.city,
-    //           district: res.data.result.addressComponent.district,
-    //           detailAdd: res.data.result.addressComponent.province + res.data.result.addressComponent.city + res.data.result.addressComponent.district + resadd
-    //         })
-    //       },
-    //     });
-    //     my.request({
-    //       url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + res.longitude + ',' + res.latitude + '&radius=3000',
-    //       success: (res) => {
-    //         var arr = []
-    //         res.data.contents.forEach(item => {
-    //           arr.push(item.shop_id)
-    //         })
-    //         that.data.shop_id = arr.join(',')
-    //         if (that.data.shop_id === '') {
-    //           this.setData({
-    //             modalidShow: true
-    //           })
-    //         }
-    //       },
-    //     });
-    //     that.setData({
-    //       longitude: map_position.bd_lng,
-    //       latitude: map_position.bd_lat,
-    //       map_address: map_address
-    //     })
-    //   },
-    //   fail(err) {
-    //     console.log(err, '错误')
-    //   }
-    // });
-
     my.navigateTo({
       url: '/package_my/pages/myaddress/selectaddress/selectaddress'
     });
@@ -278,15 +235,30 @@ Page({
     let patrn = /[`…~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；……‘’，。￣、…＠＃％＾＆×＿＋｛｝｜＂＞＜]/im;
     // let value = e.detail.value.trim().replace(regEn, '').replace(regCn, '').replace(patrn,'')
     let value = e.detail.value.trim()
-    if(!s.test(value)){
+    if (!s.test(value)) {
       return value = this.data[key]
     }
     this.setData({ [key]: value })
   },
-  closeFN() {
-    this.setData({
-      addressdetail: ''
-    })
+  closeFN(e) {
+    let d = e.currentTarget.dataset.value;
+    switch (d) {
+      case d = 'name':
+        this.setData({
+          name: ''
+        })
+        break;
+      case d = 'phone':
+        this.setData({
+          phone: ''
+        })
+        break;
+      default:
+        this.setData({
+          addressdetail: ''
+        })
+        break;
+    }
   },
   modalidShoFN() {
     this.setData({
@@ -312,7 +284,7 @@ Page({
       return
     }
     if (/^1\d{10}$/.test(this.data.phone)) {
-    }else if(this.data.phone===''){
+    } else if (this.data.phone === '') {
       my.showToast({
         type: 'none',
         content: '请填写电话',

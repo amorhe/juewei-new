@@ -102,7 +102,7 @@
         </view>
       </view>
     </view>
-    <view class="track paddingBThirty borderBottomSolid" onTap="chooseCoupon" data-coupon="{{orderInfo.use_coupons[0]}}" data-money="{{orderInfo.qlt_price}}">
+    <view class="track paddingBThirty borderBottomSolid" onTap="eveChooseCoupon" data-coupon="{{orderInfo.use_coupons[0]}}" data-money="{{orderInfo.qlt_price}}">
       <view>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
         <text class="marginLSixteen">优惠券</text>
@@ -167,12 +167,12 @@
               </view>
             </view>
           </view>
-          <view class="goodsNumber flexRow" a:if="{{gifts[item.id].num}}">
-            <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
-            <text>{{gifts[item.id].num}}</text>
+          <view class="goodsNumber flexRow" a:if="{{gifts.length>0 && gifts[0].id==item.id}}">
+            <image src="{{imageUrl}}goods_reduce.png" onTap="eveReduceBtnTap" />
+            <text>{{gifts[0].num}}</text>
             <image mode="scaleToFill" src="{{imageUrl}}goods_add2.png"/>
           </view>
-          <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" data-activity_id="{{item.activity_id}}" data-gift_id="{{item.gift_id}}" data-id="{{item.id}}" data-cash="{{item.cash}}" data-point="{{item.point}}" data-gift_price="{{item.gift_price}}" a:if="{{!gifts[item.id].num}}">换购</button>
+          <button class="repurseBtn" hover-class="none" onTap="eveAddRepurseTap" data-activity_id="{{item.activity_id}}" data-gift_id="{{item.gift_id}}" data-id="{{item.id}}" data-cash="{{item.cash}}" data-point="{{item.point}}" data-gift_price="{{item.gift_price}}" a:if="{{gifts.length==0 || gifts[0].id!==item.id}}">换购</button>
         </view>
       </view>
     </scroll-view>
@@ -193,12 +193,12 @@
           </view>
         </view>
       </view>
-      <view class="goodsNumber flexRow" a:if="{{gifts[item.id].num}}">
-        <image src="{{imageUrl}}goods_reduce.png" onTap="reduceBtnTap" />
-        <text>{{gifts[item.id].num}}</text>
+      <view class="goodsNumber flexRow" a:if="{{gifts.length>0 && gifts[0].id==item.id}}">
+        <image src="{{imageUrl}}goods_reduce.png" onTap="eveReduceBtnTap" />
+        <text>{{gifts[0].num}}</text>
         <image mode="scaleToFill" src="{{imageUrl}}goods_add2.png"/>
       </view>
-      <button class="repurseBtn" hover-class="none" onTap="addRepurseTap" data-activity_id="{{item.activity_id}}" data-gift_id="{{item.gift_id}}" data-id="{{item.id}}" data-cash="{{item.cash}}" data-point="{{item.point}}" data-gift_price="{{item.gift_price}}" a:if="{{!gifts[item.id].num}}">换购</button>
+      <button class="repurseBtn" hover-class="none" onTap="eveAddRepurseTap" data-activity_id="{{item.activity_id}}" data-gift_id="{{item.gift_id}}" data-id="{{item.id}}" data-cash="{{item.cash}}" data-point="{{item.point}}" data-gift_price="{{item.gift_price}}" a:if="{{gifts.length==0 || gifts[0].id!==item.id}}">换购</button>
     </view>
     <view class="repursePrice" a:if="{{gifts[gift_id].num}}">
       <text class="fontTwentySix">小计</text>
@@ -225,7 +225,7 @@
       <text class="numberColor fontFourty fontBold">{{order_price}}</text>
     </view>
     <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-      <view onTap="confirmPay" class="primaryBtn" a:if="{{trueprice>=send_price}}">
+      <view onTap="eveConfirmPay" class="primaryBtn" a:if="{{trueprice>=send_price}}">
         确认支付
         <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;height:100rpx;right:0" formType="submit">
         </button>

@@ -1,3 +1,8 @@
+.contain{
+  background: #fff;
+  width: 100%;
+  height: 100vh
+}
 .wait-pay {
   width: 750rpx;
   height: 50rpx;
@@ -57,7 +62,7 @@
 .p-right {
   display: flex;
   flex-direction: column;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 .p-title {
@@ -125,7 +130,7 @@
 .wait-pay-btn {
   width: 670rpx;
   height: 96rpx;
-  background: linear-gradient(135deg, rgba(251, 83, 50, .3) 0%, rgba(230, 0, 18, .3) 100%);
+  background: linear-gradient(135deg, rgba(251, 83, 50, 0.3) 0%, rgba(230, 0, 18, 0.3) 100%);
   border-radius: 47rpx;
   font-size: 36rpx;
   font-weight: 400;
@@ -173,7 +178,7 @@ input {
   margin-right: 64rpx;
   background: transparent;
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
 .post-address {
@@ -229,12 +234,15 @@ input {
 }
 
 .post-sex-active, .label-active {
-  border-color: #E60012 !important;
-  color: #E60012 !important;
+  border-color: #e60012 !important;
+  color: #e60012 !important;
 }
 
 .real-address {
-  flex: 1
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* 选择地址 */
@@ -336,7 +344,7 @@ input {
 .search-icon {
   width: 24rpx;
   height: 24rpx;
-  margin-right: 10rpx
+  margin-right: 10rpx;
 }
 
 .shop-ul {
@@ -350,7 +358,7 @@ input {
 }
 
 .shop-detail {
-  flex: 1
+  flex: 1;
 }
 
 .shop-detail-top {
@@ -369,7 +377,7 @@ input {
   display: flex;
   font-size: 28rpx;
   font-weight: 400;
-  color: #E60012;
+  color: #e60012;
 }
 
 .shop-address {
@@ -400,7 +408,7 @@ input {
 }
 
 .am-modal-footer {
-  background: rgba(0, 0, 0, 0)
+  background: rgba(0, 0, 0, 0);
 }
 
 .confirm {
@@ -408,5 +416,5 @@ input {
 }
 
 .cancel {
-  color: #E60012;
+  color: #e60012;
 }
