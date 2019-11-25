@@ -228,7 +228,7 @@ page {
 }
 
 .sroll-view-wrap {
-  background: white;
+  background: #f5f5f5;
   position: sticky;
   z-index: 99;
   left: 0
