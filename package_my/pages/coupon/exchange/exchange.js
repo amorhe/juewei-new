@@ -5,7 +5,8 @@ Page({
     code:'',
     imageUrl,
 		mask: false,
-		modalShow: false
+		modalShow: false,
+    content:'',
   },
   onLoad() {},
   writeCode(e){
@@ -16,10 +17,16 @@ Page({
   exchangeBtn(){
     const _sid = my.getStorageSync({key: '_sid'}).data;
     const {code} = this.data
-    if(!code){
-      return my.showToast({
-        content:'请输入兑换码'
-      });
+    const that = this
+
+    if(!code) {
+      return that.setData({
+        content: '请输入兑换码'
+      }, () => setTimeout(() => {
+        that.setData({
+          content: ''
+        });
+      }, 2000));
     }
     exchangeCoupon(_sid, code).then((res) => {
       if(res.CODE == 'A100') {
@@ -28,9 +35,14 @@ Page({
 					modalShow: true
 				})
       }else{
-        my.showToast({
+        that.setData({
           content:res.MESSAGE
-        });
+        },()=> setTimeout(()=>{
+          that.setData({
+            content:''
+          });
+        },2000));
+
       }
     })
   },

@@ -38,3 +38,33 @@ page {
 .noneCode {
   background:linear-gradient(135deg,rgba(251,83,50,.4) 0%,rgba(230,0,18,.4) 100%);
 }
+
+.toast{
+  position:absolute;
+  display:flex;
+  justify-content:center;
+  margin:auto;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  text-align:center;
+  left:0;
+  right:0;
+  top: 300rpx;
+  bottom:0;
+
+}
+
+.toast view{
+height:96rpx;
+ display:flex;
+   justify-content:center;
+  align-item:center;
+   background:rgba(0,0,0,1);
+    border-radius:48rpx;
+    line-height:96rpx;
+    opacity:0.5;
+    padding: 0 51rpx;
+     font-size:36rpx;
+      color:rgba(255,255,255,1);
+}
+
