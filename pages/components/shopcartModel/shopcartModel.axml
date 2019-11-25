@@ -1,73 +1,70 @@
 <view class="goodsBottom">
-    <view class="fullReduce" a:if="{{activityText!='' && !showShopcar}}">{{activityText}}</view>
-    <view class="shopcart">
-        <image class="shopcarImage" a:if="{{ shopcartNum== 0}}" src="{{imageUrl}}shopcart_empty.png" />
-        <image onTap="openShopcart" a:if="{{shopcartNum>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
-        <view class="addcount" a:if="{{shopcartNum>0}}">{{shopcartNum}}</view>
-        <view class="haveGoods">
-            <view a:if="{{shopcartNum>0}}">
-                <text>￥</text>
-                <text>{{priceAll/100}}</text>
-            </view>
-            <view a:if="{{isTake}}">
-                <view a:if="{{!freeId}}">另需配送费{{dispatch_price}}元</view>
-                <view a:if="{{freeId}}">{{freeText}}</view>
-            </view>
-        </view>
-        <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
-            <view class="buyBtn" a:if="{{(priceAll/100<send_price || shopcartNum==0) && isOpen !=2}}">￥{{send_price}}起
-                <text a:if="{{type==1}}">送</text>
-                <text a:if="{{type==2}}">购</text></view>
-            <view class="buyBtn" a:if="{{isOpen == 2}}">未营业</view>
-            <view class="buyBtn canBuy" onTap="goOrderSubmit"
-                a:if="{{(priceAll/100>=send_price && shopcartNum>0) && isOpen !=2}}">
-                去结算<button
-                    style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;right:0;bottom:0;height:100rpx"
-                    formType="submit"></button>
-            </view>
-        </form>
+  <view class="fullReduce" a:if="{{activityText!='' && !showShopcar}}">{{activityText}}</view>
+  <view class="shopcart">
+    <image class="shopcarImage" a:if="{{ shopcartNum== 0}}" src="{{imageUrl}}shopcart_empty.png" />
+    <image onTap="openShopcart" a:if="{{shopcartNum>0}}" class="shopcarImage" src="{{imageUrl}}shopcart.png" />
+    <view class="addcount" a:if="{{shopcartNum>0}}">{{shopcartNum}}</view>
+    <view class="haveGoods">
+      <view a:if="{{shopcartNum>0}}">
+        <text>￥</text>
+        <text>{{priceAll/100}}</text>
+      </view>
+      <view a:if="{{isTake}}">
+        <view a:if="{{!freeId}}">另需配送费{{dispatch_price}}元</view>
+        <view a:if="{{freeId}}">{{freeText}}</view>
+      </view>
     </view>
-</view>
-<!-- 购物车弹框 -->
-<view a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
-    <view class="fullReduce fontSmall" a:if="{{activityText!=''}}">{{activityText}}</view>
-    <view class="clearShopcar" onTap="clearShopcart">
-        <image src="{{imageUrl}}deleteIcon.png" />
-        <text>清空购物车</text>
-    </view>
-    <view class="shopcartWrap">
-        <view class="goodsLi" a:for="{{shopcartAll}}">
-            <view class="goodsNameI">
-                <view>
+    <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
+      <view class="buyBtn" a:if="{{(priceAll/100
+        <send_price || shopcartNum==0) && isOpen !=2}}">￥{{send_price}}起
+          <text a:if="{{type==1}}">送</text>
+          <text a:if="{{type==2}}">购</text>
+          </view>
+          <view class="buyBtn" a:if="{{isOpen == 2}}">未营业</view>
+          <view class="buyBtn canBuy" onTap="goOrderSubmit" a:if="{{(priceAll/100>=send_price && shopcartNum>0) && isOpen !=2}}">
+                去结算
+            <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:240rpx;right:0;bottom:0;height:100rpx" formType="submit"></button>
+          </view>
+          </form>
+          </view>
+          </view>
+          <!-- 购物车弹框 -->
+          <view a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
+            <view class="fullReduce fontSmall" a:if="{{activityText!=''}}">{{activityText}}</view>
+            <view class="clearShopcar" onTap="clearShopcart">
+              <image src="{{imageUrl}}deleteIcon.png" />
+              <text>清空购物车</text>
+            </view>
+            <view class="shopcartWrap">
+              <view class="goodsLi" a:for="{{shopcartAll}}">
+                <view class="goodsNameI">
+                  <view>
                     <text>{{item.goods_name}}</text>
                     <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
-                </view>
-                <view>
+                  </view>
+                  <view>
                     <text class="format_view">{{item.goods_format}}</text>
                     <text a:if="{{item.huangou}}" class="numberColor orcle">指定商品</text>
+                  </view>
                 </view>
-            </view>
-            <view class="flexNormal">
-                <view class="goodsPriceBox">
-                    <text
-                        class="numberColor">￥{{item.num>item.goods_order_limit?item.goods_order_limit*item.goods_price/100 + (item.num-item.goods_order_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
-                </view>
-                <view class="goodsNumber">
-                    <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart"
-                        data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" />
+                <view class="flexNormal">
+                  <view class="goodsPriceBox">
+                    <text a:if="{{item.goods_order_limit}}" class="orginal">￥{{item.goods_original_price}}</text>
+                    <text class="numberColor">￥{{item.num>item.goods_order_limit?item.goods_order_limit*item.goods_price/100 + (item.num-item.goods_order_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
+                  </view>
+                  <view class="goodsNumber">
+                    <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" />
                     <text>{{item.num}}</text>
-                    <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}"
-                        data-goods_format="{{item.goods_format}}" data-goods_discount="{{item.goods_discount}}" />
+                    <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" data-goods_discount="{{item.goods_discount}}" />
+                  </view>
                 </view>
+              </view>
             </view>
-        </view>
-    </view>
-    <view>
-        <view class="nullView"></view>
-    </view>
-</view>
-<!-- 弹框组件 -->
-<confirm confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" content="{{content}}"
-    mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
-<!-- 遮罩层 -->
-<view a:if="{{mask1 && shopcartAll.length>0}}" class="mask" onTap="hiddenShopcart" catchTouchMove="touchstart"></view>
+            <view>
+              <view class="nullView"></view>
+            </view>
+          </view>
+          <!-- 弹框组件 -->
+          <confirm confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" content="{{content}}" mask="{{mask}}" modalShow="{{modalShow}}" onCounterPlusOne="onCounterPlusOne" isType="{{isType}}" />
+          <!-- 遮罩层 -->
+          <view a:if="{{mask1 && shopcartAll.length>0}}" class="mask" onTap="hiddenShopcart"></view>

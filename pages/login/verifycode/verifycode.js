@@ -1,4 +1,4 @@
-import { imageUrl, baseUrl } from '../../common/js/baseUrl'
+import { imageUrl, baseUrl,mySet,myGet } from '../../common/js/baseUrl'
 import { sendCode, captcha, loginByPhone } from '../../common/js/login'
 let timeCount
 var app = getApp()
@@ -83,6 +83,7 @@ Page({
           key: 'user_id', // 缓存数据的key
           data: res.data.user_id, // 要缓存的数据
         });
+        mySet('userInfo',res.data);
         my.navigateBack({
           delta: 2
         })

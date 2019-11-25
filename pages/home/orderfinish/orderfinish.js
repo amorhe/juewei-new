@@ -86,6 +86,11 @@ Page({
         }
       })
 
+    }else{
+      //获取详情订单失败
+      this.setData({
+        newUserShow: false
+      })
     }
 
   },

@@ -13,7 +13,8 @@ import {
   useraddressInfo,
   add_lng_lat,
   payment,
-  useraddress
+  useraddress,
+  AliMiniPay
 } from '../../common/js/home'
 import {
   upformId

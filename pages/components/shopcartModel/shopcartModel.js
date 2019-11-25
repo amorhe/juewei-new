@@ -1,4 +1,4 @@
-import { imageUrl, jsonUrl,myGet,mySet } from '../../common/js/baseUrl'
+import { imageUrl, jsonUrl, myGet, mySet } from '../../common/js/baseUrl'
 import { compare, upformId } from '../../common/js/time'
 var app = getApp();
 Component({
@@ -26,7 +26,9 @@ Component({
     shopcartNum: 0,
     priceAll: 0,
     activityText: '',
-    freeText: ''
+    freeText: '',
+    mask1:false,
+    onOpenShopcar:(data) => {console.log(data)}
   },
   //组件创建时触发
   onInit() { },
@@ -74,6 +76,10 @@ Component({
         showShopcar: true,
         mask1: true
       })
+   
+       this.props.onOpenShopcar({
+        detail: true
+      });
     },
     // 隐藏购物车
     hiddenShopcart() {
@@ -81,6 +87,10 @@ Component({
         showShopcar: false,
         mask1: false
       })
+      
+      this.props.onOpenShopcar({
+        detail: false
+      });
     },
     // 清空购物车
     clearShopcart() {
@@ -156,7 +166,7 @@ Component({
           }
         } else if (goodlist[keys].goods_price && goodlist[keys].num) {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
-        }else{
+        } else {
 
         }
         //计算包邮价格
@@ -205,10 +215,10 @@ Component({
           priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           //套餐不算在内
           if (keys.indexOf('PKG') == -1) {
-             priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+            priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           }
 
-        } else if (goodlist[keys].goods_price && goodlist[keys].num){
+        } else if (goodlist[keys].goods_price && goodlist[keys].num) {
           priceAll += goodlist[keys].goods_price * goodlist[keys].num;
         } else {
 
@@ -470,8 +480,8 @@ Component({
     onSubmit(e) {
       upformId(e.detail.formId);
     },
-    touchstart(){
-
+    touchstart() {
+      return false
     }
   }
 });

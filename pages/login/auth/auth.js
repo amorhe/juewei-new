@@ -1,4 +1,4 @@
-import { imageUrl, baseUrl } from '../../common/js/baseUrl'
+import { imageUrl, baseUrl,myGet,mySet } from '../../common/js/baseUrl'
 import { sendCode, captcha, loginByAliUid, loginByAuth, getuserInfo, decryptPhone } from '../../common/js/login'
 import { upformId } from '../../common/js/time'
 var app = getApp(); //放在顶部
@@ -181,6 +181,7 @@ Page({
                 key: '_sid', // 缓存数据的key
                 data: data.data._sid, // 要缓存的数据
               });
+              mySet('userInfo',data.data);
               that.setData({
                 ali_uid: data.data.ali_uid,
                 _sid: data.data._sid
@@ -194,6 +195,7 @@ Page({
                 key: '_sid', // 缓存数据的key
                 data: data.data._sid, // 要缓存的数据
               });
+              mySet('userInfo',data.data);
               that.setData({
                 ali_uid: data.data.ali_uid,
                 _sid: data.data._sid
@@ -243,6 +245,7 @@ Page({
           key: 'user_id', // 缓存数据的key
           data: res.data.user_id, // 要缓存的数据
         });
+        mySet('userInfo',res.data);
         app.globalData._sid = res.data._sid
         this.getUserInfo(res.data._sid);
       } else {
