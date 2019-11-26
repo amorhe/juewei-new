@@ -58,7 +58,7 @@
           </view>
         </view>
       </view>
-      <view class="hint hr" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
+      <view class="hint hr" style="color:#999" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
       温馨提示：可到会员专享>兑换记录中查看
       </view>
       <view class="li-button" onTap="redirect">

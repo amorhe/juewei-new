@@ -304,7 +304,7 @@ view.pay {
   width: 140rpx;
   height: 64rpx;
   border-radius: 32rpx;
-  border: 1px solid rgba(153, 153, 153, 1);
+  border: 2rpx solid rgba(153, 153, 153, 1);
   font-size: 26rpx;
   font-weight: 400;
   color: rgba(51, 51, 51, 1);

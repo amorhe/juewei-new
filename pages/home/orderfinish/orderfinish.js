@@ -46,7 +46,6 @@ Page({
     if (new_user == 1) { return }
     let res = await ajax('/juewei-api/order/detail', { order_no })
     if (res.code == 0) {
-      // console.log(res)
       // 说明是新用户
       if (res.data.new_user == 1) {
         my.setStorage({
@@ -62,30 +61,31 @@ Page({
       }
       // 虚拟商品弹框
       let static_no = 0;
-      res.data.goods_list.forEach(item => {
-        if (item.is_gifts == 1 && static_no == 0) {
-          static_no = 1;
-          // 优惠券
-          if (item.gift_type == 1) {
+      if(res.data && res.data.goods_list && res.data.goods_list.length>0){
+        res.data.goods_list.forEach(item => {
+          if (item.is_gifts == 1 && static_no == 0) {
+            static_no = 1;
+            // 优惠券
+            if (item.gift_type == 1) {
+              this.setData({
+                gift_type: 1,
+                gifts: true
+              })
+            }
+            // 兑换码
+            if (item.gift_type == 2) {
+              this.setData({
+                gift_type: 2,
+                gifts: true
+              })
+            }
+          } else {
             this.setData({
-              gift_type: 1,
-              gifts: true
+              gifts: false
             })
           }
-          // 兑换码
-          if (item.gift_type == 2) {
-            this.setData({
-              gift_type: 2,
-              gifts: true
-            })
-          }
-        } else {
-          this.setData({
-            gifts: false
-          })
-        }
-      })
-
+        })
+      }
     }else{
       //获取详情订单失败
       this.setData({
@@ -112,9 +112,9 @@ Page({
 
   async getCouponsList() {
     let res = await ajax('/mini/coupons/list', { get_type: 'new_user' })
+    // res.DATA.new_user=[{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'}]
     if (res.CODE === 'A100' && res.DATA.new_user && res.DATA.new_user.length > 0) {
-      let new_user = res.DATA.new_user
-        .map(({ end_time, ...item }) => ({
+      let new_user = res.DATA.new_user.map(({ end_time, ...item }) => ({
           end_time: new Date(end_time * 1000).toLocaleDateString(),
           ...item
         }))

@@ -102,13 +102,14 @@
         </view>
       </view>
     </view>
-    <view class="track paddingBThirty borderBottomSolid" onTap="eveChooseCoupon" data-coupon="{{orderInfo.use_coupons[0]}}" data-money="{{orderInfo.qlt_price}}">
+    <view class="track paddingBThirty borderBottomSolid" onTap="eveChooseCoupon" data-coupon="{{orderInfo.use_coupons[0]}}" data-money="{{orderInfo.qlt_price}}" data-is_allow_coupon="{{is_allow_coupon}}">
       <view>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}coupon.png"/>
         <text class="marginLSixteen">优惠券</text>
       </view>
       <view>
-        <text class="colorNine" a:if="{{orderInfo.use_coupons.length==0 && !notUse}}">无可用红包</text>
+        <text class="colorNine" a:if="{{is_allow_coupon && orderInfo.use_coupons.length==0 && !notUse}}">无可用红包</text>
+        <text class="colorNine" a:if="{{!is_allow_coupon}}">每天仅限两单优惠</text>
         <text class="colorNine" a:if="{{notUse}}">点击选择</text>
         <text class="colorNine" a:if="{{orderInfo.use_coupons.length>0 && !notUse}}">- ¥{{coupon_money/100}}</text>
         <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
