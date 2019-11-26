@@ -1,4 +1,4 @@
-import { imageUrl, ak, geotable_id } from '../common/js/baseUrl'
+import { imageUrl, ak, geotable_id,mySet,myGet } from '../common/js/baseUrl'
 import { bd_encrypt } from '../common/js/map'
 import { GetLbsShop, NearbyShop } from '../common/js/home'
 import { cur_dateTime, compare, sortNum } from '../common/js/time'
@@ -76,7 +76,6 @@ Page({
     const shopArr1 = [];
     const shopArr2 = [];
     GetLbsShop(lng, lat).then((res) => {
-      console.log(res)
       if (res.code == 100 && res.data.shop_list.length > 0) {
         let shop_list = res.data.shop_list;
         for (let i = 0; i < shop_list.length; i++) {
@@ -91,14 +90,14 @@ Page({
         }
         // 按照goods_num做降序排列
         let shopArray = shopArr1.concat(shopArr2);
-        shopArray.sort((a, b) => {
-          var value1 = a.goods_num,
-            value2 = b.goods_num;
-          if (value1 <= value2) {
-            return a.distance - b.distance;
-          }
-          return value2 - value1;
-        });
+        // shopArray.sort((a, b) => {
+        //   var value1 = a.goods_num,
+        //     value2 = b.goods_num;
+        //   if (value1 <= value2) {
+        //     return a.distance - b.distance;
+        //   }
+        //   return value2 - value1;
+        // });
         shopArray[0]['jingxuan'] = true;
         my.setStorageSync({ key: 'takeout', data: shopArray });   // 保存外卖门店到本地
         //存储app.golbalData
@@ -186,7 +185,6 @@ Page({
     NearbyShop(JSON.stringify(obj)).then((res) => {
       for (let i = 0; i < res.length; i++) {
         let status = cur_dateTime(res[i].start_time, res[i].end_time);
-        // app.globalData.isOpen = status;
         // 判断是否营业
         if (status == 1 || status == 3) {
           shopArr1.push(res[i]);
@@ -195,8 +193,8 @@ Page({
         }
       }
       // 根据距离最近排序
-      shopArr1.sort(sortNum('distance'));
-      shopArr2.sort(sortNum('distance'));
+      // shopArr1.sort(sortNum('distance'));
+      // shopArr2.sort(sortNum('distance'));
       const shopArray = shopArr1.concat(shopArr2);
       shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
@@ -209,7 +207,6 @@ Page({
   onCounterPlusOne(e) {
     // 点击左边去自提
     if (e.type == 1 && e.isType == "noShop") {
-      console.log(e)
       this.setData({
         modalShow: e.modalShow,
         mask: e.mask,

@@ -7,30 +7,32 @@
             <view class="couponUl" a:if="{{couponList.length>0}}">
               <view class="couponLi" style="{{item.toggleRule?'max-height:800rpx':'max-height:254rpx'}}" a:for="{{couponList}}">
                 <image class="quan" src="{{imageUrl}}coupon_bg.png" mode="widthFix"/>
-                <view>
-                  <view class="couponNumber">
-                    <text>{{item.money/100}}</text>
-                    <text>元</text>
+                <view class="content_v">
+                  <view class="flexC">
+                    <view class="couponNumber">
+                      <text>{{item.money/100}}</text>
+                      <text>元</text>
+                    </view>
+                    <view class="couponMiddle">
+                      <view>{{item.way==1?'外卖专享券':item.way==2?'门店专享券':'全场通享券'}}</view>
+                      <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
+                      <view class="fontTwentyTwo">{{item.full_money>0?'满'+ item.full_money / 100 + '可用':'立减券'}}</view>
+                    </view>
+                    <view class="useBtn fontTwentySix" data-way="{{item.way}}" data-code="{{item.code}}" catchTap="toUse">立即使用</view>
                   </view>
-                  <view class="couponMiddle">
-                    <view>{{item.way==1?'外卖专享券':item.way==2?'门店专享券':'全场通享券'}}</view>
-                    <view class="fontTwentyTwo">{{item.start_time}}至{{item.end_time}}</view>
-                    <view class="fontTwentyTwo">{{item.full_money>0?`满${item.full_money / 100}可用`:'立减券'}}</view>
+                  <view class="flexC">
+                    <view class="whiteCircleLeft"></view>
+                    <view class="dashLine"></view>
+                    <view class="whiteCircleRight"></view>
                   </view>
-                  <view class="useBtn fontTwentySix" data-way="{{item.way}}" data-code="{{item.code}}" catchTap="toUse">立即使用</view>
-                </view>
-                <view>
-                  <view class="whiteCircleLeft"></view>
-                  <view class="dashLine"></view>
-                  <view class="whiteCircleRight"></view>
-                </view>
-                <view>
-                  <view data-index="{{index}}" onTap="toggleRule" style="position:relative;z-index:1;display:flex;align-item:center">
-                    <text class="colorWhite fontTwentyTwo">更多使用规则</text>
-                    <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s"/>
+                  <view class="flexC" style="height:64rpx;padding-bottom:8rpx">
+                    <view data-index="{{index}}" onTap="toggleRule" style="position:relative;z-index:1;display:flex;align-item:center">
+                      <text class="colorWhite fontTwentyTwo">更多使用规则</text>
+                      <image class="arrow_down_icon" src="{{imageUrl}}arrow_down2.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s" />
+                    </view>
+                    <image class="qr" onTap="showCode" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" a:if="{{item.way == 3}}" />
+                    <image class="qr" data-code="{{item.code}}" a:if="{{item.way != 3}}" />
                   </view>
-                  <image class="qr" src="{{imageUrl}}qrcode.png" data-code="{{item.code}}" catchTap="showCode" a:if="{{item.way == 3}}" />
-                  <image class="qr" data-code="{{item.code}}" a:if="{{item.way != 3}}" />
                 </view>
                 <view class="rule">
                   <view a:if="{{item.gift_usage_rule}}">1、{{item.gift_usage_rule}}</view>
@@ -45,14 +47,19 @@
               </view>
             </view>
             <!-- 空状态 -->
-            <view class="nullBox" style="height:85vh;padding-top:207rpx;box-sizing:border-box" a:if="{{couponList.length ==0}}">
+            <view class="nullBox" style="height:100vh;padding-top:207rpx;box-sizing:border-box" a:if="{{couponList.length ==0}}">
               <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
               <text>暂无优惠券</text>
+              <view class="cardMiddle" hidden="{{activeTab==1}}">
+                <navigator url="/package_my/pages/coupon/couponRecord/couponRecord">查看历史优惠券</navigator>
+                <text class="grayLine">|</text>
+                <navigator url="/package_my/pages/coupon/explain/explain">优惠券使用说明</navigator>
+              </view>
             </view>
-            <view class="cardMiddle" hidden="{{activeTab==1}}">
-              <navigator url="/package_my/pages/coupon/couponRecord/couponRecord">查看历史优惠券</navigator>
+            <view class="cardMiddle" hidden="{{activeTab==1 || couponList.length==0}}">
+              <navigator url="/package_my/pages/coupon/couponRecord/couponRecord" hover-class="none">查看历史优惠券</navigator>
               <text class="grayLine">|</text>
-              <navigator url="/package_my/pages/coupon/explain/explain">优惠券使用说明</navigator>
+              <navigator url="/package_my/pages/coupon/explain/explain" hover-class="none">优惠券使用说明</navigator>
             </view>
           </view>
         </tab-content>
@@ -69,18 +76,19 @@
               </view>
             </view>
             <!-- 空状态 -->
-            <view class="nullBox" style="height:85vh;padding-top:207rpx;box-sizing:border-box" a:if="{{exchangeList.length== 0}}">
+            <view class="nullBox" style="height:100vh;padding-top:207rpx;box-sizing:border-box" a:if="{{exchangeList.length== 0}}">
               <image class='nullImg' src="{{ imageUrl }}bg_coupon.png"/>
               <text>暂无兑换码</text>
+              <navigator url="/package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord" class="fontSmallGray codeMiddle" hover-class="none" style="margin-top:325rpx">查看历史兑换码</navigator>
             </view>
-            <navigator url="/package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord" class="fontSmallGray codeMiddle">查看历史兑换码</navigator>
+            <navigator url="/package_my/pages/coupon/redeemCodeRecord/redeemCodeRecord" class="fontSmallGray codeMiddle" a:if="{{exchangeList.length> 0}}">查看历史兑换码</navigator>
           </view>
         </tab-content>
       </block>
     </tabs>
   </view>
 </view>
-<navigator url="/package_my/pages/coupon/exchange/exchange" class="couponPosition" hidden="{{activeTab==1}}">
+<navigator url="/package_my/pages/coupon/exchange/exchange" class="couponPosition" hidden="{{activeTab==1}}" hover-class="none">
   <image src="{{imageUrl}}exchange.png"/>
   <view>兑换优惠券</view>
 </navigator>
@@ -93,8 +101,6 @@
   <view class="code-phone">
    {{phone.slice(0,3)}} **** {{phone.slice(7)}}
   </view>
-  <!--<view class="code-pay" onTap="wait">
-    确认支付</view> -->
 </modal>
 <!-- 限时优惠 -->
 <modal show="{{open1}}" showClose="{{ true }}" onModalClose="closeModel">

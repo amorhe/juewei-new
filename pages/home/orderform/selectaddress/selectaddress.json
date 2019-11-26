@@ -1,7 +1,7 @@
 {
     "defaultTitle": "选择地址",
     "titleBarColor": "#E60012",
-    "backgroundColor": "#fff",
+    "backgroundColor": "#feffff",
     "usingComponents": {
       "confirm": "../../../components/confirm/confirm",
 			"modal": "mini-antui/es/modal/index"

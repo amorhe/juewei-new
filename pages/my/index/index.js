@@ -8,7 +8,6 @@ var app = getApp()
 Page({
   data: {
     imageUrl,
-    avatarImg: '',
     _sid: '',
     userInfo: {},
     isLogin: false,
