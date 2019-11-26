@@ -158,5 +158,6 @@ App({
     refresh: false, // 当前页面是否需要刷新
     gopages: '', //跳转到相应文件
     isIphoneX: false,
+    notUse:0 //默认用户的可用的
   }
 });
