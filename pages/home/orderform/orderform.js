@@ -310,6 +310,7 @@ Page({
   },
   // 弹框事件回调
   onCounterPlusOne(data) {
+ 
     let goodlist = myGet('goodsList');
     let newShopcart = {},
       newGoodsArr = [],
@@ -332,16 +333,18 @@ Page({
           }
         }
       }
-    }
-    if (Object.keys(obj2).length > 0 && Object.keys(obj1).length == 0) {
-      newShopcart = obj2;
-    } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length == 0) {
-      newShopcart = obj1;
-    } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length > 0) {
-      for (let key in obj1) {
-        if (obj2[key]) {
-          newShopcart[key] = obj1[key];
-        } else {
+      // obj1价格变更    obj2已下架
+      if (Object.keys(obj2).length > 0 && Object.keys(obj1).length == 0) {
+        newShopcart = obj2;
+      } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length == 0) {
+        newShopcart = obj1;
+      } else if (Object.keys(obj1).length > 0 && Object.keys(obj2).length > 0) {
+          for (let key in obj1) {
+            if (obj2[key]) {
+              newShopcart[key] = obj1[key];
+            } 
+          }
+      } else {
           my.removeStorage({
             key: 'goodsList'
           })
@@ -349,32 +352,47 @@ Page({
             url: '/pages/home/goodslist/goodslist'
           })
           return;
-        }
-
-        for (let ott in newShopcart) {
-          newGoodsArr.push(newShopcart[ott])
-        }
-        mySet('goodsList', goodlist);
-        this.setData({
-          goodsList: newGoodsArr
-        })
-        // 重新选择商品
-        if (data.isType == 'orderConfirm' && data.type == 1) {
-          switchTab({
-            url: '/pages/home/goodslist/goodslist'
-          })
-          return;
-        }
-        // 继续结算
-        if (data.isType == 'orderConfirm' && data.type == 0) {
-          this.funConfirmOrder(myGet('shop_id'), JSON.stringify(newGoodsArr));
-        }
-        this.setData({
-          mask: false,
-          modalShow: false
-        })
       }
+    }else{
+      newShopcart = goodlist;
     }
+      // //此处不清楚
+      // for (let key in obj1) {
+      //   if (obj2[key]) {
+      //     newShopcart[key] = obj1[key];
+      //   } else {
+      //     my.removeStorage({
+      //       key: 'goodsList'
+      //     })
+      //     switchTab({
+      //       url: '/pages/home/goodslist/goodslist'
+      //     })
+      //     return;
+      //   }
+      // }
+
+      for (let ott in newShopcart) {
+        newGoodsArr.push(newShopcart[ott])
+      }
+      mySet('goodsList', goodlist);
+      this.setData({
+        goodsList: newGoodsArr
+      })
+      // 重新选择商品
+      if (data.isType == 'orderConfirm' && data.type == 1) {
+        switchTab({
+          url: '/pages/home/goodslist/goodslist'
+        })
+        return;
+      }
+      // 继续结算
+      if (data.isType == 'orderConfirm' && data.type == 0) {
+        this.funConfirmOrder(myGet('shop_id'), JSON.stringify(newGoodsArr));
+      }
+      this.setData({
+        mask: false,
+        modalShow: false
+      })
   },
   // 同意协议
   checkedTrueTap() {

@@ -14,13 +14,13 @@ Page({
     couponList: [],  // 优惠券列表
     defaultcoupon: '',    // 默认选中的优惠券
     couponChoosed: '',    //coupon.code  选择的优惠按
-    is_allow_coupon:false, //是否可以享受优惠
+    is_allow_coupon: false //是否可以享受优惠
   },
   onLoad(e) {
     app.globalData.notUse = 0;
     this.setData({
       couponChoosed:((e.coupon && e.coupon!='')?e.coupon:''),
-      is_allow_coupon:e.is_allow_coupon
+      is_allow_coupon:e.is_allow_coupon=='true'
     })
     const _sid = my.getStorageSync({ key: '_sid' }).data;
     this.getCouponsList(_sid, e.money / 100);
@@ -91,6 +91,13 @@ Page({
       url: '/pages/home/orderform/orderform'
     });
   },
+
+  
+  chooseCouponed_noused(e){
+    
+  },
+
+
 
   /**
    * @function 展示CODE

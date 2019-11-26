@@ -17,6 +17,8 @@
   overflow: hidden;
   transition: all .3s;
 }
+
+
 .quan {
   width: 287rpx;
   height: 334rpx;
@@ -64,14 +66,14 @@
   width: 32rpx;
   height: 32rpx;
   border-radius: 50%;
-  background: #fff;
+  background: #f5f5f5;
   margin-left: -48rpx;
 }
 .whiteCircleRight {
   width: 32rpx;
   height: 32rpx;
   border-radius: 50%;
-  background: #fff;
+  background: #f5f5f5;
   margin-right: -36rpx;
 }
 .dashLine {
@@ -258,4 +260,42 @@
 .select {
   width: 40rpx;
   height: 40rpx
+}
+
+
+.noused{
+  background:#ffffff;
+  max-height:135px;
+}
+
+.noused .couponNumber{
+  color:#CCCCCC;
+  width:30%;
+}
+.noused .couponMiddle{
+  color:#CCCCCC;
+  flex:1;
+}
+.noused .dashLine{
+  border-bottom:1px dashed #cccccc;
+}
+.noused .whiteCircleLeft{
+   position: relative;
+   z-index: 9999;
+}
+.noused .img_warm{
+  overflow: hidden;
+  width:26rpx;
+  height:26rpx;
+  vertical-align: middle;
+  margin-right:10rpx;
+  line-height: 40rpx;
+  margin-top:-6rpx;
+}
+.noused .v_txt{
+   height:40rpx;
+   line-height: 40rpx;
+   vertical-align: middle;
+   font-size: 24rpx;
+   display: block;
 }
