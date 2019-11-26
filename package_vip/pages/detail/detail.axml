@@ -49,17 +49,17 @@
     <view class="footet-containt">
      {{detail.start_time.split(' ')[0]}}至{{detail.end_time.split(' ')[0]}}
     </view>
-    <view class="footer-title" a:if="{{detail.exchange_intro}}"> 
+    <view class="footer-title" a:if="{{detail.exchange_intro}}">
      兑换说明
     </view>
     <rich-text nodes="{{detail._exchange_intro}}" />
     <!-- {{detail.exchange_intro}} -->
-    <view class="footer-title" a:if="{{detail.intro}}">     
+    <view class="footer-title" a:if="{{detail.intro}}">
      商品详情
     </view>
     <rich-text nodes="{{detail._intro}}" />
     <!-- {{detail.intro}} -->
-    <view class="footer-title">     
+    <view class="footer-title">
      兑换次数
     </view>
     <view class="footet-containt"> {{detail.exchange_limit_type==1?"每人每天":"活动期间"}}
