@@ -179,8 +179,8 @@
     </scroll-view>
     <!-- 换购商品只有一个 -->
     <view class="repurseGoodsInfo" a:for="{{repurseList}}" style="width:654rpx" a:if="{{repurseList.length==1}}">
-      <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{item.gift_img_url}}"/>
-      <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url==''}}" src="{{imageUrl}}coupon_default.png"/>
+      <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!='' && item.gift_img_url!=null}}" src="{{item.gift_img_url}}"/>
+      <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url=='' || item.gift_img_url==null}}" src="{{imageUrl}}gift.jpg"/>
       <view>
         <view>
           <text>{{item.gift_name}}</text>
