@@ -19,7 +19,7 @@
       <view class="searchlistBox">
         <view class="searchedList" a:if="{{searchedAddress.length > 0}}" a:for="{{searchedAddress}}" onTap="switchAddress" data-info="{{item}}" data-type="3" data-address="{{item.name}}">
           <view class="addressInfo">
-            <text>{{item.name}}</text>
+            <text>{{item.name.substr(0,item.name.indexOf(inputAddress)-1)}}<text style="color:#ff0000;">{{inputAddress}}</text>{{item.name.substr(item.name.indexOf(inputAddress)+inputAddress.length)}}</text>
             <text class="distance fontGray">{{item.detail_info.distance+"米"}}</text></view>
           <view class="detailAddress fontGray">{{item.address}}</view>
         </view>

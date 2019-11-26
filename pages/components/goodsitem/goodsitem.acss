@@ -506,7 +506,7 @@
   width: 29rpx;
   height: 29rpx;
   background: linear-gradient(135deg, rgba(253, 235, 113, 1) 0%, rgba(248, 216, 0, 1) 100%);
-  color: #fff;
+  color: #ff0000;
   border-radius: 50%;
   text-align: center;
   line-height: 29rpx;
