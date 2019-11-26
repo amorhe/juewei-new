@@ -3,6 +3,7 @@
 
 <view class="modalView" a:if="{{modalShow}}">
   <view a:if="{{title}}" class="modalTitle">{{title}}</view>
+	<view a:if="{{successIcon}}" class="successIcon"><image src="{{imageUrl}}success.png"/></view>
   <view class="modalContent">{{content}}</view>
   <view class="modalBtn">
    <button onTap="confirmTap" hover-class="none">{{confirmButtonText}}</button>

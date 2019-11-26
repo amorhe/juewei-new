@@ -5,6 +5,7 @@
   position: fixed;
   top: 403rpx;
   left: 95rpx;
+	padding-top: 40rpx;
   z-index: 1005;
   padding-top: 40rpx;
   box-sizing: border-box;
@@ -61,4 +62,11 @@
   position: fixed;
   left: 0;
   top: 0;
+}
+.successIcon {
+  text-align: center;
+}
+.successIcon image {
+  width: 120rpx;
+  height: 120rpx;
 }

@@ -528,7 +528,7 @@ Page({
         } else if (res.data.activity_list[''].reduce_detail.length > 1) {
           coupon_money = res.data.activity_list[''].reduce_detail[res.data.activity_list[''].reduce_detail.findIndex(val => Math.max(val.coupon.reduce))].coupon.reduce;
         }
-
+ 
         //由于orderconfirm不能承接换购商品，所以采用了前端判断换购商品策略
         let order_price_num = (res.data.activity_list[''].real_price / 100);
         let order_price_point = '';
@@ -646,7 +646,7 @@ Page({
     }
     // 创建订单
     let use_coupons = ''
-    if (this.data.orderInfo.use_coupons[0] != undefined) {
+    if (this.data.orderInfo.use_coupons[0] && this.data.orderInfo.use_coupons[0] != '') {
       use_coupons = this.data.orderInfo.use_coupons[0]
     }
     createOrder(app.globalData.type, shop_id, goods, shop_id, 11, remark, '阿里小程序', address_id, lng, lat, type, str_gift, use_coupons, notUse, app.globalData.freeId, this.data.activity_channel).then((res) => {
