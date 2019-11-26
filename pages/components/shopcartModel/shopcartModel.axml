@@ -49,13 +49,13 @@
                 </view>
                 <view class="flexNormal">
                   <view class="goodsPriceBox">
-                    <text a:if="{{item.goods_order_limit}}" class="orginal">￥{{item.goods_original_price}}</text>
+                    <text a:if="{{item.goods_order_limit}}" class="orginal">￥{{item.goods_original_price/100}}</text>
                     <text class="numberColor priceTotal">￥{{item.num>item.goods_order_limit?item.goods_order_limit*item.goods_price/100 + (item.num-item.goods_order_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
                   </view>
                   <view class="goodsNumber">
                     <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" />
                     <text>{{item.num}}</text>
-                    <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" data-goods_discount="{{item.goods_discount}}" />
+                    <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" data-goods_discount="{{item.goods_discount}}"/>
                   </view>
                 </view>
               </view>
