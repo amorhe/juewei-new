@@ -700,7 +700,7 @@ page {
   width: 36rpx;
   height: 36rpx;
   background: linear-gradient(135deg, rgba(253, 235, 113, 1) 0%, rgba(248, 216, 0, 1) 100%);
-  color: #E60012;
+  color: #ff0000;
   border-radius: 50%;
   text-align: center;
   line-height: 36rpx;

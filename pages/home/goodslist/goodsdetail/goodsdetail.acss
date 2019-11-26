@@ -185,7 +185,7 @@
   width:0.29rem;
   height:0.29rem;
   background:linear-gradient(135deg, rgb(253, 235, 113) 0%, rgb(248, 216, 0) 100%);
-  color:rgb(255, 255, 255);
+  color:#ff0000;
   border-radius:50%;
   text-align:center;
   line-height:0.29rem;
