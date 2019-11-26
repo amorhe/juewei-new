@@ -70,6 +70,7 @@ Page({
     //   ,
 
     time: '',
+    overdue: false,
 
     // },
 
@@ -92,7 +93,7 @@ Page({
   },
 
   async onShow() {
-    const {id} = this.data;
+    const { id } = this.data;
     await this.getOrderDetail(id)
   },
 
@@ -130,7 +131,7 @@ Page({
       //   }
       // }
 
-      let { remaining_pay_minute, remaining_pay_second, ...item } = res.data
+      let { remaining_pay_minute, remaining_pay_second, overdue, way, ...item } = res.data
       let { time } = this.data
       time = setInterval(() => {
         --remaining_pay_second
@@ -141,11 +142,18 @@ Page({
           --remaining_pay_minute
           remaining_pay_second = 59
         }
+        let bol = false;
+        if (overdue == 1 || way == '') {
+          bol = true;
+        } else {
+          bol = false
+        }
         this.setData({
           _exchange_intro,
           _intro,
-          detail: { ...item, remaining_pay_second, remaining_pay_minute },
-          time
+          detail: { ...item, remaining_pay_second, remaining_pay_minute, way },
+          time,
+          overdue: bol
         })
       }, 1000)
     }
@@ -220,24 +228,24 @@ Page({
    */
 
   async payNow() {
-    let { order_sn, id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address,shop_id,shop_name } = this.data.detail;
+    let { order_sn, id, order_amount, receive_type, user_address_phone, user_address_name, province, city, district, user_address_id, user_address_detail_address, shop_id, shop_name } = this.data.detail;
     // 校验订单 地址信息
     // receive_type 发货方式 0 无需发货 1 到店领取 2公司邮寄
-    console.log(receive_type,user_address_phone,this.data.detail);
+    console.log(receive_type, user_address_phone, this.data.detail);
     if (receive_type == 2 || receive_type == 1) {
-        return my.navigateTo({
-                  url: '/package_vip/pages/waitpay/waitpay?'
-                    + 'order_sn=' + order_sn
-                    + '&user_address_name=' + user_address_name
-                    + '&user_address_phone=' + user_address_phone
-                    + '&province=' + (province!==null?province:'')
-                    + '&city=' + (city!==null?city:'')
-                    + '&district=' + (district!==null?district:'')
-                    + '&shop_id=' + shop_id
-                    + '&shop_name=' + (shop_name!==null?shop_name:'')
-                    + '&user_address_id=' + user_address_id
-                    + '&user_address_detail_address=' + user_address_detail_address
-        });
+      return my.navigateTo({
+        url: '/package_vip/pages/waitpay/waitpay?'
+          + 'order_sn=' + order_sn
+          + '&user_address_name=' + user_address_name
+          + '&user_address_phone=' + user_address_phone
+          + '&province=' + (province !== null ? province : '')
+          + '&city=' + (city !== null ? city : '')
+          + '&district=' + (district !== null ? district : '')
+          + '&shop_id=' + shop_id
+          + '&shop_name=' + (shop_name !== null ? shop_name : '')
+          + '&user_address_id=' + user_address_id
+          + '&user_address_detail_address=' + user_address_detail_address
+      });
     }
     // 虚拟商品无需发货
     if (receive_type == 0) {

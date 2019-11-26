@@ -27,7 +27,7 @@ import {
   redirectTo,
   reLaunch,
   switchTab
-} from '../../common/js/router.js'
+} from '../../common/js/router'
 var app = getApp();
 Page({
 
