@@ -78,7 +78,9 @@ Page({
     trueprice: 0, //真实的总价价格
     send_price: 0,
     price_no_count: false,
-    goodsOrder: {}
+    goodsOrder: {},
+    is_allow_coupon:false//是否可以优惠
+
   },
 
   /**
@@ -423,7 +425,7 @@ Page({
   // 选择优惠券
   eveChooseCoupon(e) {
     navigateTo({
-      url: '/pages/home/orderform/chooseCoupon/chooseCoupon?coupon=' + e.currentTarget.dataset.coupon + '&money=' + e.currentTarget.dataset.money
+      url: '/pages/home/orderform/chooseCoupon/chooseCoupon?coupon=' + (e.currentTarget.dataset.coupon?e.currentTarget.dataset.coupon:'') + '&money=' + e.currentTarget.dataset.money+'&is_allow_coupon='+e.currentTarget.dataset.is_allow_coupon
     });
   },
   // 订单确认
@@ -542,6 +544,7 @@ Page({
           goodsReal,
           goodsInvented,
           orderInfo: res.data.activity_list[''],
+          is_allow_coupon:res.data.is_allow_coupon,//是否优惠两单
           order_price: `¥${order_price_num}${order_price_point}`,
           trueprice: res.data.activity_list[''].sum_price / 100 - res.data.activity_list[''].dispatch_price / 100,
           coupon_money,
