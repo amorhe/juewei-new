@@ -2,6 +2,7 @@ import { loginByAliUid } from './pages/common/js/login'
 import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
+    // 加入小程序检查更新
     const updateManager = my.getUpdateManager()
 
     updateManager.onCheckForUpdate(function(res) {
