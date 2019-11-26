@@ -2,7 +2,7 @@
   <!-- 外卖和自提订单详情 -->
   <view style="height:1rpx"></view>
   <view class="board">
-    <view class="board-state" onTap="show">  
+    <view class="board-state" onTap="show">
       {{ d.dis_type==1 ? ((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消' : (d.order_status_info.order_status == 2 && d.order_status_info.dis_status == 2 && d.dis_tag != 'ZPS' && d.dis_get_time ) ? '骑手已接单' :  takeOutState[d.order_status_info.order_status]) :((d.order_status_info.order_status == 0 && d.remaining_pay_minute< 0) ? '订单已取消': pickUpState[d.order_status_info.order_status] )}}
       <!-- {{status[d.status]}} -->
       <image mode="scaleToFill" src="{{imageUrl}}arrow_right1.png"/>
@@ -235,7 +235,7 @@
           <view class="code-button" data-text="{{d.order_no}}" onTap="handleCopy">复制</view>
         </view>
       </view>
-      <view class="item" a:if="{{payTypes[d.pay_type]}}"> 
+      <view class="item" a:if="{{payTypes[d.pay_type]}}">
         <view class="label">
           支付方式
         </view>
@@ -273,7 +273,7 @@
 	<view class="code-tip">到店自提请出示二维码</view>
 </modal>
 <popup show="{{showTop}}" position="bottom">
-  <view style="background: #fff">
+  <view style="background: #fff;border-radius: 20rpx 20rpx 0 0">
     <view class="order-trace">订单跟踪
       <image onTap="closeModel" mode="scaleToFill" src="{{imageUrl}}close1.png"/></view>
     <view class="order-trace-ul">
