@@ -5,6 +5,7 @@
   position: fixed;
   top: 403rpx;
   left: 95rpx;
+	padding-top: 40rpx;
   z-index: 1005;
   box-sizing: border-box;
   overflow: hidden;
@@ -20,7 +21,7 @@
   padding: 0 35rpx;
   display: flex;
   justify-content: center;
-  margin: 60rpx 0 60rpx;
+  margin: 20rpx 0 60rpx;
   flex-wrap: wrap;
   text-align: center
 }
@@ -41,4 +42,11 @@
 }
 .modalBtn>button:nth-child(2){
   color: #E60012
+}
+.successIcon {
+  text-align: center;
+}
+.successIcon image {
+  width: 120rpx;
+  height: 120rpx;
 }

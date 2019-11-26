@@ -1,7 +1,8 @@
+import {imageUrl} from '../../common/js/baseUrl'
 Component({
   mixins: [],
   data: {
-
+		imageUrl
   },
   props: {
     mask: '',   // 遮罩
@@ -11,6 +12,7 @@ Component({
     confirmButtonText: '确认',
     cancelButtonText: '取消',
     onCounterPlusOne: (data) => console.log(data),
+		successIcon: false
   },
   onInit() { },
   deriveDataFromProps() { },
