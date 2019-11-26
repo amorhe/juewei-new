@@ -1,4 +1,4 @@
-import { imageUrl, ak,geotable_id } from '../../../../pages/common/js/baseUrl'
+import { imageUrl, ak, geotable_id } from '../../../../pages/common/js/baseUrl'
 import { gd_decrypt, bd_encrypt } from '../../../../pages/common/js/map'
 const app = getApp();
 Page({
@@ -6,38 +6,49 @@ Page({
     imageUrl,
     mapiconInfo: '',
     mapInfo: [],
-    latitude:'',
-    longitude:'',
+    latitude: '',
+    longitude: '',
     list: [],
-    city:'北京市',
+    city: '',
     addressIng: '',    // 定位地址
     nearAddress: [],   // 附近地址
     isSuccess: false,
     info: '',   // 一条地址信息
     inputAddress: '',  //手动输入的地址
     loginOpened: false,
-    addressList:[],
-    currentPos:'天安门',
+    addressList: [],
+    currentPos: '',
     noSearchResult: false,
-    mapCtx:{},
+    mapCtx: {},
     movePosFlag: false
   },
   onLoad() {
     this.getLocation();
+    // let bol = my.canIUse('map.optimize');
+    // if (bol) {
+    //   this.getLocation();
+    // } else {
+    //   my.alert({
+    //     content:'支付宝版本过低，请升级新版本！',
+    //     success:() => {
+    //       my.navigateBack();
+    //     }
+    //   })
+    // }
   },
   onReady(e) {
     // 使用 my.createMapContext 获取 map 上下文
     this.setData({
-      mapCtx:my.createMapContext('map')
+      mapCtx: my.createMapContext('map')
     })
     this.mapCtx = my.createMapContext('map');
-    this.data.mapCtx.gestureEnable({isGestureEnable:1});
+    this.data.mapCtx.gestureEnable({ isGestureEnable: 1 });
     // 为了使初始化时只执行一遍
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setData({
         movePosFlag: true
       })
-    },1000)
+    }, 1000)
   },
   getLocation() {
     var that = this
@@ -48,7 +59,7 @@ Page({
         let currentPos = res.pois[0] ? res.pois[0].name : currentPos;
         that.setData({
           longitude: res.longitude,
-          latitude:res.latitude,
+          latitude: res.latitude,
           city: res.city,
           currentPos: currentPos
         });
@@ -60,7 +71,7 @@ Page({
       },
     })
   },
-    // 切换城市
+  // 切换城市
   choosecityTap() {
     my.chooseCity({
       showLocatedCity: true,
@@ -83,14 +94,14 @@ Page({
     var that = this
     let baiduPos = bd_encrypt(long, lat);// 百度经纬度
     my.request({
-      url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id='+ geotable_id +'&location=' + baiduPos.bd_lng + ',' + baiduPos.bd_lat + '&radius=2000',
+      url: 'https://api.map.baidu.com/geosearch/v3/nearby?ak=' + ak + '&geotable_id=' + geotable_id + '&location=' + baiduPos.bd_lng + ',' + baiduPos.bd_lat + '&radius=2000',
       success: (res) => {
         // 设置定位位置的图标
-        
-        if(!this.data.sysInfo){
+
+        if (!this.data.sysInfo) {
           let sysInfo = my.getSystemInfoSync();
           this.setData({
-            sysInfo:sysInfo
+            sysInfo: sysInfo
           })
         }
         let windowWidth = this.data.sysInfo.windowWidth;
@@ -119,7 +130,7 @@ Page({
           obj.height = 20
           arr.push(obj)
         })
-        
+
         that.setData({
           mapInfo: arr
         })
@@ -134,21 +145,24 @@ Page({
   },
   // 搜索
   searchAddress() {
-    
-    let  pos = this.data.inputAddress || this.data.currentPos;
-    
-    let url = `https://api.map.baidu.com/place/v2/search?query=${pos}&region=${this.data.city}&output=json&ak=${ak}`;
+    let url = ''
+    if (this.data.inputAddress == '') {
+      url = `https://api.map.baidu.com/place/v2/search?query=美食,酒店,购物,生活服务,丽人,休闲娱乐,文化传媒,医疗,金融,房地产,公司企业,政府机构&location=${this.data.latitude},${this.data.longitude}&radius=2000&output=json&ak=${ak}`;
+    } else {
+      url = `https://api.map.baidu.com/place/v2/search?query=${this.data.inputAddress}&region=${this.data.city}&output=json&ak=${ak}`;
+    }
     url = encodeURI(url);
     my.request({
       url,
       success: (res) => {
-        if(res.data.status === 0){
+        if (res.data.status === 0) {
           let result = res.data.results;
           // 无数据显示无数据页面
-          if(result.length === 0){
+          if (result.length === 0) {
             this.setData({
               noSearchResult: true
             })
+            return
           }
           this.setData({
             addressList: result,
@@ -157,35 +171,33 @@ Page({
         }
         // 搜索到的位置
         let centerPos = res.data.results[0];
-        if(centerPos){
+        if (centerPos) {
           const gd_pos = gd_decrypt(centerPos.location.lng, centerPos.location.lat);
           this.setData({
             longitude: gd_pos.lng,
-            latitude:gd_pos.lat
+            latitude: gd_pos.lat
           });
-          this.setIcon(gd_pos.lng, gd_pos.lat);
+          this.setIcon(centerPos.location.lng, centerPos.location.lat);
         }
-        
+
       },
     });
   },
-  chooseAdress (e) {
-    
+  chooseAdress(e) {
     let { pos } = e.currentTarget.dataset;
     app.globalData.addAddressInfo = pos;
     my.navigateBack();
   },
-  mapTap(e){
-    if(!this.data.movePosFlag){
+  mapTap(e) {
+    if (!this.data.movePosFlag) {
       return;
     }
-    console.log(e.type);
-    if(e.type == 'end' || e.type == 'tap'){
-      
+    if (e.type == 'end' || e.type == 'tap') {
+
       let newLat = e.latitude;
       let newLng = e.longitude;
       let that = this;
-      that.setIcon(e.longitude,e.latitude);
+      that.setIcon(e.longitude, e.latitude);
       let baiduPos = bd_encrypt(e.longitude, e.latitude);
       this.mapCtx.updateComponents({
         longitude: e.longitude,
@@ -196,20 +208,20 @@ Page({
       my.request({
         url,
         success: (res) => {
-          if(res.data.status === 0){
+          if (res.data.status === 0) {
             let result = res.data.result.pois;
             let addressComponent = res.data.result.addressComponent
             // 无数据显示无数据页面
-            if(result.length === 0){
+            if (result.length === 0) {
               this.setData({
                 noSearchResult: true
               })
             }
-          
+
             result.forEach(item => {
               item.province = addressComponent.province,
-              item.city = addressComponent.city,
-              item.district = addressComponent.district
+                item.city = addressComponent.city,
+                item.district = addressComponent.district
               item.location = {
                 lng: item.point.x,
                 lat: item.point.y
@@ -222,7 +234,7 @@ Page({
           }
         },
       });
-      
+
     }
   }
 });

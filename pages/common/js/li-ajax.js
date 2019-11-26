@@ -63,8 +63,8 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       },
       fail: (err) => {
         my.hideLoading()
-        reject(my.alert({
-          title: '服务器错误'
+        reject(my.showToast({
+          content: '服务器错误'
         }))
       }
     });
@@ -110,8 +110,8 @@ export const getRegion = async () => {
         resolve(JSON.parse(res.data.split('=')[1].slice(0, -1)))
       },
       fail: res => {
-        my.alert({
-          title: res
+        my.showToast({
+          content: res
         });
       }
     });
@@ -165,6 +165,7 @@ export const guide = e => {
     latitude:shop_latitude,
     name: shop_name,
     address,
+    scale: 13
   });
 }
 
@@ -211,7 +212,7 @@ export const getAddressId = () => {
       },
       fail() {
         my.hideLoading();
-        reject(my.alert({ title: '定位失败' }))
+        reject(my.showToast({ content: '定位失败' }))
       },
     })
   })

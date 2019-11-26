@@ -18,3 +18,7 @@
   text-decoration: line-through;
   font-size: 28rpx
 }
+.priceTotal {
+  min-width:56rpx;
+  display:inline-block
+}

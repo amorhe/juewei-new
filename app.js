@@ -2,6 +2,32 @@ import { loginByAliUid } from './pages/common/js/login'
 import { baseUrl } from './pages/common/js/baseUrl'
 App({
   onLaunch(options) {
+    const updateManager = my.getUpdateManager()
+
+    updateManager.onCheckForUpdate(function(res) {
+      // 请求完新版本信息的回调
+      console.log(res.hasUpdate)
+      if (res.hasUpdate) {
+        updateManager.onUpdateReady(function() {
+          my.confirm({
+            title: '更新提示',
+            content: '新版本已经准备好，是否重启应用？',
+            success: function(res) {
+              if (res.confirm) {
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                updateManager.applyUpdate()
+              }
+            }
+          })
+        })
+
+        updateManager.onUpdateFailed(function() {
+          // 新版本下载失败
+        })
+      }
+    })
+
+
     // page是拿不到的信息，只有query可以拿到
     if (options.query && options.query.go) {
       this.globalData.query = options.query.go;

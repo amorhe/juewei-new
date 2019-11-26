@@ -67,8 +67,8 @@
           <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
           <view class="flexNormal">
             <view class="ordergoodsOld" a:if="{{item.goods_original_price > item.goods_price}}">
-              <text class="fontTwentyTwo">￥</text>
-              <text>{{item.goods_original_price * item.goods_quantity / 100}}</text></view>
+              <text class="fontTwentyTwo">￥{{item.goods_original_price * item.goods_quantity / 100}}</text>
+            </view>
             <view>
               <text class="fontTwentyTwo">￥</text>
               <text>{{item.goods_price / 100 * item.goods_quantity}}</text>

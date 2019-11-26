@@ -32,8 +32,8 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
           });
         } else {
           //提示接口的信息，并且跳错误页
-          reject(my.alert({
-            title: rest.msg,
+          reject(my.showToast({
+            content: rest.msg,
             success() {
               my.redirectTo({
                 url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
@@ -44,8 +44,8 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
       },
       fail: (err) => {
         my.hideLoading();
-        reject(my.alert({
-          title: '网络请求错误',
+        reject(my.showToast({
+          content: '网络请求错误',
           success() {
             my.redirectTo({
               url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
