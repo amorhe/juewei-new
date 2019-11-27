@@ -40,8 +40,8 @@ App({
     my.getNetworkType({
       success: (res) => {
         if (res.networkType == "NOTREACHABLE") {
-          my.reLaunch({
-            url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+          my.redirectTo({
+            url: '/pages/noNet/noNet?redir=', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
           });
           return
         }

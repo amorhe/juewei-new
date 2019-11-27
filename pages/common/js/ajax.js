@@ -10,6 +10,9 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
     headers = { 'content-type': 'application/json' };
   }
   let promise = new Promise(function(resolve, reject) {
+    let url_pages = getCurrentPages() //获取加载的页面
+    let url_currentPage = url_pages[url_pages.length-1] //获取当前页面的对象
+    let redir_url = url_currentPage.route //当前页面url
     my.request({
       url: newBaseUrl ? (newBaseUrl + url) : (baseUrl + url),
       headers,
@@ -36,7 +39,7 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
             content: rest.msg,
             success() {
               my.redirectTo({
-                url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+                url: '/pages/noNet/noNet?redir='+redir_url, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
               });
             }
           }))
@@ -48,7 +51,7 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
           content: '网络请求错误',
           success() {
             my.redirectTo({
-              url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+              url: '/pages/noNet/noNet?redir='+redir_url, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
             });
           }
         }))

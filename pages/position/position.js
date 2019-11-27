@@ -4,7 +4,7 @@ import { GetLbsShop, NearbyShop } from '../common/js/home'
 import { cur_dateTime, compare, sortNum } from '../common/js/time'
 let timeCount;
 var app = getApp();
-
+let redir_url = 'pages/position/position' //当前页面url
 Page({
   data: {
     imageUrl: imageUrl,
@@ -130,7 +130,7 @@ Page({
         content: '网络请求错误',
         success() {
           my.redirectTo({
-            url: '/pages/noNet/noNet', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
+            url: '/pages/noNet/noNet?redir='+redir_url, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
           });
         }
       })
