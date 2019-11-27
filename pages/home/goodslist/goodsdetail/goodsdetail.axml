@@ -146,9 +146,14 @@
               <view>
                 <view>
                   <view>{{item.nick_name}}</view>
-                  <view class="commontImageView">
+                  <view class="commontImageView" a:if="{{item.takeout_order_comment_dispatching_level > 0}}">
                     <image class="normalImage" a:for="{{item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_2.png" />
                     <image class="normalImage" a:for="{{5-item.takeout_order_comment_dispatching_level}}" src="{{imageUrl}}stars_1.png" />
+                  </view>
+                  <!-- 前端判断 -->
+                  <view class="commontImageView" a:if="{{item.takeout_order_comment_dispatching_level == 0}}">
+                    <image class="normalImage" a:for="{{1}}" src="{{imageUrl}}stars_2.png" />
+                    <image class="normalImage" a:for="{{4}}" src="{{imageUrl}}stars_1.png" />
                   </view>
                 </view>
               </view>
