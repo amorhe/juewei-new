@@ -1,4 +1,4 @@
-import { imageUrl, ak, geotable_id,mySet,myGet } from '../common/js/baseUrl'
+import { imageUrl, ak, geotable_id, mySet, myGet } from '../common/js/baseUrl'
 import { bd_encrypt } from '../common/js/map'
 import { GetLbsShop, NearbyShop } from '../common/js/home'
 import { cur_dateTime, compare, sortNum } from '../common/js/time'
@@ -103,16 +103,10 @@ Page({
         //存储app.golbalData
         my.setStorageSync({ key: 'appglobalData', data: app.globalData }); //
         let that = this;
-        timeCount = setInterval(function() {
-          if (that.data.selfok == true) {
-            clearInterval(timeCount);
-            //跳转到商城首页
-            my.reLaunch({
-              url: '/pages/home/goodslist/goodslist'
-            });
-          }
-        }, 1000);
-
+        //外卖ok
+        this.setData({
+          selfok: true
+        })
       } else if (res.code == 100 && res.data.shop_list.length == 0) {
         this.setData({
           content: '您的定位地址无可配送门店',
@@ -198,10 +192,15 @@ Page({
       const shopArray = shopArr1.concat(shopArr2);
       shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
-      //外卖ok
-      this.setData({
-        selfok: true
-      })
+      timeCount = setInterval(function() {
+        if (that.data.selfok == true) {
+          clearInterval(timeCount);
+          //跳转到商城首页
+          my.reLaunch({
+            url: '/pages/home/goodslist/goodslist'
+          });
+        }
+      }, 1000);
     })
   },
   onCounterPlusOne(e) {

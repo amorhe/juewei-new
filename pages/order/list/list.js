@@ -1,4 +1,4 @@
-import { imageUrl, imageUrl2 } from '../../common/js/baseUrl'
+import { imageUrl, imageUrl2,myGet } from '../../common/js/baseUrl'
 import { ajax, log, contact, isloginFn, guide, getSid } from '../../common/js/li-ajax'
 import { reqUserPoint } from '../../common/js/vip'
 const app = getApp()
@@ -132,14 +132,20 @@ Page({
     timers.forEach(item => clearInterval(item))
 
     // 校验用户是否登录
-    await reqUserPoint()
-    let _sid = await getSid()
+    // await reqUserPoint()
+     // 判断 是否登录
+    let userInfo = myGet('userInfo');
+    let _sid = ''
+    if (userInfo && userInfo.user_id && userInfo.user_id != '') {
+       _sid = await getSid()
+    }
+  
     this.setData({
       loginOpened: !_sid,
       // 设置 当前订单列表的显示状态
       dis_type:app.globalData.type === 1 ? 0 : 1
     })
-    if (!_sid) { return isloginFn() }
+    // if (!_sid) { return isloginFn() }
     // 校验是否 需要刷新
     if (app.globalData.refresh === true) {
     await my.showToast({
