@@ -56,6 +56,11 @@ Page({
         list: [...list, ...res.data.data],
         finish: true
       })
+    }else{
+      this.setData({
+        list: [...list],
+        finish: true
+      })
     }
   },
   toUrl(e) {
