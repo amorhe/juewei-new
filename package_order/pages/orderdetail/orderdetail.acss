@@ -100,6 +100,8 @@ view.pay {
   height: 86rpx;
   border: 1px solid #f2f2f2;
   margin-right: 28rpx;
+  background-size: auto 100% !important;
+  background-position: 50% 50% !important;
 }
 
 .good-item {
