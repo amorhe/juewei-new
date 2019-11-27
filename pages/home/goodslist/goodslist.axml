@@ -177,7 +177,7 @@
         </view>
         <view style="height:60rpx;width:100%"></view>
       </scroll-view>
-      <scroll-view scroll-y="true" style="width:582rpx;height: 100%;" scroll-into-view="s{{togoodsType}}" scroll-with-animation="true" scroll-animation-duration="30" class="scrolllist" onScroll="onScroll" onTouchend="onTouchend">
+      <scroll-view scroll-y="true" style="width:582rpx;height: 100%;" scroll-into-view="s{{togoodsType}}" scroll-with-animation="true" scroll-animation-duration="30" class="scrolllist" onScroll="onScroll" onTouchEnd="onTouchend">
         <view id="s{{index + 1}}" a:for="{{shopGoodsAll}}" a:if="{{item.last.length>0}}" class="sc_right_item" >
           <view class="goodsTypeEv">{{item.key}}</view>
           <!-- 折扣套餐爆款 -->

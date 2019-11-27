@@ -16,7 +16,8 @@
     "pages/skip/tomy/tomy",
     "pages/skip/tovip/tovip",
     "pages/skip/tocoupon/tocoupon",
-    "pages/skip/tonearbyshop/tonearbyshop"
+    "pages/skip/tonearbyshop/tonearbyshop",
+    "pages/webview/webview/webview"
   ],
   "subPackages": [
     {
