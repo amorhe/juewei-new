@@ -66,7 +66,7 @@ Page({
     ],
 
     cur: 0,
-
+    
 
 
   },
@@ -241,6 +241,10 @@ Page({
    */
 
   async changeMenu(e) {
+    //用户未登录状态
+    if(this.data.loginOpened){
+       
+    }
     let { menuList, timers } = this.data
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
@@ -305,7 +309,8 @@ Page({
             menuList,
             timers,
             loading: false,
-            refreshFinish: false
+            refreshFinish: false,
+            loginOpened:false
           }, () => my.hideLoading())
         }, 1000)
 
@@ -315,7 +320,6 @@ Page({
         my.hideLoading()
       }
     })
-
   },
 
   /**
@@ -327,7 +331,7 @@ Page({
     const { menuList, cur } = this.data;
     setTimeout(async () => {
       await this.getOrderList()
-    }, 300)
+    }, 100)
   },
 
   /**

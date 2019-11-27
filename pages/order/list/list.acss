@@ -196,3 +196,17 @@ page {
 .cancel{
   color: #E60012;
 }
+
+.login{
+  margin: 0 auto;
+  margin-top:20rpx;
+  width:180rpx;
+  height:64rpx;
+  line-height:63rpx;
+  background:#FB5332;
+  background:linear-gradient(right,#E60012,#FB5332);
+  color:#ffffff;
+  font-size:26rpx;
+  border-radius: 64rpx;
+  text-align: center;
+}
