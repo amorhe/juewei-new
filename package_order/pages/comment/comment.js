@@ -255,7 +255,7 @@ Page({
       fail: (err) => {
         log(err)
         my.showToast({
-          content: 'fail',
+          content: '选择您的图片失败',
         });
       }
     })

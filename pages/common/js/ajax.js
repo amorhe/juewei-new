@@ -48,7 +48,7 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
       fail: (err) => {
         my.hideLoading();
         reject(my.showToast({
-          content: '网络请求错误',
+          content: '您的网路有点卡哦，请稍后再试！',
           success() {
             my.redirectTo({
               url: '/pages/noNet/noNet?redir='+redir_url, // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用

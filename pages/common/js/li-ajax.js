@@ -65,7 +65,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       fail: (err) => {
         my.hideLoading()
         reject(my.showToast({
-          content: '服务器错误'
+          content: '您的网络有点卡哦，请稍后再试！'
         }))
       }
     });
