@@ -192,6 +192,7 @@ Page({
       const shopArray = shopArr1.concat(shopArr2);
       shopArray[0]['jingxuan'] = true;
       my.setStorageSync({ key: 'self', data: shopArray });  // 保存自提门店到本地
+      let that = this;
       timeCount = setInterval(function() {
         if (that.data.selfok == true) {
           clearInterval(timeCount);
