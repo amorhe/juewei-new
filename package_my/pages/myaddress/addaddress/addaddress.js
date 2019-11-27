@@ -99,7 +99,6 @@ Page({
     my.getLocation({
       type: 3,
       success(res) {
-        console.log(res)
         var address = res.pois[0].name ? res.pois[0].name : res.pois[0].address
         // 获取到的是高德的经纬度，要转换为百度经纬度
         let map_position = bd_encrypt(res.longitude, res.latitude);

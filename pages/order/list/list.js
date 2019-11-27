@@ -135,7 +135,7 @@ Page({
     await reqUserPoint()
     let _sid = await getSid()
     this.setData({
-      // loginOpened: !_sid
+      loginOpened: !_sid,
       // 设置 当前订单列表的显示状态
       dis_type:app.globalData.type === 1 ? 0 : 1
     })

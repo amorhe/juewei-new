@@ -1,6 +1,3 @@
-<!-- <view>
-  选择收货地址
-</view> -->
 <view class="addressView">
   <view class="searchView" style="background:#fff">
     <view>
@@ -14,29 +11,35 @@
       </view>
     </view>
   </view>
-
-  <view class="mapView">
-    <map id="map" style="width:100%;height:100%;" onRegionChange="mapTap" onTap="mapTap" optimize="{{true}}" show-location latitude="{{latitude}}" longitude="{{longitude}}" scale="14"  markers="{{ mapInfo }}"></map>
+  <view class="mapView" a:if="{{!isSearch}}">
+    <map id="map" style="width:100%;height:100%;" onRegionChange="mapTap" onTap="mapTap" optimize="{{true}}" show-location latitude="{{latitude}}" longitude="{{longitude}}" scale="14" markers="{{ mapInfo }}"></map>
   </view>
-  <view>
-    <cover-view class="addressshopBox">
-      <cover-view class="addressItem" a:for="{{addressList}}" onTap="chooseAdress" data-pos='{{item}}'>
-        <cover-view class="iconImgView">
-          <cover-image a:if="{{ index == 0}}" src="{{ imageUrl }}position.png" class="iconImg"/>
-          <cover-image a:else src="{{ imageUrl }}order2.png" class="iconImg"/>
-        </cover-view>
-        <cover-view>
-          <cover-view class="addressName">{{item.name}}</cover-view>
-          <cover-view class="addressInfo">{{item.address || item.addr}}</cover-view>
-        </cover-view>
-      </cover-view>
-      <cover-view></cover-view>
-    </cover-view>
+  <scroll-view scroll-y="{{true}}" onScrollToLower="scrollToLower" class="scroll_box {{isSearch?'active':''}}">
+    <!-- <view class="addressshopBox"> -->
+      <view class="addressItem" a:for="{{addressList}}" onTap="chooseAdress" data-pos='{{item}}'>
+        <view class="iconImgView">
+          <image a:if="{{ index == 0}}" src="{{ imageUrl }}position.png" class="iconImg"/>
+          <image a:else src="{{ imageUrl }}order2.png" class="iconImg"/>
+        </view>
+        <view>
+          <view class="addressName">{{item.name}}</view>
+          <view class="addressInfo">{{item.address || item.addr}}</view>
+        </view>
+      </view>
+      <view></view>
+    <!-- </view> -->
+  </scroll-view>
+  <view class="shopsearch_view" a:if="{{isSearch}}">
+    <view class="shopsearch" a:if="{{addressList.length>0}}" a:for="{{addressList}}" onTap="chooseAdress" data-pos='{{item}}'>
+      <view class="searchTitle">
+        <text class="fontBold">{{item.name}}</text>
+      </view>
+      <view class="search_b">{{item.address}}</view>
+    </view>
+    <view class="noSearchResult" a:if="{{ noSearchResult }}">
+      <image class="position_icon" mode="scaleToFill" src="{{imageUrl}}bg_position.png"/>
+      <text class="text">找不到地址</text>
+      <text class="noresultText">请尝试只输入小区、写字楼或学校名，详细地址（如门牌号）可稍后输入哦。</text>
+    </view>
   </view>
-  <cover-view class="noSearchResult" a:if="{{ noSearchResult }}">
-    <image class="position_icon" mode="scaleToFill" src="{{imageUrl}}bg_position.png"/>
-    <text class="text">找不到地址</text>
-    <text class="noresultText">请尝试只输入小区、写字楼或学校名，详细地址（如门牌号）可稍后输入哦。</text>
-  </cover-view>
 </view>
-

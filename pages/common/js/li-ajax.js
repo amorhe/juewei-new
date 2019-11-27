@@ -39,6 +39,7 @@ export const ajax = async (url, data = {}, method = 'POST') => {
       data,
       method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      timeout: 5000,
       success: (res) => {
         // log(res.data)
         res.data.task = task
@@ -162,7 +163,7 @@ export const guide = e => {
   const { shop_longitude, shop_latitude, shop_name, address } = e.currentTarget.dataset;
   my.openLocation({
     longitude: shop_longitude,
-    latitude:shop_latitude,
+    latitude: shop_latitude,
     name: shop_name,
     address,
     scale: 13
@@ -176,7 +177,7 @@ export const guide = e => {
 export const contact = () => {
   //my.makePhoneCall({ number: '4009995917' });
   my.navigateTo({
-      url: '/package_my/pages/onlineservice/onlineservice',
+    url: '/package_my/pages/onlineservice/onlineservice',
   });
 }
 

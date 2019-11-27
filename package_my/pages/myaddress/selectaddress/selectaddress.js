@@ -20,7 +20,8 @@ Page({
     currentPos: '',
     noSearchResult: false,
     mapCtx: {},
-    movePosFlag: false
+    movePosFlag: false,
+    isSearch: false
   },
   onLoad() {
     this.getLocation();
@@ -55,15 +56,17 @@ Page({
     my.getLocation({
       type: 3,
       success(res) {
+        console.log(res)
         my.hideLoading();
         let currentPos = res.pois[0] ? res.pois[0].name : currentPos;
         that.setData({
           longitude: res.longitude,
           latitude: res.latitude,
           city: res.city,
-          currentPos: currentPos
+          currentPos: currentPos,
+          addressList: res.pois
         });
-        that.searchAddress();
+        that.setIcon(res.longitude, res.latitude)
       },
       fail() {
         my.hideLoading();
@@ -89,6 +92,12 @@ Page({
       },
     });
   },
+  scrollToLower() {
+
+    // this.setData({
+    //   isSearch: true
+    // })
+  },
   setIcon(long, lat) {
     // 从地图中获取的和往地图中设置的都是高德经纬度，接口调用和后台存储的都是百度的经纬度，在使用中要注意转换
     var that = this
@@ -112,11 +121,7 @@ Page({
             latitude: lat,// 高德经纬度
             longitude: long,
             width: 32,
-            height: 32,
-            // fixedPoint:{
-            //     originX: windowWidth / 2, 
-            //     originY: windowHeight / 4  
-            // }
+            height: 32
           }
         ]
         // 设置门店的图标
@@ -139,18 +144,20 @@ Page({
   },
   // 输入
   searchInput(e) {
+    if (e.detail.value == '') {
+      this.setData({
+        noSearchResult: false,
+        isSearch: false
+      })
+      return
+    }
     this.setData({
       inputAddress: e.detail.value
     })
   },
   // 搜索
   searchAddress() {
-    let url = ''
-    if (this.data.inputAddress == '') {
-      url = `https://api.map.baidu.com/place/v2/search?query=美食,酒店,购物,生活服务,丽人,休闲娱乐,文化传媒,医疗,金融,房地产,公司企业,政府机构&location=${this.data.latitude},${this.data.longitude}&radius=2000&output=json&ak=${ak}`;
-    } else {
-      url = `https://api.map.baidu.com/place/v2/search?query=${this.data.inputAddress}&region=${this.data.city}&output=json&ak=${ak}`;
-    }
+    let url = `https://api.map.baidu.com/place/v2/search?query=${this.data.inputAddress}&region=${this.data.city}&output=json&ak=${ak}`;
     url = encodeURI(url);
     my.request({
       url,
@@ -160,13 +167,15 @@ Page({
           // 无数据显示无数据页面
           if (result.length === 0) {
             this.setData({
-              noSearchResult: true
+              noSearchResult: true,
+              isSearch: true
             })
             return
           }
           this.setData({
             addressList: result,
-            noSearchResult: false
+            noSearchResult: false,
+            isSearch: true
           })
         }
         // 搜索到的位置
