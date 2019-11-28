@@ -34,7 +34,7 @@
           联系客服
       </view>
       <view class="cancel-order" a:if="{{d.order_status_info.order_status != 0 && d.order_status_info.order_status != 1 && d.order_status_info.order_status != 2 && d.order_status_info.order_status != 3}}" catchTap="buyAgain">
-          再来一单{{d.order_status_info.order_status}}
+          再来一单
       </view>
       <view class="cancel-order red" catchTap="toComment" data-order_no="{{d.order_no}}" a:if="{{d.order_status_info.order_status == 4 && d.is_comment == 0}}">
           评价订单
@@ -83,7 +83,7 @@
               <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts!==1}}" src="{{item.goods_img}}"/>
               <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)==='PKG' && item.is_gifts!==1}}" src="{{ img_url + item.goods_img }}"/>
               <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts===1 && item.goods_code.indexOf('JJG')>-1 && (item.gift_type==3 || item.gift_type==4) }}" src="{{item.goods_img ? item.goods_img : imageUrl + 'gift.jpg'}}"/>
-              <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts===1 && item.goods_code.indexOf('JJG')===-1 && (item.gift_type==3 || item.gift_type==4) }}" src="{{item.goods_img ? item.goods_img : imageUrl + 'present_bg.png'}}"/>
+              <image mode="scaleToFill" a:if="{{item.goods_code.substr(2,3)!=='PKG' && item.is_gifts===1 && item.goods_code.indexOf('JJG')===-1 }}" src="{{item.goods_img ? item.goods_img : imageUrl + 'present_bg.png'}}"/>
               <view class="body">
                 <view class="name">
                   <view class="top">
