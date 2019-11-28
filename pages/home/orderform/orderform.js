@@ -79,8 +79,8 @@ Page({
     send_price: 0,
     price_no_count: false,
     goodsOrder: {},
-    is_allow_coupon:false//是否可以优惠
-
+    is_allow_coupon:false,//是否可以优惠
+    activity_channel:1 //支付宝的
   },
 
   /**
@@ -458,7 +458,7 @@ Page({
     //提交确认订单
     // 这里面遇到了选中的换商品字符串无法传入到后台的情况
     let gift_list_confirm = [];
-    confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, JSON.stringify([]), notUse, (app.globalData.freetf ? app.globalData.freeId : ''), myGet('_sid'), 2).then((res) => {
+    confirmOrder(this.data.orderType, shop_id, goods, shop_id, this.data.coupon_code, JSON.stringify([]), notUse, (app.globalData.freetf ? app.globalData.freeId : ''), myGet('_sid'),this.data.activity_channel).then((res) => {
       let goodsList = myGet('goodsList');
       if (res.code == 0) {
         let goodsReal = [],
