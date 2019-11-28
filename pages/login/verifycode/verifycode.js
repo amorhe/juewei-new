@@ -83,11 +83,34 @@ Page({
           key: 'user_id', // 缓存数据的key
           data: res.data.user_id, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: 'phone', // 缓存数据的key
+          data: res.data.phone, // 要缓存的数据
+        });
         mySet('userInfo',res.data);
         my.navigateBack({
           delta: 2
         })
       } else {
+        //失败
+        my.removeStorageSync({
+          key: 'authCode',
+        });
+        my.removeStorageSync({
+          key: 'ali_uid',
+        });
+        my.removeStorageSync({
+          key: '_sid',
+        });
+        my.removeStorageSync({
+          key: 'user_id',
+        });
+        my.removeStorageSync({
+          key: 'phone',
+        });
+        my.removeStorageSync({
+          key: 'userInfo',
+        });
         // 其他
         my.showToast({
           type: 'none',
@@ -95,9 +118,7 @@ Page({
           content: res.msg
         });
       }
-
     })
-
   },
   // 倒计时60
   timeDate(e) {

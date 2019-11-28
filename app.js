@@ -81,6 +81,10 @@ App({
               key: 'phone', // 缓存数据的key
               data: data.data.phone, // 要缓存的数据
             });
+            my.setStorageSync({
+              key: 'userInfo', // 缓存数据的key
+              data: data.data, // 要缓存的数据
+            });
           } else {//用户登录失败的情况
             my.setStorageSync({
               key: 'ali_uid', // 缓存数据的key
@@ -95,6 +99,9 @@ App({
             });
             my.removeStorageSync({
               key: 'phone',
+            });
+            my.removeStorageSync({
+              key: 'userInfo',
             });
           }
         })
@@ -115,6 +122,9 @@ App({
         });
         my.removeStorageSync({
           key: 'phone',
+        });
+        my.removeStorageSync({
+          key: 'userInfo',
         });
       }
     });

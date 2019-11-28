@@ -234,7 +234,6 @@ Page({
   },
   // 授权登录
   loginByAuthFn(ali_uid, phone) {
-    console.log('授权函数')
     loginByAuth(ali_uid, phone, '', '').then((res) => {
       if (res.code == 0) {
         my.setStorageSync({
@@ -245,10 +244,32 @@ Page({
           key: 'user_id', // 缓存数据的key
           data: res.data.user_id, // 要缓存的数据
         });
+        my.setStorageSync({
+          key: 'phone', // 缓存数据的key
+          data: res.data.phone, // 要缓存的数据
+        });
         mySet('userInfo',res.data);
         app.globalData._sid = res.data._sid
         this.getUserInfo(res.data._sid);
       } else {
+        my.removeStorageSync({
+          key: 'authCode',
+        });
+        my.removeStorageSync({
+          key: 'ali_uid',
+        });
+        my.removeStorageSync({
+          key: '_sid',
+        });
+        my.removeStorageSync({
+          key: 'user_id',
+        });
+        my.removeStorageSync({
+          key: 'phone',
+        });
+        my.removeStorageSync({
+          key: 'userInfo',
+        });
         my.showToast({
           type: 'none',
           content: res.msg,

@@ -135,6 +135,7 @@ Page({
     // await reqUserPoint()
      // 判断 是否登录
     let userInfo = myGet('userInfo');
+    let user_id = myGet('user_id');
     let _sid = ''
     if (userInfo && userInfo.user_id && userInfo.user_id != '') {
        _sid = await getSid()
