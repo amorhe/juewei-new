@@ -251,7 +251,7 @@
             a:if="{{item.key!='套餐' && item.key!='爆款' &&item.key!='折扣'}}"  style="position:relative;">
             <view class="discountImg" style="height:136rpx">
               <image a:if="{{v.huangou==1}}" class="huangouPng" mode="scaleToFill" src="{{imageUrl}}markup_icon.png" />
-              <image class="goods_ss_img" src="{{v.goods_small_img[0]}}" mode="scaleToFill" />
+              <image class="goods_ss_img" src="{{v.goods_img[0]}}" mode="scaleToFill" />
             </view>
             <view class="goodsInfos" style="height:136rpx">
               <view>

@@ -4,7 +4,6 @@ App({
   onLaunch(options) {
     // 加入小程序检查更新
     const updateManager = my.getUpdateManager()
-
     updateManager.onCheckForUpdate(function(res) {
       // 请求完新版本信息的回调
       if (res.hasUpdate) {
@@ -20,13 +19,11 @@ App({
             }
           })
         })
-
         updateManager.onUpdateFailed(function() {
           // 新版本下载失败
         })
       }
     })
-
 
     // page是拿不到的信息，只有query可以拿到
     if (options.query && options.query.go) {
@@ -36,7 +33,7 @@ App({
         data: options.query.go, // 要缓存的数据
       });
     }
-    // 第一次打开
+    // 检测网络是否正常
     my.getNetworkType({
       success: (res) => {
         if (res.networkType == "NOTREACHABLE") {
@@ -44,9 +41,12 @@ App({
             url: '/pages/noNet/noNet?redir=', // 需要跳转的应用内非 tabBar 的目标页面路径 ,路径后可以带参数。参数规则如下：路径与参数之间使用
           });
           return
+        }else{
+          //正常网络
         }
       }
     })
+    // 监听网络状态变化
     my.onNetworkStatusChange((res) => {
       if (res.networkAvailable == true) {
         my.reLaunch({
@@ -54,6 +54,7 @@ App({
         })
       }
     })
+
     // 获取授权
     my.getAuthCode({
       scopes: ['auth_base'],
@@ -63,11 +64,14 @@ App({
           data: res.authCode, // 要缓存的数据
         });
         loginByAliUid(res.authCode).then((data) => {
-          if (data.code == 0 && data.data.user_id) {
-            // console.log('loginByAliUid',data);
+          if (data.code == 0 && data.data.user_id) {//用户自动登录成功
             my.setStorageSync({
               key: 'ali_uid', // 缓存数据的key
               data: data.data.ali_uid, // 要缓存的数据
+            });
+            my.setStorageSync({
+              key: '_sid', // 缓存数据的key
+              data: data.data._sid, // 要缓存的数据
             });
             my.setStorageSync({
               key: 'user_id', // 缓存数据的key
@@ -78,10 +82,10 @@ App({
               data: data.data.phone, // 要缓存的数据
             });
             my.setStorageSync({
-              key: '_sid', // 缓存数据的key
-              data: data.data._sid, // 要缓存的数据
+              key: 'userInfo', // 缓存数据的key
+              data: data.data, // 要缓存的数据
             });
-          } else {
+          } else {//用户登录失败的情况
             my.setStorageSync({
               key: 'ali_uid', // 缓存数据的key
               data: data.data.ali_uid, // 要缓存的数据
@@ -90,9 +94,39 @@ App({
               key: '_sid', // 缓存数据的key
               data: data.data._sid, // 要缓存的数据
             });
+            my.removeStorageSync({
+              key: 'user_id',
+            });
+            my.removeStorageSync({
+              key: 'phone',
+            });
+            my.removeStorageSync({
+              key: 'userInfo',
+            });
           }
         })
       },
+      //获取授权码失败
+      fail:(e)=>{
+        my.removeStorageSync({
+          key: 'authCode',
+        });
+        my.removeStorageSync({
+          key: 'ali_uid',
+        });
+        my.removeStorageSync({
+          key: '_sid',
+        });
+        my.removeStorageSync({
+          key: 'user_id',
+        });
+        my.removeStorageSync({
+          key: 'phone',
+        });
+        my.removeStorageSync({
+          key: 'userInfo',
+        });
+      }
     });
   },
   onShow(options) {//多次执行
