@@ -55,7 +55,7 @@ Page({
     //console.log(this.data.focus)
     setTimeout(() => {
       that.onFocus();
-    }, 100);
+    }, 200);
   },
   onFocus() {
     this.setData({
