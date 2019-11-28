@@ -24,7 +24,7 @@
       <view class="cancel-order" a:if="{{(d.order_status_info.order_status == 1 || d.order_status_info.order_status == 2) && !((d.order_status_info.order_status)==2 && (d.dis_tag == 'ZPS'||d.dis_type==2) ) }}" catchTap="showCancel">
           取消订单
       </view>
-      <view class="cancel-order" a:if="{{(d.order_status_info.order_status ==2 ||d.order_status_info.order_status==3)  && d.dis_type == 1 && d.dis_tag != 'ZPS' && ((d.dis_get_time != '0000-00-00 00:00:00') || (d.dis_get_time != ''))}}" data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
+      <view class="cancel-order" a:if="{{(d.order_status_info.order_status ==2 ||d.order_status_info.order_status==3)  && d.dis_type == 1 && d.dis_tag != 'ZPS' && ((d.dis_get_time != '0000-00-00 00:00:00') || (d.dis_get_time != ''))  && d.dis_tel!=''}}" data-number="{{d.dis_tel}}" catchTap="makePhoneCall">
           联系骑手
       </view>
       <view class="cancel-order" a:if="{{d.order_status_info.order_status == 3 && d.dis_tag == 'ZPS'}}" data-number="{{d.shop_tel}}" catchTap="makePhoneCall">

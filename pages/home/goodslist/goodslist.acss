@@ -84,7 +84,6 @@ page {
 }
 
 .content_main {
-  padding-right: 36rpx;
   position: sticky;
 }
 
