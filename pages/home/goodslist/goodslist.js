@@ -514,7 +514,7 @@ Page({
   },
   // 门店营销活动(折扣和套餐)
   async funGetActivityList(city_id, district_id, company_id, buy_type, user_id, type) {
-    let res = await activityList(city_id, district_id, company_id, buy_type, user_id, 2, type);
+    let res = await activityList(city_id, district_id, company_id, buy_type, user_id, 3, type);
     if (res && res.data) {//活动接口存在
       // 获取加价购商品
       if (res && res.data && res.data.MARKUP && res.data.MARKUP != null) {
