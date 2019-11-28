@@ -2,7 +2,6 @@
   "defaultTitle": "会员专享",
   "titleBarColor": "#E60012",
   "backgroundColor": "#feffff",
-  "titleImage":"https://test-cdn-wap.juewei.com/m/ali-mini/image/body_bg.png",
   "transparentTitle": "auto",
   "allowsBounceVertical": "NO"
 }

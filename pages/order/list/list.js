@@ -1,5 +1,5 @@
 import { imageUrl, imageUrl2,myGet } from '../../common/js/baseUrl'
-import { ajax, log, contact, isloginFn, guide, getSid } from '../../common/js/li-ajax'
+import { ajax, log, contact, isloginFn, guide } from '../../common/js/li-ajax'
 import { reqUserPoint } from '../../common/js/vip'
 const app = getApp()
 Page({
@@ -136,13 +136,12 @@ Page({
      // 判断 是否登录
     let userInfo = myGet('userInfo');
     let user_id = myGet('user_id');
-    let _sid = ''
-    if (userInfo && userInfo.user_id && userInfo.user_id != '') {
-       _sid = await getSid()
-    }
-  
+    let _sid = myGet('_sid');
+    // if (userInfo && userInfo.user_id && userInfo.user_id != '') {
+    //    _sid = await getSid()
+    // }
     this.setData({
-      loginOpened: !_sid,
+      loginOpened: (userInfo && userInfo.user_id && userInfo.user_id != ''),
       // 设置 当前订单列表的显示状态
       dis_type:app.globalData.type === 1 ? 0 : 1
     })
