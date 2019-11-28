@@ -242,12 +242,12 @@ view.pay {
   height: auto
 }
 
-.item .label {
+/* .item .label {
   font-size: 28rpx;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
   width:400rpx;
-}
+} */
 
 
 
@@ -256,7 +256,7 @@ view.pay {
   align-items: center;
 }
 
-.dis {
+/* .dis {
   display: flex;
   align-items: center;
   font-size: 28rpx;
@@ -266,7 +266,7 @@ view.pay {
 
 .dis text {
   margin-left: 15rpx;
-}
+} */
 
 .cancelr {
   font-size: 22rpx;
@@ -319,6 +319,7 @@ view.pay {
   font-size: 28rpx;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
+  width:25%;
 }
 
 .dis {
