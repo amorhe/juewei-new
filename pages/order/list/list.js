@@ -113,24 +113,19 @@ Page({
     timers.forEach(item => clearInterval(item))
 
     // 拉取最新数据
-    setTimeout(() => {
-      this.setData({
-        menuList: _menuList,
-        refreshFinish: true,
-      }, async () => {
-        await this.getMore()
-        my.stopPullDownRefresh()
-      })
+    this.setData({
+      menuList: _menuList,
+      refreshFinish: true,
+    }, async () => {
+      await this.getMore()
+      my.stopPullDownRefresh()
     })
-
   },
 
 
   async onShow() {
     const { timers } = this.data;
-
     timers.forEach(item => clearInterval(item))
-
     // 校验用户是否登录
     // await reqUserPoint()
      // 判断 是否登录
@@ -140,12 +135,13 @@ Page({
     // if (userInfo && userInfo.user_id && userInfo.user_id != '') {
     //    _sid = await getSid()
     // }
+ 
     this.setData({
-      loginOpened: (userInfo && userInfo.user_id && userInfo.user_id != ''),
+      loginOpened: !(userInfo && userInfo.user_id && userInfo.user_id != ''),
       // 设置 当前订单列表的显示状态
       dis_type:app.globalData.type === 1 ? 0 : 1
     })
-    // if (!_sid) { return isloginFn() }
+
     // 校验是否 需要刷新
     if (app.globalData.refresh === true) {
     await my.showToast({
@@ -153,8 +149,6 @@ Page({
       });
       app.globalData.refresh = false
     }
-
-
     return this.setData({
       cur: app.globalData.refresh_state || 0
     }, () => this.refresh())
@@ -241,24 +235,16 @@ Page({
    */
 
   async changeMenu(e) {
-    //用户未登录状态
-    if(this.data.loginOpened){
-       
-    }
     let { menuList, timers } = this.data
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
     timers.forEach(item => clearInterval(item))
     const { cur } = e.currentTarget.dataset
     if (this.data.cur === cur) { return }
-    setTimeout(() => {
-      this.setData({ cur }, () => {
-        setTimeout(() => {
-          this.refresh();
-          app.globalData.refresh_state = cur
-        })
-      }, 0)
-    }, 0)
+    this.setData({ cur }, () => {
+      this.refresh();
+      app.globalData.refresh_state = cur
+    })
   },
 
 
@@ -266,23 +252,58 @@ Page({
    * @function 获取订单列表
    */
   async getOrderList() {
-
     let { menuList, cur, timers } = this.data
     let { page, dis_type, timer, list, loading } = menuList[cur]
     if (loading) { return }
     menuList[cur].page++
     menuList.forEach(({ timer }) => clearInterval(timer))
     timers.forEach(item => clearInterval(item))
-    let { data, code } = await ajax('/juewei-api/order/list', { page_size: 20, page, dis_type }, 'GET')
-    my.showLoading({
-      content: '加载中...',
-    });
+    let result={};
+    let data =[];
+    let code = 999;
+    try{
+       result = await ajax('/juewei-api/order/list', { page_size: 20, page, dis_type }, 'GET');
+       data=result.data;
+       code=result.code;
+    }catch(e){
+       
+    }
+    my.showLoading({ content: '加载中...' });
     menuList[loading] = true
     this.setData({ loading: true }, () => {
       menuList.forEach(({ timer }) => clearInterval(timer))
       timers.forEach(item => clearInterval(item))
+      
       if (code === 0) {
-        list = [...list, ...data]
+        list = [...list, ...data];
+        //先显示出来
+        list = list.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
+          remaining_pay_second--
+          if (remaining_pay_second === 0 && remaining_pay_minute === 0) {
+            clearInterval(timer)
+          }
+          if (remaining_pay_second <= 0) {
+            --remaining_pay_minute
+            remaining_pay_second = 59
+          }
+          return {
+            remaining_pay_minute,
+            remaining_pay_second,
+            ...item,
+          }
+        })
+        menuList[cur].timer = timer
+        menuList[cur].finish = true
+        menuList[cur].list = list
+        menuList[loading] = false
+        this.setData({
+          menuList,
+          loading: false,
+          refreshFinish: false,
+          loginOpened:false
+        }, () => my.hideLoading())
+
+        //循环时间  //这段代码慢了1秒钟，应该采用每一个单独递归。
         timer = setInterval(() => {
           list = list.map(({ remaining_pay_minute, remaining_pay_second, ...item }) => {
             remaining_pay_second--
@@ -313,8 +334,7 @@ Page({
             loginOpened:false
           }, () => my.hideLoading())
         }, 1000)
-
-
+        my.hideLoading()
       } else {
         this.open()
         my.hideLoading()
@@ -329,9 +349,7 @@ Page({
   async getMore() {
     // 页面被拉到底部
     const { menuList, cur } = this.data;
-    setTimeout(async () => {
-      await this.getOrderList()
-    }, 100)
+    await this.getOrderList()
   },
 
   /**
