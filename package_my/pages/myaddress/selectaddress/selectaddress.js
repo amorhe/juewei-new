@@ -210,6 +210,9 @@ Page({
             })
             return
           }
+          result.forEach((item,index)=>{
+              console.log(item,index);
+          })
           this.setData({
             addressList: result,
             noSearchResult: false,

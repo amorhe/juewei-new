@@ -52,7 +52,6 @@ Page({
   // 兑换码
   getExchangeCode(_sid) {
     exchangeCode(_sid, 'use').then((res) => {
-      console.log(res)
       const { tabs } = this.data
       tabs[1].title = `兑换码${res.DATA.length}个`;
       this.setData({

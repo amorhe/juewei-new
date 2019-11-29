@@ -32,7 +32,14 @@
     <view class="shopsearch" a:if="{{addressList.length>0}}" a:for="{{addressList}}" onTap="chooseAdress" data-pos='{{item}}'>
       <view class="searchTitle">
         <!-- <text class="fontBold">{{item.name}}</text> -->
-        <text class="fontBold">{{item.name.substr(0,item.name.indexOf(inputAddress)-1)}}<text style="color:#ff0000;">{{inputAddress}}</text>{{item.name.substr(item.name.indexOf(inputAddress)+inputAddress.length)}}</text>
+        <text class="fontBold" a:if="{{ item.name.indexOf(inputAddress)>-1 }}">
+          {{item.name.substr(0,item.name.indexOf(inputAddress)-1)}}
+          <text style="color:#ff0000;">{{inputAddress}}</text>
+          {{item.name.substr(item.name.indexOf(inputAddress)+inputAddress.length)}}
+        </text>
+        <text class="fontBold" a:if="{{ item.name.indexOf(inputAddress)==-1 }}">
+           {{item.name}} 
+        </text>
       </view>
       <view class="search_b">{{item.address}}</view>
     </view>
