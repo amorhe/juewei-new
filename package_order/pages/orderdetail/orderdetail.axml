@@ -87,7 +87,8 @@
               <view class="body">
                 <view class="name">
                   <view class="top">
-                    <view class="image" a:if="{{item.goods_code.substr(2,3)==='DIS' || item.goods_code.substr(2,3)==='PKG'}}">折</view>
+                    
+                    <view class="image" a:if="{{item.goods_code.substr(2,3)==='DIS' || (item.goods_code.substr(2,3)==='PKG' && (item.goods_original_price!=item.goods_price))}}">折</view>
                     <view class="image" a:if="{{item.is_gifts===1 && item.goods_code.substr(2,3)==='JJG'}}">换</view>
                     <view class="image" a:if="{{item.is_gifts===1 && item.goods_code.substr(2,3)!=='JJG'}}">赠</view>
                     <view>{{item.goods_name}}<text a:if="{{item.remark}}">（{{item.remark}}）</text></view>

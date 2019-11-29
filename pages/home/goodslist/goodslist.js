@@ -469,23 +469,38 @@ Page({
         this.setData({
           btnClick: true
         })
-        my.showModal({
-          title: '您的定位地址无可配送门店',
-          cancelText: '去自提',
-          cancelColor: '#E60012',
-          confirmText: '修改地址',
-          confirmColor: '#E60012',
-          success(res) {
-            if (res.confirm) {
-              navigateTo({
-                url: '/pages/home/selecttarget/selecttarget?type=true'
-              })
-            } else if (res.cancel) {
-
-            }
-          }
+        my.confirm({
+           content: '您的定位地址无可配送门店',
+           confirmButtonText: '修改地址',
+           cancelButtonText: '去自提',
+           success: (result) => {
+             if(result.confirm){
+               navigateTo({
+                 url: '/pages/home/selecttarget/selecttarget?type=true'
+               })
+             }
+           }
         })
-        return
+        return;
+        //微信是用不了的
+        // my.showModal({
+        //   title: '您的定位地址无可配送门店',
+        //   cancelText: '去自提',
+        //   cancelColor: '#E60012',
+        //   confirmText: '修改地址',
+        //   confirmColor: '#E60012',
+        //   success(res) {
+        //     if (res.confirm) {
+        //       navigateTo({
+        //         url: '/pages/home/selecttarget/selecttarget?type=true'
+        //       })
+        //     } else if (res.cancel) {
+
+        //     }
+        //   }
+        // })
+ 
+        
       }
       let shopTakeOut = myGet('takeout')[0] || '';
       this.setData({

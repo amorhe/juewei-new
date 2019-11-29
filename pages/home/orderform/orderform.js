@@ -578,19 +578,26 @@ Page({
           newArr: res.data
         })
       } else if (res.code == 'A123') {
-        my.showModal({
-          content: res.msg,
-          showCancel: false,
-          confirmText: '重新选择',
-          confirmColor: '#E60012',
-          success(conf) {
+        my.alert({
+           content: res.msg,
+           buttonText: '重新选择',
+           success() {
             switchTab({
               url: '/pages/home/goodslist/goodslist'
             })
           }
-        })
-
-
+        });
+        // my.confirm({
+        //   content: res.msg,
+        //   showCancel: false,
+        //   buttonText: '重新选择',
+        //   confirmColor: '#E60012',
+        //   success(conf) {
+        //     switchTab({
+        //       url: '/pages/home/goodslist/goodslist'
+        //     })
+        //   }
+        // })
       } else if (res.code == 30106) {
         //用户未登录状态
         // 直接跳转
