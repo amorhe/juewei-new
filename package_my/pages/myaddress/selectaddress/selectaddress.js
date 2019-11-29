@@ -115,11 +115,12 @@ Page({
       showLocatedCity: true,
       showHotCities: true,
       success: (res) => {
-        if (res.city.indexOf('市') == res.city.length - 1) {
+        if (res.city.indexOf('市') == res.city.length - 1 || res.city.indexOf('州') == res.city.length - 1) {
           this.setData({
             city: res.city
           })
         } else {
+          if(res.city)
           this.setData({
             city: res.city + '市'
           })

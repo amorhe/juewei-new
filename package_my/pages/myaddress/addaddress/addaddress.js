@@ -47,6 +47,7 @@ Page({
   onShow() {
     if (app.globalData.addAddressInfo) {
       let addAddressInfo = app.globalData.addAddressInfo;
+      //这里不能用全局变量，需要重新获取
       this.setData({
         province: addAddressInfo.province,
         city: addAddressInfo.city,
@@ -71,6 +72,8 @@ Page({
           }
         },
       });
+    }else{
+      this.getLocation()
     }
   },
   onhide() {

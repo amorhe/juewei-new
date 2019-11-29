@@ -457,6 +457,7 @@ Page({
     // 判断 是否登录
     let userInfo = myGet('userInfo');
     if (userInfo && userInfo.user_id && userInfo.user_id != '') {
+      app.globalData.addAddressInfo=null;
       navigateTo({
         url: "/package_my/pages/myaddress/addaddress/addaddress"
       });
