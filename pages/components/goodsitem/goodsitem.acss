@@ -272,11 +272,11 @@
 }
 
 .goodsWrap {
-  padding: 14rpx 20rpx 12rpx;
+  padding: 14rpx 20rpx 20rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 0 0 20rpx 20 rpx;
+  border-radius: 0 0 20rpx 20rpx;
   margin-bottom: 16rpx;
 }
 

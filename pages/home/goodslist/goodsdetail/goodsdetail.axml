@@ -26,9 +26,9 @@
         </view>
         <view class="oldPrice" a:if="{{goodsInfo.key!='爆款' && goodsInfo.goods_format[0].goods_original_price}}">¥{{goodsInfo.goods_format[0].goods_original_price / 100}}/{{goodsInfo.goods_unit}}</view>
       </view>
-      <view>
+      <view style="">
         <!-- 无sku -->
-        <view a:if="{{goodsInfo.goods_format.length==1}}" class="goodsNumber">
+        <view a:if="{{goodsInfo.goods_format.length==1}}" class="goodsNumber" style="padding-right:40rpx;">
           <!-- 折扣套餐 -->
           <view a:if="{{(!shopcartList[`${goodsInfo.goods_format[0].goods_activity_code}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`]||shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}`].sumnum==0) && (goodsInfo.key=='折扣' || goodsInfo.key=='套餐')}}" class="fontTwentySix addShopcart" onTap="addshopcart" catchTap="addshopcart" data-key="{{goodsInfo.key}}" data-goods_code="{{goodsInfo.goods_format[0].goods_activity_code}}" data-goods_format="{{(goodsInfo.goods_format[0].type?goodsInfo.goods_format[0].type:'')}}" data-goods_price="{{goodsInfo.goods_format[0].goods_price / 100}}" data-goods_img="{{goodsInfo.goods_small_img[0]}}" data-goods_name="{{goodsInfo.goods_name}}" data-taste_name="{{goodsInfo.taste_name}}" data-sap_code="{{goodsInfo.sap_code}}" data-goods_discount="{{goodsInfo.goods_format[0].goods_discount}}" data-goods_unit="{{goodsInfo.goods_unit}}" data-goods_discount_user_limit="{{goodsInfo.goods_format[0].goods_discount_user_limit}}" data-goods_order_limit="{{goodsInfo.goods_format[0].goods_order_limit}}" data-goods_original_price="{{goodsInfo.goods_format[0].goods_original_price / 100}}" data-goods_activity_code="{{goodsInfo.goods_channel + goodsInfo.goods_type + goodsInfo.company_goods_id}}">加入购物车</view>
           <!-- 非折扣套餐 -->
@@ -50,7 +50,7 @@
         </view>
         <!-- sku商品 -->
         <view class="fontTwentySix addShopcart" a:if="{{goodsInfo.goods_format.length>1}}" onTap="chooseSizeTap" data-item="{{goodsInfo}}">
-        加入购物车
+          加入购物车
           <view class="addcount1" a:if="{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum>0 || shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[1].type}`].sumnum>0}}">{{shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`]?shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[0].type}`].sumnum:shopcartList[`${goodsInfo.goods_channel}${goodsInfo.goods_type}${goodsInfo.company_goods_id}_${goodsInfo.goods_format[1].type}`].sumnum}}</view>
         </view>
       </view>
