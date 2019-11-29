@@ -166,7 +166,8 @@
   </view>
   <view class="{{maskView?'content_other':'content_main'}}" style="{{isShow?'top:254rpx;':'top:208rpx;'}}">
     <view class="pages_scroll pagesinfo" style="height:{{totalH}}rpx;{{isiphonex?' padding-bottom:20px;':''}}">
-      <scroll-view scroll-y="true" style="width:168rpx;height: 100%;background: #F8F8F8;" scroll-top="{{goodsType > 7 ? (goodsType - 6) * 55 : 0}}">
+  
+      <scroll-view scroll-y="true" style="width:168rpx;height: 100%;background: #F8F8F8;" scroll-top="{{goodsType > 7 ? (goodsType - 6) * 65 : 0}}">
         <view class="goodsUl">
           <view onTap="eveChooseGoodsType" data-type="{{index+1}}" a:for="{{shopGoodsAll}}"  style="{{goodsType == index + 1?'background:#fff':'background:#F8F8F8'}}">
             <image a:if="{{goodsType != index + 1}}" src="{{imageUrl}}m_{{goodsClass[item.key]}}_1.png" />
@@ -175,8 +176,9 @@
             <view class="{{goodsType== index + 1?'activeView':''}}">{{item.key}}</view>
           </view>
         </view>
-        <view style="height:60rpx;width:100%"></view>
+        <view style="height:360rpx;width:100%"></view>
       </scroll-view>
+ 
       <scroll-view scroll-y="true" style="width:582rpx;height: 100%;" scroll-into-view="s{{togoodsType}}" scroll-with-animation="true" scroll-animation-duration="30" class="scrolllist" onScroll="onScroll" onTouchEnd="onTouchend">
         <view id="s{{index + 1}}" a:for="{{shopGoodsAll}}" a:if="{{item.last.length>0}}" class="sc_right_item" >
           <view class="goodsTypeEv">{{item.key}}</view>
@@ -293,12 +295,14 @@
             </view>
           </view>
         </view>
-        <view style="height:60rpx;width:100%"></view>
+        <view style="height:360rpx;width:100%"></view>
       </scroll-view>
+
     </view>
     <!-- 小红点 -->
     <canvas style="display:{{display_good_box ? 'block' : 'none'}}; position:fixed; width: 100vw; height: 100vh; left:0rpx; top:0rpx;z-index:5000" canvas-id="myCanvas" />
-    <view style="width:750rpx;height:150rpx;"></view>
+    
+    <!-- <view style="width:750rpx;height:150rpx;"></view> -->
     <!-- 购物车 -->
     <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" type="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClearshopcart="funClearshopcart" activityText="{{activityText}}" freeText="{{freeText}}" freeId="{{freeId}}" isOpen="{{isOpen}}" onChangeShopcart="funChangeShopcart" class="e1" onOpenShopcar="funOpenShopcar" style="bottom:{{bottomTabbar}}rpx" />
     <!-- 加入购物车选择商品规格 -->
