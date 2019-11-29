@@ -1,0 +1,4 @@
+<view class="juewei_page">
+  <image class="juewei_bg" src="{{imageUrl}}juewei_bg.png" />
+  <image class="juewei_tit" src="{{imageUrl}}juewei_tit.png" />
+</view>

@@ -1,0 +1,21 @@
+.juewei_page{
+   overflow: hidden;
+   width:100vw;
+   height:100vh;
+   background:#E60012;
+   position: relative;
+}
+.juewei_bg{
+   width:750rpx;
+   height:1334rpx;
+   overflow:hidden;
+}
+.juewei_tit{
+  width:695rpx;
+  height:196rpx;
+  margin:28rpx;
+  position: absolute;
+  top: 265rpx;
+  left: 0;
+  z-index: 10;
+}
