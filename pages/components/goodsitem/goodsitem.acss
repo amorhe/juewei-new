@@ -272,7 +272,7 @@
 }
 
 .goodsWrap {
-  padding: 14rpx 20rpx 20rpx;
+  padding: 14rpx 20rpx 25rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
