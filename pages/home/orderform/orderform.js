@@ -574,34 +574,32 @@ Page({
           modalShow: true,
           showShopcar: false,
           isType: 'orderConfirm',
-          content: res.msg + '，系统已经更新，是否确认结算',
+          content: (res.msg!='')? res.msg + '，系统已经更新，是否确认结算': '系统已经更新，是否确认结算',
           newArr: res.data
         })
       } else if (res.code == 'A123') {
         my.alert({
            content: res.msg,
-           buttonText: '重新选择',
+           buttonText: '请重新选择',
            success() {
             switchTab({
               url: '/pages/home/goodslist/goodslist'
             })
           }
         });
-        // my.confirm({
-        //   content: res.msg,
-        //   showCancel: false,
-        //   buttonText: '重新选择',
-        //   confirmColor: '#E60012',
-        //   success(conf) {
-        //     switchTab({
-        //       url: '/pages/home/goodslist/goodslist'
-        //     })
-        //   }
-        // })
       } else if (res.code == 30106) {
         //用户未登录状态
         // 直接跳转
-
+        my.alert({
+           content: '请重新登录',
+           buttonText: '登录',
+           success() {
+             //用户跳转登录
+             navigateTo({
+                 url: '/pages/login/auth/auth'
+             });
+          }
+        });
       } else {
         this.setData({
           mask: true,

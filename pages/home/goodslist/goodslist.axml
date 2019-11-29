@@ -302,7 +302,8 @@
     <!-- 购物车 -->
     <shopcart-model shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" type="{{type}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" onClearshopcart="funClearshopcart" activityText="{{activityText}}" freeText="{{freeText}}" freeId="{{freeId}}" isOpen="{{isOpen}}" onChangeShopcart="funChangeShopcart" class="e1" onOpenShopcar="funOpenShopcar" style="bottom:{{bottomTabbar}}rpx" />
     <!-- 加入购物车选择商品规格 -->
-    <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="eveCloseModal" goodsKey="{{goodsKey}}" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="funCart" priceAll="{{priceAll}}" shopcartNum="{{shopcartNum}}" goodsList="{{shopcartList}}"
-      />
+    <goods-modal maskView="{{maskView}}" goodsModal="{{goodsModal}}" onCloseModal="eveCloseModal" goodsKey="{{goodsKey}}" goodsItem="{{goodsItem.last[goodsLast]}}" onCart="funCart" priceAll="{{priceAll}}" shopcartNum="{{shopcartNum}}" goodsList="{{shopcartList}}" />
   </view>
+  
+  <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" />
  </view>

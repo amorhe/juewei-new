@@ -82,11 +82,13 @@ Page({
       "解辣神器": "qqt_series"
     },
     shopGoodsAll: [],
+    //弹出框
     content: '',
     confirmButtonText: '',
     cancelButtonText: '',
     modalShow: false,
     mask: false,
+
     otherGoods: [], // 参与换购的商品
     type: 1, // 默认外卖
     shopGoods: [], // 门店商品
@@ -469,38 +471,15 @@ Page({
         this.setData({
           btnClick: true
         })
-        my.confirm({
-           content: '您的定位地址无可配送门店',
-           confirmButtonText: '修改地址',
-           cancelButtonText: '去自提',
-           success: (result) => {
-             if(result.confirm){
-               navigateTo({
-                 url: '/pages/home/selecttarget/selecttarget?type=true'
-               })
-             }
-           }
-        })
-        return;
-        //微信是用不了的
-        // my.showModal({
-        //   title: '您的定位地址无可配送门店',
-        //   cancelText: '去自提',
-        //   cancelColor: '#E60012',
-        //   confirmText: '修改地址',
-        //   confirmColor: '#E60012',
-        //   success(res) {
-        //     if (res.confirm) {
-        //       navigateTo({
-        //         url: '/pages/home/selecttarget/selecttarget?type=true'
-        //       })
-        //     } else if (res.cancel) {
 
-        //     }
-        //   }
-        // })
- 
-        
+        this.setData({
+          content: '您的定位地址无可配送门店',
+          confirmButtonText: '去自提',
+          cancelButtonText: '修改地址',
+          modalShow: true,
+          mask: true
+        });
+        return;
       }
       let shopTakeOut = myGet('takeout')[0] || '';
       this.setData({
@@ -1265,5 +1244,19 @@ Page({
   },
   onSubmit(e) {
     upformId(e.detail.formId);
-  }
+  },
+  onCounterPlusOne(e) {
+    // 点击左边去自提
+    if (e.type == 1 && e.isType == "noShop") {
+      this.setData({
+        modalShow: e.modalShow,
+        mask: e.mask,
+        type: 2
+      })
+    } else {
+      my.redirectTo({
+        url: '/pages/home/selecttarget/selecttarget?type=true'
+      });
+    }
+  },
 })

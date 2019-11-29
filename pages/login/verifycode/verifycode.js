@@ -17,8 +17,18 @@ Page({
     getCode: true,
     cursor: 0,
     timestamp: 0,        //当前时间戳
+    next:false
   },
   onLoad(e) {
+    if(e.next=='true'){
+      this.setData({
+         next:true
+      });
+    }else{
+      this.setData({
+         next:false
+      });
+    }
     var ali_uid = my.getStorageSync({
       key: 'ali_uid', // 缓存数据的key
     }).data;
@@ -35,7 +45,7 @@ Page({
     if (this.data.timestamp != 0) {
       let timestampNew = new Date().getTime();
       let counts = parseInt((timestampNew - this.data.timestamp) / 1000);
-      console.log(counts)
+ 
       if (counts > 0) {
         this.setData({
           countTime: this.data.countTime - counts
@@ -63,6 +73,7 @@ Page({
     });
   },
   onBlur() {
+    let that=this;
     this.setData({
       focus: false,
     });
@@ -88,9 +99,23 @@ Page({
           data: res.data.phone, // 要缓存的数据
         });
         mySet('userInfo',res.data);
-        my.navigateBack({
-          delta: 2
-        })
+       
+        //判断是否跳转到orderform页面
+        if(that.data.next==true){
+          // 关闭当前跳转到下订单页面
+          my.redirectTo({
+            url: '/pages/home/orderform/orderform'
+          })
+        }else{
+          //返回上两级
+          my.navigateBack({
+            delta: 2
+          })
+        }
+        //返回上两级
+        // my.navigateBack({
+        //   delta: 2
+        // })
       } else {
         //失败
         my.removeStorageSync({

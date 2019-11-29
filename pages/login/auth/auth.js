@@ -10,12 +10,21 @@ Page({
     getCode: false,
     phone: '',
     img_code: '',
-    imgUrl: ''
+    imgUrl: '',
+    next:false
   },
-  onLoad() {
-
+  onLoad(option) {
+    if(option.next=='true'){
+      this.setData({
+        next:true
+      })
+    }else{
+      this.setData({
+        next:false
+      })
+    }
   },
-  onShow() {
+  onShow(aa) {
     this.getAliId()
   },
   openModal() {
@@ -133,7 +142,7 @@ Page({
           content: '短信发送成功'
         });
         my.navigateTo({
-          url: '/pages/login/verifycode/verifycode?phone=' + data.phone
+          url: '/pages/login/verifycode/verifycode?phone=' + data.phone+ (that.data.next==true?'&next=true':'')
         });
       } else {
         that.setData({
@@ -281,12 +290,20 @@ Page({
   },
   // 用户信息
   getUserInfo(_sid) {
+    let that=this;
     getuserInfo(_sid).then((res) => {
       app.globalData.userInfo = res.data;
       my.hideLoading();
-      my.navigateBack({
-        delta: 1
-      })
+      if(that.data.next==true){
+        // 关闭当前跳转到下订单页面
+        my.redirectTo({
+          url: '/pages/home/orderform/orderform'
+        })
+      }else{
+        my.navigateBack({
+          delta: 1
+        })
+      }
     })
   },
   toUrl(e) {
