@@ -5,7 +5,7 @@
           <view class="flexSpecial">
             <radio value="{{item.user_address_id}}" checked="{{item.is_default==1}}" color="#E60012" style="transform:scale(0.7);"/>
             <view class="receiverView">
-              <view>{{item.user_address_map_addr + item.user_address_address}}</view>
+              <view style="font-weight:bold">{{item.user_address_map_addr + item.user_address_address}}</view>
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
@@ -18,7 +18,7 @@
       <view class="borderBottomSolid addressUl colorNine" a:for="{{addressListNoUse}}" onTap="chooseNewAddress" data-lng="{{item.lng}}" data-lat="{{item.lat}}" data-address="{{item.user_address_map_addr + item.user_address_address}}">
           <view class="flexSpecial">
             <view class="receives">
-              <view>{{item.user_address_map_addr + item.user_address_address}}</view>
+              <view style="line-height:50rpx;">{{item.user_address_map_addr + item.user_address_address}}</view>
               <view class="fontSmallGray">{{item.user_address_name}} {{item.user_address_phone}}</view>
             </view>
           </view>
