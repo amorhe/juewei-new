@@ -489,7 +489,7 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 180rpx
+  min-width: 0;
 }
 
 .goodsRules>view>image, .goodsNumber>image {
