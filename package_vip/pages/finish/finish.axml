@@ -87,10 +87,10 @@
         在<text>http://www.ebeecake.com</text> 输入兑换码兑换；<view>活动所有权归本公司所有。</view></view> -->
       </view>
       <!--<view class="explain" a:if="{{d.intro}}"><view class="explain-title">商品</view><rich-text nodes="{{d._intro}}"></rich-text><view class="explain-detail"><view>全场通用</view><view>活动所有权归本公司所有。</view></view></view> -->
-      <view class="hint" a:if="{{!d.get_code}}" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
+      <view class="hint" style="color:#999" a:if="{{!d.get_code}}" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
       温馨提示：可到会员专享>兑换记录中查看
       </view>
-      <view class="hint" a:if="{{d.get_code}}">
+      <view class="hint" style="color:#999" a:if="{{d.get_code}}">
       温馨提示：可到
         <text style="color:#108EE9">我的>卡券</text> 中查看
       </view>
@@ -111,10 +111,10 @@
         <view class="explain-title">兑换说明</view>
         <rich-text nodes="{{d._exchange_intro}}"></rich-text>
       </view>
-      <view class="hint" a:if="{{d.gift_code}}" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
+      <view class="hint" style="color:#999" a:if="{{d.gift_code}}" data-url="/package_vip/pages/exchangelist/exchangelist" onTap="liTo">
       温馨提示：可到会员专享>兑换记录中查看
       </view>
-      <view class="hint" a:if="{{!d.gift_code}}">
+      <view class="hint" style="color:#999" a:if="{{!d.gift_code}}">
       温馨提示：可到
         <text style="color:#108EE9" data-url="/package_my/pages/coupon/coupon" onTap="liTo">我的>卡劵</text> 中查看
       </view>
