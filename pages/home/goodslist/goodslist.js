@@ -190,7 +190,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
     // 定位地址
     this.setData({
       type: app.globalData.type,
@@ -259,16 +258,46 @@ Page({
       app.globalData.activityList.PKG = [];
     }
     let user_id = 1;
+
+
     if (myGet('userInfo') && myGet('userInfo').user_id) {
       user_id = myGet('userInfo').user_id;
       // 优惠券
       this.funGetcouponsExpire(myGet('_sid'));
     } else {
       // 设置scroll-view高度
-      this.setData({
-        totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 450
-      })
+      // this.setData({
+      //   totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 450
+      // })
     }
+
+    // 设置scroll-view高度
+    this.setData({
+      totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 368
+    })
+
+    
+    // my.createSelectorQuery().select('.goodslistpages').boundingClientRect().exec((rect) => {
+    //     console.log('goodslistpages',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+    // })
+    // my.createSelectorQuery().select('.goodsPosition').boundingClientRect().exec((rect) => {
+    //     console.log('goodsPosition',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+    // })
+    // my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((rect) => {
+    //     this.setData({
+    //         totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 388 - (48.5625*(750 / my.getSystemInfoSync().windowWidth)+rect.height*(750 / my.getSystemInfoSync().windowWidth))
+    //     })
+    //     console.log('pagesScorll',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+    // })
+    // my.createSelectorQuery().select('.content_main').boundingClientRect().exec((rect) => {
+         
+    //       console.log('content_main',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+    // });
+    // my.createSelectorQuery().select('.goodsBottom').boundingClientRect().exec((rect) => {
+    //     console.log('goodsBottom',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+    // })
+  
+ 
     this.funGetBannerList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id); //banner
     this.funGetShowpositionList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id);
     this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type) //营销活动
@@ -1095,22 +1124,38 @@ Page({
         this.setData({
           couponsExpire: res.data,
           isShow: true,
-          totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 454
+          totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 414
         })
       } else {
         this.setData({
           isShow: false,
-          totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 408
+          totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 368
         })
       }
+
+
+      // my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((rect) => {
+      //     this.setData({
+      //         totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 388 - (48.5625*(750 / my.getSystemInfoSync().windowWidth)+rect.height*(750 / my.getSystemInfoSync().windowWidth))
+      //     })
+      //     console.log('pagesScorll',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+      // })
+
+
     })
   },
   // 关闭优惠券提醒
   eveCloseCouponView() {
     this.setData({
       isShow: false,
-      totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 408
+      totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 368
     })
+    // my.createSelectorQuery().select('.pagesScorll').boundingClientRect().exec((rect) => {
+    //     this.setData({
+    //         totalH: my.getSystemInfoSync().windowHeight * (750 / my.getSystemInfoSync().windowWidth) - 388 - (48.5625*(750 / my.getSystemInfoSync().windowWidth)+rect.height*(750 / my.getSystemInfoSync().windowWidth))
+    //     })
+    //     console.log('pagesScorll',rect[0],rect[0].height,(750 / my.getSystemInfoSync().windowWidth)*rect[0].height);
+    // })
   },
   // 购物车活动提示
   funShopcartPrompt(oldArr, priceFree, repurse_price) {
