@@ -237,7 +237,6 @@ page {
 
 .ul .li {
   padding: 20rpx 0;
-  border-bottom: 1rpx dashed #eee
 }
 
 .ul .li .title {

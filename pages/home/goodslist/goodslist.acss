@@ -489,6 +489,7 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-width: 180rpx
 }
 
 .goodsRules>view>image, .goodsNumber>image {
@@ -772,7 +773,8 @@ page {
 }
 
 .goodsPriceBox {
-  margin-right: 88rpx;
+  margin-right: 44rpx;
+  text-align: right
 }
 
 .goodsOldPrice {
