@@ -310,7 +310,6 @@ Page({
   },
   // 弹框事件回调
   onCounterPlusOne(data) {
- 
     let goodlist = myGet('goodsList');
     let newShopcart = {},
       newGoodsArr = [],
@@ -319,14 +318,14 @@ Page({
     if (this.data.newArr.length > 0 && !this.data.newArr[0].user_id) {
       for (let _item of this.data.newArr) {
         for (let item of this.data.goodsList) {
-          // 商品价格变更
+          // 商品价格变更 //这里不再看大小份，无论大份和小份都清除掉
           if (_item.type == 1) {
             if (`${_item.goodsCode}` == `${item.goods_code}`) {
               item.goods_price = _item.goodsPrice;
             }
             obj1[`${item.goods_code}_${item.goods_format}`] = item;  //多
           } else {
-            // 商品下架
+            // 商品下架 不堪大小份
             if (`${_item.goodsCode}` != `${item.goods_code}`) {
               obj2[`${item.goods_code}_${item.goods_format}`] = item;  //少
             }
