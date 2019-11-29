@@ -321,13 +321,13 @@ Page({
         for (let item of this.data.goodsList) {
           // 商品价格变更
           if (_item.type == 1) {
-            if (`${_item.goodsCode}${_item.goodsFormat}` == `${item.goods_code}${item.goods_format}`) {
+            if (`${_item.goodsCode}` == `${item.goods_code}`) {
               item.goods_price = _item.goodsPrice;
             }
             obj1[`${item.goods_code}_${item.goods_format}`] = item;  //多
           } else {
             // 商品下架
-            if (`${_item.goodsCode}${_item.goodsFormat}` != `${item.goods_code}${item.goods_format}`) {
+            if (`${_item.goodsCode}` != `${item.goods_code}`) {
               obj2[`${item.goods_code}_${item.goods_format}`] = item;  //少
             }
           }
@@ -356,20 +356,6 @@ Page({
     }else{
       newShopcart = goodlist;
     }
-      // //此处不清楚
-      // for (let key in obj1) {
-      //   if (obj2[key]) {
-      //     newShopcart[key] = obj1[key];
-      //   } else {
-      //     my.removeStorage({
-      //       key: 'goodsList'
-      //     })
-      //     switchTab({
-      //       url: '/pages/home/goodslist/goodslist'
-      //     })
-      //     return;
-      //   }
-      // }
 
       for (let ott in newShopcart) {
         newGoodsArr.push(newShopcart[ott])
@@ -385,6 +371,8 @@ Page({
         })
         return;
       }
+
+ 
       // 继续结算
       if (data.isType == 'orderConfirm' && data.type == 0) {
         this.funConfirmOrder(myGet('shop_id'), JSON.stringify(newGoodsArr));
