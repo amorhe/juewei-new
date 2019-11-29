@@ -52,6 +52,7 @@ Page({
     });
   },
   addressFn() {
+    app.globalData.addAddressInfo=null;
     my.navigateTo({
       url: "/package_my/pages/myaddress/addaddress/addaddress"
     });
