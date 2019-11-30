@@ -153,7 +153,7 @@
     <scroll-view class="repurseView" scroll-x a:if="{{repurseList.length>1}}">
       <view style="width:{{581*repurseList.length}}rpx">
         <view class="repurseGoodsInfo" a:for="{{repurseList}}">
-          <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{item.gift_img_url}}"/>
+          <image class="repurseGoodsImage" mode="scaleToFill" a:if="{{item.gift_img_url!=''}}" src="{{ (item.gift_img_url.indexOf('http')==0)?(item.gift_img_url):(imageUrl2+item.gift_img_url)}}"/>
           <image class="repurseGoodsImage" mode="widthFix" a:if="{{item.gift_img_url==''}}" src="{{imageUrl}}gift.jpg"/>
           <view>
             <view>
