@@ -114,10 +114,10 @@ Page({
  
   onlineservice(){
     if (this.data.userInfo.user_id) {
-      //my.makePhoneCall({ number: '4009995917' }); // 打客服电话
-      my.navigateTo({
-        url: '/package_my/pages/onlineservice/onlineservice',
-      });
+      my.makePhoneCall({ number: '4009995917' }); // 打客服电话
+      // my.navigateTo({
+      //   url: '/package_my/pages/onlineservice/onlineservice',
+      // });
     } else {
       my.navigateTo({
         url: '/pages/login/auth/auth',

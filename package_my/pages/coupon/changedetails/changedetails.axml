@@ -8,7 +8,6 @@
           <text>{{source == 1?'活动奖品':'积分兑换'}}</text>
         </view>
       </view>
-      <!--<navigator url="/package_my/pages/onlineservice/onlineservice" class="contactBtn">联系客服</navigator> -->
       <view class="contactBtn" catchTap="contact">联系客服</view>
     </view>
     <view class="redeemCodeDetail borderBottom">

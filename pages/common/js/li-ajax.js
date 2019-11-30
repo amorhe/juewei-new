@@ -175,10 +175,10 @@ export const guide = e => {
  */
 
 export const contact = () => {
-  //my.makePhoneCall({ number: '4009995917' });
-  my.navigateTo({
-    url: '/package_my/pages/onlineservice/onlineservice',
-  });
+  my.makePhoneCall({ number: '4009995917' });
+  // my.navigateTo({
+  //   url: '/package_my/pages/onlineservice/onlineservice',
+  // });
 }
 
 /**
