@@ -78,9 +78,9 @@ page {
 }
 
 .fixed {
-  position: sticky;
+  position: static;
   top: 80rpx;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .content_main {

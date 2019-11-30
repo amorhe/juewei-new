@@ -83,7 +83,7 @@
       </view>
     </view>
   </view>
-  <view class="pagesScorll {{isFixedTop?'fixed':''}}" a:if="{{!isSelf}}">
+  <view class="pagesScorll {{isFixedTop?'fixed':''}}" a:if="{{!isSelf}}" style="">
     <navigator id="pages_s" url="/pages/home/switchshop/switchshop?type={{type}}" hover-class="none">
       <!-- 推荐门店 -->
       <view class="shopDefault">

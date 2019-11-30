@@ -103,7 +103,6 @@ Page({
       }
     ]
 
-
     // 清空所有计时器
     menuList.forEach(({ timer }) => clearInterval(timer))
     timers.forEach(item => clearInterval(item))
@@ -118,8 +117,8 @@ Page({
     })
   },
 
-
   async onShow() {
+ 
     const { timers } = this.data;
     timers.forEach(item => clearInterval(item))
     // 校验用户是否登录
@@ -140,13 +139,15 @@ Page({
 
     // 校验是否 需要刷新
     if (app.globalData.refresh === true) {
-    await my.showToast({
-        content: '取消成功'
-      });
-      app.globalData.refresh = false
+        await my.showToast({
+            content: '取消成功'
+        });
+        app.globalData.refresh = false
     }
+ 
     return this.setData({
-      cur: app.globalData.refresh_state || 0
+      cur: app.globalData.refresh_state || 0,
+      refreshFinish:false
     }, () => this.refresh())
   },
   onUnload() {

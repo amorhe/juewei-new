@@ -101,6 +101,7 @@ Page({
         mySet('userInfo',res.data);
        
         //判断是否跳转到orderform页面
+        clearInterval(timeCount);
         if(that.data.next==true){
           // 关闭当前跳转到下订单页面
           my.redirectTo({

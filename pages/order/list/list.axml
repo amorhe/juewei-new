@@ -38,7 +38,7 @@
         <view class="cancel-order" a:if="{{[1,2].includes(item.order_status)}}">
           取消订单
         </view>
-         <view class="cancel-order" a:if="{{[2,3].includes(item.order_status) && [2,4].includes(item.dis_status)  && item.dis_tag != 'ZPS' && item.dis_get_time}}"  data-dis_tel="{{item.dis_tel}}" catchTap="makePhoneCall">
+         <view class="cancel-order" a:if="{{[2,3].includes(item.order_status) && [2,4].includes(item.dis_status)  && item.dis_tag != 'ZPS' && item.dis_get_time && item.dis_tel!=''}}" data-dis_tel="{{item.dis_tel}}" catchTap="makePhoneCall">
           联系骑手
         </view>
        

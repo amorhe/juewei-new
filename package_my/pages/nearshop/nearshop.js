@@ -39,7 +39,7 @@ Page({
   },
   // 搜索
   addressSearch() {
-    let url = `https://api.map.baidu.com/geocoding/v3/?address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
+    let url = `https://api.map.baidu.com/geocoding/v3/?city=${this.data.city}&address=${this.data.city}${this.data.inputAddress}&output=json&ak=${ak}`
     url = encodeURI(url);
     my.request({
       url,
