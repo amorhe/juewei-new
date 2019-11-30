@@ -744,9 +744,9 @@ Page({
                         if (val == `${fn.goods_activity_code}_${fn.type}`) {
                           shopcartObj[val] = goodsList[val];
                           // 判断购物车商品价格更新
-                          if (goodsList[val].goods_price != fn.goods_price) {
+                          if (goodsList[val].goods_price != parseInt(fn.goods_price)) {
                             snum += shopcartObj[val].num;
-                            shopcartObj[val].goods_price = fn.goods_price
+                            shopcartObj[val].goods_price = parseInt(fn.goods_price)
                           }
                         }
                       }
@@ -759,9 +759,9 @@ Page({
                           if (val == `${fn.goods_activity_code}_${fn.type != undefined ? fn.type : ''}`) {
                             shopcartObj[val] = goodsList[val];
                             // 判断购物车商品价格更新
-                            if (goodsList[val].goods_price != fn.goods_price) {
+                            if (goodsList[val].goods_price != parseInt(fn.goods_price)) {
                               snum += shopcartObj[val].num;
-                              shopcartObj[val].goods_price = fn.goods_price
+                              shopcartObj[val].goods_price =  parseInt(fn.goods_price)
                             }
                           }
                         }
@@ -778,9 +778,9 @@ Page({
                       if (val == `${value.goods_channel}${value.goods_type}${value.company_goods_id}_${fn.type}`) {
                         shopcartObj[val] = goodsList[val];
                         // 判断购物车商品价格更新
-                        if (goodsList[val].goods_price != fn.goods_price) {
+                        if (goodsList[val].goods_price !=  parseInt(fn.goods_price)) {
                           snum += shopcartObj[val].num;
-                          shopcartObj[val].goods_price = fn.goods_price
+                          shopcartObj[val].goods_price =  parseInt(fn.goods_price)
                         }
                       }
                     }
@@ -791,10 +791,10 @@ Page({
               // 计算购物车是否在门店内后筛选剩余商品价格
               if (shopcartObj[val]) { //判断商品是否存在
                 if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
-                  priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
+                  priceAll += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
                   priceFree += (shopcartObj[val].num - shopcartObj[val].goods_order_limit) * shopcartObj[val].goods_original_price;
                 } else {
-                  priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
+                  priceAll += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].num;
                 }
                 if (!shopcartObj[val].goods_discount) {
                   priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
@@ -802,15 +802,16 @@ Page({
                 //计算可换购价格
                 if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
                   if (shopcartObj[val].huangou && shopcartObj[val].goods_price && shopcartObj[val].num) {
-                    repurse_price += shopcartObj[val].goods_price * shopcartObj[val].num;
+                    repurse_price += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].num;
                   }
                 } else {
-                  repurse_price = priceAll
+                  repurse_price = parseInt(priceAll)
                 }
                 shopcartAll.push(shopcartObj[val]);
                 shopcartNum += shopcartObj[val].num;
               }
             }
+            console.log('repurse_price',repurse_price);
             // 购物车活动提示
             this.funShopcartPrompt(this.data.fullActivity, priceFree, repurse_price)
             if (!myGet('goodsList')) {
@@ -896,13 +897,13 @@ Page({
         oneGood = {
           "goods_name": e.currentTarget.dataset.goods_name,
           "taste_name": e.currentTarget.dataset.taste_name,
-          "goods_price": e.currentTarget.dataset.goods_price * 100,
+          "goods_price": parseInt(parseFloat(e.currentTarget.dataset.goods_price) * 100),
           "num": 1,
           "sumnum": 1,
           "goods_code": e.currentTarget.dataset.goods_code,
           "goods_activity_code": e.currentTarget.dataset.goods_activity_code,
           "goods_discount": e.currentTarget.dataset.goods_discount,
-          "goods_original_price": e.currentTarget.dataset.goods_original_price,
+          "goods_original_price": parseInt(e.currentTarget.dataset.goods_original_price),
           "goods_discount_user_limit": e.currentTarget.dataset.goods_discount_user_limit,
           "goods_order_limit": e.currentTarget.dataset.goods_order_limit,
           "goods_format": goods_format,
@@ -913,7 +914,7 @@ Page({
         oneGood = {
           "goods_name": e.currentTarget.dataset.goods_name,
           "taste_name": e.currentTarget.dataset.taste_name,
-          "goods_price": e.currentTarget.dataset.goods_price * 100,
+          "goods_price": parseInt(parseFloat(e.currentTarget.dataset.goods_price) * 100),
           "num": 1,
           "sumnum": 1,
           "goods_code": e.currentTarget.dataset.goods_code,
@@ -946,13 +947,13 @@ Page({
       }
       //折扣和套餐的
       if (goodlist[keys].goods_order_limit && goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        priceAll += parseInt(goodlist[keys].goods_price * goodlist[keys].goods_order_limit) + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         if (keys.indexOf('PKG') == -1) {
-          priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          priceFree +=  parseInt(goodlist[keys].goods_original_price) * (goodlist[keys].num - goodlist[keys].goods_order_limit);
         }
         //普通商品
       } else if (goodlist[keys].goods_price && goodlist[keys].num) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
       } else {
 
       }
@@ -963,10 +964,10 @@ Page({
       // 计算可换购商品价格
       if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
         if (goodlist[keys].huangou && goodlist[keys].goods_price && goodlist[keys].num) {
-          repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
+          repurse_price += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
         }
       } else {
-        repurse_price = priceAll
+        repurse_price = parseInt(priceAll)
       }
       shopcartAll.push(goodlist[keys]);
       shopcartNum += goodlist[keys].num
@@ -1012,12 +1013,12 @@ Page({
       }
 
       if (goodlist[keys].goods_order_limit && goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+        priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         if (keys.indexOf('PKG') == -1) {
           priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
         }
       } else if (goodlist[keys].goods_price && goodlist[keys].num) {
-        priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+        priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
       } else {
 
       }
@@ -1028,10 +1029,10 @@ Page({
       // 计算可换购商品价格
       if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
         if (goodlist[keys].huangou && goodlist[keys].goods_price && goodlist[keys].num) {
-          repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
+          repurse_price += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
         }
       } else {
-        repurse_price = priceAll
+        repurse_price = parseInt(priceAll)
       }
       if (goodlist[keys].num > 0) {
         newGoodlist[keys] = goodlist[keys];

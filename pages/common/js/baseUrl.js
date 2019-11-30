@@ -1,6 +1,6 @@
 // 测试环境
 export const baseUrl = 'https://test-wap.juewei.com/api';
-//新接口
+// 新接口
 export const newBaseUrl = 'https://test-saas.juewei.com';
 // 图片测试cdn
 export const imageUrl = 'https://test-cdn-wap.juewei.com/m/ali-mini/image/';

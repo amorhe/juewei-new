@@ -164,13 +164,13 @@ Component({
           }
         }
         if (goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           //套餐不算在内
           if (keys.indexOf('PKG') == -1) {
             priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           }
         } else if (goodlist[keys].goods_price && goodlist[keys].num) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
         } else {
 
         }
@@ -181,10 +181,10 @@ Component({
         // 计算可换购商品价格
         if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
           if (goodlist[keys].huangou && goodlist[keys].goods_price && goodlist[keys].num) {
-            repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
+            repurse_price += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
           }
         } else {
-          repurse_price = priceAll
+          repurse_price = parseInt(priceAll)
         }
         shopcartAll.push(goodlist[keys]);
         shopcartNum += goodlist[keys].num
@@ -217,14 +217,13 @@ Component({
           continue;
         }
         if (goodlist[keys].goods_order_limit && goodlist[keys].num > goodlist[keys].goods_order_limit) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          priceAll +=  parseInt(goodlist[keys].goods_price) * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           //套餐不算在内
           if (keys.indexOf('PKG') == -1) {
             priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           }
-
         } else if (goodlist[keys].goods_price && goodlist[keys].num) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
         } else {
 
         }
@@ -235,10 +234,10 @@ Component({
         // 计算可换购商品价格
         if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
           if (goodlist[keys].huangou && goodlist[keys].goods_price && goodlist[keys].num) {
-            repurse_price += goodlist[keys].goods_price * goodlist[keys].num;
+            repurse_price += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
           }
         } else {
-          repurse_price = priceAll
+          repurse_price = parseInt(priceAll)
         }
         if (goodlist[keys].num > 0) {
           newGoodlist[keys] = goodlist[keys];
@@ -256,7 +255,7 @@ Component({
         })
       }
     },
-    // 立即购买
+    // 去结算
     goOrderSubmit() {
       // js节流防短时间重复点击
       if (this.data.btnClick == false) {
@@ -364,15 +363,23 @@ Component({
         // 计算购物车是否在门店内后筛选剩余商品价格
         if (shopcartObj[val]) {//判断商品是否存在
           if (shopcartObj[val].goods_discount && shopcartObj[val].num > shopcartObj[val].goods_order_limit) {
-            priceAll += shopcartObj[val].goods_price * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
+            priceAll += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].goods_order_limit + (shopcartObj[val].num - goodsList[val].goods_order_limit) * shopcartObj[val].goods_original_price;
           } else {
-            priceAll += shopcartObj[val].goods_price * shopcartObj[val].num;
+            priceAll += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].num;
           }
+          // 计算包邮价格
           if (!shopcartObj[val].goods_discount) {
-            priceFree += shopcartObj[val].goods_price * shopcartObj[val].num;
+            priceFree += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].num;
+          }else{
+
           }
-          if (shopcartObj[val].huangou) {
-            repurse_price += shopcartObj[val].goods_price * shopcartObj[val].num;
+          //计算换购价格
+          if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
+            if (goodlist[keys].huangou && goodlist[keys].goods_price && goodlist[keys].num) {
+               repurse_price += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].num;
+            }
+          }else{
+            repurse_price = parseInt(priceAll)
           }
           shopcartAll.push(shopcartObj[val]);
           shopcartNum += shopcartObj[val].num;

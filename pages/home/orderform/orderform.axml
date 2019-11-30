@@ -66,12 +66,12 @@
         <view class="listRight">
           <view class="ordergoodsCount">x{{item.goods_quantity}}</view>
           <view class="flexNormal">
-            <view class="ordergoodsOld" a:if="{{item.goods_original_price > item.goods_price}}">
-              <text class="fontTwentyTwo">￥{{item.goods_original_price * item.goods_quantity / 100}}</text>
+            <view class="ordergoodsOld" a:if="{{ item.goods_original_price > item.goods_price }}">
+              <text class="fontTwentyTwo">￥{{item.goods_original_price*item.goods_quantity/100 }}</text>
             </view>
             <view>
               <text class="fontTwentyTwo">￥</text>
-              <text>{{item.goods_price / 100 * item.goods_quantity}}</text>
+              <text>{{ item.goods_price * item.goods_quantity/100 }}</text>
             </view>
           </view>
         </view>
@@ -82,11 +82,11 @@
       <view>
         <view class="ordergoodsOld" a:if="{{orderDetail.dispatch_price != orderInfo.dispatch_price}}">
           <text class="fontTwentyTwo">￥</text>
-          <text>{{orderDetail.dispatch_price / 100}}</text>
+          <text>{{ orderDetail.dispatch_price / 100 }}</text>
         </view>
         <view class="numberColor">
           <text class="fontTwentyTwo">￥</text>
-          <text>{{orderInfo.dispatch_price/100 || 0}}</text>
+          <text>{{ orderInfo.dispatch_price/100 || 0 }}</text>
         </view>
       </view>
     </view>
@@ -98,7 +98,7 @@
       <view>
         <view class="numberColor">
           <text class="fontTwentyTwo">-￥</text>
-          <text>{{orderInfo.full_reduce_price/100 || 0}}</text>
+          <text>{{ orderInfo.full_reduce_price/100 || 0 }}</text>
         </view>
       </view>
     </view>

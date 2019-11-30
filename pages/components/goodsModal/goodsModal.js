@@ -111,7 +111,7 @@ Component({
           oneGood = {
             "goods_name": e.currentTarget.dataset.goods_name,
             "taste_name": e.currentTarget.dataset.taste_name,
-            "goods_price": e.currentTarget.dataset.goods_price * 100,
+            "goods_price": parseInt(parseFloat(e.currentTarget.dataset.goods_price) * 100),
             "num": 1,
             "sumnum": sumnum,
             "goods_code": e.currentTarget.dataset.goods_code,
@@ -128,7 +128,7 @@ Component({
           oneGood = {
             "goods_name": e.currentTarget.dataset.goods_name,
             "taste_name": e.currentTarget.dataset.taste_name,
-            "goods_price": e.currentTarget.dataset.goods_price * 100,
+            "goods_price": parseInt(parseFloat(e.currentTarget.dataset.goods_price) * 100),
             "num": 1,
             "sumnum": sumnum,
             "goods_code": e.currentTarget.dataset.goods_code,
@@ -153,12 +153,12 @@ Component({
           }
         }
         if (goodlist[keys].goods_order_limit && goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           if (keys.indexOf('PKG') == -1) {
             priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           }
         } else if (goodlist[keys].goods_price && goodlist[keys].num) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
         } else {
 
         }
@@ -205,12 +205,12 @@ Component({
           continue;
         }
         if (goodlist[keys].goods_order_limit && goodlist[keys].goods_order_limit != null && goodlist[keys].num > goodlist[keys].goods_order_limit) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].goods_order_limit + (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           if (keys.indexOf('PKG') == -1) {
             priceFree += (goodlist[keys].num - goodlist[keys].goods_order_limit) * goodlist[keys].goods_original_price;
           }
         } else if (goodlist[keys].goods_price && goodlist[keys].num) {
-          priceAll += goodlist[keys].goods_price * goodlist[keys].num;
+          priceAll += parseInt(goodlist[keys].goods_price) * goodlist[keys].num;
         } else {
           //不做处理
         }
