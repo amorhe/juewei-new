@@ -3,8 +3,8 @@
   <view class="post-address">
     <view class="post-name">
       <view class="item post-name-left">联系人</view>
-      <input class="post-name-right" placeholder="姓名" maxlength="20" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange"/>
-      <image a:if="{{name.length>0}}" class="arrow" mode="scaleToFill" onTap="closeFN" data-value="name" src="{{imageUrl}}close3.png"/>
+      <input class="post-name-right" placeholder="姓名" maxlength="20" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange" onFocus="showclear" onBlur="hideclear"/>
+      <image a:if="{{name.length>0 && show_name_clear}}" class="arrow" mode="scaleToFill" onTap="closeFN1" data-value="name" src="{{imageUrl}}close3.png" style="margin-top:20rpx;position:absolute;right:30rpx;"/>
     </view>
     <view class="post-sex">
       <text class="item"></text>
@@ -13,8 +13,8 @@
     </view>
     <view class="list">
       <view class="item">电话</view>
-      <input placeholder="手机号码" type="numberpad" value="{{phone}}" maxlength="11" data-key="phone" onInput="handelChange"/>
-      <image a:if="{{phone.length>0}}" class="arrow" mode="scaleToFill" onTap="closeFN" data-value="phone" src="{{imageUrl}}close3.png"/>
+      <input placeholder="手机号码" type="numberpad" value="{{phone}}" maxlength="11" data-key="phone" onInput="handelChange"  onFocus="showclear" onBlur="hideclear" style="flex:none;width:4rem;margin-right:0.5rem;"/>
+      <image a:if="{{phone.length>0 && show_phone_clear}}" class="arrow" mode="scaleToFill" onTap="closeFN2" data-value="phone" src="{{imageUrl}}close3.png" style="position:absolute;right:30rpx;"/>
     </view>
     <view class="select-address list" onTap="chooseLocation">
       <view class="item">地址</view>
@@ -24,8 +24,8 @@
     </view>
     <view class="list">
       <view class="item">门牌号</view>
-      <input placeholder="例：6号楼606室" controlled="{{true}}" value="{{addressdetail}}" data-key="addressdetail" onInput="handelChange"/>
-      <image a:if="{{addressdetail.length>0}}" data-value="addressdetail" class="arrow" mode="scaleToFill" onTap="closeFN" src="{{imageUrl}}close3.png"/>
+      <input placeholder="例：6号楼606室" controlled="{{true}}" value="{{addressdetail}}" data-key="addressdetail" onInput="handelChange"  onFocus="showclear" onBlur="hideclear" style="flex:none;width:4rem;margin-right:0.5rem;"/>
+      <image a:if="{{addressdetail.length>0 && show_addressdetail_clear}}" data-value="addressdetail" class="arrow" mode="scaleToFill" onTap="closeFN3" src="{{imageUrl}}close3.png" style="position:absolute;right:30rpx;"/>
     </view>
     <view class="list">
       <view class="item">标签</view>

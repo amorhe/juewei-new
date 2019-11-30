@@ -42,7 +42,10 @@ Page({
     modalidShow: false, // 无门店,
     detailAdd: '',
     clickadd: false,
-    city: ''
+    city: '',
+    show_name_clear:false,
+    show_phone_clear:false,
+    show_addressdetail_clear:false
   },
   onShow() {
     if (app.globalData.addAddressInfo) {
@@ -243,6 +246,8 @@ Page({
       //无操作
     }
     this.setData({ [key]: value })
+
+    
   },
   closeFN(e) {
     let d = e.currentTarget.dataset.value;
@@ -260,6 +265,67 @@ Page({
       default:
         this.setData({
           addressdetail: ''
+        })
+        break;
+    }
+  },
+  closeFN1(){
+        this.setData({
+          name: ''
+        })
+  },
+  closeFN2(){
+        this.setData({
+          phone: ''
+        })
+  },
+  closeFN3(){
+        this.setData({
+          addressdetail: ''
+        })
+  },
+  showclear(e){
+    let d = e.currentTarget.dataset.key;
+    switch (d) {
+      case 'name':
+        this.setData({
+          show_name_clear: true,
+          show_phone_clear:false,
+          show_addressdetail_clear:false
+        })
+        break;
+      case 'phone':
+        this.setData({
+          show_name_clear: false,
+          show_phone_clear:true,
+          show_addressdetail_clear:false
+        })
+        break;
+      case 'addressdetail':
+        this.setData({
+          show_name_clear: false,
+          show_phone_clear:false,
+          show_addressdetail_clear:true
+        })
+        break;
+    }
+  },
+  hideclear(e){
+    let d = e.currentTarget.dataset.key;
+    switch (d) {
+      case 'name':
+        this.setData({
+          show_name_clear: false
+        })
+        break;
+      case 'phone':
+        this.setData({
+          show_phone_clear:false
+        })
+        break;
+      case 'addressdetail':
+        this.setData({
+          show_addressdetail_clear:false
         })
         break;
     }
