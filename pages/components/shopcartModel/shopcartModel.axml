@@ -37,7 +37,7 @@
             </view>
             <view class="shopcartWrap">
               <view class="goodsLi" a:for="{{shopcartAll}}">
-                <view class="goodsNameI">
+                <view class="goodsNameI" style="width:45%;">
                   <view>
                     <text>{{item.goods_name}}</text>
                     <text a:if="{{item.taste_name}}">（{{item.taste_name}}）</text>
@@ -47,14 +47,14 @@
                     <text a:if="{{item.huangou}}" class="numberColor orcle">指定商品</text>
                   </view>
                 </view>
-                <view class="flexNormal">
-                  <view class="goodsPriceBox">
-                    <text a:if="{{item.goods_order_limit}}" class="orginal">￥{{item.goods_original_price * item.num /100}}</text>
-                    <text class="numberColor priceTotal">￥{{item.num>item.goods_order_limit?item.goods_order_limit*item.goods_price/100 + (item.num-item.goods_order_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
+                <view class="flexNormal" style="width:55%;">
+                  <view class="goodsPriceBox" style="width:45%;">
+                    <text a:if="{{item.goods_order_limit}}" class="orginal" style="width:50rpx;">￥{{item.goods_original_price * item.num /100}}</text>
+                    <text class="numberColor priceTotal" style="width:50rpx;">￥{{item.num>item.goods_order_limit?item.goods_order_limit*item.goods_price/100 + (item.num-item.goods_order_limit) * item.goods_original_price/100:item.goods_price * item.num/100}}</text>
                   </view>
-                  <view class="goodsNumber">
+                  <view class="goodsNumber" style="width:55%; text-align:right;">
                     <image src="{{imageUrl}}goods_reduce.png" onTap="reduceshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" />
-                    <text>{{item.num}}</text>
+                    <text style=" width:40rpx;text-align:center;margin:0 !important;">{{item.num}}</text>
                     <image src="{{imageUrl}}goods_add.png" onTap="addshopcart" data-goods_code="{{item.goods_code}}" data-goods_format="{{item.goods_format}}" data-goods_discount="{{item.goods_discount}}"/>
                   </view>
                 </view>
