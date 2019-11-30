@@ -269,6 +269,8 @@ Page({
       modalidShow: false
     })
   },
+
+  //保存地址
   Addaddress() {
     var that = this
     if (this.data.name === '') {
@@ -311,6 +313,14 @@ Page({
       });
       return
     }
+    //判断地址是否有门店
+    if (this.data.shop_id==='') {
+      this.setData({
+        modalidShow: true
+      })
+      return
+    }
+
     if (this.data.clickadd) {
       return
     }

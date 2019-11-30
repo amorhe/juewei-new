@@ -811,7 +811,6 @@ Page({
                 shopcartNum += shopcartObj[val].num;
               }
             }
-            console.log('repurse_price',repurse_price);
             // 购物车活动提示
             this.funShopcartPrompt(this.data.fullActivity, priceFree, repurse_price)
             if (!myGet('goodsList')) {
