@@ -111,12 +111,10 @@ Page({
       showno: 1
     })
   },
-  // 打客服电话
-  // makePhoneCall() {
-  //   // my.makePhoneCall({ number: '4009995917' });
-  // },
+ 
   onlineservice(){
     if (this.data.userInfo.user_id) {
+      //my.makePhoneCall({ number: '4009995917' }); // 打客服电话
       my.navigateTo({
         url: '/package_my/pages/onlineservice/onlineservice',
       });

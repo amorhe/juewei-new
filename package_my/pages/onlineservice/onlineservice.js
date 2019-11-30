@@ -22,7 +22,6 @@ Page({
         phone: phone,
         url: serviceUrl +'/m/shop/onlineservice.html?uid='+encodeURIComponent(userid)+'&name='+ encodeURIComponent(nickname) +'&mobile='+encodeURIComponent(phone)+'&channel='+encodeURIComponent('支付宝小程序')
       });
-      console.log(serviceUrl + '/m/shop/onlineservice.html?uid='+encodeURIComponent(userid)+'&name='+ encodeURIComponent(nickname) +'&mobile='+encodeURIComponent(phone)+'&channel='+encodeURIComponent('支付宝小程序'))
   },
   onShow(){
   },
