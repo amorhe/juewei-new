@@ -375,7 +375,7 @@ Component({
           }
           //计算换购价格
           if (app.globalData.repurseGoods && app.globalData.repurseGoods.length > 0) {
-            if (goodlist[keys].huangou && goodlist[keys].goods_price && goodlist[keys].num) {
+            if (shopcartObj[keys].huangou && shopcartObj[keys].goods_price && shopcartObj[keys].num) {
                repurse_price += parseInt(shopcartObj[val].goods_price) * shopcartObj[val].num;
             }
           }else{
