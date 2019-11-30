@@ -67,7 +67,7 @@
           <view class="no_rule">
               <view data-index="{{index}}" catchTap="" style="position:relative;z-index:1;align-item:center">
                 <view class="v_txt" style="color:#ff0000"><image class="img_warm" src="{{imageUrl}}warn.png" /><text>不可用原因</text></view>
-                <view class="v_txt" style="color:#cccccc;">已超过两笔优惠</view>
+                <view class="v_txt" style="color:#cccccc;">已超过两笔订单优惠</view>
               </view>
           </view>
  
