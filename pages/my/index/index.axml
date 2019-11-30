@@ -83,7 +83,6 @@
     </form>
   </view>
 </view>
-<!--<navigator url="/package_my/pages/onlineservice/onlineservice"><image class="customerService" mode="scaleToFill" src="{{imageUrl}}service.png"/></navigator> -->
 <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
   <view class="customerService" onTap="onlineservice">
     <button style="position: absolute; opacity: 0;filter:Alpha(opacity=0);width:110rpx;height:110rpx" form-type="submit"></button>
