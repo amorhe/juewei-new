@@ -242,9 +242,19 @@ Page({
 
   linkTo(e) {
     const { url } = e.currentTarget.dataset
-    my.navigateTo({
-      url
-    });
+    //console.log('linkTo',url);
+    //my.navigateTo({
+    //  url
+    //});
+    if (url.indexOf('https://') > -1 && url.indexOf('https://') < 4) {
+      my.navigateTo({
+        url: '/pages/webview/webview/webview?url=' + url
+      });
+    } else {
+      my.navigateTo({
+        url: url
+      });
+    }
   },
 
   /**

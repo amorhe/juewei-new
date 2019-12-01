@@ -1211,18 +1211,27 @@ Page({
   },
   //  活动跳转链接
   imageLink(e) {
-    navigateTo({
-      url: e.currentTarget.dataset.link
-    });
+    //navigateTo({
+    //  url: e.currentTarget.dataset.link
+    //});
+    if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
+      my.navigateTo({
+        url: '/pages/webview/webview/webview?url=' + e.currentTarget.dataset.link
+      });
+    } else {
+      my.navigateTo({
+        url: e.currentTarget.dataset.link
+      });
+    }
   },
   // banner图跳转链接
   linkUrl(e) {
     if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
-      redirectTo({
-        url: '/pages/webview/webview?url=' + e.currentTarget.dataset.link
+      my.navigateTo({
+        url: '/pages/webview/webview/webview?url=' + e.currentTarget.dataset.link
       });
     } else {
-      navigateTo({
+      my.navigateTo({
         url: e.currentTarget.dataset.link
       });
     }
