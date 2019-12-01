@@ -504,7 +504,7 @@ Page({
   },
   // 首页banner列表
   funGetBannerList(city_id, district_id, company_id) {
-    bannerList(city_id, district_id, company_id).then((data) => {
+    bannerList(city_id, district_id, company_id,1).then((data) => {
       if (data.data.length == 1) {
         this.setData({
           indicatorDots: false,
@@ -529,7 +529,7 @@ Page({
   },
   // 首页商品展位
   funGetShowpositionList(city_id, district_id, company_id) {
-    showPositionList(city_id, district_id, company_id).then((res) => {
+    showPositionList(city_id, district_id, company_id,1).then((res) => {
       this.setData({
         showListObj: res.data
       })
