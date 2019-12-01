@@ -1216,7 +1216,7 @@ Page({
     //});
     if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
       my.navigateTo({
-        url: '/pages/webview/webview/webview?url=' + e.currentTarget.dataset.link
+        url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
       });
     } else {
       my.navigateTo({
@@ -1228,7 +1228,7 @@ Page({
   linkUrl(e) {
     if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
       my.navigateTo({
-        url: '/pages/webview/webview/webview?url=' + e.currentTarget.dataset.link
+        url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
       });
     } else {
       my.navigateTo({

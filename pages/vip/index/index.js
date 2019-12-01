@@ -248,7 +248,7 @@ Page({
     //});
     if (url.indexOf('https://') > -1 && url.indexOf('https://') < 4) {
       my.navigateTo({
-        url: '/pages/webview/webview/webview?url=' + url
+        url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
       });
     } else {
       my.navigateTo({
