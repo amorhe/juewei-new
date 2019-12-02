@@ -29,13 +29,13 @@
           </view>
           </view>
           <!-- 购物车弹框 -->
-          <view a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
+          <view  a:if="{{showShopcar && shopcartAll.length>0}}" class="shopcarContent">
             <view class="fullReduce fontSmall" a:if="{{activityText!=''}}">{{activityText}}</view>
             <view class="clearShopcar" onTap="clearShopcart">
               <image src="{{imageUrl}}deleteIcon.png" />
               <text>清空购物车</text>
             </view>
-            <view class="shopcartWrap">
+            <scroll-view scroll-y="{{true}}" class="shopcartWrap">
               <view class="goodsLi" a:for="{{shopcartAll}}">
                 <view class="goodsNameI" style="width:45%;">
                   <view>
@@ -59,7 +59,7 @@
                   </view>
                 </view>
               </view>
-            </view>
+            </scroll-view>
             <view>
               <view class="nullView"></view>
             </view>

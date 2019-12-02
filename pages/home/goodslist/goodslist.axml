@@ -1,4 +1,5 @@
-<view class="goodslistpages" style="position:relative" disable-scroll="{{maskView || shopcarShow}}">
+<view class="geedslistpagebox" style="position:relative;">
+<view class="goodslistpages"  style="position:relative;overflow:hidden;{{(maskView || shopcarShow)?'height:100vh;':'height:auto;'}}">
   <!-- 定位 -->
   <view a:if="{{!isSelf}}" class="goodsPosition" style="{{shopcarShow?'z-index:0':'z-index:1000'}}">
     <navigator url="/pages/home/selecttarget/selecttarget?type=1" class="positionLeft" hover-class="none">
@@ -310,4 +311,5 @@
   </view>
   
   <confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}"  onCounterPlusOne="onCounterPlusOne" isType="noShop" />
+ </view>
  </view>
