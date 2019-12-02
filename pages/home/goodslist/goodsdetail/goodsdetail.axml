@@ -1,7 +1,8 @@
-<view disable-scroll="{{maskView || shopcarShow}}">
+<view class="goodsdetailbox" style="position:relative;background-color:#f5f5f5;">
+  <view style="position:relative;overflow:hidden;{{(maskView || shopcarShow)?'height:100vh;':'height:auto;'}}">
   <image class="goodsImage" mode="scaleToFill" a:if="{{goodsInfo.goods_type!='PKG'}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
   <image class="goodsImage" mode="scaleToFill" a:if="{{goodsInfo.goods_type=='PKG'}}" src="{{img_url + goodsInfo.goods_img[0]}}"/>
-  <view class="goodsWrap borderBottom">
+  <view class="goodsWrap borderBottom" style="background-color:#ffffff;">
     <view class="goodsTitle marginB">
       <view>
         <view class="goodsName">{{goodsInfo.goods_name}}</view>
@@ -60,7 +61,7 @@
     </view>
   </view>
   <!-- 简介、详情 -->
-  <view class="menuWrap">
+  <view class="menuWrap" style="background-color:#ffffff;margin-bottom:16rpx;">
     <view class="menus">
       <view data-cur="{{index}}" onTap="changeMenu" class="menu {{activeTab === index ? 'active':''}}" a:for="{{tabs}}">
         {{item.title}}
@@ -74,7 +75,7 @@
     </view>
   </view>
   <!-- 口味、配送 -->
-  <view class="menuWrap">
+  <view class="menuWrap" style="background-color:#ffffff;">
     <view class="menus">
       <view data-cur="{{index}}" onTap="changeTab" class="menu {{tabActive === index ? 'active':''}}" a:for="{{tabsT}}">
           {{item.title}}
@@ -186,4 +187,5 @@
   <shopcartmodel shopcartAll="{{shopcartAll}}" shopcartNum="{{shopcartNum}}" shopcartList="{{shopcartList}}" priceAll="{{priceAll}}" activityText="{{activityText}}" freeText="{{freeText}}" onClear="onClear" onChangeShopcart="onchangeShopcart" onOpenShopcar="funOpenShopcar"/>
   <!-- 加入购物车选择商品规格 -->
   <goodsmodal maskView="{{maskView}}" goodsKey="{{goodsKey}}" goodsModal="{{goodsModal}}" onCloseModal="closeModal" goodsItem="{{goodsItem}}" onCart="onCart" priceAll="{{priceAll}}"/>
+</view>
 </view>

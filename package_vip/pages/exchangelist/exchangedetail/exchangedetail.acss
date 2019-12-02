@@ -791,6 +791,9 @@ page {
     line-height: 52rpx;
     text-align: center
 }
+.ul{
+  border-bottom:1px dashed #EEEEEE;
+}
 
 .ul .li {
     padding: 24rpx 0;

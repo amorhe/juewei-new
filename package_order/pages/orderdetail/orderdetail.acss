@@ -283,6 +283,7 @@ view.pay {
   align-items: center;
   background: white;
   margin-top: 40rpx;
+  height:68rpx;
 }
 
 .out-footer view:last-child {
@@ -304,15 +305,17 @@ view.pay {
 
 .cancel-order {
   width: 140rpx;
-  height: 64rpx;
+  height: 60rpx;
   border-radius: 32rpx;
   border: 2rpx solid rgba(153, 153, 153, 1);
   font-size: 26rpx;
   font-weight: 400;
   color: rgba(51, 51, 51, 1);
-  line-height: 68rpx;
+  line-height: 60rpx;
   text-align: center;
-  margin-left: 20rpx
+  margin-left: 20rpx;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .item .label {
