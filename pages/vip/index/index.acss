@@ -137,7 +137,10 @@ page {
 }
 
 .li>.li-pic {
-  position: relative
+  position: relative;
+  width: 333rpx;
+  height: 333rpx;
+  overflow:hidden;
 }
 
 .li>.li-pic>image {
