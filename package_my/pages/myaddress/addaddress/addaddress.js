@@ -234,19 +234,40 @@ Page({
 
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
-    let s = /^[a-zA-Z0-9_\u4e00-\u9fa5 ]{0,20}$/
-    let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
-    let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-    let patrn = /[`…~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；……‘’，。￣、…＠＃％＾＆×＿＋｛｝｜＂＞＜]/im;
-
-    let value = e.detail.value;
-    if (!s.test(value)) {
-      value = this.data[key]
-    }else{
-      //无操作
+    let reg_name = /^[a-zA-Z0-9_\u4e00-\u9fa5 ]{0,20}$/;
+    let reg_phone = /^\d{0,11}$/;
+    // let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
+    // let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
+    // let patrn = /[`…~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；……‘’，。￣、…＠＃％＾＆×＿＋｛｝｜＂＞＜]/im;
+    let value =e.detail.value;
+    switch(key){
+      case 'name':
+        if(reg_name.test(value)){
+          this.setData({ name: value })
+        }else{
+          this.setData({ name: this.data.name })
+        }
+        break;
+      case 'phone':
+        if(reg_phone.test(value)){
+          console.log('1');
+          this.setData({ phone: value })
+        }else{
+          console.log('2');
+          this.setData({ phone: this.data.phone })
+        }
+        break;
+      case 'addressdetail':
+        if(value!=''){
+          this.setData({ addressdetail: value })
+        }else{
+          this.setData({ addressdetail:this.data.addressdetail })
+        }
+        break;
+      default:
+        break;
     }
-    this.setData({ [key]: value })
-
+    
     
   },
   closeFN(e) {
