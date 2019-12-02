@@ -3,9 +3,9 @@
   <view class="post-address">
     <view class="post-name" style="position:relative;">
       <view class="item post-name-left">联系人</view>
-      <input class="post-name-right" placeholder="姓名" maxlength="20" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange" onFocus="showclear" onBlur="hideclear"/>
-      <view a:if="{{name.length>0  && show_name_clear}}"  onTap="closeFN1" style="height:72rpx;width:72rpx; position:absolute;top:0;right:0;">
-          <image class="arrow" mode="scaleToFill" data-value="name" src="{{imageUrl}}close3.png" style="margin-top:20rpx;position:absolute;right:0;"/>
+      <input class="post-name-right" placeholder="姓名" maxlength="20" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange" onFocus="showclear" onBlur="hideclear" style="width:440rpx;flex:none;"/>
+      <view a:if="{{name.length>0 && show_name_clear}}" onTap="closeFN1" style="height:74rpx;width:74rpx; position:absolute;top:0;right:0;border-bottom: 1px solid #eee;">
+          <image class="arrow" mode="scaleToFill"  onTap="closeFN1"  data-value="name" src="{{imageUrl}}close3.png" style="margin-top:20rpx;position:absolute;right:0;"/>
       </view>
     </view>
     <view class="post-sex">

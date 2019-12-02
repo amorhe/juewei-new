@@ -3,6 +3,7 @@ import { ajax, log } from '../../common/js/li-ajax'
 var app = getApp();
 Page({
   data: {
+    user_id:'',
     imageUrl,
     order_no: '',
     show: false,
@@ -12,6 +13,7 @@ Page({
     gift_type: 0
   },
   async onLoad(e) {
+    this.data.user_id = my.getStorageSync({ key: 'user_id' }).data;
     const { order_no } = e
     this.setData({
       order_no
@@ -40,7 +42,7 @@ Page({
   async isNewUser() {
     const { order_no } = this.data
     let new_user = my.getStorageSync({
-      key: 'new_user', // 缓存数据的key
+      key: this.data.user_id+'_new_user', // 缓存数据的key
     }).data;
     // 说明不是 第一次
     if (new_user == 1) { return }
@@ -48,8 +50,9 @@ Page({
     if (res.code == 0) {
       // 说明是新用户
       if (res.data.new_user == 1) {
+        
         my.setStorage({
-          key: 'new_user', // 缓存数据的key
+          key: this.data.user_id+'_new_user', // 缓存数据的key
           data: 1, // 要缓存的数据
           success: async (res) => {
             await this.getCouponsList()
