@@ -1215,9 +1215,18 @@ Page({
     //  url: e.currentTarget.dataset.link
     //});
     if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
-      my.navigateTo({
-        url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
-      });
+      // my.navigateTo({
+      //   url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
+      // });
+      //跳转到生活号页面
+      my.ap.navigateToAlipayPage({
+          path: e.currentTarget.dataset.link,
+          success:(res) => {
+          },
+          fail:(error) => {
+            my.alert({content:'跳转失败：url链接为' + e.currentTarget.dataset.link});        
+          }
+      })
     } else {
       my.navigateTo({
         url: e.currentTarget.dataset.link
@@ -1227,9 +1236,18 @@ Page({
   // banner图跳转链接
   linkUrl(e) {
     if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
-      my.navigateTo({
-        url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
-      });
+      //跳转到生活号页面
+      my.ap.navigateToAlipayPage({
+          path: e.currentTarget.dataset.link,
+          success:(res) => {
+          },
+          fail:(error) => {
+            my.alert({content:'跳转失败：url链接为' + e.currentTarget.dataset.link});        
+          }
+      })
+      // my.navigateTo({
+      //   url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
+      // });
     } else {
       my.navigateTo({
         url: e.currentTarget.dataset.link

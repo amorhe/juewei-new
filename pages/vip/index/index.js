@@ -247,9 +247,18 @@ Page({
     //  url
     //});
     if (url.indexOf('https://') > -1 && url.indexOf('https://') < 4) {
-      my.navigateTo({
-        url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
-      });
+      // my.navigateTo({
+      //   url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
+      // });
+     //跳转到生活号页面
+      my.ap.navigateToAlipayPage({
+          path: url,
+          success:(res) => {
+          },
+          fail:(error) => {
+            my.alert({content:'跳转失败：url链接为' + url});        
+          }
+      })
     } else {
       my.navigateTo({
         url: url
