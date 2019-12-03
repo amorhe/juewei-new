@@ -9,12 +9,10 @@
   </view>
 </view>
 <!-- 百元 礼包券 -->
-<modal show="{{newUserShow}}" showClose="{{ false }}">
-  <view class="wrap_bg" style="position:fixed;width:100vw;height:100vh;top:0;left:0;z-index:90;" onTap="close">
+  <view hidden="{{!newUserShow}}" class="wrap_bg" style="position:fixed;width:100vw;height:100vh;top:0;left:0;z-index:90; background-color:rgba(0,0,0,0.75)" onTap="close">
      <image src="{{imageUrl}}close5.png" style="width:72rpx; height:72rpx;position:absolute;left:50%;bottom:100rpx;margin-left:-36rpx;"/>
   </view>
-  <view class="wrap" style="background-image:url({{imageUrl}}redBg.png);position:relative;z-index:99;">
-
+  <view hidden="{{!newUserShow}}" class="wrap" style="background-image:url({{imageUrl}}redBg.png);position:absolute;top:0;left:50%; top:50%;margin-left:-300rpx; margin-top:-370rpx;z-index:99;">
     <scroll-view scroll-y="{{true}}" class="ul" catchTap="">
       <view class="li" style="background-image:url({{imageUrl}}couponBg.png)" a:for="{{new_user}}" catchTap="toTakeIn">
         <view class="left">
@@ -33,7 +31,8 @@
       </view>
     </scroll-view>
   </view>
-</modal>
+<!-- <modal show="{{newUserShow}}" showClose="{{ true }}" disableScroll="true"> -->
+<!-- </modal> -->
 
 <modal show="{{gifts}}" showClose="{{false}}">
   <view class="giftsBox">
