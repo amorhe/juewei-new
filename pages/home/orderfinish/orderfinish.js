@@ -1,4 +1,5 @@
 import { imageUrl } from '../../common/js/baseUrl'
+import { formatTime } from '../../common/js/time'
 import { ajax, log } from '../../common/js/li-ajax'
 var app = getApp();
 Page({
@@ -118,10 +119,10 @@ Page({
 
   async getCouponsList() {
     let res = await ajax('/mini/coupons/list', { get_type: 'new_user' })
-    //  res.DATA.new_user=[{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'}]
+    //res.DATA.new_user=[{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'}]
     if (res.CODE === 'A100' && res.DATA.new_user && res.DATA.new_user.length > 0) {
       let new_user = res.DATA.new_user.map(({ end_time, ...item }) => ({
-          end_time: new Date(end_time * 1000).toLocaleDateString(),
+          end_time: formatTime(end_time,'Y-M-D'),  //formatTime(new Date(end_time * 1000).toLocaleDateString(),'Y-M-D'),
           ...item
         }))
       this.setData({

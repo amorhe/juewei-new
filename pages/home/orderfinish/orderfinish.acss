@@ -102,14 +102,16 @@
 .li-btn {
   width: 150rpx;
   height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
   background: rgba(230, 0, 18, 1);
   border-radius: 32rpx;
-  text-align: center;
+  
   font-size: 28rpx;
   font-family: PingFangSC-Regular;
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
-  line-height: 64rpx;
+  
 }
 
 .type {
