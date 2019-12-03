@@ -149,7 +149,7 @@
     </view>
     <view class="shopUp" a:if="{{isSelf}}">
       <image class="shopLogo" src="{{imageUrl}}shopbg.png" />
-      <navigator url="/package_my/pages/nearshop/nearshop?re=2" class="shopBoxs">
+      <navigator open-type="redirect" url="/package_my/pages/nearshop/nearshop?re=2" class="shopBoxs">
         <view>
           <image class="ImageFourty" mode="scaleToFill" src="{{imageUrl}}position.png" />
           <view class="shop_info">
