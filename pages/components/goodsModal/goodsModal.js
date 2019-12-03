@@ -43,7 +43,7 @@ Component({
     chooseSize(e) {
       this.setData({
         size: e.currentTarget.dataset.size,
-        price: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_price / 100,
+        price: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_price,
         sizeText: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].type,
         goods_activity_code: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_activity_code,
         goods_discount: this.props.goodsItem.goods_format[e.currentTarget.dataset.size].goods_discount,
@@ -107,6 +107,7 @@ Component({
         goodlist[`${goods_code}_${goods_format}`].num++;
       } else {
         let oneGood = {};
+        console.log(e.currentTarget.dataset);
         if (e.currentTarget.dataset.goods_discount) {
           oneGood = {
             "goods_name": e.currentTarget.dataset.goods_name,
