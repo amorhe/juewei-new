@@ -24,7 +24,7 @@
         <view class="flexC" style="height:64rpx;padding-bottom:16rpx;width:100%">
           <view data-index="{{index}}" onTap="toggleRule" style="position:relative;z-index:1;display:flex;align-item:center">
             <text class="fontTwentyTwo">更多使用规则</text>
-            <image class="arrow_down_icon" src="{{imageUrl}}arrow_down1.png" style="transform:rotate({{item.toggleRule?0:-180}}deg);transition:all .3s" />
+            <image class="arrow_down_icon" src="{{imageUrl}}arrow_down1.png" style="transform:rotate({{item.toggleRule?-180:0}}deg);transition:all .3s;margin-top:0;" />
           </view>
         </view>
       </view>
