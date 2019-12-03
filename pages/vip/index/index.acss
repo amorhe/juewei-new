@@ -129,7 +129,7 @@ page {
 
 .ul .li {
   width: 333rpx;
-  height: 513rpx;
+  height: 500rpx;
   border-radius: 8rpx;
   margin-bottom: 20rpx;
   overflow: hidden;
