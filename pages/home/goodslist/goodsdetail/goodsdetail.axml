@@ -1,5 +1,5 @@
 <view class="goodsdetailbox" style="position:relative;background-color:#f5f5f5;">
-  <view style="position:relative;overflow:hidden;{{(maskView || shopcarShow)?'height:100vh;':'height:auto;'}}">
+  <view style="position:relative;overflow:hidden;">
   <image class="goodsImage" mode="scaleToFill" a:if="{{goodsInfo.goods_type!='PKG'}}" src="{{goodsInfo.goods_img_detail[0]}}"/>
   <image class="goodsImage" mode="scaleToFill" a:if="{{goodsInfo.goods_type=='PKG'}}" src="{{img_url + goodsInfo.goods_img[0]}}"/>
   <view class="goodsWrap borderBottom" style="background-color:#ffffff;">
