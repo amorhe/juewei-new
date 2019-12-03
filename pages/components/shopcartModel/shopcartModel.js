@@ -303,9 +303,9 @@ Component({
         snum = 0,
         DIS = app.globalData.DIS || [],
         PKG = app.globalData.PKG || [],
-        isfresh1 = false,
-        isfresh2 = false,
-        isfresh3 = false;
+        isfresh1 = false, //折扣商品价格更新
+        isfresh2 = false, //套餐商品价格更新
+        isfresh3 = false; //普通商品价格更新
       if (goodsList == null) return;
       // 判断购物车商品是否在当前门店里
       for (let val in goodsList) {
@@ -387,6 +387,7 @@ Component({
       }
       // 购物车筛选后剩余数量
       shopcartNum = Object.entries(shopcartObj).reduce((pre, cur) => {
+        console.log('cur[1]',pre,cur[1]);
         const { num } = cur[1]
         return pre + num
       }, 0)
@@ -396,7 +397,7 @@ Component({
         data: shopcartObj
       })
       app.globalData.goodsBuy = this.props.shopcartAll;
-      // console.log(app.globalData.goodsBuy)
+
       if (num - shopcartNum > 0 && snum > 0) {
         return this.setData({
           showShopcar: false,
@@ -421,7 +422,7 @@ Component({
           cancelButtonText: '继续结算',
           btnClick: true
         })
-      } else if (num - shopcartNum == 0 && snum > 0 && (isfresh1 || isfresh2 || isfresh3)) {
+      } else if (num - shopcartNum == 0 && snum > 0 && (isfresh1 || isfresh2 || isfresh3)) { //折扣，套餐，普通商品
         return this.setData({
           showShopcar: false,
           mask1: false,

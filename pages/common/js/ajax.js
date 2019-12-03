@@ -46,6 +46,9 @@ export const ajax = (url, data = {}, method = "POST", newBaseUrl) => {
         }
       },
       fail: (err) => {
+        //加入白名单方式
+        
+
         my.hideLoading();
         reject(my.showToast({
           content: '您的网络有点卡哦，请稍后再试！',

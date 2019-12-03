@@ -891,12 +891,11 @@ Page({
       goodlist[`${goods_code}_${goods_format}`].sumnum += 1;
     } else {
       let oneGood = {};
-
       if (e.currentTarget.dataset.goods_discount) {//是商品折扣的
         oneGood = {
           "goods_name": e.currentTarget.dataset.goods_name,
           "taste_name": e.currentTarget.dataset.taste_name,
-          "goods_price": parseInt(parseFloat(e.currentTarget.dataset.goods_price) * 100),
+          "goods_price": parseInt(e.currentTarget.dataset.goods_price),
           "num": 1,
           "sumnum": 1,
           "goods_code": e.currentTarget.dataset.goods_code,
@@ -913,7 +912,7 @@ Page({
         oneGood = {
           "goods_name": e.currentTarget.dataset.goods_name,
           "taste_name": e.currentTarget.dataset.taste_name,
-          "goods_price": parseInt(parseFloat(e.currentTarget.dataset.goods_price) * 100),
+          "goods_price": parseInt(e.currentTarget.dataset.goods_price),
           "num": 1,
           "sumnum": 1,
           "goods_code": e.currentTarget.dataset.goods_code,
