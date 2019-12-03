@@ -59,10 +59,10 @@
 }
 
 .wrap>.ul {
-  max-height: 500rpx;
+  max-height: 530rpx;
   width: 560rpx;
   overflow: scroll;
-  margin: 220rpx auto 0;
+  margin: 200rpx auto 0;
 }
 
 .wrap>.ul>.li {

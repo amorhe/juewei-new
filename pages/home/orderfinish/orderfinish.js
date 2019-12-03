@@ -14,7 +14,7 @@ Page({
   },
   async onLoad(e) {
     this.data.user_id = my.getStorageSync({ key: 'user_id' }).data;
-    const { order_no } = e
+    const { order_no } = e;
     this.setData({
       order_no
     }, async () => {
@@ -45,8 +45,11 @@ Page({
       key: this.data.user_id+'_new_user', // 缓存数据的key
     }).data;
     // 说明不是 第一次
+    // new_user=0;
     if (new_user == 1) { return }
-    let res = await ajax('/juewei-api/order/detail', { order_no })
+    let res = await ajax('/juewei-api/order/detail', { order_no });
+    // res.code=0;
+    // res.data.new_user=1;
     if (res.code == 0) {
       // 说明是新用户
       if (res.data.new_user == 1) {
@@ -115,7 +118,7 @@ Page({
 
   async getCouponsList() {
     let res = await ajax('/mini/coupons/list', { get_type: 'new_user' })
-    // res.DATA.new_user=[{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'}]
+    //  res.DATA.new_user=[{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'},{full_money:'4000',money:'2000',end_time:'1574749176'}]
     if (res.CODE === 'A100' && res.DATA.new_user && res.DATA.new_user.length > 0) {
       let new_user = res.DATA.new_user.map(({ end_time, ...item }) => ({
           end_time: new Date(end_time * 1000).toLocaleDateString(),
