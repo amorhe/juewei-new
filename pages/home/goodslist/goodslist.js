@@ -538,7 +538,7 @@ Page({
   },
   // 门店营销活动(折扣和套餐)
   async funGetActivityList(city_id, district_id, company_id, buy_type, user_id, type) {
-    let res = await activityList(city_id, district_id, company_id, buy_type, user_id, 3, type);
+    let res = await activityList(city_id, district_id, company_id, buy_type, user_id, 1, type);
     if (res && res.data) {//活动接口存在
       // 获取加价购商品
       if (res && res.data && res.data.MARKUP && res.data.MARKUP != null) {
@@ -1211,46 +1211,71 @@ Page({
   },
   //  活动跳转链接
   imageLink(e) {
-    //navigateTo({
-    //  url: e.currentTarget.dataset.link
-    //});
-    if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
-      // my.navigateTo({
-      //   url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
-      // });
-      //跳转到生活号页面
-      my.ap.navigateToAlipayPage({
-          path: e.currentTarget.dataset.link,
-          success:(res) => {
-          },
-          fail:(error) => {
-            my.alert({content:'跳转失败：url链接为' + e.currentTarget.dataset.link});        
-          }
-      })
+    let url=e.currentTarget.dataset.link;
+    if (url.indexOf('https://') > -1 && url.indexOf('https://') < 4) {
+        if(url.indexOf('https://render.alipay.com') > -1 && url.indexOf('https://render.alipay.com') < 4){
+            //跳转到生活号页面
+            my.ap.navigateToAlipayPage({
+                path: url,
+                success:(res) => {
+                },
+                fail:(error) => {
+                  my.alert({content:'跳转失败：url链接为' + url});        
+                }
+            })
+        }else{
+            my.navigateTo({
+              url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
+            });
+        }
+    }else if(url.indexOf('alipays://') > -1 && url.indexOf('alipays://') < 4){
+        //跳转到支付宝其他小程序页面
+        my.ap.navigateToAlipayPage({
+            path: url,
+            success:(res) => {
+            },
+            fail:(error) => {
+              my.alert({content:'跳转失败：url链接为' + url});        
+            }
+        })
     } else {
       my.navigateTo({
-        url: e.currentTarget.dataset.link
+        url: url
       });
     }
   },
   // banner图跳转链接
   linkUrl(e) {
-    if ((e.currentTarget.dataset.link).indexOf('https://') > -1 && (e.currentTarget.dataset.link).indexOf('https://') < 4) {
-      //跳转到生活号页面
-      my.ap.navigateToAlipayPage({
-          path: e.currentTarget.dataset.link,
-          success:(res) => {
-          },
-          fail:(error) => {
-            my.alert({content:'跳转失败：url链接为' + e.currentTarget.dataset.link});        
-          }
-      })
-      // my.navigateTo({
-      //   url: '/pages/webview/webview/webview?url=' + encodeURIComponent(e.currentTarget.dataset.link)
-      // });
+    let url=e.currentTarget.dataset.link;
+    if (url.indexOf('https://') > -1 && url.indexOf('https://') < 4) {
+        if(url.indexOf('https://render.alipay.com') > -1 && url.indexOf('https://render.alipay.com') < 4){
+            //跳转到生活号页面
+            my.ap.navigateToAlipayPage({
+                path: url,
+                success:(res) => {
+                },
+                fail:(error) => {
+                  my.alert({content:'跳转失败：url链接为' + url});        
+                }
+            })
+        }else{
+            my.navigateTo({
+              url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
+            });
+        }
+    }else if(url.indexOf('alipays://') > -1 && url.indexOf('alipays://') < 4){
+        //跳转到支付宝其他小程序页面
+        my.ap.navigateToAlipayPage({
+            path: url,
+            success:(res) => {
+            },
+            fail:(error) => {
+              my.alert({content:'跳转失败：url链接为' + url});        
+            }
+        })
     } else {
       my.navigateTo({
-        url: e.currentTarget.dataset.link
+        url: url
       });
     }
   },

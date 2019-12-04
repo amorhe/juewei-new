@@ -242,23 +242,32 @@ Page({
 
   linkTo(e) {
     const { url } = e.currentTarget.dataset
-    //console.log('linkTo',url);
-    //my.navigateTo({
-    //  url
-    //});
     if (url.indexOf('https://') > -1 && url.indexOf('https://') < 4) {
-      // my.navigateTo({
-      //   url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
-      // });
-     //跳转到生活号页面
-      my.ap.navigateToAlipayPage({
-          path: url,
-          success:(res) => {
-          },
-          fail:(error) => {
-            my.alert({content:'跳转失败：url链接为' + url});        
-          }
-      })
+        if(url.indexOf('https://render.alipay.com') > -1 && url.indexOf('https://render.alipay.com') < 4){
+            //跳转到生活号页面
+            my.ap.navigateToAlipayPage({
+                path: url,
+                success:(res) => {
+                },
+                fail:(error) => {
+                  my.alert({content:'跳转失败：url链接为' + url});        
+                }
+            })
+        }else{
+            my.navigateTo({
+              url: '/pages/webview/webview/webview?url=' + encodeURIComponent(url)
+            });
+        }
+    }else if(url.indexOf('alipays://') > -1 && url.indexOf('alipays://') < 4){
+        //跳转到支付宝其他小程序页面
+        my.ap.navigateToAlipayPage({
+            path: url,
+            success:(res) => {
+            },
+            fail:(error) => {
+              my.alert({content:'跳转失败：url链接为' + url});        
+            }
+        })
     } else {
       my.navigateTo({
         url: url
