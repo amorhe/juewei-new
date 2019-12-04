@@ -18,7 +18,7 @@
              </cover-view>
              <cover-view>
                <cover-view class="fontSmallGray preWrap">{{item.address}}</cover-view>
-               <cover-view class="fontSmallGray">距离{{item.distance}}米</cover-view>
+               <cover-view class="fontSmallGray">距离：{{(item.distance>1000)?(item.distance/1000).toFixed(1)+'公里':item.distance+'米'}}</cover-view>
                <cover-view onTap="chooseshop" class="tapCoverView" data-id="{{item.shop_id}}" data-index="{{index}}" data-shopIng="{{item}}"></cover-view>
              </cover-view>
           </cover-view>

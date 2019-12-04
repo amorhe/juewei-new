@@ -21,7 +21,7 @@
             <cover-image a:if="{{activeIndex!=index}}" class="shopIcon" src="{{imageUrl}}order2.png" />
             <cover-view>{{item.title}}</cover-view>
           </cover-view>
-          <cover-view class="fontTwentyTwo">距离{{item.distance}}米</cover-view>
+          <cover-view class="fontTwentyTwo">距离：{{(item.distance>1000)?(item.distance/1000).toFixed(1)+'公里':item.distance+'米'}}</cover-view>
           <cover-view class="fontTwentyTwo paddingLeft">营业时间：{{item.start_time}}-{{item.end_time}}</cover-view>
           <cover-view class="fontSmallGray paddingLeft">{{item.address}}</cover-view>
         </cover-view>

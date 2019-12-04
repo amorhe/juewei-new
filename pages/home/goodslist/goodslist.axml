@@ -99,7 +99,7 @@
             <view class="shopDefaultRight">
               <view style="height:50rpx; line-height:50rpx;">
                 <image src="{{imageUrl}}position.png" />
-                <view>距离{{shopTakeOut.distance}}米</view>
+                <view>距离{{(shopTakeOut.distance>1000)?(shopTakeOut.distance/1000).toFixed(1)+'公里':shopTakeOut.distance+'米'}}</view>
               </view>
               <view style="height:88rpx;line-height:88rpx;">
                 <!-- shop_takeout = 1 外卖开启。 =2  未开外卖 -->
@@ -160,7 +160,7 @@
         </view>
         <view class="distanceView">
           <image class="normalImage" mode="scaleToFill" src="{{imageUrl}}arrow_right1.png" />
-          <view>距离{{shopTakeOut.distance}}米</view>
+          <view>距离{{(shopTakeOut.distance>1000)?(shopTakeOut.distance/1000).toFixed(1)+'公里':shopTakeOut.distance+'米'}}</view>
         </view>
       </navigator>
     </view>

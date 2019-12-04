@@ -203,56 +203,57 @@ Page({
     });
     // 初始化默认外卖
     let shopArray = [];
-    if (!this.data.isSelf && app.globalData.shopIng && !app.globalData.switchClick) {
-      if (myGet('shop_id') != app.globalData.shop_id) {
-        const status = cur_dateTime(app.globalData.shopIng.start_time, app.globalData.shopIng.end_time);
+    if (!this.data.isSelf && app.globalData.shopIng && !app.globalData.switchClick) {//切换门店
+        app.globalData.shopIng1=null;
+        if (myGet('shop_id') != app.globalData.shop_id) {
+          const status = cur_dateTime(app.globalData.shopIng.start_time, app.globalData.shopIng.end_time);
+          this.setData({
+            isOpen: status,
+            shopTakeOut: app.globalData.shopIng
+          })
+          mySet('shop_id', app.globalData.shopIng.shop_id)
+          app.globalData.isOpen = status;
+          app.globalData.shopTakeOut = this.data.shopTakeOut;
+        }
         this.setData({
-          isOpen: status,
+          jingxuan: app.globalData.shopIng.jingxuan || false,
           shopTakeOut: app.globalData.shopIng
         })
-        mySet('shop_id', app.globalData.shopIng.shop_id)
-        app.globalData.isOpen = status;
-        app.globalData.shopTakeOut = this.data.shopTakeOut;
-      }
-      this.setData({
-        jingxuan: app.globalData.shopIng.jingxuan || false,
-        shopTakeOut: app.globalData.shopIng
-      })
-    } else if (this.data.isSelf && app.globalData.shopIng1 && !app.globalData.switchClick) {
-      if (myGet('shop_id') != app.globalData.shop_id) {
-        const status = cur_dateTime(app.globalData.shopIng1.start_time, app.globalData.shopIng1.end_time);
+    } else if (this.data.isSelf && app.globalData.shopIng1 && !app.globalData.switchClick) { //去自提
+        if (myGet('shop_id') != app.globalData.shop_id) {
+          const status = cur_dateTime(app.globalData.shopIng1.start_time, app.globalData.shopIng1.end_time);
+          this.setData({
+            isOpen: status,
+            shopTakeOut: app.globalData.shopIng1
+          })
+          mySet('shop_id', app.globalData.shopIng1.shop_id)
+          app.globalData.isOpen = status;
+          app.globalData.shopTakeOut = this.data.shopTakeOut;
+        }
         this.setData({
-          isOpen: status,
+          jingxuan: app.globalData.shopIng1.jingxuan || false,
           shopTakeOut: app.globalData.shopIng1
         })
-        mySet('shop_id', app.globalData.shopIng1.shop_id)
+    } else if (!app.globalData.shopIng && !app.globalData.switchClick) {//无门店无切换状态
+        app.globalData.shopIng1=null;
+        if (app.globalData.type == 1) {
+          shopArray = myGet('takeout')
+        } else {
+          shopArray = myGet('self')
+        }
+        const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
+        this.setData({
+          isOpen: status,
+          shopTakeOut: shopArray[0],
+          jingxuan: true
+        })
+        mySet('shop_id', shopArray[0].shop_id)
+        app.globalData.shopTakeOut = shopArray[0];
         app.globalData.isOpen = status;
-        app.globalData.shopTakeOut = this.data.shopTakeOut;
-      }
-      this.setData({
-        jingxuan: app.globalData.shopIng1.jingxuan || false,
-        shopTakeOut: app.globalData.shopIng1
-      })
-    } else if (!app.globalData.shopIng && !app.globalData.switchClick) {
-      if (app.globalData.type == 1) {
-        shopArray = myGet('takeout')
-      } else {
-        shopArray = myGet('self')
-      }
-      // console.log(shopArray)
-      const status = cur_dateTime(shopArray[0].start_time, shopArray[0].end_time);
-      this.setData({
-        isOpen: status,
-        shopTakeOut: shopArray[0],
-        jingxuan: true
-      })
-      mySet('shop_id', shopArray[0].shop_id)
-      app.globalData.shopTakeOut = shopArray[0];
-      app.globalData.isOpen = status;
-    } else {
-      this.setData({
-        shopTakeOut: app.globalData.shopTakeOut
-      })
+    } else {//其他情况
+        this.setData({
+          shopTakeOut: app.globalData.shopTakeOut
+        })
     }
     app.globalData.switchClick = null;
     if (app.globalData.activityList) {
