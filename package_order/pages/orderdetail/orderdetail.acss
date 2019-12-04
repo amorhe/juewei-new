@@ -274,7 +274,9 @@ view.pay {
   font-weight: 400;
   color: rgba(51, 51, 51, 1);
   text-align: center;
-  padding: 8rpx 0 40rpx;
+  margin: 8rpx 0 35rpx;
+  line-height:30rpx;
+  height:30rpx;
 }
 
 .out-footer {
