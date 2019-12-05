@@ -302,7 +302,7 @@ Page({
   
  
     this.funGetBannerList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id); //banner
-    this.funGetShowpositionList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id);
+    this.funGetShowpositionList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id);//展位
     this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type) //营销活动
     mySet('vip_address', app.globalData.shopTakeOut);
     this.funGotopage();
@@ -463,9 +463,11 @@ Page({
         jingxuan: true
       });
       app.globalData.type = 2;
-      this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type)
       this.funGetBannerList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id); //banner
-      this.funGetShowpositionList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id);
+      this.funGetShowpositionList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id);//展位
+      this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type)
+
+      
     } else {
       //切换外卖
       if (!myGet('takeout')) {
@@ -489,9 +491,10 @@ Page({
         jingxuan: true
       })
       app.globalData.type = 1;
-      this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type)
       this.funGetBannerList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id); //banner
-      this.funGetShowpositionList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id);
+      this.funGetShowpositionList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id);//展位
+      this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type)
+     
     }
     app.globalData.shopTakeOut = this.data.shopTakeOut;
     const status = cur_dateTime(this.data.shopTakeOut.start_time, this.data.shopTakeOut.end_time);
@@ -525,7 +528,13 @@ Page({
           imgUrls: []
         })
       }
-
+    }).catch(e=>{
+       //错误在这里
+        this.setData({
+          indicatorDots: false,
+          autoplay: false,
+          imgUrls: []
+        })
     });
   },
   // 首页商品展位
@@ -534,11 +543,21 @@ Page({
       this.setData({
         showListObj: res.data
       })
+    }).catch(e=>{
+        this.setData({
+        showListObj: []
+      })
     })
   },
   // 门店营销活动(折扣和套餐)
   async funGetActivityList(city_id, district_id, company_id, buy_type, user_id, type) {
-    let res = await activityList(city_id, district_id, company_id, buy_type, user_id, 1, type);
+    let res = {};
+    try{
+       res = await activityList(city_id, district_id, company_id, buy_type, user_id, 1, type);
+    }catch(e){
+       res = {};
+    };
+
     if (res && res.data) {//活动接口存在
       // 获取加价购商品
       if (res && res.data && res.data.MARKUP && res.data.MARKUP != null) {
@@ -562,7 +581,6 @@ Page({
         this.funGetCompanyGoodsList(this.data.shopTakeOut.company_sale_id); //获取公司所有商品(第一个为当前门店)
       })
     } else {//活动接口崩溃的时候，发生错误的情况，没有活动接口了
-      console.log('活动接口崩溃！');
       app.globalData.gifts = [];
       app.globalData.fullActivity = [];
       this.setData({
@@ -622,7 +640,16 @@ Page({
       }
       // 筛选在当前门店里面的套餐商品  
       if (this.data.activityList.PKG) {
-        PKG = this.data.activityList.PKG.filter(item => item.pkg_goods.map(ott => arr.findIndex(value => value.sap_code == ott.sap_code) != -1));
+        PKG = this.data.activityList.PKG.filter(item => {
+               let pkg_sap_code=true;
+               item.pkg_goods.map(ott => {
+                  if(arr.findIndex(value => value.sap_code == ott.sap_code) == -1){
+                     pkg_sap_code=false;
+                  }
+               })
+               return pkg_sap_code
+            }
+        );
         PKG.forEach(item => item.key = '套餐');
       }
       // 套餐商品图片格式
