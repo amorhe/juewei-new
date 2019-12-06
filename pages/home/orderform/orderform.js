@@ -441,7 +441,6 @@ Page({
     if (app.globalData.notUse) {
       notUse = app.globalData.notUse
     }
-
     //提交确认订单
     // 这里面遇到了选中的换商品字符串无法传入到后台的情况
     let gift_list_confirm = [];

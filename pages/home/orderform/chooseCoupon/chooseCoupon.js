@@ -17,7 +17,11 @@ Page({
     is_allow_coupon: false //是否可以享受优惠
   },
   onLoad(e) {
-    app.globalData.notUse = 0;
+    if(((e.coupon && e.coupon!='')?e.coupon:'')==''){
+      app.globalData.notUse = 1; 
+    }else{
+      app.globalData.notUse = 0; 
+    }
     this.setData({
       couponChoosed:((e.coupon && e.coupon!='')?e.coupon:''),
       is_allow_coupon:e.is_allow_coupon=='true'
@@ -43,22 +47,16 @@ Page({
       })
       // 已选中的优惠券
       if (that.data.couponChoosed!='') { //app.globalData.coupon_code
-        // if (app.globalData.notUse == 0) {
-        //  that.data.couponChoosed[`e${res.DATA.use.findIndex(item => item.code == app.globalData.coupon_code)}`] =that.data.selected_coupon; //app.globalData.coupon_code;
-        //   console.log('111', that.data.couponChoosed);
-        // }
         that.setData({
           couponList: res.DATA.use,
           couponChoosed: ((app.globalData.notUse == 0)?that.data.couponChoosed:'')  //用户不用优惠券的时候要保持空
         })
       } else { // 默认不选择优惠券
-        // this.data.couponChoosed[`e${res.DATA.use.findIndex(item => item.code == res.DATA.max.code)}`] = res.DATA.max.code;
         that.setData({
           couponList: res.DATA.use,
           couponChoosed: ''  //this.data.couponChoosed
         })
       }
-      
     })
   },
 
@@ -92,7 +90,7 @@ Page({
     });
   },
 
-  
+  //不能选的优惠券
   chooseCouponed_noused(e){
     
   },
