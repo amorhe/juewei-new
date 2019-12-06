@@ -65,6 +65,11 @@ Page({
       activeTab: index,
     });
   },
+  handleTabChange({ index }){
+    this.setData({
+      activeTab: index,
+    });
+  },
   // 兑换详情
   changedetail(e) {
     const { gift_code_id, gift_id, order_id, source } = e.currentTarget.dataset

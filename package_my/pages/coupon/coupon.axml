@@ -1,6 +1,6 @@
 <view class="couponContainer">
   <view>
-    <tabs tabs="{{tabs}}" onTabClick="handleTabClick" activeTab="{{activeTab}}" tabBarActiveTextColor="#E60012" tabBarUnderlineColor="#E60012" swipeable="true" activeCls="activeFont">
+    <tabs tabs="{{tabs}}" onTabClick="handleTabClick" onChange="handleTabChange" activeTab="{{activeTab}}" tabBarActiveTextColor="#E60012" tabBarUnderlineColor="#E60012" swipeable="true" activeCls="activeFont">
       <block>
         <tab-content key="0">
           <view class="tab-content tabBox">
