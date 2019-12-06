@@ -18,7 +18,8 @@
     "pages/skip/tocoupon/tocoupon",
     "pages/skip/tonearbyshop/tonearbyshop",
     "pages/webview/webview/webview",
-    "pages/juewei/juewei"
+    "pages/juewei/juewei",
+    "pages/home/selfgoods/selfgoods"
   ],
   "subPackages": [
     {
