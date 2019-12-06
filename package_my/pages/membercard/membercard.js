@@ -46,7 +46,9 @@ Page({
         });
       },
       fail: (e) => {
-       
+        this.setData({
+          userInfo
+        })
       }
     });
   },
