@@ -143,7 +143,8 @@ Page({
     totalH: 0,
     bottomTabbar: 98,
     freeId: '',
-    isiphonex: app.globalData.isIphoneX || false //判断是否是iphonex以上的全面屏
+    isiphonex: app.globalData.isIphoneX || false, //判断是否是iphonex以上的全面屏
+    todetailpage:false //跳转详情页
   },
 
   /**
@@ -192,6 +193,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function(e) {
+    //从详情回来的时候应该不刷新页面
+    // 详情回来就return，其他页面刷新
+    if(this.data.todetailpage){
+       this.setData({
+         todetailpage:false
+       })
+       return;
+    }
+
+
     // 定位地址
     this.setData({
       type: app.globalData.type,
@@ -1229,6 +1240,10 @@ Page({
   },
   // 去商品详情页
   eveGoodsdetailContent(e) {
+    //跳转详情页后，详情页就不能再跳转其他页面了
+    this.setData({
+        todetailpage:true
+    });
     navigateTo({
       url: '/pages/home/goodslist/goodsdetail/goodsdetail?goods_code=' + e.currentTarget.dataset.goods_code
     });
