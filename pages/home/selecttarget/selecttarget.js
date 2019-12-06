@@ -215,7 +215,6 @@ Page({
     my.getLocation({
       type: 3,
       success(res) {
-        // console.log(res)
         my.hideLoading();
         const mapPosition = bd_encrypt(res.longitude, res.latitude);
         my.setStorageSync({
@@ -242,6 +241,7 @@ Page({
         that.getAddressList((mapPosition.bd_lng, mapPosition.bd_lat), mapPosition.bd_lat, mapPosition.bd_lng);
       },
       fail() {
+        my.hideLoading();
         that.setData({
           isSuccess: false
         })

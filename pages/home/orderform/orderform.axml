@@ -221,9 +221,13 @@
 <view class="orderConfirm">
   <view class="colorNine">已优惠¥{{orderInfo.reduce_price/100 || 0}}</view>
   <view class="orderPrimary">
-    <view>
+    <view class="price_txt">
       <text>合计</text>
-      <text class="numberColor fontFourty fontBold">{{order_price}}</text>
+      <!-- 这显示需要区分字号 -->
+      <text a:for="{{order_price.split('')}}">
+         <text a:if="{{item=='¥' || item=='+'}}" class="numberColor fontFourty ">{{item}}</text>
+         <text a:else class="numberColor fontFourty fontBold">{{item}}</text>
+      </text>
     </view>
     <form onSubmit="onSubmit" onReset="onReset" report-submit="true">
       <view onTap="eveConfirmPay" class="primaryBtn" a:if="{{trueprice>=send_price}}">

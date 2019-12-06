@@ -255,3 +255,13 @@
   text-decoration: line-through;
   margin-right: 16rpx;
 }
+.price_txt{
+  font-size:26rpx;
+
+}
+.colorNine{
+  font-size:26rpx;
+}
+.fontBold{
+  font-size: 36rpx;
+}
