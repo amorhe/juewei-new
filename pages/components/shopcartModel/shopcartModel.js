@@ -436,6 +436,7 @@ Component({
         })
       }
       my.hideLoading();
+      app.globalData.coupon_code=''; //默认是空
       my.navigateTo({
         url: '/pages/home/orderform/orderform'
       })

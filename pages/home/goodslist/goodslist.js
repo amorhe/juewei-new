@@ -466,8 +466,6 @@ Page({
       this.funGetBannerList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id); //banner
       this.funGetShowpositionList(shopTakeOut.city_id, shopTakeOut.district_id, shopTakeOut.company_sale_id);//展位
       this.funGetActivityList(this.data.shopTakeOut.city_id, this.data.shopTakeOut.district_id, this.data.shopTakeOut.company_sale_id, app.globalData.type, user_id, app.globalData.type)
-
-      
     } else {
       //切换外卖
       if (!myGet('takeout')) {
@@ -1324,15 +1322,16 @@ Page({
   onSubmit(e) {
     upformId(e.detail.formId);
   },
+  //去自提，选择地址外卖弹出框回调
   onCounterPlusOne(e) {
-    // 点击左边去自提
-    if (e.type == 1 && e.isType == "noShop") {
+    if (e.type == 1 && e.isType == "noShop") { // 点击左边去自提
       this.setData({
         modalShow: e.modalShow,
         mask: e.mask,
         type: 2
       })
-    } else {
+    } else {//去外卖选择地址
+      app.globalData.type = 1;
       my.redirectTo({
         url: '/pages/home/selecttarget/selecttarget?type=true'
       });
