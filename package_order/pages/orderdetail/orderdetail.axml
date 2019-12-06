@@ -20,7 +20,7 @@
     <view class="board-time" a:if="{{[4].includes(d.order_status_info.order_status) && d.dis_type==1}}">
       <text class="board-last">感谢您对绝味鸭脖的支持，期待你再次光临。</text>
     </view>
-    <view class="out-footer" a:if="{{!d.order_cancel_reason}}">
+    <view class="out-footer" a:if="{{d.order_cancel_reason=='' && d.order_status_info.order_status != 0}}">
       <view class="cancel-order" a:if="{{(d.order_status_info.order_status == 1 || d.order_status_info.order_status == 2) && !((d.order_status_info.order_status)==2 && (d.dis_tag == 'ZPS'||d.dis_type==2) ) }}" catchTap="showCancel">
           取消订单
       </view>
@@ -47,13 +47,13 @@
       <view class="cancel" catchTap="showCancel">取消订单</view>
       <view class="pay" catchTap="payNow" data-order_no="{{d.order_no}}" style="color:{{d.channel != 1 ?'#ccc':''}};border-color:{{d.channel != 1 ?'#ccc':''}}">立即支付</view>
     </view>
-    <view class="cancelr" a:if="{{d.order_cancel_reason}}">
+    <view class="cancelr" a:if="{{d.order_cancel_reason && d.order_cancel_reason!=''}}">
       {{d.order_cancel_reason}}
     </view>
     <view class="cancelr" a:if="{{d.channel != 1 && d.order_status_info.order_status == 0}}" style="color:#999">
      订单不支持跨平台操作，请去微信平台操作。
     </view>
-    <view class="buttons" a:if="{{d.order_cancel_reason}}" style="height:70rpx;">
+    <view class="buttons" a:if="{{d.order_cancel_reason && d.order_cancel_reason!=''}}" style="height:70rpx;">
       <view class="cancel" onTap="contact">联系客服</view>
       <view class="pay" catchTap="buyAgain">再来一单</view>
     </view>
