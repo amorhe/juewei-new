@@ -232,105 +232,77 @@ Page({
     this.setData({ curLabel })
   },
 
+  //用户输入校验
   handelChange(e) {
     let { key } = e.currentTarget.dataset;
-    let reg_name = /^[a-zA-Z0-9_\u4e00-\u9fa5 ]{0,20}$/;
+    let reg_name = /^[a-zA-Z0-9_\u4e00-\u9fa5\s]{0,20}$/;
     let reg_phone = /^\d{0,11}$/;
-    // let regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im
-    // let regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-    // let patrn = /[`…~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；……‘’，。￣、…＠＃％＾＆×＿＋｛｝｜＂＞＜]/im;
     let value =e.detail.value;
     switch(key){
       case 'name':
         if(reg_name.test(value)){
-          this.setData({ name: value })
+          this.setData({ name: value });
         }else{
-          this.setData({ name: this.data.name })
+          this.setData({ name: this.data.name });
         }
         break;
       case 'phone':
-        if(reg_phone.test(value)){
-          console.log('1');
-          this.setData({ phone: value })
-        }else{
-          console.log('2');
-          this.setData({ phone: this.data.phone })
-        }
+        this.setData({ phone: value })
         break;
       case 'addressdetail':
-        if(value!=''){
-          this.setData({ addressdetail: value })
-        }else{
-          this.setData({ addressdetail:this.data.addressdetail })
-        }
+        this.setData({ addressdetail: value })
         break;
       default:
-        break;
-    }
-    
-    
-  },
-  closeFN(e) {
-    let d = e.currentTarget.dataset.value;
-    switch (d) {
-      case d = 'name':
-        this.setData({
-          name: ''
-        })
-        break;
-      case d = 'phone':
-        this.setData({
-          phone: ''
-        })
-        break;
-      default:
-        this.setData({
-          addressdetail: ''
+        this.setData({ 
+          name:'',
+          phone:'',
+          addressdetail: '' 
         })
         break;
     }
   },
-  closeFN1(){
-        this.setData({
-          name: ''
-        })
+  //清空文字
+  closeImg(e){
+     let { key } = e.currentTarget.dataset;
+     switch(key){
+      case 'name':
+        this.setData({ name: '' })
+        break;
+      case 'phone':
+        this.setData({ phone: '' })
+        break;
+      case 'addressdetail':
+        this.setData({ addressdetail: '' })
+        break;
+      default:
+        break;
+    }
   },
-  closeFN2(){
-        this.setData({
-          phone: ''
-        })
-  },
-  closeFN3(){
-        this.setData({
-          addressdetail: ''
-        })
-  },
+  //获取焦点，显示清空按钮
   showclear(e){
     let d = e.currentTarget.dataset.key;
+    let v = e.detail.value;
+    let show_name_clear=false;
+    let show_phone_clear=false;
+    let show_addressdetail_clear=false;
     switch (d) {
       case 'name':
-        this.setData({
-          show_name_clear: true,
-          show_phone_clear:false,
-          show_addressdetail_clear:false
-        })
+          show_name_clear=true;
         break;
       case 'phone':
-        this.setData({
-          show_name_clear: false,
-          show_phone_clear:true,
-          show_addressdetail_clear:false
-        })
+          show_phone_clear=true;
         break;
       case 'addressdetail':
-        this.setData({
-          show_name_clear: false,
-          show_phone_clear:false,
-          show_addressdetail_clear:true
-        })
+          show_addressdetail_clear=true;
         break;
     }
+    this.setData({
+          show_name_clear,
+          show_phone_clear,
+          show_addressdetail_clear
+    })
   },
+  //失去焦点,隐藏清空按钮
   hideclear(e){
     let d = e.currentTarget.dataset.key;
     switch (d) {
@@ -351,6 +323,8 @@ Page({
         break;
     }
   },
+
+
   modalidShoFN() {
     this.setData({
       modalidShow: false

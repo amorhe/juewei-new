@@ -3,9 +3,9 @@
   <view class="post-address">
     <view class="post-name" style="position:relative;">
       <view class="item post-name-left">联系人</view>
-      <input class="post-name-right" placeholder="姓名" maxlength="20" controlled="{{true}}" type="text" value="{{name}}" data-key="name" onInput="handelChange" onFocus="showclear" onBlur="hideclear" style="width:440rpx;flex:none;"/>
-      <view a:if="{{name.length>0 && show_name_clear}}" onTap="closeFN1" style="height:74rpx;width:74rpx; position:absolute;top:0;right:0;border-bottom: 1px solid #eee;">
-          <image class="arrow" mode="scaleToFill"  onTap="closeFN1"  data-value="name" src="{{imageUrl}}close3.png" style="margin-top:20rpx;position:absolute;right:0;"/>
+      <input class="post-name-right" type="text" placeholder="姓名" maxlength="20" controlled="{{true}}" value="{{name}}" data-key="name" onInput="handelChange" onFocus="showclear" onBlur="hideclear" confirm-hold="{{true}}" enableNative="{{false}}" style="width:440rpx;flex:none;"/>
+      <view a:if="{{name.length>0 && show_name_clear}}" data-key="name" onTap="closeImg" style="height:74rpx;width:74rpx; position:absolute;top:0;right:0;border-bottom: 1px solid #eee;">
+          <image class="arrow" mode="scaleToFill" src="{{imageUrl}}close3.png" style="margin-top:20rpx;position:absolute;right:0;"/>
       </view>
     </view>
     <view class="post-sex">
@@ -15,8 +15,8 @@
     </view>
     <view class="list">
       <view class="item">电话</view>
-      <input placeholder="手机号码" type="numberpad" value="{{phone}}" maxlength="11" controlled="{{true}}" data-key="phone" onInput="handelChange"  onFocus="showclear" onBlur="hideclear" style="flex:none;width:4rem;margin-right:0.5rem;"/>
-      <image a:if="{{phone.length>0 && show_phone_clear}}" class="arrow" mode="scaleToFill" onTap="closeFN2" data-value="phone" src="{{imageUrl}}close3.png" style="position:absolute;right:30rpx;"/>
+      <input placeholder="手机号码" type="number" value="{{phone}}" maxlength="11" controlled="{{true}}" data-key="phone" onInput="handelChange"  onFocus="showclear" onBlur="hideclear" confirm-hold="{{true}}" enableNative="{{false}}" style="flex:none;width:4rem;margin-right:0.5rem;"/>
+      <image a:if="{{phone.length>0 && show_phone_clear}}" class="arrow" mode="scaleToFill" data-key="phone" onTap="closeImg" src="{{imageUrl}}close3.png" style="position:absolute;top:30rpx;right:0;"/>
     </view>
     <view class="select-address list" onTap="chooseLocation">
       <view class="item">地址</view>
@@ -26,8 +26,8 @@
     </view>
     <view class="list">
       <view class="item">门牌号</view>
-      <input placeholder="例：6号楼606室" controlled="{{true}}" value="{{addressdetail}}" controlled="{{true}}" data-key="addressdetail" onInput="handelChange"  onFocus="showclear" onBlur="hideclear" style="flex:none;width:4rem;margin-right:0.5rem;"/>
-      <image a:if="{{addressdetail.length>0 && show_addressdetail_clear}}" data-value="addressdetail" class="arrow" mode="scaleToFill" onTap="closeFN3" src="{{imageUrl}}close3.png" style="position:absolute;right:30rpx;"/>
+      <input placeholder="例：6号楼606室" type="text" maxlength="100" value="{{addressdetail}}" controlled="{{true}}" data-key="addressdetail" onInput="handelChange"  onFocus="showclear" onBlur="hideclear" confirm-hold="{{true}}" enableNative="{{false}}" style="flex:none;width:4rem;margin-right:0.5rem;"/>
+      <image a:if="{{addressdetail.length>0 && show_addressdetail_clear}}" class="arrow" mode="scaleToFill"  data-key="addressdetail" onTap="closeImg" src="{{imageUrl}}close3.png" style="position:absolute;top:30rpx;right:0;"/>
     </view>
     <view class="list">
       <view class="item">标签</view>
