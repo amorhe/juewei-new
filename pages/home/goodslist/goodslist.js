@@ -201,8 +201,7 @@ Page({
        })
        return;
     }
-
-
+ 
     // 定位地址
     this.setData({
       type: app.globalData.type,
