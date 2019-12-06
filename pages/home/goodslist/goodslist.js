@@ -150,7 +150,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log('onload=',options.isSelf)
     if (options.isSelf) {
       this.setData({
         isSelf: true
@@ -840,6 +839,7 @@ Page({
             }
             // 购物车活动提示
             this.funShopcartPrompt(this.data.fullActivity, priceFree, repurse_price)
+
             if (!myGet('goodsList')) {
               let data = {}
               this.funChangeShopcart(data);
@@ -853,6 +853,15 @@ Page({
               repurse_price
             })
             mySet('goodsList', shopcartObj);
+            //刷新和切换门店会弹出
+            let listnum = Object.keys(goodsList).length-Object.keys(shopcartObj).length;
+            if(listnum>0){
+              my.alert({
+                content: '有'+ listnum +'个商品已失效，已经帮您从购物车清除了',
+                buttonText: '我知道了',
+                success: () => { }
+              });
+            }
           })
           // 获取商品模块的节点
           my.createSelectorQuery().selectAll('.goodsTypeEv').boundingClientRect().exec((ret) => {

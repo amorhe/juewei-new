@@ -387,7 +387,6 @@ Component({
       }
       // 购物车筛选后剩余数量
       shopcartNum = Object.entries(shopcartObj).reduce((pre, cur) => {
-        console.log('cur[1]',pre,cur[1]);
         const { num } = cur[1]
         return pre + num
       }, 0)
