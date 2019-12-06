@@ -193,6 +193,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function(e) {
+    console.log('isSelf=',e,this.data.isSelf) 
+    if (app.globalData.type==2) {
+      this.setData({
+        isSelf: true
+      })
+    }else{
+      this.setData({
+        isSelf: false
+      })
+    }
     // 定位地址
     this.setData({
       type: app.globalData.type,

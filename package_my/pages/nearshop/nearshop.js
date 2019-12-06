@@ -133,9 +133,8 @@ Page({
     app.globalData.address1='';
     app.globalData.shopIng1 = e.currentTarget.dataset.info;
     app.globalData.type = 2;
-    console.log('app.globalData.shopIng1=',app.globalData.shopIng1);
     my.redirectTo({
-      url: '/pages/home/goodslist/goodslist?isSelf=true', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
+      url: '/pages/home/selfgoods/selfgoods?isSelf=true', // 跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数
       success: (res) => {
 
       },

@@ -207,7 +207,7 @@ Component({
 			key: 'goodsList', // 缓存数据的key
 			data: shopcartObj // 要缓存的数据
 		});
-
+    console.log('提示',this.data.shopcartNum, num ,shopcartNum ,snum);
 		if (this.data.shopcartNum > 0 && num - shopcartNum > 0 && snum > 0) {
 			return this.setData({
 				switchShopcontent: `有${num - shopcartNum}个商品已失效，${snum}个商品价格已更新`,

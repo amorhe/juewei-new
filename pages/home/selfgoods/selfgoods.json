@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "绝味鸭脖",
+  "usingComponents": {
+		"confirm": "../../components/confirm/confirm",
+    "goods-modal": "../../components/goodsModal/goodsModal",
+    "shopcart-model": "../../components/shopcartModel/shopcartModel"
+  },
+  "allowsBounceVertical": "YES",
+  "pullRefresh": true
+}
