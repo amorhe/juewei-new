@@ -76,12 +76,13 @@
       <!-- 提示框 -->
       <!--<confirm content="{{content}}" confirmButtonText="{{confirmButtonText}}" cancelButtonText="{{cancelButtonText}}" modalShow="{{modalShow}}" mask="{{mask}}" onCounterPlusOne="onCounterPlusOne" isType="noShop" /> -->
     </view>
-    <!--未登录提示 -->
+    <!-- 无外卖去自提 -->
     <modal show="{{loginOpened}}" showClose="{{ false }}">
       <view class="modalInfo">
         当前选择地址无可浏览的门店!
       </view>
       <view slot="footer" class="footerButton">
+        <view class="modalButton" style="color:#999999;" onTap="onModalCancel">取消</view>
         <view class="modalButton" onTap="onModalRepurse">去自提</view>
       </view>
     </modal>

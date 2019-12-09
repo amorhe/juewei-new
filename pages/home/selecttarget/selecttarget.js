@@ -483,5 +483,12 @@ Page({
     my.switchTab({
       url: '/pages/home/goodslist/goodslist'
     })
+  },
+  //取消按钮
+  onModalCancel(){
+    this.setData({
+      loginOpened: false
+    })
+    app.globalData.type = 1;
   }
 });
